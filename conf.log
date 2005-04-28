@@ -1,0 +1,5 @@
+make[1]: Entering directory `/tmp/stopmotion-0.3pre.0/.qconftemp'
+g++ -c -pipe -Wall -W -O2 -D_REENTRANT  -DX11_INC='"/usr/X11R6/include"' -DX11_LIBDIR='"/usr/X11R6/lib"' -DX11_LIB='"-lXext -lX11 -lm"' -DCC='"gcc"' -DQT_NO_DEBUG -DQT_THREAD_SUPPORT -DQT_SHARED -I/usr/share/qt3/mkspecs/default -I. -I/usr/include/qt3 -I/usr/X11R6/include -o conf.o conf.cpp
+g++  -o conf conf.o    -L/usr/share/qt3/lib -L/usr/X11R6/lib -lqt-mt -lXext -lX11 -lm -lpthread
+make[1]: *** Deleting file `conf'
+make[1]: *** [conf] Interrupt

@@ -1,0 +1,18 @@
+Source: stopmotion
+Section: x11
+Priority: optional
+Maintainer: Bjoern Erik Nilsen <bjoern.nilsen@hig.no>
+Build-Depends: debhelper (>= 4.0.0), libsdl1.2-dev, libxml2-dev, libqt3-mt-dev, libtar-dev, libvorbis-dev, libsdl-image1.2-dev, libfam-dev
+Standards-Version: 3.6.1
+
+Package: stopmotion
+Architecture: any
+Depends: ${shlibs:Depends}, vgrabbj
+Description: program for creating stop motion animations
+ you can create stop-motion animations with images grabbed
+ from your favourite video device. You just sets stopmotion to
+ use a grabber program that works with your device. It is also 
+ possible to do the same with video export; just plug in a
+ encoder capable of doing video export from couple of images.
+ Stopmotion has a set of tools which helps you creating the 
+ movements smooth and precise.
