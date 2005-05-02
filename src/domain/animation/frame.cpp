@@ -31,7 +31,6 @@
 
 unsigned int Frame::tmpNum   = 0;
 unsigned int Frame::trashNum = 0;
-unsigned int Frame::soundNr  = 0;
 char Frame::tempPath[256]   = {0};
 char Frame::trashPath[256]  = {0};
 
@@ -47,6 +46,7 @@ Frame::Frame(const char *filename)
 	imagePath = new char[len];
 	strcpy(imagePath, filename);
 	isProjectFile = false;
+	soundNum = -1;
 	
 	assert(tempPath  != NULL);
 	assert(trashPath != NULL);
@@ -88,22 +88,55 @@ int Frame::addSound(const char *filename)
 		delete f;
 		return ret;
 	}
-	sounds.push_back(f);
-
-	stringstream ss;
-	ss << "Sound" << soundNr++;
-	soundNames.push_back( ss.str() );
 	
-	return 0;
+	// Check if the file exsists, which it probably should do. 
+	// The setFilename function will fail if the file doesn't exists,
+	// but paranoid people have to dobbel check :-).
+	if ( access(filename, F_OK) == 0 ) {
+		// Create a new path
+		char *imgId = getImageId();
+		char newSoundPath[256] = {0};
+		sprintf(newSoundPath, "%s%s_snd_%d%s", 
+			tempPath, imgId, ++soundNum, strrchr(filename,'.'));
+		delete [] imgId;
+		
+		// Check if the sound already is inside the tmp directory.
+		// (This can be the fact if we runs in recovery mode.)
+		if ( strstr(filename, "/.stopmotion/tmp/") == NULL ) {
+			char command[512] = {0};
+			sprintf(command, "/bin/cp %s %s", filename, newSoundPath);
+			system(command);
+		}
+		else {
+			rename(filename, newSoundPath);
+		}
+		
+		// Update with the new path
+		f->setFilename(newSoundPath);
+		// and add it to the vector
+		sounds.push_back(f);
+
+		stringstream ss;
+		ss << "Sound" << soundNum;
+		soundNames.push_back( ss.str() );
+		return 0;
+	}
+	return 1;
 }
 
 
 void Frame::removeSound(unsigned int soundNumber)
 {
+	assert(sounds[soundNumber] != NULL);
+	
+	AudioFormat *f = sounds[soundNumber];
+	if ( access( f->getSoundPath(), F_OK ) == 0 ) {
+		unlink( f->getSoundPath() );
+	}
 	delete sounds[soundNumber];
 	sounds[soundNumber] = NULL;
-	
 	sounds.erase(sounds.begin() + soundNumber);
+	--soundNum;
 }
 
 
@@ -128,6 +161,14 @@ void Frame::setSoundName(unsigned int soundNumber, char* soundName)
 char* Frame::getSoundName(unsigned int soundNumber)
 {
 	return (char*)soundNames[soundNumber].c_str();
+}
+
+
+void Frame::moveToProjectDir(
+		const char *imageDir, const char *soundDir , unsigned int imgNum )
+{
+	moveToImageDir(imageDir, imgNum);
+	moveToSoundDir(soundDir);
 }
 
 
@@ -173,6 +214,9 @@ void Frame::moveToImageDir(const char *directory, unsigned int imgNum)
 		else {
 			rename (imagePath, newPath);
 		}
+		
+		free(currP);
+		free(newP);
 	}
 	else {
 		int relation = strcmp(imagePath, newPath);
@@ -184,6 +228,39 @@ void Frame::moveToImageDir(const char *directory, unsigned int imgNum)
 	delete [] imagePath;
 	imagePath = new char[strlen(newPath) + 1];
 	strcpy(imagePath, newPath);
+}
+
+
+void Frame::moveToSoundDir(const char *directory)
+{
+	assert(directory != NULL);
+	
+	// Gets the id for this frame
+	char *imgId = getImageId();
+	
+	// Move all of the sounds belonging to this frame
+	// to the sounds directory
+	unsigned int numSounds = sounds.size();
+	for (unsigned int i = 0; i < numSounds; i++) {
+		AudioFormat *f = sounds[i];
+		char *soundPath = f->getSoundPath();
+		
+		// Create a new sound path
+		char newSoundPath[256] = {0};	
+		sprintf(newSoundPath, "%s%s_snd_%d%s", 
+			directory, imgId, ++soundNum, strrchr(soundPath,'.'));
+		
+		if (access(soundPath, F_OK) == 0) {
+			// Move from old path to new path
+			rename(soundPath, newSoundPath);
+		}
+		// Update with the new path
+		f->setFilename(newSoundPath);
+		f = NULL;
+		soundPath = NULL;
+	}
+	
+	delete [] imgId;
 }
 
 
@@ -233,6 +310,19 @@ void Frame::moveToTrash()
 	delete [] imagePath;
 	imagePath = new char[strlen(newImagePath) + 1];
 	strcpy(imagePath, newImagePath);
+	
+	// Remove all of the sounds added to this frame. This should be
+	// added to the undo history in the future.
+	unsigned int numSounds = sounds.size();
+	for (unsigned int i = 0; i < numSounds; i++) {
+		AudioFormat *f = sounds[i];
+		if ( access( f->getSoundPath(), F_OK ) == 0 ) {
+			unlink( f->getSoundPath() );
+		}
+		delete sounds[i];
+		sounds[i] = NULL;
+	}
+	sounds.clear();
 
 	++trashNum;
 	--tmpNum;
@@ -254,4 +344,22 @@ void Frame::playSounds(AudioDriver *driver)
 		}
 		driver->playInThread();
 	}
+}
+
+
+char* Frame::getImageId()
+{
+	char tmp[256] = {0};
+	strcpy(tmp, imagePath);
+	char *bname = basename(tmp);
+	char *dotPtr = strrchr(imagePath, '.');
+	
+	char imgID[256] = {0};
+	strncpy(imgID, bname, strlen(bname) - strlen(dotPtr) );
+	strcat(imgID, "\0");
+	
+	char *ret = new char[strlen(imgID) + 1];
+	strcpy(ret, imgID);
+	
+	return ret;
 }

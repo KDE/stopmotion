@@ -30,6 +30,7 @@
 
 
 const char ProjectSerializer::imageDirectory[] = "images/";
+const char ProjectSerializer::soundDirectory[] = "sounds/";
 
 
 ProjectSerializer::ProjectSerializer()
@@ -46,6 +47,7 @@ ProjectSerializer::ProjectSerializer()
 	projectPath = NULL;
 	projectFile = NULL;
 	imagePath   = NULL;
+	soundPath   = NULL;
 	xmlFile     = NULL;
 	prevProPath = NULL;
 	prevImgPath = NULL;
@@ -108,6 +110,10 @@ bool ProjectSerializer::save( 	const char *filename,
 	if ( setProjectFile(filename) ) {
 		setProjectPaths(projectPath, true);
 	}
+	// Only for backwards compability
+	else if (access(soundPath, F_OK) != 0) {
+		mkdir(soundPath, 0755);
+	} 
 	
 	doc = xmlNewDoc(BAD_CAST "1.0");
 	dtd = xmlCreateIntSubset(doc, BAD_CAST "smil", BAD_CAST "-//W3C//DTD SMIL 2.0//EN",
@@ -155,6 +161,7 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 	xmlNodePtr node = NULL;
 	char *absPath    = NULL;
 	Frame *frame     = NULL;
+	AudioFormat *sound = NULL;
 	unsigned int index = 0;
 	
 	scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
@@ -163,17 +170,34 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 	frontend->showProgress("Saving scenes to disk ...", numScenes);
 	for (unsigned int i = 0; i < numScenes; i++) {
 		frontend->updateProgress(i);
+		// Scenes
 		node = xmlNewChild(scenes, NULL, BAD_CAST "seq", NULL);
+		
+		// Images
 		images = xmlNewChild(node, NULL, BAD_CAST "images", NULL);
 		vector<Frame*> frames = sVect[i]->getFrames();
 		unsigned int numFrames = frames.size();
 		for (unsigned int j = 0; j < numFrames; j++) {
 			frame = frames[j];
-			frame->moveToImageDir(imagePath, ++index);
+			frame->moveToProjectDir(imagePath, soundPath, ++index);
 			absPath = frame->getImagePath();
 			char *relPath = basename(absPath);
 			node = xmlNewChild(images, NULL, BAD_CAST "img", NULL);
 			xmlNewProp(node, BAD_CAST "src", BAD_CAST relPath);
+			
+			// Sounds
+			unsigned int numSounds = frame->getNumberOfSounds();
+			if (numSounds > 0) {
+				sounds = xmlNewChild(node, NULL, BAD_CAST "sounds", NULL);
+				vector<AudioFormat*> audioFiles = frame->getSounds();
+				for (unsigned int k = 0; k < numSounds; k++) {
+					sound = audioFiles[k];
+					relPath = basename(audioFiles[k]->getSoundPath());
+					node = xmlNewChild(sounds, NULL, BAD_CAST "audio", NULL);
+					xmlNewProp(node, BAD_CAST "src", BAD_CAST relPath);
+					xmlNewProp(node, BAD_CAST "alt", BAD_CAST frame->getSoundName(i));
+				}
+			}
 		}
 		frames.clear();
 	}
@@ -185,17 +209,35 @@ void ProjectSerializer::getAttributes(xmlNodePtr node, vector<Scene*>& sVect)
 	xmlNodePtr currNode = NULL;
 	for (currNode = node; currNode; currNode = currNode->next) {
 		if (currNode->type == XML_ELEMENT_NODE) {
-			if ( strcmp((char*)currNode->name, "img") == 0 ) {
+			char *nodeName = (char*)currNode->name;
+			// We either have a image node or a sound node
+			if ( strcmp(nodeName, "img") == 0 || strcmp(nodeName, "audio") == 0 ) {
 				char *filename = (char*)xmlGetProp(currNode, BAD_CAST "src");
-				if (filename) {
+				if (filename != NULL) {
 					char tmp[256] = {0};
-					sprintf(tmp, "%s%s", imagePath, filename);
-					Frame *f = new Frame(tmp);
-					Scene *s = sVect.back();
-					s->addSavedFrame(f);
-					f->markAsProjectFile();
+					// The node is a image node
+					if ( strcmp(nodeName, "img") == 0 ) {
+						sprintf(tmp, "%s%s", imagePath, filename);
+						Frame *f = new Frame(tmp);
+						Scene *s = sVect.back();
+						s->addSavedFrame(f);
+						f->markAsProjectFile();
+					}
+					// The node is a sound node
+					else {
+						sprintf(tmp, "%s%s", soundPath, filename);
+						Scene *s = sVect.back();
+						Frame *f = s->getFrame(s->getSize() - 1);
+						f->addSound(tmp);
+						char *soundName = (char*)xmlGetProp(currNode, BAD_CAST "alt");
+						if (soundName != NULL) {
+							unsigned int soundNum = f->getNumberOfSounds() - 1;
+							f->setSoundName(soundNum,  soundName);
+						}
+					}
 				}
 			}
+			// The node is a scene node
 			else if ( strcmp((char*)currNode->name, "seq") == 0 ) {
 				Scene *s = new Scene();
 				sVect.push_back(s);
@@ -254,13 +296,16 @@ void ProjectSerializer::setProjectPaths(const char *unpacked, bool isSave)
 	sprintf(bigTmp, "%s%s", projectPath, imageDirectory);
 	imagePath = new char[strlen(bigTmp) + 1];
 	strcpy(imagePath, bigTmp);
+	
+	sprintf(bigTmp, "%s%s", projectPath, soundDirectory);
+	soundPath = new char[strlen(bigTmp) + 1];
+	strcpy(soundPath, bigTmp);
 
 	if (isSave) {
-		struct stat st;
-		stat(projectPath, &st);
-		if ( S_ISDIR(st.st_mode) == 0 ) {
+		if ( access(projectPath, F_OK) != 0 ) {
 			mkdir(projectPath, 0755);
 			mkdir(imagePath, 0755);
+			mkdir(soundPath, 0755);
 		}
 	}
 }

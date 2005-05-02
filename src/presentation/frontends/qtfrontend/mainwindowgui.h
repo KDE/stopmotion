@@ -275,6 +275,12 @@ private slots:
 	void openProject();
 	
 	/**
+	 * Opens a saved project.
+	 * @param projectFile the project to open
+	 */
+	void openProject(const char *projectFile);
+	
+	/**
 	 * Opens a project.
 	 */
 	void openMostRecent();

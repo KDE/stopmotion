@@ -6,7 +6,6 @@
 #endif
 
 #include "presentation/frontends/nonguifrontend/nonguifrontend.h"
-#include "presentation/frontends/frontend.h"
 #include "src/foundation/preferencestool.h"
 
 #include <unistd.h>
@@ -20,7 +19,12 @@
 #include <libgen.h>
 
 
-void init(Frontend *frontend, DomainFacade *facadePtr);
+struct AudioFile {
+	unsigned int belongsTo;
+	char filename[256];
+};
+
+bool init(Frontend *frontend, DomainFacade *facadePtr);
 void cleanup();
 bool isRecoveryMode();
 void createDirectories();
@@ -31,35 +35,47 @@ int main(int argc, char **argv)
 {
 	// returns a pointer that is allocated with new
 	DomainFacade *facadePtr = DomainFacade::getFacade();
-	Frontend *frontend;
+	
+	atexit(cleanup);
+	int ret = 0;
 	
 	// if program is started with --nonGUI
 	if ( argc > 1 && strcmp(argv[1], "--nonGUI") == 0 ) {
-		frontend = new NonGUIFrontend(facadePtr); 
+		NonGUIFrontend *nonGUIFrontend = new NonGUIFrontend(facadePtr);
+		facadePtr->registerFrontend(nonGUIFrontend);
+		init(nonGUIFrontend, facadePtr);
+		ret = nonGUIFrontend->run(argc, argv);
+		delete nonGUIFrontend;
+		nonGUIFrontend = NULL;
 	}
 	else {
 #ifdef QTGUI
-		frontend = new QtFrontend(argc, argv);
+		QtFrontend *qtFrontend = new QtFrontend(argc, argv);
+		facadePtr->registerFrontend(qtFrontend);
+		bool hasRecovered = init(qtFrontend, facadePtr);
+		if ( hasRecovered == false && argc > 1 && access(argv[1], R_OK) == 0) {
+			facadePtr->openProject(argv[1]);
+			const char *proFile = facadePtr->getProjectFile();
+			if ( proFile != NULL ) {
+				PreferencesTool *pref = PreferencesTool::get();
+				pref->setPreference("mostRecent", proFile);
+			}
+		}
+		ret = qtFrontend->run(argc, argv);
+		delete qtFrontend;
+		qtFrontend = NULL;
 #endif
 	}
-	facadePtr->registerFrontend(frontend);
-	
-	init(frontend, facadePtr);
-	atexit(cleanup);
-	
-	int ret = frontend->run(argc, argv);
 	
 	delete facadePtr;
 	facadePtr = NULL;
-	delete frontend;
-	frontend = NULL;
-	
+
 	return ret;
 }
 
 
 // creates directories if they already not exist.
-void init(Frontend *frontend, DomainFacade *facadePtr)
+bool init(Frontend *frontend, DomainFacade *facadePtr)
 {
 	if ( isRecoveryMode() ) {
 		int ret = frontend->askQuestion(
@@ -68,6 +84,7 @@ void init(Frontend *frontend, DomainFacade *facadePtr)
 		// The user wants to recover
 		if (ret == 0) {
 			recover(facadePtr);
+			return true;
 		}
 		else {
 			cleanup();
@@ -78,6 +95,7 @@ void init(Frontend *frontend, DomainFacade *facadePtr)
 		cleanup();
 		createDirectories();
 	}
+	return false;
 }
 
 
@@ -158,6 +176,7 @@ void recover(DomainFacade *facadePtr)
 	dp = opendir(tmp);
 	if (dp) {
 		vector<char*> frames;
+		vector<AudioFile> sounds;
 		struct dirent *ep;
 		struct stat st;
 
@@ -165,9 +184,27 @@ void recover(DomainFacade *facadePtr)
 			char *fileName = new char[256];
 			sprintf(fileName, "%s/%s", tmp, ep->d_name);
 			stat(fileName, &st);
-			// is a regular file, not a directory
+			// Is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0) {
-				frames.push_back(fileName);
+				// Image file
+				if ( strstr(fileName, "snd") == NULL ) {
+					frames.push_back(fileName);
+				}
+				// Sound file
+				else {
+					char buf[256] = {0};
+					char index[256] = {0};
+					
+					char *firstDelim = strchr(fileName, '_');
+					strcpy(buf, firstDelim + 1);
+					char *secondDelim = strchr(buf, '_');
+					strncpy(index, buf, strlen(buf) - strlen(secondDelim));
+					
+					AudioFile af;
+					af.belongsTo = (unsigned int)atoi(index);
+					strcpy(af.filename, fileName);
+					sounds.push_back(af);	
+				}
 			}
 			else {
 				delete [] fileName;
@@ -183,6 +220,11 @@ void recover(DomainFacade *facadePtr)
 		unsigned int numElem = frames.size();
 		for (unsigned int i = 0; i < numElem; i++) {
 			delete [] frames[i];
+		}
+		
+		numElem = sounds.size();
+		for (unsigned int j = 0; j < numElem; j++) {
+			facadePtr->addSound(sounds[j].belongsTo, sounds[j].filename);
 		}
 	}
 }

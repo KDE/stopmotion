@@ -105,12 +105,14 @@ public:
 	char* getImagePath();
 	 
 	/**
-	 * Moves the images to the image directory.
-	 * @param directory the directory where the project files are stored
-	 * @param imgNum the number of the image which is used to set a filename
-	 * (imgNum.png).
+	 * Moves sounds and images belonging to this frame into project directories.
+	 * @param imageDir the image directory to move images into
+	 * @param soundDir the sound directory to move sounds into
+	 * @param imgNum a number describing the position of this frame relative
+	 * to the other frames. E.g. 000005 if this frame is number five in the sequence
+	 * of frames.
 	 */
-	void moveToImageDir(const char *directory, unsigned int imgNum);
+	void moveToProjectDir(const char *imageDir, const char *soundDir, unsigned int imgNum);
 	 
 	/**
 	 * Copies the files belonging to this frame to a temporary directory.
@@ -131,11 +133,8 @@ public:
 	 * Plays the sounds belonging to this frame.
 	 */
 	void playSounds(AudioDriver *driver);
-
-	 
+ 
 private:
-	static unsigned int soundNr;
-
 	/** Absolute path to a temporary directory (~/.stopmotion/tmp). */
 	static char tempPath[256];
 	
@@ -156,6 +155,29 @@ private:
 	/** True if this frame is saved to a project file. It is also true if the
 	 * frame is loaded from a previously saved project. */
 	bool isProjectFile;
+	
+	/** Number of sounds belonging to this frame. */
+	int soundNum;
+
+	/**
+	 * Moves the sounds to a sound directory.
+	 * @param directory the directory to move the sounds to
+	 */
+	void moveToSoundDir(const char *directory);
+	
+	/**
+	 * Moves the images to an image directory.
+	 * @param directory the directory where the project files are stored
+	 * @param imgNum the number of the image which is used to set a filename
+	 */
+	void moveToImageDir(const char *directory, unsigned int imgNum);
+	
+	/**
+	 * Gets the id of an image. This is just the filename of the image without
+	 * extension.
+	 * @return an id for the image
+	 */
+	char* getImageId();
 };
 
 #endif

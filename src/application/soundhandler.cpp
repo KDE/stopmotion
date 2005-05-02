@@ -40,7 +40,7 @@ void SoundHandler::setSoundsList(QListBox *soundsList)
 
 void SoundHandler::addSound()
 {
-	QString file = QFileDialog::getOpenFileName(homeDir, "Sounds (*.ogg)");
+	QString file = QFileDialog::getOpenFileName(homeDir, tr("Sounds (*.ogg)") );
 	if ( !file.isNull() ) {
 		int ret = DomainFacade::getFacade()->addSound( DomainFacade::getFacade()->
 				getActiveFrameNumber(), (char*)file.ascii() );
@@ -62,11 +62,10 @@ void SoundHandler::removeSound()
 	int index = soundsList->index(soundsList->selectedItem());
 	
 	if(index >= 0) {
-		DomainFacade::getFacade()->removeSound( DomainFacade::getFacade()->
-				getActiveFrameNumber(), index );
+		DomainFacade::getFacade()->removeSound( 
+			DomainFacade::getFacade()->getActiveFrameNumber(), index );
 		
 		soundsList->removeItem(index);
-		
 		emit soundsChanged();
 	}
 }
@@ -79,14 +78,14 @@ void SoundHandler::setSoundName()
 	if(index >= 0) {
 		bool ok;
 		QString text = QInputDialog::getText(
-			"Sound name", "Enter the name of the sound:", QLineEdit::Normal,
+			tr("Sound name"), tr("Enter the name of the sound:"), QLineEdit::Normal,
 			QString::null, &ok, (QWidget*)this->parent() );
 		
 		if ( ok && !text.isEmpty() ) {
 			DomainFacade::getFacade()->setSoundName(DomainFacade::getFacade()->
 					getActiveFrameNumber(), index, (char*)text.ascii() );
 	
-			soundsList->changeItem ( text, index );
+			soundsList->changeItem( text, index );
 		}
 	}
 }

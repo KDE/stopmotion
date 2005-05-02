@@ -90,9 +90,11 @@ private:
 	xmlNodePtr sounds;
 	
 	static const char imageDirectory[]; // relative to projectDirectory
+	static const char soundDirectory[]; // releative to projectDirectory
 	char *projectPath;// absolute
 	char *projectFile;// absolute
 	char *imagePath;  // absolute
+	char *soundPath;  // absolute
 	char *xmlFile;    // absolute
 	char *prevProPath;// absolute
 	char *prevImgPath;// absolute

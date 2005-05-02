@@ -9,8 +9,11 @@ through the Skolelinux/Debian-edu distribution of GNU/Linux.
 INSTALLATION
 ------------
 If you run Debian the easiest way to install this program is to
-download the latest Debian package from our website:
-http://developer.skolelinux.no/info/studentgrupper/2005-hig-stopmotion/.
+add this line to your sources.list file:
+
+deb http://www.skolelinux.no/~bjoern/debian/ unstable main
+
+Then run 'apt-get update' and 'apt-get install stopmotion'.
 
 If you do not run Debian you have to compile the program from source.
 We have not focused on getting the configure script as good as it

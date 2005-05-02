@@ -789,47 +789,45 @@ void MainWindowGUI::openProject()
 {
 	QString file = QFileDialog::getOpenFileName(lastVisitedDir, "Stopmotion (*.sto)", this);
 	if ( !file.isNull() ) {
-		DomainFacade::getFacade()->openProject( file.ascii() );
-		fileMenu->setItemEnabled(SAVE_AS, true);
-		fileMenu->setItemEnabled(SAVE, true);
-		setMostRecentProject();
-		int size = DomainFacade::getFacade()->getModelSize();
-		if(size > 0) {
-			activateMenuOptions();
-			modelSizeChanged(size);
-			toolsMenu->modelSizeChanged(size);
-		}
+		openProject( file.ascii() );
 	}
 }
 
 
-void MainWindowGUI::openMostRecent()
+void MainWindowGUI::openProject( const char * projectFile )
 {
-	PreferencesTool *pref = PreferencesTool::get();
-	DomainFacade::getFacade()->openProject( pref->getPreference("mostRecent", "") );
+	assert(projectFile != NULL);
+	
+	DomainFacade::getFacade()->openProject( projectFile );
 	fileMenu->setItemEnabled(SAVE_AS, true);
 	fileMenu->setItemEnabled(SAVE, true);
 	setMostRecentProject();
+	int size = DomainFacade::getFacade()->getModelSize();
+	if(size > 0) {
+		activateMenuOptions();
+		modelSizeChanged(size);
+		toolsMenu->modelSizeChanged(size);
+	}
+}
+
+void MainWindowGUI::openMostRecent()
+{
+	PreferencesTool *pref = PreferencesTool::get();
+	openProject( pref->getPreference("mostRecent", "") );
 }
 
 
 void MainWindowGUI::openSecondMostRecent()
 {
 	PreferencesTool *pref = PreferencesTool::get();
-	DomainFacade::getFacade()->openProject( pref->getPreference("secondMostRecent", "") );
-	fileMenu->setItemEnabled(SAVE_AS, true);
-	fileMenu->setItemEnabled(SAVE, true);
-	setMostRecentProject();
+	openProject( pref->getPreference("secondMostRecent", "") );
 }
 
 
 void MainWindowGUI::openThirdMostRecent()
 {
 	PreferencesTool *pref = PreferencesTool::get();
-	DomainFacade::getFacade()->openProject( pref->getPreference("thirdMostRecent", "") );
-	fileMenu->setItemEnabled(SAVE_AS, true);
-	fileMenu->setItemEnabled(SAVE, true);
-	setMostRecentProject();
+	openProject( pref->getPreference("thirdMostRecent", "") );
 }
 
 
@@ -1100,12 +1098,15 @@ void MainWindowGUI::setMostRecentProject()
 	const char *first = DomainFacade::getFacade()->getProjectFile();
 	if (first != NULL) {
 		PreferencesTool *prefs = PreferencesTool::get();
-		const char *third = prefs->getPreference("secondMostRecent", "");
-		const char *second = prefs->getPreference("mostRecent", "");
-		prefs->setPreference("mostRecent", first, false);
-		prefs->setPreference("secondMostRecent", second, false);
-		prefs->setPreference("thirdMostRecent", third, false);
-		updateMostRecentMenu();
+		const char *prefsFirst = prefs->getPreference("mostRecent", "");
+		if (strcmp(first, prefsFirst) != 0) {
+			const char *second = prefs->getPreference("mostRecent", "");
+			const char *third = prefs->getPreference("secondMostRecent", "");
+			prefs->setPreference("mostRecent", first, false);
+			prefs->setPreference("secondMostRecent", second, false);
+			prefs->setPreference("thirdMostRecent", third, false);
+			updateMostRecentMenu();
+		}
 	}
 }
 
@@ -1131,3 +1132,5 @@ void MainWindowGUI::updateMostRecentMenu( )
 		thirdMostRecentAct->addTo(mostRecentMenu);
 	}
 }
+
+
