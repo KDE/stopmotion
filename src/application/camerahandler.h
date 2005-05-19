@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,6 +24,7 @@
 
 #include "src/presentation/frontends/qtfrontend/videoview.h"
 #include "src/presentation/frontends/qtfrontend/frameview.h"
+#include "modelhandler.h"
 // #include "camerainitthread.h"
 
 #include <qobject.h>
@@ -41,8 +42,15 @@ class CameraHandler : public QObject
 {
 	Q_OBJECT
 public:
+	/**
+	 * Constructor for setting up the camerahandler.
+	 * @param parent the parent widget
+	 * @param sb the statusbar for updates
+	 * @param modelHandler for adding frames when capturing.
+	 * @param name the name of the object
+	 */
 	CameraHandler ( QObject *parent = 0, QStatusBar *sb = 0, 
-			const char *name = 0 );
+			ModelHandler* modelHandler = 0, const char *name = 0);
 	
 	~CameraHandler();
 
@@ -52,12 +60,12 @@ public:
 	void setVideoView(VideoView *videoView);
 	
 	/**
-	 * Sets the viewing mode/type of effect used when displaying the video.
+	 * Sets the viewing mode which is the type of effect used when running the camera.
 	 * @param mode the type of effect to be showed on the video. The modes are:
 	 *             0: Image mixing/onion skinning
 	 *             1: Image differentiating
 	 *             2: Playback
-	 * @return true if the mode was succesfully changed
+	 * @return true if the change was succesfull
 	 */
 	bool setViewMode(int mode);
 	
@@ -84,6 +92,7 @@ private:
 	QTimer *timer;
 	char temp[256];
 	bool isCameraOn;
+	ModelHandler *modelHandler;
 	
 	QWidgetStack *frameViewStack;
 	VideoView *videoView;

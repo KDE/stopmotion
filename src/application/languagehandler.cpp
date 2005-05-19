@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -28,7 +28,7 @@ LanguageHandler::LanguageHandler ( QObject *parent, QStatusBar *sb, QApplication
 		const char *name ) 
 		: QObject(parent, name), statusBar(sb), stApp(stApp)
 {
-	qmPath = stApp->applicationDirPath() + "/translations";
+	qmPath = "/usr/share/stopmotion/translations";
 	stTranslator = new QTranslator(this);
 	stApp->installTranslator(stTranslator);
 }
@@ -36,6 +36,9 @@ LanguageHandler::LanguageHandler ( QObject *parent, QStatusBar *sb, QApplication
 
 QPopupMenu* LanguageHandler::createLanguagesMenu(QPopupMenu *parent)
 {
+	//For the .po files. findtr isn't as intelligent as luptate
+	tr("English");
+	
 	languagesMenu = new QPopupMenu(parent);
 	
 	QDir dir(qmPath);
@@ -56,10 +59,10 @@ QPopupMenu* LanguageHandler::createLanguagesMenu(QPopupMenu *parent)
 		
 		QTranslatorMessage message =
 				translator.findMessage("LanguageHandler", "English", 
-								"This should be translated to the name of the "
-								"language you are translating to, in that language. "
-								"Example: English = Deutsch (Deutsch is \"German\" "
-								"in German)");
+						"This should be translated to the name of the "
+						"language you are translating to, in that language. "
+						"Example: English = Deutsch (Deutsch is \"German\" "
+						"in German)");
 		QString language = message.translation();
 		
 		//Checks that the mimimum requirement for accepting a string is covered.

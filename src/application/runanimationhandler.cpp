@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "runanimationhandler.h"
 
+#include "src/foundation/preferencestool.h"
 #include "src/domain/domainfacade.h"
 
 
@@ -30,8 +31,10 @@ RunAnimationHandler::RunAnimationHandler ( QObject *parent, QStatusBar *sb,
 	pauseButton        = NULL;
 	removeFramesButton = NULL;
 	loopButton         = NULL;
+	timer              = NULL;
 	
-	fps = 10;
+	fps = PreferencesTool::get()->getPreference("fps", 10);
+	
 	frameNr = 0;
 	isLooping = false;
 	
@@ -76,11 +79,13 @@ void RunAnimationHandler::runAnimation()
 		if(f->getSceneSize(f->getActiveSceneNumber()) > 0) {
 			f->initAudioDevice();
 			QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(runAnimation()) );
-			QObject::connect( playButton, SIGNAL(clicked()), this, SLOT(stopAnimation()) );
+			QObject::connect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
 			
 			playButton->setToggleButton(true);
 			playButton->toggle();
 			removeFramesButton->setEnabled(false);
+			
+			frameNr = f->getActiveFrameNumber();
 			
 			statusBar->message( tr("Running animation"), 2000 );
 			//this->frameNr = 0;
@@ -94,7 +99,37 @@ void RunAnimationHandler::runAnimation()
 void RunAnimationHandler::stopAnimation()
 {
 	if(timer->isActive()) {
-		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(stopAnimation()) );
+ 		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
+ 		QObject::connect(playButton, SIGNAL(clicked()), this, SLOT(runAnimation()));
+		
+		if(playButton->isOn()) {
+			playButton->toggle();
+		}
+		
+		playButton->setToggleButton(false);
+		removeFramesButton->setEnabled(true);
+		
+		DomainFacade *f = DomainFacade::getFacade();
+		f->setActiveFrame( frameNr );
+		f->shutdownAudioDevice();
+		
+		statusBar->clear();
+		timer->stop();
+		f->setActiveFrame(0);
+	}
+}
+
+
+void RunAnimationHandler::setPauseButton(QPushButton * pauseButton)
+{
+	this->pauseButton = pauseButton;
+}
+
+
+void RunAnimationHandler::pauseAnimation()
+{
+	if(timer->isActive()) {
+		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
 		QObject::connect(playButton, SIGNAL(clicked()), this, SLOT(runAnimation()));
 		
 		if(playButton->isOn()) {
@@ -110,25 +145,8 @@ void RunAnimationHandler::stopAnimation()
 		
 		statusBar->clear();
 		timer->stop();
-		frameNr = 0;
 	}
-}
-
-
-void RunAnimationHandler::setPauseButton(QPushButton * pauseButton)
-{
-	this->pauseButton = pauseButton;
-}
-
-
-void RunAnimationHandler::pauseAnimation()
-{
-	/*if(timer->isActive()) {
-		DomainFacade::getFacade()->setActiveFrame( frameNr );
 	
-		statusBar->clear();
-		timer->stop();
-	}*/
 }
 
 
@@ -147,8 +165,26 @@ void RunAnimationHandler::selectNextFrame()
 	if(afn > -1 && afn < (int)DomainFacade::getFacade()->
 			getSceneSize(DomainFacade::getFacade()->
 			getActiveSceneNumber()) - 1) {
-	
 		DomainFacade::getFacade()->setActiveFrame(afn+1);
+	}
+}
+
+
+void RunAnimationHandler::selectPreviousScene()
+{
+	int asn = DomainFacade::getFacade()->getActiveSceneNumber();
+	if(asn > 0) {
+		DomainFacade::getFacade()->setActiveScene(asn-1);
+	}
+}
+
+
+void RunAnimationHandler::selectNextScene()
+{
+	int asn = DomainFacade::getFacade()->getActiveSceneNumber();
+	if(asn > -1 && asn < (int)DomainFacade::getFacade()->
+			getNumberOfScenes() -1) {
+		DomainFacade::getFacade()->setActiveScene(asn+1);
 	}
 }
 
@@ -159,6 +195,9 @@ void RunAnimationHandler::setSpeed(int fps)
 	if( timer->isActive() ) {
 		timer->changeInterval(1000/this->fps);
 	}
+	
+	//Adding the fps to the preferencestool.
+	PreferencesTool::get()->setPreference("fps", fps);
 }
 
 

@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,6 +31,7 @@
 
 #include <qtimer.h>
 #include <vector>
+#include <queue>
 #include <qwidget.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
@@ -43,6 +44,11 @@ struct SDL_Surface;
  * Widget for viewing the frames in the animation using SDL. This widget also 
  * serves as videoview widget for displaying video from an external source
  * by grabbing through the harddrive.
+ *
+ * Note: I'm considering redesigning the entire framework around this class, both
+ * to make it more intuiative and to work with dynamic plugins for filters such
+ * as onionskinning, diffing, you name it! (plugins are cool) =) However this is
+ * not very important and is left for a weekend where i'm bored :p
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
@@ -158,19 +164,31 @@ public:
 	
 	/**
 	 * Sets the viewing mode/type of effect used when displaying the video.
-	 * @param mode the type of effect to be showed on the video. The modes are:
-	 *             0: Image mixing/onion skinning
-	 *             1: Image differentiating
-	 *             2: Playback
+	 * @param mode the type of effect to be showed on the video. The modes are:\n
+	 *             0: Image mixing/onion skinning\n
+	 *             1: Image differentiating\n
+	 *             2: Playback\n
 	 * @return true if the mode was succesfully changed
 	 */
 	bool setViewMode(int mode);
+	
+	/**
+	 * Returns the view mode.
+	 * @return the view mode.
+	 */
+	int getViewMode();
 	
 	/**
 	 * Sets the speed for the playback.
 	 * @param playbackSpeed the speed to be setted
 	 */
 	void setPlaybackSpeed(int playbackSpeed);
+	
+	/**
+	 * When a new frame is captured this function is notified and updates
+	 * the vector of cached frames for the mixing
+	 */
+	void capture();
 	
 public slots:
 	/**
@@ -191,7 +209,7 @@ private:
 	SDL_Surface *screen;
 	SDL_Surface *videoSurface;
 	
-	/** The facade cached away for efficiency reasons */
+	/** The facade cached away in this class for efficiency reasons */
 	DomainFacade *facade;
 	
 	int widthConst, heightConst;
@@ -200,10 +218,19 @@ private:
 	int playbackSpeed;
 	char *capturedImg;
 	
+	int activeFrame;
+	int lastMixCount;
+	int lastViewMode;
+	
+	vector<SDL_Surface*>imageBuffer;
+	
+	
 	ImageGrabThread *grabThread;
 	QTimer grabTimer;
 	QTimer playbackTimer;
 	ImageGrabber *grabber;
+	
+	
 	 
 	
 	/**

@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -62,13 +62,16 @@
 #include <qtabdialog.h>
 #include <qtextedit.h>
 #include <qaccel.h>
+#include <qtextbrowser.h>
+#include "helpwindow.h"
 
 #include <iostream>
+
 using namespace std;
 
 
-MainWindowGUI::MainWindowGUI(QApplication *stApp) 
-		: QMainWindow( 0, "stopmotion", WDestructiveClose )
+MainWindowGUI::MainWindowGUI(QApplication *stApp)
+		: stApp(stApp)
 {
 	centerWidget        = NULL;
 	workArea            = NULL;
@@ -91,10 +94,10 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	copyAct             = NULL;
 	pasteAct            = NULL;
 	gotoFrameAct        = NULL;
-// 	disableAct          = NULL;
-	configureAct             = NULL;
+	configureAct        = NULL;
  	whatsthisAct        = NULL;
 	aboutAct            = NULL;
+	helpAct             = NULL;
 	
 	fileMenu            = NULL;
 	exportMenu          = NULL;
@@ -103,6 +106,9 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	toolsMenu           = NULL;
 	preferencesMenu     = NULL;
 	gotoMenu            = NULL;
+	gotoMenuGrid        = NULL;
+	space               = NULL;
+	gotoMenuCloseButton = NULL;
 	helpMenu            = NULL;
 	lastVisitedDir      = NULL;
 	numberDisplay       = NULL;
@@ -114,6 +120,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	languageHandler     = NULL;
 	soundHandler        = NULL;
 	changeMonitor       = NULL; 
+	lastVisitedDir      = NULL;
 	
 	lastVisitedDir = new char[256];
 	strcpy( lastVisitedDir, getenv("PWD") );
@@ -134,8 +141,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	
 	//Initializes and sets up the workarea consisting of the toolsmenu and the frameview.
 	workArea = new QHBox(bottomSplitter);
-// 	centerWidget->setResizeMode(workArea, QSplitter::KeepSize);
-	
+
 	makeToolsMenu(workArea);
 	makeViews(workArea);
 	makeGotoMenu(centerWidget);
@@ -149,7 +155,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	createMenus();
 	
 	//This slot will activate/deactivate menu options based on the changes in the model.
-	QObject::connect( frameBar, SIGNAL( modelSizeChanged(int) ),
+	connect( frameBar, SIGNAL( modelSizeChanged(int) ),
 			this, SLOT( modelSizeChanged(int) ) );
 	
 	//Mainwindow preferences.
@@ -165,31 +171,31 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 
 MainWindowGUI::~MainWindowGUI()
 {
-	delete [] lastVisitedDir;
 }
 
 
 void MainWindowGUI::createHandlers(QApplication *stApp)
 {
 	languageHandler = new LanguageHandler( this, this->statusBar(), stApp );
-	QObject::connect( languageHandler, SIGNAL(languageChanged()), 
+	connect( languageHandler, SIGNAL(languageChanged()), 
 			this, SLOT(retranslateStrings()) );
-	
-	cameraHandler = new CameraHandler( this, this->statusBar() );
-	
+		
 	runAnimationHandler = new RunAnimationHandler( this, this->statusBar() );
 	
 	modelHandler = new ModelHandler( this, this->statusBar(), frameBar, changeMonitor, lastVisitedDir );
-	QObject::connect( modelHandler, SIGNAL(modelChanged()), 
+	connect( modelHandler, SIGNAL(modelChanged()), 
 			this, SLOT(activateMenuOptions()) );
 	
+	cameraHandler = new CameraHandler( this, this->statusBar(), modelHandler );
+
+	
 	editMenuHandler = new EditMenuHandler( this, this->statusBar(), frameBar );
-	QObject::connect( editMenuHandler, SIGNAL(addFrames(const QStringList &)),
+	connect( editMenuHandler, SIGNAL(addFrames(const QStringList &)),
 			modelHandler, SLOT(addFrames(const QStringList &)) );
 			
 	soundHandler = new SoundHandler( this, this->statusBar(), 
 			this->lastVisitedDir );
-	QObject::connect( soundHandler, SIGNAL( soundsChanged() ),
+	connect( soundHandler, SIGNAL( soundsChanged() ),
 			frameBar, SLOT( frameSoundsChanged() ) );
 }
 
@@ -215,6 +221,14 @@ void MainWindowGUI::createAccelerators()
 	previousFrameAccel->connectItem( previousFrameAccel->insertItem(Key_Left), 
 			runAnimationHandler, SLOT(selectPreviousFrame()) );
 	
+	QAccel *nextSceneAccel = new QAccel( this );
+	nextSceneAccel->connectItem( nextSceneAccel->insertItem(Key_O),
+			runAnimationHandler, SLOT(selectNextScene()) );
+	
+	QAccel *previousSceneAccel = new QAccel( this );
+	previousSceneAccel->connectItem( previousSceneAccel->insertItem(Key_I),
+			runAnimationHandler, SLOT(selectPreviousScene()) );
+	
 	QAccel *toggleCameraAccel = new QAccel( this );
 	toggleCameraAccel->connectItem( toggleCameraAccel->insertItem(Key_C), 
 			cameraHandler, SLOT(toggleCamera()) );
@@ -223,7 +237,7 @@ void MainWindowGUI::createAccelerators()
 	captureAccel->connectItem( captureAccel->insertItem(Key_Space), 
 			cameraHandler, SLOT(captureFrame()) );
 	
-		QAccel *addFrameAccel = new QAccel( this );
+	QAccel *addFrameAccel = new QAccel( this );
 	addFrameAccel->connectItem( addFrameAccel->insertItem(CTRL+Key_F),
 			modelHandler, SLOT(chooseFrame()) );
 	
@@ -247,12 +261,12 @@ void MainWindowGUI::createActions()
 	newAct = new QAction(this);
 	newAct->setIconSet(QIconSet(filenewicon));
 	newAct->setAccel(CTRL+Key_N);
-	QObject::connect(newAct, SIGNAL(activated()), this, SLOT(newProject()));
+	connect(newAct, SIGNAL(activated()), this, SLOT(newProject()));
 	
 	openAct = new QAction(this);
 	openAct->setIconSet(QIconSet(fileopenicon));
 	openAct->setAccel(CTRL+Key_O);
-	QObject::connect(openAct, SIGNAL(activated()), this, SLOT(openProject()));
+	connect(openAct, SIGNAL(activated()), this, SLOT(openProject()));
 	
 	mostRecentAct = new QAction(this);
 	mostRecentAct->setIconSet(QIconSet(windowicon));
@@ -272,80 +286,84 @@ void MainWindowGUI::createActions()
 	saveAct = new QAction(this);
 	saveAct->setIconSet(QIconSet(filesaveasicon));
 	saveAct->setAccel(CTRL+Key_S);
-	QObject::connect(saveAct, SIGNAL(activated()), this, SLOT(saveProject()));
+	connect(saveAct, SIGNAL(activated()), this, SLOT(saveProject()));
 	
 	saveAsAct = new QAction(this);
 	saveAsAct->setIconSet(QIconSet(filesaveicon));
 	saveAsAct->setAccel(CTRL+SHIFT+Key_S);
-	QObject::connect(saveAsAct, SIGNAL(activated()), this, SLOT(saveProjectAs()));
+	connect(saveAsAct, SIGNAL(activated()), this, SLOT(saveProjectAs()));
 	
 	videoAct = new QAction(this);
 	videoAct->setAccel(CTRL+ALT+Key_V);
 	videoAct->setIconSet(QIconSet(videoexport));
-	QObject::connect(videoAct, SIGNAL(activated()), this, SLOT(exportToVideo()));
+	connect(videoAct, SIGNAL(activated()), this, SLOT(exportToVideo()));
 	
 	cinerellaAct = new QAction(this);
 	cinerellaAct->setAccel(CTRL+ALT+Key_C);
 	cinerellaAct->setEnabled(false);
-	QObject::connect(cinerellaAct, SIGNAL(activated()), this, SLOT(exportToCinerella()));
+	connect(cinerellaAct, SIGNAL(activated()), this, SLOT(exportToCinerella()));
 	
 	quitAct = new QAction(this);
 	quitAct->setIconSet(QIconSet(quiticon));
 	quitAct->setAccel(CTRL+Key_Q);
-	QObject::connect(quitAct, SIGNAL(activated()), qApp, SLOT(quit()));
+	connect(quitAct, SIGNAL(activated()), qApp, SLOT(quit()));
 	
 	
 	//Edit menu
 	undoAct = new QAction(this);
 	undoAct->setIconSet(QIconSet(undoicon));
 	undoAct->setAccel(CTRL+Key_Z);
-	QObject::connect(undoAct, SIGNAL(activated()), editMenuHandler, SLOT(undo()));
+	connect(undoAct, SIGNAL(activated()), editMenuHandler, SLOT(undo()));
 	
 	redoAct = new QAction(this);
 	redoAct->setIconSet(QIconSet(redoicon));
 	redoAct->setAccel(CTRL+SHIFT+Key_Z);
-	QObject::connect(redoAct, SIGNAL(activated()), editMenuHandler, SLOT(redo()));
+	connect(redoAct, SIGNAL(activated()), editMenuHandler, SLOT(redo()));
 	
 	cutAct = new QAction(this);
 	cutAct->setIconSet(QIconSet(cuticon));
 	cutAct->setAccel(CTRL+Key_X);
-	QObject::connect(cutAct, SIGNAL(activated()), editMenuHandler, SLOT(cut()));
+	connect(cutAct, SIGNAL(activated()), editMenuHandler, SLOT(cut()));
 	
 	copyAct = new QAction(this);
 	copyAct->setIconSet(QIconSet(copyicon));
 	copyAct->setAccel(CTRL+Key_C);
-	QObject::connect(copyAct, SIGNAL(activated()), editMenuHandler, SLOT(copy()));
+	connect(copyAct, SIGNAL(activated()), editMenuHandler, SLOT(copy()));
 	
 	pasteAct = new QAction(this);
 	pasteAct->setIconSet(QIconSet(pasteicon));
 	pasteAct->setAccel(CTRL+Key_V);
-	QObject::connect(pasteAct, SIGNAL(activated()), editMenuHandler, SLOT(paste()));
+	connect(pasteAct, SIGNAL(activated()), editMenuHandler, SLOT(paste()));
 	
 	gotoFrameAct = new QAction(this);
 	gotoFrameAct->setAccel(CTRL+Key_G);
-	QObject::connect(gotoFrameAct, SIGNAL(activated()), gotoMenu, SLOT(open()));
+	connect(gotoFrameAct, SIGNAL(activated()), gotoMenu, SLOT(open()));
 	
 	
 	//Settings menu	
 // 	disableAct = new QAction(this);
 	//disableAct->setAccel(CTRL+Key_G);
-	//QObject::connect(disableAct, SIGNAL(activated()), gotoMenu, SLOT(open()));
+	//connect(disableAct, SIGNAL(activated()), gotoMenu, SLOT(open()));
 // 	disableAct->setEnabled(false);
 	
 	configureAct = new QAction(this);
 	configureAct->setIconSet(QIconSet(configureicon));
 	configureAct->setAccel(CTRL+Key_P);
-	QObject::connect(configureAct, SIGNAL(activated()), this, SLOT(showPreferencesMenu()));
+	connect(configureAct, SIGNAL(activated()), this, SLOT(showPreferencesMenu()));
 	
 
 	//Help menu
 	whatsthisAct = new QAction(this);
 	whatsthisAct->setIconSet(QIconSet(whatsthisicon));
 	whatsthisAct->setAccel(SHIFT+Key_F1);
-	QObject::connect(whatsthisAct, SIGNAL(activated()), this, SLOT(whatsThis()));
+	connect(whatsthisAct, SIGNAL(activated()), this, SLOT(whatsThis()));
+	
+	helpAct = new QAction(this);
+	helpAct->setAccel(Key_F1);
+	connect(helpAct, SIGNAL(activated()), this, SLOT(showHelpDialog()));
 	
 	aboutAct = new QAction(this);
-	QObject::connect(aboutAct, SIGNAL(activated()), this, SLOT(showAboutDialog()));
+	connect(aboutAct, SIGNAL(activated()), this, SLOT(showAboutDialog()));
 }
 
 
@@ -375,8 +393,9 @@ void MainWindowGUI::createMenus()
 	
 	helpMenu = new QPopupMenu(this);
 	whatsthisAct->addTo(helpMenu);
+	helpAct->addTo(helpMenu);
+	helpMenu->insertSeparator();
 	aboutAct->addTo(helpMenu);
-
 }
 
 
@@ -391,9 +410,9 @@ void MainWindowGUI::makeToolsMenu(QWidget * parent)
 	toolsMenu = new ToolsMenu(runAnimationHandler, modelHandler, 
 			cameraHandler, parent);
 	
-	QObject::connect( frameBar, SIGNAL( modelSizeChanged(int) ),
+	connect( frameBar, SIGNAL( modelSizeChanged(int) ),
 			toolsMenu, SLOT( modelSizeChanged(int) ) );
-	QObject::connect( cameraHandler, SIGNAL(cameraStateChanged(bool)),
+	connect( cameraHandler, SIGNAL(cameraStateChanged(bool)),
 			toolsMenu, SLOT(cameraOn(bool)) );
 }
 
@@ -410,7 +429,7 @@ void MainWindowGUI::makeGotoMenu( QWidget * parent )
 {
 	gotoMenu = new MenuFrame( parent );
 	editMenuHandler->setGotoMenu(gotoMenu);
-	QGridLayout *grid = new QGridLayout( gotoMenu, 0, 2, 2 );
+	gotoMenuGrid = new QGridLayout( gotoMenu, 0, 2, 2 );
 	
 	gotoFrameLabel = new QLabel(gotoMenu);
 	gotoFrameLabel->setMaximumWidth(gotoFrameLabel->width());
@@ -419,30 +438,30 @@ void MainWindowGUI::makeGotoMenu( QWidget * parent )
 	gotoSpinner->setMaximumWidth(60);
 	gotoSpinner->setMinValue(1);
 	gotoSpinner->setEnabled(false);
-	QObject::connect( frameBar, SIGNAL( newActiveFrame(int) ), 
+	connect( frameBar, SIGNAL( newActiveFrame(int) ), 
 			gotoSpinner, SLOT( setValue(int) ) );
-	QObject::connect( frameBar, SIGNAL( modelSizeChanged(int) ),
+	connect( frameBar, SIGNAL( modelSizeChanged(int) ),
 			gotoSpinner, SLOT( setMaximumValue(int) ) );
 	gotoMenu->hide();
-	QObject::connect( gotoSpinner, SIGNAL( spinBoxTriggered(int) ), 
+	connect( gotoSpinner, SIGNAL( spinBoxTriggered(int) ), 
 	        editMenuHandler, SLOT( gotoFrame(int) ) );
-	QObject::connect( gotoSpinner, SIGNAL( spinBoxCanceled() ),
+	connect( gotoSpinner, SIGNAL( spinBoxCanceled() ),
 			editMenuHandler, SLOT( closeGotoMenu() ) );
 	gotoMenu->setFocusWidget(gotoSpinner);
 	
-	QSpacerItem *space = new QSpacerItem(0, 0);
+	space = new QSpacerItem(0, 0);
 	
-	QPushButton *closeButton = new QPushButton(gotoMenu);
-	closeButton->setPixmap(closeicon);
-	closeButton->setFlat(true);
-	closeButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
-	QObject::connect( closeButton, SIGNAL(clicked()), 
+	gotoMenuCloseButton = new QPushButton(gotoMenu);
+	gotoMenuCloseButton->setPixmap(closeicon);
+	gotoMenuCloseButton->setFlat(true);
+	gotoMenuCloseButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
+	QObject::connect( gotoMenuCloseButton, SIGNAL(clicked()), 
 			gotoMenu, SLOT(close()) );
 	
-	grid->addWidget( gotoFrameLabel, 0, 0 );
-	grid->addWidget( gotoSpinner, 0, 1 );
-	grid->addItem( space, 0, 2 );
-	grid->addWidget( closeButton, 0, 3 );
+	gotoMenuGrid->addWidget( gotoFrameLabel, 0, 0 );
+	gotoMenuGrid->addWidget( gotoSpinner, 0, 1 );
+	gotoMenuGrid->addItem( space, 0, 2 );
+	gotoMenuGrid->addWidget( gotoMenuCloseButton, 0, 3 );
 }
 
 
@@ -450,14 +469,14 @@ void MainWindowGUI::makeStatusBar()
 {
 	numberDisplay = new QLabel(this);
 	this->statusBar()->addWidget(numberDisplay, 0, true);
-	QObject::connect( frameBar, SIGNAL(newActiveFrame(const QString &)), 
+	connect( frameBar, SIGNAL(newActiveFrame(const QString &)), 
 			numberDisplay, SLOT(setText(const QString &)) );
 }
 
 
 void MainWindowGUI::makeViews(QWidget *parent)
 {
-	QObject::connect(cameraHandler, SIGNAL(capturedFrame()), 
+	connect(cameraHandler, SIGNAL(capturedFrame()), 
 			this, SLOT(activateMenuOptions()));
 	
 	frameViewStack = new QWidgetStack(parent);
@@ -476,7 +495,7 @@ void MainWindowGUI::makeViews(QWidget *parent)
 	
 	VideoView *videoView = frameView;
 	
-	QObject::connect( videoView, SIGNAL(cameraReady()),
+	connect( videoView, SIGNAL(cameraReady()),
 	 		cameraHandler, SLOT(switchToVideoView()) );
 	
 	cameraHandler->setVideoView(videoView);
@@ -507,6 +526,7 @@ void MainWindowGUI::retranslateStrings()
 	configureAct->setMenuText(		tr("&Configure Stopmotion"));
 	
 	whatsthisAct->setMenuText(	tr("What's &This"));
+	helpAct->setMenuText(		tr("&Help"));
 	aboutAct->setMenuText(		tr("&About"));
 	
 	//Other widgets
@@ -705,6 +725,14 @@ void MainWindowGUI::retranslateHelpText()
 	whatsthisAct->setToolTip(infoText);
 	
 	infoText =
+			tr("<h4>Help</h4> "
+			"<p>This button will bring up a dialog with the Stopmotion manual</p>");
+	helpAct->setWhatsThis(infoText);
+	infoText = 
+			aboutAct->toolTip().prepend(tr("Help"));
+	helpAct->setToolTip(infoText);
+	
+	infoText =
 			tr("<h4>About</h4> "
 			"<p>This will display a small information box where you can read "
 			"general information as well as the names of the developers "
@@ -898,6 +926,7 @@ void MainWindowGUI::exportToVideo()
 			enc->setOutputFile(output);
 		}
 		if ( enc->isValid() && isCanceled == false ) {
+			saveProject();
 			DomainFacade::getFacade()->exportToVideo(enc);
 		}
 		else if (isCanceled == false){
@@ -1014,7 +1043,7 @@ void MainWindowGUI::showAboutDialog()
 			new QLabel(tr(
 						"<p><b>Main developers</b><br>"
 						"Fredrik Berg Kjølstad &lt;fredrikbk@hotmail.com&gt;<br>"
-						"Bjørn Erik Nilsen &lt;bjoern_erik_nilsen@hotmail.com&gt;</p>"), 
+						"Bjørn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;</p>"), 
 						aboutDialog);
 	aboutDialog->addTab(authorsText, tr("A&uthors"));
 	
@@ -1051,10 +1080,44 @@ void MainWindowGUI::showAboutDialog()
 }
 
 
+/**
+ *A lot of this code is modified from a Qt example at:
+ *http://doc.trolltech.com/3.3/helpviewer-example.html#x1105
+ */
+void MainWindowGUI::showHelpDialog()
+{
+	HelpWindow *help = new HelpWindow("/usr/share/doc/stopmotion/html/index.html", ".", 
+			0, "help viewer");
+	help->setCaption(tr("Stopmotion User Manual"));
+	
+	if ( QApplication::desktop()->width() > 400
+			&& QApplication::desktop()->height() > 500 ) {
+		help->move(40, 40);
+		help->show();
+	}
+	else {
+		help->showMaximized();
+	}
+	/*QDialog *helpDialog = new QDialog(this, "helpdialog", false, WDestructiveClose);
+	
+	QTextBrowser *helpText = new QTextBrowser(helpDialog);
+	helpText->setMinimumWidth(600);
+	helpText->setMinimumHeight(400);
+	
+	//helpText->setSource("/usr/share/doc/stopmotion/html/index");
+	helpText->mimeSourceFactory()->setFilePath("/usr/share/doc/stopmotion/html/index");
+	
+	helpDialog->show();
+	//QTextBrowser *helpDialog = new QTabDialog(
+	//		WDestructiveClose);*/
+}
+
+
+
 void MainWindowGUI::showPreferencesMenu()
 {
-	PreferencesMenu *preferencesMenu = new PreferencesMenu(this);
-	preferencesMenu->show();
+	PreferencesMenu *pfm = new PreferencesMenu(this);
+	pfm->show();
 }
 
 
@@ -1072,6 +1135,12 @@ void MainWindowGUI::modelSizeChanged( int modelSize )
 		copyAct->setEnabled(false);
 		gotoFrameAct->setEnabled(false);
 	}
+	else {
+		cutAct->setEnabled(true);
+		copyAct->setEnabled(true);
+		gotoFrameAct->setEnabled(true);
+		saveAsAct->setEnabled(true);
+	}
 }
 
 
@@ -1079,18 +1148,11 @@ void MainWindowGUI::activateMenuOptions()
 {
 	undoAct->setEnabled(true);
 	redoAct->setEnabled(true);
-	gotoFrameAct->setEnabled(true);
-	saveAsAct->setEnabled(true);
-	copyAct->setEnabled(true);
+	//gotoFrameAct->setEnabled(true);
+	//saveAsAct->setEnabled(true);
+	//copyAct->setEnabled(true);
 	//cutAct->setEnabled(true);
 }
-
-
-void MainWindowGUI::closeEvent(QCloseEvent *)
-{
-	qApp->quit();
-}
-
 
 
 void MainWindowGUI::setMostRecentProject()
@@ -1111,7 +1173,7 @@ void MainWindowGUI::setMostRecentProject()
 }
 
 
-void MainWindowGUI::updateMostRecentMenu( )
+void MainWindowGUI::updateMostRecentMenu()
 {
 	mostRecentMenu->clear();
 	PreferencesTool *pref = PreferencesTool::get();
@@ -1132,5 +1194,62 @@ void MainWindowGUI::updateMostRecentMenu( )
 		thirdMostRecentAct->addTo(mostRecentMenu);
 	}
 }
+
+
+// This is only implemented to avoid segfaults at exit. Deleting of 
+// toolsMenu causes a segfault. I've tried to removed it from it's
+// parents list of childrens, but it doesn't seems to work. 
+void MainWindowGUI::closeEvent(QCloseEvent *)
+{
+	
+	delete [] lastVisitedDir; lastVisitedDir = NULL;
+	delete frameBar; frameBar = NULL;
+	delete frameView; frameView = NULL;
+	delete frameViewStack; frameViewStack = NULL;
+	delete preferencesMenu; preferencesMenu = NULL;
+	delete modelHandler; modelHandler = NULL;
+	delete soundHandler; soundHandler = NULL;
+	delete cameraHandler; cameraHandler = NULL;
+	delete editMenuHandler; editMenuHandler = NULL;
+	delete languageHandler; languageHandler = NULL;
+	delete runAnimationHandler; runAnimationHandler = NULL;
+	delete changeMonitor; changeMonitor = NULL;
+	delete gotoMenu; gotoMenu = NULL;
+	
+	delete newAct; newAct = NULL;
+	delete openAct; openAct = NULL;
+	delete mostRecentAct; mostRecentAct = NULL;
+	delete secondMostRecentAct; secondMostRecentAct = NULL;
+	delete thirdMostRecentAct; thirdMostRecentAct = NULL;
+	delete saveAct; saveAct = NULL;
+	delete saveAsAct; saveAsAct = NULL;
+	delete videoAct; videoAct = NULL;
+	delete cinerellaAct; cinerellaAct = NULL;
+	delete quitAct; quitAct = NULL;
+	delete undoAct; undoAct = NULL;
+	delete redoAct; redoAct = NULL;
+	delete cutAct; cutAct = NULL;
+	delete copyAct; copyAct = NULL;
+	delete pasteAct; pasteAct = NULL;
+	delete gotoFrameAct; gotoFrameAct = NULL;
+	delete configureAct; configureAct = NULL;
+ 	delete whatsthisAct; whatsthisAct = NULL;
+	delete aboutAct; aboutAct = NULL;
+	delete helpAct; helpAct = NULL;
+	
+	delete mostRecentMenu; mostRecentMenu = NULL;
+	delete editMenu; editMenu = NULL;
+	delete settingsMenu; settingsMenu = NULL;
+	delete helpMenu; helpMenu = NULL;
+	delete numberDisplay; numberDisplay = NULL;
+	
+	// Segfault:
+	//delete fileMenu; fileMenu = NULL;
+	//delete exportMenu; exportMenu = NULL;
+	//delete toolsMenu; toolsMenu = NULL;
+
+	stApp->quit();
+}
+
 
 

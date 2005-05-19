@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,6 +26,7 @@
 #include <qlistbox.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
+#include <qlayout.h>
 
 
 /**
@@ -63,17 +64,20 @@ private:
 	QPushButton *addSoundButton;
 	QPushButton *removeSoundsButton;
 	QPushButton *changeNameButton;
+	QGridLayout *grid;
+	QSpacerItem *spacer;
+	QSpacerItem *space;
 	
 public slots:
 	/**
 	 * Opens the menu.
 	 */
-	virtual void open();
+	void open();
 	
 	/**
 	 * Closes the menu and turns the focus to the newFocusWidget.
 	 */
-	virtual void close();
+	void close();
 };
 
 #endif

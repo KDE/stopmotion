@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,6 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "toolsmenu.h"
+
+#include "src/foundation/preferencestool.h"
 
 #include "graphics/icons/play.xpm"
 #include "graphics/icons/fastforward.xpm"
@@ -40,12 +42,48 @@
 #include <qaccel.h>
 #include <qmessagebox.h>
 
+#include <iostream>
+
 
 ToolsMenu::ToolsMenu( RunAnimationHandler *runAnimationHandler, ModelHandler *modelHandler,
 		CameraHandler *cameraHandler, QWidget *parent ) : QFrame(parent),
 		runAnimationHandler(runAnimationHandler), modelHandler(modelHandler), 
 		cameraHandler(cameraHandler)
 {
+	captureGroup = NULL;
+	runAnimationGroup = NULL;
+	addFrameButton = NULL;
+	removeFramesButton = NULL;
+	newSceneButton = NULL;
+	removeSceneButton = NULL;
+	cameraButton = NULL;
+	captureFrameButton = NULL;
+	playButton = NULL;
+	nextFrameButton = NULL;
+	previousFrameButton = NULL;
+	toEndButton = NULL;
+	toBeginningButton = NULL;
+	stopButton = NULL;
+	pauseButton = NULL;
+	loopButton = NULL;
+	mixSlider = NULL;
+	animationSpeedChooser = NULL;
+	viewChooseCombo = NULL;
+	animationSpeedChooserCaption = NULL;
+	mixSliderCaption = NULL;
+	horizontalSpace = NULL;
+	verticalSpace = NULL;
+	horizontalDummySpace = NULL;
+	groupSpace = NULL;
+	grid = NULL;
+	captureGrid = NULL;
+	runAnimationGrid = NULL;
+	loopAccel = NULL;
+	playAccel = NULL;
+	mixAccel = NULL;
+	diffAccel = NULL;
+	playbackAccel = NULL;
+	
 	addWidgets();
 	createAccelerators();
 }
@@ -53,28 +91,40 @@ ToolsMenu::ToolsMenu( RunAnimationHandler *runAnimationHandler, ModelHandler *mo
 
 void ToolsMenu::createAccelerators()
 {
-	QAccel *loopAccel = new QAccel( this );
+	loopAccel = new QAccel( this );
 	loopAccel->connectItem( loopAccel->insertItem(CTRL+Key_L), 
 			loopButton, SLOT(toggle()) );
 	
-	QAccel *playAccel = new QAccel( this );        
+	playAccel = new QAccel( this );        
 	playAccel->connectItem( playAccel->insertItem(Key_K), 
 			runAnimationHandler, SLOT(toggleRunning()) );
 	playAccel->connectItem( playAccel->insertItem(Key_P), 
 			runAnimationHandler, SLOT(toggleRunning()) );
+	
+	mixAccel = new QAccel( this );
+	mixAccel->connectItem( mixAccel->insertItem(Key_1), 
+			this, SLOT(setMixingMode()) );
+	
+	diffAccel = new QAccel( this );
+	diffAccel->connectItem( diffAccel->insertItem(Key_2), 
+			this, SLOT(setDiffingMode()) );
+	
+	playbackAccel = new QAccel( this );
+	playbackAccel->connectItem( playbackAccel->insertItem(Key_3), 
+			this, SLOT(setPlaybackMode()) );
 }
 
 
 void ToolsMenu::addWidgets()
 {
 	// Spacer elements
-	QSpacerItem *horizontalSpace = 
+	horizontalSpace = 
 			new QSpacerItem(5, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
-	QSpacerItem *verticalSpace = 
+	verticalSpace = 
 			new QSpacerItem(0, 5, QSizePolicy::Fixed, QSizePolicy::Fixed);
-	QSpacerItem *horizontalDummySpace = 
+	horizontalDummySpace = 
 			new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
-	QSpacerItem *groupSpace = 
+	groupSpace = 
 			new QSpacerItem(0, 25, QSizePolicy::Minimum, QSizePolicy::Fixed);
 	
 	// Widgets for the toolsmenu:
@@ -141,11 +191,13 @@ void ToolsMenu::addWidgets()
 	
 	animationSpeedChooser = new QSpinBox( 1, 30, 1, runAnimationGroup );
 	animationSpeedChooser->setFocusPolicy( QWidget::NoFocus );
-	animationSpeedChooser->setValue(10);
+	animationSpeedChooser->setValue(PreferencesTool::get()->getPreference("fps", 10));
 	connect( animationSpeedChooser, SIGNAL(valueChanged(int)),
 			runAnimationHandler, SLOT(setSpeed(int)));
 	connect( animationSpeedChooser, SIGNAL( valueChanged(int) ),
 			cameraHandler, SLOT(setPlaybackSpeed(int)) );
+	//This preference is set in the RunAnimationHandler::setSpeed function
+	//animationSpeedChooser->setValue(PreferencesTool::get()->getPreference("fps", 10));
 	
 	playButton = new QPushButton( runAnimationGroup );
 	playButton->setIconSet( QIconSet(QPixmap(playicon)) );
@@ -174,11 +226,15 @@ void ToolsMenu::addWidgets()
 	toEndButton = new QPushButton( runAnimationGroup );
 	toEndButton->setIconSet( QIconSet(QPixmap(steptoendicon)) );
 	toEndButton->setFocusPolicy( QWidget::NoFocus );
+	connect( toEndButton, SIGNAL(clicked()), 
+			runAnimationHandler, SLOT(selectNextScene()) );
 	toEndButton->setEnabled(false);
 	
 	toBeginningButton = new QPushButton( runAnimationGroup );
 	toBeginningButton->setIconSet( QIconSet(QPixmap(steptobeginningicon)) );
 	toBeginningButton->setFocusPolicy( QWidget::NoFocus );
+	connect( toBeginningButton, SIGNAL(clicked()), 
+			runAnimationHandler, SLOT(selectPreviousScene()) );
 	toBeginningButton->setEnabled(false);
 	
 	stopButton = new QPushButton( runAnimationGroup );
@@ -202,9 +258,9 @@ void ToolsMenu::addWidgets()
 	connect( loopButton, SIGNAL(clicked()), runAnimationHandler, SLOT(toggleLooping()) );
 	
 	// Layouts
-	QGridLayout *grid = new QGridLayout( this, 1, 1, 3);
-	QGridLayout *captureGrid = new QGridLayout( captureGroup, 1, 1, 3);
-	QGridLayout *runAnimationGrid = new QGridLayout( runAnimationGroup, 1, 1, 3);
+	grid = new QGridLayout( this, 1, 1, 3);
+	captureGrid = new QGridLayout( captureGroup, 1, 1, 3);
+	runAnimationGrid = new QGridLayout( runAnimationGroup, 1, 1, 3);
 	
 	//Add the widgets to the grid
 	grid->addWidget(addFrameButton, 0, 0);
@@ -257,19 +313,13 @@ void ToolsMenu::activateCaptureGroup(bool activate)
 
 void ToolsMenu::retranslateStrings()
 {
-	//Visible text
-// 	addFrameButton->setText(		tr("&Add Frames") );
-// 	removeFramesButton->setText(	tr("&Remove Selection") );
-// 	newSceneButton->setText(		tr("New &Scene") );
-// 	removeSceneButton->setText(		tr("Re&move Scene") );
-	animationSpeedChooserCaption->
-						setText(	tr("FPS chooser") );
-	mixSliderCaption->setText(		tr("Number of mixes:") );
+	animationSpeedChooserCaption->setText( tr("FPS chooser") );
+	mixSliderCaption->setText( tr("Number of images:") );
 	
 	viewChooseCombo->clear();
-	viewChooseCombo->insertItem(	tr("Mix"), 0 );
-	viewChooseCombo->insertItem(	tr("Diff"), 1 );
-	viewChooseCombo->insertItem(	tr("Playback"), 2 );
+	viewChooseCombo->insertItem( tr("Mix"), 0 );
+	viewChooseCombo->insertItem( tr("Diff"), 1 );
+	viewChooseCombo->insertItem( tr("Playback"), 2 );
 	
 	//Tooltip and whatsthis text
 	QString infoText = 
@@ -316,9 +366,10 @@ void ToolsMenu::retranslateStrings()
 	QToolTip::add( captureFrameButton, infoText );
 	
 	infoText = 
-			tr("<h4>Number of mixes</h4> "
+			tr("<h4>Number of images</h4> "
 			"<p>By changing the value in this slidebar you can specify how many images "
-			"backwards in the animation which should be mixed on top of the camera. </p> "
+			"backwards in the animation which should be mixed on top of the camera or "
+			"if you are in playback mode: how many images to play. </p> "
 			"<p>By mixing the previous image(s) onto the camera you can more easily see "
 			"how the next shot will be in relation to the other, therby making a smoother "
 			"stop motion animation!</p>");
@@ -345,20 +396,79 @@ void ToolsMenu::retranslateStrings()
 	QToolTip::add(stopButton, infoText);
 	
 	infoText =
+			tr("<h4>Previous frame (J, Left)</h4>");
+	QToolTip::add(previousFrameButton, infoText);
+	
+	infoText =
+			tr("<h4>Next frame (L, Right)</h4>");
+	QToolTip::add(nextFrameButton, infoText);
+	
+	infoText =
+			tr("<h4>Previous scene (I)</h4>");
+	QToolTip::add(toBeginningButton, infoText);
+	
+	infoText =
+			tr("<h4>Next scene (O)</h4>");
+	QToolTip::add(toEndButton, infoText);
+	
+	infoText =
 			tr("<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether "
 			"you want the animation to play to the end, or to loop indefinetly.</p>");
 	QToolTip::add(loopButton, infoText);
 }
 
 
+void ToolsMenu::setMixingMode()
+{
+	changeViewingMode(0);
+}
+
+
+void ToolsMenu::setDiffingMode()
+{
+	changeViewingMode(1);
+}
+
+
+void ToolsMenu::setPlaybackMode()
+{
+	changeViewingMode(2);
+}
+
+
 void ToolsMenu::changeViewingMode(int index)
 {
 	if( cameraHandler->setViewMode(index) ) {
-		if(index == 1) {
-			mixSlider->setEnabled(false);
-		}
-		else {
-			mixSlider->setEnabled(true);
+		viewChooseCombo->setCurrentItem(index);
+		switch (index)
+		{
+			case 0:
+			{
+				//mixSlider->setMinValue();
+				//Also triggers the sliders signal causing the 
+				//videoviews mixcount to get updated
+				mixSlider->setValue(PreferencesTool::get()->
+						getPreference("mixcount", 2));
+				mixSlider->setMaxValue(5);
+				mixSlider->setEnabled(true);
+				mixSliderCaption->setEnabled(true);
+				break;
+			}
+			case 2:
+			{
+				mixSlider->setMaxValue(50);
+				mixSlider->setValue(PreferencesTool::get()->
+						getPreference("playbackcount", 5));
+				mixSliderCaption->setEnabled(true);
+				mixSlider->setEnabled(true);
+				break;
+			}
+			default:
+			{
+				mixSlider->setEnabled(false);
+				mixSliderCaption->setEnabled(false);
+				break;
+			}
 		}
 	}
 	else {
@@ -383,7 +493,10 @@ void ToolsMenu::modelSizeChanged(int modelSize)
 			previousFrameButton->setEnabled(false);
 			nextFrameButton->setEnabled(false);
 			playButton->setEnabled(false);
+			pauseButton->setEnabled(false);
 			stopButton->setEnabled(false);
+			toEndButton->setEnabled(false);
+			toBeginningButton->setEnabled(false);
 		}
 	}
 	else if(modelSize >= 2) {
@@ -391,7 +504,10 @@ void ToolsMenu::modelSizeChanged(int modelSize)
 			previousFrameButton->setEnabled(true);
 			nextFrameButton->setEnabled(true);
 			playButton->setEnabled(true);
+			pauseButton->setEnabled(true);
 			stopButton->setEnabled(true);
+			toEndButton->setEnabled(true);
+			toBeginningButton->setEnabled(true);
 		}
 	}
 }
@@ -401,11 +517,15 @@ void ToolsMenu::cameraOn(bool isOn)
 {
 	if(isOn) {
 		playButton->setEnabled(false);
+		pauseButton->setEnabled(false);
 		stopButton->setEnabled(false);
+		runAnimationHandler->stopAnimation();
+ 		changeViewingMode(0);
 		viewChooseCombo->setCurrentItem(0);
 	}
 	else {
 		playButton->setEnabled(true);
+		pauseButton->setEnabled(true);
 		stopButton->setEnabled(true);
 	}
 }

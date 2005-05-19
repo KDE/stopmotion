@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -45,6 +45,13 @@ void UndoHistory::addUndo (Undo *undo)
 			delete undos[currentUndo];
 			undos.erase(undos.begin() + currentUndo);
 		}
+	}
+	
+	if((currentUndo + 1) > MAX_UNDOES) {
+		delete undos.front();
+		undos.erase(undos.begin());
+		--currentUndo;
+		
 	}
 	
 	this->undos.push_back(undo);

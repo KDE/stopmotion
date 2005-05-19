@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -28,7 +28,6 @@
 #include <qframe.h>
 #include <qdragobject.h> 
 
-#include <iostream>
 
 FrameBar::FrameBar(QWidget *parent)
 		: QScrollView(parent)
@@ -158,7 +157,7 @@ void FrameBar::addFrames( const vector< char * > & frames, unsigned int index,
 	}
 	
 	
-	//Adds the new frames to the framebar
+	// Adds the new frames to the framebar
 	ThumbView *thumb;
 	bool operationCanceled = false;
 	for(i=0; i<framesSize; i++) {
@@ -307,7 +306,6 @@ void FrameBar::setActiveFrame(int frameNumber)
 				thumbViews[i]->setSelected(false);
 			}
 		}
-		
 		thumbViews[thumbNumber]->setPixmap( QPixmap( 
 				QImage(DomainFacade::getFacade()->getFrame(frameNumber)->getImagePath()).
 				scale(FRAMEBAR_HEIGHT-3, FRAMEBAR_HEIGHT) ) );
@@ -428,6 +426,8 @@ void FrameBar::newScene(int index)
 	this->addChild(thumb, (index)*FRAMEBAR_HEIGHT);
 	thumb->show();
 	this->resizeContents(thumbViews.size()*FRAMEBAR_HEIGHT, FRAMEBAR_HEIGHT);
+	
+	emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 }
 
 
@@ -579,4 +579,15 @@ void FrameBar::resizeEvent(QResizeEvent * event)
 	}
 	resizeContents(thumbViews.size()*FRAMEBAR_HEIGHT, FRAMEBAR_HEIGHT);
 	QScrollView::resizeEvent(event);
+}
+
+void FrameBar::setOpeningScene(bool openingScene)
+{
+	this->openingScene = openingScene;
+}
+
+
+bool FrameBar::isOpeningScene()
+{
+	return openingScene;
 }

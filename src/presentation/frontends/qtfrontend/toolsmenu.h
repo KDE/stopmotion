@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -108,15 +108,45 @@ private:
 	QComboBox *viewChooseCombo;
 	QLabel *animationSpeedChooserCaption;
 	QLabel *mixSliderCaption;
+	QSpacerItem *horizontalSpace;
+	QSpacerItem *verticalSpace;
+	QSpacerItem *horizontalDummySpace;
+	QSpacerItem *groupSpace;
+	QGridLayout *grid;
+	QGridLayout *captureGrid;
+	QGridLayout *runAnimationGrid;
+	QAccel *loopAccel;
+	QAccel *playAccel;
+	QAccel *mixAccel;
+	QAccel *diffAccel;
+	QAccel *playbackAccel;
 	
 private slots:
 
 	/**
-	 * Slot for being notified when the viewing mode changes, so that widgets
+	 * Slot for notified the toolsmenu when the viewing mode changes, so that widgets
 	 * can be updated.
 	 * @param index the new viewing mode.
 	 */
 	void changeViewingMode(int index);
+	
+	/**
+	 * Slot for setting the camera mode to mixing.
+	 * Used by the shortcut key.
+	 */
+	void setMixingMode();
+	
+		/**
+	 * Slot for setting the camera mode to Diffing.
+	 * Used by the shortcut key.
+	 */
+	void setDiffingMode();
+	
+	/**
+	 * Slot for setting the camera mode to Playback.
+	 * Used by the shortcut key.
+	 */
+	void setPlaybackMode();
 	
 	/**
 	 * Slot for being notified when the camera is turned on so that

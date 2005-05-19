@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -34,11 +34,10 @@ using namespace std;
 class UndoHistory
 {
 public:
-
-	UndoHistory();
-
-	~UndoHistory();
 	
+	UndoHistory();
+	
+	~UndoHistory();
 	
 	/**
 	 * Add an undo command object to the list of undoable commands.
@@ -68,6 +67,7 @@ public:
 private:
 	vector<Undo*> undos;
 	unsigned int currentUndo;
+	static const unsigned int MAX_UNDOES = 200;
 };
 
 #endif

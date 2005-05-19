@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -459,10 +459,14 @@ void Animation::animationChanged(const char *alteredFile)
 bool Animation::exportToVideo(VideoEncoder * encoder)
 {
 	VideoFactory *factory = new VideoFactory(serializer, frontend);
+	frontend->showProgress("Exporting ...", 0);
 	if ( factory->createVideoFile(encoder) != NULL ) {
+		frontend->hideProgress();
 		return true;
 	}
-	frontend->reportError("Video export failed ... to be continued", 0);
+	frontend->hideProgress();
+	frontend->reportError("Video export failed. Please check your \n"
+	                      "export settings in the preferences menu.", 0);
 	return false;
 }
 

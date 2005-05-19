@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,8 +31,18 @@ FramePreferencesMenu::FramePreferencesMenu( QWidget * parent,
 		SoundHandler *soundHandler, const char * name )
 		: MenuFrame(parent, name), soundHandler(soundHandler)
 {
+	soundsList = NULL;
+	soundsLabel = NULL;
+	closeButton = NULL;
+	addSoundButton = NULL;
+	removeSoundsButton = NULL;
+	changeNameButton = NULL;
+	grid = NULL;
+	spacer = NULL;
+	space = NULL;
+	
 	this->setFrameStyle(QFrame::PopupPanel | QFrame::Sunken);
-	QGridLayout *grid = new QGridLayout( this, 1, 1, 3 );
+	grid = new QGridLayout( this, 1, 1, 3 );
 	
 	addSoundButton = new QPushButton( this );
 	addSoundButton->setFocusPolicy( QWidget::NoFocus );
@@ -55,12 +65,11 @@ FramePreferencesMenu::FramePreferencesMenu( QWidget * parent,
 	closeButton->setFlat(true);
 	connect(closeButton, SIGNAL(clicked()),this, SLOT(close()) );
 	
-	QSpacerItem *spacer = new QSpacerItem(0, 0, 
-			QSizePolicy::Expanding, QSizePolicy::Fixed);
+	spacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
 	
 	soundsLabel = new QLabel(this);
 	soundsList = new QListBox(this);
-	QSpacerItem *space = new QSpacerItem(0, 7);
+	space = new QSpacerItem(0, 7);
 	
 	grid->addWidget( addSoundButton, 1, 0 );
 	grid->addWidget( removeSoundsButton, 2, 0 );

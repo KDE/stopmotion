@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -177,6 +177,20 @@ public:
 	 */
 	void setMovingScene(int movingScene);
 	
+	/**
+	 * Sets whether the scene is currently opening so that close requests
+	 * can be ignored while it is processing.
+	 *
+	 * @param openingScene true if the scene is currently being opened. False
+	 * if not.
+	 */
+	void setOpeningScene(bool openingScene);
+	
+	/**
+	 * Returns true if a scene is currently being opened.
+	 * @return true if a scene is currently being opened.
+	 */
+	bool isOpeningScene();
 protected:
 	
 	/**
@@ -213,7 +227,6 @@ signals:
 	void modelSizeChanged( int modelSize );
 	
 private:
-	
 	/** The height of the framebar*/
 	int FRAMEBAR_HEIGHT;
 	
@@ -235,6 +248,8 @@ private:
 	
 	/** True if the user is currently holding down shift to select multiple frames */
 	bool selecting;
+	
+	bool openingScene;
 	
 	/** Pointer to the frame preferencesMenu */
 	FramePreferencesMenu *preferencesMenu;

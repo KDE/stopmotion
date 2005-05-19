@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -44,11 +44,12 @@ ExternalChangeMonitor::ExternalChangeMonitor()
 	famConn        = NULL;
 	workDirectory  = "";
 	refresh        = false;
+	running        = false;
 	
 	connect( &timer, SIGNAL(timeout()), this, SLOT(timeout()) );
 	
-	this->tmpDirectory = getenv("HOME");
-	this->tmpDirectory += "/.stopmotion/tmp";
+	tmpDirectory = getenv("HOME");
+	tmpDirectory += "/.stopmotion/tmp";
 }
 
 
@@ -62,52 +63,55 @@ ExternalChangeMonitor::~ExternalChangeMonitor()
 
 void ExternalChangeMonitor::changeWorkDirectory(const char* workDirectory)
 {
-	Logger::get().logDebug("Registring working directory for changelistening: ");
-	Logger::get().logDebug(workDirectory);
-	
-	stopMonitoring();
-	
-	famConn = new FAMConnection;
-	if(FAMOpen2(famConn, "stopmotion") != 0)
-	{
-		delete famConn;
-		famConn = NULL;
-		Logger::get().logWarning("Warning: Cannot connect to FAM");
-		return;
-	}
-	
-	if( FAMMonitorDirectory( famConn, tmpDirectory.ascii(), &famRequest, NULL ) < 0 ) {
-		Logger::get().logWarning("Warning: Cannot monitor tmp directory: ");
-		FAMClose( famConn );
-		return;
-	}
-	
-	QString dirName;
-	if(strcmp(workDirectory, "") != 0) {
-		QStringList lst = QStringList::split("/", QString(workDirectory));
-		dirName = lst.back();
-		lst = QStringList::split(".sto", dirName);
-		dirName = lst.front();
-		dirName.prepend("/.stopmotion/packer/");
-		dirName.prepend(getenv("HOME"));
-		dirName.append("/images");
+	if(running) {
+		Logger::get().logDebug("Registring working directory for changelistening: ");
+		Logger::get().logDebug(workDirectory);
 		
-		if( FAMMonitorDirectory( famConn, dirName.ascii(), &famRequest, NULL ) < 0 ) {
-			Logger::get().logWarning("Warning: Cannot monitor project directory: ");
+		stopMonitoring();
+		
+		famConn = new FAMConnection;
+		if(FAMOpen2(famConn, "stopmotion") != 0)
+		{
+			delete famConn;
+			famConn = NULL;
+			Logger::get().logWarning("Warning: Cannot connect to FAM");
+			running = false;
+			return;
+		}
+		
+		if( FAMMonitorDirectory( famConn, tmpDirectory.ascii(), &famRequest, NULL ) < 0 ) {
+			Logger::get().logWarning("Warning: Cannot monitor tmp directory: ");
 			FAMClose( famConn );
 			return;
 		}
+		
+		QString dirName;
+		if(strcmp(workDirectory, "") != 0) {
+			QStringList lst = QStringList::split("/", QString(workDirectory));
+			dirName = lst.back();
+			lst = QStringList::split(".sto", dirName);
+			dirName = lst.front();
+			dirName.prepend("/.stopmotion/packer/");
+			dirName.prepend(getenv("HOME"));
+			dirName.append("/images");
+			
+			if( FAMMonitorDirectory( famConn, dirName.ascii(), &famRequest, NULL ) < 0 ) {
+				Logger::get().logWarning("Warning: Cannot monitor project directory: ");
+				FAMClose( famConn );
+				return;
+			}
+		}
+		
+		int famfd = FAMCONNECTION_GETFD(famConn);
+		int flags = fcntl(famfd, F_GETFL);
+		fcntl(famfd, F_SETFL, flags | O_NONBLOCK);
+		
+		socketNotifier = new QSocketNotifier(famfd, QSocketNotifier::Read, 0);
+		connect(socketNotifier, SIGNAL(activated(int)), this, SLOT(readFam()));
+		
+		
+		this->workDirectory = dirName;
 	}
-	
-	int famfd = FAMCONNECTION_GETFD(famConn);
-	int flags = fcntl(famfd, F_GETFL);
-	fcntl(famfd, F_SETFL, flags | O_NONBLOCK);
-	
-	socketNotifier = new QSocketNotifier(famfd, QSocketNotifier::Read, 0);
-	connect(socketNotifier, SIGNAL(activated(int)), this, SLOT(readFam()));
-	
-	
- 	this->workDirectory = dirName;
 }
 
 
@@ -119,8 +123,11 @@ void ExternalChangeMonitor::startMonitoring()
 		delete famConn;
 		famConn = NULL;
 		Logger::get().logWarning("Warning: Cannot connect to FAM");
+		running = false;
 		return;
 	}
+	
+	running = true;
 	
 	int famfd = FAMCONNECTION_GETFD(famConn);
 	int flags = fcntl(famfd, F_GETFL);
@@ -146,6 +153,8 @@ void ExternalChangeMonitor::stopMonitoring()
 		FAMClose(famConn);
 		delete famConn;
 		famConn = NULL;
+		
+		running = false;
 }
 
 
@@ -189,13 +198,17 @@ void ExternalChangeMonitor::readFam()
 
 void ExternalChangeMonitor::suspendMonitor()
 {
-	FAMSuspendMonitor(famConn, &famRequest);
+	if(running) {
+		FAMSuspendMonitor(famConn, &famRequest);
+	}
 }
 
 
 void ExternalChangeMonitor::resumeMonitor()
 {
-	FAMResumeMonitor(famConn, &famRequest);
+	if(running) {
+		FAMResumeMonitor(famConn, &famRequest);
+	}
 }
 
 

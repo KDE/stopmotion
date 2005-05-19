@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -34,6 +34,7 @@
 #include "menuframe.h"
 #include "framepreferencesmenu.h"
 #include "toolsmenu.h"
+
 #include <qmainwindow.h>
 #include <qevent.h>
 #include <qvbox.h>
@@ -88,6 +89,7 @@ public:
 	void keyPressEvent( QKeyEvent *k );
 	
 private:
+	QApplication *stApp;
 	QSplitter *centerWidget;
 	QVBox *bottomSplitter;
 	QHBox *workArea;
@@ -116,6 +118,7 @@ private:
 	QAction *configureAct;
  	QAction *whatsthisAct;
 	QAction *aboutAct;
+	QAction *helpAct;
 	
 	//Menues
 	QPopupMenu *fileMenu;
@@ -127,17 +130,17 @@ private:
 	QPopupMenu *helpMenu;
 	ToolsMenu *toolsMenu;
 	FramePreferencesMenu *preferencesMenu;
+	
 	MenuFrame *gotoMenu;
+	QGridLayout *gotoMenuGrid;
+	QSpacerItem *space;
+	QPushButton *gotoMenuCloseButton;
 	
 	//Widgets
 	QLabel *numberDisplay;
 	FlexibleSpinBox *gotoSpinner;
 	QLabel *gotoFrameLabel;
-// 	QPushButton *addSoundButton;
-// 	QPushButton *removeSoundsButton;
-// 	QPushButton *changeNameButton;
-// 	QLabel *soundsLabel;
-// 	QListBox *soundsList;
+	
 	
 	//Handlers
 	ModelHandler *modelHandler;
@@ -254,6 +257,7 @@ private:
 	 */
 	void updateMostRecentMenu();
 	
+	
 private slots:
 	
 	/**
@@ -303,6 +307,11 @@ private slots:
 	void showAboutDialog();
 	
 	/**
+	 * Brings up an help dialog with the stopmotion user manua.
+	 */
+	void showHelpDialog();
+	
+	/**
 	 * Brings up a preferences menu where the user can set preferences for the
 	 * application.
 	 */
@@ -319,13 +328,6 @@ private slots:
 	 */
 	void exportToCinerella();
 	
-	/**
-	 * Overloaded function which is called on a close event. The function ensures
-	 * that the correct cleanup routines are runned before closing.
-	 * @param e the close event
-	 */
-	void closeEvent ( QCloseEvent * e );
-	
 public slots:
 	/**
 	 * This slot is notified when the size of the model changes so that menuframe
@@ -338,6 +340,12 @@ public slots:
 	 * Sets differents buttons such as undo, save as and copy to be enabled.
 	 */
 	void activateMenuOptions();
+	
+	/**
+	 * Notified when closing the application.
+	 * @param  ce information about the close event.
+	 */
+	void closeEvent(QCloseEvent *ce);
 };
 
 #endif

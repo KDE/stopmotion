@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -60,8 +60,7 @@ const char* VideoFactory::createVideoFile(VideoEncoder *encoder)
 }
 
 
-int VideoFactory::startEncoder( const char * command )
+int VideoFactory::startEncoder(const char *command)
 {
-	// run this in a separate process or thread?
 	return system(command);
 }

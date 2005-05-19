@@ -1,3 +1,17 @@
+stopmotion (0.3.0-1) unstable; urgency=low
+
+  * Fixed the following bugs:
+    - Segfault if no FAM is installed
+    - Segfault when running mainwindowgui's destructor
+    - Segfault when trying to remove empty rows in the preferences menu
+    - Missing images when adding a frame to a saved project
+  * Added:
+    - Exporting to video without saving first
+    - Norwegian translation files
+    - User manual in html format
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Thu, 19 May 2005 14:16:42 +0200
+
 stopmotion (0.3pre.1-1) unstable; urgency=low
 
   * Removed displaying of sound related error messages if no sounds are added

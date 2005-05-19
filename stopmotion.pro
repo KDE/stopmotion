@@ -49,7 +49,7 @@ HEADERS += src/config.h \
            graphics/icons/clapper.xpm \
            graphics/icons/closescene.xpm \
            graphics/icons/close.xpm \
-           graphics/icons/configureicon.xpm \ 
+           graphics/icons/configureicon.xpm \
            graphics/icons/copyicon.xpm \
            graphics/icons/cuticon.xpm \
            graphics/icons/fastforward.xpm \
@@ -113,7 +113,8 @@ HEADERS += src/config.h \
            src/presentation/frontends/qtfrontend/framebar/scenethumbview.h \
            src/presentation/frontends/qtfrontend/framebar/thumbview.h \
            src/presentation/frontends/qtfrontend/exporttab.h \
-           src/application/externalchangemonitor.h 
+           src/application/externalchangemonitor.h \
+           src/presentation/frontends/qtfrontend/helpwindow.h 
 SOURCES += src/main.cpp \
            src/domain/domainfacade.cpp \
            src/foundation/logger.cpp \
@@ -164,7 +165,8 @@ SOURCES += src/main.cpp \
            src/presentation/frontends/qtfrontend/framebar/scenethumbview.cpp \
            src/presentation/frontends/qtfrontend/framebar/thumbview.cpp \
            src/presentation/frontends/qtfrontend/exporttab.cpp \
-           src/application/externalchangemonitor.cpp 
+           src/application/externalchangemonitor.cpp \
+           src/presentation/frontends/qtfrontend/helpwindow.cpp 
 CONFIG += debug
 TEMPLATE = app
 DEPENDPATH += src \

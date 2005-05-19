@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -39,8 +39,8 @@ Frame::Frame(const char *filename)
 {
 	assert(filename != NULL);
 	
-	sprintf(tempPath, "%s/.stopmotion/tmp/", getenv("HOME"));
-	sprintf(trashPath, "%s/.stopmotion/trash/", getenv("HOME"));
+	snprintf(tempPath, 256, "%s/.stopmotion/tmp/", getenv("HOME"));
+	snprintf(trashPath, 256, "%s/.stopmotion/trash/", getenv("HOME"));
 	
 	int len = strlen(filename) + 1;
 	imagePath = new char[len];
@@ -96,7 +96,7 @@ int Frame::addSound(const char *filename)
 		// Create a new path
 		char *imgId = getImageId();
 		char newSoundPath[256] = {0};
-		sprintf(newSoundPath, "%s%s_snd_%d%s", 
+		snprintf(newSoundPath, 256, "%s%s_snd_%d%s", 
 			tempPath, imgId, ++soundNum, strrchr(filename,'.'));
 		delete [] imgId;
 		
@@ -104,7 +104,7 @@ int Frame::addSound(const char *filename)
 		// (This can be the fact if we runs in recovery mode.)
 		if ( strstr(filename, "/.stopmotion/tmp/") == NULL ) {
 			char command[512] = {0};
-			sprintf(command, "/bin/cp %s %s", filename, newSoundPath);
+			snprintf(command, 512, "/bin/cp %s %s", filename, newSoundPath);
 			system(command);
 		}
 		else {
@@ -168,7 +168,9 @@ void Frame::moveToProjectDir(
 		const char *imageDir, const char *soundDir , unsigned int imgNum )
 {
 	moveToImageDir(imageDir, imgNum);
-	moveToSoundDir(soundDir);
+	if ( sounds.size() > 0 ) {
+		moveToSoundDir(soundDir);
+	}
 }
 
 
@@ -180,7 +182,7 @@ void Frame::moveToImageDir(const char *directory, unsigned int imgNum)
 	char filename[12] = {0};
 	char tmp[7] = {0};
 	
-	sprintf(tmp, "%d", imgNum);
+	snprintf(tmp, 7, "%d", imgNum);
 	int fileLength = strlen(tmp);
 	
 	// creates a filename with six characters as total length,
@@ -199,33 +201,11 @@ void Frame::moveToImageDir(const char *directory, unsigned int imgNum)
 	strcpy(newPath, directory);
 	strcat(newPath, filename);
 	
-	// the image is already in the image directory, only renaming
-	// is necessary
-	if (isProjectFile) {
-		char *currP = strdup(imagePath);
-		char *newP = strdup(newPath);
-		
-		int relation = strcmp( basename(currP), basename(newP) );
-		if ( relation != 0) {
-			char command[512] = {0};
-			sprintf(command, "/bin/cp %s %s", imagePath, newPath);
-			system(command);
-		}
-		else {
-			rename (imagePath, newPath);
-		}
-		
-		free(currP);
-		free(newP);
-	}
-	else {
-		int relation = strcmp(imagePath, newPath);
-		if (relation != 0) {
-			rename(imagePath, newPath);
-		}
-	}
+	rename(imagePath, newPath);
 	
 	delete [] imagePath;
+	imagePath = NULL;
+	
 	imagePath = new char[strlen(newPath) + 1];
 	strcpy(imagePath, newPath);
 }
@@ -247,7 +227,7 @@ void Frame::moveToSoundDir(const char *directory)
 		
 		// Create a new sound path
 		char newSoundPath[256] = {0};	
-		sprintf(newSoundPath, "%s%s_snd_%d%s", 
+		snprintf(newSoundPath, 256, "%s%s_snd_%d%s", 
 			directory, imgId, ++soundNum, strrchr(soundPath,'.'));
 		
 		if (access(soundPath, F_OK) == 0) {
@@ -273,15 +253,18 @@ void Frame::copyToTemp()
 	char *dotPtr = strrchr(imagePath,'.');
 	
 	// creates a new image path
-	sprintf(newImagePath, "%stmp_%d%s", tempPath, tmpNum, dotPtr);
+	snprintf(newImagePath, 256, "%stmp_%d%s", tempPath, tmpNum, dotPtr);
 
 	// the image isn't in the trash directory
 	if ( strstr(imagePath, "/.stopmotion/trash/") == NULL ) {
 		if ( strcmp(imagePath, newImagePath) != 0) {
 			// constructs a copy command and executes it
-			sprintf(command, "/bin/cp %s %s", imagePath, newImagePath);
+			snprintf(command, 512, "/bin/cp %s %s", imagePath, newImagePath);
 			system(command);
 		}
+	}
+	else if ( strstr(imagePath, "/.stopmotion/packer/") != NULL ) {
+		rename(imagePath, newImagePath);
 	}
 	else {
 		if ( strcmp(imagePath, newImagePath) != 0) {
@@ -291,6 +274,8 @@ void Frame::copyToTemp()
 	}
 	
 	delete [] imagePath;
+	imagePath = NULL;
+	
 	imagePath = new char[strlen(newImagePath) + 1];
 	strcpy(imagePath, newImagePath);
 
@@ -303,7 +288,7 @@ void Frame::moveToTrash()
 	char newImagePath[256] = {0};
 	
 	char *dotPtr = strrchr(imagePath,'.');
-	sprintf(newImagePath, "%strash_%d%s", trashPath, trashNum, dotPtr);
+	snprintf(newImagePath, 256, "%strash_%d%s", trashPath, trashNum, dotPtr);
 
 	rename(imagePath, newImagePath);
 	
@@ -363,3 +348,10 @@ char* Frame::getImageId()
 	
 	return ret;
 }
+
+
+bool Frame::isProjectFrame()
+{
+	return isProjectFile;
+}
+

@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,8 +21,9 @@
 #include "src/foundation/preferencestool.h"
 
 #include <qmessagebox.h>
+#include <qtextcodec.h>
 #include <string.h>
-#include <iostream>
+
 
 
 QtFrontend::QtFrontend(int argc, char **argv)
@@ -32,11 +33,13 @@ QtFrontend::QtFrontend(int argc, char **argv)
 	initializePreferences();
 	
 	//Loads the correct translator based on the language in the preferences file.
-	QString t = PreferencesTool::get()->getPreference("language", "en");
+	QString t = PreferencesTool::get()->getPreference("language", QTextCodec::locale());
+	
+	//Loads the stopmotion translation file
 	Logger::get().logDebug("Loading translator: ");
 	Logger::get().logDebug(t.ascii());
 	QTranslator translator( 0 );
-	translator.load( "translations/stopmotion_" + t, "." );
+	translator.load( "/usr/share/stopmotion/translations/stopmotion_" + t, "." );
 	stApp->installTranslator( &translator );
 	
 	//If the preferred language is english (en) no translator should be
@@ -61,7 +64,10 @@ QtFrontend::~QtFrontend()
 {
 	delete stApp;
 	stApp = NULL;
-	// doesn't need to delete mw since the WDestructiveClose flag is set.
+	
+	// This causes the application to segfault at exit
+	//delete mw;
+	//mw = NULL;
 }
 
 

@@ -65,10 +65,13 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/stopmotion.
+	#install -D -o 0 -g 0 -m 644 stopmotion.mime $(CURDIR)/debian/stopmotion/usr/lib/mime/packages/stopmotion
 	$(MAKE) install prefix=$(CURDIR)/debian/stopmotion/usr
-	install -D -o 0 -g 0 -m 644 stopmotion.mime $(CURDIR)/debian/stopmotion/usr/lib/mime/packages/stopmotion
 	install -D -o 0 -g 0 -m 644 stopmotion.desktop $(CURDIR)/debian/stopmotion/usr/share/applications/stopmotion.desktop
 	install -D -o 0 -g 0 -m 644 graphics/stopmotion.png $(CURDIR)/debian/stopmotion/usr/share/pixmaps/stopmotion.png
+	cp -R html/ $(CURDIR)/debian/stopmotion/usr/share/doc/stopmotion/
+	lrelease stopmotion.pro
+	cp translations/*.qm $(CURDIR)/debian/stopmotion/usr/share/stopmotion/translations/
 
 # Build architecture-independent files here.
 binary-indep: build install
