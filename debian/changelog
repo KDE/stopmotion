@@ -1,3 +1,14 @@
+stopmotion (0.3.1-1) unstable; urgency=low
+
+  * Added terminating of the grabber process if camera is turned on when
+    closing the program
+  * Changed the way default preferences are initalized. Did also add a default
+    option for video export
+  * Changed the control file: moved vgrabbj and fam from depends to recommends
+    and suggests, respectively
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sun, 31 Jul 2005 17:17:30 +0200
+
 stopmotion (0.3.0-1) unstable; urgency=low
 
   * Fixed the following bugs:

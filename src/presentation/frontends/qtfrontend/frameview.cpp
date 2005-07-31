@@ -74,7 +74,11 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 
 FrameView::~FrameView()
 {
-	//off();
+	// Turn off camera if it's on
+	if (isPlayingVideo) {
+		off();
+	}
+	
 	SDL_FreeSurface(videoSurface);
 	videoSurface = NULL;
 	SDL_FreeSurface(screen);

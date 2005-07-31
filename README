@@ -29,12 +29,12 @@ However, the libraries needed to build the program is:
 	- libXML2
 	- vorbis
 	- vorbisfile
-	- FAM/Gamin
+	- FAM-dev/Gamin
 
 After you have ensured that these libraries are installed, you can
 run ./configure and make.
 
-Please send me a bug report <bjoern.nilsen@hig.no> if there are things 
+Please send me a bug report <bjoern.nilsen@bjoernen.com> if there are things 
 that I have not included in this document. 
 
 
