@@ -13,8 +13,9 @@ Suggests: fam
 Description: program for creating stop motion animations
  You can create stop-motion animations with images grabbed
  from your favourite video device. You just sets stopmotion to
- use a grabber program that works with your device. It is also 
+ use a grabber program which works with your device. It is also 
  possible to do the same with video export; just plug in an
  encoder capable of doing video export from couple of images.
+ .
  Stopmotion has a set of tools which helps you creating the 
  movements smooth and precise.

@@ -33,6 +33,8 @@
 class Undo
 {
 public:
+	virtual ~Undo() {}
+	
 	/**
 	 * Abstract function for undoing the command represented by this undo object.
 	 * @param a the model to perform the undo command on.

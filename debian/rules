@@ -70,7 +70,6 @@ install: build
 	install -D -o 0 -g 0 -m 644 stopmotion.desktop $(CURDIR)/debian/stopmotion/usr/share/applications/stopmotion.desktop
 	install -D -o 0 -g 0 -m 644 graphics/stopmotion.png $(CURDIR)/debian/stopmotion/usr/share/pixmaps/stopmotion.png
 	cp -R html/ $(CURDIR)/debian/stopmotion/usr/share/doc/stopmotion/
-	lrelease stopmotion.pro
 	cp translations/*.qm $(CURDIR)/debian/stopmotion/usr/share/stopmotion/translations/
 
 # Build architecture-independent files here.
