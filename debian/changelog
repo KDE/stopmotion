@@ -1,10 +1,18 @@
+stopmotion (0.3.2-2) unstable; urgency=low
+
+  * uninstallable; needs rebuild for the Qt/KDE transition (Closes:
+    #328019)
+
+ -- Andreas Schuldei <andreas@debian.org>  Tue, 13 Sep 2005 13:49:14 +0200
+
 stopmotion (0.3.2-1) unstable; urgency=low
 
+  [ Bjoern Erik Nilsen ]
   * New upload to get a rebuild with the new C++ ABI
     (build depends on libqt3-mt-dev)
   * Added virtual destructors to few classes
 
- -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sat,  3 Sep 2005 15:43:36 +0200
+ -- Andreas Schuldei <andreas@debian.org>  Tue, 13 Sep 2005 13:49:01 +0200
 
 stopmotion (0.3.1-1) unstable; urgency=low
 
