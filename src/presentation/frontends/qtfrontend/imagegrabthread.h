@@ -20,7 +20,7 @@
 #ifndef IMAGEGRABTHREAD_H
 #define IMAGEGRABTHREAD_H
 
-#include "frameview.h"
+#include "src/presentation/frontends/qtfrontend/frameview.h"
 #include "src/technical/grabber/imagegrabber.h"
 
 #include <qthread.h>

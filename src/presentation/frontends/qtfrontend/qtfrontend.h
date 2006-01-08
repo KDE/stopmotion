@@ -23,6 +23,7 @@
 #include "src/config.h"
 #include "src/presentation/frontends/frontend.h"
 #include "mainwindowgui.h"
+#include "src/foundation/preferencestool.h"
 
 #include <qprogressdialog.h>
 #include <qprogressbar.h>
@@ -125,6 +126,7 @@ private:
 	QTimer *timer;
 	
 	void initializePreferences();
+	void setDefaultPreferences(PreferencesTool *prefs);
 };
 
 #endif

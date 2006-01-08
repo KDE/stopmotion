@@ -50,11 +50,10 @@ public:
 	bool setPreferencesFile(const char* filePath, const char* version);
 	
 	/**
-	 * Sets the version of the preference file. Should be greater
-	 * than zero.
-	 * @param versionNumber the version number of the preference file
+	 * Sets the version of the preference file.
+	 * @param version the version number of the preference file
 	 */
-// 	void setVersion(int versionNumber);
+ 	void setVersion(const char *version);
 	
 	/**
 	 * Returns the version number of the preference file or 0 if
@@ -62,7 +61,7 @@ public:
 	 * @return the version number of the preference file or 0 if
 	 * there are no version tag.
 	 */
-// 	int getVersion();
+ 	const char* getOldVersion();
 	
 	/**
 	 * Adds a string preference.
@@ -145,8 +144,10 @@ private:
 	xmlDtdPtr dtd; 
 	xmlNodePtr rootNode;
 	xmlNodePtr preferences;
+	xmlNodePtr versionNode;
 	
 	char *preferencesFile;
+	char *oldVersion;
 	
 	/**
 	 * Retrieves the node with key "key".

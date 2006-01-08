@@ -15,7 +15,8 @@ TRANSLATIONS += translations/stopmotion_no_nb.ts \
                 translations/stopmotion_gr.ts \
                 translations/stopmotion_ru.ts \
                 translations/stopmotion_es.ts \
-                translations/stopmotion_kl.ts 
+                translations/stopmotion_kl.ts \
+				translations/stopmotion_cz.ts
 HEADERS += src/config.h \
            src/domain/domainfacade.h \
            src/foundation/logger.h \
@@ -189,6 +190,7 @@ $$system(xml2-config --cflags | sed -e 's/-I//g')
 LIBS += $$system(sdl-config --libs) \
 $$system(xml2-config --libs) \
 -lSDL_image -ltar -lvorbis -lvorbisfile -lfam
+QMAKE_CXXFLAGS_WARN_ON += -Wno-non-virtual-dtor
 include(conf.pri)
 CONFIG -= debug
 CONFIG += release
