@@ -192,7 +192,7 @@ void QtFrontend::initializePreferences()
 	}
 	
 	// If file doesn't exist or has wrong version number
-	if ( !prefs->setPreferencesFile(preferencesFile.ascii(), "0.4") ) {
+	if ( !prefs->setPreferencesFile(preferencesFile.ascii(), "0.5") ) {
 		// File doesn't exist
 		if (prefsFileExists == -1) {
 			setDefaultPreferences(prefs);
@@ -206,13 +206,17 @@ void QtFrontend::initializePreferences()
 			// Use new preferences
 			if (useNewPrefsFile == 0) { // 0 = yes
 				setDefaultPreferences(prefs);
-				
 			}
 			// Use old preferences
 			else {
 				rename(oldPrefsFile.ascii(), preferencesFile.ascii());
 				prefs->setPreferencesFile(preferencesFile.ascii(), prefs->getOldVersion());
-				prefs->setVersion("0.4");
+				
+				// Update version
+				prefs->setVersion("0.5");
+				
+				// Do necessary updates on the old prefs file:
+				updateOldPreferences(prefs);
 			}
 		}
 	}
@@ -233,7 +237,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("importdescription0", 
 			tr("The simplest setting. Fairly slow").ascii());
 	prefs->setPreference("importprepoll0",
-			"vgrabbj -f (DEFAULTPATH) -d /dev/video0 -b -D 0 -i vga");
+			"vgrabbj -f $IMAGEFILE -d /dev/video0 -b -D 0 -i vga");
 	prefs->setPreference("importstopdeamon0", "");
 
 	// Default import option 2
@@ -241,13 +245,26 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("importdescription1", 
 			tr("Starts vgrabbj as a deamon. Pretty fast.").ascii());
 	prefs->setPreference("importstartdeamon1", 
-			"vgrabbj -f (DEFAULTPATH) -d /dev/video0 -b -D 0 -i vga -L250");
+			"vgrabbj -f $IMAGEFILE -d /dev/video0 -b -D 0 -i vga -L250");
 	prefs->setPreference("importstopdeamon1", 
 			"kill -9 `ps ax | grep vgrabbj | grep -v grep | cut -b 0-5`");
+	
+	// Default import option 3
+	// Verify this before making it as a default option
+	/*
+	prefs->setPreference("importname2", tr("dvgrab").ascii());
+	prefs->setPreference("importdescription2", 
+			tr("Grabbing from DV-cam").ascii());
+	prefs->setPreference("importstartdeamon2", 
+			"dvgrab --format jpeg --jpeg-overwrite --jpeg-deinterlace --jpeg-width 640 " 
+			"--jpeg-height 480 --frames 25 $IMAGEFILE");
+	prefs->setPreference("importstopdeamon2", 
+			"kill -9 `ps ax | grep dvgrab | grep -v grep | cut -b 0-5`");
+	*/
 	// -----------------------------------------------------------------------
 
 	// Default export options ------------------------------------------------
-	prefs->setPreference("numEncoders", 3);
+	prefs->setPreference("numEncoders", 4);
 	prefs->setPreference("activeEncoder", 2);
 
 	// Default export option 1
@@ -276,7 +293,37 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1:$opt -mf type=jpg:fps=8 "
 			"-o $VIDEOFILE mf://$IMAGEPATH/*.jpg");
 	prefs->setPreference("stopEncoder2", "");
+	
+	// Default export option 4
+	prefs->setPreference("encoderName3", "ffmpeg");
+	prefs->setPreference("encoderDescription3", 
+			tr("Exports from jpeg images to mpeg4 video").ascii());
+	prefs->setPreference("startEncoder3",
+			"ffmpeg -r 10 -b 1800 -i $IMAGEPATH/%06d.jpg $VIDEOFILE");
+	prefs->setPreference("stopEncoder3", "");
 	//-------------------------------------------------------------------------
+}
+
+
+void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
+{
+	// Replace all occurences of '(DEFAULTPATH)' with '$IMAGEFILE'  (version 0.3 and 0.4)
+	int numImports = prefs->getPreference("numberofimports", 1);
+	for (int i = 0; i < numImports; ++i) {
+		string start( prefs->getPreference(QString("importstartdeamon%1").arg(i).ascii(), "") );
+		int index = start.find("(DEFAULTPATH)");
+		if (index != -1) {
+			start.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
+			prefs->setPreference( QString("importstartdeamon%1").arg(i).ascii(), start.c_str() );
+		}
+
+		string prepoll( prefs->getPreference(QString("importprepoll%1").arg(i).ascii(), "") );
+		index = prepoll.find("(DEFAULTPATH)");
+		if (index != -1) {
+			prepoll.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
+			prefs->setPreference( QString("importprepoll%1").arg(i).ascii(), prepoll.c_str() );
+		}
+	}
 }
 
 

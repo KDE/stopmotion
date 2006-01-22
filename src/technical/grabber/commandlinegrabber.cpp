@@ -22,7 +22,6 @@
 #include <sstream>
 #include <sys/types.h>
 #include <signal.h>
-
 #include <iostream>
 
 using namespace std;
@@ -41,15 +40,9 @@ CommandLineGrabber::CommandLineGrabber(char* filePath, const char* prePoll,
 
 bool CommandLineGrabber::init()
 {
-	if(isProcess) {
-		if(startProcess != "") {
+	if (isProcess) {
+		if (startProcess != "") {
 			Logger::get().logDebug("Attemting to start process");
-			//Can't test this this way as the command line for starting the
-			//process as a vgrabbj deamon returns 256 no matter if it works or if it
-			//fails. Needs to be fixed some other way, and i think i have an idea.
-			//if ( system(startProcess.c_str()) != 0 ) {
-			//	return false;
-			//}
 			system(startProcess.c_str());
 			
 		}
@@ -64,7 +57,7 @@ bool CommandLineGrabber::init()
 bool CommandLineGrabber::tearDown()
 {
 	Logger::get().logDebug("Attemting to shutt down process");
-	if(stopProcess != "") {
+	if (stopProcess != "") {
 		system( stopProcess.c_str() );
 	}
 	else {
@@ -76,7 +69,7 @@ bool CommandLineGrabber::tearDown()
 
 bool CommandLineGrabber::grab()
 {
-	if( system( prePoll.c_str() ) != 0 ) {
+	if ( system(prePoll.c_str()) != 0 ) {
 		isInitSuccess = false;
 		return false;
 	}
@@ -84,17 +77,13 @@ bool CommandLineGrabber::grab()
 }
 
 
-string CommandLineGrabber::parseCommand( const char * command )
+string CommandLineGrabber::parseCommand(const char * command)
 {
 	string tmp = command;
-	
-	int location = (int)tmp.find("(DEFAULTPATH)");
-	
-	if(location != -1) {
-		tmp.replace(location, 13, string(filePath));
+	int index = tmp.find("$IMAGEFILE");
+	if (index != -1) {
+		tmp.replace(index, strlen("$IMAGEFILE"), string(filePath));
 	}
 	return tmp;
 }
-
-
 

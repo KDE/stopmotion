@@ -127,6 +127,7 @@ private:
 	
 	void initializePreferences();
 	void setDefaultPreferences(PreferencesTool *prefs);
+	void updateOldPreferences(PreferencesTool *prefs);
 };
 
 #endif

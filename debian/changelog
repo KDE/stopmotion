@@ -1,3 +1,13 @@
+stopmotion (0.3.4-1) unstable; urgency=low
+
+  * please include icon for menu (Closes: #348933)
+  * Added another option for video export, using ffmpeg
+  * Updated the norwegian translation
+  * Changed from using '(DEFAULTPATH)' to '$IMAGEFILE' on import settings to
+    make it more consistent
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sun, 22 Jan 2006 16:03:17 +0100
+
 stopmotion (0.3.3-1) unstable; urgency=low
 
   * FTBFS on GNU/kFreeBSD (Closes: #336872)

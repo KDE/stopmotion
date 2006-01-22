@@ -569,7 +569,7 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Coordinating&lt;/b&gt;&lt;br&gt;Herman Robak &amp;lt;herman@skolelinux.no&amp;gt;&lt;br&gt;&#xd8;yvind Kol&#xe5;s &amp;lt;pippin@gimp.org&amp;gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Testing&lt;/b&gt;&lt;br&gt;Tore Sinding Bekkedal &amp;lt;toresbe@ifi.uio.no&amp;gt;&lt;br&gt;Finn Arne Johansen &amp;lt;faj@bzz.no&amp;gt;&lt;br&gt;Halvor Borgen &amp;lt;halvor.borgen@hig.no&amp;gt;&lt;br&gt;Bj&#xf8;rn Are Hansen &amp;lt;post@bahansen.net&amp;gt;&lt;br&gt;John Steinar Bild&#xf8;y &amp;lt;johnsbil@haldenfriskole.no&amp;gt;&lt;br&gt;Ole-Anders Andreassen &amp;lt;ole-anders.andreassen@sunndal.kommune.no&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Translation&lt;/b&gt;&lt;br&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Spolupráce&lt;/b&gt;&lt;br&gt;Herman Robak &amp;lt;herman@skolelinux.no&amp;gt;&lt;br&gt;Øyvind Kolås &amp;lt;pippin@gimp.org&amp;gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Testování&lt;/b&gt;&lt;br&gt;Tore Sinding Bekkedal &amp;lt;toresbe@ifi.uio.no&amp;gt;&lt;br&gt;Finn Arne Johansen &amp;lt;faj@bzz.no&amp;gt;&lt;br&gt;Halvor Borgen &amp;lt;halvor.borgen@hig.no&amp;gt;&lt;br&gt;Bjørn Are Hansen &amp;lt;post@bahansen.net&amp;gt;&lt;br&gt;John Steinar Bildøy &amp;lt;johnsbil@haldenfriskole.no&amp;gt;&lt;br&gt;Ole-Anders Andreassen &amp;lt;ole-anders.andreassen@sunndal.kommune.no&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Překlad&lt;/b&gt;&lt;br&gt;Jiří Helebrant &amp;lt;helb@skatekralovice.com&amp;gt;&lt;/p&gt;</translation>
+        <translation type="obsolete">&lt;p&gt;&lt;b&gt;Spolupráce&lt;/b&gt;&lt;br&gt;Herman Robak &amp;lt;herman@skolelinux.no&amp;gt;&lt;br&gt;Øyvind Kolås &amp;lt;pippin@gimp.org&amp;gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Testování&lt;/b&gt;&lt;br&gt;Tore Sinding Bekkedal &amp;lt;toresbe@ifi.uio.no&amp;gt;&lt;br&gt;Finn Arne Johansen &amp;lt;faj@bzz.no&amp;gt;&lt;br&gt;Halvor Borgen &amp;lt;halvor.borgen@hig.no&amp;gt;&lt;br&gt;Bjørn Are Hansen &amp;lt;post@bahansen.net&amp;gt;&lt;br&gt;John Steinar Bildøy &amp;lt;johnsbil@haldenfriskole.no&amp;gt;&lt;br&gt;Ole-Anders Andreassen &amp;lt;ole-anders.andreassen@sunndal.kommune.no&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Překlad&lt;/b&gt;&lt;br&gt;Jiří Helebrant &amp;lt;helb@skatekralovice.com&amp;gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&amp;Thanks To</source>
@@ -582,6 +582,10 @@ to check your settings in the preferences menu?</source>
     <message>
         <source>Stopmotion User Manual</source>
         <translation>Manuál</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;&lt;b&gt;Coordinating&lt;/b&gt;&lt;br&gt;Herman Robak &amp;lt;herman@skolelinux.no&amp;gt;&lt;br&gt;&#xd8;yvind Kol&#xe5;s &amp;lt;pippin@gimp.org&amp;gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Testing&lt;/b&gt;&lt;br&gt;Tore Sinding Bekkedal &amp;lt;toresbe@ifi.uio.no&amp;gt;&lt;br&gt;Finn Arne Johansen &amp;lt;faj@bzz.no&amp;gt;&lt;br&gt;Halvor Borgen &amp;lt;halvor.borgen@hig.no&amp;gt;&lt;br&gt;Bj&#xf8;rn Are Hansen &amp;lt;post@bahansen.net&amp;gt;&lt;br&gt;John Steinar Bild&#xf8;y &amp;lt;johnsbil@haldenfriskole.no&amp;gt;&lt;br&gt;Ole-Anders Andreassen &amp;lt;ole-anders.andreassen@sunndal.kommune.no&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Translation&lt;/b&gt;&lt;br&gt;George Helebrant &amp;lt;helb@skatekralovice.com&amp;gt; (Czech)&lt;br&gt;&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -646,7 +650,7 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg -ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE</source>
-        <translation>&lt;p&gt;&lt;b&gt;Main developers&lt;/b&gt;&lt;br&gt;Fredrik Berg Kjølstad &amp;lt;fredrikbk@hotmail.com&amp;gt;&lt;br&gt;Bjørn Erik Nilsen &amp;lt;bjoern.nilsen@bjoernen.com&amp;gt;&lt;/p&gt;</translation>
+        <translation type="obsolete">&lt;p&gt;&lt;b&gt;Main developers&lt;/b&gt;&lt;br&gt;Fredrik Berg Kjølstad &amp;lt;fredrikbk@hotmail.com&amp;gt;&lt;br&gt;Bjørn Erik Nilsen &amp;lt;bjoern.nilsen@bjoernen.com&amp;gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source></source>
@@ -663,6 +667,20 @@ to check your settings in the preferences menu?</source>
     <message>
         <source>&amp;No</source>
         <translation>&amp;Ne</translation>
+    </message>
+    <message>
+        <source>A newer version of the preferences file with few more default
+values exists. Do you want to use this one? (Your old preferences
+ will be saved in ~/.stopmotion/preferences.xml.OLD)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exports from jpeg images to mpeg2 video</source>
+        <translation type="unfinished">Exportuje z obrázků (jpeg) do videa (mpeg2)</translation>
+    </message>
+    <message>
+        <source>Exports from jpeg images to mpeg4 video</source>
+        <translation type="unfinished">Exportuje z obrázků (jpeg) do videa (mpeg4)</translation>
     </message>
 </context>
 <context>

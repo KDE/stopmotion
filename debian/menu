@@ -1,2 +1,3 @@
 ?package(stopmotion):needs="X11" section="Apps/Education"\
-  title="Stopmotion" command="/usr/bin/stopmotion"
+  title="Stopmotion" command="/usr/bin/stopmotion" \
+  icon="/usr/share/pixmaps/stopmotion.xpm"
