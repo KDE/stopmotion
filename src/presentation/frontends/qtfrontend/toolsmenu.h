@@ -106,6 +106,7 @@ private:
 	QSlider *mixSlider;
 	QSpinBox *animationSpeedChooser;
 	QComboBox *viewChooseCombo;
+	QComboBox *unitChooseCombo;
 	QLabel *animationSpeedChooserCaption;
 	QLabel *mixSliderCaption;
 	QSpacerItem *horizontalSpace;
@@ -120,6 +121,7 @@ private:
 	QAccel *mixAccel;
 	QAccel *diffAccel;
 	QAccel *playbackAccel;
+	QTimer *captureTimer;
 	
 private slots:
 
@@ -131,12 +133,24 @@ private slots:
 	void changeViewingMode(int index);
 	
 	/**
+	 * Slot for notified the toolsmenu when the unit mode changes.
+	 * @param index the new unit mode.
+	 */
+	void changeUnitMode(int index);
+	
+	/**
+	 * Slot for updating the slider value when running in automatic mode.
+	 * @param value the new slider value.
+	 */
+	void updateSliderValue(int value);
+	
+	/**
 	 * Slot for setting the camera mode to mixing.
 	 * Used by the shortcut key.
 	 */
 	void setMixingMode();
 	
-		/**
+	/**
 	 * Slot for setting the camera mode to Diffing.
 	 * Used by the shortcut key.
 	 */

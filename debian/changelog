@@ -1,3 +1,9 @@
+stopmotion (0.4.0-1) unstable; urgency=low
+
+  * Added a new feature: Automatic grabbing of images at given time intervals
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Thu,  9 Feb 2006 23:53:39 +0100
+
 stopmotion (0.3.4-1) unstable; urgency=low
 
   * please include icon for menu (Closes: #348933)

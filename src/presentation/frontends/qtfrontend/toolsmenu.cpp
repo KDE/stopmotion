@@ -69,6 +69,7 @@ ToolsMenu::ToolsMenu( RunAnimationHandler *runAnimationHandler, ModelHandler *mo
 	mixSlider = NULL;
 	animationSpeedChooser = NULL;
 	viewChooseCombo = NULL;
+	unitChooseCombo = NULL;
 	animationSpeedChooserCaption = NULL;
 	mixSliderCaption = NULL;
 	horizontalSpace = NULL;
@@ -83,6 +84,8 @@ ToolsMenu::ToolsMenu( RunAnimationHandler *runAnimationHandler, ModelHandler *mo
 	mixAccel = NULL;
 	diffAccel = NULL;
 	playbackAccel = NULL;
+	captureTimer = new QTimer();
+	connect( captureTimer, SIGNAL( timeout() ), cameraHandler, SLOT(captureFrame()) );
 	
 	addWidgets();
 	createAccelerators();
@@ -173,6 +176,11 @@ void ToolsMenu::addWidgets()
 	viewChooseCombo->setFocusPolicy( QWidget::NoFocus );
 	connect(viewChooseCombo, SIGNAL(activated (int)),this, SLOT(changeViewingMode(int)));
 	
+	unitChooseCombo = new QComboBox(captureGroup);
+	unitChooseCombo->setFocusPolicy( QWidget::NoFocus );
+	unitChooseCombo->setEnabled(false);
+	connect(unitChooseCombo, SIGNAL(activated (int)),this, SLOT(changeUnitMode(int)));
+	
 	mixSliderCaption = new QLabel(captureGroup);
 	mixSliderCaption->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
 	
@@ -180,6 +188,7 @@ void ToolsMenu::addWidgets()
 	mixSlider->setTickmarks(QSlider::Below);
 	mixSlider->setFocusPolicy( QWidget::NoFocus );
 	connect( mixSlider, SIGNAL(valueChanged(int)), cameraHandler, SLOT(setMixCount(int)) );
+	connect( mixSlider, SIGNAL(valueChanged(int)), this, SLOT(updateSliderValue(int)) );
 	
 	//Groupbox containing buttons related to running the animation.
 	runAnimationGroup = new QGroupBox(this);
@@ -277,6 +286,7 @@ void ToolsMenu::addWidgets()
 	captureGrid->addItem( horizontalSpace, 0, 3);  // right
 	captureGrid->addWidget( captureFrameButton, 1, 1 );
 	captureGrid->addWidget( viewChooseCombo, 1, 2 ); 
+	captureGrid->addWidget( unitChooseCombo, 2, 2 ); 
 	captureGrid->addItem( verticalSpace, 2, 1 ); // middle
 	captureGrid->addMultiCellWidget( mixSliderCaption, 3, 3, 1, 2 );
 	captureGrid->addMultiCellWidget( mixSlider, 4, 4, 1, 2 );
@@ -317,9 +327,17 @@ void ToolsMenu::retranslateStrings()
 	mixSliderCaption->setText( tr("Number of images:") );
 	
 	viewChooseCombo->clear();
-	viewChooseCombo->insertItem( tr("Mix"), 0 );
-	viewChooseCombo->insertItem( tr("Diff"), 1 );
-	viewChooseCombo->insertItem( tr("Playback"), 2 );
+	viewChooseCombo->insertItem(tr("Mix"), 0);
+	viewChooseCombo->insertItem(tr("Diff"), 1);
+	viewChooseCombo->insertItem(tr("Playback"), 2);
+	viewChooseCombo->insertItem(tr("Auto"), 3);
+	
+	unitChooseCombo->clear();
+	unitChooseCombo->insertItem("", 0);
+	unitChooseCombo->insertItem(tr("Pr sec"), 1);
+	unitChooseCombo->insertItem(tr("Pr min"), 2);
+	unitChooseCombo->insertItem(tr("Pr hr"), 3);
+	unitChooseCombo->setCurrentItem(0);
 	
 	//Tooltip and whatsthis text
 	QString infoText = 
@@ -418,6 +436,27 @@ void ToolsMenu::retranslateStrings()
 }
 
 
+void ToolsMenu::updateSliderValue(int sliderValue)
+{
+	if ( captureTimer->isActive() && sliderValue != 0) {
+		int factor = 0;
+		int index = unitChooseCombo->currentItem();
+		switch (index) {
+			case 1:
+				factor = 1000;
+				break;
+			case 2:
+				factor = 60000;
+				break;
+			case 3:
+				factor = 3600000;
+				break;
+		}
+		captureTimer->changeInterval(factor / sliderValue);
+	}
+}
+
+
 void ToolsMenu::setMixingMode()
 {
 	changeViewingMode(0);
@@ -440,18 +479,18 @@ void ToolsMenu::changeViewingMode(int index)
 {
 	if( cameraHandler->setViewMode(index) ) {
 		viewChooseCombo->setCurrentItem(index);
+		unitChooseCombo->setCurrentItem(0);
 		switch (index)
 		{
 			case 0:
 			{
-				//mixSlider->setMinValue();
-				//Also triggers the sliders signal causing the 
-				//videoviews mixcount to get updated
 				mixSlider->setValue(PreferencesTool::get()->
 						getPreference("mixcount", 2));
 				mixSlider->setMaxValue(5);
 				mixSlider->setEnabled(true);
 				mixSliderCaption->setEnabled(true);
+				unitChooseCombo->setEnabled(false);
+				captureTimer->stop();
 				break;
 			}
 			case 2:
@@ -461,12 +500,25 @@ void ToolsMenu::changeViewingMode(int index)
 						getPreference("playbackcount", 5));
 				mixSliderCaption->setEnabled(true);
 				mixSlider->setEnabled(true);
+				unitChooseCombo->setEnabled(false);
+				captureTimer->stop();
+				break;
+			}
+			case 3:
+			{
+				mixSlider->setMaxValue(10);
+				mixSlider->setValue(1);
+				mixSliderCaption->setEnabled(true);
+				mixSlider->setEnabled(true);
+				unitChooseCombo->setEnabled(true);
 				break;
 			}
 			default:
 			{
 				mixSlider->setEnabled(false);
 				mixSliderCaption->setEnabled(false);
+				unitChooseCombo->setEnabled(false);
+				captureTimer->stop();
 				break;
 			}
 		}
@@ -481,6 +533,46 @@ void ToolsMenu::changeViewingMode(int index)
 				QMessageBox::NoButton);
 		viewChooseCombo->setCurrentItem(0);
 		cameraHandler->setViewMode(0);
+	}
+}
+
+
+void ToolsMenu::changeUnitMode(int index)
+{
+	int sliderValue = mixSlider->value();
+	if (sliderValue == 0 || index == 0) {
+		if (captureTimer->isActive()) {
+			captureTimer->stop();
+		}
+		return;
+	}
+	
+	int factor = 0;
+	switch (index) {
+		case 1:
+			factor = 1000;
+			break;
+		case 2:
+			factor = 60000;
+			break;
+		case 3:
+			factor = 3600000;
+			break;
+		default:
+			if ( captureTimer->isActive() ) {
+				captureTimer->stop();
+			}
+			break;
+	}
+
+	if ( captureTimer->isActive() == false) {
+		// Grab the first frame manually
+		cameraHandler->captureFrame();
+		// then grab at the given interval
+		captureTimer->start(factor / sliderValue);
+	}
+	else {
+		captureTimer->changeInterval(factor / sliderValue);
 	}
 }
 
@@ -527,5 +619,8 @@ void ToolsMenu::cameraOn(bool isOn)
 		playButton->setEnabled(true);
 		pauseButton->setEnabled(true);
 		stopButton->setEnabled(true);
+		if ( captureTimer->isActive() ) {
+			captureTimer->stop();
+		}
 	}
 }

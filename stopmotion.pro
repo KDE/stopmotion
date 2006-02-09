@@ -16,7 +16,8 @@ TRANSLATIONS += translations/stopmotion_no_nb.ts \
                 translations/stopmotion_ru.ts \
                 translations/stopmotion_es.ts \
                 translations/stopmotion_kl.ts \
-				translations/stopmotion_cz.ts
+				translations/stopmotion_cz.ts \
+				translations/stopmotion_sl.ts
 HEADERS += src/config.h \
            src/domain/domainfacade.h \
            src/foundation/logger.h \
