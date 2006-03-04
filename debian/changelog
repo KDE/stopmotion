@@ -1,9 +1,3 @@
-stopmotion (0.4.1-0bpo1) sarge-backports; urgency=low
-
-  * Backport for sarge
-
- -- Steffen Joeris <steffen.joeris@skolelinux.de>  Sat, 18 Mar 2006 09:41:45 +0000
-
 stopmotion (0.4.1-1) unstable; urgency=low
 
   * Code cleanup

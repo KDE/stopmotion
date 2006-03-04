@@ -2,7 +2,7 @@ Source: stopmotion
 Section: x11
 Priority: optional
 Maintainer: Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>
-Uploaders: Andreas Schuldei <andreas@debian.org>, Steffen Joeris <steffen.joeris@skolelinux.de>
+Uploaders: Andreas Schuldei <andreas@debian.org>
 Build-Depends: debhelper (>= 4.0.0), libsdl1.2-dev, libxml2-dev, libqt3-mt-dev, libtar-dev, libvorbis-dev, libsdl-image1.2-dev, libfam-dev
 Standards-Version: 3.6.2
 
