@@ -25,7 +25,7 @@ UndoRemove::UndoRemove(const vector<char*>& frameNames, unsigned int fromIndex,
 		: fromIndex(fromIndex), activeScene(activeScene)
 {
 	unsigned int size = frameNames.size();
-	for (unsigned int i = 0; i < size; i++) {
+	for (unsigned int i = 0; i < size; ++i) {
 		this->frameNames.push_back(frameNames[i]);
 	}
 }
@@ -34,7 +34,7 @@ UndoRemove::UndoRemove(const vector<char*>& frameNames, unsigned int fromIndex,
 UndoRemove::~UndoRemove()
 {
 	unsigned int size = frameNames.size();
-	for (unsigned int i = 0; i < size; i++) {
+	for (unsigned int i = 0; i < size; ++i) {
 		delete [] frameNames[i];
 		frameNames[i] = NULL;
 	}
@@ -50,14 +50,14 @@ void UndoRemove::undo(AnimationModel* a)
 	
 	// Deallocates the old allocated image paths.
 	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		delete [] frameNames[i];
 		frameNames[i] = NULL;
 	}
 	
 	// Setting new image paths.
 	numElem = newImagePaths.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		frameNames[i] = newImagePaths[i];
 	}
 }
@@ -73,14 +73,14 @@ void UndoRemove::redo(AnimationModel* a)
 			
 	// Deallocates the old allocated image paths.
 	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		delete [] frameNames[i];
 		frameNames[i] = NULL;
 	}
 
 	// Setting new image paths.
 	numElem = newImagePaths.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		frameNames[i] = newImagePaths[i];
 	}
 }

@@ -22,7 +22,6 @@
 
 //Global defines
 #define QTGUI
-//#define NDEBUG
 
 //Global includes
 #include <assert.h>

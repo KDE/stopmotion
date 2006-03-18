@@ -784,5 +784,21 @@ as a deamon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a deamon.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pr sec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pr min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pr hr</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -96,7 +96,7 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 	if ( !names.isEmpty() ) {
 		vector<char*> fNames;
 		QStringList::Iterator it = names.begin();
-		while(it != names.end() ) {
+		while (it != names.end() ) {
 			QString fileName = *it;
 			char *f = (char*)fileName.ascii();
 			fNames.push_back( f );
@@ -105,7 +105,6 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 		// trim to size :)
 		vector<char*>(fNames).swap(fNames);
 		DomainFacade::getFacade()->addFrames(fNames);
-		//this->activateMenuOptions();
 		emit modelChanged();
 	}
 	
@@ -115,7 +114,7 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 
 void ModelHandler::addFrame( const QString &fileName )
 {
-	if ( fileDialog != NULL ) {
+	if (fileDialog != NULL) {
 		fileDialog->hide();
 		strcpy( lastVisitedDir, ( fileDialog->dirPath() ).ascii() );
 	}
@@ -128,7 +127,7 @@ void ModelHandler::addFrame( const QString &fileName )
 
 void ModelHandler::removeFrames()
 {
-	if(removeFramesButton->isEnabled()) {
+	if (removeFramesButton->isEnabled()) {
 		int selectionFrame = frameBar->getSelectionFrame();
 		int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
 		int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
@@ -144,7 +143,7 @@ void ModelHandler::newScene()
 {
 	int activeScene = DomainFacade::getFacade()->getActiveSceneNumber();
 	
-	if(activeScene >= 0) {
+	if (activeScene >= 0) {
 		DomainFacade::getFacade()->newScene(activeScene+1);
 	}
 	else {

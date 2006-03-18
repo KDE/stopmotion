@@ -29,8 +29,8 @@
 #include <sstream>
 #include <qpushbutton.h>
 #include <qiconset.h>
-
 #include <iostream>
+
 
 SceneThumbView::SceneThumbView(FrameBar *frameBar, QWidget *parent, int number, 
 	const char * name) 
@@ -41,11 +41,9 @@ SceneThumbView::SceneThumbView(FrameBar *frameBar, QWidget *parent, int number,
 	arrowButton = new SceneArrowButton(this);
 	int width = this->width();
 	arrowButton->setGeometry( width-width/4, width/9, width/6, width/6 );
-	QObject::connect( arrowButton, SIGNAL(clicked()), 
-		this, SLOT(closeScene()) );
+	QObject::connect( arrowButton, SIGNAL(clicked()), this, SLOT(closeScene()) );
 	
 	f.setPointSize(15);
-	
 	centerIcon = QPixmap(clapper);
 }
 
@@ -60,7 +58,7 @@ void SceneThumbView::setOpened( bool isOpened )
 	this->isOpened = isOpened;
 	arrowButton->setOpened(isOpened);
 	
-	if( !isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
+	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
 		centerIcon = QPixmap( QImage(
 				DomainFacade::getFacade()->getFrame(0, number)->getImagePath()).
 				scale(width()/2, height()/2) );
@@ -92,7 +90,7 @@ void SceneThumbView::paintEvent ( QPaintEvent * )
 	paint.setFont(f);
 	paint.drawText( 7, (width/4), QString("%1").arg(number+1));
 	
-	if( !isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
+	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
 		paint.drawPixmap(width/4, width/3, centerIcon);
 	}
 	else {
@@ -111,7 +109,7 @@ void SceneThumbView::mousePressEvent(QMouseEvent *e)
 
 void SceneThumbView::mouseReleaseEvent( QMouseEvent * )
 {
-	if( (DomainFacade::getFacade()->getActiveSceneNumber() != this->number) &&
+	if ((DomainFacade::getFacade()->getActiveSceneNumber() != this->number) &&
 			(frameBar->isOpeningScene() == false) ) {
 		frameBar->setOpeningScene(true);
 		DomainFacade::getFacade()->setActiveScene(number);
@@ -122,9 +120,9 @@ void SceneThumbView::mouseReleaseEvent( QMouseEvent * )
 
 void SceneThumbView::mouseMoveEvent(QMouseEvent * me)
 {
-	if(me->state() & LeftButton) {
+	if (me->state() & LeftButton) {
 		int distance = (me->pos() - dragPos).manhattanLength();
-		if(distance > QApplication::startDragDistance()) {
+		if (distance > QApplication::startDragDistance()) {
 			startDrag();
 		}
 	}
@@ -135,17 +133,8 @@ void SceneThumbView::mouseMoveEvent(QMouseEvent * me)
 void SceneThumbView::startDrag()
 {
 	Logger::get().logDebug("Starting drag of the scene");
-	
 	frameBar->setMovingScene(this->number);
-	
 	QStrList lst;
-	
-	/*unsigned int size = DomainFacade::getFacade()->getSceneSize( 
-			DomainFacade::getFacade()->getActiveSceneNumber() );
-	for(unsigned int i=0; i<size; i++) {
-		lst.append( DomainFacade::getFacade()->getFrame(i)->getImagePath() );
-	}*/
-	
 	QUriDrag *drag = new QUriDrag( lst, this );
 	drag->drag();
 }
@@ -153,8 +142,8 @@ void SceneThumbView::startDrag()
 
 void SceneThumbView::closeScene()
 {
-	if(frameBar->isOpeningScene() == false) {
-		if(DomainFacade::getFacade()->getActiveSceneNumber() == this->number) {
+	if (frameBar->isOpeningScene() == false) {
+		if (DomainFacade::getFacade()->getActiveSceneNumber() == this->number) {
 			DomainFacade::getFacade()->setActiveScene(-1);
 		}
 		else {
@@ -167,11 +156,10 @@ void SceneThumbView::closeScene()
 void SceneThumbView::contentsDropped(QDropEvent *event)
 {
 	int movingScene = frameBar->getMovingScene();
-	if( (event->source() != 0) && (movingScene != this->number) && 
+	if ((event->source() != 0) && (movingScene != this->number) && 
 			(movingScene != -1) ) {
 		
 		Logger::get().logDebug("Moving scene");
-		
 		DomainFacade::getFacade()->moveScene(movingScene, this->number);
 	}
 }
@@ -189,9 +177,8 @@ void SceneThumbView::resizeThumb(int height)
 	
 	f.setPointSize(width/6);
 	
-	if( !isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
-		centerIcon = QPixmap( QImage(
-				DomainFacade::getFacade()->getFrame(0, number)->getImagePath()).
-				scale(width/2, height/2) );
+	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
+		centerIcon = QPixmap( QImage(DomainFacade::getFacade()->getFrame(0, number)->
+					getImagePath()).scale(width/2, height/2) );
 	}
 }

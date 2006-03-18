@@ -49,10 +49,8 @@ FrameThumbView::~FrameThumbView()
 
 void FrameThumbView::mousePressEvent( QMouseEvent * e )
 {
-	//Lets the mainwindowgui also respond to the mousepressevent (hide menues)
-	//((MainWindowGUI*)parentWidget())->mousePressEvent( e );
-	if(e->button() == LeftButton) {
-		if(!frameBar->isSelecting()) {
+	if (e->button() == LeftButton) {
+		if (!frameBar->isSelecting()) {
 			//2 "unnecessary" int initialization here, but it is better than having 8 extra
 			//retrieval funtions.
 			int selectionFrame = frameBar->getSelectionFrame();
@@ -63,7 +61,7 @@ void FrameThumbView::mousePressEvent( QMouseEvent * e )
 			//If the user presses inside the selection area this shouldn't trigger an
 			//setActiveFrame before the mouse button is released. The reason for this is
 			//to give the user a chance to drag the items. See mouseReleaseEvent(...)
-			if( number > highend || number < lowend) {
+			if (number > highend || number < lowend) {
 				DomainFacade::getFacade()->setActiveFrame(number);
 			}
 			dragPos = e->pos();
@@ -78,13 +76,13 @@ void FrameThumbView::mousePressEvent( QMouseEvent * e )
 void FrameThumbView::mouseReleaseEvent( QMouseEvent * e )
 {
 	Logger::get().logDebug("Releasing mouse button inside thumbview");
-	if(e->button() == LeftButton) {
-		if(!frameBar->isSelecting()) {
+	if (e->button() == LeftButton) {
+		if (!frameBar->isSelecting()) {
 			int selectionFrame = frameBar->getSelectionFrame();
 			int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
 			int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 			int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
-			if( number <= highend || number >= lowend) {
+			if (number <= highend || number >= lowend) {
 				DomainFacade::getFacade()->setActiveFrame(number);
 			}
 		}
@@ -94,9 +92,9 @@ void FrameThumbView::mouseReleaseEvent( QMouseEvent * e )
 
 void FrameThumbView::mouseMoveEvent(QMouseEvent *me)
 {
-	if(me->state() & LeftButton) {
+	if (me->state() & LeftButton) {
 		int distance = (me->pos() - dragPos).manhattanLength();
-		if(distance > QApplication::startDragDistance()) {
+		if (distance > QApplication::startDragDistance()) {
 			startDrag();
 		}
 	}
@@ -116,10 +114,9 @@ void FrameThumbView::mouseDoubleClickEvent( QMouseEvent * )
 void FrameThumbView::paintEvent ( QPaintEvent * paintEvent )
 {
 	QLabel::paintEvent(paintEvent);
-	
 	QPainter painter( this );
 	
-	if(selected) {
+	if (selected) {
 		painter.fillRect( 4, 5, textWidth, 14, QBrush(Qt::white) );
 		painter.setPen( Qt::black );
 	}
@@ -132,9 +129,8 @@ void FrameThumbView::paintEvent ( QPaintEvent * paintEvent )
 	ss << number+1;
 	painter.drawText( 5, 17, ss.str().c_str() );
 	
-	if(this->hasSounds) {
+	if (this->hasSounds) {
 		QPixmap noteIcon = QPixmap(note);
-
 		painter.drawPixmap( width()-32, 0, noteIcon);
 	}
 }
@@ -152,7 +148,7 @@ void FrameThumbView::startDrag()
 	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
 	int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 	int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
-	for(int i=lowend; i<=highend; i++) {
+	for (int i=lowend; i<=highend; ++i) {
 		lst.append( DomainFacade::getFacade()->getFrame(i)->getImagePath() );
 	}
 	
@@ -184,7 +180,7 @@ void FrameThumbView::setNumber( int number )
 void FrameThumbView::setSelected(bool selected)
 {
 	this->selected = selected;
-	if(selected) {
+	if (selected) {
 		setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 		setLineWidth(5);
 		setMidLineWidth(6);
@@ -201,17 +197,14 @@ void FrameThumbView::setSelected(bool selected)
  */
 void FrameThumbView::contentsDropped(QDropEvent * event)
 {
-	//if(event->spontaneous() == false) {
-	if( (event->source() != 0) && (frameBar->getMovingScene() == -1) ) {
+	if ( (event->source() != 0) && (frameBar->getMovingScene() == -1) ) {
 		Logger::get().logDebug("Moving picture");
-		
 		int selectionFrame = frameBar->getSelectionFrame();
 		int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
 		unsigned int highend = (selectionFrame > activeFrame ) 
 				? selectionFrame : activeFrame;
 		unsigned int lowend = (selectionFrame < activeFrame ) 
 				? selectionFrame : activeFrame;
-		
 		DomainFacade::getFacade()->moveFrames(lowend, highend, this->number);
 		
 	}
@@ -219,13 +212,12 @@ void FrameThumbView::contentsDropped(QDropEvent * event)
 		Logger::get().logDebug("Adding picture(s)");
 		DomainFacade::getFacade()->setActiveFrame(this->number);
 		
-		if( QUriDrag::canDecode(event) ) {
-				
+		if ( QUriDrag::canDecode(event) ) {
 			QStringList fileNames;
-			if( QUriDrag::decodeLocalFiles(event, fileNames) ) {
+			if ( QUriDrag::decodeLocalFiles(event, fileNames) ) {
 				std::vector<char*> fNames;
 				QStringList::Iterator it = fileNames.begin();
-				while(it != fileNames.end() ) {
+				while (it != fileNames.end() ) {
 					QString fileName = *it;
 					char *f = (char*)fileName.ascii();
 					fNames.push_back( f );
@@ -242,10 +234,7 @@ void FrameThumbView::resizeThumb(int height)
 {
 	QPixmap p = *pixmap();
 	QImage img = p.convertToImage();
-	setPixmap( QPixmap(QImage(img).
-			scale(height-3, height)));
-	
-	
+	setPixmap( QPixmap(QImage(img).scale(height-3, height)));
 	setMinimumHeight(height);
 	setMaximumHeight(height);
 	setMinimumWidth(height);

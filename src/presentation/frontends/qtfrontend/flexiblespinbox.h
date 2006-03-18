@@ -46,9 +46,6 @@ public:
 	 */
 	void keyPressEvent( QKeyEvent * k );
 	
-protected:
-
-	
 public slots:
 	/**
 	 * Sets a limit for the maximum value. This is based on the

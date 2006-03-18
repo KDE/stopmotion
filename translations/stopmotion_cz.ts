@@ -798,5 +798,21 @@ to running the image grabbing as a deamon.</source>
         <translation>Přehrávání nyní funguje pouze když grabber běží jako démon.
 Toho můžete docílit v menu &quot;Nastavení&quot;.</translation>
     </message>
+    <message>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pr sec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pr min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pr hr</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

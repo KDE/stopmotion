@@ -55,6 +55,11 @@ int OggVorbis::setFilename(const char *filename)
 	// Opens the file and tests for vorbis-ness
 	FILE *f = fopen(filename, "r");
 	if (f) {
+		if (oggFile != NULL) {
+			free(oggFile);
+			oggFile = NULL;
+		}
+		
 		oggFile = (OggVorbis_File*)malloc( sizeof(OggVorbis_File) );
 		if (oggFile == NULL) {
 			// logFatal terminates the application
@@ -75,6 +80,10 @@ int OggVorbis::setFilename(const char *filename)
 		oggFile = NULL;
 		// The given filename is a valid ogg file and we wants
 		// to save it for later usage.
+		if (this->filename != NULL) {
+			delete [] this->filename;
+			this->filename = NULL;
+		}
 		this->filename = new char[strlen(filename) + 1];
 		strcpy(this->filename, filename);
 	}

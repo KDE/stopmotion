@@ -43,7 +43,6 @@ NonGUIFrontend::~ NonGUIFrontend()
 int NonGUIFrontend::run(int argc, char **argv) 
 {
 	printf("NonGUIFrontend starts running ...\n");
-	
 	return parseArguments(argc, argv);
 }
 
@@ -167,7 +166,7 @@ void NonGUIFrontend::addFrames(const char *directory)
 		facadePtr->addFrames(frames);
 
 		unsigned int numElem = frames.size();
-		for (unsigned int i = 0; i < numElem; i++) {
+		for (unsigned int i = 0; i < numElem; ++i) {
 			delete [] frames[i];
 		}
 		

@@ -35,7 +35,7 @@ AnimationModel::~AnimationModel()
 
 void AnimationModel::attatch(Observer *o)
 {
-	if(o != NULL) {
+	if (o != NULL) {
 		observers.push_back(o);
 	}
 	else {
@@ -47,7 +47,7 @@ void AnimationModel::attatch(Observer *o)
 void AnimationModel::detatch(Observer *o)
 {
 	//Sequential search for the observer. Complexity: O(N/2) on the average.
-	for(unsigned int i = 0; i < observers.size(); i++) {
+	for (unsigned int i = 0; i < observers.size(); ++i) {
 		if (observers[i] == o) {
 			observers.erase(observers.begin() + i);
 			break;
@@ -58,7 +58,7 @@ void AnimationModel::detatch(Observer *o)
 
 void AnimationModel::registerFrontend(Frontend *frontend)
 {
-	if(this->frontend != NULL) {
+	if (this->frontend != NULL) {
 		delete this->frontend;
 	}
 	this->frontend = frontend;
@@ -77,7 +77,7 @@ Frontend* AnimationModel::getFrontend()
 void AnimationModel::notifyAdd(const vector<char*>& frames, unsigned int index)
 {
 	unsigned int numElem = observers.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updateAdd(frames, index, frontend);
 	}
 }
@@ -87,7 +87,7 @@ void AnimationModel::notifyRemove(unsigned int fromFrame, unsigned int toFrame)
 {
 	Logger::get().logDebug("Notifying the observers of the removal of the frame");
 	unsigned int numElem = observers.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updateRemove(fromFrame, toFrame);
 	}
 }
@@ -97,9 +97,8 @@ void AnimationModel::notifyMove(unsigned int fromFrame, unsigned int toFrame,
 								unsigned int movePosition)
 {
 	Logger::get().logDebug("Notifying the observers of the moving of the frame");
-	
 	unsigned int numElem = observers.size();
-	for(unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updateMove(fromFrame, toFrame, movePosition);
 	}
 }
@@ -109,7 +108,7 @@ void AnimationModel::notifyNewActiveFrame(int frameNumber)
 {
 	Logger::get().logDebug("Notifying observers about new active frame");
 	unsigned int numElem = observers.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updateNewActiveFrame(frameNumber);
 	}
 }
@@ -119,7 +118,7 @@ void AnimationModel::notifyClear()
 {
 	Logger::get().logDebug("Notifying observers that the model is erased");
 	unsigned int numElem = observers.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updateClear();
 	}
 }
@@ -128,7 +127,7 @@ void AnimationModel::notifyClear()
 void AnimationModel::notifyPlayFrame(int frameNumber)
 {
 	unsigned int numElem = observers.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updatePlayFrame(frameNumber);
 	}
 }
@@ -137,7 +136,7 @@ void AnimationModel::notifyPlayFrame(int frameNumber)
 void AnimationModel::notifyNewScene( int index )
 {
 	unsigned int numElem = observers.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updateNewScene(index);
 	}
 }
@@ -146,7 +145,7 @@ void AnimationModel::notifyNewScene( int index )
 void AnimationModel::notifyRemoveScene( int sceneNumber )
 {
 	unsigned int numElem = observers.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updateRemoveScene(sceneNumber);
 	}
 }
@@ -155,7 +154,7 @@ void AnimationModel::notifyRemoveScene( int sceneNumber )
 void AnimationModel::notifyMoveScene( int sceneNumber, int movePosition )
 {
 	unsigned int numElem = observers.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updateMoveScene(sceneNumber, movePosition);
 	}
 }
@@ -165,7 +164,7 @@ void AnimationModel::notifyNewActiveScene( int sceneNumber, vector<char*> frameP
 		Frontend *frontend )
 {
 	unsigned int numElem = observers.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updateNewActiveScene(sceneNumber, framePaths, frontend);
 	}
 }
@@ -173,7 +172,7 @@ void AnimationModel::notifyNewActiveScene( int sceneNumber, vector<char*> frameP
 void AnimationModel::notifyAnimationChanged(int frameNumber)
 {
 	unsigned int numElem = observers.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		observers[i]->updateAnimationChanged(frameNumber);
 	}
 }

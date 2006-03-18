@@ -24,6 +24,7 @@
 
 #include <qlabel.h>
 
+
 class FrameBar;
 
 /**

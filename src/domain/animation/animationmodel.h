@@ -31,6 +31,7 @@
 
 using namespace std;
 
+
 /**
  *The animation model abstract class. All implementations of the animation 
  *model have to inherit from this class.
@@ -261,7 +262,6 @@ public:
 	 * @return the number of the currently active frame.
 	 */
 	virtual int getActiveFrameNumber() = 0;
-	  
 	 
 	/**
 	 * Abstract function for clearing the model.

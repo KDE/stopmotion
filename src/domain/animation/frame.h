@@ -28,6 +28,7 @@
 #include <string>
 using namespace std;
 
+
 /**
  * Class representing the frames in the animation
  *

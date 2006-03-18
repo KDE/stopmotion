@@ -28,7 +28,6 @@
 QtFrontend::QtFrontend(int argc, char **argv)
 {
 	stApp = new QApplication(argc, argv);
-	
 	initializePreferences();
 	
 	//Loads the correct translator based on the language in the preferences file.
@@ -52,6 +51,7 @@ QtFrontend::QtFrontend(int argc, char **argv)
 	mw->resize(751, 593);
 	mw->move(20, 20);
 	mw->show();
+	
 	progressDialog = NULL;
 	progressBar = NULL;
 	infoText = NULL;
@@ -185,12 +185,11 @@ void QtFrontend::initializePreferences()
 	// Has to check this before calling setPreferencesFile(...) because
 	// the function creates the file if it doesn't exist.
 	int prefsFileExists = access(preferencesFile.ascii(), R_OK);
-	
 	if (prefsFileExists != -1) {
 		QString tmp = "/bin/cp " + preferencesFile + " " + oldPrefsFile;
 		system(tmp.ascii());
 	}
-	
+
 	// If file doesn't exist or has wrong version number
 	if ( !prefs->setPreferencesFile(preferencesFile.ascii(), "0.5") ) {
 		// File doesn't exist
@@ -219,7 +218,7 @@ void QtFrontend::initializePreferences()
 				updateOldPreferences(prefs);
 			}
 		}
-	}
+	}	
 }
 	
 

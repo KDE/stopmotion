@@ -141,7 +141,6 @@ private:
 	int fps;
 	bool isLooping;
 	
-	
 private slots:
 	/**
 	 * Slot for playing the next frame. This slot is triggered by the timer.

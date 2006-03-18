@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "scene.h"
+#include <sstream>
 
 
 Scene::Scene()
@@ -29,7 +30,7 @@ Scene::Scene()
 Scene::~Scene()
 {
 	unsigned int numElem = frames.size();
-	for(unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		delete frames[i];
 	}
 }
@@ -60,18 +61,33 @@ const vector<char*> Scene::addFrames(const vector<char*>& frameNames, unsigned i
 	
 	vector<char*> newImagePaths;
 	bool isImportingAborted = false;
-	unsigned int i = 0;
-	unsigned int numElem = frameNames.size();
 	
-	if(frameNames.size() == 1) {
-		newImagePaths.push_back( addFrame(frameNames[i], index) );
-	}
+	unsigned i = 0;
+	unsigned numElem = frameNames.size();
+	
+	if (frameNames.size() == 1) {
+		char* file = frameNames[i];
+		if (access(file, R_OK) == 0) {
+			newImagePaths.push_back( addFrame(file, index) );
+		}
+		else {
+			frontend->reportError("You do not have permission to read that file", 0);
+			return newImagePaths;
+		}
+	}	
 	else {
 		frontend->showProgress("Importing frames from disk ...", numElem * 2);
-	
-		for (; i < numElem; i++) {
+		
+		unsigned numNotReadable = 0;
+		for (; i < numElem; ++i) {
 			frontend->updateProgress(i);
-			newImagePaths.push_back( addFrame(frameNames[i], index) );
+			char* file = frameNames[i];
+			if (access(file, R_OK) == 0) {
+				newImagePaths.push_back( addFrame(frameNames[i], index) );
+			}
+			else {
+				++numNotReadable;	
+			}
 			
 			// Doesn't want to process events for each new frame added.
 			if ( (i % 10) == 0) {
@@ -84,14 +100,19 @@ const vector<char*> Scene::addFrames(const vector<char*>& frameNames, unsigned i
 			}
 		}
 		frontend->updateProgress(numElem);
-	
 		
-		if(isImportingAborted) {
+		if (isImportingAborted) {
 			numberOfCanceledFrames = i;
 			newImagePaths.clear();
 		}
 		else {
 			numberOfCanceledFrames = numElem;
+		}
+
+		if (numNotReadable > 0) {
+			stringstream ss;
+			ss << "You do not have permission to read " << numNotReadable << " file(s)";
+			frontend->reportError(ss.str().c_str(), 0);
 		}
 	}
 	
@@ -133,8 +154,8 @@ const vector< char * > Scene::removeFrames( unsigned int fromFrame, const unsign
 	vector<char*> newImagePaths;
 	char *newPath;
 	
-	if( toFrame < frames.size() ) { 
-		for (unsigned int i = fromFrame; i <= toFrame; i++) {
+	if ( toFrame < frames.size() ) { 
+		for (unsigned int i = fromFrame; i <= toFrame; ++i) {
 			Frame *f = frames[fromFrame];
 			f->moveToTrash();
 			newPath = new char[256];
@@ -155,15 +176,15 @@ const vector< char * > Scene::removeFrames( unsigned int fromFrame, const unsign
 void Scene::moveFrames( unsigned int fromFrame, unsigned int toFrame, 
 		unsigned int movePosition )
 {
-	if(movePosition < fromFrame) {
-		for(unsigned int i=fromFrame, j=movePosition; i<=toFrame; i++, j++) {
+	if (movePosition < fromFrame) {
+		for (unsigned int i = fromFrame, j = movePosition; i <= toFrame; ++i, ++j) {
 			Frame *f = frames[i];
 			frames.erase(frames.begin() + i);
 			frames.insert(frames.begin() + j, f);
 		}
 	}
 	else {
-		for(unsigned int i=fromFrame; i<=toFrame; i++) {
+		for (unsigned int i = fromFrame; i <= toFrame; ++i) {
 			Frame *f = frames[fromFrame];
 			frames.erase(frames.begin() + fromFrame);
 			frames.insert(frames.begin() + movePosition, f);
@@ -196,7 +217,7 @@ vector<char *> Scene::getImagePaths( )
 {
 	vector<char*> imagePaths;
 	unsigned int size = frames.size();
-	for(unsigned int i=0; i<size; i++) {
+	for (unsigned int i = 0; i < size; ++i) {
 		imagePaths.push_back(frames[i]->getImagePath());
 	}
 	return imagePaths;

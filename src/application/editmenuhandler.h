@@ -21,7 +21,6 @@
 #define EDITMENUHANDLER_H
 
 #include "src/config.h"
-
 #include "src/presentation/frontends/qtfrontend/menuframe.h"
 #include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 #include "modelhandler.h"
@@ -78,12 +77,6 @@ public slots:
 	 * Redoes the last undo the user have done.
 	 */
 	void redo();
-	
-	/**
-	 * Copies the selection to the global clipboard and removes it from
-	 * the project.
-	 */
-	void cut();
 	
 	/**
 	 * Copies a selection to the global clipboard.

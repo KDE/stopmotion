@@ -22,6 +22,7 @@
 #include <qpixmap.h> 
 #include <qimage.h> 
 
+
 PicturePreview::PicturePreview( QWidget *parent ) : QLabel(parent)
 {
 	this->setMinimumWidth(60);
@@ -32,10 +33,8 @@ PicturePreview::PicturePreview( QWidget *parent ) : QLabel(parent)
 void PicturePreview::previewUrl( const QUrl &u )
 {
 	QString path = u.path();
-
 	QImage img( path );
-	
-	if( !img.isNull() ) {
+	if ( !img.isNull() ) {
 		img = img.smoothScale(PREVIEW_SIZE, PREVIEW_SIZE);
 		QPixmap pix;
 		pix.convertFromImage(img);

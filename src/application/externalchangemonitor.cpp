@@ -19,18 +19,15 @@
  ***************************************************************************/
 #include "externalchangemonitor.h"
 
+#include "src/domain/domainfacade.h"
+
 #include <iostream>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
-
 #include <qimage.h>
 #include <SDL/SDL_image.h>
-// #include <qimagedecoder.h>
-// #include <stdio.h>
-#include "src/domain/domainfacade.h"
 
 using namespace std;
 
@@ -55,7 +52,7 @@ ExternalChangeMonitor::ExternalChangeMonitor()
 
 ExternalChangeMonitor::~ExternalChangeMonitor()
 {
-	if(socketNotifier != NULL) {
+	if (socketNotifier != NULL) {
 		stopMonitoring();
 	}
 }
@@ -63,14 +60,14 @@ ExternalChangeMonitor::~ExternalChangeMonitor()
 
 void ExternalChangeMonitor::changeWorkDirectory(const char* workDirectory)
 {
-	if(running) {
+	if (running) {
 		Logger::get().logDebug("Registring working directory for changelistening: ");
 		Logger::get().logDebug(workDirectory);
 		
 		stopMonitoring();
 		
 		famConn = new FAMConnection;
-		if(FAMOpen2(famConn, "stopmotion") != 0)
+		if (FAMOpen2(famConn, "stopmotion") != 0)
 		{
 			delete famConn;
 			famConn = NULL;
@@ -79,14 +76,14 @@ void ExternalChangeMonitor::changeWorkDirectory(const char* workDirectory)
 			return;
 		}
 		
-		if( FAMMonitorDirectory( famConn, tmpDirectory.ascii(), &famRequest, NULL ) < 0 ) {
+		if ( FAMMonitorDirectory( famConn, tmpDirectory.ascii(), &famRequest, NULL ) < 0 ) {
 			Logger::get().logWarning("Warning: Cannot monitor tmp directory: ");
 			FAMClose( famConn );
 			return;
 		}
 		
 		QString dirName;
-		if(strcmp(workDirectory, "") != 0) {
+		if (strcmp(workDirectory, "") != 0) {
 			QStringList lst = QStringList::split("/", QString(workDirectory));
 			dirName = lst.back();
 			lst = QStringList::split(".sto", dirName);
@@ -95,7 +92,7 @@ void ExternalChangeMonitor::changeWorkDirectory(const char* workDirectory)
 			dirName.prepend(getenv("HOME"));
 			dirName.append("/images");
 			
-			if( FAMMonitorDirectory( famConn, dirName.ascii(), &famRequest, NULL ) < 0 ) {
+			if ( FAMMonitorDirectory( famConn, dirName.ascii(), &famRequest, NULL ) < 0 ) {
 				Logger::get().logWarning("Warning: Cannot monitor project directory: ");
 				FAMClose( famConn );
 				return;
@@ -109,7 +106,6 @@ void ExternalChangeMonitor::changeWorkDirectory(const char* workDirectory)
 		socketNotifier = new QSocketNotifier(famfd, QSocketNotifier::Read, 0);
 		connect(socketNotifier, SIGNAL(activated(int)), this, SLOT(readFam()));
 		
-		
 		this->workDirectory = dirName;
 	}
 }
@@ -118,8 +114,7 @@ void ExternalChangeMonitor::changeWorkDirectory(const char* workDirectory)
 void ExternalChangeMonitor::startMonitoring()
 {
 	famConn = new FAMConnection;
-	if(FAMOpen2(famConn, "stopmotion") != 0)
-	{
+	if (FAMOpen2(famConn, "stopmotion") != 0) {
 		delete famConn;
 		famConn = NULL;
 		Logger::get().logWarning("Warning: Cannot connect to FAM");
@@ -133,7 +128,7 @@ void ExternalChangeMonitor::startMonitoring()
 	int flags = fcntl(famfd, F_GETFL);
 	fcntl(famfd, F_SETFL, flags | O_NONBLOCK);
 	
-	if( FAMMonitorDirectory( famConn, tmpDirectory.ascii(), &famRequest, NULL ) < 0 ) {
+	if ( FAMMonitorDirectory( famConn, tmpDirectory.ascii(), &famRequest, NULL ) < 0 ) {
 		Logger::get().logWarning("Warning: Cannot monitor tmp directory: ");
 		FAMClose( famConn );
 		return;
@@ -160,17 +155,15 @@ void ExternalChangeMonitor::stopMonitoring()
 
 void ExternalChangeMonitor::readFam()
 {
-	while (FAMPending(famConn))
-	{
+	while ( FAMPending(famConn) ) {
 		FAMEvent event;
-		if (FAMNextEvent(famConn, &event) != 1)
-		{
+		if (FAMNextEvent(famConn, &event) != 1) {
 			stopMonitoring();
 			return;
 		}
 		
-		if( event.code == FAMChanged ) {
-			if(refresh == false){
+		if (event.code == FAMChanged) {
+			if (refresh == false){
 				timer.start(TIMER_INTERVAL, true);
 				refresh = true;
 			}
@@ -183,7 +176,7 @@ void ExternalChangeMonitor::readFam()
 			QString tmp = event.filename;
 			tmp.prepend("/");
 			
-			if(tmp.left(4) == "/tmp") {
+			if (tmp.left(4) == "/tmp") {
 				tmp.prepend(tmpDirectory);
 			}
 			else {
@@ -198,7 +191,7 @@ void ExternalChangeMonitor::readFam()
 
 void ExternalChangeMonitor::suspendMonitor()
 {
-	if(running) {
+	if (running) {
 		FAMSuspendMonitor(famConn, &famRequest);
 	}
 }
@@ -206,7 +199,7 @@ void ExternalChangeMonitor::suspendMonitor()
 
 void ExternalChangeMonitor::resumeMonitor()
 {
-	if(running) {
+	if (running) {
 		FAMResumeMonitor(famConn, &famRequest);
 	}
 }

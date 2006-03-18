@@ -29,7 +29,7 @@ UndoHistory::UndoHistory()
 UndoHistory::~UndoHistory()
 {
 	unsigned int numElem = undos.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		delete undos[i];
 		undos[i] = NULL;
 	}
@@ -41,17 +41,16 @@ void UndoHistory::addUndo (Undo *undo)
 {
 	if ( currentUndo < undos.size() ) {
 		unsigned int numElem = undos.size();
-		for(unsigned int i=currentUndo; i < numElem; i++) {
+		for (unsigned int i=currentUndo; i < numElem; ++i) {
 			delete undos[currentUndo];
 			undos.erase(undos.begin() + currentUndo);
 		}
 	}
 	
-	if((currentUndo + 1) > MAX_UNDOES) {
+	if ((currentUndo + 1) > MAX_UNDOES) {
 		delete undos.front();
 		undos.erase(undos.begin());
 		--currentUndo;
-		
 	}
 	
 	this->undos.push_back(undo);
@@ -65,34 +64,30 @@ bool UndoHistory::undo(AnimationModel *a)
 		undos[--currentUndo]->undo(a);
 	}
 
-	if(currentUndo == 0) {
+	if (currentUndo == 0) {
 		return false;
 	}
-	else {
-		return true;
-	}
+	return true;
 }
 
 
 bool UndoHistory::redo(AnimationModel *a)
 {
-	if ( currentUndo < undos.size() && undos.size() > 0) {
+	if (currentUndo < undos.size() && undos.size() > 0) {
 		undos[currentUndo++]->redo(a);
 	}
 	
-	if (currentUndo == undos.size()) {
+	if ( currentUndo == undos.size() ) {
 		return false;
 	}
-	else {
-		return true;
-	}
+	return true;
 }
 
 
 void UndoHistory::clear()
 {
 	unsigned int numElem = undos.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		delete undos[i];
 		undos[i] = NULL;
 	}

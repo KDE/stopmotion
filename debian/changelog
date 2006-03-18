@@ -1,3 +1,20 @@
+stopmotion (0.4.1-0bpo1) sarge-backports; urgency=low
+
+  * Backport for sarge
+
+ -- Steffen Joeris <steffen.joeris@skolelinux.de>  Sat, 18 Mar 2006 09:41:45 +0000
+
+stopmotion (0.4.1-1) unstable; urgency=low
+
+  * Code cleanup
+  * Code optimization
+  * Fixed few memory leaks
+  * Made initializing of Stopmotion and reading of image files more robust in
+    case of wrong permissions
+  * Added slovenian translation
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sat,  4 Mar 2006 13:29:38 +0100
+
 stopmotion (0.4.0-1) unstable; urgency=low
 
   * Added a new feature: Automatic grabbing of images at given time intervals

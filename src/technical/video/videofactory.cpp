@@ -27,6 +27,12 @@ VideoFactory::VideoFactory(ProjectSerializer *serializer, Frontend *frontend)
 }
 
 
+VideoFactory::~VideoFactory()
+{
+
+}
+
+
 const char* VideoFactory::createVideoFile(VideoEncoder *encoder)
 {
 	string startCommand = encoder->getStartCommand();

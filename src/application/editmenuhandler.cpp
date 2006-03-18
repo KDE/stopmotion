@@ -66,19 +66,6 @@ void EditMenuHandler::redo()
 }
 
 
-void EditMenuHandler::cut()
-{
-	/*copy();
-	
-	int selectionFrame = frameBar->getSelectionFrame();
-	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
-	int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
-	int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
-	
-	DomainFacade::getFacade()->removeFrames(lowend, highend);*/
-}
-
-
 void EditMenuHandler::copy()
 {
 	QStrList lst;
@@ -118,7 +105,6 @@ void EditMenuHandler::paste()
 		QString fileName = *it;
 		temp = QStringList::split("file:", fileName);
 		fileName = temp.last();
-		//fileName.prepend("/");
 		if(fileName[0] == '/') {
 			uris.push_back(fileName);
 		}

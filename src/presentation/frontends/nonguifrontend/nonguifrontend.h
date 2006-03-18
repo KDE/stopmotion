@@ -24,6 +24,7 @@
 #include "src/presentation/frontends/frontend.h"
 #include "src/domain/domainfacade.h"
 
+
 /**
  * Frontend for using the program through command line options.
  * 

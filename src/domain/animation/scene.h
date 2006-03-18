@@ -21,9 +21,9 @@
 #define SCENE_H
 
 #include "src/config.h"
-
 #include "frame.h"
 #include "src/presentation/frontends/frontend.h"
+
 
 /**
  * Class representing the scenes in the animation
@@ -129,7 +129,6 @@ public:
 	 * @param f the frame to add
 	 */
 	void addSavedFrame(Frame *f);
-	
 	
 	/**
 	 * Adds a sound located at the path ``sound'' to the frame at location frameNumber 

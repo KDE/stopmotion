@@ -21,7 +21,6 @@
 #define MODELHANDLER_H
 
 #include "src/config.h"
-
 #include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 #include "src/application/externalchangemonitor.h"
 

@@ -29,6 +29,7 @@
 #include <sstream>
 #include <libgen.h>
 
+
 unsigned int Frame::tmpNum   = 0;
 unsigned int Frame::trashNum = 0;
 char Frame::tempPath[256]   = {0};
@@ -60,7 +61,7 @@ Frame::~Frame()
 	imagePath = NULL;
 	
 	unsigned int numElem = sounds.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		delete sounds[i];
 		sounds[i] = NULL;
 	}
@@ -168,7 +169,7 @@ void Frame::moveToProjectDir(
 		const char *imageDir, const char *soundDir , unsigned int imgNum )
 {
 	moveToImageDir(imageDir, imgNum);
-	if ( sounds.size() > 0 ) {
+	if (sounds.size() > 0) {
 		moveToSoundDir(soundDir);
 	}
 }
@@ -187,7 +188,7 @@ void Frame::moveToImageDir(const char *directory, unsigned int imgNum)
 	
 	// creates a filename with six characters as total length,
 	// empty characters are filled with zeros
-	for (int i = 0; i < 6 - fileLength; i++) {
+	for (int i = 0; i < 6 - fileLength; ++i) {
 		filename[i] = '0';
 	}
 	strcat(filename, tmp);
@@ -221,7 +222,7 @@ void Frame::moveToSoundDir(const char *directory)
 	// Move all of the sounds belonging to this frame
 	// to the sounds directory
 	unsigned int numSounds = sounds.size();
-	for (unsigned int i = 0; i < numSounds; i++) {
+	for (unsigned int i = 0; i < numSounds; ++i) {
 		AudioFormat *f = sounds[i];
 		char *soundPath = f->getSoundPath();
 		
@@ -256,18 +257,18 @@ void Frame::copyToTemp()
 	snprintf(newImagePath, 256, "%stmp_%d%s", tempPath, tmpNum, dotPtr);
 
 	// the image isn't in the trash directory
-	if ( strstr(imagePath, "/.stopmotion/trash/") == NULL ) {
-		if ( strcmp(imagePath, newImagePath) != 0) {
+	if (strstr(imagePath, "/.stopmotion/trash/") == NULL) {
+		if (strcmp(imagePath, newImagePath) != 0) {
 			// constructs a copy command and executes it
 			snprintf(command, 512, "/bin/cp %s %s", imagePath, newImagePath);
 			system(command);
 		}
 	}
-	else if ( strstr(imagePath, "/.stopmotion/packer/") != NULL ) {
+	else if (strstr(imagePath, "/.stopmotion/packer/") != NULL) {
 		rename(imagePath, newImagePath);
 	}
 	else {
-		if ( strcmp(imagePath, newImagePath) != 0) {
+		if (strcmp(imagePath, newImagePath) != 0) {
 			rename(imagePath, newImagePath);
 			--trashNum;
 		}
@@ -299,9 +300,9 @@ void Frame::moveToTrash()
 	// Remove all of the sounds added to this frame. This should be
 	// added to the undo history in the future.
 	unsigned int numSounds = sounds.size();
-	for (unsigned int i = 0; i < numSounds; i++) {
+	for (unsigned int i = 0; i < numSounds; ++i) {
 		AudioFormat *f = sounds[i];
-		if ( access( f->getSoundPath(), F_OK ) == 0 ) {
+		if (access(f->getSoundPath(), F_OK) == 0) {
 			unlink( f->getSoundPath() );
 		}
 		delete sounds[i];
@@ -324,7 +325,7 @@ void Frame::playSounds(AudioDriver *driver)
 {
 	unsigned int numElem = sounds.size();
 	if (numElem > 0) {
-		for (unsigned int i = 0; i < numElem; i++) {
+		for (unsigned int i = 0; i < numElem; ++i) {
 				driver->addAudioFile(sounds[i]);
 		}
 		driver->playInThread();

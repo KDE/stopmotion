@@ -21,7 +21,6 @@
 
 #include "src/foundation/preferencestool.h"
 #include "flexiblelineedit.h"
-
 #include "graphics/icons/close.xpm"
 
 #include <qlayout.h>
@@ -157,7 +156,7 @@ void ImportTab::initializeImportValues()
 	
 	int numImports = pref->getPreference("numberofimports", 1);
 	int newRow = 0;
-	for(int i=0; i<numImports; i++) {
+	for (int i = 0; i < numImports; ++i) {
 		newRow = deviceSelectionTable->numRows();
 		deviceSelectionTable->insertRows(newRow);
 		checkTableItem = new QCheckTableItem( deviceSelectionTable, "");
@@ -185,7 +184,7 @@ void ImportTab::initializeImportValues()
 	}
 	
 	int activeCommand = pref->getPreference("activedevice", 0);
-	if(activeCommand > -1) {
+	if (activeCommand > -1) {
 		((QCheckTableItem*)deviceSelectionTable->item(activeCommand, 0))->setChecked(true);
 	}
 	
@@ -201,8 +200,8 @@ void ImportTab::apply()
 	
 	//Deletes removed imports from the preferencestool.
 	int prefSize = prefs->getPreference("numberofimports", -1);
- 	if(prefSize > size) {
-		for(int i=size; i<prefSize; ++i) {
+ 	if (prefSize > size) {
+		for (int i = size; i < prefSize; ++i) {
 			prefs->removePreference(QString("importname%1").arg(i).ascii());
 			prefs->removePreference(QString("importdescription%1").arg(i).ascii());
 			prefs->removePreference(QString("importprepoll%1").arg(i).ascii());
@@ -212,7 +211,7 @@ void ImportTab::apply()
 	}
 	prefs->setPreference("numberofimports", size, true);
 	
-	for(int i=0; i<size; i++) {
+	for (int i = 0; i < size; ++i) {
 		prefs->setPreference(QString("importname%1").arg(i), 
 				deviceSelectionTable->text(i, 1).ascii(), true);
 		prefs->setPreference(QString("importdescription%1").arg(i),
@@ -223,7 +222,7 @@ void ImportTab::apply()
 				startDeamonStrings[i].ascii(), true);
 		prefs->setPreference(QString("importstopdeamon%1").arg(i),
 				stopDeamonStrings[i].ascii(), true);
-		if( ((QCheckTableItem*)deviceSelectionTable->item(i, 0))->isChecked() ) {
+		if ( ((QCheckTableItem*)deviceSelectionTable->item(i, 0))->isChecked() ) {
 			activeCommand = i;
 		}
 	}
@@ -236,8 +235,7 @@ void ImportTab::addImportProgram()
 {
 	int newRow = deviceSelectionTable->numRows();
 	deviceSelectionTable->insertRows(newRow);
-	deviceSelectionTable->setItem( newRow, 0, 
-			new QCheckTableItem( deviceSelectionTable, ""));
+	deviceSelectionTable->setItem( newRow, 0, new QCheckTableItem( deviceSelectionTable, ""));
 	prePollStrings.push_back("");
 	startDeamonStrings.push_back("");
 	stopDeamonStrings.push_back("");
@@ -259,8 +257,7 @@ void ImportTab::removeImportProgram()
 
 void ImportTab::valueChanged(int row, int column)
 {
-	switch (column)
-	{
+	switch (column) {
 		case 0:
 		{
 			int size = deviceSelectionTable->numRows();
@@ -293,7 +290,7 @@ void ImportTab::valueChanged(int row, int column)
 void ImportTab::activeRowChanged(int row)
 {
 	selectedDevice = row;
-	if(grabberPreferences->isShown()) {
+	if ( grabberPreferences->isShown() ) {
 		changeSettings();
 	}
 }
@@ -301,7 +298,7 @@ void ImportTab::activeRowChanged(int row)
 
 void ImportTab::changeSettings()
 {
-	if(selectedDevice >= 0) {
+	if (selectedDevice >= 0) {
 		prePollEdit->setText(prePollStrings[selectedDevice]);
 		startDeamonEdit->setText(startDeamonStrings[selectedDevice]);
 		stopDeamonEdit->setText(stopDeamonStrings[selectedDevice]);

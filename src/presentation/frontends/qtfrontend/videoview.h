@@ -21,10 +21,10 @@
 #define VIDEOVIEW_H
 
 #include "src/config.h"
-
 #include "src/presentation/observer.h"
 
 #include <qwidget.h>
+
 
 /**
  * Abstract class for the widgets who displays video to the users. 
@@ -61,7 +61,6 @@ public:
 	 */
 	virtual void initCompleted();
 	
-	
 	/**
 	 *Function to recieven notification when a frame is added.
 	 *
@@ -79,7 +78,6 @@ public:
 	 *
 	 */
 	virtual void updateMove(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition);
-	
 	
 	/**
 	 *Function to recieve notification when a new frame is selected.
@@ -126,7 +124,6 @@ public:
 	
 	void setMixCount(int mixCount);
 
-
 	virtual bool setViewMode(int mode);
 	virtual int getViewMode();
 
@@ -136,9 +133,6 @@ protected:
 	
 	virtual void initCamera();
 	
-private:
-
-
 signals:
 	void cameraReady();
 };

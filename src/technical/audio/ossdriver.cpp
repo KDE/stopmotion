@@ -121,7 +121,7 @@ bool OSSDriver::initialize()
 		{1, AFMT_S16_LE, 2, 44100} 
 	};
 	
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; ++i) {
 		// Initializes the audio device
 		if ( !setIoctl(initValues[0][i], initValues[1][i]) ) {
 			close(audioFD);
@@ -160,13 +160,13 @@ void OSSDriver::shutdown()
 		
 		// Wait for the threads to terminate
 		unsigned int numElem = audioThreads.size();
-		for (unsigned int i = 0; i < numElem; i++) {
+		for (unsigned int i = 0; i < numElem; ++i) {
 			pthread_join(audioThreads[i], NULL);
 		}
 		audioThreads.clear();
 		
 		numElem = audioFiles.size();
-		for (unsigned int i = 0; i < numElem; i++) {
+		for (unsigned int i = 0; i < numElem; ++i) {
 			// Just to ensure that the file is closed
 			audioFiles[i]->close();
 		}

@@ -75,8 +75,8 @@ void RunAnimationHandler::toggleRunning()
 void RunAnimationHandler::runAnimation()
 {
 	DomainFacade *f = DomainFacade::getFacade();
-	if(f->getActiveSceneNumber() >= 0) {
-		if(f->getSceneSize(f->getActiveSceneNumber()) > 0) {
+	if (f->getActiveSceneNumber() >= 0) {
+		if (f->getSceneSize(f->getActiveSceneNumber()) > 0) {
 			f->initAudioDevice();
 			QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(runAnimation()) );
 			QObject::connect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
@@ -84,12 +84,8 @@ void RunAnimationHandler::runAnimation()
 			playButton->setToggleButton(true);
 			playButton->toggle();
 			removeFramesButton->setEnabled(false);
-			
 			frameNr = f->getActiveFrameNumber();
-			
 			statusBar->message( tr("Running animation"), 2000 );
-			//this->frameNr = 0;
-			//QObject::connect( timer, SIGNAL(timeout()), this, SLOT(playNextFrame()) );
 			timer->start( 1000/fps, false );
 		}
 	}
@@ -98,11 +94,11 @@ void RunAnimationHandler::runAnimation()
 
 void RunAnimationHandler::stopAnimation()
 {
-	if(timer->isActive()) {
+	if ( timer->isActive() ) {
  		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
  		QObject::connect(playButton, SIGNAL(clicked()), this, SLOT(runAnimation()));
 		
-		if(playButton->isOn()) {
+		if ( playButton->isOn() ) {
 			playButton->toggle();
 		}
 		
@@ -128,11 +124,11 @@ void RunAnimationHandler::setPauseButton(QPushButton * pauseButton)
 
 void RunAnimationHandler::pauseAnimation()
 {
-	if(timer->isActive()) {
+	if ( timer->isActive() ) {
 		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
 		QObject::connect(playButton, SIGNAL(clicked()), this, SLOT(runAnimation()));
 		
-		if(playButton->isOn()) {
+		if ( playButton->isOn() ) {
 			playButton->toggle();
 		}
 		
@@ -153,7 +149,7 @@ void RunAnimationHandler::pauseAnimation()
 void RunAnimationHandler::selectPreviousFrame()
 {
 	int afn = DomainFacade::getFacade()->getActiveFrameNumber();
-	if(afn > 0) {
+	if (afn > 0) {
 		DomainFacade::getFacade()->setActiveFrame(afn-1);
 	}
 }
@@ -162,7 +158,7 @@ void RunAnimationHandler::selectPreviousFrame()
 void RunAnimationHandler::selectNextFrame()
 {
 	int afn = DomainFacade::getFacade()->getActiveFrameNumber();
-	if(afn > -1 && afn < (int)DomainFacade::getFacade()->
+	if (afn > -1 && afn < (int)DomainFacade::getFacade()->
 			getSceneSize(DomainFacade::getFacade()->
 			getActiveSceneNumber()) - 1) {
 		DomainFacade::getFacade()->setActiveFrame(afn+1);
@@ -173,7 +169,7 @@ void RunAnimationHandler::selectNextFrame()
 void RunAnimationHandler::selectPreviousScene()
 {
 	int asn = DomainFacade::getFacade()->getActiveSceneNumber();
-	if(asn > 0) {
+	if (asn > 0) {
 		DomainFacade::getFacade()->setActiveScene(asn-1);
 	}
 }
@@ -182,7 +178,7 @@ void RunAnimationHandler::selectPreviousScene()
 void RunAnimationHandler::selectNextScene()
 {
 	int asn = DomainFacade::getFacade()->getActiveSceneNumber();
-	if(asn > -1 && asn < (int)DomainFacade::getFacade()->
+	if (asn > -1 && asn < (int)DomainFacade::getFacade()->
 			getNumberOfScenes() -1) {
 		DomainFacade::getFacade()->setActiveScene(asn+1);
 	}
@@ -192,7 +188,7 @@ void RunAnimationHandler::selectNextScene()
 void RunAnimationHandler::setSpeed(int fps)
 {
 	this->fps = fps;
-	if( timer->isActive() ) {
+	if ( timer->isActive() ) {
 		timer->changeInterval(1000/this->fps);
 	}
 	
@@ -211,10 +207,10 @@ void RunAnimationHandler::playNextFrame()
 {
 	DomainFacade *facade = DomainFacade::getFacade();
 	
-	if(facade->getActiveSceneNumber() >= 0) {
+	if (facade->getActiveSceneNumber() >= 0) {
 		facade->playFrame( frameNr );
 		
-		if(isLooping) {
+		if (isLooping) {
 			frameNr = (frameNr < facade->getSceneSize(
 						facade->getActiveSceneNumber()) - 1) 
 						? frameNr+1 : 0;

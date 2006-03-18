@@ -27,6 +27,7 @@
 #include "licence.h"
 #include "preferencesmenu.h"
 #include "toolsmenu.h"
+#include "helpwindow.h"
 
 #include "graphics/icons/windowicon.xpm"
 #include "graphics/icons/configureicon.xpm"
@@ -63,8 +64,6 @@
 #include <qtextedit.h>
 #include <qaccel.h>
 #include <qtextbrowser.h>
-#include "helpwindow.h"
-
 #include <iostream>
 
 using namespace std;
@@ -126,26 +125,21 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	strcpy( lastVisitedDir, getenv("PWD") );
 	centerWidget = new QSplitter(Qt::Vertical, this);
 	centerWidget->setChildrenCollapsible(false);
-	//centerWidget->setResizeMode( QWidget * w, ResizeMode mode )
 	
 	makeFrameBar(centerWidget);
-	//centerWidget->setResizeMode(frameBar, QSplitter::KeepSize);
 	
 	setupDirectoryMonitoring();
 	createHandlers(stApp);
 	createAccelerators();
 	
 	bottomSplitter = new QVBox(centerWidget);
-	
 	makePreferencesMenu(bottomSplitter);
 	
 	//Initializes and sets up the workarea consisting of the toolsmenu and the frameview.
 	workArea = new QHBox(bottomSplitter);
-
 	makeToolsMenu(workArea);
 	makeViews(workArea);
 	makeGotoMenu(centerWidget);
-	
 	setCentralWidget(centerWidget);
 	
 	makeStatusBar();
@@ -308,7 +302,6 @@ void MainWindowGUI::createActions()
 	quitAct->setAccel(CTRL+Key_Q);
 	connect(quitAct, SIGNAL(activated()), qApp, SLOT(quit()));
 	
-	
 	//Edit menu
 	undoAct = new QAction(this);
 	undoAct->setIconSet(QIconSet(undoicon));
@@ -323,7 +316,6 @@ void MainWindowGUI::createActions()
 	cutAct = new QAction(this);
 	cutAct->setIconSet(QIconSet(cuticon));
 	cutAct->setAccel(CTRL+Key_X);
-	connect(cutAct, SIGNAL(activated()), editMenuHandler, SLOT(cut()));
 	
 	copyAct = new QAction(this);
 	copyAct->setIconSet(QIconSet(copyicon));
@@ -339,18 +331,10 @@ void MainWindowGUI::createActions()
 	gotoFrameAct->setAccel(CTRL+Key_G);
 	connect(gotoFrameAct, SIGNAL(activated()), gotoMenu, SLOT(open()));
 	
-	
-	//Settings menu	
-// 	disableAct = new QAction(this);
-	//disableAct->setAccel(CTRL+Key_G);
-	//connect(disableAct, SIGNAL(activated()), gotoMenu, SLOT(open()));
-// 	disableAct->setEnabled(false);
-	
 	configureAct = new QAction(this);
 	configureAct->setIconSet(QIconSet(configureicon));
 	configureAct->setAccel(CTRL+Key_P);
 	connect(configureAct, SIGNAL(activated()), this, SLOT(showPreferencesMenu()));
-	
 
 	//Help menu
 	whatsthisAct = new QAction(this);
@@ -514,17 +498,13 @@ void MainWindowGUI::retranslateStrings()
 	videoAct->setMenuText(		tr("Video"));
 	cinerellaAct->setMenuText(	tr("Cinelerra"));
 	quitAct->setMenuText(		tr("&Quit"));
-	
 	undoAct->setMenuText(		tr("&Undo"));
 	redoAct->setMenuText(		tr("Re&do"));
 	cutAct->setMenuText(		tr("Cu&t"));
 	copyAct->setMenuText(		tr("&Copy"));
 	pasteAct->setMenuText(		tr("&Paste"));
 	gotoFrameAct->setMenuText(	tr("&Go to frame"));
-	
-// 	disableAct->setMenuText(	tr("Disable sound"));
 	configureAct->setMenuText(		tr("&Configure Stopmotion"));
-	
 	whatsthisAct->setMenuText(	tr("What's &This"));
 	helpAct->setMenuText(		tr("&Help"));
 	aboutAct->setMenuText(		tr("&About"));
@@ -535,7 +515,6 @@ void MainWindowGUI::retranslateStrings()
 	
 	//Tooltip and whatsthis texts
 	retranslateHelpText();
-	
 	
 	//The menus
 	menuBar()->clear(); 
@@ -558,10 +537,9 @@ void MainWindowGUI::retranslateStrings()
 	quitAct->addTo(fileMenu);
 	
 	menuBar()->insertItem( tr("&Edit"), editMenu);
-	
 	menuBar()->insertItem( tr("&Settings"), settingsMenu);
+	
 	settingsMenu->clear();
-// 	disableAct->addTo(settingsMenu);
  	settingsMenu->insertItem(QIconSet(languages), tr("&Languages"), languagesMenu);
 	configureAct->addTo(settingsMenu);
 	
@@ -693,17 +671,6 @@ void MainWindowGUI::retranslateHelpText()
 			gotoFrameAct->toolTip().prepend(tr("Go to frame"));
 	gotoFrameAct->setToolTip(infoText);
 	
-	
-	//Settings menu
-	/*infoText =
-			tr("<h4>Disable sound</h4> "
-			"<p>This will disable the sound from playing when you run the "
-			"animation</p>");
-	disableAct->setWhatsThis(infoText);
-	infoText = 
-			disableAct->toolTip().prepend(tr("Quit"));
-	disableAct->setToolTip(infoText);*/
-	
 	infoText =
 			tr("<h4>Configure Stopmotion</h4> "
 			"<p>This will opens a window where you can <em>configure</em> "
@@ -831,7 +798,7 @@ void MainWindowGUI::openProject( const char * projectFile )
 	fileMenu->setItemEnabled(SAVE, true);
 	setMostRecentProject();
 	int size = DomainFacade::getFacade()->getModelSize();
-	if(size > 0) {
+	if (size > 0) {
 		activateMenuOptions();
 		modelSizeChanged(size);
 		toolsMenu->modelSizeChanged(size);
@@ -841,21 +808,27 @@ void MainWindowGUI::openProject( const char * projectFile )
 void MainWindowGUI::openMostRecent()
 {
 	PreferencesTool *pref = PreferencesTool::get();
-	openProject( pref->getPreference("mostRecent", "") );
+	const char *prop = pref->getPreference("mostRecent", "");
+	openProject(prop);
+	xmlFree((xmlChar*)prop);
 }
 
 
 void MainWindowGUI::openSecondMostRecent()
 {
 	PreferencesTool *pref = PreferencesTool::get();
-	openProject( pref->getPreference("secondMostRecent", "") );
+	const char *prop = pref->getPreference("secondMostRecent", "");
+	openProject(prop);
+	xmlFree((xmlChar*)prop);
 }
 
 
 void MainWindowGUI::openThirdMostRecent()
 {
 	PreferencesTool *pref = PreferencesTool::get();
-	openProject( pref->getPreference("thirdMostRecent", "") );
+	const char *prop = pref->getPreference("thirdMostRecent", "");
+	openProject(prop);
+	xmlFree((xmlChar*)prop);
 }
 
 
@@ -905,13 +878,20 @@ void MainWindowGUI::exportToVideo()
 	else {
 		bool isCanceled = false;
 		char tmp[256];
-		VideoEncoder *enc = new VideoEncoder();
+		VideoEncoder enc;
+		
 		sprintf(tmp, "startEncoder%d", active);
-		enc->setStartCommand( prefs->getPreference(tmp, "") );
+		const char *prop = prefs->getPreference(tmp, "");
+		enc.setStartCommand(prop);
+		xmlFree((xmlChar*)prop);
+		
 		sprintf(tmp, "stopEncoder%d", active);
-		enc->setStopCommand( prefs->getPreference(tmp, "") );
+		prop = prefs->getPreference(tmp, "");
+		enc.setStopCommand(prop);
+		xmlFree((xmlChar*)prop);
+			
 		sprintf(tmp, "outputFile%d", active);
-		const char *output = prefs->getPreference(tmp, "");
+		const char *output = prefs->getPreference(tmp, "");	
 		if (strcmp(output, "") == 0) {
 			QString file = QFileDialog::getSaveFileName(lastVisitedDir, NULL,
 			this, "Export to video", tr("Export to video file"));
@@ -919,15 +899,17 @@ void MainWindowGUI::exportToVideo()
 				isCanceled = true;	
 			}
 			else {
-				enc->setOutputFile( file.ascii() );
+				enc.setOutputFile( file.ascii() );
 			}
 		}
 		else {
-			enc->setOutputFile(output);
+			enc.setOutputFile(output);
+			xmlFree((xmlChar*)output);
 		}
-		if ( enc->isValid() && isCanceled == false ) {
+		
+		if ( enc.isValid() && isCanceled == false ) {
 			saveProject();
-			DomainFacade::getFacade()->exportToVideo(enc);
+			DomainFacade::getFacade()->exportToVideo(&enc);
 		}
 		else if (isCanceled == false){
 			int ret = QMessageBox::warning(this,
@@ -966,10 +948,10 @@ void MainWindowGUI::dropEvent(QDropEvent *event)
 {
 	Logger::get().logDebug("Drop inside the application");
 
-	if( QUriDrag::canDecode(event) ) {
+	if ( QUriDrag::canDecode(event) ) {
 		QStringList fileNames;
 		
-		if( QUriDrag::decodeLocalFiles(event, fileNames) ) {
+		if ( QUriDrag::decodeLocalFiles(event, fileNames) ) {
 			Logger::get().logDebug("test");
 			modelHandler->addFrames(fileNames);
 		}
@@ -1063,6 +1045,7 @@ void MainWindowGUI::showAboutDialog()
 						"</p>"
 						"<p><b>Translation</b><br>"
 						"George Helebrant &lt;helb@skatekralovice.com&gt; (Czech)<br>"
+						"Gorazd Bizjak and Matej Lavreni &lt;info@zapstudio.net&gt; (Slovenian)<br>"
 						"</p>") );
 	thanksToText->setReadOnly(true);
 	thanksToText->setPaletteBackgroundColor(aboutDialog->paletteBackgroundColor());
@@ -1073,11 +1056,9 @@ void MainWindowGUI::showAboutDialog()
 	licenceText->setHScrollBarMode( QScrollView::AlwaysOff );
 	licenceText->setMinimumWidth(620);
 	licenceText->setMinimumHeight(250);
-	
 	licenceText->setText( licence );
 	
 	aboutDialog->addTab(licenceText, tr("&Licence Agreement"));
-	
 	aboutDialog->show();
 }
 
@@ -1100,18 +1081,6 @@ void MainWindowGUI::showHelpDialog()
 	else {
 		help->showMaximized();
 	}
-	/*QDialog *helpDialog = new QDialog(this, "helpdialog", false, WDestructiveClose);
-	
-	QTextBrowser *helpText = new QTextBrowser(helpDialog);
-	helpText->setMinimumWidth(600);
-	helpText->setMinimumHeight(400);
-	
-	//helpText->setSource("/usr/share/doc/stopmotion/html/index");
-	helpText->mimeSourceFactory()->setFilePath("/usr/share/doc/stopmotion/html/index");
-	
-	helpDialog->show();
-	//QTextBrowser *helpDialog = new QTabDialog(
-	//		WDestructiveClose);*/
 }
 
 
@@ -1131,8 +1100,7 @@ void MainWindowGUI::mousePressEvent( QMouseEvent * )
 
 void MainWindowGUI::modelSizeChanged( int modelSize )
 {
-	if(modelSize == 0) {
-// 		editMenu->setItemEnabled(CUT, false);
+	if (modelSize == 0) {
 		cutAct->setEnabled(false);
 		copyAct->setEnabled(false);
 		gotoFrameAct->setEnabled(false);
@@ -1150,10 +1118,6 @@ void MainWindowGUI::activateMenuOptions()
 {
 	undoAct->setEnabled(true);
 	redoAct->setEnabled(true);
-	//gotoFrameAct->setEnabled(true);
-	//saveAsAct->setEnabled(true);
-	//copyAct->setEnabled(true);
-	//cutAct->setEnabled(true);
 }
 
 
@@ -1170,7 +1134,10 @@ void MainWindowGUI::setMostRecentProject()
 			prefs->setPreference("secondMostRecent", second, false);
 			prefs->setPreference("thirdMostRecent", third, false);
 			updateMostRecentMenu();
+			xmlFree((xmlChar*)second);
+			xmlFree((xmlChar*)third);
 		}
+		xmlFree((xmlChar*)prefsFirst);
 	}
 }
 
@@ -1181,19 +1148,28 @@ void MainWindowGUI::updateMostRecentMenu()
 	PreferencesTool *pref = PreferencesTool::get();
 	
 	const char *first = pref->getPreference("mostRecent", "");
-	if ( strcmp(first, "") != 0 && access(first, F_OK) == 0 ) {
-		mostRecentAct->setMenuText(first);
-		mostRecentAct->addTo(mostRecentMenu);
+	if (strcmp(first, "") != 0) {
+		if (access(first, R_OK) == 0) {
+			mostRecentAct->setMenuText(first);
+			mostRecentAct->addTo(mostRecentMenu);
+		}
+		xmlFree((xmlChar*)first);
 	}
 	const char *second = pref->getPreference("secondMostRecent", "");
-	if (strcmp(second, "") != 0 && access(second, F_OK) == 0 ) {
-		secondMostRecentAct->setMenuText(second);
-		secondMostRecentAct->addTo(mostRecentMenu);
+	if (strcmp(second, "") != 0) { 
+		if (access(second, R_OK) == 0) {
+			secondMostRecentAct->setMenuText(second);
+			secondMostRecentAct->addTo(mostRecentMenu);
+		}
+		xmlFree((xmlChar*)second);
 	}
 	const char *third = pref->getPreference("thirdMostRecent", "");
-	if (strcmp(third, "") != 0 && access(third, F_OK) == 0 ) {
-		thirdMostRecentAct->setMenuText(third);
-		thirdMostRecentAct->addTo(mostRecentMenu);
+	if (strcmp(third, "") != 0) {
+		if (access(third, R_OK) == 0) {
+			thirdMostRecentAct->setMenuText(third);
+			thirdMostRecentAct->addTo(mostRecentMenu);
+		}
+		xmlFree((xmlChar*)third);
 	}
 }
 

@@ -26,6 +26,7 @@
 
 using namespace std;
 
+
 /**
  *Factory for storing, handling and retrieving undos.
  *

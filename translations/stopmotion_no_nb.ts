@@ -948,5 +948,21 @@ to running the image grabbing as a deamon.</source>
 en nisse. Gå til preferansemenyen (CTRL+P ) for å sette at 
 programmet skal kjøres som en nisse.</translation>
     </message>
+    <message>
+        <source>Auto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pr sec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pr min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pr hr</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -33,48 +33,66 @@ void recover(DomainFacade *facadePtr);
 
 int main(int argc, char **argv) 
 {
-	// returns a pointer that is allocated with new
-	DomainFacade *facadePtr = DomainFacade::getFacade();
-	
 	atexit(cleanup);
 	int ret = 0;
+	bool hasCorrectPermissions = true;
+	
+	// Check if ~./stopmotion directory exists, create it if not
+	char tmp[256] = {0};
+	snprintf( tmp, 256, "%s/.stopmotion/", getenv("HOME") );
+	if ( access(tmp, F_OK) == -1 ) {
+		mkdir(tmp, 0755);
+	}
+	else if (access(tmp, R_OK | W_OK | X_OK) == -1) {
+		hasCorrectPermissions = false;
+	}
+	
+	// returns a pointer to the facade (allocated with new)
+	DomainFacade *facadePtr = DomainFacade::getFacade();
 	
 	// if program is started with --nonGUI
 	if ( argc > 1 && strcmp(argv[1], "--nonGUI") == 0 ) {
-		NonGUIFrontend *nonGUIFrontend = new NonGUIFrontend(facadePtr);
-		facadePtr->registerFrontend(nonGUIFrontend);
-		init(nonGUIFrontend, facadePtr);
-		ret = nonGUIFrontend->run(argc, argv);
-		delete nonGUIFrontend;
-		nonGUIFrontend = NULL;
+		NonGUIFrontend nonGUIFrontend(facadePtr);
+		if (hasCorrectPermissions == false) {
+			nonGUIFrontend.reportError(
+					"You do not have the necessary permissions to run Stopmotion.\n"
+					"You need permission to read, write and execute on ~/.stopmotion", 1);
+			delete facadePtr;
+			facadePtr = NULL;
+			return 1;
+		}
+		
+		facadePtr->registerFrontend(&nonGUIFrontend);
+		init(&nonGUIFrontend, facadePtr);
+		ret = nonGUIFrontend.run(argc, argv);
 	}
 	else {
 #ifdef QTGUI
-		QtFrontend *qtFrontend = new QtFrontend(argc, argv);
-		if (qtFrontend != NULL) {
-			facadePtr->registerFrontend(qtFrontend);
-			bool hasRecovered = init(qtFrontend, facadePtr);
-			if ( hasRecovered == false && argc > 1 && access(argv[1], R_OK) == 0) {
-				facadePtr->openProject(argv[1]);
-				const char *proFile = facadePtr->getProjectFile();
-				if ( proFile != NULL ) {
-					PreferencesTool *pref = PreferencesTool::get();
-					pref->setPreference("mostRecent", proFile);
-				}
+		QtFrontend qtFrontend(argc, argv);
+		if (hasCorrectPermissions == false) {
+			qtFrontend.reportError(
+					"You do not have the necessary permissions to run Stopmotion.\n"
+					"You need permission to read, write and execute on ~/.stopmotion", 1);
+			delete facadePtr;
+			facadePtr = NULL;
+			return 1;
+		}
+		facadePtr->registerFrontend(&qtFrontend);
+		bool hasRecovered = init(&qtFrontend, facadePtr);
+		if ( hasRecovered == false && argc > 1 && access(argv[1], R_OK) == 0) {
+			facadePtr->openProject(argv[1]);
+			const char *proFile = facadePtr->getProjectFile();
+			if ( proFile != NULL ) {
+				PreferencesTool *pref = PreferencesTool::get();
+				pref->setPreference("mostRecent", proFile);
 			}
-			ret = qtFrontend->run(argc, argv);
-			delete qtFrontend;
-			qtFrontend = NULL;
 		}
-		else {
-			printf("Error: Out of memory!\n");
-		}
+		ret = qtFrontend.run(argc, argv);
 #endif
 	}
 	
 	delete facadePtr;
 	facadePtr = NULL;
-
 	return ret;
 }
 
@@ -135,13 +153,6 @@ bool isRecoveryMode()
 void createDirectories()
 {
 	char tmp[256] = {0};
-	snprintf( tmp, 256, "%s/.stopmotion/", getenv("HOME") );
-	
-	// is ~/.stopmotion doesn't exist
-	if ( access(tmp, F_OK) == -1 ) {
-		mkdir(tmp, 0755);
-	}
-	
 	snprintf( tmp, 256, "%s/.stopmotion/tmp/", getenv("HOME") );
 	mkdir(tmp, 0755);
 	snprintf( tmp, 256, "%s/.stopmotion/trash/", getenv("HOME") );
@@ -170,6 +181,9 @@ void recover(DomainFacade *facadePtr)
 				if ( strstr(mostRecent, ep->d_name) != NULL && 
 							access(mostRecent, F_OK) == 0) {
 					facadePtr->openProject(mostRecent);
+				}
+				if (strcmp(mostRecent, "") != 0) {
+					xmlFree((xmlChar*)mostRecent);
 				}
 				break;
 			}
@@ -208,14 +222,15 @@ void recover(DomainFacade *facadePtr)
 					AudioFile af;
 					af.belongsTo = (unsigned int)atoi(index);
 					strcpy(af.filename, fileName);
-					sounds.push_back(af);	
+					sounds.push_back(af);
+					delete [] fileName;
+					fileName = NULL;
 				}
 			}
 			else {
 				delete [] fileName;
+				fileName = NULL;
 			}
-			fileName = NULL;
-			
 		}
 		closedir(dp);
 		
@@ -223,12 +238,13 @@ void recover(DomainFacade *facadePtr)
 		facadePtr->addFrames(frames);
 
 		unsigned int numElem = frames.size();
-		for (unsigned int i = 0; i < numElem; i++) {
+		for (unsigned int i = 0; i < numElem; ++i) {
 			delete [] frames[i];
+			frames[i] = NULL;
 		}
 		
 		numElem = sounds.size();
-		for (unsigned int j = 0; j < numElem; j++) {
+		for (unsigned int j = 0; j < numElem; ++j) {
 			facadePtr->addSound(sounds[j].belongsTo, sounds[j].filename);
 		}
 	}
