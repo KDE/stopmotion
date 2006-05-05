@@ -16,7 +16,7 @@ endif
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-	CFLAGS="$(CFLAGS)" ./configure --prefix=debian/stopmotion/usr
+	CFLAGS="$(CFLAGS)" ./configure --prefix=/usr
 
 build: build-stamp
 
@@ -49,12 +49,10 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/stopmotion.
-	$(MAKE) install prefix=$(CURDIR)/debian/stopmotion/usr
+	$(MAKE) install prefix=$(CURDIR)/debian/stopmotion
 	install -D -o 0 -g 0 -m 644 stopmotion.desktop $(CURDIR)/debian/stopmotion/usr/share/applications/stopmotion.desktop
 	install -D -o 0 -g 0 -m 644 graphics/stopmotion.png $(CURDIR)/debian/stopmotion/usr/share/pixmaps/stopmotion.png
 	install -D -o 0 -g 0 -m 644 graphics/stopmotion.xpm $(CURDIR)/debian/stopmotion/usr/share/pixmaps/stopmotion.xpm
-	cp -R html/ $(CURDIR)/debian/stopmotion/usr/share/doc/stopmotion/
-	cp translations/*.qm $(CURDIR)/debian/stopmotion/usr/share/stopmotion/translations/
 
 # Build architecture-independent files here.
 binary-indep: build install

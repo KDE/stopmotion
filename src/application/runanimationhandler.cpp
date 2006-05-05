@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "runanimationhandler.h"
+#include "src/application/runanimationhandler.h"
 
 #include "src/foundation/preferencestool.h"
 #include "src/domain/domainfacade.h"
@@ -25,7 +25,7 @@
 
 RunAnimationHandler::RunAnimationHandler ( QObject *parent, QStatusBar *sb, 
 		const char *name ) 
-		: QObject(parent, name), statusBar(sb)
+		: QObject(parent), statusBar(sb)
 {
 	playButton         = NULL;
 	pauseButton        = NULL;
@@ -40,6 +40,7 @@ RunAnimationHandler::RunAnimationHandler ( QObject *parent, QStatusBar *sb,
 	
 	timer = new QTimer(this);
 	QObject::connect( timer, SIGNAL(timeout()), this, SLOT(playNextFrame()) );
+	setObjectName(name);
 }
 
 
@@ -81,12 +82,14 @@ void RunAnimationHandler::runAnimation()
 			QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(runAnimation()) );
 			QObject::connect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
 			
-			playButton->setToggleButton(true);
+			//playButton->setToggleButton(true);
+			playButton->setChecked(true);
 			playButton->toggle();
 			removeFramesButton->setEnabled(false);
 			frameNr = f->getActiveFrameNumber();
-			statusBar->message( tr("Running animation"), 2000 );
-			timer->start( 1000/fps, false );
+			statusBar->showMessage( tr("Running animation"), 2000 );
+			timer->start( 1000/fps);
+			timer->setSingleShot(false);
 		}
 	}
 }
@@ -98,18 +101,18 @@ void RunAnimationHandler::stopAnimation()
  		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
  		QObject::connect(playButton, SIGNAL(clicked()), this, SLOT(runAnimation()));
 		
-		if ( playButton->isOn() ) {
+		if ( playButton->isChecked() ) {
 			playButton->toggle();
 		}
 		
-		playButton->setToggleButton(false);
+		playButton->setChecked(false);
 		removeFramesButton->setEnabled(true);
 		
 		DomainFacade *f = DomainFacade::getFacade();
 		f->setActiveFrame( frameNr );
 		f->shutdownAudioDevice();
 		
-		statusBar->clear();
+		statusBar->clearMessage();
 		timer->stop();
 		f->setActiveFrame(0);
 	}
@@ -128,18 +131,18 @@ void RunAnimationHandler::pauseAnimation()
 		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
 		QObject::connect(playButton, SIGNAL(clicked()), this, SLOT(runAnimation()));
 		
-		if ( playButton->isOn() ) {
+		if ( playButton->isChecked() ) {
 			playButton->toggle();
 		}
 		
-		playButton->setToggleButton(false);
+		playButton->setChecked(false);
 		removeFramesButton->setEnabled(true);
 		
 		DomainFacade *f = DomainFacade::getFacade();
 		f->setActiveFrame( frameNr );
 		f->shutdownAudioDevice();
 		
-		statusBar->clear();
+		statusBar->clearMessage();
 		timer->stop();
 	}
 	
@@ -189,7 +192,7 @@ void RunAnimationHandler::setSpeed(int fps)
 {
 	this->fps = fps;
 	if ( timer->isActive() ) {
-		timer->changeInterval(1000/this->fps);
+		timer->setInterval(1000/this->fps);
 	}
 	
 	//Adding the fps to the preferencestool.

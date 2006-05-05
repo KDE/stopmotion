@@ -21,15 +21,13 @@
 #define CAMERAHANDLER_H
 
 #include "src/config.h"
-#include "src/presentation/frontends/qtfrontend/videoview.h"
 #include "src/presentation/frontends/qtfrontend/frameview.h"
-#include "modelhandler.h"
+#include "src/application/modelhandler.h"
 
-#include <qobject.h>
-#include <qpushbutton.h>
-#include <qstatusbar.h>
-#include <qwidgetstack.h>
-#include <qtimer.h>
+#include <QObject>
+#include <QPushButton>
+#include <QStatusBar>
+#include <QTimer>
 
 
 /**
@@ -53,9 +51,7 @@ public:
 	~CameraHandler();
 
 	void setCameraButton( QPushButton *cameraButton );
-	void setWidgetStack(QWidgetStack *frameViewStack);
 	void setFrameView(FrameView *frameView);
-	void setVideoView(VideoView *videoView);
 	
 	/**
 	 * Sets the viewing mode which is the type of effect used when running the camera.
@@ -83,7 +79,6 @@ public slots:
 	 */
 	void switchToVideoView();
 	
-	
 private:
 	QStatusBar *statusBar;
 	QPushButton *cameraButton;
@@ -92,8 +87,6 @@ private:
 	bool isCameraOn;
 	ModelHandler *modelHandler;
 	
-	QWidgetStack *frameViewStack;
-	VideoView *videoView;
 	FrameView *frameView;
 	
 	void cameraOn();

@@ -17,27 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "picturepreview.h"
+#ifndef UTIL_H
+#define UTIL_H
 
-#include <qpixmap.h> 
-#include <qimage.h> 
+#include "src/technical/util.h"
 
 
-PicturePreview::PicturePreview( QWidget *parent ) : QLabel(parent)
+class Util
 {
-	this->setMinimumWidth(60);
-	this->setMaximumSize(PREVIEW_SIZE, PREVIEW_SIZE);
-}
+public:
+	static const char* checkCommand(const char* command);
+};
 
+#endif
 
-void PicturePreview::previewUrl( const QUrl &u )
-{
-	QString path = u.path();
-	QImage img( path );
-	if ( !img.isNull() ) {
-		img = img.smoothScale(PREVIEW_SIZE, PREVIEW_SIZE);
-		QPixmap pix;
-		pix.convertFromImage(img);
-		setPixmap( pix );
-	}
-}

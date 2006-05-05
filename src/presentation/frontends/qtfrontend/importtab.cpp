@@ -19,37 +19,31 @@
  ***************************************************************************/
 #include "importtab.h"
 
-#include "src/foundation/preferencestool.h"
 #include "flexiblelineedit.h"
 #include "graphics/icons/close.xpm"
 
-#include <qlayout.h>
-#include <qlabel.h>
+#include <QLayout>
+#include <QLabel>
+#include <QGridLayout>
+#include <QTextEdit>
+#include <QHeaderView>
 
 
-ImportTab::ImportTab( QWidget *parent ) : QFrame(parent)
+ImportTab::ImportTab( QWidget *parent ) : QWidget(parent)
 {
-	selectedDevice = -1;
-	numGrabbers = 0;
-	
-	deviceSelectionTable = NULL;
-	addButton            = NULL;
-	removeButton         = NULL;
-	changeButton         = NULL;
-	closeChangeBoxButton = NULL;
-	prePollEdit          = NULL;
-	startDeamonEdit      = NULL;
-	stopDeamonEdit       = NULL;
-	grabberPreferences   = NULL;
-	grid                 = NULL;
-	grabberGrid          = NULL;
-	space3               = NULL;
-	rightSpace           = NULL;
-	leftSpace            = NULL;
-	prePollLabel         = NULL;
-	startDeamonLabel     = NULL;
-	stopDeamonLabel      = NULL;
-	checkTableItem       = NULL;
+	deviceSelectionTable = 0;
+	addButton            = 0;
+	removeButton         = 0;
+	changeButton         = 0;
+	closeChangeBoxButton = 0;
+	prePollEdit          = 0;
+	startDeamonEdit      = 0;
+	stopDeamonEdit       = 0;
+	grabberPreferences   = 0;
+	prePollLabel         = 0;
+	startDeamonLabel     = 0;
+	stopDeamonLabel      = 0;
+	checkTableItem       = 0;
 	
 	makeGUI();
 }
@@ -57,240 +51,229 @@ ImportTab::ImportTab( QWidget *parent ) : QFrame(parent)
 
 void ImportTab::makeGUI()
 {
-	this->setFocusPolicy(QWidget::ClickFocus);
-	grid = new QGridLayout( this, 1, 1, 3 );
+	this->setFocusPolicy(Qt::ClickFocus);
 	
-	QLabel *informationText = 
-			new QLabel(tr(
+	QTextEdit *informationText = new QTextEdit;
+	informationText->setReadOnly(true);
+	informationText->setHtml(tr(
 				"<p>Below you can set which program/process stopmotion should use "
 				"for grabbing images from the webcam, and displaying video.<br> "
-				"<br> </p>"), this);
+				"<br> </p>"));
 	informationText->setMinimumWidth(440);
 	informationText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	
-	deviceSelectionTable = new QTable(this);
-	deviceSelectionTable->setMinimumHeight(120);
-	deviceSelectionTable->setNumCols(3);
-	deviceSelectionTable->setSelectionMode(QTable::SingleRow);
-	deviceSelectionTable->horizontalHeader()->setLabel( 0, tr( "Active" ) );
-	deviceSelectionTable->horizontalHeader()->setLabel( 1, tr( "Name" ) );
-	deviceSelectionTable->horizontalHeader()->setLabel( 2, tr( "Description" ) );
-	deviceSelectionTable->adjustColumn(0);
-	deviceSelectionTable->adjustColumn(1);
-	deviceSelectionTable->adjustColumn(2);
-	QObject::connect( deviceSelectionTable, SIGNAL(currentChanged(int, int)),
-			this, SLOT(activeRowChanged(int)) );
-	QObject::connect( deviceSelectionTable, SIGNAL(valueChanged(int, int)),
-			this, SLOT(valueChanged(int, int)) );
+	QStringList lst;
+	lst << tr("Name") << tr("Description");
 	
-	addButton = new QPushButton(tr("&Add") ,this);
-	addButton->setFocusPolicy( QWidget::NoFocus );
-	QObject::connect(addButton, SIGNAL(clicked()), 
-			this, SLOT(addImportProgram()) );
+	deviceSelectionTable = new QTableWidget;
+	deviceSelectionTable->setColumnCount(2);
+	deviceSelectionTable->setRowCount(0);
+	deviceSelectionTable->setSelectionMode(QAbstractItemView::SingleSelection);
+	deviceSelectionTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+	deviceSelectionTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
+	deviceSelectionTable->setHorizontalHeaderLabels(lst);
+	deviceSelectionTable->verticalHeader()->setVisible(false);
 	
-	removeButton = new QPushButton(tr("&Remove"), this);
-	QObject::connect( removeButton, SIGNAL(clicked()), 
-			this, SLOT(removeImportProgram()) );
+	connect(deviceSelectionTable, SIGNAL(cellClicked(int, int)), 
+			this, SLOT(activeCellChanged(int, int)));
+	connect(deviceSelectionTable, SIGNAL(cellChanged(int, int)), 
+			this, SLOT(contentsChanged(int, int)));
 	
-	changeButton = new QPushButton(tr("&Edit"), this);
-	QObject::connect( changeButton, SIGNAL(clicked()), 
-			this, SLOT(changeSettings()) );
+	addButton = new QPushButton(tr("&Add"));
+	addButton->setFocusPolicy( Qt::NoFocus );
+	QObject::connect(addButton, SIGNAL(clicked()), this, SLOT(addImportProgram()));
 	
-	space3 = new QSpacerItem(0, 10, QSizePolicy::Fixed, QSizePolicy::Fixed);
-	rightSpace = new QSpacerItem(5, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
-	leftSpace = new QSpacerItem(5, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
+	removeButton = new QPushButton(tr("&Remove"));
+	QObject::connect( removeButton, SIGNAL(clicked()), this, SLOT(removeImportProgram()));
 	
-	grabberPreferences = new QGroupBox(this);
+	changeButton = new QPushButton(tr("&Edit"));
+	QObject::connect( changeButton, SIGNAL(clicked()), this, SLOT(changeSettings()));
+	
+	grabberPreferences = new QGroupBox;
 	grabberPreferences->setTitle(tr("Import device settings"));
 	grabberPreferences->hide();
 	
-	grabberGrid = new QGridLayout(grabberPreferences, 1, 1, 3);
-	
-	closeChangeBoxButton = new QPushButton(grabberPreferences);
-	closeChangeBoxButton->setPixmap(closeicon);
+	closeChangeBoxButton = new QPushButton;
+	closeChangeBoxButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
+	closeChangeBoxButton->setIcon(QPixmap(closeicon));
 	closeChangeBoxButton->setFlat(true);
-	QObject::connect( closeChangeBoxButton, SIGNAL(clicked()),
-			this, SLOT(closeChangeBox()) );
+	QObject::connect( closeChangeBoxButton, SIGNAL(clicked()),this, SLOT(closeChangeBox()));
 	
-	prePollLabel = new QLabel( tr("Pre-poll command"), grabberPreferences );
-	prePollEdit = new FlexibleLineEdit(grabberPreferences);
-	QObject::connect( prePollEdit, SIGNAL(textChanged(const QString &)),
-			this, SLOT(updatePrePollString(const QString &)) );
+	prePollLabel = new QLabel( tr("Pre-poll command") );
+	prePollEdit = new FlexibleLineEdit;
+	QObject::connect( prePollEdit, SIGNAL(textChanged(const QString &)), 
+			this, SLOT(updatePrePollString(const QString &)));
 	
-	startDeamonLabel = new QLabel( tr("Start deamon"), grabberPreferences );
-	startDeamonEdit = new FlexibleLineEdit(grabberPreferences);
-	QObject::connect( startDeamonEdit, SIGNAL(textChanged(const QString &)),
-			this, SLOT(updateStartDeamonString(const QString &)) );
+	startDeamonLabel = new QLabel( tr("Start deamon") );
+	startDeamonEdit = new FlexibleLineEdit;
+	QObject::connect( startDeamonEdit, SIGNAL(textChanged(const QString &)), 
+			this, SLOT(updateStartDeamonString(const QString &)));
 	
-	stopDeamonLabel = new QLabel( tr("Stop deamon"), grabberPreferences );
-	stopDeamonEdit = new FlexibleLineEdit(grabberPreferences);
-	QObject::connect( stopDeamonEdit, SIGNAL(textChanged(const QString &)),
+	stopDeamonLabel = new QLabel( tr("Stop deamon") );
+	stopDeamonEdit = new FlexibleLineEdit;
+	QObject::connect( stopDeamonEdit, SIGNAL(textChanged(const QString &)), 
 			this, SLOT(updatestopDeamonString(const QString &)) );
 	
-	grid->addWidget( informationText, 0, 1 );
-	grid->addMultiCellWidget( deviceSelectionTable, 1, 4, 1, 1 );
-	grid->addWidget( addButton, 2, 2 );
-	grid->addWidget( removeButton, 3, 2 );
-	grid->addWidget( changeButton, 4, 2 );
-	
-	grabberGrid->addWidget(closeChangeBoxButton, 0, 1);
-	grabberGrid->addWidget(prePollLabel, 1, 0);
-	grabberGrid->addWidget(prePollEdit, 2, 0);
-	grabberGrid->addWidget(startDeamonLabel, 3, 0);
-	grabberGrid->addWidget(startDeamonEdit, 4, 0);
-	grabberGrid->addWidget(stopDeamonLabel, 5, 0);
-	grabberGrid->addWidget(stopDeamonEdit, 6, 0);
-	grid->addMultiCellWidget( grabberPreferences, 5, 5, 1, 2 );
-	
-	grid->addItem( space3, 6, 1 );
-	grid->addItem( rightSpace, 3, 3 );
-	grid->addItem( leftSpace, 3, 0);
+	QVBoxLayout *mainLayout = new QVBoxLayout;
+	mainLayout->addWidget(informationText);
+	QVBoxLayout *buttonLayout = new QVBoxLayout;
+	buttonLayout->setMargin(0);
+	buttonLayout->setSpacing(2);
+	buttonLayout->addStretch(1);
+	buttonLayout->addWidget(addButton);
+	buttonLayout->addWidget(removeButton);
+	buttonLayout->addWidget(changeButton);
+	QHBoxLayout *deviceLayout = new QHBoxLayout;
+	deviceLayout->addWidget(deviceSelectionTable);
+	deviceLayout->addLayout(buttonLayout);
+	mainLayout->addLayout(deviceLayout);
+	mainLayout->addWidget(grabberPreferences);
+	setLayout(mainLayout);
+
+	QVBoxLayout *grabberPrefsLayout = new QVBoxLayout;
+	QHBoxLayout *hbLayout = new QHBoxLayout;
+	hbLayout->setMargin(0);
+	hbLayout->setSpacing(0);
+	hbLayout->addStretch(1);
+	hbLayout->addWidget(closeChangeBoxButton);
+	grabberPrefsLayout->addLayout(hbLayout);
+	grabberPrefsLayout->addWidget(prePollLabel);
+	grabberPrefsLayout->addWidget(prePollEdit);
+	grabberPrefsLayout->addWidget(startDeamonLabel);
+	grabberPrefsLayout->addWidget(startDeamonEdit);
+	grabberPrefsLayout->addWidget(stopDeamonLabel);
+	grabberPrefsLayout->addWidget(stopDeamonEdit);
+	grabberPreferences->setLayout(grabberPrefsLayout);
 }
 
 
 void ImportTab::initializeImportValues()
 {
 	PreferencesTool* pref = PreferencesTool::get();
-	selectedDevice = PreferencesTool::get()->getPreference("activeCommand", 0);
 
-	
-	int numImports = pref->getPreference("numberofimports", 1);
-	int newRow = 0;
+	int numImports = pref->getPreference("numberofimports", 0);
+	deviceSelectionTable->setRowCount(numImports);
+	const char *prop = 0;
 	for (int i = 0; i < numImports; ++i) {
-		newRow = deviceSelectionTable->numRows();
-		deviceSelectionTable->insertRows(newRow);
-		checkTableItem = new QCheckTableItem( deviceSelectionTable, "");
-		deviceSelectionTable->setItem( newRow, 0, checkTableItem );
-		deviceSelectionTable->setText( newRow, 1, QString(pref->getPreference(
-				QString("importname%1").arg(i).ascii(), "")) );
-		deviceSelectionTable->setText( newRow, 2, QString( pref->getPreference(
-				QString("importdescription%1").arg(i).ascii(), "")) );
-		prePollStrings.push_back(QString( pref->getPreference(
-				QString("importprepoll%1").arg(i).ascii(), "")));
-		startDeamonStrings.push_back(QString( pref->getPreference(
-				QString("importstartdeamon%1").arg(i).ascii(), "")));
-		stopDeamonStrings.push_back(QString( pref->getPreference(
-				QString("importstopdeamon%1").arg(i).ascii(), "")));
+		prop = pref->getPreference(QString("importname%1").arg(i).toLatin1().constData(), "");
+		QString name(prop);
+		freeProperty(prop);
 		
+		prop = pref->getPreference(QString("importdescription%1").arg(i).toLatin1().constData(), "");
+		QString desc(prop);
+		freeProperty(prop);
+		
+		deviceSelectionTable->setItem( i, 0, new QTableWidgetItem(name) );
+		deviceSelectionTable->setItem( i, 1, new QTableWidgetItem(desc) );
+		
+		prop = pref->getPreference(QString("importprepoll%1").arg(i).toLatin1().constData(), "");
+		prePollStrings.push_back(QString(prop));
+		freeProperty(prop);
+		
+		prop = pref->getPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(), "");
+		startDeamonStrings.push_back(QString(prop));
+		freeProperty(prop);
+		
+		prop = pref->getPreference(QString("importstopdeamon%1").arg(i).toLatin1().constData(), "");
+		stopDeamonStrings.push_back(QString(prop));
+		freeProperty(prop);
 	}
-	deviceSelectionTable->adjustColumn(1);
-	deviceSelectionTable->adjustColumn(2);
 	
-	int width = deviceSelectionTable->columnWidth(2);
-	int prefWidth = deviceSelectionTable->width() - 
-			(deviceSelectionTable->columnWidth(0) + deviceSelectionTable->columnWidth(1));
-	if (width < prefWidth) {
-		deviceSelectionTable->setColumnWidth(2, prefWidth + 4);
-	}
-	
-	int activeCommand = pref->getPreference("activedevice", 0);
+	int activeCommand = pref->getPreference("activedevice", -1);
 	if (activeCommand > -1) {
-		((QCheckTableItem*)deviceSelectionTable->item(activeCommand, 0))->setChecked(true);
+		deviceSelectionTable->setCurrentCell(activeCommand, 0);
 	}
-	
-	numGrabbers += numImports;
 }
 
 
 void ImportTab::apply()
 {
 	PreferencesTool *prefs = PreferencesTool::get();
-	int size = deviceSelectionTable->numRows();
-	int activeCommand = -1;
 	
-	//Deletes removed imports from the preferencestool.
-	int prefSize = prefs->getPreference("numberofimports", -1);
- 	if (prefSize > size) {
-		for (int i = size; i < prefSize; ++i) {
-			prefs->removePreference(QString("importname%1").arg(i).ascii());
-			prefs->removePreference(QString("importdescription%1").arg(i).ascii());
-			prefs->removePreference(QString("importprepoll%1").arg(i).ascii());
-			prefs->removePreference(QString("importstartdeamon%1").arg(i).ascii());
-			prefs->removePreference(QString("importstopdeamon%1").arg(i).ascii());
-		}
-	}
-	prefs->setPreference("numberofimports", size, true);
-	
-	for (int i = 0; i < size; ++i) {
-		prefs->setPreference(QString("importname%1").arg(i), 
-				deviceSelectionTable->text(i, 1).ascii(), true);
-		prefs->setPreference(QString("importdescription%1").arg(i),
-				deviceSelectionTable->text(i, 2).ascii(), true);
-		prefs->setPreference(QString("importprepoll%1").arg(i),
-				prePollStrings[i].ascii(), true);
-		prefs->setPreference(QString("importstartdeamon%1").arg(i),
-				startDeamonStrings[i].ascii(), true);
-		prefs->setPreference(QString("importstopdeamon%1").arg(i),
-				stopDeamonStrings[i].ascii(), true);
-		if ( ((QCheckTableItem*)deviceSelectionTable->item(i, 0))->isChecked() ) {
-			activeCommand = i;
+	// Remove old preferences
+	int numImports = prefs->getPreference("numberofimports", -1);
+ 	if (numImports > 0) {
+		for (int i = 0; i < numImports; ++i) {
+			prefs->removePreference(QString("importname%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("importdescription%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("importprepoll%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("importstartdeamon%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("importstopdeamon%1").arg(i).toLatin1().constData());
 		}
 	}
 	
-	prefs->setPreference("activedevice", activeCommand, true);
+	numImports = deviceSelectionTable->rowCount();
+	if (numImports > 0) {
+		prefs->setPreference("numberofimports", numImports, true);
+		prefs->setPreference("activedevice", deviceSelectionTable->currentRow(), true);
+		for (int i = 0; i < numImports; ++i) {
+			prefs->setPreference(QString("importname%1").arg(i).toLatin1().constData(), 
+					deviceSelectionTable->item(i, 0)->text().toLatin1().constData(), true);
+			prefs->setPreference(QString("importdescription%1").arg(i).toLatin1().constData(),
+					deviceSelectionTable->item(i, 1)->text().toLatin1().constData(), true);
+			prefs->setPreference(QString("importprepoll%1").arg(i).toLatin1().constData(),
+					prePollStrings[i].toLatin1().constData(), true);
+			prefs->setPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(),
+					startDeamonStrings[i].toLatin1().constData(), true);
+			prefs->setPreference(QString("importstopdeamon%1").arg(i).toLatin1().constData(),
+					stopDeamonStrings[i].toLatin1().constData(), true);
+		}
+	}
+	else {
+		prefs->setPreference("numberofimports", -1, true);
+		prefs->setPreference("activedevice", -1, true);
+	}
+}
+
+
+void ImportTab::resizeEvent(QResizeEvent *event)
+{
+	contentsChanged(0, 0);
+	QWidget::resizeEvent(event);
 }
 
 
 void ImportTab::addImportProgram()
 {
-	int newRow = deviceSelectionTable->numRows();
-	deviceSelectionTable->insertRows(newRow);
-	deviceSelectionTable->setItem( newRow, 0, new QCheckTableItem( deviceSelectionTable, ""));
+	int newRow = deviceSelectionTable->rowCount();
+	deviceSelectionTable->setRowCount(newRow + 1);
+	deviceSelectionTable->setItem( newRow, 0, new QTableWidgetItem(QString("")) );
+	deviceSelectionTable->setItem( newRow, 1, new QTableWidgetItem(QString("")) );
+	deviceSelectionTable->setCurrentCell(newRow, 0);
+
 	prePollStrings.push_back("");
 	startDeamonStrings.push_back("");
 	stopDeamonStrings.push_back("");
-	++numGrabbers;
 }
 
 
 void ImportTab::removeImportProgram()
 {
-	if (numGrabbers > 0) {
-		prePollStrings.erase(prePollStrings.begin() + selectedDevice);
-		startDeamonStrings.erase(startDeamonStrings.begin() + selectedDevice);
-		stopDeamonStrings.erase(stopDeamonStrings.begin() + selectedDevice);
-		deviceSelectionTable->removeRow(selectedDevice);
-		--numGrabbers;
+	int selectedRow = deviceSelectionTable->currentRow();
+	if (selectedRow >= 0) {
+		prePollStrings.erase(prePollStrings.begin() + selectedRow);
+		startDeamonStrings.erase(startDeamonStrings.begin() + selectedRow);
+		stopDeamonStrings.erase(stopDeamonStrings.begin() + selectedRow);
+		deviceSelectionTable->removeRow(selectedRow);
+		contentsChanged(0, 0);
 	}
 }
 
 
-void ImportTab::valueChanged(int row, int column)
+void ImportTab::contentsChanged(int, int)
 {
-	switch (column) {
-		case 0:
-		{
-			int size = deviceSelectionTable->numRows();
-			for(int i = 0; i<size; i++) {
-				((QCheckTableItem*)deviceSelectionTable->item(i, 0))->
-						setChecked(i == row);
-			}
-			break;
-		}
-		case 1: case 2:
-		{
-			deviceSelectionTable->adjustColumn(1);
-			deviceSelectionTable->adjustColumn(2);
-			
-			int width = deviceSelectionTable->columnWidth(2);
-			int prefWidth = deviceSelectionTable->width() - 
-					(deviceSelectionTable->columnWidth(0) + 
-					deviceSelectionTable->columnWidth(1));
-			if (width < prefWidth) {
-				deviceSelectionTable->setColumnWidth(2, prefWidth - 34);
-			}
-			
-			activeRowChanged(row);
-			break;
-		}
+	deviceSelectionTable->resizeColumnsToContents();
+	int totalWidth = deviceSelectionTable->columnWidth(0) + deviceSelectionTable->columnWidth(1);
+	int tableWidth = deviceSelectionTable->width() - 5;
+	if ( totalWidth < tableWidth) {
+		deviceSelectionTable->setColumnWidth( 1, tableWidth - deviceSelectionTable->columnWidth(0) );
 	}
 }
 
 
-void ImportTab::activeRowChanged(int row)
+void ImportTab::activeCellChanged(int, int)
 {
-	selectedDevice = row;
-	if ( grabberPreferences->isShown() ) {
+	if ( grabberPreferences->isVisible() ) {
 		changeSettings();
 	}
 }
@@ -298,10 +281,11 @@ void ImportTab::activeRowChanged(int row)
 
 void ImportTab::changeSettings()
 {
-	if (selectedDevice >= 0) {
-		prePollEdit->setText(prePollStrings[selectedDevice]);
-		startDeamonEdit->setText(startDeamonStrings[selectedDevice]);
-		stopDeamonEdit->setText(stopDeamonStrings[selectedDevice]);
+	int selected = deviceSelectionTable->currentRow();
+	if (selected >= 0) {
+		prePollEdit->setText(prePollStrings[selected]);
+		startDeamonEdit->setText(startDeamonStrings[selected]);
+		stopDeamonEdit->setText(stopDeamonStrings[selected]);
 		grabberPreferences->show();
 	}
 }
@@ -309,23 +293,32 @@ void ImportTab::changeSettings()
 
 void ImportTab::updatePrePollString(const QString &txt)
 {
-	prePollStrings[selectedDevice] = txt;
+	prePollStrings[deviceSelectionTable->currentRow()] = txt;
 }
 
 
 void ImportTab::updateStartDeamonString(const QString &txt)
 {
-	startDeamonStrings[selectedDevice] = txt;
+	startDeamonStrings[deviceSelectionTable->currentRow()] = txt;
 }
 
 
 void ImportTab::updatestopDeamonString(const QString &txt)
 {
-	stopDeamonStrings[selectedDevice] = txt;
+	stopDeamonStrings[deviceSelectionTable->currentRow()] = txt;
+}
+
+	
+void ImportTab::freeProperty(const char *prop, const char *tag)
+{
+	if (strcmp(prop, tag) != 0) {
+		xmlFree((xmlChar *)prop);
+	}
 }
 
 
 void ImportTab::closeChangeBox()
 {
 	grabberPreferences->hide();
+	this->resize(minimumSize());
 }

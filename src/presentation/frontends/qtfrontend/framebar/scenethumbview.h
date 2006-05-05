@@ -20,8 +20,13 @@
 #ifndef SCENETHUMBVIEW_H
 #define SCENETHUMBVIEW_H
 
-#include "thumbview.h"
-#include "scenearrowbutton.h"
+#include "src/presentation/frontends/qtfrontend/framebar/thumbview.h"
+#include "src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h"
+
+#include <QMouseEvent>
+#include <QPixmap>
+#include <QPaintEvent>
+#include <QDropEvent>
 
 
 /**
@@ -56,13 +61,7 @@ public:
 	 * Returns whether the scene is opened.
 	 * @return true if the scene is currently opened.
 	 */
-	bool getIsOpened();
-	
-	/**
-	 * Resizes the scenethumbview.
-	 * @param height the new height of the widget.
-	 */
-	virtual void resizeThumb(int height);
+	bool getIsOpened() const;
 	
 public slots:
 	/**
@@ -114,7 +113,7 @@ private:
 	
 	/** The font of the text on the widget */
 	QFont f;
-	
+		
 	/**
 	 * Starts a drag event with this scene as the drag object.
 	 */

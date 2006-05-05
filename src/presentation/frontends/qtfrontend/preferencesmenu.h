@@ -23,7 +23,8 @@
 #include "importtab.h"
 #include "exporttab.h"
 
-#include <qtabdialog.h>
+#include <QDialog>
+#include <QTabWidget>
 
 
 /**
@@ -31,7 +32,7 @@
  * 
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class PreferencesMenu : public QTabDialog 
+class PreferencesMenu : public QDialog 
 {
 	Q_OBJECT
 public:
@@ -39,13 +40,13 @@ public:
 	 * Sets up the filepreview-label.
 	 * @param parent the parent of the widget.
 	 */
-	PreferencesMenu( QWidget *parent=0 );
+	PreferencesMenu(QWidget *parent = 0);
 	
 private:
 	ImportTab *importVideoTab;
 	ExportTab *exportVideoTab;
+	QTabWidget *tabWidget;
 
-	void connectButtons();
 	void makeVideoImportTab();
 	void makeVideoExportTab();
 	

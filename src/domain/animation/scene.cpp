@@ -86,6 +86,8 @@ const vector<char*> Scene::addFrames(const vector<char*>& frameNames, unsigned i
 				newImagePaths.push_back( addFrame(frameNames[i], index) );
 			}
 			else {
+				Logger::get().logWarning("Wrong permission:");
+				Logger::get().logWarning(file);
 				++numNotReadable;	
 			}
 			

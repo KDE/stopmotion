@@ -36,7 +36,7 @@ VideoFactory::~VideoFactory()
 const char* VideoFactory::createVideoFile(VideoEncoder *encoder)
 {
 	string startCommand = encoder->getStartCommand();
-	if ( startCommand.empty() == false ) {
+	if ( !startCommand.empty() ) {
 		int index = startCommand.find("$IMAGEPATH");
 		if (index != -1) {
 			if ( serializer->getImagePath() ) {
@@ -58,6 +58,10 @@ const char* VideoFactory::createVideoFile(VideoEncoder *encoder)
 				return NULL;
 			}
 		}
+		index = startCommand.find("$opt");
+		if (index != -1) {
+			startCommand.replace(index, strlen("$opt"), "");
+		}
 		if ( startEncoder(startCommand.c_str()) == 0 ) {
 			return encoder->getOutputFile();
 		}
@@ -68,5 +72,5 @@ const char* VideoFactory::createVideoFile(VideoEncoder *encoder)
 
 int VideoFactory::startEncoder(const char *command)
 {
-	return system(command);
+	return frontend->runExternalCommand(command);
 }

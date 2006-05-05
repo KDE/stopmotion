@@ -21,7 +21,8 @@
 #ifndef FLEXIBLESPINBOX_H
 #define FLEXIBLESPINBOX_H
 
-#include <qspinbox.h>
+#include <QSpinBox>
+#include <QKeyEvent>
 
 
 /**
@@ -65,6 +66,9 @@ signals:
 	 * Emits this signal when getting an escape event (Key_Escape).
 	 */
 	void spinBoxCanceled();
+
+protected:
+	void showEvent(QShowEvent * event);
 };
 
 #endif

@@ -1,5 +1,68 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>AboutDialog</name>
+    <message>
+        <source>This is the stopmotion application for creating stopmotion animations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;About</source>
+        <translation type="unfinished">&amp;Om</translation>
+    </message>
+    <message>
+        <source>Main developers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A&amp;uthors</source>
+        <translation type="unfinished">&amp;Forfattere</translation>
+    </message>
+    <message>
+        <source>Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slovenian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coordinating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Testing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Thanks To</source>
+        <translation type="unfinished">&amp;Takk til</translation>
+    </message>
+    <message>
+        <source>&amp;Licence Agreement</source>
+        <translation type="unfinished">&amp;Lisensavtale</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished">Om</translation>
+    </message>
+</context>
+<context>
     <name>CameraHandler</name>
     <message>
         <source>Camera &amp;off</source>
@@ -14,7 +77,7 @@
     <name>ExportTab</name>
     <message>
         <source>Active</source>
-        <translation>Aktiv</translation>
+        <translation type="obsolete">Aktiv</translation>
     </message>
     <message>
         <source>Name</source>
@@ -78,10 +141,55 @@
     </message>
 </context>
 <context>
+    <name>ExternalCommand</name>
+    <message>
+        <source>Input to program:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output from external command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfull!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FileDialog</name>
     <message>
         <source>Go to home directory</source>
-        <translation>Gå til hjemmekatalog</translation>
+        <translation type="obsolete">Gå til hjemmekatalog</translation>
+    </message>
+</context>
+<context>
+    <name>Form</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FrameBar</name>
+    <message>
+        <source>Frame number: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -139,68 +247,76 @@ This can be set in the preferences menu.</source>
         <translation>Du må velge et program som kan fange bilder.
 Dette kan settes i preferanse-menyen.</translation>
     </message>
+    <message>
+        <source>Pre poll command does not exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You do not have the given grabber installed on your system</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HelpWindow</name>
     <message>
         <source>&amp;New Window</source>
-        <translation>&amp;Nytt vindu</translation>
+        <translation type="obsolete">&amp;Nytt vindu</translation>
     </message>
     <message>
         <source>&amp;Open File</source>
-        <translation>&amp;Åpne fil</translation>
+        <translation type="obsolete">&amp;Åpne fil</translation>
     </message>
     <message>
         <source>&amp;Print</source>
-        <translation>&amp;Print</translation>
+        <translation type="obsolete">&amp;Print</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Lukk</translation>
+        <translation type="obsolete">&amp;Lukk</translation>
     </message>
     <message>
         <source>&amp;Backward</source>
-        <translation>&amp;Bakover</translation>
+        <translation type="obsolete">&amp;Bakover</translation>
     </message>
     <message>
         <source>&amp;Forward</source>
-        <translation>&amp;Fremover</translation>
+        <translation type="obsolete">&amp;Fremover</translation>
     </message>
     <message>
         <source>&amp;Home</source>
-        <translation>&amp;Hjem</translation>
+        <translation type="obsolete">&amp;Hjem</translation>
     </message>
     <message>
         <source>Add Bookmark</source>
-        <translation>Legg til bokmerke</translation>
+        <translation type="obsolete">Legg til bokmerke</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>&amp;Fil</translation>
+        <translation type="obsolete">&amp;Fil</translation>
     </message>
     <message>
         <source>&amp;Go</source>
-        <translation>&amp;Gå</translation>
+        <translation type="obsolete">&amp;Gå</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Historie</translation>
+        <translation type="obsolete">Historie</translation>
     </message>
     <message>
         <source>Bookmarks</source>
-        <translation>Bokmerker</translation>
+        <translation type="obsolete">Bokmerker</translation>
     </message>
     <message>
         <source>Backward</source>
-        <translation>Bakover</translation>
+        <translation type="obsolete">Bakover</translation>
     </message>
     <message>
         <source>Forward</source>
-        <translation>Fremover</translation>
+        <translation type="obsolete">Fremover</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation>Hjem</translation>
+        <translation type="obsolete">Hjem</translation>
     </message>
 </context>
 <context>
@@ -212,7 +328,7 @@ Dette kan settes i preferanse-menyen.</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>Aktiv</translation>
+        <translation type="obsolete">Aktiv</translation>
     </message>
     <message>
         <source>Name</source>
@@ -277,6 +393,29 @@ Dette kan settes i preferanse-menyen.</translation>
     <message>
         <source>English</source>
         <translation>Norsk</translation>
+    </message>
+    <message>
+        <source>&amp;Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <source>Stopmotion Help Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backward</source>
+        <translation type="unfinished">Bakover</translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation type="unfinished">Fremover</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -387,7 +526,7 @@ Dette kan settes i preferanse-menyen.</translation>
     </message>
     <message>
         <source>Frame number: 0</source>
-        <translation>Frame: 0</translation>
+        <translation type="obsolete">Frame: 0</translation>
     </message>
     <message>
         <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the numberof the currently selected frame&lt;/p&gt;</source>
@@ -411,19 +550,19 @@ Dette kan settes i preferanse-menyen.</translation>
     </message>
     <message>
         <source>&lt;p&gt;This is the stopmotion application for creating stopmotion animations.&lt;/p&gt;&lt;p&gt;(c) 2005, Fredrik Berg Kj&#xf8;lstad and Bj&#xf8;rn Erik Nilsen&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Dette er Stopmotion-applikasjonen til å lage stop motion-animasjoner. &lt;/p&gt; &lt;p&gt;(c) 2005, Fredrik Berg Kjølstad and Bjørn Erik Nilsen&lt;/p&gt;</translation>
+        <translation type="obsolete">&lt;p&gt;Dette er Stopmotion-applikasjonen til å lage stop motion-animasjoner. &lt;/p&gt; &lt;p&gt;(c) 2005, Fredrik Berg Kjølstad and Bjørn Erik Nilsen&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Save File</source>
-        <translation>Lagre fil</translation>
+        <translation type="obsolete">Lagre fil</translation>
     </message>
     <message>
         <source>&amp;Thanks To</source>
-        <translation>&amp;Takk til</translation>
+        <translation type="obsolete">&amp;Takk til</translation>
     </message>
     <message>
         <source>&amp;Licence Agreement</source>
-        <translation>&amp;Lisensavtale</translation>
+        <translation type="obsolete">&amp;Lisensavtale</translation>
     </message>
     <message>
         <source>&lt;h4&gt;Open&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Opens&lt;/em&gt; a Stopmotion project file.&lt;/p&gt;</source>
@@ -475,7 +614,7 @@ Dette kan settes i preferanse-menyen.</translation>
     </message>
     <message>
         <source>A&amp;uthors</source>
-        <translation>&amp;Forfattere</translation>
+        <translation type="obsolete">&amp;Forfattere</translation>
     </message>
     <message>
         <source>&lt;h4&gt;Quit&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Quits&lt;/em&gt; the program.&lt;/p&gt;</source>
@@ -503,7 +642,7 @@ Dette kan settes i preferanse-menyen.</translation>
     </message>
     <message>
         <source>&amp;Languages</source>
-        <translation>&amp;Språk</translation>
+        <translation type="obsolete">&amp;Språk</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -651,15 +790,27 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Main developers&lt;/b&gt;&lt;br&gt;Fredrik Berg Kj&#xf8;lstad &amp;lt;fredrikbk@hotmail.com&amp;gt;&lt;br&gt;Bj&#xf8;rn Erik Nilsen &amp;lt;bjoern.nilsen@bjoernen.com&amp;gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Utviklere&lt;/b&gt;&lt;br&gt;Fredrik Berg Kjølstad &amp;lt;fredrikbk@hotmail.com&amp;gt;&lt;br&gt;Bjørn Erik Nilsen &amp;lt;bjoern.nilsen@bjoernen.com&amp;gt;&lt;/p&gt;</translation>
+        <translation type="obsolete">&lt;p&gt;&lt;b&gt;Utviklere&lt;/b&gt;&lt;br&gt;Fredrik Berg Kjølstad &amp;lt;fredrikbk@hotmail.com&amp;gt;&lt;br&gt;Bjørn Erik Nilsen &amp;lt;bjoern.nilsen@bjoernen.com&amp;gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Stopmotion User Manual</source>
-        <translation>Stopmotion brukermanual</translation>
+        <translation type="obsolete">Stopmotion brukermanual</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Coordinating&lt;/b&gt;&lt;br&gt;Herman Robak &amp;lt;herman@skolelinux.no&amp;gt;&lt;br&gt;&#xd8;yvind Kol&#xe5;s &amp;lt;pippin@gimp.org&amp;gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Testing&lt;/b&gt;&lt;br&gt;Tore Sinding Bekkedal &amp;lt;toresbe@ifi.uio.no&amp;gt;&lt;br&gt;Finn Arne Johansen &amp;lt;faj@bzz.no&amp;gt;&lt;br&gt;Halvor Borgen &amp;lt;halvor.borgen@hig.no&amp;gt;&lt;br&gt;Bj&#xf8;rn Are Hansen &amp;lt;post@bahansen.net&amp;gt;&lt;br&gt;John Steinar Bild&#xf8;y &amp;lt;johnsbil@haldenfriskole.no&amp;gt;&lt;br&gt;Ole-Anders Andreassen &amp;lt;ole-anders.andreassen@sunndal.kommune.no&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Translation&lt;/b&gt;&lt;br&gt;George Helebrant &amp;lt;helb@skatekralovice.com&amp;gt; (Czech)&lt;br&gt;&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Koordinering&lt;/b&gt;&lt;br&gt;Herman Robak &amp;lt;herman@skolelinux.no&amp;gt;&lt;br&gt;Øyvind Kolås &amp;lt;pippin@gimp.org&amp;gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Testing&lt;/b&gt;&lt;br&gt;Tore Sinding Bekkedal &amp;lt;toresbe@ifi.uio.no&amp;gt;&lt;br&gt;Finn Arne Johansen &amp;lt;faj@bzz.no&amp;gt;&lt;br&gt;Halvor Borgen &amp;lt;halvor.borgen@hig.no&amp;gt;&lt;br&gt;Bjørn Are Hansen &amp;lt;post@bahansen.net&amp;gt;&lt;br&gt;John Steinar Bildøy &amp;lt;johnsbil@haldenfriskole.no&amp;gt;&lt;br&gt;Ole-Anders Andreassen &amp;lt;ole-anders.andreassen@sunndal.kommune.no&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Oversetting&lt;/b&gt;&lt;br&gt;George Helebrant &amp;lt;helb@skatekralovice.com&amp;gt; (Tsjekkisk)&lt;br&gt;&lt;/p&gt;</translation>
+        <translation type="obsolete">&lt;p&gt;&lt;b&gt;Koordinering&lt;/b&gt;&lt;br&gt;Herman Robak &amp;lt;herman@skolelinux.no&amp;gt;&lt;br&gt;Øyvind Kolås &amp;lt;pippin@gimp.org&amp;gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Testing&lt;/b&gt;&lt;br&gt;Tore Sinding Bekkedal &amp;lt;toresbe@ifi.uio.no&amp;gt;&lt;br&gt;Finn Arne Johansen &amp;lt;faj@bzz.no&amp;gt;&lt;br&gt;Halvor Borgen &amp;lt;halvor.borgen@hig.no&amp;gt;&lt;br&gt;Bjørn Are Hansen &amp;lt;post@bahansen.net&amp;gt;&lt;br&gt;John Steinar Bildøy &amp;lt;johnsbil@haldenfriskole.no&amp;gt;&lt;br&gt;Ole-Anders Andreassen &amp;lt;ole-anders.andreassen@sunndal.kommune.no&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Oversetting&lt;/b&gt;&lt;br&gt;George Helebrant &amp;lt;helb@skatekralovice.com&amp;gt; (Tsjekkisk)&lt;br&gt;&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Frame number: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose project file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save As</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -711,6 +862,18 @@ to check your settings in the preferences menu?</source>
         <source>&amp;Remove</source>
         <translation type="obsolete">&amp;Fjern</translation>
     </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preferences Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtFrontend</name>
@@ -728,7 +891,7 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>Progress</source>
-        <translation>Progresjon</translation>
+        <translation type="obsolete">Progresjon</translation>
     </message>
     <message>
         <source>vgrabbj VGA singleshot</source>
@@ -748,11 +911,11 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>&amp;Yes</source>
-        <translation>&amp;Ja</translation>
+        <translation type="obsolete">&amp;Ja</translation>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation>&amp;Nei</translation>
+        <translation type="obsolete">&amp;Nei</translation>
     </message>
     <message>
         <source>The simplest setting. Fairly slow</source>
@@ -782,6 +945,14 @@ lagret som ~/.stopmotion/preferences.xml.OLD)</translation>
         <source>Exports from jpeg images to mpeg4 video</source>
         <translation>Eksporterer fra jpeg-bilder til mpeg4-video</translation>
     </message>
+    <message>
+        <source>dvgrab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grabbing from DV-cam. (EXPERIMENTAL)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RunAnimationHandler</name>
@@ -803,6 +974,10 @@ lagret som ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <source>Enter the name of the sound:</source>
         <translation>Angi navn på lyden:</translation>
+    </message>
+    <message>
+        <source>Choose sound file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

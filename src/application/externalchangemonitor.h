@@ -21,9 +21,11 @@
 #define EXTERNALCHANGEMONITOR_H
 
 #include "src/config.h"
-#include <qobject.h>
-#include <qsocketnotifier.h>
-#include <qtimer.h>
+
+#include <QObject>
+#include <QTimer>
+#include <QSocketNotifier>
+
 #include <fam.h>
 
 
@@ -50,7 +52,7 @@ public:
 	 * to notify of changes when the disk representation of the animation is 
 	 * changed
 	 */
-	ExternalChangeMonitor();
+	ExternalChangeMonitor(QObject *parent = 0);
 	
 	/**
 	 * Calls stopMonitoring and cleans up.

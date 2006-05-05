@@ -17,43 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "exporttab.h"
+#include "src/presentation/frontends/qtfrontend/exporttab.h"
 
 #include "graphics/icons/close.xpm"
 #include "flexiblelineedit.h"
 #include "src/foundation/preferencestool.h"
+#include "src/foundation/logger.h"
 
-#include <qlayout.h>
-#include <qfiledialog.h>
+#include <QFileDialog>
+#include <QLabel>
+#include <QInputDialog>
+#include <QHeaderView>
 
 
-ExportTab::ExportTab(QWidget *parent) : QFrame(parent)
+ExportTab::ExportTab(QWidget *parent) : QWidget(parent)
 {
-	addButton = NULL;
-	removeButton = NULL;
-	editButton = NULL;
-	browseButton = NULL;
-	yesButton = NULL;
-	noButton = NULL;
-	closeButton = NULL;
-	encoderPrefs = NULL;
-	encoderTable = NULL;
-	startEncoder = NULL;
-	stopEncoder = NULL;
-	startEncoderLabel = NULL;
-	stopEncoderLabel = NULL;
-	defaultOutput = NULL;
-	defaultOutputLabel = NULL;
-	mainGrid = NULL;
-	settingsGrid = NULL;
-	space3 = NULL;
-	rightSpace = NULL;
-	leftSpace = NULL;
-	askForOutput = NULL;
-	infoText = NULL;
-	
-	selectedEncoder = -1;
-	numEncoders = 0;
+	addButton          = 0;
+	removeButton       = 0;
+	editButton         = 0;
+	browseButton       = 0;
+	yesButton          = 0;
+	noButton           = 0;
+	closeButton        = 0;
+	encoderPrefs       = 0;
+	encoderTable       = 0;
+	startEncoder       = 0;
+	stopEncoder        = 0;
+	startEncoderLabel  = 0;
+	stopEncoderLabel   = 0;
+	defaultOutput      = 0;
+	defaultOutputLabel = 0;
+	askForOutput       = 0;
+	infoText           = 0;
 	
 	makeGUI();
 }
@@ -61,9 +56,9 @@ ExportTab::ExportTab(QWidget *parent) : QFrame(parent)
 
 void ExportTab::makeGUI()
 {
-	mainGrid = new QGridLayout(this, 1, 1, 3);
-	
-	infoText = new QLabel(
+	infoText = new QTextEdit;
+	infoText->setReadOnly(true);
+	infoText->setHtml(
 			tr(
 				"<p>Below you can set which program/process stopmotion should use "
 				"for encoding the currently active project to a video file.</p>"
@@ -77,247 +72,251 @@ void ExportTab::makeGUI()
 				"<p> Example with mencoder (converting jpg to mpeg1): <br>"
 				"mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg "
 				"-ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE <br>"
-			), this);
+			));
 	infoText->setMinimumWidth(440);
 	infoText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	
-	encoderTable = new QTable(this);
-	encoderTable->setMinimumHeight(120);
-	encoderTable->setNumCols(3);
-	encoderTable->setSelectionMode(QTable::SingleRow);
-	encoderTable->horizontalHeader()->setLabel( 0, tr( "Active" ) );
-	encoderTable->horizontalHeader()->setLabel( 1, tr( "Name" ) );
-	encoderTable->horizontalHeader()->setLabel( 2, tr( "Description" ) );
-	encoderTable->adjustColumn(0);
-	encoderTable->adjustColumn(1);
-	encoderTable->adjustColumn(2);
-	connect( encoderTable, SIGNAL(currentChanged(int, int)),
-			this, SLOT(activeRowChanged(int)) );
-	connect( encoderTable, SIGNAL(valueChanged(int, int)),
-			this, SLOT(valueChanged(int, int)) );
-	
-	addButton = new QPushButton(tr("&Add") ,this);
-	addButton->setFocusPolicy( QWidget::NoFocus );
+	encoderTable = new QTableWidget;
+	encoderTable->setColumnCount(2);
+	encoderTable->setRowCount(0);
+	encoderTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
+	encoderTable->setSelectionMode(QAbstractItemView::SingleSelection);
+	encoderTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+	QStringList lst;
+	lst << tr("Name") << tr("Description");
+	encoderTable->setHorizontalHeaderLabels(lst);
+	encoderTable->verticalHeader()->setVisible(false);
+
+	connect(encoderTable, SIGNAL(cellClicked(int, int)), this, SLOT(activeCellChanged(int, int)));
+	connect(encoderTable, SIGNAL(cellChanged(int, int)), this, SLOT(contentsChanged(int, int)));
+
+	addButton = new QPushButton(tr("&Add"));
+	addButton->setFocusPolicy( Qt::NoFocus );
 	connect(addButton, SIGNAL(clicked()), this, SLOT(addEncoder()) );
 	
-	removeButton = new QPushButton(tr("&Remove"), this);
+	removeButton = new QPushButton(tr("&Remove"));
 	connect( removeButton, SIGNAL(clicked()), this, SLOT(removeEncoder()) );
 	
-	editButton = new QPushButton(tr("&Edit"), this);
+	editButton = new QPushButton(tr("&Edit"));
 	QObject::connect( editButton, SIGNAL(clicked()), this, SLOT(editSettings()) );
 	
-	space3 = new QSpacerItem(0, 10, QSizePolicy::Fixed, QSizePolicy::Fixed);
-	rightSpace = new QSpacerItem(5, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
-	leftSpace = new QSpacerItem(5, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
-	
-	encoderPrefs = new QGroupBox(this);
+	encoderPrefs = new QGroupBox;
 	encoderPrefs->setTitle( tr("Encoder settings") );
 	encoderPrefs->hide();
-	settingsGrid = new QGridLayout(encoderPrefs, 1, 1, 3);
 	
-	closeButton = new QPushButton(encoderPrefs);
-	closeButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	closeButton->setPixmap(closeicon);
+	closeButton = new QPushButton;
+	closeButton->setIcon(QPixmap(closeicon));
 	closeButton->setFlat(true);
+	closeButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
 	connect( closeButton, SIGNAL(clicked()),this, SLOT(closeSettings()) );
 	
 	askForOutput = new QLabel( 
-			tr("Do you want to be asked for an output file everytime "
-			"you choose to export?"), encoderPrefs);
+			tr("Do you want to be asked for an output file everytime you choose to export?"));
 			   
-	yesButton = new QRadioButton(tr("Yes"), encoderPrefs);
+	yesButton = new QRadioButton(tr("Yes"));
 	yesButton->setChecked(true);
 	yesButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	connect( yesButton, SIGNAL(clicked()), this, SLOT(setYesButtonOn()) );
 	
-	noButton = new QRadioButton(tr("No"), encoderPrefs);
+	noButton = new QRadioButton(tr("No"));
 	noButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	noButton->setChecked(false);
 	connect( noButton, SIGNAL(clicked()), this, SLOT(setNoButtonOn()) );
 	
-	defaultOutputLabel = new QLabel( tr("Set default output file:"), encoderPrefs );
-	defaultOutput = new FlexibleLineEdit(encoderPrefs);
+	defaultOutputLabel = new QLabel( tr("Set default output file:"));
+	defaultOutput = new FlexibleLineEdit;
 	defaultOutput->setEnabled(false);
 	connect( defaultOutput, SIGNAL(textChanged(const QString &)), 
 			this, SLOT(setDefaultOutput(const QString &)) );
 			
-	browseButton = new QPushButton(tr("Browse"), encoderPrefs);
+	browseButton = new QPushButton(tr("Browse"));
 	browseButton->setEnabled(false);
 	browseButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	connect( browseButton, SIGNAL(clicked()), this, SLOT(browseFiles()) );
 	
-	startEncoderLabel = new QLabel( tr("Start encoder:"), encoderPrefs );
-	startEncoder = new FlexibleLineEdit(encoderPrefs);
+	startEncoderLabel = new QLabel( tr("Start encoder:") );
+	startEncoder = new FlexibleLineEdit;
 	connect( startEncoder, SIGNAL(textChanged(const QString &)),
 			this, SLOT(updateStartString(const QString &)) );
 	
-	stopEncoderLabel = new QLabel( tr("Stop encoder:"), encoderPrefs );
-	stopEncoder = new FlexibleLineEdit(encoderPrefs);
+	stopEncoderLabel = new QLabel( tr("Stop encoder:") );
+	stopEncoder = new FlexibleLineEdit;
 	connect( stopEncoder, SIGNAL(textChanged(const QString &)),
 			this, SLOT(updateStopString(const QString &)) );
 	
-	mainGrid->addWidget(infoText, 0, 1);
-	mainGrid->addMultiCellWidget(encoderTable, 1, 4, 1, 1);
-	mainGrid->addWidget(addButton, 2, 2);
-	mainGrid->addWidget(removeButton, 3, 2);
-	mainGrid->addWidget(editButton, 4, 2 );
-	mainGrid->addMultiCellWidget(encoderPrefs, 5, 5, 1, 2);
-	mainGrid->addItem(space3, 6, 1);
-	mainGrid->addItem(rightSpace, 3, 3);
-	mainGrid->addItem(leftSpace, 3, 0);
+	QVBoxLayout *mainLayout = new QVBoxLayout;
+	mainLayout->addWidget(infoText);
+	QVBoxLayout *buttonLayout = new QVBoxLayout;
+	buttonLayout->setMargin(0);
+	buttonLayout->setSpacing(2);
+	buttonLayout->addStretch(1);
+	buttonLayout->addWidget(addButton);
+	buttonLayout->addWidget(removeButton);
+	buttonLayout->addWidget(editButton);
+	QHBoxLayout *encoderLayout = new QHBoxLayout;
+	encoderLayout->addWidget(encoderTable);
+	encoderLayout->addLayout(buttonLayout);
+	mainLayout->addLayout(encoderLayout);
+	mainLayout->addWidget(encoderPrefs);
+	setLayout(mainLayout);
 
-	settingsGrid->addWidget(closeButton, 0, 4);
-	settingsGrid->addMultiCellWidget(askForOutput, 1, 1, 0, 3);
-	settingsGrid->addWidget(yesButton, 2, 0);
-	settingsGrid->addWidget(noButton, 2, 1);
-	settingsGrid->addMultiCellWidget(defaultOutputLabel, 3, 3, 0, 3);
-	settingsGrid->addMultiCellWidget(defaultOutput, 4, 4, 0, 2);
-	settingsGrid->addWidget(browseButton, 4, 3);
-	settingsGrid->addMultiCellWidget(startEncoderLabel, 5, 5, 0, 3);
-	settingsGrid->addMultiCellWidget(startEncoder, 6, 6, 0, 3);
-	settingsGrid->addMultiCellWidget(stopEncoderLabel, 7, 7, 0, 3);
-	settingsGrid->addMultiCellWidget(stopEncoder, 8, 8, 0, 3);
+	QVBoxLayout *encoderPrefsLayout = new QVBoxLayout;
+	QHBoxLayout *hbLayout = new QHBoxLayout;
+	hbLayout->setMargin(0);
+	hbLayout->setSpacing(0);
+	hbLayout->addStretch(1);
+	hbLayout->addWidget(closeButton);
+	
+	encoderPrefsLayout->addLayout(hbLayout);
+	encoderPrefsLayout->addWidget(askForOutput);
+	hbLayout = new QHBoxLayout;
+	hbLayout->addWidget(yesButton);
+	hbLayout->addWidget(noButton);
+	hbLayout->addStretch(1);
+	encoderPrefsLayout->addLayout(hbLayout);
+	encoderPrefsLayout->addWidget(defaultOutputLabel);
+	hbLayout = new QHBoxLayout;
+	hbLayout->addWidget(defaultOutput);
+	hbLayout->addWidget(browseButton);
+	encoderPrefsLayout->addLayout(hbLayout);
+	encoderPrefsLayout->addWidget(startEncoderLabel);
+	encoderPrefsLayout->addWidget(startEncoder);
+	encoderPrefsLayout->addWidget(stopEncoderLabel);
+	encoderPrefsLayout->addWidget(stopEncoder);
+	encoderPrefs->setLayout(encoderPrefsLayout);
 }
 
 
 void ExportTab::initialize()
 {
+	Logger::get().logDebug("Initializing encoder settings");
 	PreferencesTool *pref = PreferencesTool::get();
-	selectedEncoder = pref->getPreference("activeEncoder", 0);
 
 	int numEncoders = pref->getPreference("numEncoders", 0);
-	int newRow = 0;
-	for(int i = 0; i < numEncoders; i++) {
-		newRow = encoderTable->numRows();
-		encoderTable->insertRows(newRow);
-		encoderTable->setItem( newRow, 0, new QCheckTableItem(encoderTable, "") );
-		encoderTable->setText( newRow, 1, QString(pref->getPreference(
-				QString("encoderName%1").arg(i).ascii(), "")) );
-		encoderTable->setText( newRow, 2, QString( pref->getPreference(
-				QString("encoderDescription%1").arg(i).ascii(), "")) );
-		startEncoderStrings.push_back(QString( pref->getPreference(
-				QString("startEncoder%1").arg(i).ascii(), "")));
-		stopEncoderStrings.push_back(QString( pref->getPreference(
-				QString("stopEncoder%1").arg(i).ascii(), "")));
-		outputFiles.push_back( QString( pref->getPreference( 
-				QString("outputFile%1").arg(i).ascii(), "" )));
+	encoderTable->setRowCount(numEncoders);
+	const char *prop = 0;
+	for (int i = 0; i < numEncoders; ++i) {
+		prop = pref->getPreference(QString("encoderName%1").arg(i).toLatin1().constData(),"");
+		QString name(prop);
+		freeProperty(prop);
 		
+		prop = pref->getPreference(QString("encoderDescription%1").arg(i).toLatin1().constData(),"");
+		QString desc(prop);
+		freeProperty(prop);
+		
+		encoderTable->setItem(i, 0, new QTableWidgetItem(name) );
+		encoderTable->setItem(i, 1, new QTableWidgetItem(desc) );
+		
+		prop = pref->getPreference(QString("startEncoder%1").arg(i).toLatin1().constData(), "");
+		startEncoderStrings.push_back(QString(prop));
+		freeProperty(prop);
+		
+		prop = pref->getPreference(QString("stopEncoder%1").arg(i).toLatin1().constData(), "");
+		stopEncoderStrings.push_back(QString(prop));
+		freeProperty(prop);
+
+		prop = pref->getPreference(QString("outputFile%1").arg(i).toLatin1().constData(), "" );
+		outputFiles.push_back( QString(prop));
+		freeProperty(prop);
 	}
-	encoderTable->adjustColumn(1);
-	encoderTable->adjustColumn(2);
-	
-	int width = encoderTable->columnWidth(2);
-	int prefWidth = encoderTable->width() - 
-			(encoderTable->columnWidth(0) + encoderTable->columnWidth(1));
-	if (width < prefWidth) {
-		encoderTable->setColumnWidth(2, prefWidth + 4);
-	}
-	
+
 	int active = pref->getPreference("activeEncoder", -1);
 	if (active > -1) {
-		((QCheckTableItem*)encoderTable->item(active, 0))->setChecked(true);
+		encoderTable->setCurrentCell(active, 0);
 	}
+}
+
+
+void ExportTab::resizeEvent(QResizeEvent *event) 
+{
+	contentsChanged(0, 0);
+	QWidget::resizeEvent(event);
 }
 
 
 void ExportTab::apply()
 {
 	PreferencesTool *prefs = PreferencesTool::get();
-	int size = encoderTable->numRows();
-	int activeEncoder = -1;
 	
-	// Deletes removed encoders from the preferencestool.
+	// Remove old preferences
 	int numEncoders = prefs->getPreference("numEncoders", -1);
- 	if (numEncoders > size) {
-		for (int i = size; i < numEncoders; ++i) {
-			prefs->removePreference(QString("encoderName%1").arg(i).ascii());
-			prefs->removePreference(QString("encoderDescription%1").arg(i).ascii());
-			prefs->removePreference(QString("startEncoder%1").arg(i).ascii());
-			prefs->removePreference(QString("stopEncoder%1").arg(i).ascii());
-			prefs->removePreference(QString("outputFile%1").arg(i).ascii());
+ 	if (numEncoders > 0) {
+		for (int i = 0; i < numEncoders; ++i) {
+			prefs->removePreference(QString("encoderName%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("encoderDescription%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("startEncoder%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("stopEncoder%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("outputFile%1").arg(i).toLatin1().constData());
 		}
 	}
-	prefs->setPreference("numEncoders", size, true);
-	
-	for (int i = 0; i < size; ++i) {
-		prefs->setPreference(QString("encoderName%1").arg(i), 
-				encoderTable->text(i, 1).ascii(), true);
-		prefs->setPreference(QString("encoderDescription%1").arg(i),
-				encoderTable->text(i, 2).ascii(), true);
-		prefs->setPreference(QString("startEncoder%1").arg(i),
-				startEncoderStrings[i].ascii(), true);
-		prefs->setPreference(QString("stopEncoder%1").arg(i),
-				stopEncoderStrings[i].ascii(), true);
-		prefs->setPreference(QString("outputFile%1").arg(i),
-				outputFiles[i].ascii(), true);
-		
-		if ( ((QCheckTableItem*)encoderTable->item(i, 0))->isChecked() ) {
-			activeEncoder = i;
+
+	// Set new preferences
+	numEncoders = encoderTable->rowCount();
+	if (numEncoders > 0) {
+		prefs->setPreference("numEncoders", numEncoders, true);
+		prefs->setPreference("activeEncoder", encoderTable->currentRow(), true);
+		for (int i = 0; i < numEncoders; ++i) {
+			prefs->setPreference(QString("encoderName%1").arg(i).toLatin1().constData(), 
+					encoderTable->item(i, 0)->text().toLatin1().constData(), true);
+			prefs->setPreference(QString("encoderDescription%1").arg(i).toLatin1().constData(),
+					encoderTable->item(i, 1)->text().toLatin1().constData(), true);
+			prefs->setPreference(QString("startEncoder%1").arg(i).toLatin1().constData(),
+					startEncoderStrings[i].toLatin1().constData(), true);
+			prefs->setPreference(QString("stopEncoder%1").arg(i).toLatin1().constData(),
+					stopEncoderStrings[i].toLatin1().constData(), true);
+			prefs->setPreference(QString("outputFile%1").arg(i).toLatin1().constData(),
+					outputFiles[i].toLatin1().constData(), true);
 		}
 	}
+	else {
+		prefs->setPreference("numEncoders", -1, true);
+		prefs->setPreference("activeEncoder", -1, true);
+	}
 	
-	prefs->setPreference("activeEncoder", activeEncoder, true);
 }
 
 
 void ExportTab::addEncoder()
 {
-	int newRow = encoderTable->numRows();
-	encoderTable->insertRows(newRow);
-	encoderTable->setItem( newRow, 0, new QCheckTableItem(encoderTable, "") );
+	int newRow = encoderTable->rowCount();
+	encoderTable->setRowCount(newRow + 1);
+	encoderTable->setItem(newRow, 0, new QTableWidgetItem(QString("")));
+	encoderTable->setItem(newRow, 1, new QTableWidgetItem(QString("")));
+	encoderTable->setCurrentCell(newRow, 0);
+
 	startEncoderStrings.push_back("");
 	stopEncoderStrings.push_back("");
 	outputFiles.push_back("");
-	++numEncoders;
 }
 
 
 void ExportTab::removeEncoder()
 {
-	if (numEncoders > 0 && selectedEncoder >= 0) {	
-		startEncoderStrings.erase(startEncoderStrings.begin() + selectedEncoder);
-		stopEncoderStrings.erase(stopEncoderStrings.begin() + selectedEncoder);
-		outputFiles.erase(outputFiles.begin() + selectedEncoder);
-		encoderTable->removeRow(selectedEncoder);
-		--numEncoders;
+	int selectedRow = encoderTable->currentRow();
+	if (selectedRow >= 0) {	
+		startEncoderStrings.erase(startEncoderStrings.begin() + selectedRow);
+		stopEncoderStrings.erase(stopEncoderStrings.begin() + selectedRow);
+		outputFiles.erase(outputFiles.begin() + selectedRow);
+		encoderTable->removeRow(selectedRow);
+		contentsChanged(0, 0);
 	}
 }
 
 
-void ExportTab::valueChanged(int row, int column)
+void ExportTab::contentsChanged(int, int)
 {
-	switch (column) {
-		case 0:
-		{
-			int size = encoderTable->numRows();
-			for (int i = 0; i < size; ++i) {
-				((QCheckTableItem*)encoderTable->item(i, 0))->setChecked(i == row);
-			}
-			break;
-		}
-		case 1: case 2:
-		{
-			encoderTable->adjustColumn(1);
-			encoderTable->adjustColumn(2);
-			
-			int width = encoderTable->columnWidth(2);
-			int prefWidth = encoderTable->width() - 
-					(encoderTable->columnWidth(0) + encoderTable->columnWidth(1));
-			if (width < prefWidth) {
-				encoderTable->setColumnWidth(2, prefWidth - 34);
-			}
-			
-			activeRowChanged(row);
-			break;
-		}
+	encoderTable->resizeColumnsToContents();
+	int totalWidth = encoderTable->columnWidth(0) + encoderTable->columnWidth(1);
+	int tableWidth = encoderTable->width() - 5;
+	if ( totalWidth < tableWidth) {
+		encoderTable->setColumnWidth( 1, tableWidth - encoderTable->columnWidth(0) );
 	}
 }
 
 
-void ExportTab::activeRowChanged(int row)
+void ExportTab::activeCellChanged(int, int)
 {
-	selectedEncoder = row;
-	if ( encoderPrefs->isShown() ) {
+	if ( encoderPrefs->isVisible() ) {
 		editSettings();
 	}
 }
@@ -325,10 +324,11 @@ void ExportTab::activeRowChanged(int row)
 
 void ExportTab::editSettings()
 {
-	if (selectedEncoder >= 0) {
-		startEncoder->setText(startEncoderStrings[selectedEncoder]);
-		stopEncoder->setText(stopEncoderStrings[selectedEncoder]);
-		if ( outputFiles[selectedEncoder] == "" ) {
+	int selected = encoderTable->currentRow();
+	if (selected >= 0) {
+		startEncoder->setText(startEncoderStrings[selected]);
+		stopEncoder->setText(stopEncoderStrings[selected]);
+		if ( outputFiles[selected] == "" ) {
 			setYesButtonOn();
 		}
 		else {
@@ -342,24 +342,33 @@ void ExportTab::editSettings()
 void ExportTab::closeSettings( )
 {
 	encoderPrefs->hide();
+	this->resize(minimumSize());
 }
 
 
 void ExportTab::updateStartString(const QString &txt)
 {
-	startEncoderStrings[selectedEncoder] = txt;
+	startEncoderStrings[encoderTable->currentRow()] = txt;
 }
 
 
 void ExportTab::updateStopString(const QString &txt)
 {
-	stopEncoderStrings[selectedEncoder] = txt;
+	stopEncoderStrings[encoderTable->currentRow()] = txt;
+}
+
+
+void ExportTab::freeProperty(const char *prop, const char *tag)
+{
+	if (strcmp(prop, tag) != 0) {
+		xmlFree((xmlChar *)prop);
+	}
 }
 
 
 void ExportTab::setDefaultOutput(const QString &txt)
 {
-	outputFiles[selectedEncoder] = txt;
+	outputFiles[encoderTable->currentRow()] = txt;
 }
 
 
@@ -370,7 +379,7 @@ void ExportTab::setYesButtonOn()
 	defaultOutput->setText("");
 	defaultOutput->setEnabled(false);
 	browseButton->setEnabled(false);
-	outputFiles[selectedEncoder] = "";
+	outputFiles[encoderTable->currentRow()] = "";
 }
 
 
@@ -380,16 +389,15 @@ void ExportTab::setNoButtonOn()
 	yesButton->setChecked(false);
 	defaultOutput->setEnabled(true);
 	browseButton->setEnabled(true);
-	defaultOutput->setText(outputFiles[selectedEncoder]);
+	defaultOutput->setText(outputFiles[encoderTable->currentRow()]);
 }
 
 
 void ExportTab::browseFiles()
 {
-	QString file = QFileDialog::getSaveFileName(getenv("PWD"), NULL,
-			this, NULL, tr("Choose output file"));
+	QString file = QFileDialog::getSaveFileName(this, tr("Choose output file"), getenv("PWD"));
 	if ( !file.isEmpty() ) {
-		outputFiles[selectedEncoder] = file;
+		outputFiles[encoderTable->currentRow()] = file;
 		defaultOutput->setText(file);
 	}
 }

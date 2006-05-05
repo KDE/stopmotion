@@ -21,12 +21,15 @@
 
 #include "mainwindowgui.h"
 
+#include <QMouseEvent>
+
 
 MenuFrame::MenuFrame(QWidget * parent, const char * name)
-		: QFrame(parent, name)
+	: QFrame(parent)
 {
 	focusSpinBox = NULL;
 	focusLineEdit = NULL;
+	setObjectName(name);
 }
 
 
@@ -49,11 +52,11 @@ void MenuFrame::setFocusWidget( QLineEdit * focusLineEdit )
 
 void MenuFrame::open( )
 {
-	if(focusSpinBox != 0) {
+	if (focusSpinBox != 0) {
 		focusSpinBox->setFocus();
 		focusSpinBox->selectAll();
 	}
-	else if(focusLineEdit != 0) {
+	else if (focusLineEdit != 0) {
 		focusLineEdit->setFocus();
 		focusLineEdit->selectAll();
 	}

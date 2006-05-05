@@ -45,9 +45,14 @@ public:
 	 * @param stopProcess command line for stopping the process
 	 * @param isProcess true if the process is running in deamon mode, false otherwise
 	 */
-	CommandLineGrabber(char* filePath, const char* prePoll, const char* startProcess, 
-			const char* stopProcess, bool isProcess = false);
+	/*CommandLineGrabber(char* filePath, const char* prePoll, const char* startProcess, 
+			const char* stopProcess, bool isProcess = false);*/
+	CommandLineGrabber(char* filePath, bool isProcess = false);
 	~CommandLineGrabber() {};
+	
+	bool setPrePollCommand(const char *command);
+	bool setStartCommand(const char *command);
+	bool setStopCommand(const char *command);
 	
 	/**
 	 * Starts the grabber if it is marked to be runned in deamon mode.

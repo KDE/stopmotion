@@ -20,15 +20,14 @@
 #ifndef TOOLSMENU_H
 #define TOOLSMENU_H
 
+#include "ui_toolsmenu.h"
+
 #include "src/application/runanimationhandler.h"
 #include "src/application/modelhandler.h"
 #include "src/application/camerahandler.h"
 
-#include <qbuttongroup.h>
-#include <qlayout.h>
-#include <qpushbutton.h>
-#include <qslider.h>
-#include <qcombobox.h>
+#include <QShortcut>
+#include <QWidget>
 
 
 /**
@@ -36,7 +35,7 @@
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class ToolsMenu : public QFrame
+class ToolsMenu : public QWidget
 {
 	Q_OBJECT
 public:
@@ -45,18 +44,7 @@ public:
 	 * @param parent the parent of the widget.
 	 */
 	ToolsMenu( RunAnimationHandler *runAnimationHandler, ModelHandler *modelHandler,
-			CameraHandler *cameraHandler, QWidget *parent=0 );
-	
-	/** 
-	 * Creates key accelerators (keyboard shortcuts)
-	 * More can be found in the function MainWindowGUI::createAccelerators().
-	 */
-	void createAccelerators();
-	
-	/**
-	 * Add widgets to the menu.
-	 */
-	void addWidgets();
+			CameraHandler *cameraHandler, QWidget *parent = 0 );
 	
 	/**
 	 * Retranslates the strings.
@@ -81,47 +69,30 @@ public slots:
 	void modelSizeChanged(int modelSize);
 	
 private:
+	Ui::Form ui;
+	
 	RunAnimationHandler *runAnimationHandler;
 	ModelHandler *modelHandler;
 	CameraHandler *cameraHandler;
 	
-	QGroupBox *captureGroup;
-	QGroupBox *runAnimationGroup;
-	
-	//Widgets
-	QPushButton *addFrameButton;
-	QPushButton *removeFramesButton;
-	QPushButton *newSceneButton;
-	QPushButton *removeSceneButton;
-	QPushButton *cameraButton;
-	QPushButton *captureFrameButton;
-	QPushButton *playButton;
-	QPushButton *nextFrameButton;
-	QPushButton *previousFrameButton;
-	QPushButton *toEndButton;
-	QPushButton *toBeginningButton;
-	QPushButton *stopButton;
-	QPushButton *pauseButton;
-	QPushButton *loopButton;
-	QSlider *mixSlider;
-	QSpinBox *animationSpeedChooser;
-	QComboBox *viewChooseCombo;
-	QComboBox *unitChooseCombo;
-	QLabel *animationSpeedChooserCaption;
-	QLabel *mixSliderCaption;
-	QSpacerItem *horizontalSpace;
-	QSpacerItem *verticalSpace;
-	QSpacerItem *horizontalDummySpace;
-	QSpacerItem *groupSpace;
-	QGridLayout *grid;
-	QGridLayout *captureGrid;
-	QGridLayout *runAnimationGrid;
-	QAccel *loopAccel;
-	QAccel *playAccel;
-	QAccel *mixAccel;
-	QAccel *diffAccel;
-	QAccel *playbackAccel;
+	QShortcut *loopAccel;
+	QShortcut *playAccel;
+	QShortcut *mixAccel;
+	QShortcut *diffAccel;
+	QShortcut *playbackAccel;
 	QTimer *captureTimer;
+	
+	/**
+	 * Creates connections, adds icons to the buttons and sets 
+	 * different properities.
+	 */
+	void setupUi();
+	
+	/** 
+	 * Creates key accelerators (keyboard shortcuts)
+	 * More can be found in the function MainWindowGUI::createAccelerators().
+	 */
+	void createAccelerators();
 	
 private slots:
 

@@ -20,13 +20,17 @@
 #ifndef EXPORTTAB_H
 #define EXPORTTAB_H
 
-#include <qframe.h>
-#include <qpushbutton.h>
-#include <qgroupbox.h>
-#include <qtable.h>
-#include <qlineedit.h>
-#include <qradiobutton.h>
-#include <qlabel.h>
+#include <QWidget>
+#include <QPushButton>
+#include <QGroupBox>
+#include <QTableWidget>
+#include <QLineEdit>
+#include <QLabel>
+#include <QGridLayout>
+#include <QTextEdit>
+#include <QToolBox>
+#include <QRadioButton>
+
 #include <vector>
 
 
@@ -34,7 +38,7 @@
  * The export tab in the preferences menu
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class ExportTab : public QFrame
+class ExportTab : public QWidget
 {
 	Q_OBJECT
 public:
@@ -54,11 +58,14 @@ public:
 	 */
 	void initialize();
 	
+protected:
+	void resizeEvent(QResizeEvent *event);
+	
 private slots:
 	void addEncoder();
 	void removeEncoder();
-	void valueChanged(int row, int column);
-	void activeRowChanged(int row);
+	void contentsChanged(int row, int column);
+	void activeCellChanged(int row, int column);
 	void editSettings();
 	void closeSettings();
 	void updateStartString(const QString &txt);
@@ -81,25 +88,18 @@ private:
 	QRadioButton *yesButton;
 	QRadioButton *noButton;
 	QGroupBox *encoderPrefs;
-	QTable *encoderTable;
+	QTableWidget *encoderTable;
 	QLineEdit *startEncoder;
 	QLineEdit *stopEncoder;
 	QLabel *startEncoderLabel;
 	QLabel *stopEncoderLabel;
 	QLineEdit *defaultOutput;
 	QLabel *defaultOutputLabel;
-	QGridLayout *mainGrid;
-	QGridLayout *settingsGrid;
-	QSpacerItem *space3;
-	QSpacerItem *rightSpace;
-	QSpacerItem *leftSpace;
 	QLabel *askForOutput;
-	QLabel *infoText;
-	
-	int selectedEncoder;
-	int numEncoders;
+	QTextEdit *infoText;
 	
 	void makeGUI();
+	void freeProperty(const char *prop, const char *tag = "");
 };
 
 #endif

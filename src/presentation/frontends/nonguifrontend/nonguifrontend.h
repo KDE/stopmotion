@@ -100,6 +100,8 @@ public:
 	 * @return 0 if the user answer yes, 1 if no
 	 */
 	int askQuestion(const char *question);
+
+	int runExternalCommand(const char *command);
 	
 private:
 	DomainFacade *facadePtr;

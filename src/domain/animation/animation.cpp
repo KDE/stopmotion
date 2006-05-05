@@ -24,11 +24,6 @@
 #include "src/technical/video/videofactory.h"
 
 #include <vector>
-#include <qstring.h>
-#include <qfiledialog.h>
-#include <qmessagebox.h>
-#include <qfileinfo.h>
-#include <qapplication.h>
 #include <iostream>
 
 
@@ -192,8 +187,7 @@ void Animation::setSoundName(unsigned int frameNumber, unsigned int soundNumber,
 Frame* Animation::getFrame(unsigned int frameNumber, unsigned int sceneNumber)
 {
 	if (frameNumber < scenes[sceneNumber]->getSize()) {
-		Logger::get().logDebug("Retrieving frame from Animation");
-		
+		Logger::get().logDebug("Retrieving frame from Animation");	
 		return scenes[sceneNumber]->getFrame(frameNumber);
 	}
 	else {
@@ -251,7 +245,9 @@ void Animation::playFrame(int frameNumber)
 {
 	if (isAudioDriverInitialized) {
 		Frame *f = getFrame(frameNumber);
-		f->playSounds(audioDriver);
+		if (f) {
+			f->playSounds(audioDriver);
+		}
 	}
 	notifyPlayFrame(frameNumber);
 }
@@ -437,12 +433,20 @@ void Animation::shutdownAudioDevice()
 
 void Animation::animationChanged(const char *alteredFile)
 {
+	assert(alteredFile != NULL);
+	if (activeScene == -1) {
+		return;
+	}
+	
 	int size = scenes[activeScene]->getSize();
 	int changedFrame = -1;
 	for (int i = 0; i < size; ++i) {
-		if(strcmp(scenes[activeScene]->getFrame(i)->getImagePath(), alteredFile) == 0) {
-			changedFrame = i;
-			break;
+		Frame *f = scenes[activeScene]->getFrame(i);
+		if (f) {
+			if (strcmp(f->getImagePath(), alteredFile) == 0) {
+				changedFrame = i;
+				break;
+			}
 		}
 	}
 	
@@ -461,8 +465,6 @@ bool Animation::exportToVideo(VideoEncoder * encoder)
 		return true;
 	}
 	frontend->hideProgress();
-	frontend->reportError("Video export failed. Please check your \n"
-	                      "export settings in the preferences menu.", 0);
 	return false;
 }
 

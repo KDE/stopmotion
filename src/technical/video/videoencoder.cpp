@@ -17,7 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "videoencoder.h"
+#include "src/technical/video/videoencoder.h"
+
+#include "src/technical/util.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -95,5 +97,10 @@ void VideoEncoder::setOutputFile(const char* file)
 
 bool VideoEncoder::isValid()
 {
-	return true;
+	const char *path = Util::checkCommand(startCommand);
+	if ( path != 0) {
+		delete [] path;
+		return true;
+	}
+	return false;
 }

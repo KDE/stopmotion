@@ -20,25 +20,28 @@
 #include "framethumbview.h"
 
 #include "src/domain/domainfacade.h"
-#include "mainwindowgui.h"
 #include "graphics/icons/note.xpm"
 
-#include <qapplication.h>
-#include <qdragobject.h> 
-#include <qpainter.h>
-#include <sstream>
+#include <QApplication>
+#include <QPainter>
+#include <QStringList>
+#include <QMouseEvent>
+#include <QPixmap>
+#include <QPaintEvent>
+#include <QDropEvent>
+#include <QDrag>
+#include <QMimeData>
+#include <QList>
+#include <QUrl>
 
-#include <iostream>
 
-
-FrameThumbView::FrameThumbView(FrameBar *frameBar, QWidget *parent, int number, 
-		const char * name) 
-		: ThumbView(frameBar, parent, number, name), hasSounds(false)
+FrameThumbView::FrameThumbView(FrameBar *frameBar, QWidget *parent, int number, const char *name)
+		: ThumbView(frameBar, parent, number, name)
 {
-	char temp[7] = {0};
-	sprintf(temp, "%d", number+1);
-	textWidth = 5+strlen(temp)*8;
+	stringNumber = QString("%1").arg(number + 1);
+	textWidth = 5 + stringNumber.length() * 8;
 	selected = false;
+	hasSounds = false;
 }
 
 
@@ -49,18 +52,16 @@ FrameThumbView::~FrameThumbView()
 
 void FrameThumbView::mousePressEvent( QMouseEvent * e )
 {
-	if (e->button() == LeftButton) {
-		if (!frameBar->isSelecting()) {
-			//2 "unnecessary" int initialization here, but it is better than having 8 extra
-			//retrieval funtions.
+	if (e->button() == Qt::LeftButton) {
+		if ( !frameBar->isSelecting() ) {
 			int selectionFrame = frameBar->getSelectionFrame();
 			int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
 			int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 			int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 			
-			//If the user presses inside the selection area this shouldn't trigger an
-			//setActiveFrame before the mouse button is released. The reason for this is
-			//to give the user a chance to drag the items. See mouseReleaseEvent(...)
+			// If the user presses inside the selection area this shouldn't trigger
+			// setActiveFrame before the mouse button is released. The reason for this is
+			// to give the user a chance to drag the items. See mouseReleaseEvent(...)
 			if (number > highend || number < lowend) {
 				DomainFacade::getFacade()->setActiveFrame(number);
 			}
@@ -76,8 +77,8 @@ void FrameThumbView::mousePressEvent( QMouseEvent * e )
 void FrameThumbView::mouseReleaseEvent( QMouseEvent * e )
 {
 	Logger::get().logDebug("Releasing mouse button inside thumbview");
-	if (e->button() == LeftButton) {
-		if (!frameBar->isSelecting()) {
+	if (e->button() == Qt::LeftButton) {
+		if ( !frameBar->isSelecting() ) {
 			int selectionFrame = frameBar->getSelectionFrame();
 			int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
 			int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
@@ -92,7 +93,7 @@ void FrameThumbView::mouseReleaseEvent( QMouseEvent * e )
 
 void FrameThumbView::mouseMoveEvent(QMouseEvent *me)
 {
-	if (me->state() & LeftButton) {
+	if (me->buttons() & Qt::LeftButton) {
 		int distance = (me->pos() - dragPos).manhattanLength();
 		if (distance > QApplication::startDragDistance()) {
 			startDrag();
@@ -108,10 +109,7 @@ void FrameThumbView::mouseDoubleClickEvent( QMouseEvent * )
 }
 
 
-/**
- *@todo the string should perhaps be cached away
- */
-void FrameThumbView::paintEvent ( QPaintEvent * paintEvent )
+void FrameThumbView::paintEvent (QPaintEvent * paintEvent)
 {
 	QLabel::paintEvent(paintEvent);
 	QPainter painter( this );
@@ -125,55 +123,56 @@ void FrameThumbView::paintEvent ( QPaintEvent * paintEvent )
 		painter.setPen( Qt::white );
 	}
 		
-	stringstream ss;
-	ss << number+1;
-	painter.drawText( 5, 17, ss.str().c_str() );
+	painter.drawText(5, 17, stringNumber);
 	
 	if (this->hasSounds) {
-		QPixmap noteIcon = QPixmap(note);
-		painter.drawPixmap( width()-32, 0, noteIcon);
+		painter.drawPixmap( width() - 32, 0, QPixmap(note) );
 	}
 }
-
+	
 
 void FrameThumbView::startDrag()
 {
-	//If the drag ends on a scene this tells the scene that it is frames who are 
-	//being moved.
+	// If the drag ends on a scene this tells the scene that it is frames who are 
+	// being moved.
 	frameBar->setMovingScene(-1);
 	
-	QStrList lst;
+	QList<QUrl> urls;
 	
 	int selectionFrame = frameBar->getSelectionFrame();
 	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
 	int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 	int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
-	for (int i=lowend; i<=highend; ++i) {
-		lst.append( DomainFacade::getFacade()->getFrame(i)->getImagePath() );
+	for (int i = lowend; i <= highend; ++i) {
+		urls.append(QUrl::fromLocalFile(DomainFacade::getFacade()->getFrame(i)->getImagePath()));
 	}
 	
-	QUriDrag *drag = new QUriDrag( lst, this );
+	QDrag *drag = new QDrag(this);
+	QMimeData *mimeData = new QMimeData;
+
+	mimeData->setUrls(urls);
+	drag->setMimeData(mimeData);
 	drag->setPixmap(*pixmap());
-	drag->drag();
+
+	//Qt::DropAction dropAction = drag->start(Qt::CopyAction | Qt::MoveAction);
+	drag->start(Qt::MoveAction);
+	
 }
 
 
 void FrameThumbView::setHasSounds( bool hasSounds )
 {
 	this->hasSounds = hasSounds;
-	repaint();
+	update();
 }
 
 
 void FrameThumbView::setNumber( int number )
 {
 	ThumbView::setNumber(number);
-	
-	char temp[8] = {0};
-	sprintf(temp, "%d", number+1);
-	textWidth = 5+strlen(temp)*8;
-	
-	repaint();
+	stringNumber = QString("%1").arg(number + 1);
+	textWidth = 5 + stringNumber.length() * 8;
+	update();
 }
 
 
@@ -201,42 +200,31 @@ void FrameThumbView::contentsDropped(QDropEvent * event)
 		Logger::get().logDebug("Moving picture");
 		int selectionFrame = frameBar->getSelectionFrame();
 		int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
-		unsigned int highend = (selectionFrame > activeFrame ) 
-				? selectionFrame : activeFrame;
-		unsigned int lowend = (selectionFrame < activeFrame ) 
-				? selectionFrame : activeFrame;
+		unsigned int highend = (selectionFrame > activeFrame) ? selectionFrame : activeFrame;
+		unsigned int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 		DomainFacade::getFacade()->moveFrames(lowend, highend, this->number);
-		
 	}
 	else {
 		Logger::get().logDebug("Adding picture(s)");
 		DomainFacade::getFacade()->setActiveFrame(this->number);
 		
-		if ( QUriDrag::canDecode(event) ) {
+		if ( event->mimeData()->hasUrls() ) {
 			QStringList fileNames;
-			if ( QUriDrag::decodeLocalFiles(event, fileNames) ) {
-				std::vector<char*> fNames;
-				QStringList::Iterator it = fileNames.begin();
-				while (it != fileNames.end() ) {
-					QString fileName = *it;
-					char *f = (char*)fileName.ascii();
-					fNames.push_back( f );
-					++it;
-				}
-				DomainFacade::getFacade()->addFrames(fNames);
+			QList<QUrl> urls = event->mimeData()->urls();
+			int numFrames = urls.size();
+			for (int i = 0; i < numFrames; ++i) {
+				fileNames.append(urls[i].toLocalFile());
 			}
+			std::vector<char*> fNames;
+			QStringList::Iterator it = fileNames.begin();
+			while (it != fileNames.end() ) {
+				QString fileName = *it;
+				const char *f = fileName.toStdString().c_str();
+				fNames.push_back( const_cast<char*>(f) );
+				++it;
+			}
+			DomainFacade::getFacade()->addFrames(fNames);
 		}
 	}
 }
 
-
-void FrameThumbView::resizeThumb(int height)
-{
-	QPixmap p = *pixmap();
-	QImage img = p.convertToImage();
-	setPixmap( QPixmap(QImage(img).scale(height-3, height)));
-	setMinimumHeight(height);
-	setMaximumHeight(height);
-	setMinimumWidth(height);
-	setMaximumWidth(height);
-}

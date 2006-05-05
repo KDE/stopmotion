@@ -1,3 +1,37 @@
+stopmotion (0.5.1-1) unstable; urgency=low
+
+  * Changed from '/bin/which' to 'which' in the Util class
+  * Changed from 'INSTALL_ROOT' to 'prefix' on install targets in the
+    Makefile
+  * Included cassert.h in the Util class
+  * Fixed minor bug related to opening and closing of scenes
+  * Updated to Standards-Version 3.7.2
+
+  * Upload sponsored by Petter Reinholdtsen.
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Fri,  5 May 2006 15:13:20 +0200
+
+stopmotion (0.5.0-1) unstable; urgency=low
+
+  * Ported to Qt4
+  * Added: 
+    - Support for getting output from stdout in a custom widget as well as
+      typing input to stdin
+    - Experimental import option for dvgrab in the preferences menu
+    - French translation
+    - Searching for commands given in the preferences menu
+    - Autoconf based configure script
+    - pkg-config as build dependency
+  * Refactored:
+    - Framebar
+    - Languagehandler
+  * Changed the way buffering of images is done, more efficient now
+  * Optimized the paint routine in frameview
+  * Improved the way Stopmotion is installed and removed when doing
+    'make install' and 'make uninstall'
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Tue, 18 Apr 2006 20:08:02 +0200
+
 stopmotion (0.4.1-1) unstable; urgency=low
 
   * Code cleanup

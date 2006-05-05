@@ -17,56 +17,41 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "camerahandler.h"
+#include "src/application/camerahandler.h"
 
 #include "src/domain/domainfacade.h"
 #include "src/foundation/preferencestool.h"
 #include "graphics/icons/cameraoff.xpm"
 #include "graphics/icons/cameraon.xpm"
 
-#include <qimage.h>
-#include <qinputdialog.h>
-#include <qwhatsthis.h>
-#include <vector>
+#include <QImage>
+#include <QInputDialog>
+#include <QWhatsThis>
+#include <QPixmap>
 
+#include <vector>
 
 
 CameraHandler::CameraHandler ( QObject *parent, QStatusBar *sb, 
 		ModelHandler* modelHandler, const char *name) 
-		: QObject(parent, name), statusBar(sb), modelHandler(modelHandler)
+	: QObject(parent), statusBar(sb), modelHandler(modelHandler)
 {
-	cameraButton = NULL;
-	frameViewStack = NULL;
-	videoView = NULL;
-	frameView = NULL;
-	timer     = NULL;
+	cameraButton = 0;
+	frameView = 0;
 
 	isCameraOn = false;
 	sprintf(temp, "%s/.stopmotion/capturedfile.jpg", getenv("HOME") ); 
 	
 	timer = new QTimer(this);
+	timer->setSingleShot(true);
 	QObject::connect( timer, SIGNAL(timeout()), this, SLOT(storeFrame()) );
+	setObjectName(name);
 }
 
 
-/**
- *@todo add cleanup code for gstreamer components
- */
 CameraHandler::~CameraHandler( )
 {
 
-}
-
-
-void CameraHandler::setWidgetStack(QWidgetStack *frameViewStack)
-{
-	this->frameViewStack = frameViewStack;
-}
-
-
-void CameraHandler::setVideoView(VideoView *videoView)
-{
-	this->videoView = videoView;
 }
 
 
@@ -84,33 +69,29 @@ void CameraHandler::setCameraButton( QPushButton *cameraButton )
 
 bool CameraHandler::setViewMode(int mode)
 {
-	return videoView->setViewMode(mode);
+	return frameView->setViewMode(mode);
 }
 
 
 void CameraHandler::cameraOn()
 {
-	cameraButton->setPixmap( QPixmap(cameraoff) );
 	DomainFacade::getFacade()->getFrontend()->showProgress("Connecting camera... ");
-	cameraButton->setEnabled(false);
-	frameViewStack->raiseWidget(videoView);
-	isCameraOn = videoView->on();
-	if (isCameraOn == false) {
+	cameraButton->setIcon( QPixmap(cameraoff) );
+	isCameraOn = frameView->on();
+	if (!isCameraOn) {
 		cameraOff();
 	}
+	DomainFacade::getFacade()->getFrontend()->hideProgress();
 }
 
 
 void CameraHandler::cameraOff()
 {
-	cameraButton->setPixmap( QPixmap(cameraon) );
-	DomainFacade::getFacade()->attatch(frameView);
-	frameViewStack->raiseWidget(frameView);
+	cameraButton->setIcon( QPixmap(cameraon) );
 	emit cameraStateChanged(false);
-	videoView->off();
+	frameView->off();
 	isCameraOn = false;
-	DomainFacade::getFacade()->setActiveFrame(
-			DomainFacade::getFacade()->getActiveFrameNumber());
+	DomainFacade::getFacade()->setActiveFrame(DomainFacade::getFacade()->getActiveFrameNumber());
 }
 
 
@@ -129,7 +110,7 @@ void CameraHandler::toggleCamera()
 void CameraHandler::captureFrame()
 {
 	Logger::get().logDebug("Capturing image from webcam");
-	timer->start(50, true);
+	timer->start(60);
 }
 
 
@@ -137,15 +118,14 @@ void CameraHandler::storeFrame()
 {
 	QImage i;
 	i.load(temp);
-	if(i.isNull() == false) {
+	if ( !i.isNull() ) {
 		modelHandler->addFrame(temp);
-		if(DomainFacade::getFacade()->getActiveFrameNumber() == 0) {
+		if (DomainFacade::getFacade()->getActiveFrameNumber() == 0) {
 			emit capturedFrame();
 		}
-		videoView->capture();
 	}
 	else {
-		timer->start(50, true);
+		timer->start(60);
 	}
 }
 
@@ -153,11 +133,6 @@ void CameraHandler::storeFrame()
 void CameraHandler::switchToVideoView()
 {
 	cameraButton->setEnabled(true);
-	
-	if(frameView != NULL) {
-		DomainFacade::getFacade()->detatch(frameView);
-	}
-	
 	emit cameraStateChanged(true);
 	DomainFacade::getFacade()->getFrontend()->hideProgress();
 }
@@ -165,11 +140,9 @@ void CameraHandler::switchToVideoView()
 
 void CameraHandler::setMixCount(int mixCount)
 {
-	videoView->setMixCount(mixCount);
+	frameView->setMixCount(mixCount);
 	
-	//Storing the new mixcount in the PreferencesTool
-	switch(videoView->getViewMode()) 
-	{
+	switch( frameView->getViewMode() ) {
 		case 0: 
 		{
 			PreferencesTool::get()->setPreference("mixcount", mixCount);
@@ -192,5 +165,5 @@ bool CameraHandler::isCameraRunning()
 
 void CameraHandler::setPlaybackSpeed(int playBackSpeed)
 {
-	videoView->setPlaybackSpeed(playBackSpeed);
+	frameView->setPlaybackSpeed(playBackSpeed);
 }

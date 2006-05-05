@@ -22,14 +22,15 @@
 
 #include "src/config.h"
 #include "src/presentation/frontends/frontend.h"
-#include "mainwindowgui.h"
+#include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 #include "src/foundation/preferencestool.h"
 
-#include <qprogressdialog.h>
-#include <qprogressbar.h>
-#include <qtimer.h>
-#include <qobject.h>
-#include <qapplication.h>
+#include <QProgressDialog>
+#include <QProgressBar>
+#include <QTimer>
+#include <QObject>
+#include <QApplication>
+#include <QLabel>
 
 
 /**
@@ -113,6 +114,8 @@ public:
 	 * @return 0 if the user answer yes, 1 if no
 	 */
 	int askQuestion(const char *question);
+
+	int runExternalCommand(const char *command);
 	
 protected slots:
 	void updateProgressBar();

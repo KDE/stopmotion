@@ -24,9 +24,10 @@
 #include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 #include "src/application/externalchangemonitor.h"
 
-#include <qstatusbar.h>
-#include <qfiledialog.h>
-#include <qpushbutton.h>
+#include <QStatusBar>
+#include <QFileDialog>
+#include <QPushButton>
+#include <QStringList>
 
 
 /**

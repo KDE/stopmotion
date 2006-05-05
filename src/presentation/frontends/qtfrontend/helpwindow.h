@@ -1,61 +1,36 @@
-/****************************************************************************
-** $Id: helpwindow.h,v 1.1 2005/05/13 05:45:07 fredrikb Exp $
-**
-** Copyright (C) 1992-2000 Trolltech AS.  All rights reserved.
-**
-** This file is part of an example program for Qt.  This example
-** program may be used, distributed and modified without limitation.
-**
-**
-** //Note from the Stopmotion developers:
-** This example was used for creating a help menu an have been modified, from
-** its original state.
-**
-*****************************************************************************/
-
+/***************************************************************************
+ *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
 #ifndef HELPWINDOW_H
 #define HELPWINDOW_H
 
-#include <qmainwindow.h>
-#include <qtextbrowser.h>
-#include <qstringlist.h>
-#include <qmap.h>
-#include <qdir.h>
+#include "ui_helpbrowser.h"
 
-
-class QComboBox;
-class QPopupMenu;
 
 class HelpWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    HelpWindow( const QString& home_,  const QString& path, QWidget* parent = 0, const char *name=0 );
-    ~HelpWindow();
-
-private slots:
-    void setBackwardAvailable( bool );
-    void setForwardAvailable( bool );
-    void sourceChanged( const QString& );
-    void openFile();
-    void newWindow();
-    void print();
-    void pathSelected( const QString & );
-    void histChosen( int );
-    void bookmChosen( int );
-    void addBookmark();
+	HelpWindow(QWidget *parent = 0);
 
 private:
-    void readHistory();
-    void readBookmarks();
-
-    QTextBrowser* browser;
-    QComboBox *pathCombo;
-    int backwardId, forwardId;
-    QStringList history, bookmarks;
-    QMap<int, QString> mHistory, mBookmarks;
-    QPopupMenu *hist, *bookm;
-
+	Ui::MainWindow ui;
 };
 
 #endif

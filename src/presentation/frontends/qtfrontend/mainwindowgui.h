@@ -21,9 +21,9 @@
 #define QTGUI_H
 
 #include "src/config.h"
-#include "framebar/framebar.h"
-#include "frameview.h"
-#include "flexiblespinbox.h"
+#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
+#include "src/presentation/frontends/qtfrontend/frameview.h"
+#include "src/presentation/frontends/qtfrontend/flexiblespinbox.h"
 #include "src/application/camerahandler.h"
 #include "src/application/editmenuhandler.h"
 #include "src/application/runanimationhandler.h"
@@ -31,23 +31,11 @@
 #include "src/application/languagehandler.h"
 #include "src/application/soundhandler.h"
 #include "src/application/externalchangemonitor.h"
-#include "menuframe.h"
-#include "framepreferencesmenu.h"
-#include "toolsmenu.h"
+#include "src/presentation/frontends/qtfrontend/menuframe.h"
+#include "src/presentation/frontends/qtfrontend/framepreferencesmenu.h"
+#include "src/presentation/frontends/qtfrontend/toolsmenu.h"
 
-#include <qmainwindow.h>
-#include <qevent.h>
-#include <qvbox.h>
-#include <qhbox.h>
-#include <qstring.h>
-#include <qcolor.h>
-#include <qpushbutton.h>
-#include <qbuttongroup.h>
-#include <qwidgetstack.h>
-#include <qspinbox.h>
-#include <qlistbox.h>
-#include <qaction.h>
-#include <qsplitter.h>
+#include <QtGui>
 
 
 /**
@@ -90,12 +78,16 @@ public:
 	
 private:
 	QApplication *stApp;
-	QSplitter *centerWidget;
-	QVBox *bottomSplitter;
-	QHBox *workArea;
+	QWidget *centerWidget;
+	QVBoxLayout *centerWidgetLayout;
+	QWidget *bottomWidget;
+	QVBoxLayout *bottomWidgetLayout;
+	QWidget *workArea;
+	QHBoxLayout *workAreaLayout;
 	FrameBar *frameBar;
 	FrameView *frameView;
-	QWidgetStack *frameViewStack;
+	QWidget *gotoMenuWidget;
+	QHBoxLayout *gotoMenuWidgetLayout;
 	
 	//Actions
 	QAction *newAct;
@@ -120,26 +112,23 @@ private:
 	QAction *helpAct;
 	
 	//Menues
-	QPopupMenu *fileMenu;
-	QPopupMenu *exportMenu;
-	QPopupMenu *mostRecentMenu;
-	QPopupMenu *editMenu;
-	QPopupMenu *settingsMenu;
-	QPopupMenu *languagesMenu;
-	QPopupMenu *helpMenu;
+	QMenu *fileMenu;
+	QMenu *exportMenu;
+	QMenu *mostRecentMenu;
+	QMenu *editMenu;
+	QMenu *settingsMenu;
+	QMenu *languagesMenu;
+	QMenu *helpMenu;
 	ToolsMenu *toolsMenu;
 	FramePreferencesMenu *preferencesMenu;
 	
-	MenuFrame *gotoMenu;
-	QGridLayout *gotoMenuGrid;
-	QSpacerItem *space;
+	//MenuFrame *gotoMenu;
 	QPushButton *gotoMenuCloseButton;
 	
 	//Widgets
 	QLabel *numberDisplay;
 	FlexibleSpinBox *gotoSpinner;
 	QLabel *gotoFrameLabel;
-	
 	
 	//Handlers
 	ModelHandler *modelHandler;
@@ -183,34 +172,28 @@ private:
 	 void createMenus();
 	
 	/**
-	 *Creates and sets up the framebar.
-	 *@param parent the widget the framebar will be inserted into.
-	 */
-	void makeFrameBar(QWidget * parent);
-	
-	/**
 	 * Creates the preferences menu.
 	 * @param parent 
 	 */
-	void makePreferencesMenu(QWidget * parent);
+	void makePreferencesMenu(QVBoxLayout *layout);
 	
 	/**
 	 *Creates and sets up the frameview.
 	 *@param parent the widget the frameview will be inserted into.
 	 */
-	void makeViews(QWidget * parent);
+	void makeViews(QHBoxLayout *layout);
 	
 	/**
 	 *Creates and sets up the toolsmenu.
 	 *@param parent the widget the toolsmenu will be inserted into.
 	 */
-	void makeToolsMenu(QWidget * parent);
+	void makeToolsMenu(QHBoxLayout *layout);
 	
 	/**
 	 * Creates and sets up the menu for going to a specified framenumber.
 	 * @param parent the widget the gotomenu will be inserted into.
 	 */
-	void makeGotoMenu(QWidget * parent);
+	void makeGotoMenu(QVBoxLayout *layout);
 	
 	/**
 	 * Sets up the statusbar with custom widgets.
@@ -323,6 +306,8 @@ private slots:
 	 * Exports the current project to a valid Cinerella project.
 	 */
 	void exportToCinerella();
+
+	void whatsThis();
 	
 public slots:
 	/**
@@ -336,12 +321,6 @@ public slots:
 	 * Sets differents buttons such as undo, save as and copy to be enabled.
 	 */
 	void activateMenuOptions();
-	
-	/**
-	 * Notified when closing the application.
-	 * @param  ce information about the close event.
-	 */
-	void closeEvent(QCloseEvent *ce);
 };
 
 #endif

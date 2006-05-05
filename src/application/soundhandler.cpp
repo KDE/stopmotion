@@ -17,23 +17,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "soundhandler.h"
+#include "src/application/soundhandler.h"
 
 #include "src/domain/domainfacade.h"
 
-#include <qfiledialog.h>
-#include <qinputdialog.h>
+#include <QFileDialog>
+#include <QInputDialog>
 
 
-SoundHandler::SoundHandler ( QObject *parent, QStatusBar *sb, const char* homeDir,
-		const char *name ) 
-		: QObject(parent, name), statusBar(sb), homeDir(homeDir)
+SoundHandler::SoundHandler(QObject *parent, QStatusBar *sb, const char* homeDir, const char *name) 
+	: QObject(parent), statusBar(sb), homeDir(homeDir)
 {
 	soundsList = NULL;
+	setObjectName(name);
 }
 
 
-void SoundHandler::setSoundsList(QListBox *soundsList)
+void SoundHandler::setSoundsList(QListWidget *soundsList)
 {
 	this->soundsList = soundsList;
 }
@@ -41,32 +41,30 @@ void SoundHandler::setSoundsList(QListBox *soundsList)
 
 void SoundHandler::addSound()
 {
-	QString file = QFileDialog::getOpenFileName(homeDir, tr("Sounds (*.ogg)") );
+	QString file = QFileDialog::
+		getOpenFileName(0, tr("Choose sound file"), QString(homeDir), tr("Sounds (*.ogg)") );
 	if ( !file.isNull() ) {
-		int ret = DomainFacade::getFacade()->addSound( DomainFacade::getFacade()->
-				getActiveFrameNumber(), (char*)file.ascii() );
+		DomainFacade *facade = DomainFacade::getFacade();
+		int ret = facade->addSound( facade->getActiveFrameNumber(), file.toLatin1().constData() );
 		if (ret == 0) {
-			soundsList->insertItem( DomainFacade::getFacade()->
-					getFrame(DomainFacade::getFacade()->
-					getActiveFrameNumber())->getSoundName(soundsList->numRows()) );
-			emit soundsChanged();
+			Frame *frame = facade->getFrame( facade->getActiveFrameNumber() );
+			if (frame) {
+				soundsList->insertItem(soundsList->count(), 
+						new QListWidgetItem( frame->getSoundName(soundsList->count())) );
+				emit soundsChanged();
+			}
 		}
-	}
-	else {
-		Logger::get().logWarning("openDialog returned a NULL pointer");
 	}
 }
 
 
 void SoundHandler::removeSound()
 {
-	int index = soundsList->index(soundsList->selectedItem());
-	
+	int index = soundsList->currentRow();
 	if (index >= 0) {
-		DomainFacade::getFacade()->removeSound( 
-			DomainFacade::getFacade()->getActiveFrameNumber(), index );
-		
-		soundsList->removeItem(index);
+		DomainFacade::getFacade()->removeSound(DomainFacade::getFacade()->getActiveFrameNumber(), index);
+		QListWidgetItem *qlwi = soundsList->takeItem(index);
+		delete qlwi;
 		emit soundsChanged();
 	}
 }
@@ -74,18 +72,15 @@ void SoundHandler::removeSound()
 
 void SoundHandler::setSoundName()
 {
-	int index = soundsList->index(soundsList->selectedItem());
-	
+	int index = soundsList->currentRow();
 	if (index >= 0) {
-		bool ok;
-		QString text = QInputDialog::getText(
-			tr("Sound name"), tr("Enter the name of the sound:"), QLineEdit::Normal,
-			QString::null, &ok, (QWidget*)this->parent() );
-		
+		bool ok = false;
+		QString text = QInputDialog::getText(0, tr("Sound name"), tr("Enter the name of the sound:"), 
+				QLineEdit::Normal,QString::null, &ok);
 		if ( ok && !text.isEmpty() ) {
-			DomainFacade::getFacade()->setSoundName(DomainFacade::getFacade()->
-					getActiveFrameNumber(), index, (char*)text.ascii() );
-			soundsList->changeItem( text, index );
+			DomainFacade::getFacade()->setSoundName(DomainFacade::getFacade()->getActiveFrameNumber(), 
+					index, text.toLatin1().data() );
+			soundsList->item(index)->setText(text);
 		}
 	}
 }
