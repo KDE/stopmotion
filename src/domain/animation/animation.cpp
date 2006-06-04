@@ -222,7 +222,10 @@ unsigned int Animation::getModelSize()
 
 unsigned int Animation::getSceneSize( int sceneNumber )
 {
-	return scenes[sceneNumber]->getSize();
+	if ( sceneNumber > -1 && sceneNumber < scenes.size() ) {
+		return scenes[sceneNumber]->getSize();
+	}
+	return 0;
 }
 
 

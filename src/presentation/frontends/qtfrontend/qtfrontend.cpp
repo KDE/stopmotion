@@ -177,7 +177,7 @@ void QtFrontend::initializePreferences()
 	}
 
 	// If file doesn't exist or has wrong version number
-	if ( !prefs->setPreferencesFile(preferencesFile.toLatin1().constData(), "0.6") ) {
+	if ( !prefs->setPreferencesFile(preferencesFile.toLatin1().constData(), "0.7") ) {
 		// File doesn't exist
 		if (prefsFileExists == -1) {
 			setDefaultPreferences(prefs);
@@ -199,7 +199,7 @@ void QtFrontend::initializePreferences()
 				prefs->setPreferencesFile(preferencesFile.toLatin1().constData(), prefs->getOldVersion());
 				
 				// Update version
-				prefs->setVersion("0.6");
+				prefs->setVersion("0.7");
 				
 				// Do necessary updates on the old prefs file:
 				updateOldPreferences(prefs);
@@ -215,7 +215,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	Logger::get().logDebug("Setting default preferences");
 
 	// Default import options ------------------------------------------------
-	prefs->setPreference("numberofimports", 3);
+	prefs->setPreference("numberofimports", 4);
 	prefs->setPreference("activedevice", 1);
 
 	// Default import option 1
@@ -223,7 +223,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("importdescription0", 
 			tr("The simplest setting. Fairly slow").toLatin1().constData());
 	prefs->setPreference("importprepoll0",
-			"vgrabbj -f $IMAGEFILE -d /dev/video0 -b -D 0 -i vga");
+			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga");
 	prefs->setPreference("importstopdeamon0", "");
 
 	// Default import option 2
@@ -231,7 +231,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("importdescription1", 
 			tr("Starts vgrabbj as a deamon. Pretty fast.").toLatin1().constData());
 	prefs->setPreference("importstartdeamon1", 
-			"vgrabbj -f $IMAGEFILE -d /dev/video0 -b -D 0 -i vga -L250");
+			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
 	prefs->setPreference("importstopdeamon1", 
 			"kill -9 `ps ax | grep vgrabbj | grep -v grep | cut -b 0-5`");
 	
@@ -244,6 +244,14 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			"--jpeg-height 480 --frames 25 $IMAGEFILE");
 	prefs->setPreference("importstopdeamon2", 
 			"kill -9 `ps ax | grep dvgrab | grep -v grep | cut -b 0-5`");
+	
+	// Default import option 4
+	prefs->setPreference("importname3", tr("videodog singleshot").toLatin1().constData());
+	prefs->setPreference("importdescription3", 
+			tr("Videodog.").toLatin1().constData());
+	prefs->setPreference("importprepoll3",
+			"videodog -x 640 -y 480 -w 3 -d $VIDEODEVICE -j -f $IMAGEFILE");
+	prefs->setPreference("importstopdeamon3", "");
 	// -----------------------------------------------------------------------
 
 	// Default export options ------------------------------------------------
@@ -291,21 +299,26 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 {
 	// Replace all occurences of '(DEFAULTPATH)' with '$IMAGEFILE'  (version 0.3 and 0.4)
+	// Replace all occurences of '/dev/xxx' with $VIDEODEVICE (version < 0.7)
 	int numImports = prefs->getPreference("numberofimports", 1);
 	for (int i = 0; i < numImports; ++i) {
 		string start( prefs->getPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(), "") );
 		int index = start.find("(DEFAULTPATH)");
 		if (index != -1) {
 			start.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
-			prefs->setPreference( QString("importstartdeamon%1").arg(i).toLatin1().constData(), start.c_str() );
 		}
+		QString s(start.c_str());
+		s.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
+		prefs->setPreference( QString("importstartdeamon%1").arg(i).toLatin1().constData(), s.toLatin1().constData());
 
 		string prepoll( prefs->getPreference(QString("importprepoll%1").arg(i).toLatin1().constData(), "") );
 		index = prepoll.find("(DEFAULTPATH)");
 		if (index != -1) {
 			prepoll.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
-			prefs->setPreference( QString("importprepoll%1").arg(i).toLatin1().constData(), prepoll.c_str() );
 		}
+		QString ss(prepoll.c_str());
+		ss.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
+		prefs->setPreference( QString("importprepoll%1").arg(i).toLatin1().constData(), ss.toLatin1().constData());
 	}
 }
 

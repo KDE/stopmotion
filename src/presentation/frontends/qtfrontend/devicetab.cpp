@@ -1,0 +1,339 @@
+/***************************************************************************
+ *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+#include "src/presentation/frontends/qtfrontend/devicetab.h"
+
+#include "graphics/icons/close.xpm"
+#include "src/domain/domainfacade.h"
+#include "src/presentation/frontends/qtfrontend/flexiblelineedit.h"
+#include "src/foundation/preferencestool.h"
+
+#include <QTextEdit>
+#include <QHeaderView>
+
+
+DeviceTab::DeviceTab(QWidget *parent) 
+	: QWidget(parent)
+{
+	deviceTable          = 0;
+	addButton            = 0;
+	removeButton         = 0;
+	editButton           = 0;
+	closeChangeBoxButton = 0;
+	deviceEdit           = 0;
+	devicePreferences    = 0;
+	deviceLabel          = 0;
+	checkTableItem       = 0;
+	
+	numAutoDetectedDevices = -1;
+	makeGUI();
+}
+
+
+void DeviceTab::makeGUI()
+{
+	this->setFocusPolicy(Qt::ClickFocus);
+	
+	QTextEdit *informationText = new QTextEdit;
+	informationText->setReadOnly(true);
+	informationText->setHtml(
+		"<p>" + tr("Below you can set which device Stopmotion should use for grabbing images "
+		"and displaying video.") + "<br><br>" + 
+		tr("You can select from the auto-detected devices below or add devices yourself. "
+		"It is not recommended to use devices which is not auto-detected, but feel free to do "
+		"it if you are an advanced user.") + "<br><br>" +
+		tr("The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import.") + 
+		"</p>");
+	informationText->setMinimumWidth(440);
+	informationText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	
+	QStringList lst;
+	lst << tr("Name") << tr("Description");
+	
+	deviceTable = new QTableWidget;
+	deviceTable->setColumnCount(2);
+	deviceTable->setRowCount(0);
+	deviceTable->setSelectionMode(QAbstractItemView::SingleSelection);
+	deviceTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+	deviceTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
+	deviceTable->setHorizontalHeaderLabels(lst);
+	deviceTable->verticalHeader()->setVisible(false);
+	
+	connect(deviceTable, SIGNAL(cellClicked(int, int)), this, SLOT(activeCellChanged(int, int)));
+	connect(deviceTable, SIGNAL(cellChanged(int, int)), this, SLOT(contentsChanged(int, int)));
+	
+	addButton = new QPushButton(tr("&Add"));
+	addButton->setFocusPolicy( Qt::NoFocus );
+	connect(addButton, SIGNAL(clicked()), this, SLOT(addDevice()));
+	
+	removeButton = new QPushButton(tr("&Remove"));
+	connect( removeButton, SIGNAL(clicked()), this, SLOT(removeDevice()));
+	
+	editButton = new QPushButton(tr("&Edit"));
+	QObject::connect( editButton, SIGNAL(clicked()), this, SLOT(editDevice()));
+	
+	devicePreferences = new QGroupBox;
+	devicePreferences->setTitle(tr("Video device settings"));
+	devicePreferences->hide();
+	
+	closeChangeBoxButton = new QPushButton;
+	closeChangeBoxButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
+	closeChangeBoxButton->setIcon(QPixmap(closeicon));
+	closeChangeBoxButton->setFlat(true);
+	connect(closeChangeBoxButton, SIGNAL(clicked()),this, SLOT(closeChangeBox()));
+	
+	deviceLabel = new QLabel( tr("Video Device ($VIDEODEVICE): ") );
+	deviceEdit = new FlexibleLineEdit;
+	connect(deviceEdit, SIGNAL(textChanged(const QString &)), 
+			this, SLOT(updateDeviceString(const QString &)));
+	
+	QVBoxLayout *mainLayout = new QVBoxLayout;
+	mainLayout->addWidget(informationText);
+	QVBoxLayout *buttonLayout = new QVBoxLayout;
+	buttonLayout->setMargin(0);
+	buttonLayout->setSpacing(2);
+	buttonLayout->addStretch(1);
+	buttonLayout->addWidget(addButton);
+	buttonLayout->addWidget(removeButton);
+	buttonLayout->addWidget(editButton);
+	QHBoxLayout *deviceLayout = new QHBoxLayout;
+	deviceLayout->addWidget(deviceTable);
+	deviceLayout->addLayout(buttonLayout);
+	mainLayout->addLayout(deviceLayout);
+	mainLayout->addWidget(devicePreferences);
+	setLayout(mainLayout);
+
+	QVBoxLayout *devicePrefsLayout = new QVBoxLayout;
+	QHBoxLayout *hbLayout = new QHBoxLayout;
+	hbLayout->setMargin(0);
+	hbLayout->setSpacing(0);
+	hbLayout->addStretch(1);
+	hbLayout->addWidget(closeChangeBoxButton);
+	devicePrefsLayout->addLayout(hbLayout);
+	devicePrefsLayout->addWidget(deviceLabel);
+	devicePrefsLayout->addWidget(deviceEdit);
+	devicePreferences->setLayout(devicePrefsLayout);
+}
+	
+
+void DeviceTab::initialize()
+{
+	Logger::get().logDebug("Initializing video device settings");
+	PreferencesTool *pref = PreferencesTool::get();
+	
+	vector<GrabberDevice> devices = DomainFacade::getFacade()->getGrabberDevices();
+	numAutoDetectedDevices = devices.size();
+	deviceTable->setRowCount(numAutoDetectedDevices);
+	
+	// Auto-detected devices
+	for (unsigned i = 0; i < numAutoDetectedDevices; ++i) {
+		QString name( devices[i].name.c_str() );
+		QString device( devices[i].device.c_str() );
+		QString desc(QString("*Autodetected* ") + devices[i].type.c_str() + "-" + 
+			tr("device") + " (" + device + ")");
+		
+		QTableWidgetItem *item = new QTableWidgetItem(name);
+		item->setFlags( item->flags() & (~Qt::ItemIsEditable) );
+		deviceTable->setItem(i, 0,  item);
+		
+		item = new QTableWidgetItem(desc);
+		item->setFlags( item->flags() & (~Qt::ItemIsEditable) );
+		deviceTable->setItem(i, 1, item);
+		
+		deviceNameStrings.push_back(name);
+		deviceStrings.push_back(device);
+		deviceDescriptionStrings.push_back(desc);
+	}
+
+	// Userdefined devices
+	int active = pref->getPreference("activeVideoDevice", -1);
+	int numUserDevices = pref->getPreference("numDevices", -1);
+
+	if (numUserDevices > 0 ) {
+		deviceTable->setRowCount( numUserDevices + numAutoDetectedDevices );
+		const char *prop = 0;
+		int idx = 0;
+
+		for (int i = 0; i < numUserDevices; ++i) {
+			prop = pref->getPreference(QString("deviceDescription%1").arg(i).toLatin1().constData(),"");
+			QString desc(prop);
+			freeProperty(prop);
+
+			if ( !desc.startsWith("*Autodetected*") ) {
+				prop = pref->getPreference(QString("deviceName%1").arg(i).toLatin1().constData(),"");
+				QString name(prop);
+				freeProperty(prop);
+
+				prop = pref->getPreference(QString("device%1").arg(i).toLatin1().constData(),"");
+				QString device(prop);
+				freeProperty(prop);
+
+				deviceTable->setItem(idx + numAutoDetectedDevices, 0, new QTableWidgetItem(name) );
+				deviceTable->setItem(idx++ + numAutoDetectedDevices, 1, new QTableWidgetItem(desc) );
+
+				deviceNameStrings.push_back(name);
+				deviceStrings.push_back(device);
+				deviceDescriptionStrings.push_back(desc);
+			}
+			else {
+				if (active == i) {
+					active = -1;
+				}
+				deviceTable->setRowCount( deviceTable->rowCount() - 1);
+			}
+		}
+	}
+	
+	if (active != -1) {
+		deviceTable->setCurrentCell(active, 0);
+	}
+	else if (numAutoDetectedDevices > 0) {
+		deviceTable->setCurrentCell(numAutoDetectedDevices - 1, 0);
+	}
+	
+	this->apply();
+	pref->flushPreferences();
+}
+
+
+void DeviceTab::apply()
+{
+	PreferencesTool *prefs = PreferencesTool::get();
+	
+	// Remove old preferences
+	int numDevices = prefs->getPreference("numDevices", -1);
+ 	if (numDevices > 0) {
+		for (int i = 0; i < numDevices; ++i) {
+			prefs->removePreference(QString("deviceName%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("deviceDescription%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("device%1").arg(i).toLatin1().constData());
+		}
+	}
+
+	// Set new preferences
+	numDevices = deviceTable->rowCount();
+	if (numDevices > 0) {
+		prefs->setPreference("numDevices", numDevices, true);
+		prefs->setPreference("activeVideoDevice", deviceTable->currentRow(), true);
+		for (int i = 0; i < numDevices; ++i) {
+			prefs->setPreference(QString("deviceName%1").arg(i).toLatin1().constData(), 
+					deviceTable->item(i, 0)->text().toLatin1().constData(), true);
+			prefs->setPreference(QString("deviceDescription%1").arg(i).toLatin1().constData(),
+					deviceTable->item(i, 1)->text().toLatin1().constData(), true);
+			prefs->setPreference(QString("device%1").arg(i).toLatin1().constData(),
+					deviceStrings[i].toLatin1().constData(), true);
+		}
+	}
+	else {
+		prefs->setPreference("numDevices", -1, true);
+		prefs->setPreference("activeVideoDevice", -1, true);
+	}
+}
+
+
+void DeviceTab::resizeEvent(QResizeEvent *event)
+{
+	contentsChanged(0, 0);
+	QWidget::resizeEvent(event);
+}
+
+
+void DeviceTab::contentsChanged(int, int)
+{
+	deviceTable->resizeColumnsToContents();
+	int totalWidth = deviceTable->columnWidth(0) + deviceTable->columnWidth(1);
+	int tableWidth = deviceTable->width() - 5;
+	if ( totalWidth < tableWidth) {
+		deviceTable->setColumnWidth( 1, tableWidth - deviceTable->columnWidth(0) );
+	}
+}
+
+
+void DeviceTab::activeCellChanged(int, int)
+{
+	if ( devicePreferences->isVisible() ) {
+		editDevice();
+	}
+}
+	
+
+void DeviceTab::editDevice()
+{
+	int selected = deviceTable->currentRow();
+	if (selected >= 0) {
+		deviceEdit->setText(deviceStrings[selected]);
+		devicePreferences->show();
+		
+		// Disables editing of autodetected devices
+		if (selected < numAutoDetectedDevices) {
+			deviceEdit->setReadOnly(true);
+		}
+		else {
+			deviceEdit->setReadOnly(false);
+		}
+	}
+}
+
+
+void DeviceTab::closeChangeBox()
+{
+	devicePreferences->hide();
+	this->resize(minimumSize());
+}
+	
+
+void DeviceTab::updateDeviceString(const QString &txt)
+{
+	deviceStrings[deviceTable->currentRow()] = txt;
+}
+
+
+void DeviceTab::addDevice()
+{
+	int newRow = deviceTable->rowCount();
+	deviceTable->setRowCount(newRow + 1);
+	deviceTable->setItem( newRow, 0, new QTableWidgetItem(QString("")) );
+	deviceTable->setItem( newRow, 1, new QTableWidgetItem(QString("")) );
+	deviceTable->setCurrentCell(newRow, 0);
+
+	deviceStrings.push_back("");
+	deviceNameStrings.push_back("");
+	deviceDescriptionStrings.push_back("");
+}
+
+
+void DeviceTab::removeDevice()
+{
+	int selectedRow = deviceTable->currentRow();
+	if (selectedRow >= 0 && selectedRow >= numAutoDetectedDevices) {
+		deviceStrings.erase(deviceStrings.begin() + selectedRow);
+		deviceNameStrings.erase(deviceNameStrings.begin() + selectedRow);
+		deviceDescriptionStrings.erase(deviceDescriptionStrings.begin() + selectedRow);
+		deviceTable->removeRow(selectedRow);
+		contentsChanged(0, 0);
+	}
+}
+
+
+void DeviceTab::freeProperty(const char *prop, const char *tag)
+{
+	if (strcmp(prop, tag) != 0) {
+		xmlFree((xmlChar *)prop);
+	}
+}

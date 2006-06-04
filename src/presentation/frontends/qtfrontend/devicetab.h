@@ -17,27 +17,57 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef DEVICETAB_H
+#define DEVICETAB_H
 
-#include "src/technical/util.h"
-
-#include <string>
-#include <vector>
-
-
-struct GrabberDevice {
-	std::string device;
-	std::string name;
-	std::string type;
-};
+#include <QTableWidget>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QGridLayout>
+#include <QWidget>
+#include <QGroupBox>
+#include <QTableWidget>
 
 
-class Util
+class DeviceTab : public QWidget
 {
+	Q_OBJECT
 public:
-	static const char* checkCommand(const char* command);
-	static const std::vector<GrabberDevice> getGrabberDevices();
+	DeviceTab(QWidget *parent = 0);
+	
+	void initialize();
+	void apply();
+
+protected:
+	void resizeEvent(QResizeEvent *event);
+
+private slots:
+	void contentsChanged(int row, int column);
+	void activeCellChanged(int row, int column);
+	void editDevice();
+	void closeChangeBox();
+	void updateDeviceString(const QString &txt);
+	void addDevice();
+	void removeDevice();
+
+private:
+	QTableWidget *deviceTable;
+	QPushButton *addButton;
+	QPushButton *removeButton;
+	QPushButton *editButton;
+	QPushButton *closeChangeBoxButton;
+	QLineEdit *deviceEdit;
+	QGroupBox *devicePreferences;
+	QLabel *deviceLabel;
+	QTableWidgetItem *checkTableItem;
+	std::vector<QString> deviceStrings;
+	std::vector<QString> deviceNameStrings;
+	std::vector<QString> deviceDescriptionStrings;
+	int numAutoDetectedDevices;
+	
+	void makeGUI();
+	void freeProperty(const char *prop, const char *tag = "");
 };
 
 #endif

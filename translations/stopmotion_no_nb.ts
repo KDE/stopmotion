@@ -1,65 +1,73 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>@default</name>
+    <message>
+        <source>You do not have the necessary permissions to run Stopmotion.
+</source>
+        <translation type="obsolete">Du har ikke de riktige rettighetene til å kjøre Stopmotion.</translation>
+    </message>
+</context>
+<context>
     <name>AboutDialog</name>
     <message>
-        <source>This is the stopmotion application for creating stopmotion animations.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;About</source>
-        <translation type="unfinished">&amp;Om</translation>
+        <translation>&amp;Om</translation>
     </message>
     <message>
         <source>Main developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Hovedutviklere</translation>
     </message>
     <message>
         <source>A&amp;uthors</source>
-        <translation type="unfinished">&amp;Forfattere</translation>
+        <translation>&amp;Forfattere</translation>
     </message>
     <message>
         <source>Translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversettelse</translation>
     </message>
     <message>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Tsjekkisk</translation>
     </message>
     <message>
         <source>Slovenian</source>
-        <translation type="unfinished"></translation>
+        <translation>Slovensk</translation>
     </message>
     <message>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Fransk</translation>
     </message>
     <message>
         <source>Logo</source>
-        <translation type="unfinished"></translation>
+        <translation>Logo</translation>
     </message>
     <message>
         <source>Coordinating</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinering</translation>
     </message>
     <message>
         <source>Testing</source>
-        <translation type="unfinished"></translation>
+        <translation>Testing</translation>
     </message>
     <message>
         <source>&amp;Thanks To</source>
-        <translation type="unfinished">&amp;Takk til</translation>
+        <translation>&amp;Takk til</translation>
     </message>
     <message>
         <source>&amp;Licence Agreement</source>
-        <translation type="unfinished">&amp;Lisensavtale</translation>
+        <translation>&amp;Lisensavtale</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">Om</translation>
+        <translation>Om</translation>
+    </message>
+    <message>
+        <source>This is the Stopmotion application for creating stop motion animations.</source>
+        <translation>Dette er Stopmotion - et program for å lage stillbildeanimasjoner.</translation>
     </message>
 </context>
 <context>
@@ -71,6 +79,57 @@
     <message>
         <source>Camera &amp;on</source>
         <translation type="obsolete">&amp;Kamera på</translation>
+    </message>
+</context>
+<context>
+    <name>DeviceTab</name>
+    <message>
+        <source>Below you can set which device Stopmotion should use for grabbing images and displaying video.</source>
+        <translation>Her kan velge hva slags enhet Stopmotion skal hente bilder fra.</translation>
+    </message>
+    <message>
+        <source>You can select from the auto-detected devices below or add devices yourself. It is not recommended to use devices which is not auto-detected, but feel free to do it if you are an advanced user.</source>
+        <translation>Du kan velge en automatisk gjenkjent enhet, eller du kan legge til egne. Sistnevnte er imidlertid ikke å foretrekke, men du må gjerne gjøre det hvis du er en avansert bruker og vet hva du gjør.</translation>
+    </message>
+    <message>
+        <source>The selected device is recognized as &lt;b&gt;$VIDEODEVICE&lt;/b&gt; under Video Import.</source>
+        <translation>Den valgte enheten representerer &lt;b&gt;$VIDEODEVICE&lt;/b&gt; under innstillingene for &apos;Videoimport&apos;.</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Navn</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Beskrivelse</translation>
+    </message>
+    <message>
+        <source>&amp;Add</source>
+        <translation>&amp;Legg til</translation>
+    </message>
+    <message>
+        <source>&amp;Remove</source>
+        <translation>&amp;Fjern</translation>
+    </message>
+    <message>
+        <source>&amp;Edit</source>
+        <translation>&amp;Rediger</translation>
+    </message>
+    <message>
+        <source>Video device settings</source>
+        <translation>Innstillinger for videoenhet</translation>
+    </message>
+    <message>
+        <source>Video Device ($VIDEODEVICE): </source>
+        <translation>Videoenhet ($VIDOEDEVICE):</translation>
+    </message>
+    <message>
+        <source>Autodetected</source>
+        <translation type="obsolete">Automatisk gjenkjent</translation>
+    </message>
+    <message>
+        <source>device</source>
+        <translation>enhet</translation>
     </message>
 </context>
 <context>
@@ -137,38 +196,50 @@
     </message>
     <message>
         <source>&lt;p&gt;Below you can set which program/process stopmotion should use for encoding the currently active project to a video file.&lt;/p&gt;&lt;p&gt;You can use $IMAGEPATH to represent the image path (absolute path to the directory where the images can be found). You should always use &lt;b&gt;$VIDEOFILE&lt;/b&gt; to represent the output file (the videofile generated by the encoder) in the &lt;b&gt;command line&lt;/b&gt;. This is independent of how you decides to select it (select it for each export or have a default file).&lt;br&gt;&lt;/p&gt;&lt;p&gt; Example with mencoder (converting jpg to mpeg1): &lt;br&gt;mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg -ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE &lt;br&gt;</source>
-        <translation>&lt;p&gt;Under kan du sette hva slags program/prosess stopmotion skal bruke til generering av video.&lt;/p&gt;&lt;p&gt;$IMAGEPATH kan brukes til å representere katalogen hvor bildene er plassert. &lt;b&gt;$VIDEOFILE&lt;/b&gt; må alltid brukes for å representere videofilen, enten du velger å bli spurt om videofil for hver gang du eksporterer eller har satt en standardfil.&lt;br&gt;&lt;/p&gt;&lt;p&gt; Eksempel med mencoder (konverterer jpg til mpeg1): &lt;br&gt;mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg -ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE &lt;br&gt;</translation>
+        <translation type="obsolete">&lt;p&gt;Under kan du sette hva slags program/prosess stopmotion skal bruke til generering av video.&lt;/p&gt;&lt;p&gt;$IMAGEPATH kan brukes til å representere katalogen hvor bildene er plassert. &lt;b&gt;$VIDEOFILE&lt;/b&gt; må alltid brukes for å representere videofilen, enten du velger å bli spurt om videofil for hver gang du eksporterer eller har satt en standardfil.&lt;br&gt;&lt;/p&gt;&lt;p&gt; Eksempel med mencoder (konverterer jpg til mpeg1): &lt;br&gt;mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg -ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE &lt;br&gt;</translation>
+    </message>
+    <message>
+        <source>Below you can set which program/process Stopmotion should use for encoding the currently active project to a video file.</source>
+        <translation>Her kan du velge hva slags program Stopmotion skal bruke til å sette sammen bildene til en film.</translation>
+    </message>
+    <message>
+        <source>You should always use &lt;b&gt;$IMAGEPATH&lt;/b&gt; and &lt;b&gt;$VIDEOFILE&lt;/b&gt; to represent the image path and the video file, respectively.</source>
+        <translation>Du bør alltid bruke &lt;b&gt;$IMAGEPATH&lt;/b&gt; og &lt;b&gt;$VIDEOFILE&lt;/b&gt; til å representere henholdsvis bildekatalogen og video-filen.</translation>
+    </message>
+    <message>
+        <source>Example with mencoder (jpeg images to mpeg4 video):</source>
+        <translation>Eksempel med mencoder (jpeg-bilder til mpeg4-video):</translation>
     </message>
 </context>
 <context>
     <name>ExternalCommand</name>
     <message>
         <source>Input to program:</source>
-        <translation type="unfinished"></translation>
+        <translation>Input til program:</translation>
     </message>
     <message>
         <source>Submit</source>
-        <translation type="unfinished"></translation>
+        <translation>Send</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukk</translation>
     </message>
     <message>
         <source>Output from external command</source>
-        <translation type="unfinished"></translation>
+        <translation>Output fra ekstern kommando</translation>
     </message>
     <message>
         <source>Result</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultat</translation>
     </message>
     <message>
         <source>Failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Feilet!</translation>
     </message>
     <message>
         <source>Successfull!</source>
-        <translation type="unfinished"></translation>
+        <translation>Suksess!</translation>
     </message>
 </context>
 <context>
@@ -182,14 +253,14 @@
     <name>Form</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
 </context>
 <context>
     <name>FrameBar</name>
     <message>
         <source>Frame number: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bildenummer:</translation>
     </message>
 </context>
 <context>
@@ -249,11 +320,15 @@ Dette kan settes i preferanse-menyen.</translation>
     </message>
     <message>
         <source>Pre poll command does not exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Forhåndskommando eksisterer ikke</translation>
     </message>
     <message>
         <source>You do not have the given grabber installed on your system</source>
-        <translation type="unfinished"></translation>
+        <translation>Programmet du har satt til å fange bilder eksisterer ikke på ditt system</translation>
+    </message>
+    <message>
+        <source>No video device selected in the preferences menu.</source>
+        <translation>Ingen videoenheter er valgt i preferansemenyen.</translation>
     </message>
 </context>
 <context>
@@ -323,7 +398,7 @@ Dette kan settes i preferanse-menyen.</translation>
     <name>ImportTab</name>
     <message>
         <source>&lt;p&gt;Below you can set which program/process stopmotion should use for grabbing images from the webcam, and displaying video.&lt;br&gt; &lt;br&gt; &lt;/p&gt;</source>
-        <translation>&lt;p&gt;Under kan du sette hva slags program/prosess stopmotion skal bruke til å fange bilder med.&lt;br&gt;&lt;br&gt;
+        <translation type="obsolete">&lt;p&gt;Under kan du sette hva slags program/prosess stopmotion skal bruke til å fange bilder med.&lt;br&gt;&lt;br&gt;
 &lt;/p&gt;</translation>
     </message>
     <message>
@@ -366,6 +441,14 @@ Dette kan settes i preferanse-menyen.</translation>
         <source>Stop deamon</source>
         <translation>Stopp nisse</translation>
     </message>
+    <message>
+        <source>Below you can set which program/process Stopmotion should use for grabbing images from the selected device.</source>
+        <translation>Her kan du sette hva slags program Stopmotion skal bruke til å fange bilder fra den valgte videoenheten.</translation>
+    </message>
+    <message>
+        <source>You should always use &lt;b&gt;$VIDEODEVICE&lt;/b&gt; and &lt;b&gt;$IMAGEFILE&lt;/b&gt; to represent the video device and the image file, respectively.</source>
+        <translation>Du bør alltid bruke &lt;b&gt;$VIDEODEVICE&lt;/b&gt; og &lt;b&gt;$IMAGEFILE&lt;/b&gt; til å representere henholdsvis videoenheten og bildefilen.</translation>
+    </message>
 </context>
 <context>
     <name>LanguageHandler</name>
@@ -392,30 +475,30 @@ Dette kan settes i preferanse-menyen.</translation>
     </message>
     <message>
         <source>English</source>
-        <translation>Norsk</translation>
+        <translation></translation>
     </message>
     <message>
         <source>&amp;Translation</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Språk</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Stopmotion Help Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopmotion hjelpevindu</translation>
     </message>
     <message>
         <source>Backward</source>
-        <translation type="unfinished">Bakover</translation>
+        <translation>Bakover</translation>
     </message>
     <message>
         <source>Forward</source>
-        <translation type="unfinished">Fremover</translation>
+        <translation>Fremover</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukk</translation>
     </message>
 </context>
 <context>
@@ -802,15 +885,15 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>Frame number: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bildenummer:</translation>
     </message>
     <message>
         <source>Choose project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg prosjektfil</translation>
     </message>
     <message>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre som</translation>
     </message>
 </context>
 <context>
@@ -836,7 +919,7 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>Video &amp;Import</source>
-        <translation>Video &amp;import</translation>
+        <translation>Video&amp;import</translation>
     </message>
     <message>
         <source>&lt;p&gt;Video Export&lt;/p&gt;</source>
@@ -844,7 +927,7 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>Video &amp;Export</source>
-        <translation>Video &amp;export</translation>
+        <translation>Video&amp;eksport</translation>
     </message>
     <message>
         <source>Active</source>
@@ -864,15 +947,19 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukk</translation>
     </message>
     <message>
         <source>Preferences Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferansemeny</translation>
+    </message>
+    <message>
+        <source>Video &amp;Device</source>
+        <translation>&amp;Videoenhet</translation>
     </message>
 </context>
 <context>
@@ -947,11 +1034,19 @@ lagret som ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <source>dvgrab</source>
-        <translation type="unfinished"></translation>
+        <translation>dvgrab</translation>
     </message>
     <message>
         <source>Grabbing from DV-cam. (EXPERIMENTAL)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fanger bilder fra DV-kamera. (EKSPERIMENTELL)</translation>
+    </message>
+    <message>
+        <source>videodog singleshot</source>
+        <translation>videodog enkeltbilde</translation>
+    </message>
+    <message>
+        <source>Videodog.</source>
+        <translation>Videodog.</translation>
     </message>
 </context>
 <context>
@@ -977,7 +1072,7 @@ lagret som ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <source>Choose sound file</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg lydfil</translation>
     </message>
 </context>
 <context>
@@ -1125,19 +1220,19 @@ programmet skal kjøres som en nisse.</translation>
     </message>
     <message>
         <source>Auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto</translation>
     </message>
     <message>
         <source>Pr sec</source>
-        <translation type="unfinished"></translation>
+        <translation>Pr sek</translation>
     </message>
     <message>
         <source>Pr min</source>
-        <translation type="unfinished"></translation>
+        <translation>Pr min</translation>
     </message>
     <message>
         <source>Pr hr</source>
-        <translation type="unfinished"></translation>
+        <translation>Pr time</translation>
     </message>
 </context>
 </TS>

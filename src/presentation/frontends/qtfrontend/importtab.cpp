@@ -55,10 +55,11 @@ void ImportTab::makeGUI()
 	
 	QTextEdit *informationText = new QTextEdit;
 	informationText->setReadOnly(true);
-	informationText->setHtml(tr(
-				"<p>Below you can set which program/process stopmotion should use "
-				"for grabbing images from the webcam, and displaying video.<br> "
-				"<br> </p>"));
+	informationText->setHtml(
+		"<p>" + tr("Below you can set which program/process Stopmotion should use "
+		"for grabbing images from the selected device.") + "</p><p>" + 
+		tr("You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
+		"the video device and the image file, respectively.") + "</p>");
 	informationText->setMinimumWidth(440);
 	informationText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	

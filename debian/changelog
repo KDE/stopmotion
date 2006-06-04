@@ -1,3 +1,17 @@
+stopmotion (0.5.2-1) unstable; urgency=low
+
+  * Added automatic detection and setup of v4l devices (Closes: #366237)
+  * Added videodog as an import command
+  * Fixed segfault when removing empty scene
+  * Updated the norwegian translation
+  * Manual page included in upstream
+  * Cosmetic changes to the manual page
+  * Removed config.sub and config.guess from rules
+  * Removed Andreas from the uploaders field in control
+  * Upload sponsored by Morten Werner Olsen.
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sun,  4 Jun 2006 15:16:25 +0200
+
 stopmotion (0.5.1-1) unstable; urgency=low
 
   * Changed from '/bin/which' to 'which' in the Util class
