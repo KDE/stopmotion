@@ -23,7 +23,6 @@
 #include "flexiblelineedit.h"
 
 #include <QVBoxLayout>
-#include <QPushButton>
 
 
 PreferencesMenu::PreferencesMenu(QWidget *parent) 
@@ -34,11 +33,11 @@ PreferencesMenu::PreferencesMenu(QWidget *parent)
 	videoDeviceTab = 0;
 	tabWidget = new QTabWidget;
 	
-	QPushButton *applyButton = new QPushButton(tr("Apply"), this);
+	applyButton = new QPushButton(tr("Apply"), this);
 	applyButton->setDefault(true);
 	connect(applyButton, SIGNAL(clicked()), this, SLOT(apply()));
 
-	QPushButton *closeButton = new QPushButton(tr("Close"), this);
+	closeButton = new QPushButton(tr("Close"), this);
 	closeButton->setDefault(true);
 	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
 
@@ -104,5 +103,21 @@ void PreferencesMenu::display()
 {
 	videoDeviceTab->initialize();
 	this->show();
+}
+	
+
+void PreferencesMenu::retranslateStrings()
+{
+	applyButton->setText(tr("Apply"));
+	closeButton->setText(tr("Close"));
+	setWindowTitle(tr("Preferences Menu"));
+	
+	tabWidget->setTabText(0, tr("Video &Device"));
+	tabWidget->setTabText(1, tr("Video &Import"));
+	tabWidget->setTabText(2, tr("Video &Export"));
+	
+	importVideoTab->retranslateStrings();
+	exportVideoTab->retranslateStrings();
+	videoDeviceTab->retranslateStrings();
 }
 

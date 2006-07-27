@@ -538,6 +538,7 @@ void MainWindowGUI::retranslateStrings()
 	//The submenus
 	toolsMenu->retranslateStrings();
 	framePreferencesMenu->retranslateStrings();
+	preferencesMenu->retranslateStrings();
 }
 
 

@@ -1,3 +1,19 @@
+stopmotion (0.5.3-0bpo1) sarge-backports; urgency=low
+
+  * Backport for sarge
+  * Build against libqt4-dev from bpo
+
+ -- Steffen Joeris <steffen.joeris@skolelinux.de>  Thu, 27 Jul 2006 09:59:53 +0000
+
+stopmotion (0.5.3-1) unstable; urgency=low
+
+  * New upstream release
+     - Added dynamic translation to the preferences menu
+  * Fixes FTBFS during the second time build (Closes: #373172)
+  * Upload sponsored by Morten Werner Olsen.
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sat, 24 Jun 2006 13:55:31 +0200
+
 stopmotion (0.5.2-1) unstable; urgency=low
 
   * Added automatic detection and setup of v4l devices (Closes: #366237)
@@ -8,7 +24,6 @@ stopmotion (0.5.2-1) unstable; urgency=low
   * Cosmetic changes to the manual page
   * Removed config.sub and config.guess from rules
   * Removed Andreas from the uploaders field in control
-  * Upload sponsored by Morten Werner Olsen.
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sun,  4 Jun 2006 15:16:25 +0200
 

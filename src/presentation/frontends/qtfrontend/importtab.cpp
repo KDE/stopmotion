@@ -25,7 +25,6 @@
 #include <QLayout>
 #include <QLabel>
 #include <QGridLayout>
-#include <QTextEdit>
 #include <QHeaderView>
 
 
@@ -44,6 +43,7 @@ ImportTab::ImportTab( QWidget *parent ) : QWidget(parent)
 	startDeamonLabel     = 0;
 	stopDeamonLabel      = 0;
 	checkTableItem       = 0;
+	informationText      = 0;
 	
 	makeGUI();
 }
@@ -53,7 +53,7 @@ void ImportTab::makeGUI()
 {
 	this->setFocusPolicy(Qt::ClickFocus);
 	
-	QTextEdit *informationText = new QTextEdit;
+	informationText = new QTextEdit;
 	informationText->setReadOnly(true);
 	informationText->setHtml(
 		"<p>" + tr("Below you can set which program/process Stopmotion should use "
@@ -322,4 +322,27 @@ void ImportTab::closeChangeBox()
 {
 	grabberPreferences->hide();
 	this->resize(minimumSize());
+}
+	
+
+void ImportTab::retranslateStrings()
+{
+	informationText->setHtml(
+		"<p>" + tr("Below you can set which program/process Stopmotion should use "
+		"for grabbing images from the selected device.") + "</p><p>" + 
+		tr("You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
+		"the video device and the image file, respectively.") + "</p>");
+	
+	QStringList lst;
+	lst << tr("Name") << tr("Description");
+	deviceSelectionTable->setHorizontalHeaderLabels(lst);
+
+	addButton->setText( tr("&Add") );
+	removeButton->setText( tr("&Remove") );
+	changeButton->setText( tr("&Edit") );
+	
+	grabberPreferences->setTitle( tr("Import device settings") );
+	prePollLabel->setText( tr("Pre-poll command") );
+	startDeamonLabel->setText( tr("Start deamon") );
+	stopDeamonLabel->setText( tr("Stop deamon") );
 }

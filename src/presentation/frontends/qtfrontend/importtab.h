@@ -29,6 +29,7 @@
 #include <QLabel>
 #include <QGridLayout>
 #include <QWidget>
+#include <QTextEdit>
 
 #include <vector>
 
@@ -65,6 +66,8 @@ public:
 	 */
 	void apply();
 
+	void retranslateStrings();
+
 protected:
 	void resizeEvent(QResizeEvent *event);
 	
@@ -97,6 +100,7 @@ private:
 	QLabel *startDeamonLabel;
 	QLabel *stopDeamonLabel;
 	QTableWidgetItem *checkTableItem;
+	QTextEdit *informationText;
 	
 	void freeProperty(const char *prop, const char *tag = "");
 };

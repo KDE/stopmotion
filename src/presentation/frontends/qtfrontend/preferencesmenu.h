@@ -26,6 +26,7 @@
 
 #include <QDialog>
 #include <QTabWidget>
+#include <QPushButton>
 
 
 /**
@@ -43,12 +44,15 @@ public:
 	 */
 	PreferencesMenu(QWidget *parent = 0);
 	void display();
+	void retranslateStrings();
 	
 private:
 	ImportTab *importVideoTab;
 	ExportTab *exportVideoTab;
 	DeviceTab *videoDeviceTab;
 	QTabWidget *tabWidget;
+	QPushButton *applyButton;
+	QPushButton *closeButton;
 
 	void makeVideoImportTab();
 	void makeVideoExportTab();
