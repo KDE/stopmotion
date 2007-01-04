@@ -177,7 +177,7 @@ void QtFrontend::initializePreferences()
 	}
 
 	// If file doesn't exist or has wrong version number
-	if ( !prefs->setPreferencesFile(preferencesFile.toLatin1().constData(), "0.7") ) {
+	if ( !prefs->setPreferencesFile(preferencesFile.toLatin1().constData(), "0.8") ) {
 		// File doesn't exist
 		if (prefsFileExists == -1) {
 			setDefaultPreferences(prefs);
@@ -199,7 +199,7 @@ void QtFrontend::initializePreferences()
 				prefs->setPreferencesFile(preferencesFile.toLatin1().constData(), prefs->getOldVersion());
 				
 				// Update version
-				prefs->setVersion("0.7");
+				prefs->setVersion("0.8");
 				
 				// Do necessary updates on the old prefs file:
 				updateOldPreferences(prefs);
@@ -215,7 +215,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	Logger::get().logDebug("Setting default preferences");
 
 	// Default import options ------------------------------------------------
-	prefs->setPreference("numberofimports", 4);
+	prefs->setPreference("numberofimports", 5);
 	prefs->setPreference("activedevice", 1);
 
 	// Default import option 1
@@ -252,11 +252,21 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("importprepoll3",
 			"videodog -x 640 -y 480 -w 3 -d $VIDEODEVICE -j -f $IMAGEFILE");
 	prefs->setPreference("importstopdeamon3", "");
+	
+	// Default import option 5
+	prefs->setPreference("importname4", tr("dvgrab").toLatin1().constData());
+	prefs->setPreference("importdescription4", 
+			tr("Grabbing from DV-cam.").toLatin1().constData());
+	prefs->setPreference("importstartdeamon4", 
+			"dvgrab --format jpeg --jpeg-overwrite --jpeg-deinterlace --jpeg-width 640 "
+			"--jpeg-height 480 --every 25 $IMAGEFILE &");
+	prefs->setPreference("importstopdeamon4", 
+			"kill -9 `ps ax | grep dvgrab | grep -v grep | cut -b 0-5`");
 	// -----------------------------------------------------------------------
 
 	// Default export options ------------------------------------------------
 	prefs->setPreference("numEncoders", 4);
-	prefs->setPreference("activeEncoder", 2);
+	prefs->setPreference("activeEncoder", 3);
 
 	// Default export option 1
 	prefs->setPreference("encoderName0", "mencoder");

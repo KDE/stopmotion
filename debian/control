@@ -8,7 +8,7 @@ Standards-Version: 3.7.2
 Package: stopmotion
 Architecture: any
 Depends: ${shlibs:Depends}
-Recommends: vgrabbj
+Recommends: vgrabbj, dvgrab, ffmpeg
 Suggests: fam
 Description: program for creating stop motion animations
  You can create stop-motion animations with images grabbed

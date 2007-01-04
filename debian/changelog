@@ -1,3 +1,17 @@
+stopmotion (0.5.4-1) unstable; urgency=low
+
+  * New upstream release
+      - Added translations: german, spanish and swedish
+      - Added yet another import option for dvgrab
+      - Fixed out-of-sync issue with SDL window
+  * stopmotion fails to start (Closes: #387768)
+  * stopmotion missing on the K menu (under multimedia) (Closes:
+    #397286)
+  * Missing packages in debian/control's Suggests: (Closes: #376921) 
+  * Upload sponsored by Petter Reinholdtsen.
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Thu,  4 Jan 2007 23:05:22 +0100
+
 stopmotion (0.5.3-1) unstable; urgency=low
 
   * New upstream release
@@ -17,6 +31,7 @@ stopmotion (0.5.2-1) unstable; urgency=low
   * Cosmetic changes to the manual page
   * Removed config.sub and config.guess from rules
   * Removed Andreas from the uploaders field in control
+  * Upload sponsored by Morten Werner Olsen.
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sun,  4 Jun 2006 15:16:25 +0200
 
