@@ -38,43 +38,63 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="63"/>
         <source>Logo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="65"/>
         <source>Coordinating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="64"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="68"/>
         <source>Testing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="75"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="79"/>
         <source>&amp;Thanks To</source>
         <translation type="unfinished">&amp;Zahvale gredo</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="80"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="84"/>
         <source>&amp;Licence Agreement</source>
         <translation type="unfinished">&amp;Licenčna pogodba</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="82"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="86"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="95"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="99"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="40"/>
         <source>This is the Stopmotion application for creating stop motion animations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="58"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="60"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
+        <source>Swedish</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1095,22 +1115,22 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
         <translation type="unfinished">Zažene vgrabbj kot prikriti proces. Deluje hitro.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="264"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="274"/>
         <source>Exports from jpeg images to mpeg1 video</source>
         <translation type="unfinished">Izvozi iz jpeg slik v mpeg1 video</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="273"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="283"/>
         <source>Exports from jpeg images to mpeg2 video</source>
         <translation type="unfinished">Izvozi iz jpeg slik v mpeg2 video</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="291"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="301"/>
         <source>Exports from jpeg images to mpeg4 video</source>
         <translation type="unfinished">Izvozi iz jpeg slik v mpeg4 video</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="329"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="339"/>
         <source>Question</source>
         <translation type="unfinished">Vprašanje</translation>
     </message>
@@ -1125,7 +1145,7 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
         <translation type="obsolete">&amp;Ne</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="239"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="257"/>
         <source>dvgrab</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1142,6 +1162,11 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="251"/>
         <source>Videodog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="259"/>
+        <source>Grabbing from DV-cam.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -38,37 +38,37 @@
         <translation>Francés</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="63"/>
         <source>Logo</source>
         <translation>Logo</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="65"/>
         <source>Coordinating</source>
         <translation>Coordinación</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="64"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="68"/>
         <source>Testing</source>
         <translation>Pruebas</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="75"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="79"/>
         <source>&amp;Thanks To</source>
         <translation>&amp;Agradecemos a</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="80"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="84"/>
         <source>&amp;Licence Agreement</source>
         <translation>&amp;Licencia</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="82"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="86"/>
         <source>OK</source>
         <translation>Aceptar</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="95"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="99"/>
         <source>About</source>
         <translation>Acerca de</translation>
     </message>
@@ -76,6 +76,26 @@
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="40"/>
         <source>This is the Stopmotion application for creating stop motion animations.</source>
         <translation>Esta es la aplicación Stopmotion, para crear animaciones de stop motion.</translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="58"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="60"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -920,7 +940,7 @@ sus ajustes en el menú de preferencias?</translation>
         <translation>Inicia vgrabbj como un demonio. Es bastante rápido.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="329"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="339"/>
         <source>Question</source>
         <translation>Pregunta</translation>
     </message>
@@ -930,7 +950,7 @@ sus ajustes en el menú de preferencias?</translation>
         <translation>El ajuste más simple. Es bastante lento</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="264"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="274"/>
         <source>Exports from jpeg images to mpeg1 video</source>
         <translation>Exporta desde imágenes jpeg a vídeo mpeg1</translation>
     </message>
@@ -942,17 +962,17 @@ values exists. Do you want to use this one? (Your old preferences
         <translation>Existe una versión más nueva del archivo de preferencias, que tiene algunos valores predeterminados más. ¿Desea emplearlo? (sus antiguas preferencias se conservarán en ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="273"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="283"/>
         <source>Exports from jpeg images to mpeg2 video</source>
         <translation>Exporta desde imágenes jpeg images a vídeo mpeg2</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="291"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="301"/>
         <source>Exports from jpeg images to mpeg4 video</source>
         <translation>Exporta desde imágenes jpeg a vídeo mpeg4</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="239"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="257"/>
         <source>dvgrab</source>
         <translation>dvgrab</translation>
     </message>
@@ -970,6 +990,11 @@ values exists. Do you want to use this one? (Your old preferences
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="251"/>
         <source>Videodog.</source>
         <translation>Videodog.</translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="259"/>
+        <source>Grabbing from DV-cam.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

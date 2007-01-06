@@ -47,37 +47,37 @@
         <translation>Fransk</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="63"/>
         <source>Logo</source>
         <translation>Logo</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="65"/>
         <source>Coordinating</source>
         <translation>Koordinering</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="64"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="68"/>
         <source>Testing</source>
         <translation>Testing</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="75"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="79"/>
         <source>&amp;Thanks To</source>
         <translation>&amp;Takk til</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="80"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="84"/>
         <source>&amp;Licence Agreement</source>
         <translation>&amp;Lisensavtale</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="82"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="86"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="95"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="99"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
@@ -85,6 +85,26 @@
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="40"/>
         <source>This is the Stopmotion application for creating stop motion animations.</source>
         <translation>Dette er Stopmotion - et program for å lage stillbildeanimasjoner.</translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="58"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="60"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1224,7 +1244,7 @@ to check your settings in the preferences menu?</source>
         <translation>Starter vgrabbj som en nisse. Veldig kjapt.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="329"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="339"/>
         <source>Question</source>
         <translation>Spørsmål</translation>
     </message>
@@ -1244,7 +1264,7 @@ to check your settings in the preferences menu?</source>
         <translation>Den enkleste opsjonen. Veldig treig</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="264"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="274"/>
         <source>Exports from jpeg images to mpeg1 video</source>
         <translation>Eksporterer fra jpeg-bilder til mpeg1-video</translation>
     </message>
@@ -1258,17 +1278,17 @@ values exists. Do you want to use this one? (Your old preferences
 lagret som ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="273"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="283"/>
         <source>Exports from jpeg images to mpeg2 video</source>
         <translation>Eksporterer fra jpeg-bilder til mpeg2-video</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="291"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="301"/>
         <source>Exports from jpeg images to mpeg4 video</source>
         <translation>Eksporterer fra jpeg-bilder til mpeg4-video</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="239"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="257"/>
         <source>dvgrab</source>
         <translation>dvgrab</translation>
     </message>
@@ -1286,6 +1306,11 @@ lagret som ~/.stopmotion/preferences.xml.OLD)</translation>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="251"/>
         <source>Videodog.</source>
         <translation>Videodog.</translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="259"/>
+        <source>Grabbing from DV-cam.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
