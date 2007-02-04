@@ -34,8 +34,8 @@ LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const cha
 	activeAction = 0;
 	translator = new QTranslator(this);
 	
-	const char *languagePref = PreferencesTool::get()->
-		getPreference("language", QLocale::system().name().toLatin1().constData());
+	const char *localePtr = QLocale::system().name().toLatin1().constData();
+	const char *languagePref = PreferencesTool::get()->getPreference("language", localePtr);
 	QString locale(languagePref);
 
 	if ( !locale.startsWith("en") ) {
@@ -47,8 +47,8 @@ LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const cha
 	stApp->installTranslator(translator);
 	setObjectName(name);
 	
-	if (strcmp(languagePref, QLocale::system().name().toLatin1().constData()) != 0) {
-		//xmlFree((xmlChar*)languagePref);
+	if (strcmp(languagePref, localePtr) != 0) {
+		xmlFree((xmlChar*)languagePref);
 	}
 }
 

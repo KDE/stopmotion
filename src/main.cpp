@@ -88,6 +88,7 @@ int main(int argc, char **argv)
 	else {
 #ifdef QTGUI
 		QtFrontend qtFrontend(argc, argv);
+		qtFrontend.processEvents();
 		if (!hasCorrectPermissions) {
 			qtFrontend.reportError(
 					"You do not have the necessary permissions to run Stopmotion.\n"
@@ -252,6 +253,9 @@ void recover(DomainFacade *facadePtr)
 			}
 		}
 		closedir(dp);
+		
+		if (frames.size() <= 0)
+			return;
 		
 		vector<char*>(frames).swap(frames);
 		facadePtr->addFrames(frames);

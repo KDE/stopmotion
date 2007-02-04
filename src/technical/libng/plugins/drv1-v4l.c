@@ -468,18 +468,7 @@ v4l_close(void *handle)
     
     close(h->fd);
 
-	if (NULL != h->attr) {
-		int i;
-		for (i = 0; i < h->nattr; ++i) {
-			if (NULL != h->attr[i].choices) {
-				free(h->attr[i].choices);
-				h->attr[i].choices = NULL;
-			}
-		}
-		free(h->attr);
-		h->attr = NULL;
-	}
-	
+	if (NULL != h->attr)     { free(h->attr);     h->attr     = NULL; }
 	if (NULL != h->channels) { free(h->channels); h->channels = NULL; }
 	if (NULL != h->buf_v4l)  { free(h->buf_v4l);  h->buf_v4l  = NULL; }
 	if (NULL != h->buf_me)   { free(h->buf_me);   h->buf_me   = NULL; }

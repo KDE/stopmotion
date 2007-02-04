@@ -1,3 +1,12 @@
+stopmotion (0.5.6-1) unstable; urgency=low
+
+  * New upstream release
+    - Fixed segfault after recovery and in some cases when reading
+	  the preferences file.
+  * Upload sponsored by Petter Reinholdtsen.
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sun,  4 Feb 2007 22:48:33 +0100
+
 stopmotion (0.5.5-1) unstable; urgency=low
 
   * New upstream release
