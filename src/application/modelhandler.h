@@ -64,6 +64,8 @@ public:
 	 * @param removeFramesButton the button used for removing frames.
 	 */
 	void setRemoveFramesButton(QPushButton *removeFramesButton);
+
+
 	
 public slots:
 	/**
@@ -99,6 +101,12 @@ public slots:
 	 * Removes the active scene.
 	 */
 	void removeScene();
+	
+	 /**
+	 * Launch the gimp to edit the current frame.
+	 * @return 0 If successful, 1 on error.
+	 */
+	int editCurrentFrame();
 	
 private:
 	FrameBar *frameBar;

@@ -9,7 +9,7 @@ Package: stopmotion
 Architecture: any
 Depends: ${shlibs:Depends}
 Recommends: vgrabbj, dvgrab, ffmpeg
-Suggests: fam
+Suggests: fam, gimp
 Description: program for creating stop motion animations
  You can create stop-motion animations with images grabbed
  from your favourite video device. You just sets stopmotion to

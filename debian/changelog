@@ -1,8 +1,17 @@
+stopmotion (0.6.0-1) unstable; urgency=low
+
+  * New upstream release
+    - Added button to launch Gimp with the current active frame.
+  * Added Gimp to 'Suggests' in debian/control.
+  * Upload sponsored by Petter Reinholdtsen.
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sun, 25 Feb 2007 15:25:48 +0100
+
 stopmotion (0.5.6-1) unstable; urgency=low
 
   * New upstream release
     - Fixed segfault after recovery and in some cases when reading
-	  the preferences file.
+      the preferences file.
   * Upload sponsored by Petter Reinholdtsen.
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Sun,  4 Feb 2007 22:48:33 +0100
