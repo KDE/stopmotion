@@ -27,7 +27,7 @@
 #include <sys/types.h>
 #include <libgen.h>
 #include <stdlib.h>
-
+#include <cstring>
 
 const char ProjectSerializer::imageDirectory[] = "images/";
 const char ProjectSerializer::soundDirectory[] = "sounds/";

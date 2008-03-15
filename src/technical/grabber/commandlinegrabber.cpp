@@ -20,10 +20,12 @@
 #include "src/technical/grabber/commandlinegrabber.h"
 #include "src/technical/util.h"
 
+#include <cstdlib>
 #include <sstream>
 #include <sys/types.h>
 #include <signal.h>
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 

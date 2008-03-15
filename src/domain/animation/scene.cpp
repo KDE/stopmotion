@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "scene.h"
 #include <sstream>
-
+#include <cstring>
 
 Scene::Scene()
 {

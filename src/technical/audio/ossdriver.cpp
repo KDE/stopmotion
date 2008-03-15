@@ -30,7 +30,8 @@
 #endif	
 #include <fcntl.h>
 #include <errno.h>
-
+#include <stdio.h>
+#include <cstring>
 
 // Help function for starting a new thread
 extern "C" void* startupThread(void *arg)
