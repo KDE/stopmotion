@@ -1,5 +1,5 @@
 /* XPM */
-static char *stopmotion_logo[] = {
+static const char *const stopmotion_logo[] = {
 /* columns rows colors chars-per-pixel */
 "556 219 98 2",
 "   c #000000",

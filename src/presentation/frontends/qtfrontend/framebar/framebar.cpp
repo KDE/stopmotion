@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -32,7 +32,42 @@
 #include <QVBoxLayout>
 #include <QPixmap>
 #include <QScrollBar>
+#include <QImageReader>
+#include <QDebug>
 
+static QImage tryReadImage(const char *filename)
+{
+    if (!filename) {
+        qWarning() << "Couldn't read image: Invalid file name";
+        return QImage();
+    }
+
+    QImageReader imageReader(filename);
+    const QImage image = imageReader.read();
+    if (!image.isNull())
+        return image;
+
+    if (imageReader.error() != QImageReader::UnsupportedFormatError
+        && imageReader.error() != QImageReader::InvalidDataError) {
+        qWarning() << "Couldn't read image:" << imageReader.errorString();
+        return image;
+    }
+
+    // At this point we most likely failed to read the image because the suffix
+    // of the file was different from the actual image format.
+    // Loop through all the supported formats and see if we can find a match.
+    const QList<QByteArray> supportedImageFormats = QImageReader::supportedImageFormats();
+    for (int i = 0; i < supportedImageFormats.size(); ++i) {
+        QImageReader anotherImageReader(filename);
+        anotherImageReader.setFormat(supportedImageFormats.at(i));
+        const QImage anotherImage = anotherImageReader.read();
+        if (!anotherImage.isNull())
+            return anotherImage;
+    }
+
+    qWarning() << "Couldn't read image:" << imageReader.errorString();
+    return image;
+}
 
 FrameBar::FrameBar(QWidget *parent)
 	: QScrollArea(parent)
@@ -150,7 +185,7 @@ void FrameBar::updateAnimationChanged(int frameNumber)
 	if (frame) {
 		const char *path = frame->getImagePath();
 		thumbViews[frameNumber + activeScene + 1]->
-			setPixmap(QPixmap::fromImage(QImage(path).scaled(FRAME_WIDTH, FRAME_HEIGHT)));
+			setPixmap(QPixmap::fromImage(tryReadImage(path).scaled(FRAME_WIDTH, FRAME_HEIGHT)));
 		thumbViews[frameNumber]->update();
 	}
 }
@@ -185,7 +220,7 @@ void FrameBar::addFrames(const vector<char *> & frames, unsigned int index, Fron
 		thumb->setMinimumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setScaledContents(true);
-		thumb->setPixmap(QPixmap::fromImage(QImage(frames[i]).scaled(FRAME_WIDTH, FRAME_HEIGHT)));
+		thumb->setPixmap(QPixmap::fromImage(tryReadImage(frames[i]).scaled(FRAME_WIDTH, FRAME_HEIGHT)));
 		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 		thumb->setParent(mainWidget);
 		thumb->move((FRAME_WIDTH + SPACE) * (index + activeScene + 1 + i), 0);

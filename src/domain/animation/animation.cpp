@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -222,7 +222,7 @@ unsigned int Animation::getModelSize()
 
 unsigned int Animation::getSceneSize( int sceneNumber )
 {
-	if ( sceneNumber > -1 && sceneNumber < scenes.size() ) {
+	if ( sceneNumber > -1 && sceneNumber < int(scenes.size()) ) {
 		return scenes[sceneNumber]->getSize();
 	}
 	return 0;

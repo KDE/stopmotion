@@ -1,7 +1,21 @@
+stopmotion (0.6.1-1) unstable; urgency=low
+
+  * New upstream release
+    - Added Italian and Turkish translation.
+    - Applied a patch from Josh Green that improves copying of files.
+    - Fixed problems related to file names containing white spaces.
+    - Fixed gcc-4.3 compiler warnings.
+    - Fixed a Qt 4.4.0 specific issue related to non-native windows.
+  * not handling nostrip build option (policy 10.1) (Closes: #438071)
+  * does not start (Closes: #413252)
+  * Updated debian/menu to reflect the new menu policy (Apps -> Applications). 
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Fri, 09 May 2008 17:05:33 +0200
+
 stopmotion (0.6.0-1.1) unstable; urgency=medium
 
-  * Non-maintainer upload.
-  * Fix FTBFS with GCC 4.3 (Closes: #417705).
+   * Non-maintainer upload.
+   * Fix FTBFS with GCC 4.3 (Closes: #417705).
 
  -- Luk Claes <luk@debian.org>  Sat, 15 Mar 2008 17:19:55 +0000
 

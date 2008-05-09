@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -142,7 +142,7 @@ void DeviceTab::initialize()
 	deviceTable->setRowCount(numAutoDetectedDevices);
 	
 	// Auto-detected devices
-	for (unsigned i = 0; i < numAutoDetectedDevices; ++i) {
+	for (int i = 0; i < numAutoDetectedDevices; ++i) {
 		QString name( devices[i].name.c_str() );
 		QString device( devices[i].device.c_str() );
 		QString desc(QString("*Autodetected* ") + devices[i].type.c_str() + "-" + 

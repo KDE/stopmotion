@@ -13,62 +13,62 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="50"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="52"/>
         <source>A&amp;uthors</source>
         <translation type="unfinished">A&amp;uteurs</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="54"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="56"/>
         <source>Translation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="55"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="57"/>
         <source>Czech</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="56"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="58"/>
         <source>Slovenian</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="57"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
         <source>French</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="63"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="65"/>
         <source>Logo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="65"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="67"/>
         <source>Coordinating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="68"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="70"/>
         <source>Testing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="79"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="81"/>
         <source>&amp;Thanks To</source>
         <translation type="unfinished">&amp;Remerciements à</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="84"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="86"/>
         <source>&amp;Licence Agreement</source>
         <translation type="unfinished">Accord de &amp;license</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="86"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="88"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="99"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="101"/>
         <source>About</source>
         <translation type="unfinished">A propos</translation>
     </message>
@@ -78,23 +78,28 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="58"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="60"/>
         <source>German</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
         <source>Portuguese</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="60"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="62"/>
         <source>Spanish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="63"/>
         <source>Swedish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="50"/>
+        <source>Contributors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -303,7 +308,7 @@
 <context>
     <name>Form</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.ui" line="36"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.ui" line="33"/>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
@@ -362,12 +367,12 @@
 <context>
     <name>FrameView</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="436"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="444"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="427"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="435"/>
         <source>Grabbing failed. This may happen if you try
 to grab from an invalid device. Please check
 your grabber settings in the preferences menu.</source>
@@ -376,7 +381,7 @@ your grabber settings in the preferences menu.</source>
 paramètres de capture dans la fenêtre de préférences.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="438"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="446"/>
         <source>You have to define an image grabber to use.
 This can be set in the preferences menu.</source>
         <translation>Vous devez définir un périphérique de capture.
@@ -388,7 +393,7 @@ Ceci peut être fait dans la fenêtre de préférences.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="382"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="386"/>
         <source>You do not have the given grabber installed on your system</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1015,14 +1020,39 @@ vos paramètres dans la fenêtre de préférences ?</translation>
 <context>
     <name>ModelHandler</name>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="52"/>
+        <location filename="../src/application/modelhandler.cpp" line="53"/>
         <source>Choose frames to add</source>
         <translation>Choisir les images à ajouter</translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="142"/>
+        <location filename="../src/application/modelhandler.cpp" line="143"/>
         <source>Removed the selected frame</source>
         <translation>L&apos;image sélectionnée a été supprimée</translation>
+    </message>
+    <message>
+        <location filename="../src/application/modelhandler.cpp" line="216"/>
+        <source>Warning</source>
+        <translation type="unfinished">Attention</translation>
+    </message>
+    <message>
+        <location filename="../src/application/modelhandler.cpp" line="184"/>
+        <source>You do not have Gimp installed on your system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application/modelhandler.cpp" line="195"/>
+        <source>There is no active frame to open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application/modelhandler.cpp" line="203"/>
+        <source>The active frame is corrupt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/application/modelhandler.cpp" line="217"/>
+        <source>Failed to start Gimp!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1199,136 +1229,141 @@ Voulez-vous utiliser ce fichier ? ( Votre précédent fichier de préférences
 <context>
     <name>ToolsMenu</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="202"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="210"/>
         <source>FPS chooser</source>
         <translation>IPS (images par seconde)</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="279"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="294"/>
         <source>&lt;h4&gt;FPS chooser&lt;/h4&gt; &lt;p&gt;By changing the value in this chooser you set which speed the animation in the &lt;b&gt;FrameView&lt;/b&gt; should run at.&lt;/p&gt; &lt;p&gt;To start an animation press the &lt;b&gt;Run Animation&lt;/b&gt; button.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;IPS (images par seconde)&lt;/h4&gt; &lt;p&gt;En modifiant cette valeur, vous changez la vitesse de l&apos;animation dans le &lt;b&gt;Cadre de prévisualisation&lt;/b&gt;.&lt;/p&gt; &lt;p&gt;Pour lire l&apos;an animation pressez le bouton &lt;b&gt;Lecture de l&apos;animation&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="203"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="211"/>
         <source>Number of images:</source>
         <translation>Nombre d&apos;images :</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="206"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="214"/>
         <source>Mix</source>
         <translation>Mixer</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="207"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="215"/>
         <source>Diff</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="208"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="216"/>
         <source>Playback</source>
         <translation>Lecture</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="222"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="230"/>
         <source>&lt;h4&gt;Add Frames (CTRL+F)&lt;/h4&gt; &lt;p&gt;Click on this button to &lt;em&gt;add&lt;/em&gt; frames to the animation.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Ajouter des images (CTRL+F)&lt;/h4&gt; &lt;p&gt;Cliquez sur ce bouton pour &lt;em&gt;ajouter&lt;/em&gt; des images à l&apos;animation.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="229"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="237"/>
         <source>&lt;h4&gt;Remove Selection (Delete)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;remove&lt;/em&gt; the selected frames from the animation.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Supprimer la Sélection (Suppr)&lt;/h4&gt; &lt;p&gt;Cliquez sur ce bouton pour &lt;em&gt;supprimer&lt;/em&gt; les images sélectionnées de l&apos;animation.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="236"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="244"/>
         <source>&lt;h4&gt;New Scene (CTRL+E)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;create&lt;/em&gt; a new &lt;em&gt;scene&lt;/em&gt; to the animation.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Nouvelle Scène (CTRL+E)&lt;/h4&gt; &lt;p&gt;Cliquez sur ce bouton pour &lt;em&gt;créer&lt;/em&gt; une nouvelle &lt;em&gt;scène&lt;/em&gt; dans l&apos;animation.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="243"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="251"/>
         <source>&lt;h4&gt;Remove Scene (SHIFT+Delete)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;remove&lt;/em&gt; the selected scene from the animation.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Supprimer une Scène (MAJ+Suppr)&lt;/h4&gt; &lt;p&gt;Cliquez sur ce bouton pour &lt;em&gt;supprimer&lt;/em&gt; la scène sélectionnée de l&apos;animation.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="249"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="257"/>
         <source>&lt;h4&gt;Toggle camera on/off (C)&lt;/h4&gt; &lt;p&gt;Click this button to toggle the camera on and off&lt;/p&gt; </source>
         <translation> &lt;h4&gt;Activer/arrêter la caméra (C)&lt;/h4&gt; &lt;p&gt;Cliquez sur ce bouton pour activer la caméra ou l&apos;arrêter&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="257"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="272"/>
         <source>&lt;h4&gt;Capture Frame (Space)&lt;/h4&gt; &lt;p&gt;Click on this button to &lt;em&gt;capture&lt;/em&gt; a frame from the camera an put it in the animation&lt;/p&gt; &lt;p&gt; This can also be done by pressing the &lt;b&gt;Space key&lt;/b&gt;&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Capturer une Image (Espace)&lt;/h4&gt; &lt;p&gt;Cliquez sur ce bouton pour &lt;em&gt;capturer&lt;/em&gt; une image depuis la caméra et l&apos;insérer dans l&apos;animation&lt;/p&gt; &lt;p&gt; Pour ce faire, vous pouvez aussi utiliser le raccourci clavier : la &lt;b&gt;touche Espace&lt;/b&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="268"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="283"/>
         <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="283"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="298"/>
         <source>&lt;h4&gt;Play animation (K, P)&lt;/h4&gt;</source>
         <translation>&lt;h4&gt;Lecture de l&apos;animation (K, P)&lt;/h4&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="286"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="301"/>
         <source>&lt;h4&gt;Stop animation (K, P)&lt;/h4&gt;</source>
         <translation>&lt;h4&gt;Arrêt de l&apos;animation (K, P)&lt;/h4&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="289"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="304"/>
         <source>&lt;h4&gt;Previous frame (J, Left)&lt;/h4&gt;</source>
         <translation>&lt;h4&gt;Image pécédente (J, Gauche)&lt;/h4&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="292"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="307"/>
         <source>&lt;h4&gt;Next frame (L, Right)&lt;/h4&gt;</source>
         <translation>&lt;h4&gt;Image suivante (L, Droite)&lt;/h4&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="295"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="310"/>
         <source>&lt;h4&gt;Previous scene (I)&lt;/h4&gt;</source>
         <translation>&lt;h4&gt;Scène précédente (I)&lt;/h4&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="298"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="313"/>
         <source>&lt;h4&gt;Next scene (O)&lt;/h4&gt;</source>
         <translation>&lt;h4&gt;Scène suivante (O)&lt;/h4&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="303"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="318"/>
         <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinetly.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Lecture de l&apos;animation en boucle (CTRL+L)&lt;/h4&gt; &lt;p&gt;Avec ce bouton vous pouvez choisir de lire l&apos;animation en boucle infinie plutôt que de la lire une seule fois jusqu&apos;à fin.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="393"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="408"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="396"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
         <source>Playback only currently works when running the grabber 
 as a deamon. Go to the preferences menu (CTRL+P) to switch 
 to running the image grabbing as a deamon.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="209"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="217"/>
         <source>Auto</source>
         <translation>Auto</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="213"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="221"/>
         <source>Pr sec</source>
         <translation>Par sec</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="214"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="222"/>
         <source>Pr min</source>
         <translation>Par min</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="215"/>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="223"/>
         <source>Pr hr</source>
         <translation>Par heure</translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="264"/>
+        <source>&lt;h4&gt;Launch Gimp&lt;/h4&gt; &lt;p&gt;Click this button to open the active frame in Gimp&lt;/p&gt; &lt;p&gt;Note that you can also drag images from the frame bar and drop them on Gimp&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

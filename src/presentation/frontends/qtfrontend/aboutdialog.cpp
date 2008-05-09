@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -38,7 +38,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 	layout->addWidget(label);
 	layout->addWidget( new QLabel(
 				"<p>" + tr("This is the Stopmotion application for creating stop motion animations.") + "</p>"
-				"<p> &copy; 2005-2006, Bjørn Erik Nilsen and Fredrik Berg Kjølstad </p>"));
+				"<p> &copy; 2005-2008, Bjørn Erik Nilsen and Fredrik Berg Kjølstad </p>"));
 	widget->setLayout(layout);
 	
 	tabWidget->addTab(widget, tr("&About") );
@@ -48,7 +48,9 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"Bjørn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>" 
 				"Fredrik Berg Kjølstad &lt;fredrikbk@hotmail.com&gt;<br>"
 				"<p><b>" + tr("Contributors") + "</b><br>"
-				"Eric Stolten &lt;stoltene2@gmail.com&gt;<br></p>"),
+				"Eric Stolten &lt;stoltene2@gmail.com&gt;<br>"
+				"Josh Green &lt;josh@resonance.org&gt;<br>"
+                                "</p>"),
 				tr("A&uthors"));
 	
 	QTextEdit *qte = new QTextEdit;
@@ -61,6 +63,8 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"José Jorge &lt;jjorge@free.fr&gt; (" + tr("Portuguese") + ")<br>"
 				"Manuel Quiñones &lt;manuel.por.aca@gmail.com&gt; (" + tr("Spanish") + ")<br>"
 				"David Hjelm &lt;dav.hjelm@spray.se&gt; (" + tr("Swedish") + ")<br>"
+				"Koray Löker &lt;loker@pardus.org.tr&gt; (" + tr("Turkish") + ")<br>"
+				"Diego Giordano &lt;fusion_machine@tin.it&gt; (" + tr("Italian") + ")<br>"
 				"</p>"
 				"<p><b>" + tr("Logo") + "</b><br>"
 				"Gorazd Bizjak &lt;gorazd@zapstudio.net&gt;<br>"

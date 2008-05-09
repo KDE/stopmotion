@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by fredrik                                         *
+ *   Copyright (C) 2005-2008 by fredrik                                         *
  *   fredrik@Elanor                                                        *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *

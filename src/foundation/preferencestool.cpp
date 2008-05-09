@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -223,7 +223,7 @@ const char* PreferencesTool::getPreference(const char* key, const char* defaultV
 }
 
 
-const int PreferencesTool::getPreference(const char * key, const int defaultValue)
+int PreferencesTool::getPreference(const char * key, const int defaultValue)
 {
 	checkInitialized();
 	xmlNode *node = findNode(key);

@@ -186,9 +186,11 @@ TRANSLATIONS += translations/stopmotion_no_nb.ts \
                 translations/stopmotion_ru.ts \
                 translations/stopmotion_es.ts \
                 translations/stopmotion_kl.ts \
-				translations/stopmotion_cz.ts \
-				translations/stopmotion_sl.ts \
-				translations/stopmotion_pt.ts
+		translations/stopmotion_cz.ts \
+		translations/stopmotion_sl.ts \
+		translations/stopmotion_pt.ts \
+		translations/stopmotion_it.ts \
+		translations/stopmotion_tr.ts
 
 DEPENDPATH += src \
               src/domain \
@@ -257,3 +259,5 @@ dummy.extra += chmod 755 $(INSTALL_ROOT)@TRANSLATIONS_DIR@ $(INSTALL_ROOT)@prefi
 
 INSTALLS += target translations htmldoc dummy
 
+QMAKE_STRIP=:
+QMAKE_STRIP=:

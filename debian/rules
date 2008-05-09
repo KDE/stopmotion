@@ -16,6 +16,9 @@ endif
 config: configure
 	dh_testdir
 	# Add here commands to configure the package.
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+	echo "QMAKE_STRIP=:" | cat >> stopmotion.pro.in
+endif
 	CFLAGS="$(CFLAGS)" ./configure --prefix=/usr
 
 build: build-stamp
@@ -63,7 +66,9 @@ binary-arch: build install
 	dh_installmime
 	dh_installman
 	dh_link
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 	dh_strip
+endif
 	dh_compress
 	dh_fixperms
 	dh_installdeb
