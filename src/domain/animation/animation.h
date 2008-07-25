@@ -175,6 +175,8 @@ public:
 	 */
 	const char *getProjectFile();
 	
+	const char *getProjectPath();
+
 	/**
 	 * Opens a project.
 	 * @param filename the project file to open (ends with .sto)

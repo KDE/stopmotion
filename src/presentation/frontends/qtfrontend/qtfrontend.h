@@ -48,7 +48,7 @@ public:
 	 * @param argc the argc argument from the environment through main
 	 * @param argv argv the argv arguments from the environment through main
 	 */
-	QtFrontend(int argc, char **argv);
+	QtFrontend(int &argc, char **argv);
 	
 	/**
 	 * Deallocates allocated memory and sets the pointers to NULL.

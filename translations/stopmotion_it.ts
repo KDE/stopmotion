@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS><TS version="1.1" language="it">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutDialog</name>
     <message>
@@ -100,7 +101,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="50"/>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Contribuenti allo sviluppo</translation>
     </message>
 </context>
 <context>
@@ -143,7 +144,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="359"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Editare</translation>
+        <translation>&amp;Modificare</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="362"/>
@@ -186,7 +187,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="415"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Editare</translation>
+        <translation>&amp;Modificare</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="97"/>
@@ -216,7 +217,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="423"/>
         <source>Browse</source>
-        <translation>Naviga</translation>
+        <translation>Sfoglia</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="424"/>
@@ -328,7 +329,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="118"/>
         <source>&lt;h4&gt;Add sound&lt;/h4&gt; &lt;p&gt;With this button you can &lt;em&gt;add sounds&lt;/em&gt; to the selected frame.&lt;/p&gt; &lt;p&gt;The sound will begin playing when this frame is shown and play until it is done.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Aggiungi suono&lt;/h4&gt; &lt;p&gt;Con questo pulsante puoi &lt;em&gt;aggiungere suoni &lt;/em&gt; al frame selezionato.&lt;/p&gt; &lt;p&gt;La riproduzione del suono comincerà quando questo frame è mostrato e durerà fino al completamento.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Aggiungi suono&lt;/h4&gt; &lt;p&gt;Con questo pulsante puoi &lt;em&gt;aggiungere suoni &lt;/em&gt; al frame selezionato.&lt;/p&gt; &lt;p&gt;La riproduzione sonora comincerà quando questo frame è mostrato e durerà fino al completamento.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="125"/>
@@ -410,7 +411,7 @@ Questo può essere impostato nel menu delle preferenze.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="342"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Editare</translation>
+        <translation>&amp;Modificare</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="344"/>
@@ -545,7 +546,7 @@ Questo può essere impostato nel menu delle preferenze.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="481"/>
         <source>Re&amp;do</source>
-        <translation>&amp;Ripristina</translation>
+        <translation>&amp;Annulla modifica</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="622"/>
@@ -595,12 +596,12 @@ Questo può essere impostato nel menu delle preferenze.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="533"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Editare</translation>
+        <translation>&amp;Modificare</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="528"/>
         <source>&amp;Settings</source>
-        <translation>&amp;Preferenze</translation>
+        <translation>&amp;Impostazioni</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="487"/>
@@ -760,7 +761,7 @@ Questo può essere impostato nel menu delle preferenze.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="616"/>
         <source>Undo</source>
-        <translation>Indietro</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="625"/>
@@ -882,27 +883,27 @@ controllare le impostazioni nel menu delle preferenze?</translation>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="216"/>
         <source>Warning</source>
-        <translation type="unfinished">Attenzione</translation>
+        <translation>Attenzione</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="184"/>
         <source>You do not have Gimp installed on your system</source>
-        <translation type="unfinished"></translation>
+        <translation>Il programma The Gimp non è attualmente installato nel sistema</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="195"/>
         <source>There is no active frame to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Non c&apos;è anclun frame attivo da aprire</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="203"/>
         <source>The active frame is corrupt</source>
-        <translation type="unfinished"></translation>
+        <translation>Il frame attivo è danneggiato</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="217"/>
         <source>Failed to start Gimp!</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile avviare The Gimp!</translation>
     </message>
 </context>
 <context>
@@ -1199,7 +1200,7 @@ per selezionare la cattura come demone.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="264"/>
         <source>&lt;h4&gt;Launch Gimp&lt;/h4&gt; &lt;p&gt;Click this button to open the active frame in Gimp&lt;/p&gt; &lt;p&gt;Note that you can also drag images from the frame bar and drop them on Gimp&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h4&gt;Avvia The Gimp&lt;/h4&gt; &lt;p&gt; Click su questo tasto per aprire il frame corrente con The Gimp&lt;/p&gt; &lt;p&gt;Ricorda che puoi anche trascinare le immagini dalla barra dei frame sulla finestra di The Gimp&lt;/p&gt;</translation>
     </message>
 </context>
 </TS>

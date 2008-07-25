@@ -1,3 +1,20 @@
+stopmotion (0.6.2-1) unstable; urgency=low
+
+  * New upstream release
+    - Fixed an invalid read reported by Valgrind.
+    - Fixed a crash occuring on some 64-bit systems.
+    - Fixed the default translation to be the same as the locale.
+    - Rewrote the file system watcher to use inotify-tools instead of FAM.
+    - Included the man page in upstream tarball.
+    - Updated the Italian translation.
+  * segfault at startup (Closes: #488621)
+  * Upgrade to Standards-Version 3.8.0.
+  * Replace libfam-dev with libinotifytools-dev in control/Build-Depends
+
+  * Upload sponsored by Petter Reinholdtsen.
+
+ -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Fri, 25 Jul 2008 12:59:29 +0200
+
 stopmotion (0.6.1-1) unstable; urgency=low
 
   * New upstream release

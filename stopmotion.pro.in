@@ -213,14 +213,14 @@ INCLUDEPATH += . \
 
 LIBS += $$system(sdl-config --libs) \
         $$system(xml2-config --libs) \
-        -lSDL_image -ltar -lvorbisfile -lfam
+        -lSDL_image -ltar -lvorbisfile -linotifytools
 
 DISTFILES += src/config.cpp.in \
              graphics/stopmotion.png \
              stopmotion.pro.in \
              stopmotion.desktop \
              stopmotion.mime \
-			 stopmotion.1.gz \
+			 stopmotion.1 \
 			 configure \
              AUTHORS \
 			 README \
@@ -259,5 +259,3 @@ dummy.extra += chmod 755 $(INSTALL_ROOT)@TRANSLATIONS_DIR@ $(INSTALL_ROOT)@prefi
 
 INSTALLS += target translations htmldoc dummy
 
-QMAKE_STRIP=:
-QMAKE_STRIP=:

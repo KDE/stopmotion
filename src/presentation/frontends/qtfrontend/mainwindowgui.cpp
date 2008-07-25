@@ -205,7 +205,6 @@ void MainWindowGUI::createHandlers(QApplication *stApp)
 void MainWindowGUI::setupDirectoryMonitoring()
 {
 	changeMonitor = new ExternalChangeMonitor(this);
-	changeMonitor->startMonitoring();
 }
 
 
@@ -765,8 +764,6 @@ void MainWindowGUI::newProject()
 	saveAct->setEnabled(false);
 	
 	DomainFacade::getFacade()->clearHistory();
-	changeMonitor->changeWorkDirectory("");
-	
 	modelSizeChanged(0);
 	toolsMenu->modelSizeChanged(0);
 }
@@ -837,7 +834,10 @@ void MainWindowGUI::saveProjectAs()
 		getSaveFileName(this, tr("Save As"), lastVisitedDir, "Stopmotion (*.sto)");
 
 	if ( !file.isNull() ) {
-		DomainFacade::getFacade()->saveProject( file.toLatin1().constData() );
+		DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
+                QString path = QString::fromLocal8Bit(DomainFacade::getFacade()->getProjectPath());
+                path += QLatin1String("images/");
+		changeMonitor->addDirectory(path);
 		//fileMenu->setItemEnabled(SAVE, true);
 		saveAct->setEnabled(true);
 		setMostRecentProject();
@@ -850,7 +850,6 @@ void MainWindowGUI::saveProject()
 	const char *file = DomainFacade::getFacade()->getProjectFile();
 	if (file) {
 		DomainFacade::getFacade()->saveProject(file);
-		changeMonitor->changeWorkDirectory(file);
 	}
 	else {
 		saveProjectAs();

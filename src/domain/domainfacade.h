@@ -211,6 +211,12 @@ public:
 	const char* getProjectFile();
 	 
 	/**
+	 * Retrieves the project path.
+	 * @return the project path if it's setted, NULL otherwise.
+	 */
+	const char* getProjectPath();
+
+	/**
 	 * Undoes the last undoable operation on the model.
 	 */
 	bool undo();

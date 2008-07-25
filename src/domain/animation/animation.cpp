@@ -267,6 +267,11 @@ const char* Animation::getProjectFile()
 	return serializer->getProjectFile();
 }
 
+const char* Animation::getProjectPath()
+{
+	return serializer->getProjectPath();
+}
+
 
 void Animation::clear()
 {

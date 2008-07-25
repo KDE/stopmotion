@@ -17,209 +17,119 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "src/application/externalchangemonitor.h"
-
+#include "externalchangemonitor.h"
 #include "src/domain/domainfacade.h"
 
-#include <QImage>
-#include <QStringList>
+#include <QDebug>
+#include <QTime>
+#include <QSocketNotifier>
 
-#include <iostream>
-
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
-#include <SDL/SDL_image.h>
-
-using namespace std;
-
+#include <inotifytools/inotifytools.h>
+#include <inotifytools/inotify.h>
 
 /**
  * @todo uniform most of the getenv("home") calls so that it is done once
  * and pasted around.
  */
 ExternalChangeMonitor::ExternalChangeMonitor(QObject *parent)
-	: QObject(parent)
+    : QObject(parent), socketNotifier(0), isMonitoring(false)
 {
-	socketNotifier = 0;
-	famConn        = 0;
-	workDirectory  = "";
-	refresh        = false;
-	running        = false;
-	
-	connect( &timer, SIGNAL(timeout()), this, SLOT(timeout()) );
-	
-	tmpDirectory = getenv("HOME");
-	tmpDirectory += "/.stopmotion/tmp";
+    QString tmpDirectory = QString::fromLocal8Bit(getenv("HOME"));
+    tmpDirectory += QLatin1String("/.stopmotion/tmp");
+    addDirectory(tmpDirectory);
 }
-
 
 ExternalChangeMonitor::~ExternalChangeMonitor()
 {
-	if (socketNotifier != 0) {
-		stopMonitoring();
-	}
+    stopMonitoring();
 }
 
-
-void ExternalChangeMonitor::changeWorkDirectory(const char* workDirectory)
+void ExternalChangeMonitor::addDirectory(const QString &directory)
 {
-	if (running) {
-		Logger::get().logDebug("Registring working directory for changelistening: ");
-		Logger::get().logDebug(workDirectory);
-		
-		stopMonitoring();
-		
-		famConn = new FAMConnection;
-		if (FAMOpen2(famConn, "stopmotion") != 0)
-		{
-			delete famConn;
-			famConn = 0;
-			Logger::get().logWarning("Warning: Cannot connect to FAM");
-			running = false;
-			return;
-		}
-		
-		if ( FAMMonitorDirectory( famConn, tmpDirectory.toStdString().c_str(), &famRequest, 0 ) < 0 ) {
-			Logger::get().logWarning("Warning: Cannot monitor tmp directory: ");
-			FAMClose( famConn );
-			return;
-		}
-		
-		QString dirName;
-		if (strcmp(workDirectory, "") != 0) {
-			QStringList lst = QString(workDirectory).split("/");
-			dirName = lst.back();
-			lst = QString(dirName).split(".sto");
-			dirName = lst.front();
-			dirName.prepend("/.stopmotion/packer/");
-			dirName.prepend(getenv("HOME"));
-			dirName.append("/images");
-			
-			if ( FAMMonitorDirectory( famConn, dirName.toStdString().c_str(), &famRequest, 0 ) < 0 ) {
-				Logger::get().logWarning("Warning: Cannot monitor project directory: ");
-				FAMClose( famConn );
-				return;
-			}
-		}
-		
-		int famfd = FAMCONNECTION_GETFD(famConn);
-		int flags = fcntl(famfd, F_GETFL);
-		fcntl(famfd, F_SETFL, flags | O_NONBLOCK);
-		
-		socketNotifier = new QSocketNotifier(famfd, QSocketNotifier::Read, 0);
-		connect(socketNotifier, SIGNAL(activated(int)), this, SLOT(readFam()));
-		
-		this->workDirectory = dirName;
-	}
-}
+    if (directory.isEmpty() || directories.contains(directory))
+        return;
 
+    Logger::get().logDebug("Registering directory for changelistening:");
+    Logger::get().logDebug(directory.toLocal8Bit());
+
+    directories.append(directory);
+
+    if (isMonitoring) {
+        stopMonitoring();
+        startMonitoring();
+    }
+}
 
 void ExternalChangeMonitor::startMonitoring()
 {
-	if (running) {
-		stopMonitoring();
-	}
-	
-	famConn = new FAMConnection;
-	if (FAMOpen2(famConn, "stopmotion") != 0) {
-		delete famConn;
-		famConn = 0;
-		Logger::get().logWarning("Warning: Cannot connect to FAM");
-		running = false;
-		return;
-	}
-	
-	running = true;
-	
-	int famfd = FAMCONNECTION_GETFD(famConn);
-	int flags = fcntl(famfd, F_GETFL);
-	fcntl(famfd, F_SETFL, flags | O_NONBLOCK);
-	
-	if ( FAMMonitorDirectory( famConn, tmpDirectory.toLatin1().constData(), &famRequest, 0 ) < 0 ) {
-		Logger::get().logWarning("Warning: Cannot monitor tmp directory: ");
-		FAMClose( famConn );
-		return;
-	}
-	
-	socketNotifier = new QSocketNotifier(famfd, QSocketNotifier::Read, 0);
-	connect(socketNotifier, SIGNAL(activated(int)), this, SLOT(readFam()));
-}
+    if (isMonitoring)
+        stopMonitoring();
 
+    const int inotifyFd = inotify_init();
+    if (inotifyFd != -1)
+        close(inotifyFd);
+
+    if (!inotifytools_initialize()) {
+        Logger::get().logWarning(strerror(inotifytools_error()));
+        return;
+    }
+
+    foreach (QString directory, directories) {
+        if (!inotifytools_watch_recursively(directory.toLocal8Bit(), IN_CLOSE_WRITE | IN_DELETE_SELF)) {
+            Logger::get().logWarning("Failed to start monitoring:");
+            Logger::get().logWarning(strerror(inotifytools_error()));
+            inotifytools_cleanup();
+            return;
+        }
+    }
+
+    isMonitoring = true;
+    socketNotifier = new QSocketNotifier(inotifyFd, QSocketNotifier::Read, this);
+    connect(socketNotifier, SIGNAL(activated(int)), this, SLOT(readInotifyEvents(int)));
+}
 
 void ExternalChangeMonitor::stopMonitoring()
 {
-	delete socketNotifier;
-	socketNotifier = 0;
-	
-	if (famConn) {
-		FAMClose(famConn);
-		delete famConn;
-		famConn = 0;
-	}
+    delete socketNotifier;
+    socketNotifier = 0;
 
-	running = false;
+    inotifytools_cleanup();
+    isMonitoring = false;
 }
 
-
-void ExternalChangeMonitor::readFam()
+void ExternalChangeMonitor::readInotifyEvents(int socket)
 {
-	while ( FAMPending(famConn) ) {
-		FAMEvent event;
-		if (FAMNextEvent(famConn, &event) != 1) {
-			stopMonitoring();
-			return;
-		}
-		
-		if (event.code == FAMChanged) {
-			if (refresh == false){
-				timer.start(TIMER_INTERVAL);
-				timer.setSingleShot(true);
-				refresh = true;
-			}
-		
-			if(timer.isActive()) {
-				timer.stop();
-				timer.start(TIMER_INTERVAL);
-				timer.setSingleShot(true);
-			}
-			
-			QString tmp = event.filename;
-			tmp.prepend("/");
-			
-			if (tmp.left(4) == "/tmp") {
-				tmp.prepend(tmpDirectory);
-			}
-			else {
-				tmp.prepend(workDirectory);
-			}
-			
-			fileName = tmp;
-		}
-	}
-}
+    Q_UNUSED(socket);
 
+    QTime time;
+    time.start();
+
+    struct inotify_event *event = inotifytools_next_event(1);
+    if (!event)
+        return;
+
+    do {
+        QString filename = QString::fromLocal8Bit(inotifytools_filename_from_wd(event->wd));
+        if (event->mask & IN_DELETE_SELF) {
+            directories.removeAll(filename);
+        } else if (event->len > 0) { // IN_CLOSE_WRITE
+            filename += QString::fromLocal8Bit(event->name);
+            DomainFacade::getFacade()->animationChanged(filename.toLocal8Bit().constData());
+        }
+    } while (time.msec() < 250 && (event = inotifytools_next_event(1)));
+}
 
 void ExternalChangeMonitor::suspendMonitor()
 {
-	if (running) {
-		FAMSuspendMonitor(famConn, &famRequest);
-	}
+    if (socketNotifier)
+        socketNotifier->setEnabled(false);
 }
-
 
 void ExternalChangeMonitor::resumeMonitor()
 {
-	if (running) {
-		FAMResumeMonitor(famConn, &famRequest);
-	}
+    if (socketNotifier)
+        socketNotifier->setEnabled(true);
+    if (!isMonitoring)
+        startMonitoring();
 }
 
-
-void ExternalChangeMonitor::timeout()
-{
-	DomainFacade::getFacade()->animationChanged(fileName.toLatin1().constData());
-	refresh = false;
-}

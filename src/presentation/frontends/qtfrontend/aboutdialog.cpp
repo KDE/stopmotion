@@ -65,6 +65,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"David Hjelm &lt;dav.hjelm@spray.se&gt; (" + tr("Swedish") + ")<br>"
 				"Koray Löker &lt;loker@pardus.org.tr&gt; (" + tr("Turkish") + ")<br>"
 				"Diego Giordano &lt;fusion_machine@tin.it&gt; (" + tr("Italian") + ")<br>"
+				"Matteo Comisso &lt;teomatteo8.9@hotmail.it&gt; (" + tr("Italian") + ")<br>"
 				"</p>"
 				"<p><b>" + tr("Logo") + "</b><br>"
 				"Gorazd Bizjak &lt;gorazd@zapstudio.net&gt;<br>"

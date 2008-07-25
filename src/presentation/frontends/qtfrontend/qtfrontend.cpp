@@ -27,7 +27,7 @@
 #include <unistd.h>
 
 
-QtFrontend::QtFrontend(int argc, char **argv)
+QtFrontend::QtFrontend(int &argc, char **argv)
 {
 	stApp = new QApplication(argc, argv);
 #if QT_VERSION == 0x040400

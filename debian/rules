@@ -64,7 +64,7 @@ binary-arch: build install
 	dh_install
 	dh_installmenu
 	dh_installmime
-	dh_installman
+	dh_installman stopmotion.1
 	dh_link
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 	dh_strip
