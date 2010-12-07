@@ -1,3 +1,10 @@
+stopmotion (0.6.2-1.1) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * Use pidof instead of a combination of kill, ps and grep (Closes: #496027).
+
+ -- Mehdi Dogguy <mehdi@debian.org>  Tue, 07 Dec 2010 06:07:08 +0100
+
 stopmotion (0.6.2-1) unstable; urgency=low
 
   * New upstream release
@@ -299,4 +306,3 @@ stopmotion (0.0.1-1) unstable; urgency=low
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@hig.no>  Thu, 10 Feb 2005 19:19:46 +0100
   
-
