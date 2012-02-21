@@ -276,6 +276,11 @@ private slots:
 	 * Saves the project to the last saved file.
 	 */
 	void saveProject();
+
+        /** 
+         * Quits gracefully (asking the user to save unsaved work)
+         */
+        void quitProgram();
 	
 	/**
 	 * Saves the project to a given filename from the user.
