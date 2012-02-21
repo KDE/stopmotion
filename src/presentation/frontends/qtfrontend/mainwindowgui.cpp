@@ -294,7 +294,7 @@ void MainWindowGUI::createActions()
 	quitAct = new QAction(this);
 	quitAct->setIcon(QIcon(quiticon));
 	quitAct->setShortcut(ControlModifier+Key_Q);
-	connect(quitAct, SIGNAL(triggered()), qApp, SLOT(quitProgram()));
+	connect(quitAct, SIGNAL(triggered()), this, SLOT(quitProgram()));
 	
 	//Edit menu
 	undoAct = new QAction(this);
