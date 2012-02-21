@@ -71,7 +71,7 @@ void ImportTab::makeGUI()
 	deviceSelectionTable->setRowCount(0);
 	deviceSelectionTable->setSelectionMode(QAbstractItemView::SingleSelection);
 	deviceSelectionTable->setSelectionBehavior(QAbstractItemView::SelectRows);
-	deviceSelectionTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
+	deviceSelectionTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 	deviceSelectionTable->setHorizontalHeaderLabels(lst);
 	deviceSelectionTable->verticalHeader()->setVisible(false);
 	
