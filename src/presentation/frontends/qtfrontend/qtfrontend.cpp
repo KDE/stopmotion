@@ -261,8 +261,8 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("importdescription4", 
 			tr("Grabbing from DV-cam.").toLatin1().constData());
 	prefs->setPreference("importstartdeamon4", 
-			"dvgrab --format jpeg --jpeg-overwrite --jpeg-deinterlace --jpeg-width 640 "
-			"--jpeg-height 480 --every 25 $IMAGEFILE &");
+			"dvgrab --format jpeg --jpeg-overwrite --jpeg-temp dvtemp.jpeg "
+			"--every 25 $IMAGEFILE &");
 	prefs->setPreference("importstopdeamon4", 
 			"kill -9 $(pidof dvgrab)");
 	// -----------------------------------------------------------------------
