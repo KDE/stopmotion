@@ -43,39 +43,59 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="63"/>
         <source>Logo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="65"/>
         <source>Coordinating</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="64"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="68"/>
         <source>Testing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="75"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="79"/>
         <source>&amp;Thanks To</source>
         <translation type="unfinished">&amp;Tack till</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="80"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="84"/>
         <source>&amp;Licence Agreement</source>
         <translation type="unfinished">&amp;Licensbestämmelser</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="82"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="86"/>
         <source>OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="95"/>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="99"/>
         <source>About</source>
         <translation type="unfinished">Om</translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="58"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
+        <source>Portuguese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="60"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
+        <source>Swedish</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1083,7 +1103,7 @@ kontrollera inställningarna i inställngsmenyn?</translation>
         <translation>Startar vgrabbj som deamon. Ganska snabb.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="329"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="339"/>
         <source>Question</source>
         <translation>Fråga</translation>
     </message>
@@ -1103,7 +1123,7 @@ kontrollera inställningarna i inställngsmenyn?</translation>
         <translation>Den enklaste inställningen. Relativt långsam</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="264"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="274"/>
         <source>Exports from jpeg images to mpeg1 video</source>
         <translation>Exporterar från jpeg bilder till mpeg1 video</translation>
     </message>
@@ -1117,17 +1137,17 @@ grundvärden finns. Vill du använda den? (Dina gamla inställningar
 kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="273"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="283"/>
         <source>Exports from jpeg images to mpeg2 video</source>
         <translation>Exporterar från jpeg bilder till mpeg2 video</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="291"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="301"/>
         <source>Exports from jpeg images to mpeg4 video</source>
         <translation>Exporterar från jpeg bilder till mpeg4 video</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="239"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="257"/>
         <source>dvgrab</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1144,6 +1164,11 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="251"/>
         <source>Videodog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="259"/>
+        <source>Grabbing from DV-cam.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
