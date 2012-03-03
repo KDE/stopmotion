@@ -25,7 +25,6 @@
 #include <qpushbutton.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
-
 #include <vector>
 using namespace std;
 

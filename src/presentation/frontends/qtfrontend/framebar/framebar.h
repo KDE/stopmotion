@@ -31,6 +31,7 @@
 #include <qscrollview.h>
 #include <qhbox.h>
 
+
 class ThumbView;
 
 /**

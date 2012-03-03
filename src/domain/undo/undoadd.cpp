@@ -26,7 +26,7 @@ UndoAdd::UndoAdd(int fromIndex, const vector<char*>& frameNames, int activeScene
 {
 	//Performing a deep-copy
 	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		this->frameNames.push_back(frameNames[i]);
 	}
 }
@@ -35,7 +35,7 @@ UndoAdd::UndoAdd(int fromIndex, const vector<char*>& frameNames, int activeScene
 UndoAdd::~UndoAdd()
 {
 	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		delete [] frameNames[i];
 		frameNames[i] = NULL;
 	}
@@ -53,14 +53,14 @@ void UndoAdd::undo(AnimationModel *a)
 
 	// Deallocates the old allocated image paths.
 	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		delete [] frameNames[i];
 		frameNames[i] = NULL;
 	}
 	
 	// Setting new image paths.
 	numElem = newImagePaths.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		frameNames[i] = newImagePaths[i];
 	}
 }
@@ -75,14 +75,14 @@ void UndoAdd::redo(AnimationModel *a)
 	
 	// Deallocates the old allocated image paths.
 	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		delete [] frameNames[i];
 		frameNames[i] = NULL;
 	}
 	
 	// Setting new image paths.
 	numElem = newImagePaths.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		frameNames[i] = newImagePaths[i];
 	}
 }

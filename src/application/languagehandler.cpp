@@ -47,12 +47,12 @@ QPopupMenu* LanguageHandler::createLanguagesMenu(QPopupMenu *parent)
 	//English is a special case (base language)
 	int id = languagesMenu->insertItem( "&1 English", 
 			this, SLOT(switchToLanguage(int)), 0, 0 );
-	if(!strcmp(PreferencesTool::get()->getPreference("language", "en"), "en")) {
+	if (!strcmp(PreferencesTool::get()->getPreference("language", "en"), "en")) {
 		languagesMenu->setItemChecked(id, true);
 	}
 	
 	int nr = 2;
-	for(int i=0; i < (int)fileNames.size(); ++i) {
+	for (int i = 0; i < (int)fileNames.size(); ++i) {
 		QTranslator translator;
 		translator.load(fileNames[i], qmPath);
 		
@@ -66,7 +66,7 @@ QPopupMenu* LanguageHandler::createLanguagesMenu(QPopupMenu *parent)
 		
 		//Checks that the mimimum requirement for accepting a string is covered.
 		//The mimimum requirement is that the menu option string (English) is translated.
-		if(language != "") {
+		if (language != "") {
 			id = languagesMenu->insertItem( QString("&%1 %2").arg(nr).arg(language),
 				this, SLOT(switchToLanguage(int)), 0, nr-1 );
 			++nr;
@@ -77,7 +77,7 @@ QPopupMenu* LanguageHandler::createLanguagesMenu(QPopupMenu *parent)
 			locales.push_back(locale);
 			
 			//Checks the menu option if this is the starting language.
-			if(!strcmp(PreferencesTool::get()->getPreference("language", "en"), locale)) {
+			if (!strcmp(PreferencesTool::get()->getPreference("language", "en"), locale)) {
 				languagesMenu->setItemChecked(id, true);
 			}
 		}
@@ -90,7 +90,7 @@ QPopupMenu* LanguageHandler::createLanguagesMenu(QPopupMenu *parent)
 void LanguageHandler::switchToLanguage(int menuID)
 {
 	//English(0) is a special case (base language)
-	if(menuID == 0) {
+	if (menuID == 0) {
 		stTranslator->clear();
 		PreferencesTool::get()->setPreference("language", "en");
 	}
@@ -99,7 +99,7 @@ void LanguageHandler::switchToLanguage(int menuID)
 		PreferencesTool::get()->setPreference("language", locales[menuID-1].ascii());
 	}
 	
-	for(int i=0; i < (int)languagesMenu->count(); ++i) {
+	for (int i = 0; i < (int)languagesMenu->count(); ++i) {
 		languagesMenu->setItemChecked(i, i == menuID);
 	}
 	

@@ -49,7 +49,6 @@ int ThumbView::getNumber()
 }
 
 
-//Abstract functions
 void ThumbView::setHasSounds( bool )
 {
 }

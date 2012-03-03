@@ -24,6 +24,7 @@
 #include <qfiledialog.h>
 #include <qinputdialog.h>
 
+
 SoundHandler::SoundHandler ( QObject *parent, QStatusBar *sb, const char* homeDir,
 		const char *name ) 
 		: QObject(parent, name), statusBar(sb), homeDir(homeDir)
@@ -61,7 +62,7 @@ void SoundHandler::removeSound()
 {
 	int index = soundsList->index(soundsList->selectedItem());
 	
-	if(index >= 0) {
+	if (index >= 0) {
 		DomainFacade::getFacade()->removeSound( 
 			DomainFacade::getFacade()->getActiveFrameNumber(), index );
 		
@@ -75,7 +76,7 @@ void SoundHandler::setSoundName()
 {
 	int index = soundsList->index(soundsList->selectedItem());
 	
-	if(index >= 0) {
+	if (index >= 0) {
 		bool ok;
 		QString text = QInputDialog::getText(
 			tr("Sound name"), tr("Enter the name of the sound:"), QLineEdit::Normal,
@@ -84,7 +85,6 @@ void SoundHandler::setSoundName()
 		if ( ok && !text.isEmpty() ) {
 			DomainFacade::getFacade()->setSoundName(DomainFacade::getFacade()->
 					getActiveFrameNumber(), index, (char*)text.ascii() );
-	
 			soundsList->changeItem( text, index );
 		}
 	}

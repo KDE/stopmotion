@@ -91,7 +91,7 @@ void FramePreferencesMenu::open()
 			DomainFacade::getFacade()->getActiveFrameNumber() )->getNumberOfSounds();
 	
 	unsigned int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
-	for(unsigned int i = 0; i<numSounds; i++) {
+	for (unsigned int i = 0; i<numSounds; ++i) {
 		soundsList->insertItem( DomainFacade::getFacade()->
 				getFrame(activeFrame)->getSoundName(i) );
 	}

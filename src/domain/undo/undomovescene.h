@@ -23,7 +23,6 @@
 #include "undo.h"
 
 
-
 /**
  * The UndoMoveScene class for undoing moveScene(...) calls to the domain.
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad

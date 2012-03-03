@@ -58,7 +58,6 @@ public:
 	 */
 	void redo(AnimationModel *a);
 	
-	
 private:
 	vector<char*> frameNames;
 	unsigned int fromIndex;

@@ -59,11 +59,9 @@ bool CommandLineGrabber::tearDown()
 	Logger::get().logDebug("Attemting to shutt down process");
 	if (stopProcess != "") {
 		system( stopProcess.c_str() );
+		return true;
 	}
-	else {
-		return false;
-	}
-	return true;
+	return false;
 }
 
 

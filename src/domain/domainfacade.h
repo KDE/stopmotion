@@ -29,6 +29,7 @@
 #include <vector>
 using namespace std;
 
+
 /**
  * Singleton facade for the domain level. All requests into the domain layer
  * has to pass through this facade. The only exception is observer requests

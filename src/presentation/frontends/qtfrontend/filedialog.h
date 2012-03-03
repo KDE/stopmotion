@@ -22,6 +22,7 @@
 
 #include <qfiledialog.h>
 
+
 /**
  * Extended QFileDialog with an additional tool button
  * for quickly getting into the users home directory.

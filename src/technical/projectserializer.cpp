@@ -167,11 +167,11 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 	// Removes frames which already are saved. Had to do this to prevent
 	// frames to overwrite each other.
 	unsigned int numScenes = sVect.size();
-	for (unsigned int m = 0; m < numScenes; m++) {
+	for (unsigned int m = 0; m < numScenes; ++m) {
 		vector<Frame*> frames = sVect[m]->getFrames();
 		
 		unsigned int numFrames = frames.size();
-		for (unsigned int l = 0; l < numFrames; l++) {
+		for (unsigned int l = 0; l < numFrames; ++l) {
 			frame = frames[l];
 			if ( frame->isProjectFrame() ) {
 				frame->copyToTemp();
@@ -183,7 +183,7 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 	
 	//unsigned int numScenes = sVect.size();
 	frontend->showProgress("Saving scenes to disk ...", numScenes);
-	for (unsigned int i = 0; i < numScenes; i++) {
+	for (unsigned int i = 0; i < numScenes; ++i) {
 		frontend->updateProgress(i);
 		// Scenes
 		node = xmlNewChild(scenes, NULL, BAD_CAST "seq", NULL);
@@ -192,7 +192,7 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 		images = xmlNewChild(node, NULL, BAD_CAST "images", NULL);
 		vector<Frame*> frames = sVect[i]->getFrames();
 		unsigned int numFrames = frames.size();
-		for (unsigned int j = 0; j < numFrames; j++) {
+		for (unsigned int j = 0; j < numFrames; ++j) {
 			frame = frames[j];
 			frame->moveToProjectDir(imagePath, soundPath, ++index);
 			frame->markAsProjectFile();
@@ -206,7 +206,7 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 			if (numSounds > 0) {
 				sounds = xmlNewChild(node, NULL, BAD_CAST "sounds", NULL);
 				vector<AudioFormat*> audioFiles = frame->getSounds();
-				for (unsigned int k = 0; k < numSounds; k++) {
+				for (unsigned int k = 0; k < numSounds; ++k) {
 					sound = audioFiles[k];
 					relPath = basename(audioFiles[k]->getSoundPath());
 					node = xmlNewChild(sounds, NULL, BAD_CAST "audio", NULL);
@@ -249,8 +249,10 @@ void ProjectSerializer::getAttributes(xmlNodePtr node, vector<Scene*>& sVect)
 						if (soundName != NULL) {
 							unsigned int soundNum = f->getNumberOfSounds() - 1;
 							f->setSoundName(soundNum,  soundName);
+							xmlFree((xmlChar*)soundName);
 						}
 					}
+					xmlFree((xmlChar*)filename);
 				}
 			}
 			// The node is a scene node
@@ -271,7 +273,6 @@ bool ProjectSerializer::saveDOMToFile(xmlDocPtr doc)
 		Logger::get().logWarning("Couldnt save DOM to file");
 		return false;
 	}
-	
 	return true;
 }
 
@@ -379,6 +380,8 @@ void ProjectSerializer::cleanup()
 		projectFile = NULL;
 		delete [] imagePath;
 		imagePath = NULL;
+		delete [] soundPath;
+		soundPath = NULL;
 		delete [] xmlFile;
 		xmlFile = NULL;
 	

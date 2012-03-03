@@ -146,6 +146,7 @@ int pack(char *directory, char *toProjectFile)
 	
 	free(tmpCopy1);
 	free(tmpCopy2);
+	libtar_list_free(files, NULL);
 	
 	return ret;
 }
@@ -175,9 +176,14 @@ char* unpack(char *projectFile, char *rootDir)
 				char *dir = (char*)malloc( strlen(tmp) + 2 );
 				strcpy(dir, tmp);
 				strcat(dir, "/");
+				free(dp);
 				return dir;
 			}
 		}
+	}
+	
+	if (NULL != dp) {
+		free(dp);
 	}
 	
 	return NULL;

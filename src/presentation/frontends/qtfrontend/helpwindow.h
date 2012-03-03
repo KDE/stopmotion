@@ -22,6 +22,7 @@
 #include <qmap.h>
 #include <qdir.h>
 
+
 class QComboBox;
 class QPopupMenu;
 
@@ -35,12 +36,10 @@ public:
 private slots:
     void setBackwardAvailable( bool );
     void setForwardAvailable( bool );
-
     void sourceChanged( const QString& );
     void openFile();
     void newWindow();
     void print();
-
     void pathSelected( const QString & );
     void histChosen( int );
     void bookmChosen( int );
@@ -58,6 +57,5 @@ private:
     QPopupMenu *hist, *bookm;
 
 };
-
 
 #endif

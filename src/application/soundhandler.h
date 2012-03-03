@@ -26,6 +26,7 @@
 #include <qstatusbar.h>
 #include <qlistbox.h>
 
+
 /**
  * This class handles request related to sounds (adding, removing, etc).
  *

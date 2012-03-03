@@ -25,13 +25,13 @@
 #include <qpainter.h>
 #include <qimage.h>
 
+
 SceneArrowButton::SceneArrowButton( QWidget *parent ) : QWidget(parent)
 {
 	this->isOpened = false;
 	this->iconX = 2;
 	moveTimer = new QTimer(this);
-	QObject::connect( moveTimer, SIGNAL(timeout()), 
-			this, SLOT(moveIcon()) );
+	QObject::connect( moveTimer, SIGNAL(timeout()), this, SLOT(moveIcon()) );
 }
 
 
@@ -49,7 +49,7 @@ void SceneArrowButton::paintEvent( QPaintEvent * )
 	paint.drawRect(0, 0, width(), height());
 	
 	QPixmap arrowIcon;
-	if(isOpened) {
+	if (isOpened) {
 		arrowIcon = QPixmap( QImage(closescene).scale(width(), height()) );
 	}
 	else {
@@ -68,7 +68,7 @@ void SceneArrowButton::moveIcon()
 
 void SceneArrowButton::mouseReleaseEvent( QMouseEvent * e )
 {
-	if(isOpened) {
+	if (isOpened) {
 		emit clicked();
 		moveTimer->stop();
 		this->iconX = 2;
@@ -82,7 +82,7 @@ void SceneArrowButton::mouseReleaseEvent( QMouseEvent * e )
 
 void SceneArrowButton::enterEvent( QEvent * )
 {
-	if(isOpened) {
+	if (isOpened) {
 		moveTimer->start(400, false);
 	}
 }

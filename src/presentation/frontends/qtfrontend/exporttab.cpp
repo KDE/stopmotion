@@ -214,7 +214,7 @@ void ExportTab::initialize()
 	}
 	
 	int active = pref->getPreference("activeEncoder", -1);
-	if(active > -1) {
+	if (active > -1) {
 		((QCheckTableItem*)encoderTable->item(active, 0))->setChecked(true);
 	}
 }
@@ -228,8 +228,8 @@ void ExportTab::apply()
 	
 	// Deletes removed encoders from the preferencestool.
 	int numEncoders = prefs->getPreference("numEncoders", -1);
- 	if(numEncoders > size) {
-		for(int i = size; i < numEncoders; ++i) {
+ 	if (numEncoders > size) {
+		for (int i = size; i < numEncoders; ++i) {
 			prefs->removePreference(QString("encoderName%1").arg(i).ascii());
 			prefs->removePreference(QString("encoderDescription%1").arg(i).ascii());
 			prefs->removePreference(QString("startEncoder%1").arg(i).ascii());
@@ -239,7 +239,7 @@ void ExportTab::apply()
 	}
 	prefs->setPreference("numEncoders", size, true);
 	
-	for(int i = 0; i < size; i++) {
+	for (int i = 0; i < size; ++i) {
 		prefs->setPreference(QString("encoderName%1").arg(i), 
 				encoderTable->text(i, 1).ascii(), true);
 		prefs->setPreference(QString("encoderDescription%1").arg(i),
@@ -251,7 +251,7 @@ void ExportTab::apply()
 		prefs->setPreference(QString("outputFile%1").arg(i),
 				outputFiles[i].ascii(), true);
 		
-		if( ((QCheckTableItem*)encoderTable->item(i, 0))->isChecked() ) {
+		if ( ((QCheckTableItem*)encoderTable->item(i, 0))->isChecked() ) {
 			activeEncoder = i;
 		}
 	}
@@ -290,7 +290,7 @@ void ExportTab::valueChanged(int row, int column)
 		case 0:
 		{
 			int size = encoderTable->numRows();
-			for(int i = 0; i < size; i++) {
+			for (int i = 0; i < size; ++i) {
 				((QCheckTableItem*)encoderTable->item(i, 0))->setChecked(i == row);
 			}
 			break;
@@ -317,7 +317,7 @@ void ExportTab::valueChanged(int row, int column)
 void ExportTab::activeRowChanged(int row)
 {
 	selectedEncoder = row;
-	if(encoderPrefs->isShown()) {
+	if ( encoderPrefs->isShown() ) {
 		editSettings();
 	}
 }
@@ -325,7 +325,7 @@ void ExportTab::activeRowChanged(int row)
 
 void ExportTab::editSettings()
 {
-	if(selectedEncoder >= 0) {
+	if (selectedEncoder >= 0) {
 		startEncoder->setText(startEncoderStrings[selectedEncoder]);
 		stopEncoder->setText(stopEncoderStrings[selectedEncoder]);
 		if ( outputFiles[selectedEncoder] == "" ) {

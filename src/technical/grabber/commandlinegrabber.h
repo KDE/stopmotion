@@ -21,11 +21,11 @@
 #define COMMANDLINEGRABBER_H
 
 #include "src/config.h"
-
 #include "imagegrabber.h"
 
 #include <string>
 using std::string;
+
 
 /**
  * Abstract class for the different video grabbers used by the VideoView
@@ -67,6 +67,7 @@ public:
 	 * @return true on success, false otherwise
 	 */
 	bool tearDown();
+
 private:
 	string prePoll;
 	string startProcess;

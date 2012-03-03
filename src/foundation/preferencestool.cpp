@@ -23,7 +23,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
 #include <iostream>
 using namespace std;
 
@@ -60,7 +59,7 @@ PreferencesTool::~PreferencesTool()
 PreferencesTool* PreferencesTool::get() 
 {
 	//Lazy initialization
-	if(preferencesTool == NULL) {
+	if (preferencesTool == NULL) {
 		preferencesTool = new PreferencesTool();
 	}
 	return preferencesTool;
@@ -72,12 +71,12 @@ bool PreferencesTool::setPreferencesFile( const char *filePath, const char *vers
 	xmlNode *node        = NULL;
  	char* currentVersion = NULL;
 	
-	if(preferencesFile != NULL) {
+	if (preferencesFile != NULL) {
 		delete [] preferencesFile;
 		preferencesFile = NULL;
 	}
 	
-	if(doc != NULL) {
+	if (doc != NULL) {
 		cleanTree();
 	}
 	
@@ -85,7 +84,7 @@ bool PreferencesTool::setPreferencesFile( const char *filePath, const char *vers
 	preferencesFile = new char[strlen(filePath)+1];
 	strcpy(preferencesFile, filePath);
 
-	if( fileExists(filePath) ) {
+	if ( fileExists(filePath) ) {
 		//Parse the xml file as an xml tree
 		doc = xmlReadFile(filePath, NULL, 0);
 		if (doc == NULL) {
@@ -95,9 +94,9 @@ bool PreferencesTool::setPreferencesFile( const char *filePath, const char *vers
 		rootNode = xmlDocGetRootElement(doc);
 
 		node = rootNode->children;
-		for(; node; node = node->next) {
-			if(node->type == XML_ELEMENT_NODE) {
-				if(xmlStrEqual(node->name, BAD_CAST "version")) {
+		for (; node; node = node->next) {
+			if (node->type == XML_ELEMENT_NODE) {
+				if (xmlStrEqual(node->name, BAD_CAST "version")) {
 					versionNode = node;
 				}
 			}
@@ -105,30 +104,31 @@ bool PreferencesTool::setPreferencesFile( const char *filePath, const char *vers
 		currentVersion = (char*)xmlGetProp(versionNode, BAD_CAST "version");
 
 		//There are no version in the file
-		if(currentVersion == NULL) {
+		if (currentVersion == NULL) {
 			cleanTree();
 		}
 		else {
 			//The version in the file is wrong
-			if(strcmp(currentVersion, version) != 0) {
+			if (strcmp(currentVersion, version) != 0) {
 				oldVersion = new char[strlen(currentVersion)+1];
 				strcpy(oldVersion, currentVersion);
 				cleanTree();
 			}
+			xmlFree((xmlChar*)currentVersion);
 		}
 	}
 
-	if(rootNode != NULL) {
+	if (rootNode != NULL) {
 		node = rootNode->children;
-		for(; node; node = node->next) {
-			if(node->type == XML_ELEMENT_NODE) {
-				if(xmlStrEqual(node->name, BAD_CAST "preferences")) {
+		for (; node; node = node->next) {
+			if (node->type == XML_ELEMENT_NODE) {
+				if (xmlStrEqual(node->name, BAD_CAST "preferences")) {
 					preferences = node;
 				}
 			}
 		}
 		
-		if(preferences == NULL) {
+		if (preferences == NULL) {
 			printf("Error while parsing preferences file");
 		}
 		return true;
@@ -175,7 +175,7 @@ bool PreferencesTool::setPreference(const char* key, const char* attribute, bool
 	xmlNodePtr node = NULL;
 	node = findNode(key);
 	
-	if( node == NULL ) {
+	if (node == NULL) {
 		node = xmlNewChild(preferences, NULL, BAD_CAST "pref", NULL);
 		xmlNewProp(node, BAD_CAST "key", BAD_CAST key);
 		xmlNewProp(node, BAD_CAST "attribute", BAD_CAST attribute);
@@ -197,7 +197,7 @@ bool PreferencesTool::setPreference(const char * key, const int attribute, bool 
 	char tmp[11] = {0};
 	snprintf(tmp, 11, "%d", attribute);
 	
-	if( node == NULL ) {
+	if (node == NULL) {
 		node = xmlNewChild(preferences, NULL, BAD_CAST "pref", NULL);
 		xmlNewProp(node, BAD_CAST "key", BAD_CAST key);
 		xmlNewProp(node, BAD_CAST "attribute", BAD_CAST tmp);
@@ -213,10 +213,8 @@ bool PreferencesTool::setPreference(const char * key, const int attribute, bool 
 const char* PreferencesTool::getPreference(const char* key, const char* defaultValue)
 {
 	checkInitialized();
-	
 	xmlNode *node = findNode(key);
-	
-	if(node != NULL) {
+	if (node != NULL) {
 		return (const char*)xmlGetProp(node, BAD_CAST "attribute");
 	}
 	else {
@@ -228,12 +226,12 @@ const char* PreferencesTool::getPreference(const char* key, const char* defaultV
 const int PreferencesTool::getPreference(const char * key, const int defaultValue)
 {
 	checkInitialized();
-		
 	xmlNode *node = findNode(key);
-	
-	if(node != NULL) {
-		const char *tmp = (const char*)xmlGetProp(node, BAD_CAST "attribute");
-		return atoi(tmp);
+	if (node != NULL) {
+		char *tmp = (char*)xmlGetProp(node, BAD_CAST "attribute");
+		int ret = atoi(tmp);
+		xmlFree(tmp);
+		return ret;
 	}
 	else {
 		return defaultValue;
@@ -244,10 +242,8 @@ const int PreferencesTool::getPreference(const char * key, const int defaultValu
 void PreferencesTool::removePreference( const char * key )
 {
 	checkInitialized();
-	
 	xmlNode *node = findNode(key);
-		
-	if(node != NULL) {
+	if (node != NULL) {
 		xmlUnlinkNode(node);
 		xmlFreeNode(node);
 		flushPreferences();
@@ -257,7 +253,7 @@ void PreferencesTool::removePreference( const char * key )
 
 bool PreferencesTool::flushPreferences()
 {
-	if( xmlSaveFormatFile(preferencesFile, doc, 1) == -1 ) {
+	if (xmlSaveFile(preferencesFile, doc) == -1) {
 		return false;
 	}
 	else {
@@ -271,11 +267,14 @@ xmlNodePtr PreferencesTool::findNode(const char * key)
 	//Search through the preferences for the element with a key which
 	//equals the key parameter.
 	xmlNode *node = preferences->children;
-	for(; node; node = node->next) {
-		if(node->type == XML_ELEMENT_NODE) {
-			if(xmlStrEqual(xmlGetProp(node, BAD_CAST "key"), BAD_CAST key)) {
+	for (; node; node = node->next) {
+		if (node->type == XML_ELEMENT_NODE) {
+			xmlChar *prop = xmlGetProp(node, BAD_CAST "key");	
+			if (xmlStrEqual(prop, BAD_CAST key)) {
+				xmlFree(prop);
 				break;
 			}
+			xmlFree(prop);
 		}
 	}
 	return node;
@@ -284,7 +283,7 @@ xmlNodePtr PreferencesTool::findNode(const char * key)
 
 bool PreferencesTool::fileExists(const char * filePath)
 {
-	if ( access(filePath, R_OK) == -1 ) {
+	if (access(filePath, R_OK) == -1) {
 		return false;
 	}
 	return true;
@@ -293,7 +292,7 @@ bool PreferencesTool::fileExists(const char * filePath)
 
 void PreferencesTool::checkInitialized()
 {
-	if(doc == NULL) {
+	if (doc == NULL) {
 		printf(	"A preferencesfile has to be specified before "
 				"using the PreferencesTool.");
 		exit(1);

@@ -21,11 +21,9 @@
 #define CAMERAHANDLER_H
 
 #include "src/config.h"
-
 #include "src/presentation/frontends/qtfrontend/videoview.h"
 #include "src/presentation/frontends/qtfrontend/frameview.h"
 #include "modelhandler.h"
-// #include "camerainitthread.h"
 
 #include <qobject.h>
 #include <qpushbutton.h>

@@ -30,8 +30,7 @@ FlexibleSpinBox::FlexibleSpinBox(QWidget *parent)
 void FlexibleSpinBox::setMaximumValue(int maxValue)
 {
 	this->setMaxValue(maxValue);
-	
-	if(maxValue > 0) {
+	if (maxValue > 0) {
 		setEnabled(true);
 	}
 	else {

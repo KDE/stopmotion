@@ -57,7 +57,6 @@ public:
 	 */
 	void redo(AnimationModel *a);
 	
-	
 private:
 	unsigned int fromFrame, toFrame, movePosition;
 	int activeScene;

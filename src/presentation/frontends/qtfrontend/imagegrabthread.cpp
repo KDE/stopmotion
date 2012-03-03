@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include "imagegrabthread.h"
 
-// #include <semaphore.h>
 #include <iostream>
 
 
@@ -33,14 +32,15 @@ ImageGrabThread::ImageGrabThread(FrameView *frameView, ImageGrabber *grabber)
 void ImageGrabThread::run()
 {
 	//Don't want the frameview to update unless the grabbing worked.
-	while(true) {
+	while (true) {
 		wasGrabSuccess = grabber->grab();
-		if(!wasGrabSuccess) {
+		if (!wasGrabSuccess) {
 			break;
 		}
 		frameView->redraw();
 	}
 }
+
 
 bool ImageGrabThread::wasGrabbingSuccess()
 {

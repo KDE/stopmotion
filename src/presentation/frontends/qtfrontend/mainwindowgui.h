@@ -114,7 +114,6 @@ private:
 	QAction *copyAct;
 	QAction *pasteAct;
 	QAction *gotoFrameAct;
-// 	QAction *disableAct;
 	QAction *configureAct;
  	QAction *whatsthisAct;
 	QAction *aboutAct;
@@ -152,7 +151,6 @@ private:
 	ExternalChangeMonitor *changeMonitor;
 	
 	char *lastVisitedDir;
-	
 	
 	/**
 	 * Creates the handlers for handling user requests.
@@ -245,7 +243,6 @@ private:
 	 */
 	void retranslateHelpText();
 	
-	
 	/**
 	 * Changes the project history so that they shows correctly in the
 	 * most recent menu.
@@ -256,7 +253,6 @@ private:
 	 * Updates the most recent menu.
 	 */
 	void updateMostRecentMenu();
-	
 	
 private slots:
 	

@@ -29,7 +29,6 @@
 #include "src/domain/undo/undomovescene.h"
 
 
-
 DomainFacade* DomainFacade::domainFacade = 0;
 
 
@@ -55,7 +54,6 @@ DomainFacade* DomainFacade::getFacade()
 	if(domainFacade == NULL) {
 		domainFacade = new DomainFacade();
 	}
-	
 	return domainFacade;
 }
 
@@ -98,7 +96,7 @@ int DomainFacade::getActiveFrameNumber()
 
 void DomainFacade::addFrames(const vector<char*>& frameNames)
 {
-	if( !(animationModel->getActiveSceneNumber() < 0 && 
+	if ( !(animationModel->getActiveSceneNumber() < 0 && 
 			animationModel->getNumberOfScenes() > 0) ) {
 
 		Logger::get().logDebug("Adding frames in the domainfacade");

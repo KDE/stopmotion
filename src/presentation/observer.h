@@ -28,6 +28,7 @@
 
 using namespace std;
 
+
 /**
  * The observer interface. All classes who wants to be notified when something 
  * changes in the animationmodel has to implement from this class.
@@ -55,14 +56,12 @@ public:
 	 */
 	virtual void updateAdd(const vector<char*>& frames, unsigned int index, Frontend *frontend) = 0;
 	
-	
 	/**
 	 * Abstract function for recieving notification about frames removed from the model.
 	 * @param fromFrame the first frame of those removed
 	 * @param toFrame the last frame of those removed
 	 */
 	virtual void updateRemove(unsigned int fromFrame, unsigned int toFrame) = 0;
-	
 	
 	/**
 	 * Abstract function for recieving notification when frames are moved in the model.
@@ -72,19 +71,16 @@ public:
 	 */
 	virtual void updateMove(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition) = 0;
 	
-	
 	/**
 	 * Abstract function for recieving notification when a new frame are selected.
 	 * @param frameNumber the new active frame.
 	 */
 	virtual void updateNewActiveFrame(int frameNumber) = 0;
 	
-	
 	/**
 	 * Abstract function for receiving notification when the model is erased.
 	 */
 	virtual void updateClear() = 0;
-	
 	
 	/**
 	 * Abstract function for recieving notification when a frame is to be played.
@@ -92,14 +88,12 @@ public:
 	 */
 	virtual void updatePlayFrame(int frameNumber) = 0;
 	
-	
 	/**
 	 * Abstract function for recieving notification when a new scene is created
 	 * at location index.
 	 * @param index the location where the new scene is created.
 	 */
 	virtual void updateNewScene(int index) = 0;
-	
 	
 	/**
 	 * Abstract function for recieving notification when a scene is removed from

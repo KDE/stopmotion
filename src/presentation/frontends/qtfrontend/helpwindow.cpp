@@ -33,8 +33,8 @@
 #include <qsimplerichtext.h>
 #include <qpainter.h>
 #include <qpaintdevicemetrics.h>
-
 #include <ctype.h>
+
 
 HelpWindow::HelpWindow( const QString& home_, const QString& _path,
                         QWidget* parent, const char *name )
@@ -75,7 +75,7 @@ HelpWindow::HelpWindow( const QString& home_, const QString& _path,
 
     QPopupMenu* go = new QPopupMenu( this );
     backwardId = go->insertItem( icon_back,
-                                 tr("&Backward"), browser, SLOT( backward() ),
+              					tr("&Backward"), browser, SLOT( backward() ),
                                  CTRL+Key_Left );
     forwardId = go->insertItem( icon_forward,
                                 tr("&Forward"), browser, SLOT( forward() ),
@@ -112,7 +112,6 @@ HelpWindow::HelpWindow( const QString& home_, const QString& _path,
     connect( browser, SIGNAL( forwardAvailable( bool ) ),
              this, SLOT( setForwardAvailable( bool ) ) );
 
-
     QToolBar* toolbar = new QToolBar( this );
     addToolBar( toolbar, "Toolbar");
     QToolButton* button;
@@ -146,6 +145,7 @@ void HelpWindow::setBackwardAvailable( bool b)
     menuBar()->setItemEnabled( backwardId, b);
 }
 
+
 void HelpWindow::setForwardAvailable( bool b)
 {
     menuBar()->setItemEnabled( forwardId, b);
@@ -172,8 +172,9 @@ void HelpWindow::sourceChanged( const QString& url )
             pathCombo->insertItem( url, 0 );
             pathCombo->setCurrentItem( 0 );
             mHistory[ hist->insertItem( url ) ] = url;
-        } else
+        } else {
             pathCombo->setCurrentItem( i );
+		}
     }
 }
 
@@ -249,8 +250,9 @@ void HelpWindow::print()
 void HelpWindow::pathSelected( const QString &_path )
 {
     browser->setSource( _path );
-    if ( mHistory.values().contains(_path) )
+    if ( mHistory.values().contains(_path) ) {
         mHistory[ hist->insertItem( _path ) ] = _path;
+	}
 }
 
 void HelpWindow::readHistory()
@@ -261,8 +263,9 @@ void HelpWindow::readHistory()
         QDataStream s( &f );
         s >> history;
         f.close();
-        while ( history.count() > 20 )
+        while ( history.count() > 20 ) {
             history.remove( history.begin() );
+		}
     }
 }
 
@@ -279,14 +282,16 @@ void HelpWindow::readBookmarks()
 
 void HelpWindow::histChosen( int i )
 {
-    if ( mHistory.contains( i ) )
-        browser->setSource( mHistory[ i ] );
+    if ( mHistory.contains(i) ) {
+        browser->setSource(mHistory[i]);
+	}
 }
 
 void HelpWindow::bookmChosen( int i )
 {
-    if ( mBookmarks.contains( i ) )
-        browser->setSource( mBookmarks[ i ] );
+    if ( mBookmarks.contains(i) ) {
+        browser->setSource(mBookmarks[i]);
+	}
 }
 
 void HelpWindow::addBookmark()

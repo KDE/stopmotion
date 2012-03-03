@@ -23,10 +23,8 @@
 #include "src/config.h"
 #include "animationmodel.h"
 #include "scene.h"
-// #include "externalchangemonitor.h"
 #include "src/technical/projectserializer.h"
 #include "src/technical/audio/ossdriver.h"
-
 #include "frame.h"
 
 #include <vector>
@@ -272,10 +270,6 @@ private:
 	
 	/** Serializer to be used on saving and loading of the project. */
 	ProjectSerializer *serializer;
-	
-	/** Class that listens for changes in the disk representation of there
-	    animation and notifies this class when something is changed        */
-// 	ExternalChangeMonitor *externalChangeMonitor;
 	
 	/** Audio driver that can play sound. */
 	AudioDriver *audioDriver;

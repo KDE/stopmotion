@@ -43,13 +43,11 @@ public:
 	 */
 	void setOpened(bool isOpened);
 	
-	
 public slots:
 	/**
 	 * Slot for moving the icon to create an animation-like effect.
 	 */
 	void moveIcon();
-	
 	
 protected:
 	/** Overloaded function to paint the widget.

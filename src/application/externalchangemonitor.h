@@ -21,7 +21,6 @@
 #define EXTERNALCHANGEMONITOR_H
 
 #include "src/config.h"
-
 #include <qobject.h>
 #include <qsocketnotifier.h>
 #include <qtimer.h>
@@ -104,7 +103,6 @@ private:
 	QTimer timer;
 	QString fileName;
 	bool refresh;
-	
 	bool running;
 	
 private slots:
@@ -112,7 +110,6 @@ private slots:
 	 * Callback function for when the QSocketNotifier recieves a fam event.
 	 */
 	void readFam();
-	
 	void timeout();
 };
 

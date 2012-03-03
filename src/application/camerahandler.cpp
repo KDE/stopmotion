@@ -129,7 +129,6 @@ void CameraHandler::toggleCamera()
 void CameraHandler::captureFrame()
 {
 	Logger::get().logDebug("Capturing image from webcam");
-	//videoView->capture();
 	timer->start(50, true);
 }
 

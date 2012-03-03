@@ -20,7 +20,6 @@
 #include "toolsmenu.h"
 
 #include "src/foundation/preferencestool.h"
-
 #include "graphics/icons/play.xpm"
 #include "graphics/icons/fastforward.xpm"
 #include "graphics/icons/rewind.xpm"
@@ -41,7 +40,6 @@
 #include <qaction.h>
 #include <qaccel.h>
 #include <qmessagebox.h>
-
 #include <iostream>
 
 
@@ -205,8 +203,6 @@ void ToolsMenu::addWidgets()
 			runAnimationHandler, SLOT(setSpeed(int)));
 	connect( animationSpeedChooser, SIGNAL( valueChanged(int) ),
 			cameraHandler, SLOT(setPlaybackSpeed(int)) );
-	//This preference is set in the RunAnimationHandler::setSpeed function
-	//animationSpeedChooser->setValue(PreferencesTool::get()->getPreference("fps", 10));
 	
 	playButton = new QPushButton( runAnimationGroup );
 	playButton->setIconSet( QIconSet(QPixmap(playicon)) );
@@ -312,7 +308,7 @@ void ToolsMenu::addWidgets()
 
 void ToolsMenu::activateCaptureGroup(bool activate)
 {
-	if(activate) {		
+	if (activate) {		
 		captureGroup->show();
 	}
 	else {
@@ -477,7 +473,7 @@ void ToolsMenu::setPlaybackMode()
 
 void ToolsMenu::changeViewingMode(int index)
 {
-	if( cameraHandler->setViewMode(index) ) {
+	if ( cameraHandler->setViewMode(index) ) {
 		viewChooseCombo->setCurrentItem(index);
 		unitChooseCombo->setCurrentItem(0);
 		switch (index)
@@ -580,7 +576,7 @@ void ToolsMenu::changeUnitMode(int index)
 void ToolsMenu::modelSizeChanged(int modelSize)
 {
 	//Not <=1 because it is signed with a meaning for -1.
-	if(modelSize == 0 || modelSize == 1) {
+	if (modelSize == 0 || modelSize == 1) {
 		if(previousFrameButton->isEnabled()) {
 			previousFrameButton->setEnabled(false);
 			nextFrameButton->setEnabled(false);
@@ -591,8 +587,8 @@ void ToolsMenu::modelSizeChanged(int modelSize)
 			toBeginningButton->setEnabled(false);
 		}
 	}
-	else if(modelSize >= 2) {
-		if(!previousFrameButton->isEnabled() && !cameraHandler->isCameraRunning()) {
+	else if (modelSize >= 2) {
+		if (!previousFrameButton->isEnabled() && !cameraHandler->isCameraRunning()) {
 			previousFrameButton->setEnabled(true);
 			nextFrameButton->setEnabled(true);
 			playButton->setEnabled(true);
@@ -607,7 +603,7 @@ void ToolsMenu::modelSizeChanged(int modelSize)
 
 void ToolsMenu::cameraOn(bool isOn)
 {
-	if(isOn) {
+	if (isOn) {
 		playButton->setEnabled(false);
 		pauseButton->setEnabled(false);
 		stopButton->setEnabled(false);

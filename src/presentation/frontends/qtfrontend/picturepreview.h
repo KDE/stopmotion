@@ -35,12 +35,12 @@ public:
 	 */
 	PicturePreview( QWidget *parent=0 );
 
-	
 	/**
 	 * Displays the preview picture
 	 * @param u the file path to the selected file in the filechooser.
 	 */
 	void previewUrl( const QUrl &u );
+
 private:
 	static const int PREVIEW_SIZE = 100;
 };

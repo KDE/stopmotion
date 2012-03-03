@@ -21,7 +21,6 @@
 #define FRAMEVIEW_H
 
 #include "src/config.h"
-
 #include "videoview.h"
 #include "src/technical/grabber/imagegrabber.h"
 #include "src/presentation/observer.h"
@@ -188,7 +187,7 @@ public:
 	 * When a new frame is captured this function is notified and updates
 	 * the vector of cached frames for the mixing
 	 */
-	void capture();
+	//void capture();
 	
 public slots:
 	/**
@@ -224,14 +223,10 @@ private:
 	
 	vector<SDL_Surface*>imageBuffer;
 	
-	
 	ImageGrabThread *grabThread;
 	QTimer grabTimer;
 	QTimer playbackTimer;
 	ImageGrabber *grabber;
-	
-	
-	 
 	
 	/**
 	 * Loads the new active frames picture into the frameview.

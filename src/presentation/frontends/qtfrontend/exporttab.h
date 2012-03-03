@@ -29,6 +29,7 @@
 #include <qlabel.h>
 #include <vector>
 
+
 /**
  * The export tab in the preferences menu
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
@@ -37,7 +38,6 @@ class ExportTab : public QFrame
 {
 	Q_OBJECT
 public:
-
 	/**
 	 * Sets up the tab.
 	 * @param parent the parent of the this widget

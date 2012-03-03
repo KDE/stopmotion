@@ -29,15 +29,13 @@
 #include <qmessagebox.h>
 #include <qfileinfo.h>
 #include <qapplication.h>
-
 #include <iostream>
+
 
 Animation::Animation()
 {
 	serializer  = new ProjectSerializer();
 	audioDriver = new OSSDriver("/dev/dsp");
-// 	externalChangeMonitor = new ExternalChangeMonitor(this);
-// 	externalChangeMonitor->startMonitoring();
 	
 	activeFrame = -1;
 	activeScene = -1;
@@ -51,7 +49,7 @@ Animation::Animation()
 Animation::~Animation()
 {
 	unsigned int numElem = scenes.size();
-	for(unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; i++) {
 		delete scenes[i];
 	}
 	
@@ -66,7 +64,7 @@ Animation::~Animation()
 const vector<char*> Animation::addFrames(const vector<char*>& frameNames, 
 		unsigned int index)
 {
-	if(this->getActiveSceneNumber() < 0) {
+	if (this->getActiveSceneNumber() < 0) {
 		this->newScene(0);
 	}
 	
@@ -78,18 +76,21 @@ const vector<char*> Animation::addFrames(const vector<char*>& frameNames,
 	
 	unsigned int newImagePathsSize = newImagePaths.size();
 		
-	if(newImagePathsSize == 1) {
+	if (newImagePathsSize == 1) {
 		this->notifyAdd(newImagePaths, index );
 	}
-	else if( newImagePathsSize > 1 ) { 
+	else if (newImagePathsSize > 1) { 
 		this->notifyAdd(newImagePaths, index );
 		isAddingAborted = frontend->isOperationAborted();
+	}
+	else if (newImagePathsSize == 0) {
+		return newImagePaths;
 	}
 	
 	// The user has aborted the operation either when importing frames
 	// or adding frames. The cleanup routine is equal for both cases, the
 	// only difference is the number of frames added to the 'frames' vector.
-	if( newImagePathsSize == 0 || isAddingAborted ) {
+	if (newImagePathsSize == 0 || isAddingAborted) {
 		scenes[activeScene]->cleanFrames(index, index + numberOfCanceledFrames);
 		newImagePaths.clear();
 	}
@@ -97,15 +98,15 @@ const vector<char*> Animation::addFrames(const vector<char*>& frameNames,
 		this->isChangesSaved = false;
 	}
 	
-	if(newImagePathsSize != 1) {
+	if (newImagePathsSize != 1) {
 		frontend->updateProgress(frameNames.size() * 2);
 		frontend->hideProgress();
 	}
 	
-	if( newImagePathsSize == 1 ) {
+	if (newImagePathsSize == 1) {
 		this->setActiveFrame(index );
 	}
-	else if( newImagePathsSize > 1 && !isAddingAborted ) {
+	else if (newImagePathsSize > 1 && !isAddingAborted) {
 		this->setActiveFrame(index + newImagePathsSize - 1);
 	}
 	
@@ -116,10 +117,9 @@ const vector<char*> Animation::addFrames(const vector<char*>& frameNames,
 const vector<char*> Animation::removeFrames(unsigned int fromFrame, unsigned int toFrame )
 {
 	assert(fromFrame <= toFrame);
-	
 	vector<char*> newImagePaths;
 	
-	if( activeFrame >= 0) {
+	if(activeFrame >= 0) {
 		newImagePaths = scenes[activeScene]->removeFrames(fromFrame, toFrame);
 		
 		this->notifyRemove(fromFrame, toFrame);
@@ -132,7 +132,6 @@ const vector<char*> Animation::removeFrames(unsigned int fromFrame, unsigned int
 		}
 		isChangesSaved = false;
 	}
-	
 	return newImagePaths;
 }
 
@@ -141,7 +140,7 @@ void Animation::moveFrames(unsigned int fromFrame, unsigned int toFrame,
 		unsigned int movePosition)
 {
 	unsigned int framesSize = scenes[activeScene]->getSize();
-	if( (fromFrame < framesSize) && (toFrame < framesSize) && (movePosition < framesSize) && 
+	if ( (fromFrame < framesSize) && (toFrame < framesSize) && (movePosition < framesSize) && 
 			((movePosition < fromFrame) || (movePosition > toFrame)) ) {
 		
 		scenes[activeScene]->moveFrames(fromFrame, toFrame, movePosition);
@@ -192,7 +191,7 @@ void Animation::setSoundName(unsigned int frameNumber, unsigned int soundNumber,
 
 Frame* Animation::getFrame(unsigned int frameNumber, unsigned int sceneNumber)
 {
-	if(frameNumber < scenes[sceneNumber]->getSize()) {
+	if (frameNumber < scenes[sceneNumber]->getSize()) {
 		Logger::get().logDebug("Retrieving frame from Animation");
 		
 		return scenes[sceneNumber]->getFrame(frameNumber);
@@ -207,7 +206,7 @@ Frame* Animation::getFrame(unsigned int frameNumber, unsigned int sceneNumber)
 
 Frame * Animation::getFrame( unsigned int frameNumber )
 {
-	if(activeScene >= 0) {
+	if (activeScene >= 0) {
 		return getFrame(frameNumber, activeScene);
 	}
 	else {
@@ -218,10 +217,9 @@ Frame * Animation::getFrame( unsigned int frameNumber )
 
 unsigned int Animation::getModelSize() 
 {
-	//return scenes[activeScene]->getSize();
 	unsigned int modelSize = 0;
 	unsigned int size = scenes.size();
-	for(unsigned int i=0; i<size; i++) {
+	for (unsigned int i = 0; i < size; ++i) {
 		modelSize += scenes[i]->getSize();
 	}
 	return modelSize;
@@ -242,7 +240,7 @@ unsigned int Animation::getNumberOfScenes( )
 
 void Animation::setActiveFrame(int frameNumber)
 {
-	if(activeScene >= 0 || frameNumber == -1) {
+	if (activeScene >= 0 || frameNumber == -1) {
 		this->activeFrame = frameNumber;
 		this->notifyNewActiveFrame(frameNumber);
 	}
@@ -276,7 +274,7 @@ void Animation::clear()
 	serializer->cleanup();
 	
 	unsigned int size = scenes.size();
-	for(unsigned int i=0; i<size; i++) {
+	for (unsigned int i = 0; i < size; ++i) {
 		delete scenes[i];
 	}
 	scenes.clear();
@@ -323,7 +321,7 @@ void Animation::loadSavedScenes()
 	Logger::get().logDebug("Loading scenes in Animation:");
 	
 	unsigned int numElem = scenes.size();
-	for (unsigned int i = 0; i < numElem; i++) {
+	for (unsigned int i = 0; i < numElem; ++i) {
 		notifyNewScene(i);
 	}
 	setActiveScene(numElem - 1);
@@ -338,7 +336,7 @@ bool Animation::isUnsavedChanges()
 
 void Animation::setActiveScene( int sceneNumber)
 {
-	if(sceneNumber != activeScene) {
+	if (sceneNumber != activeScene) {
 		activateScene(sceneNumber);
 	}
 }
@@ -347,8 +345,8 @@ void Animation::setActiveScene( int sceneNumber)
 void Animation::activateScene( int sceneNumber )
 {
 	this->activeScene = sceneNumber;
-	if(sceneNumber >= 0) {
-		if(scenes[sceneNumber]->getSize() > 0) {
+	if (sceneNumber >= 0) {
+		if (scenes[sceneNumber]->getSize() > 0) {
 			this->notifyNewActiveScene(sceneNumber, 
 					scenes[sceneNumber]->getImagePaths(),frontend);
 			setActiveFrame(0);
@@ -378,8 +376,8 @@ void Animation::newScene( int index )
 
 void Animation::removeScene( int sceneNumber )
 {
-	if(sceneNumber >= 0) {
-		if(sceneNumber < (int)scenes.size()-1 ) {
+	if (sceneNumber >= 0) {
+		if (sceneNumber < (int)scenes.size()-1 ) {
 			activateScene( sceneNumber + 1 );
 			this->activeScene = sceneNumber;
 		}
@@ -397,7 +395,7 @@ void Animation::removeScene( int sceneNumber )
 
 void Animation::moveScene( int sceneNumber, int movePosition )
 {
-	if(sceneNumber != movePosition) {
+	if (sceneNumber != movePosition) {
 		this->setActiveScene(-1);
 		
 		Scene *tmp;
@@ -406,7 +404,6 @@ void Animation::moveScene( int sceneNumber, int movePosition )
 		scenes.insert(scenes.begin() + movePosition, tmp);
 		
 		this->notifyMoveScene(sceneNumber, movePosition);
-		//this->setActiveScene(movePosition);
 	}
 }
 
@@ -427,7 +424,6 @@ bool Animation::initAudioDevice()
 					"the audio device. Audio will be disabled until you\n"
 					"have fixed the problem.", 0);
 	}
-
 	return isAudioDriverInitialized;
 }
 
@@ -443,14 +439,14 @@ void Animation::animationChanged(const char *alteredFile)
 {
 	int size = scenes[activeScene]->getSize();
 	int changedFrame = -1;
-	for(int i = 0; i < size; i++) {
+	for (int i = 0; i < size; ++i) {
 		if(strcmp(scenes[activeScene]->getFrame(i)->getImagePath(), alteredFile) == 0) {
 			changedFrame = i;
 			break;
 		}
 	}
 	
-	if( changedFrame >= 0) {
+	if (changedFrame >= 0) {
 		notifyAnimationChanged(changedFrame);
 	}
 }
@@ -458,9 +454,9 @@ void Animation::animationChanged(const char *alteredFile)
 
 bool Animation::exportToVideo(VideoEncoder * encoder)
 {
-	VideoFactory *factory = new VideoFactory(serializer, frontend);
+	VideoFactory factory(serializer, frontend);
 	frontend->showProgress("Exporting ...", 0);
-	if ( factory->createVideoFile(encoder) != NULL ) {
+	if (factory.createVideoFile(encoder) != NULL) {
 		frontend->hideProgress();
 		return true;
 	}

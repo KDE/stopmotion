@@ -33,7 +33,7 @@ void UndoMove::undo(AnimationModel *a)
 	//Setting the active scene to the scene which the frames were originally added to.
 	a->setActiveScene(activeScene);
 	
-	if(movePosition < fromFrame) {
+	if (movePosition < fromFrame) {
 		a->moveFrames(movePosition, movePosition+(toFrame-fromFrame), toFrame);
 	}
 	else {
@@ -46,6 +46,5 @@ void UndoMove::redo(AnimationModel *a)
 {
 	//Setting the active scene to the scene which the frames were originally added to.
 	a->setActiveScene(activeScene);
-	
 	a->moveFrames(fromFrame, toFrame, movePosition);
 }

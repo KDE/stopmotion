@@ -22,6 +22,7 @@
 
 #include "src/domain/animation/animationmodel.h"
 
+
 /**
  *Superclass for all undo command objects. 
  *The undo objects can be called upon to undo operations the user has done.
@@ -47,12 +48,6 @@ public:
 	 * @param a the model to perform the redo command on.
 	 */
 	virtual void redo(AnimationModel *a) = 0;
-	
-protected:
-
-	
-private:
-
 };
 
 #endif
