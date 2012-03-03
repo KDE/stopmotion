@@ -22,10 +22,9 @@
 
 #include "src/config.h"
 
-#include <qobject.h>
-#include <qstatusbar.h>
-#include <qlistbox.h>
-
+#include <QObject>
+#include <QStatusBar>
+#include <QListWidget>
 
 /**
  * This class handles request related to sounds (adding, removing, etc).
@@ -51,7 +50,8 @@ public:
 	 * needed.
 	 * @param soundsList the listbox to add to the handler.
 	 */
-	void setSoundsList(QListBox *soundsList);
+	//void setSoundsList(Q3ListBox *soundsList);
+	void setSoundsList(QListWidget *soundsList);
 	
 public slots:
 
@@ -73,7 +73,8 @@ public slots:
 private:
 	QStatusBar *statusBar;
 	const char* homeDir;
-	QListBox *soundsList;
+	//Q3ListBox *soundsList;
+	QListWidget *soundsList;
 	
 signals:
 	void soundsChanged();

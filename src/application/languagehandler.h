@@ -22,11 +22,12 @@
 
 #include "src/config.h"
 
-#include <qobject.h>
-#include <qstatusbar.h>
-#include <qapplication.h>
-#include <qpopupmenu.h>
-#include <qtranslator.h>
+#include <QObject>
+#include <QApplication>
+#include <QMenu>
+#include <QTranslator>
+#include <QHash>
+#include <QAction>
 
 
 /**
@@ -42,30 +43,24 @@ public:
 	/**
 	 * Creates and initializes the LanguageHandler.
 	 * @param parent the parent of the LanguageHandler.
-	 * @param sb a statusbar for displaying status information to the user.
 	 * @param stApp the main window
 	 * @param name the name of the LanguageHandler
 	 */
-	LanguageHandler ( QObject *parent = 0, QStatusBar *sb = 0, QApplication *stApp = 0,
-			 const char *name = 0 );
+	LanguageHandler ( QObject *parent = 0, QApplication *stApp = 0, const char *name = 0 );
 	
 	/**
 	 * Creates the languagesMenu.
-	 *
 	 * @param parent the parent menu.
 	 * @return a populated language menu.
 	 */
-	QPopupMenu* createLanguagesMenu(QPopupMenu *parent);
-	
+	QMenu* createLanguagesMenu(QMenu *parent);
 	
 private:
-	QStatusBar *statusBar;
-	QApplication *stApp;
-	
-	QTranslator *stTranslator;
-	QPopupMenu *languagesMenu;
-	QStringList locales;
+	QTranslator *translator;
+	QMenu *languagesMenu;
 	QString qmPath;
+	QAction *activeAction;
+	QHash<QAction*, QString> locales;
 	
 private slots:
 	/**
@@ -73,7 +68,7 @@ private slots:
 	 * @param menuID the ide of the menu options with the language to
 	 * switch to.
 	 */
-	void switchToLanguage(int menuID);
+	void changeLanguage(QAction *activeAction);
 	
 signals:
 	/**

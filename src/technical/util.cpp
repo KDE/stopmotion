@@ -17,41 +17,37 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "filedialog.h"
+#include "src/technical/util.h"
 
-#include "graphics/icons/home.xpm"
+#include <ext/stdio_filebuf.h>
+#include <istream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cassert>
 
-#include <qtoolbutton.h>
-#include <qpixmap.h>
-#include <qtooltip.h>
+using namespace std;
 
 
-FileDialog::FileDialog( const QString & dirName, const QString & filter, 
-		QWidget * parent, const char * name, bool modal )
-		: QFileDialog(dirName, filter, parent, name, modal)
+const char* Util::checkCommand(const char *command)
 {
-	QToolButton *button = new QToolButton(this);
-	button->setPixmap( QPixmap(home) );
-	QToolTip::add( button, tr( "Go to home directory" ) );
+	assert(command != 0);
 	
-	connect( button, SIGNAL( clicked() ), this, SLOT( goToHomeDir() ) );
-	this->addToolButton(button);
-}
-
-
-FileDialog::FileDialog( QWidget * parent, const char * name, bool modal )
-		: QFileDialog(parent, name, modal)
-{
-	QToolButton *button = new QToolButton(this);
-	button->setPixmap( QPixmap(home) );
-	QToolTip::add( button, tr( "Go to home directory" ) );
+	int len = 7 + strlen(command);
+	char tmp[len];
+	snprintf(tmp, len, "which %s", command);
 	
-	connect( button, SIGNAL( clicked() ), this, SLOT( goToHomeDir() ) );
-	this->addToolButton(button);
+	FILE *fp = popen(tmp, "r");
+	__gnu_cxx::stdio_filebuf<char> buf(fp, ios::in);
+	istream bufStream(&buf);
+	
+	string line = "";
+	getline(bufStream, line);
+	if (line != "") {
+		char *path = new char[line.length() + 1];
+		strcpy(path, line.c_str());
+		return path;
+	}
+	
+	return NULL;
 }
 
-
-void FileDialog::goToHomeDir()
-{
-	setDir( getenv("HOME") );
-}

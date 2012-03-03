@@ -17,25 +17,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "editmenuhandler.h"
+#include "src/application/editmenuhandler.h"
 
 #include "src/domain/domainfacade.h"
-#include "mainwindowgui.h"
+#include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qdragobject.h> 
+#include <QApplication>
+#include <QClipboard>
+#include <QDrag> 
+#include <QStringList>
+#include <QList>
+#include <QUrl>
 
 
 EditMenuHandler::EditMenuHandler ( QObject *parent, QStatusBar *sb, 
 		FrameBar *frameBar, const char *name ) 
-		: QObject(parent, name), statusBar(sb), frameBar(frameBar)
+	: QObject(parent), statusBar(sb), frameBar(frameBar)
 {
-	gotoMenu = NULL;
+	gotoMenu = 0;
+	setObjectName(name);
 }
 
 
-void EditMenuHandler::setGotoMenu( MenuFrame * gotoMenu )
+void EditMenuHandler::setGotoMenu( QWidget * gotoMenu )
 {
 	this->gotoMenu = gotoMenu;
 }
@@ -50,7 +54,7 @@ void EditMenuHandler::gotoFrame(int frameNumber)
 
 void EditMenuHandler::closeGotoMenu()
 {
-	gotoMenu->close( (QWidget*)this->parent() );
+	gotoMenu->hide();
 }
 
 
@@ -68,47 +72,38 @@ void EditMenuHandler::redo()
 
 void EditMenuHandler::copy()
 {
-	QStrList lst;
-	QString t;
-	
+	QList<QUrl> urls;
+
 	int selectionFrame = frameBar->getSelectionFrame();
 	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
-	int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 	int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
-	
-	for(int i=lowend; i<=highend; i++) {
-		t = DomainFacade::getFacade()->getFrame(i)->getImagePath();
-		
-		t.prepend("file:");
-		t.append("\n");
-		
-		lst.append(t);
+	int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
+
+	for (int i = lowend; i <= highend; ++i) {
+		urls.append(QUrl::fromLocalFile(DomainFacade::getFacade()->getFrame(i)->getImagePath()));
 	}
-	
-	QUriDrag *drag = new QUriDrag( lst, (QWidget*)this->parent() );
-	QApplication::clipboard()->setData(drag);
+
+	//QDrag *drag = new QDrag((MainWindowGUI*)this->parent());
+	QMimeData *mimeData = new QMimeData;
+
+	mimeData->setUrls(urls);
+	//drag->setMimeData(mimeData);
+
+	//drag->start(Qt::MoveAction);
+	QApplication::clipboard()->setMimeData(mimeData);
 }
 
 
 void EditMenuHandler::paste()
 {
-	QString text;
-	if ( QTextDrag::decode(QApplication::clipboard()->data(), text) );
-	
-	QStringList uris;
-	QStringList fileNames;
-	fileNames = QStringList::split("\n", text);
-	
-	QStringList temp;
-	QStringList::Iterator it = fileNames.begin();
-	while(it != fileNames.end() ) {
-		QString fileName = *it;
-		temp = QStringList::split("file:", fileName);
-		fileName = temp.last();
-		if(fileName[0] == '/') {
-			uris.push_back(fileName);
+	const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+	if ( mimeData->hasUrls() ) {
+		QStringList fileNames;
+		QList<QUrl> urls = mimeData->urls();
+		int numFrames = urls.size();
+		for (int i = 0; i < numFrames; ++i) {
+			fileNames.append(urls[i].toLocalFile());
 		}
-		++it;
+		emit addFrames(fileNames);
 	}
-	emit addFrames(uris);
 }

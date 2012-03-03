@@ -90,6 +90,8 @@ public:
 	 * @return 0 if the user answer yes, 1 if no
 	 */
 	virtual int askQuestion(const char *question) = 0;
+
+	virtual int runExternalCommand(const char *command) = 0;
 };
 
 #endif

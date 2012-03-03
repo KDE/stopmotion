@@ -25,8 +25,8 @@
 #include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 #include "modelhandler.h"
 
-#include <qobject.h>
-#include <qstatusbar.h>
+#include <QObject>
+#include <QStatusBar>
 
 
 /**
@@ -53,7 +53,7 @@ public:
 	 * Sets the gotoMenu property so that it can be closed.
 	 * @param gotoMenu the gotoMenu.
 	 */
-	void setGotoMenu(MenuFrame *gotoMenu);
+	void setGotoMenu(QWidget *gotoMenu);
 
 public slots:
 	
@@ -91,7 +91,7 @@ public slots:
 private:
 	QStatusBar *statusBar;
 	FrameBar *frameBar;
-	MenuFrame *gotoMenu;
+	QWidget *gotoMenu;
 	
 signals:
 	/**

@@ -1,40 +1,41 @@
 WHAT IS THIS
 ------------
-The stop motion project is a project to create a program to
-create stop motion animations. The program is aimed at students
-at primary and secondary schools, and will be distributed 
-through the Skolelinux/Debian-edu distribution of GNU/Linux.
+Stopmotion is a program to create stop motion animations.
+See http://stopmotion.bjoernen.com for more info.
 
 
 INSTALLATION
 ------------
-If you run Debian (testing or unstable) the easiest way to install this program is to
-run the command 'aptitude install stopmotion'.
+1) ./configure
+2) make
+3) make install
 
-If you do not run Debian you have to compile the program from source.
-We have not focused on getting the configure script as good as it
-should be; you will not get any error message if you do not have
-the necessary libraries installed. This will hopefully be fixed
-later. 
-
-However, the libraries needed to build the program is:
-	- Qt3 (of course), the configure script checks for this
-	- libtar
-	- SDL
-	- SDL_image
-	- libXML2
-	- vorbis
-	- vorbisfile
-	- FAM-dev/Gamin
-
-After you have ensured that these libraries are installed, you can
-run ./configure and make.
-
-Please send me a bug report <bjoern.nilsen@bjoernen.com> if there are things 
-that I have not included in this document. 
+The configure script will generate 'stopmotion.pro' and 'config.cpp' from 
+'stopmotion.pro.in' and 'config.cpp.in', respectively. You can override the 
+settings in these files, but ideally you should give all your settings through 
+options to the configure script. See './configure --help' for more info.
+ 
+You need the following libraries installed to compile:
+    - Qt4
+    - libtar
+    - SDL
+    - SDL_image
+    - XML2
+    - vorbisfile
+    - FAM/Gamin
+	- pkg-config
 
 
 WHO CAN USE IT
 --------------
 Everyone can use this application as it is distributed under the
 GPL licence (See the file COPYING for more details).
+
+
+DO YOU WANT TO CONTRIBUTE?
+--------------------------
+Do not hesitate to contact us if you want to contribute with translations,
+graphics, code, +++ 
+
+Your help is very much appreciated.
+

@@ -20,8 +20,12 @@
 #ifndef SCENEARROWBUTTON_H
 #define SCENEARROWBUTTON_H
 
-#include <qwidget.h>
-#include <qtimer.h>
+#include <QWidget>
+#include <QTimer>
+//Added by qt3to4:
+#include <QMouseEvent>
+#include <QEvent>
+#include <QPaintEvent>
 
 
 /**

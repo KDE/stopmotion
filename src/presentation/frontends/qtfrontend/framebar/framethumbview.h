@@ -20,7 +20,11 @@
 #ifndef FRAMETHUMBVIEW_H
 #define FRAMETHUMBVIEW_H
 
-#include "thumbview.h"
+#include "src/presentation/frontends/qtfrontend/framebar/thumbview.h"
+
+#include <QMouseEvent>
+#include <QDropEvent>
+#include <QPaintEvent>
 
 
 /**
@@ -36,7 +40,7 @@ public:
 	 * @param parent the parent widget.
 	 * @param number the number of this widget in the framebar.
 	 */
-	FrameThumbView(FrameBar *frameBar, QWidget *parent = 0, int number = 0, const char * name = 0);
+	FrameThumbView(FrameBar *frameBar, QWidget *parent = 0, int number = 0, const char *name = 0);
 	
 	/**
 	 * Cleans up after the widget.
@@ -91,24 +95,16 @@ public:
 	 * Notifies the framethumbview that a drop have happened inside its borders. 
 	 * @param event information about the event.
 	 */
-	virtual void contentsDropped(QDropEvent * event);
-	
-	/**
-	 * Resizes the framethumbviwe.
-	 * @param height the new height of the widget.
-	 */
-	virtual void resizeThumb(int height);
+	void contentsDropped(QDropEvent * event);
 	
 protected:
 	/**
 	 * Event function which paints the widget.
 	 */
-	virtual void paintEvent ( QPaintEvent * );
+	void paintEvent ( QPaintEvent * );
 	
-private:
-	
-	/** Starts an uri drag of the picture in this label. */
-	void startDrag();
+private:	
+	QString stringNumber;
 	
 	/** The width the text should have. (Cached for efficiency reasons)*/
 	int textWidth;
@@ -118,6 +114,9 @@ private:
 	
 	/** Specifies whether this frame is selected. */
 	bool selected;
+	
+	/** Starts an uri drag of the picture in this label. */
+	void startDrag();
 };
 
 #endif

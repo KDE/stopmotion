@@ -17,40 +17,43 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "scenethumbview.h"
+#include "src/presentation/frontends/qtfrontend/framebar/scenethumbview.h"
 
 #include "graphics/icons/clapper.xpm"
 #include "src/domain/domainfacade.h"
 
-#include <qpainter.h>
-#include <qimage.h>
-#include <qapplication.h>
-#include <qdragobject.h> 
-#include <sstream>
-#include <qpushbutton.h>
-#include <qiconset.h>
-#include <iostream>
+#include <QPainter>
+#include <QImage>
+#include <QApplication>
+#include <QStringList>
+#include <QPixmap>
+#include <QMouseEvent>
+#include <QPaintEvent>
+#include <QDropEvent>
+#include <QPushButton>
+#include <QIcon>
+#include <QList>
+#include <QUrl>
 
 
-SceneThumbView::SceneThumbView(FrameBar *frameBar, QWidget *parent, int number, 
-	const char * name) 
- : ThumbView(frameBar, parent, number, name)
+SceneThumbView::SceneThumbView(FrameBar *frameBar, QWidget *parent, int number, const char * name) 
+	: ThumbView(frameBar, parent, number, name)
 {
 	this->isOpened = false;
 	
 	arrowButton = new SceneArrowButton(this);
-	int width = this->width();
-	arrowButton->setGeometry( width-width/4, width/9, width/6, width/6 );
+	int width = frameBar->getFrameWidth();
+	int height = frameBar->getFrameHeight();
+	arrowButton->setGeometry( width - width / 4, height / 9, width / 6, width / 6 );
+	arrowButton->show();
 	QObject::connect( arrowButton, SIGNAL(clicked()), this, SLOT(closeScene()) );
 	
-	f.setPointSize(15);
+	f.setPointSize(12);
 	centerIcon = QPixmap(clapper);
 }
 
 
-SceneThumbView::~SceneThumbView()
-{
-}
+SceneThumbView::~SceneThumbView() {}
 
 
 void SceneThumbView::setOpened( bool isOpened )
@@ -59,19 +62,21 @@ void SceneThumbView::setOpened( bool isOpened )
 	arrowButton->setOpened(isOpened);
 	
 	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
-		centerIcon = QPixmap( QImage(
-				DomainFacade::getFacade()->getFrame(0, number)->getImagePath()).
-				scale(width()/2, height()/2) );
+		Frame *frame = DomainFacade::getFacade()->getFrame(0, number);
+		if (frame) {
+			centerIcon = QPixmap::fromImage( 
+					QImage(frame->getImagePath()).scaled(width() / 2, height() / 2) );
+		}
 	}
 	else {
 		centerIcon = QPixmap(clapper);
 	}
 	
-	this->repaint();
+	this->update();
 }
 
 
-bool SceneThumbView::getIsOpened()
+bool SceneThumbView::getIsOpened() const
 {
 	return isOpened;
 }
@@ -85,24 +90,23 @@ void SceneThumbView::paintEvent ( QPaintEvent * )
 {
 	int width = this->width();
 	
-	QPainter paint( this );
-	paint.setPen( Qt::black );
+	QPainter paint(this);
+	paint.setPen(Qt::black);
 	paint.setFont(f);
-	paint.drawText( 7, (width/4), QString("%1").arg(number+1));
+	paint.drawText( 7, width / 4, QString("%1").arg(number + 1) );
 	
 	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
-		paint.drawPixmap(width/4, width/3, centerIcon);
+		paint.drawPixmap(width / 4, width / 3, centerIcon);
 	}
 	else {
-		paint.drawPixmap(width/2-16, width/2-10, centerIcon);
+		paint.drawPixmap(width / 2 - 16, width / 2 - 10, centerIcon);
 	}
 }
 
 
 void SceneThumbView::mousePressEvent(QMouseEvent *e)
 {
-	//For calculating the manhattenLength to avoid unvanted
-	//drags.
+	//For calculating the manhattan length to avoid unvanted drags.
 	dragPos = e->pos();
 }
 
@@ -120,7 +124,8 @@ void SceneThumbView::mouseReleaseEvent( QMouseEvent * )
 
 void SceneThumbView::mouseMoveEvent(QMouseEvent * me)
 {
-	if (me->state() & LeftButton) {
+	// it should probably be me->button() here...
+	if (me->buttons() & Qt::LeftButton) {
 		int distance = (me->pos() - dragPos).manhattanLength();
 		if (distance > QApplication::startDragDistance()) {
 			startDrag();
@@ -134,17 +139,25 @@ void SceneThumbView::startDrag()
 {
 	Logger::get().logDebug("Starting drag of the scene");
 	frameBar->setMovingScene(this->number);
-	QStrList lst;
-	QUriDrag *drag = new QUriDrag( lst, this );
-	drag->drag();
+	
+	QDrag *drag = new QDrag(this);
+	QMimeData *mimeData = new QMimeData;
+	QList<QUrl> urls;
+	mimeData->setUrls(urls);
+	drag->setMimeData(mimeData);
+	drag->setPixmap(centerIcon);
+
+	//Qt::DropAction dropAction = drag->start(Qt::CopyAction | Qt::MoveAction);
+	drag->start(Qt::MoveAction);
 }
 
 
 void SceneThumbView::closeScene()
 {
-	if (frameBar->isOpeningScene() == false) {
-		if (DomainFacade::getFacade()->getActiveSceneNumber() == this->number) {
-			DomainFacade::getFacade()->setActiveScene(-1);
+	DomainFacade *facade = DomainFacade::getFacade();
+	if ( !frameBar->isOpeningScene() && this->number >= 0) {
+		if (facade->getActiveSceneNumber() == this->number && this->number > 0) {
+			facade->setActiveScene(this->number - 1);
 		}
 		else {
 			DomainFacade::getFacade()->setActiveScene(number);
@@ -156,29 +169,9 @@ void SceneThumbView::closeScene()
 void SceneThumbView::contentsDropped(QDropEvent *event)
 {
 	int movingScene = frameBar->getMovingScene();
-	if ((event->source() != 0) && (movingScene != this->number) && 
-			(movingScene != -1) ) {
-		
+	if ((event->source() != 0) && (movingScene != this->number) && (movingScene != -1) ) {
 		Logger::get().logDebug("Moving scene");
 		DomainFacade::getFacade()->moveScene(movingScene, this->number);
 	}
 }
 
-
-void SceneThumbView::resizeThumb(int height)
-{
-	setMinimumHeight(height);
-	setMaximumHeight(height);
-	setMinimumWidth(height);
-	setMaximumWidth(height);
-	
-	int width = this->width();
-	arrowButton->setGeometry( width-width/4, width/9, width/6, width/6 );
-	
-	f.setPointSize(width/6);
-	
-	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
-		centerIcon = QPixmap( QImage(DomainFacade::getFacade()->getFrame(0, number)->
-					getImagePath()).scale(width/2, height/2) );
-	}
-}

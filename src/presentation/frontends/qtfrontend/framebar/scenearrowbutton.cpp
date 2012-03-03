@@ -22,8 +22,12 @@
 #include "graphics/icons/openscene.xpm"
 #include "graphics/icons/closescene.xpm"
 
-#include <qpainter.h>
-#include <qimage.h>
+#include <QPainter>
+#include <QImage>
+#include <QPixmap>
+#include <QMouseEvent>
+#include <QEvent>
+#include <QPaintEvent>
 
 
 SceneArrowButton::SceneArrowButton( QWidget *parent ) : QWidget(parent)
@@ -50,10 +54,10 @@ void SceneArrowButton::paintEvent( QPaintEvent * )
 	
 	QPixmap arrowIcon;
 	if (isOpened) {
-		arrowIcon = QPixmap( QImage(closescene).scale(width(), height()) );
+		arrowIcon = QPixmap::fromImage( QImage(closescene).scaled(width(), height()) );
 	}
 	else {
-		arrowIcon = QPixmap( QImage(openscene).scale(width(), height()) );
+		arrowIcon = QPixmap::fromImage( QImage(openscene).scaled(width(), height()) );
 	}
 	paint.drawPixmap(iconX, 0, arrowIcon);
 }
@@ -83,7 +87,8 @@ void SceneArrowButton::mouseReleaseEvent( QMouseEvent * e )
 void SceneArrowButton::enterEvent( QEvent * )
 {
 	if (isOpened) {
-		moveTimer->start(400, false);
+		moveTimer->start(400);
+		moveTimer->setSingleShot(false);
 	}
 }
 

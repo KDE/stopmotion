@@ -230,7 +230,9 @@ const int PreferencesTool::getPreference(const char * key, const int defaultValu
 	if (node != NULL) {
 		char *tmp = (char*)xmlGetProp(node, BAD_CAST "attribute");
 		int ret = atoi(tmp);
-		xmlFree(tmp);
+		if (xmlStrEqual((xmlChar*)tmp, BAD_CAST key)) {
+			xmlFree((xmlChar*)tmp);
+		}
 		return ret;
 	}
 	else {
@@ -253,7 +255,7 @@ void PreferencesTool::removePreference( const char * key )
 
 bool PreferencesTool::flushPreferences()
 {
-	if (xmlSaveFile(preferencesFile, doc) == -1) {
+	if (xmlSaveFormatFile(preferencesFile, doc, 1) == -1) {
 		return false;
 	}
 	else {

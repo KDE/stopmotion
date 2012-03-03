@@ -21,20 +21,20 @@
 #define FRAMEVIEW_H
 
 #include "src/config.h"
-#include "videoview.h"
 #include "src/technical/grabber/imagegrabber.h"
 #include "src/presentation/observer.h"
 #include "src/domain/animation/frame.h"
-#include "imagegrabthread.h"
+#include "src/presentation/frontends/qtfrontend/imagegrabthread.h"
 #include "src/domain/domainfacade.h"
 
-#include <qtimer.h>
-#include <vector>
-#include <queue>
-#include <qwidget.h>
+#include <QTimer>
+#include <QResizeEvent>
+#include <QPaintEvent>
+#include <QWidget>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
+#include <deque>
 
 class ImageGrabThread;
 struct SDL_Surface;
@@ -51,7 +51,7 @@ struct SDL_Surface;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class FrameView : public VideoView
+class FrameView : public QWidget, public Observer
 {
 	Q_OBJECT
 public:
@@ -78,6 +78,8 @@ public:
 	 * Sets the view to 16:9 format.
 	 */
 	void setNormalRatio();
+	
+	void initCompleted();
 	
 	/**
 	 * Function to recieven notification when a frame is added.
@@ -171,24 +173,23 @@ public:
 	 */
 	bool setViewMode(int mode);
 	
+	void setMixCount(int mixCount);
+	
 	/**
 	 * Returns the view mode.
 	 * @return the view mode.
 	 */
-	int getViewMode();
+	int getViewMode() const;
 	
 	/**
 	 * Sets the speed for the playback.
 	 * @param playbackSpeed the speed to be setted
 	 */
 	void setPlaybackSpeed(int playbackSpeed);
-	
-	/**
-	 * When a new frame is captured this function is notified and updates
-	 * the vector of cached frames for the mixing
-	 */
-	//void capture();
-	
+
+signals:
+	void cameraReady();
+
 public slots:
 	/**
 	 * Draws the next frame from the camera.
@@ -205,34 +206,39 @@ protected:
 	void paintEvent(QPaintEvent *);
 	
 private:
+	static const int alphaLut[5];
+	
 	SDL_Surface *screen;
 	SDL_Surface *videoSurface;
+	deque<SDL_Surface*>imageBuffer;;
+	
+	QTimer grabTimer;
+	QTimer playbackTimer;
+	ImageGrabThread *grabThread;
+	ImageGrabber *grabber;
+	char *capturedImg;
 	
 	/** The facade cached away in this class for efficiency reasons */
 	DomainFacade *facade;
 	
-	int widthConst, heightConst;
 	bool isPlayingVideo;
+	
+	int widthConst, heightConst;
 	int mode;
 	int playbackSpeed;
-	char *capturedImg;
-	
 	int activeFrame;
+	int mixCount;
 	int lastMixCount;
 	int lastViewMode;
-	
-	vector<SDL_Surface*>imageBuffer;
-	
-	ImageGrabThread *grabThread;
-	QTimer grabTimer;
-	QTimer playbackTimer;
-	ImageGrabber *grabber;
-	
+	int numImagesInBuffer;
+
 	/**
 	 * Loads the new active frames picture into the frameview.
 	 * @param frameNumber 
 	 */
 	void setActiveFrame(int frameNumber);
+
+	void addToImageBuffer(SDL_Surface *const image);
 	
 	/**
 	 * Highly tweaked/optimized homemade function for taking the rgb differences 
@@ -246,6 +252,7 @@ private:
 	 * @return a surface with the rgb difference of s1 and s2.
 	 */
 	SDL_Surface* differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2);
+	void freeProperty(const char *prop, const char *tag = "");
 };
 
 #endif

@@ -1,10 +1,69 @@
 <!DOCTYPE TS><TS>
 <context>
-    <name>ExportTab</name>
+    <name>AboutDialog</name>
     <message>
-        <source>Active</source>
+        <source>This is the stopmotion application for creating stopmotion animations.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main developers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A&amp;uthors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Czech</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Slovenian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coordinating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Testing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Thanks To</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Licence Agreement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ExportTab</name>
     <message>
         <source>Name</source>
         <translation type="unfinished"></translation>
@@ -67,9 +126,50 @@
     </message>
 </context>
 <context>
-    <name>FileDialog</name>
+    <name>ExternalCommand</name>
     <message>
-        <source>Go to home directory</source>
+        <source>Input to program:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output from external command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfull!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FileDialog</name>
+</context>
+<context>
+    <name>Form</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FrameBar</name>
+    <message>
+        <source>Frame number: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -125,78 +225,22 @@ your grabber settings in the preferences menu.</source>
 This can be set in the preferences menu.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pre poll command does not exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You do not have the given grabber installed on your system</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HelpWindow</name>
-    <message>
-        <source>&amp;New Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Open File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Print</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Backward</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Forward</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Home</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add Bookmark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Go</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>History</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bookmarks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Backward</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forward</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Home</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ImportTab</name>
     <message>
         <source>&lt;p&gt;Below you can set which program/process stopmotion should use for grabbing images from the webcam, and displaying video.&lt;br&gt; &lt;br&gt; &lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -245,6 +289,29 @@ This can be set in the preferences menu.</source>
     </message>
     <message>
         <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <source>Stopmotion Help Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -339,10 +406,6 @@ This can be set in the preferences menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Languages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -387,10 +450,6 @@ This can be set in the preferences menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Frame number: 0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the numberof the currently selected frame&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -412,26 +471,6 @@ This can be set in the preferences menu.</source>
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save File</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;This is the stopmotion application for creating stopmotion animations.&lt;/p&gt;&lt;p&gt;(c) 2005, Fredrik Berg Kj&#xf8;lstad and Bj&#xf8;rn Erik Nilsen&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A&amp;uthors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Thanks To</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Licence Agreement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -567,15 +606,15 @@ to check your settings in the preferences menu?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;b&gt;Main developers&lt;/b&gt;&lt;br&gt;Fredrik Berg Kj&#xf8;lstad &amp;lt;fredrikbk@hotmail.com&amp;gt;&lt;br&gt;Bj&#xf8;rn Erik Nilsen &amp;lt;bjoern.nilsen@bjoernen.com&amp;gt;&lt;/p&gt;</source>
+        <source>Frame number: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Stopmotion User Manual</source>
+        <source>Choose project file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;&lt;b&gt;Coordinating&lt;/b&gt;&lt;br&gt;Herman Robak &amp;lt;herman@skolelinux.no&amp;gt;&lt;br&gt;&#xd8;yvind Kol&#xe5;s &amp;lt;pippin@gimp.org&amp;gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Testing&lt;/b&gt;&lt;br&gt;Tore Sinding Bekkedal &amp;lt;toresbe@ifi.uio.no&amp;gt;&lt;br&gt;Finn Arne Johansen &amp;lt;faj@bzz.no&amp;gt;&lt;br&gt;Halvor Borgen &amp;lt;halvor.borgen@hig.no&amp;gt;&lt;br&gt;Bj&#xf8;rn Are Hansen &amp;lt;post@bahansen.net&amp;gt;&lt;br&gt;John Steinar Bild&#xf8;y &amp;lt;johnsbil@haldenfriskole.no&amp;gt;&lt;br&gt;Ole-Anders Andreassen &amp;lt;ole-anders.andreassen@sunndal.kommune.no&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Translation&lt;/b&gt;&lt;br&gt;George Helebrant &amp;lt;helb@skatekralovice.com&amp;gt; (Czech)&lt;br&gt;&lt;/p&gt;</source>
+        <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -600,6 +639,18 @@ to check your settings in the preferences menu?</source>
         <source>Video &amp;Export</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preferences Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtFrontend</name>
@@ -616,10 +667,6 @@ to check your settings in the preferences menu?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Progress</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>vgrabbj VGA singleshot</source>
         <translation type="unfinished"></translation>
     </message>
@@ -633,14 +680,6 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>Question</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -669,6 +708,14 @@ values exists. Do you want to use this one? (Your old preferences
         <source>Exports from jpeg images to mpeg4 video</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>dvgrab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grabbing from DV-cam. (EXPERIMENTAL)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RunAnimationHandler</name>
@@ -689,6 +736,10 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <source>Enter the name of the sound:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose sound file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

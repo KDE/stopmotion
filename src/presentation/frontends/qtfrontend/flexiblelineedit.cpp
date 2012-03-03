@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "flexiblelineedit.h"
+#include <QKeyEvent>
 
 
 
@@ -31,12 +32,12 @@ void FlexibleLineEdit::keyPressEvent( QKeyEvent * k )
 {
 	switch ( k->key() ) 
 	{
-		case Key_Return: case Key_Enter:
+		case Qt::Key_Return: case Qt::Key_Enter:
 		{
 			emit returnPressed();
 			break;
 		}
-		case Key_Escape:
+		case Qt::Key_Escape:
 		{
 			emit lineEditCanceled();
 			k->ignore();

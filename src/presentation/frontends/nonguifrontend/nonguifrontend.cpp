@@ -275,3 +275,9 @@ int NonGUIFrontend::askQuestion(const char *)
 {
 	return 1;
 }
+
+
+int NonGUIFrontend::runExternalCommand(const char *)
+{
+	return 1;
+}

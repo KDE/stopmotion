@@ -17,21 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "modelhandler.h"
+#include "src/application/modelhandler.h"
 
-#include "mainwindowgui.h"
+#include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 #include "src/domain/domainfacade.h"
-#include "filedialog.h"
-#include "picturepreview.h"
+
+#include <QChar>
 
 
 ModelHandler::ModelHandler ( QObject *parent, QStatusBar *sb, FrameBar *frameBar, 
 		ExternalChangeMonitor *changeMonitor, char *lastVisitedDir, const char *name ) 
-		: QObject(parent, name), frameBar(frameBar), statusBar(sb), 
+		: QObject(parent), frameBar(frameBar), statusBar(sb), 
 		lastVisitedDir(lastVisitedDir), changeMonitor(changeMonitor)
 {
 	fileDialog = NULL;
 	removeFramesButton = NULL;
+	setObjectName(name);
 }
 
 
@@ -48,49 +49,46 @@ void ModelHandler::setRemoveFramesButton( QPushButton * removeFramesButton )
 
 void ModelHandler::chooseFrame()
 {
-	fileDialog = new FileDialog(lastVisitedDir, NULL, (MainWindowGUI*)parent());
-	PicturePreview* p = new PicturePreview(fileDialog);
+	fileDialog = new QFileDialog((MainWindowGUI*)parent(), tr("Choose frames to add"), lastVisitedDir);
+	QStringList filters;
+	filters << "Images (*.png *.jpg *.jpeg  *.gif *.PNG *.JPG *.JPEG *.GIF)"
+			<< "Joint Photographic Ex. Gr. (*.jpg *.jpeg *.JPG *.JPEG)"
+			<< "Portable Network Graphics (*.png *.PNG)"
+			<< "GIMP native (*.xcf *.XCF)"
+			<< "Tagged Image File Format (*.tif *.TIF)"
+			<< "Windows Bitmap (*.bmp *.BMP)"
+			<< "TrueVision Targa (*.tga *.TGA)"
+			<< "Portable Anymap (*.pnm *.PNM)"
+			<< "X11 Pixmap (*.xpm *.XPM)"
+			<< "ZSoft IBM PC Paintbrush (*.pcx *.PCX)"
+			<< "CompuServe Graph. Interch. Format (*.gif *.GIF)"
+			<< "Interleaved Bitmap (*.lbm *.iff *.LBM *.IFF)"
+			<< "All files (*)";
+	fileDialog->setFilters(filters);
+	fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
+	fileDialog->setFileMode(QFileDialog::ExistingFiles);
 	
-	fileDialog->setContentsPreviewEnabled( TRUE );
-	fileDialog->setContentsPreview( p, p );
-	fileDialog->setMode(QFileDialog::ExistingFiles);
-	fileDialog->setPreviewMode( QFileDialog::Contents );
-	fileDialog->setCaption( tr("Choose frames to add") );
-	fileDialog->setFilters( QString(
-					"Images (*.png *.jpg *.jpeg  *.gif *.PNG *.JPG *.JPEG *.GIF)\n"
-					"Joint Photographic Ex. Gr. (*.jpg *.jpeg *.JPG *.JPEG)\n"
-					"Portable Network Graphics (*.png *.PNG)\n"
-					"GIMP native (*.xcf *.XCF)\n"
-					"Tagged Image File Format (*.tif *.TIF)\n"
-					"Windows Bitmap (*.bmp *.BMP)\n"
-					"TrueVision Targa (*.tga *.TGA)\n"
-					"Portable Anymap (*.pnm *.PNM)\n"
-					"X11 Pixmap (*.xpm *.XPM)\n"
-					"ZSoft IBM PC Paintbrush (*.pcx *.PCX)\n"
-					"CompuServe Graph. Interch. Format (*.gif *.GIF)\n"
-					"Interleaved Bitmap (*.lbm *.iff *.LBM *.IFF)\n"
-					"All files (*)\n") );
+	//PicturePreview* p = new PicturePreview(fileDialog);
 	
 	QObject::connect( fileDialog, SIGNAL(filesSelected (const QStringList &)), 
 			this, SLOT(addFrames(const QStringList &)) );
-	QObject::connect( fileDialog, SIGNAL(fileSelected (const QString &)), 
-			this, SLOT(addFrame(const QString &)) );
 	
 	fileDialog->show();
 }
 
 
+// TODO: implement with std strings
 void ModelHandler::addFrames( const QStringList & fileNames)
 {
 	Logger::get().logDebug("addFrames in modelhandler");
-	QStringList names = fileNames;
+	QStringList names(fileNames);
 	
 	changeMonitor->suspendMonitor();
 	// the fileDialog pointer is NULL when adding of frames is
 	// done by drag 'n drop
 	if ( fileDialog != NULL ) {
 		fileDialog->hide();
-		strcpy( lastVisitedDir, ( fileDialog->dirPath() ).ascii() );
+		strcpy( lastVisitedDir, fileDialog->directory().path().toLatin1().constData() );
 	}
 	
 	if ( !names.isEmpty() ) {
@@ -98,16 +96,23 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 		QStringList::Iterator it = names.begin();
 		while (it != names.end() ) {
 			QString fileName = *it;
-			char *f = (char*)fileName.ascii();
-			fNames.push_back( f );
+			char *f = new char[fileName.length()];
+			strcpy(f, fileName.toLatin1().data());
+			fNames.push_back(f);
 			++it;
 		}
 		// trim to size :)
 		vector<char*>(fNames).swap(fNames);
 		DomainFacade::getFacade()->addFrames(fNames);
+		
+		// Cleanup
+		for (unsigned i = 0; i < fNames.size(); ++i) {
+			delete [] fNames[i];
+			fNames[i] = NULL;
+		}
+		
 		emit modelChanged();
 	}
-	
 	changeMonitor->resumeMonitor();
 }
 
@@ -116,7 +121,7 @@ void ModelHandler::addFrame( const QString &fileName )
 {
 	if (fileDialog != NULL) {
 		fileDialog->hide();
-		strcpy( lastVisitedDir, ( fileDialog->dirPath() ).ascii() );
+		strcpy( lastVisitedDir, fileDialog->directory().path().toLatin1().constData() );
 	}
 	
 	QStringList fileNames;
@@ -134,7 +139,7 @@ void ModelHandler::removeFrames()
 		int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 	
 		DomainFacade::getFacade()->removeFrames(lowend, highend);
-		statusBar->message( tr("Removed the selected frame"), 2000 );
+		statusBar->showMessage( tr("Removed the selected frame"), 2000 );
 	}
 }
 

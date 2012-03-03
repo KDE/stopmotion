@@ -20,12 +20,18 @@
 #ifndef IMPORTTAB_H
 #define IMPORTTAB_H
 
-#include <qtable.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
+#include "src/foundation/preferencestool.h"
+
+#include <QTableWidget>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QGroupBox>
+#include <QLabel>
+#include <QGridLayout>
+#include <QWidget>
+
 #include <vector>
+
 using namespace std;
 
 
@@ -34,7 +40,7 @@ using namespace std;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class ImportTab : public QFrame
+class ImportTab : public QWidget
 {
 	Q_OBJECT
 public:
@@ -58,31 +64,27 @@ public:
 	 * Applies the settings in the import tab.
 	 */
 	void apply();
+
+protected:
+	void resizeEvent(QResizeEvent *event);
 	
 private slots:
 	void addImportProgram();
 	void removeImportProgram();
-	void valueChanged(int row, int column);
-	void activeRowChanged(int row);
+	void contentsChanged(int row, int column);
+	void activeCellChanged(int row, int column);
 	void changeSettings();
 	void closeChangeBox();
-	//These are called so often that I choose to have one for each
-	//lineedit instead of 1 with test.
 	void updatePrePollString(const QString &txt);
 	void updateStartDeamonString(const QString &txt);
 	void updatestopDeamonString(const QString &txt);
 	
 private:
-	int selectedDevice;
-	int numGrabbers;
-	
-	//Cache these so that i they aren't flushed to the preftool until the user
-	//press ok.
 	vector<QString>prePollStrings;
 	vector<QString>startDeamonStrings;
 	vector<QString>stopDeamonStrings;
 	
-	QTable *deviceSelectionTable;
+	QTableWidget *deviceSelectionTable;
 	QPushButton *addButton;
 	QPushButton *removeButton;
 	QPushButton *changeButton;
@@ -91,17 +93,12 @@ private:
 	QLineEdit *startDeamonEdit;
 	QLineEdit *stopDeamonEdit;
 	QGroupBox *grabberPreferences;
-	QGridLayout *grid;
-	QGridLayout *grabberGrid;
-	QSpacerItem *space3;
-	QSpacerItem *rightSpace;
-	QSpacerItem *leftSpace;
 	QLabel *prePollLabel;
 	QLabel *startDeamonLabel;
 	QLabel *stopDeamonLabel;
-	QCheckTableItem *checkTableItem;
+	QTableWidgetItem *checkTableItem;
 	
-	void updateChange(const QString &txt);
+	void freeProperty(const char *prop, const char *tag = "");
 };
 
 #endif

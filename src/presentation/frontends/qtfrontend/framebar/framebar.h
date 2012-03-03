@@ -27,9 +27,14 @@
 #include "thumbview.h"
 #include "framepreferencesmenu.h"
 
+#include <QDragEnterEvent>
+#include <QResizeEvent>
+#include <QDropEvent>
+#include <QScrollArea>
+#include <QHBoxLayout>
+#include <QWidget>
+
 #include <vector>
-#include <qscrollview.h>
-#include <qhbox.h>
 
 
 class ThumbView;
@@ -39,7 +44,7 @@ class ThumbView;
  * 
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class FrameBar : public QScrollView, public Observer
+class FrameBar : public QScrollArea, public Observer
 {
 	Q_OBJECT
 public:
@@ -118,8 +123,7 @@ public:
 	 * @param frontend the frontend for getting a progressbar when adding 
 	 * opening the new active scene.
 	 */
-	void updateNewActiveScene(int sceneNumber, vector<char*> framePaths,
-			Frontend *frontend);
+	void updateNewActiveScene(int sceneNumber, vector<char*> framePaths, Frontend *frontend);
 	
 	/**
 	 * Updates the framebar when an external program has altered the disk files.
@@ -138,7 +142,7 @@ public:
 	 * Returns true if the user is currently selecting several thumbviews.
 	 * @return true if the user is currently selecting several thumbviews.
 	 */
-	bool isSelecting();
+	bool isSelecting() const;
 	
 	/**
 	 * Sets a selection of frames between (including) this frame and the activeFrame.
@@ -151,7 +155,7 @@ public:
 	 * Returns the current selectionFrame
 	 * @return the current selectionFrame
 	 */
-	int getSelectionFrame();
+	int getSelectionFrame() const;
 	
 	/**
 	 * Registers the frame preferences menu in the framebar.
@@ -169,7 +173,7 @@ public:
 	 * is currently being moved in the framebar.
 	 * @return the value of the movingScene property.
 	 */
-	int getMovingScene();
+	int getMovingScene() const;
 	
 	/**
 	 * Sets the value of the movingScene property specifying which scene
@@ -191,28 +195,29 @@ public:
 	 * Returns true if a scene is currently being opened.
 	 * @return true if a scene is currently being opened.
 	 */
-	bool isOpeningScene();
+	bool isOpeningScene() const;
+
+	int getFrameWidth() const;
+	int getFrameHeight() const;
+	int getSpace() const;
+
 protected:
+	/**
+	 * Overloaded event function for when a drag enter occurs in the framebar
+	 * @param event information about the dragEnterEvent
+	 */
+	void dragEnterEvent(QDragEnterEvent *event);
 	
 	/**
-	 *Overloaded event function for when when a drag enters the framebar
-	 *@param event information about the dragEnterEvent
+	 * Overloaded event function for when a drop event occurs in the framebar.
+	 * @param event information about the dropEvent
 	 */
-	void contentsDragEnterEvent(QDragEnterEvent * event);
+	void dropEvent(QDropEvent *event);
 	
-	/**
-	 *Overloaded event function for when a drop event occur in the framebar.
-	 *@param event information about the dropEvent
-	 */
-	void contentsDropEvent(QDropEvent * event);
-	
-	/**
-	 * Overloaded event function for recieving resize event. These events
-	 * cause the thumbviews to change size.
-	 * @param event information about the event.
-	 */
-	void resizeEvent (QResizeEvent *event);
-	
+	void dragMoveEvent(QDragMoveEvent *event);
+
+	void resizeEvent(QResizeEvent *event);
+
 public slots:
 	/**
 	 * Recieves notification when the sounds in a frame has been changed.
@@ -226,10 +231,15 @@ signals:
 	void newActiveFrame( const QString & );
 	void newActiveFrame( int value );
 	void modelSizeChanged( int modelSize );
+	void newMaximumValue(int value);
+
+private slots:
+	void scroll();
 	
 private:
-	/** The height of the framebar*/
-	int FRAMEBAR_HEIGHT;
+	static const int FRAME_HEIGHT = 88;
+	static const int FRAME_WIDTH = 117;
+	static const int SPACE = 2;
 	
 	/** Vector of thumbviews to keep track of the pictures in the framebar*/
 	vector<ThumbView*>thumbViews;
@@ -246,11 +256,32 @@ private:
 	/** The other border frame in a selection together with activeFrame. 
 	*   If only one is selected selectionFrame == activeFrame            */
 	int selectionFrame;
+
+	/** Direction to scroll when dragging. 
+	 * -1 = scroll negative, 0 = no scroll, 1 = scroll positive */
+	int scrollDirection;
+	
+	int lowerScrollAreaX;
+	int upperScrollAreaX;
+	
+	int lowerAccelScrollAreaX;
+	int upperAccelScrollAreaX;
+	
+	int minScrollAreaX;
+	int maxScrollAreaX;
+	
+	int minScrollAreaY;
+	int maxScrollAreaY;
 	
 	/** True if the user is currently holding down shift to select multiple frames */
 	bool selecting;
 	
 	bool openingScene;
+	
+	QTimer *scrollTimer;
+	QScrollBar *scrollBar;
+
+	QWidget *mainWidget;
 	
 	/** Pointer to the frame preferencesMenu */
 	FramePreferencesMenu *preferencesMenu;
@@ -270,8 +301,7 @@ private:
 	 * @param frontend the frontend for processing updating the program
 	 * progressbar.
 	 */
-	void addFrames(const vector<char*>& frames, unsigned int index, 
-			Frontend *frontend);
+	void addFrames(const vector<char*>& frames, unsigned int index, Frontend *frontend);
 	
 	/**
 	 * Removes a selection of thumbviews from the framebar.
@@ -286,8 +316,7 @@ private:
 	 * @param toFrame the last frame to move.
 	 * @param movePosition the position to move the frames to.
 	 */
-	void moveFrames(unsigned int fromFrame, unsigned int toFrame, 
-			unsigned int movePosition);
+	void moveFrames(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition);
 	
 	/**
 	 *Sets the thumbview frameNumber in the framebar to be the active frame.
@@ -321,8 +350,7 @@ private:
 	 * @param frontend the frontend for getting a progressbar when adding the
 	 * frames to the scene.
 	 */
-	void setActiveScene(int sceneNumber, vector<char*> framePaths,
-			Frontend *frontend);
+	void setActiveScene(int sceneNumber, vector<char*> framePaths, Frontend *frontend);
 	
 	/**
 	 *Moves a thumbview in the thumbviews-vector from fromPosition to toPosition.

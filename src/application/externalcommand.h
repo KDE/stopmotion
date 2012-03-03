@@ -17,32 +17,44 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PICTUREPREVIEW_H
-#define PICTUREPREVIEW_H
+#ifndef EXTERNALCOMMAND_H
+#define EXTERNALCOMMAND_H
 
-#include <qlabel.h>
-#include <qfiledialog.h> 
+#include <QAction>
+#include <QButtonGroup>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QWidget>
+#include <QProcess>
+#include <QTextBrowser>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 
-/**
- *@author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
- */
-class PicturePreview : public QLabel, public QFilePreview {
+class ExternalCommand : public QWidget
+{
+	Q_OBJECT;
 public:
-	/**
-	 * Sets up the filepreview-label.
-	 * @param parent the parent of the widget.
-	 */
-	PicturePreview( QWidget *parent=0 );
+	ExternalCommand(QWidget *parent = 0);
+	void run(const QString &command);
 
-	/**
-	 * Displays the preview picture
-	 * @param u the file path to the selected file in the filechooser.
-	 */
-	void previewUrl( const QUrl &u );
+private slots:
+	void readFromStandardOutput();
+	void readFromStandardError();
+	void submitInputToProgram();
+	void displayExitStatus(int exitCode, QProcess::ExitStatus exitStatus);
 
 private:
-	static const int PREVIEW_SIZE = 100;
+	QVBoxLayout *vboxLayout;
+	QTextBrowser *textBrowser;
+	QHBoxLayout *hboxLayout;
+	QLabel *label;
+	QLineEdit *lineEdit;
+	QPushButton *submitButton;
+	QPushButton *closeButton;
+	QProcess *process;
 };
 
 #endif
+

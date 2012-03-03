@@ -21,9 +21,10 @@
 #ifndef MENUFRAME_H
 #define MENUFRAME_H
 
-#include <qframe.h>
-#include <qspinbox.h>
-#include <qlineedit.h>
+#include <QFrame>
+#include <QSpinBox>
+#include <QLineEdit>
+#include <QMouseEvent>
 
 /**
  * A customized GUI menu class for embedded menues which shouldn't be visible 

@@ -44,6 +44,10 @@ public:
 	 */
 	bool isGrabberProcess();
 	
+	virtual bool setPrePollCommand(const char *command) = 0;
+	virtual bool setStartCommand(const char *command) = 0;
+	virtual bool setStopCommand(const char *command) = 0;
+	
 	/**
 	 * Abstract function for initializing the grabber.
 	 * @return true on success, false otherwise

@@ -17,92 +17,118 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "languagehandler.h"
+#include "src/application/languagehandler.h"
 
 #include "src/foundation/preferencestool.h"
+#include "src/config.h"
 
-#include <qdir.h>
+#include <QDir>
+#include <QTranslator>
+#include <QLocale>
 
 
-LanguageHandler::LanguageHandler ( QObject *parent, QStatusBar *sb, QApplication *stApp,
-		const char *name ) 
-		: QObject(parent, name), statusBar(sb), stApp(stApp)
+LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const char *name) 
+	: QObject(parent)
 {
-	qmPath = "/usr/share/stopmotion/translations";
-	stTranslator = new QTranslator(this);
-	stApp->installTranslator(stTranslator);
+	qmPath = QString(stopmotion::translationsDirectory);
+	activeAction = 0;
+	translator = new QTranslator(this);
+	
+	const char *languagePref = PreferencesTool::get()->
+		getPreference("language", QLocale::system().name().toLatin1().constData());
+	QString locale(languagePref);
+
+	if ( !locale.startsWith("en") ) {
+		Logger::get().logDebug("Loading translator: ");
+		Logger::get().logDebug(locale.toLatin1().constData());
+		translator->load( "stopmotion_" + locale, qmPath);
+	}
+	
+	stApp->installTranslator(translator);
+	setObjectName(name);
+	
+	if (strcmp(languagePref, QLocale::system().name().toLatin1().constData()) != 0) {
+		//xmlFree((xmlChar*)languagePref);
+	}
 }
 
 
-QPopupMenu* LanguageHandler::createLanguagesMenu(QPopupMenu *parent)
+QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 {
-	//For the .po files. findtr isn't as intelligent as luptate
+	assert(parent);
+	// For the .po files. findtr isn't as intelligent as luptate
 	tr("English");
 	
-	languagesMenu = new QPopupMenu(parent);
+	languagesMenu = parent->addMenu(tr("&Translation"));
+	connect(languagesMenu, SIGNAL(triggered(QAction *)), this, SLOT(changeLanguage(QAction *)));
 	
 	QDir dir(qmPath);
-	QStringList fileNames = dir.entryList("stopmotion_*.qm");
+	QStringList fileNames = dir.entryList(QStringList("stopmotion_*.qm"));
 	
 	//English is a special case (base language)
-	int id = languagesMenu->insertItem( "&1 English", 
-			this, SLOT(switchToLanguage(int)), 0, 0 );
-	if (!strcmp(PreferencesTool::get()->getPreference("language", "en"), "en")) {
-		languagesMenu->setItemChecked(id, true);
-	}
-	
-	int nr = 2;
-	for (int i = 0; i < (int)fileNames.size(); ++i) {
+	QAction *langAct = languagesMenu->addAction("&1 English");
+	langAct->setCheckable(true);
+	locales.insert(langAct, "en");
+
+	int num = 2;
+	for (int i = 0; i < fileNames.size(); ++i) {
 		QTranslator translator;
 		translator.load(fileNames[i], qmPath);
 		
-		QTranslatorMessage message =
-				translator.findMessage("LanguageHandler", "English", 
-						"This should be translated to the name of the "
-						"language you are translating to, in that language. "
-						"Example: English = Deutsch (Deutsch is \"German\" "
-						"in German)");
-		QString language = message.translation();
+		QString language = translator.translate("LanguageHandler", "English", 
+			"This should be translated to the name of the "
+			"language you are translating to, in that language. "
+			"Example: English = Deutsch (Deutsch is \"German\" "
+			"in German)");
 		
-		//Checks that the mimimum requirement for accepting a string is covered.
-		//The mimimum requirement is that the menu option string (English) is translated.
+		// Checks that the mimimum requirement for accepting a string is covered.
+		// The mimimum requirement is that the menu option string (English) is translated.
 		if (language != "") {
-			id = languagesMenu->insertItem( QString("&%1 %2").arg(nr).arg(language),
-				this, SLOT(switchToLanguage(int)), 0, nr-1 );
-			++nr;
+			langAct = languagesMenu->addAction(QString("&%1 %2").arg(num++).arg(language));
+			langAct->setCheckable(true);
+			langAct->setChecked(false);
 			
 			QString locale = fileNames[i];
-			locale = locale.mid(locale.find('_') + 1);
-			locale.truncate(locale.find('.'));
-			locales.push_back(locale);
-			
-			//Checks the menu option if this is the starting language.
-			if (!strcmp(PreferencesTool::get()->getPreference("language", "en"), locale)) {
-				languagesMenu->setItemChecked(id, true);
-			}
+			locale = locale.mid(locale.indexOf('_') + 1);
+			locale.truncate(locale.indexOf('.'));
+			locales.insert(langAct, locale);
 		}
+	}
+	
+	const char *languagePref = PreferencesTool::get()->getPreference("language", "en");
+	activeAction = locales.key(QString(languagePref));
+	if (activeAction != 0) {
+		activeAction->setChecked(true);
+	}
+	else {
+		Logger::get().logWarning("Something wrong with the locale!");
+	}
+	
+	if ( strcmp(languagePref, "en") != 0) {
+		xmlFree((xmlChar*)languagePref);
 	}
 	
 	return languagesMenu;
 }
 
 
-void LanguageHandler::switchToLanguage(int menuID)
+void LanguageHandler::changeLanguage(QAction *action)
 {
-	//English(0) is a special case (base language)
-	if (menuID == 0) {
-		stTranslator->clear();
-		PreferencesTool::get()->setPreference("language", "en");
+	if (activeAction != 0) {
+		activeAction->setChecked(false);
+	}
+	action->setChecked(true);
+	activeAction = action;
+	
+	QString locale = locales[action];
+	if (locale != "en") {
+		translator->load("stopmotion_" + locale, qmPath);
 	}
 	else {
-		stTranslator->load("stopmotion_" + locales[menuID-1], qmPath);
-		PreferencesTool::get()->setPreference("language", locales[menuID-1].ascii());
+		translator->load("");
 	}
 	
-	for (int i = 0; i < (int)languagesMenu->count(); ++i) {
-		languagesMenu->setItemChecked(i, i == menuID);
-	}
-	
+	PreferencesTool::get()->setPreference("language", locale.toLatin1().constData());
 	emit languageChanged();
 }
 

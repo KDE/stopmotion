@@ -22,7 +22,8 @@
 
 #include "framebar.h"
 
-#include <qlabel.h>
+#include <QDropEvent>
+#include <QLabel>
 
 
 class FrameBar;
@@ -33,7 +34,7 @@ class FrameBar;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class ThumbView : public QLabel 
+class ThumbView : public QLabel
 {
 public:
 
@@ -43,12 +44,12 @@ public:
 	 * @param parent the parent widget.
 	 * @param number the number of this thumbview in the framebar.
 	 */
-	ThumbView(FrameBar *frameBar, QWidget *parent, int number, const char * name = 0);
+	ThumbView(FrameBar *frameBar, QWidget *parent, int number, const char *name = 0);
 	
 	/**
 	 * Cleans up after the widget.
 	 */
-	~ThumbView();
+	virtual ~ThumbView();
 	
 	/**
 	 * Function to set the number of this ThumbView in the framebar 
@@ -61,7 +62,7 @@ public:
 	 *Retrieves the number of this ThumbView in the framebar
 	 *@return the number for this ThumbView in the framebar
 	 */
-	int getNumber();
+	int getNumber() const;
 	
 	/**
 	 * Abstract function for telling a framethumbview that it has one or more sounds
@@ -92,21 +93,15 @@ public:
 	 */
 	virtual void contentsDropped(QDropEvent * event);
 	
-	/**
-	 * Resizes the thumbview.
-	 * @param height the new height of the widget.
-	 */
-	virtual void resizeThumb(int height);
-	
 protected:
 	/** The framebar for communicating with it */
 	FrameBar *frameBar;
 	
-	/**The number this frame has in the framebar*/
-	int number;
-	
 	/**Coordinate for calculating when a drag should start to give some slack*/
 	QPoint dragPos;
+	
+	/**The number this frame has in the framebar*/
+	int number;	
 };
 
 #endif

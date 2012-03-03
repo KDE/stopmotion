@@ -22,41 +22,61 @@
 #include "src/foundation/preferencestool.h"
 #include "flexiblelineedit.h"
 
+#include <QVBoxLayout>
+#include <QPushButton>
 
-PreferencesMenu::PreferencesMenu( QWidget *parent ) 
-		: QTabDialog(parent, "preferencesmenu", false, WDestructiveClose)
+
+PreferencesMenu::PreferencesMenu(QWidget *parent) 
+		: QDialog(parent, Qt::Dialog)
 {
-	importVideoTab = NULL;
-	exportVideoTab = NULL;
+	importVideoTab = 0;
+	exportVideoTab = 0;
+	tabWidget = new QTabWidget;
 	
-	connectButtons();
+	QPushButton *applyButton = new QPushButton(tr("Apply"), this);
+	applyButton->setDefault(true);
+	connect(applyButton, SIGNAL(clicked()), this, SLOT(apply()));
+
+	QPushButton *closeButton = new QPushButton(tr("Close"), this);
+	closeButton->setDefault(true);
+	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
+
+	QHBoxLayout *buttonLayout = new QHBoxLayout;
+	buttonLayout->addStretch(1);
+	buttonLayout->addWidget(applyButton);
+	buttonLayout->addWidget(closeButton);
+	
+	QVBoxLayout *mainLayout = new QVBoxLayout;
+	mainLayout->addWidget(tabWidget);
+	mainLayout->addLayout(buttonLayout);
+	
+	setLayout(mainLayout);
+	setWindowTitle(tr("Preferences Menu"));
+	setMaximumWidth(600);
+	setMinimumWidth(600);
+	setModal(false);
+	setAttribute(Qt::WA_DeleteOnClose);
+	
 	makeVideoImportTab();
 	makeVideoExportTab();
-	setCancelButton();
-}
-
-
-void PreferencesMenu::connectButtons()
-{
-	QObject::connect( this, SIGNAL(applyButtonPressed()), this, SLOT(apply()) );
 }
 
 
 void PreferencesMenu::makeVideoImportTab()
 {
-	importVideoTab = new ImportTab(this);
+	importVideoTab = new ImportTab;
 	importVideoTab->initializeImportValues();	
 	importVideoTab->setMinimumHeight(300);
-	addTab(importVideoTab, tr("Video &Import"));
+	tabWidget->addTab(importVideoTab, tr("Video &Import"));
 }
 
 
 void PreferencesMenu::makeVideoExportTab()
 {
-	exportVideoTab = new ExportTab(this);
+	exportVideoTab = new ExportTab;
 	exportVideoTab->initialize();
 	exportVideoTab->setMinimumHeight(300);
-	addTab(exportVideoTab, tr("Video &Export"));
+	tabWidget->addTab(exportVideoTab, tr("Video &Export"));
 }
 
 

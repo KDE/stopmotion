@@ -17,69 +17,69 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "framepreferencesmenu.h"
+#include "src/presentation/frontends/qtfrontend/framepreferencesmenu.h"
 
 #include "src/domain/domainfacade.h"
 #include "graphics/icons/close.xpm"
 
-#include <qlayout.h>
-#include <qwhatsthis.h>
-#include <qtooltip.h>
+#include <QToolTip>
+#include <QLabel>
+#include <QGridLayout>
 
 
 FramePreferencesMenu::FramePreferencesMenu( QWidget * parent, 
 		SoundHandler *soundHandler, const char * name )
-		: MenuFrame(parent, name), soundHandler(soundHandler)
+	: MenuFrame(parent, name), soundHandler(soundHandler)
 {
-	soundsList = NULL;
-	soundsLabel = NULL;
-	closeButton = NULL;
-	addSoundButton = NULL;
-	removeSoundsButton = NULL;
-	changeNameButton = NULL;
-	grid = NULL;
-	spacer = NULL;
-	space = NULL;
+	soundsList = 0;
+	soundsLabel = 0;
+	closeButton = 0;
+	addSoundButton = 0;
+	removeSoundsButton = 0;
+	changeNameButton = 0;
+	grid = 0;
 	
-	this->setFrameStyle(QFrame::PopupPanel | QFrame::Sunken);
-	grid = new QGridLayout( this, 1, 1, 3 );
+	this->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+	grid = new QGridLayout;
+	grid->setMargin(1);
+	grid->setSpacing(1);
 	
-	addSoundButton = new QPushButton( this );
-	addSoundButton->setFocusPolicy( QWidget::NoFocus );
-	connect( addSoundButton, SIGNAL( clicked() ), 
-			soundHandler, SLOT( addSound() ) );
+	addSoundButton = new QPushButton;
+	addSoundButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+	addSoundButton->setFocusPolicy( Qt::NoFocus );
+	connect( addSoundButton, SIGNAL( clicked() ), soundHandler, SLOT( addSound() ) );
 	
-	removeSoundsButton = new QPushButton(this);
-	removeSoundsButton->setFocusPolicy( QWidget::NoFocus );
-	connect( removeSoundsButton, SIGNAL( clicked() ), 
-			soundHandler, SLOT( removeSound() ) );
+	removeSoundsButton = new QPushButton;
+	removeSoundsButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+	removeSoundsButton->setFocusPolicy( Qt::NoFocus );
+	connect( removeSoundsButton, SIGNAL( clicked() ), soundHandler, SLOT( removeSound() ) );
 			
-	changeNameButton = new QPushButton(this);
-	changeNameButton->setFocusPolicy( QWidget::NoFocus );
-	connect( changeNameButton, SIGNAL( clicked() ), 
-			soundHandler, SLOT( setSoundName() ) );
+	changeNameButton = new QPushButton;
+	changeNameButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+	changeNameButton->setFocusPolicy( Qt::NoFocus );
+	connect( changeNameButton, SIGNAL( clicked() ), soundHandler, SLOT( setSoundName() ) );
 	
-	closeButton = new QPushButton(this);
-	closeButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
-	closeButton->setPixmap(closeicon);
+	closeButton = new QPushButton;
+	closeButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+	closeButton->setIcon(QPixmap(closeicon));
 	closeButton->setFlat(true);
 	connect(closeButton, SIGNAL(clicked()),this, SLOT(close()) );
 	
-	spacer = new QSpacerItem(0, 0, QSizePolicy::Expanding, QSizePolicy::Fixed);
+	soundsLabel = new QLabel;
+	soundsList = new QListWidget;
 	
-	soundsLabel = new QLabel(this);
-	soundsList = new QListBox(this);
-	space = new QSpacerItem(0, 7);
-	
+	grid->addWidget( soundsLabel, 0, 1 );
 	grid->addWidget( addSoundButton, 1, 0 );
 	grid->addWidget( removeSoundsButton, 2, 0 );
 	grid->addWidget( changeNameButton, 3, 0 );
-	grid->addWidget( soundsLabel, 0, 1 );
-	grid->addItem( spacer, 0, 2 );
- 	grid->addWidget( closeButton, 0, 3 );
-	grid->addMultiCellWidget( soundsList, 1, 3, 1, 3, 0 );
-	grid->addItem( space, 4, 0 );
+ 	grid->addWidget( closeButton, 0, 2 );
 	
+	QVBoxLayout *layout = new QVBoxLayout;
+	layout->addWidget(soundsList);
+	grid->addLayout( layout, 1, 1, 3, 2);
+	
+	grid->setColumnStretch(1, 1);
+	setLayout(grid);
 	soundHandler->setSoundsList(soundsList);
 }
 
@@ -91,9 +91,8 @@ void FramePreferencesMenu::open()
 			DomainFacade::getFacade()->getActiveFrameNumber() )->getNumberOfSounds();
 	
 	unsigned int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
-	for (unsigned int i = 0; i<numSounds; ++i) {
-		soundsList->insertItem( DomainFacade::getFacade()->
-				getFrame(activeFrame)->getSoundName(i) );
+	for (unsigned int i = 0; i < numSounds; ++i) {
+		soundsList->addItem( new QListWidgetItem(DomainFacade::getFacade()->getFrame(activeFrame)->getSoundName(i)));
 	}
 	this->show();
 }
@@ -117,29 +116,29 @@ void FramePreferencesMenu::retranslateStrings()
 			"<p>With this button you can <em>add sounds</em> to the selected frame.</p> "
 			"<p>The sound will begin playing when this frame is shown and play "
 			"until it is done.</p>");
-	QToolTip::add( addSoundButton, infoText );
-	QWhatsThis::add( addSoundButton, infoText );
+	addSoundButton->setToolTip(infoText);
+	addSoundButton->setWhatsThis(infoText);
 	
 	infoText = 
 			tr("<h4>Remove sound</h4> "
 			"<p>With this button you can <em>remove</em> the selected sound from "
 			"this frame.</p>");
-	QToolTip::add( removeSoundsButton, infoText );
-	QWhatsThis::add( removeSoundsButton, infoText );
+	removeSoundsButton->setToolTip(infoText);
+	removeSoundsButton->setWhatsThis(infoText);
 	
 	infoText = 
 			tr("<h4>Change name</h4> "
 			"<p>With this button you can change the name of the selected sound. "
 			"<BR>The name of the sound has no other effect than making it easier "
 			"work with the animation.</p>");
-	QToolTip::add( changeNameButton, infoText );
-	QWhatsThis::add( changeNameButton, infoText );
+	changeNameButton->setToolTip(infoText);
+	changeNameButton->setWhatsThis(infoText);
 	
 	infoText = 
 			tr("<h4>Sounds</h4> "
 			"<p>This lists shows all the sounds connected to this frame.</p>"
 			"<p>The sounds will begin playing when this frame is shown and play "
 			"until they are done.</p>");
-	QWhatsThis::add( soundsLabel, infoText );
-	QWhatsThis::add( soundsList, infoText );
+	soundsLabel->setToolTip(infoText);
+	soundsList->setWhatsThis(infoText);
 }

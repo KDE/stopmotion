@@ -23,10 +23,11 @@
 #include "menuframe.h"
 #include "src/application/soundhandler.h"
 
-#include <qlistbox.h>
-#include <qpushbutton.h>
-#include <qlabel.h>
-#include <qlayout.h>
+#include <QListWidget>
+#include <QPushButton>
+#include <QLabel>
+#include <QLayout>
+#include <QGridLayout>
 
 
 /**
@@ -58,15 +59,13 @@ public:
 	
 private:
 	SoundHandler *soundHandler;
-	QListBox *soundsList;
+	QListWidget *soundsList;
 	QLabel *soundsLabel;
 	QPushButton *closeButton;
 	QPushButton *addSoundButton;
 	QPushButton *removeSoundsButton;
 	QPushButton *changeNameButton;
 	QGridLayout *grid;
-	QSpacerItem *spacer;
-	QSpacerItem *space;
 	
 public slots:
 	/**

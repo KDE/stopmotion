@@ -17,123 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#ifndef ABOUTDIALOG_H
+#define ABOUTDIALOG_H
 
-#include "videoview.h"
+#include <QDialog>
+#include <QTabWidget>
 
-
-
-VideoView::VideoView( QWidget *parent, const char *name, WFlags f)
-		: QWidget(parent, name, f)
+class AboutDialog : public QDialog
 {
-	this->mixCount = 2;
-}
+	Q_OBJECT;
+public:
+	AboutDialog(QWidget *parent = 0);
 
+private:
+	QTabWidget *tabWidget;
+};
 
-VideoView::~VideoView()
-{
-}
-
-
-void VideoView::initCamera()
-{
-}
-
-
-bool VideoView::on()
-{
-	return false;
-}
-
-
-void VideoView::off()
-{
-}
-
-
-void VideoView::capture()
-{
-}
-
-
-void VideoView::setPlaybackSpeed(int)
-{
-}
-
-void VideoView::initCompleted()
-{
-	emit cameraReady();
-}
-
-
-void VideoView::updateAdd(const vector<char*>&, unsigned int, Frontend*)
-{
-}
-
-
-void VideoView::updateRemove(unsigned int, unsigned int)
-{
-}
-
-
-void VideoView::updateMove(unsigned int, unsigned int, unsigned int)
-{
-}
-
-
-void VideoView::updateNewActiveFrame(int)
-{
-}
-
-
-void VideoView::updateClear()
-{
-}
-
-
-void VideoView::updatePlayFrame(int)
-{
-}
-
-
-void VideoView::updateNewScene(int)
-{
-}
-
-
-void VideoView::updateRemoveScene(int)
-{
-}
-
-
-void VideoView::updateMoveScene(int, int)
-{
-}
-
-
-void VideoView::updateNewActiveScene(int, vector<char*>,
-	Frontend *)
-{
-}
-
-
-void VideoView::updateAnimationChanged(vector<Frame*>&)
-{
-}
-
-
-void VideoView::setMixCount(int mixCount)
-{
-	this->mixCount = mixCount;
-}
-
-
-bool VideoView::setViewMode(int)
-{
-	return false;
-}
-
-
-int VideoView::getViewMode()
-{
-	return -1;
-}
+#endif

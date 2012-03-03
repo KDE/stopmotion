@@ -17,19 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "flexiblespinbox.h"
+#include "src/presentation/frontends/qtfrontend/flexiblespinbox.h"
+
+#include <QKeyEvent>
 
 
 FlexibleSpinBox::FlexibleSpinBox(QWidget *parent)
-		: QSpinBox(parent)
+	: QSpinBox(parent)
 {
-
 }
 
 
 void FlexibleSpinBox::setMaximumValue(int maxValue)
 {
-	this->setMaxValue(maxValue);
+	this->setMaximum(maxValue);
 	if (maxValue > 0) {
 		setEnabled(true);
 	}
@@ -43,21 +44,28 @@ void FlexibleSpinBox::keyPressEvent( QKeyEvent * k )
 {
 	switch ( k->key() ) 
 	{
-		case Key_Return: case Key_Enter:
+		case Qt::Key_Return: case Qt::Key_Enter:
 		{
 			emit spinBoxTriggered(this->value()-1);
 			break;
 		}
-		case Key_Escape:
+		case Qt::Key_Escape:
 		{
 			emit spinBoxCanceled();
 			break;
 		}
 		default:
 		{
-			k->ignore();
+			QSpinBox::keyPressEvent(k);
 			break;
 		}
 	}
 	
+}
+	
+
+void FlexibleSpinBox::showEvent(QShowEvent *)
+{
+	this->setFocus();
+	this->selectAll();
 }

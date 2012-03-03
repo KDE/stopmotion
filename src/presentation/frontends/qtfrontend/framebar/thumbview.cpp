@@ -20,15 +20,16 @@
 #include "thumbview.h"
 
 #include "src/domain/domainfacade.h"
-#include "mainwindowgui.h"
+#include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 
-#include <qapplication.h>
-#include <qdragobject.h> 
+#include <QLabel>
+#include <QDropEvent>
 
 
-ThumbView::ThumbView(FrameBar *frameBar, QWidget *parent, int number, const char * name) 
- : QLabel(parent, name), frameBar(frameBar), number(number)
+ThumbView::ThumbView(FrameBar *frameBar, QWidget *parent, int number, const char *name) 
+	: QLabel(parent), frameBar(frameBar), number(number)
 {
+	setObjectName(name);
 }
 
 
@@ -43,32 +44,15 @@ void ThumbView::setNumber(int number)
 }
 
 
-int ThumbView::getNumber()
+int ThumbView::getNumber() const
 {
 	return number;
 }
 
 
-void ThumbView::setHasSounds( bool )
-{
-}
+void ThumbView::setHasSounds(bool) {}
+void ThumbView::setOpened(bool) {}
+void ThumbView::setSelected(bool) {}
+void ThumbView::contentsDropped(QDropEvent *) {}
 
 
-void ThumbView::setOpened( bool )
-{
-}
-
-
-void ThumbView::setSelected(bool)
-{
-}
-
-
-void ThumbView::contentsDropped(QDropEvent *)
-{
-}
-
-
-void ThumbView::resizeThumb(int)
-{
-}

@@ -20,7 +20,8 @@
 #ifndef FLEXIBLELINEEDIT_H
 #define FLEXIBLELINEEDIT_H
 
-#include <qlineedit.h>
+#include <QLineEdit>
+#include <QKeyEvent>
 
 
 /**

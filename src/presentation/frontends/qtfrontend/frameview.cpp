@@ -21,53 +21,58 @@
 // This widget is created from a widget in an example program for Qt. Available at
 // http://www.libsdl.org/cvs/qtSDL.tar.gz
 
-#include "frameview.h"
+#include "src/presentation/frontends/qtfrontend/frameview.h"
 #include "src/technical/grabber/commandlinegrabber.h"
 #include "src/foundation/preferencestool.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <qsize.h>
+#include <QSize>
+#include <QX11Info>
+#include <QResizeEvent>
+#include <QMessageBox>
+#include <QPaintEvent>
 #if defined(Q_WS_X11)
 #include <X11/Xlib.h>
 #endif
-#include <qmessagebox.h>
+
+#include <cstdio>
+#include <stdlib.h>
+#include <cstring>
+
+	
+const int FrameView::alphaLut[5] = { 128, 64, 43, 32, 26 };
 
 
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
- : VideoView(parent, name, WNoAutoErase)
+ : QWidget(parent), screen(0), videoSurface(0), grabThread(0), grabber(0)
 {
-	Logger::get().logDebug("FrameView is attatched to the model"
-		" and the model to FrameView");
-	
-	screen       = NULL;
-	videoSurface = NULL;
-	widthConst  = 4;
-	heightConst = 3;
-	lastMixCount = 2;
-	lastViewMode = 0;
-	mode = 0;
-	activeFrame = 0;
-	this->playbackSpeed = PreferencesTool::get()->getPreference("fps", playbackSpeed);
-	facade = DomainFacade::getFacade();
-	
 	char tmp[256];
 	snprintf(tmp, 256, "%s/.stopmotion/capturedfile.jpg", getenv("HOME"));
 	capturedImg = new char[strlen(tmp) + 1];
 	strcpy(capturedImg, tmp);
 	
+	facade = DomainFacade::getFacade();
+	
 	isPlayingVideo = false;
-	grabber = NULL;
-	grabThread = NULL;
+	widthConst  = 4;
+	heightConst = 3;
+	mode = 0;
+	this->playbackSpeed = PreferencesTool::get()->getPreference("fps", playbackSpeed);
+	activeFrame = 0;
+	mixCount = 2;
+	lastMixCount = 2;
+	lastViewMode = 0;
+	numImagesInBuffer = 0;
 	
-	connect( &grabTimer, SIGNAL(timeout()), 
-			this, SLOT(redraw()) );
-	connect( &playbackTimer, SIGNAL(timeout()),
-			this, SLOT(nextPlayBack()) );
+	connect(&grabTimer, SIGNAL(timeout()), this, SLOT(redraw()));
+	connect(&playbackTimer, SIGNAL(timeout()),this, SLOT(nextPlayBack()));
 	
-	atexit(SDL_Quit);
 	setNormalRatio();
+	setAttribute(Qt::WA_PaintOnScreen);	
+	setAttribute(Qt::WA_NoSystemBackground);
+	setObjectName(name);
+	
+	facade->attatch(this);
+	Logger::get().logDebug("FrameView is attatched to the model and the model to FrameView");
 }
 
 
@@ -77,22 +82,26 @@ FrameView::~FrameView()
 	if (isPlayingVideo) {
 		off();
 	}
-	
-	SDL_FreeSurface(videoSurface);
-	videoSurface = NULL;
-	SDL_FreeSurface(screen);
-	screen = NULL;
+
+	if (videoSurface) {
+		SDL_FreeSurface(videoSurface);
+		videoSurface = 0;
+	}
 
 	for (unsigned int i = 0; i < imageBuffer.size(); ++i) {
 		SDL_FreeSurface(imageBuffer[i]);
 	}
 	imageBuffer.clear();
+	numImagesInBuffer = 0;
+	
+	// Freeing resources allocated to SDL and shutdown
+	SDL_Quit();
 	
 	delete grabber;
-	grabber = NULL;
+	grabber = 0;
 	
 	delete [] capturedImg;
-	capturedImg = NULL;
+	capturedImg = 0;
 }
 
 
@@ -115,9 +124,20 @@ void FrameView::setNormalRatio()
 }
 
 
-// abstract functions that must be implemented, but who aren't needed in
-//this particular widget.
-void FrameView::updateAdd(const vector<char*>&, unsigned int, Frontend*) {}
+void FrameView::initCompleted()
+{
+	emit cameraReady();
+}
+
+
+void FrameView::updateAdd(const vector<char*> &frames, unsigned int, Frontend*) 
+{
+	if (isPlayingVideo) {
+		addToImageBuffer( IMG_Load(frames[0]) );
+	}
+}
+
+
 void FrameView::updateRemove(unsigned int, unsigned int) {}
 void FrameView::updateMove(unsigned int, unsigned int, unsigned int) {}
 
@@ -129,9 +149,9 @@ void FrameView::updateNewActiveFrame(int frameNumber)
 	}
 	else {
 		SDL_FreeSurface(videoSurface);
-		videoSurface = NULL;
-		this->repaint();
-	}
+		videoSurface = 0;
+		this->update();
+	}	
 }
 
 
@@ -142,30 +162,26 @@ void FrameView::updatePlayFrame(int frameNumber)
 	}
 	else {
 		SDL_FreeSurface(videoSurface);
-		videoSurface = NULL;
-		this->repaint();
+		videoSurface = 0;
+		this->update();
 	}
 }
 
 
 void FrameView::resizeEvent(QResizeEvent*)
 {	
-	// We could get a resize event at any time, so clean previous mode
-	SDL_FreeSurface(screen);
-	screen = NULL;
-	SDL_QuitSubSystem(SDL_INIT_VIDEO);
-
 	// Set the new video mode with the new window size
 	char variable[64];
 	sprintf(variable, "SDL_WINDOWID=0x%lx", winId());
 	putenv(variable);
-	if ( SDL_InitSubSystem(SDL_INIT_VIDEO) < 0 ) {
+	if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
 		char msg[80] = "Unable to init SDL: ";
 		strcat( msg, SDL_GetError() );
 		Logger::get().logFatal(msg);
     }
-	
-	screen = SDL_SetVideoMode(width(), height(), 0, 0);
+
+	// The previously surface is automatically deleted by SDL
+	screen = SDL_SetVideoMode(width(), height(), 0, SDL_DOUBLEBUF | SDL_SWSURFACE);
 	if (!screen) {
 		char msg[80] = "Unable to set vide mode: ";
 		strcat( msg, SDL_GetError() );
@@ -173,153 +189,75 @@ void FrameView::resizeEvent(QResizeEvent*)
 	}
 }
 
+
 void FrameView::paintEvent(QPaintEvent *)
 {
-	//Are static for efficiency.
-#ifdef diff_rollback
- 	static Frame *f = NULL;
-#endif
-	static SDL_Surface *frameSurface = NULL;
+	static SDL_Surface *frameSurface = 0;
 	int activeFrame = -1;
 	
 #if defined(Q_WS_X11)
 	// Make sure we're not conflicting with drawing from the Qt library
-	XSync(QPaintDevice::x11Display(), FALSE);
+	XSync(QX11Info::display(), FALSE);
 #endif
 	if (screen) {
-		SDL_FreeSurface(screen);
-		SDL_FillRect(screen, NULL, 0);
+		SDL_FillRect(screen, 0, 0);
 		
-		if ( videoSurface ) {
+		if (videoSurface) {
 			SDL_Rect dst;
 			dst.x = (screen->w - videoSurface->w) >> 1;
 			dst.y = (screen->h - videoSurface->h) >> 1;
 			dst.w = videoSurface->w;
 			dst.h = videoSurface->h;
-			SDL_BlitSurface(videoSurface, NULL, screen, &dst);
+			SDL_BlitSurface(videoSurface, 0, screen, &dst);
+			
 			if (isPlayingVideo) {
 				activeFrame = facade->getActiveFrameNumber();
-				switch (mode)
-				{
-					//Image mixing
+				switch (mode) {
+					// Image mixing
 					case 0:
 					{
-						//Define for rolling back to some old code for mixing. 
-						//Provided in a transition phase
-#ifdef mix_rollback
-						for (int i = 1; (i <= mixCount) && (activeFrame - i >= -1); ++i) {
-							//This test is needed for when the user closes scenes
-							//when the camera is on.
-							f = facade->getFrame(activeFrame + 1 - i);
-							if (f == NULL) {
-								break;
-							}
-							frameSurface = IMG_Load( f->getImagePath() );
-							
-							if (frameSurface != NULL) {
-								SDL_Rect dst2;
-								dst2.x = (screen->w - frameSurface->w) >> 1;
-								dst2.y = (screen->h - frameSurface->h) >> 1;
-								dst2.w = frameSurface->w;
-								dst2.h = frameSurface->h;
-								SDL_SetAlpha(frameSurface, SDL_SRCALPHA, 80 / i);
-								SDL_BlitSurface(frameSurface, NULL , screen, &dst2);
-								SDL_FreeSurface(frameSurface);
-							}
-						}
-#else
-						//Buffering here i the paint function is kind of ugly, but there
-						//is good reasons for it being like this. However, if someone can
-						//find a prettier way the code will be gratefull.
-						if (activeFrame != this->activeFrame || lastMixCount != mixCount
-								|| lastViewMode != mode) {
-							
-							const unsigned bufferSize = imageBuffer.size();
-							for (unsigned int i = 0; i < bufferSize; ++i) {
-								SDL_FreeSurface(imageBuffer[i]);
-							}
-							imageBuffer.clear();
-							
-							for (int i = activeFrame, j = 0; i >= 0 && j < mixCount; --i, ++j) {
-								imageBuffer.insert(imageBuffer.begin() + j, 
-										IMG_Load(facade->getFrame(i)->getImagePath()));
-							}
+						if (activeFrame != this->activeFrame || lastMixCount != mixCount || 
+								lastViewMode != mode) {
 							this->activeFrame = activeFrame;
 							lastMixCount = mixCount;
 							lastViewMode = mode;
 						}
 						
-						const unsigned bufferSize = imageBuffer.size();
-						for (unsigned int i = 0; i < bufferSize; ++i) {
-							frameSurface = imageBuffer[i];
-							if (frameSurface != NULL) {
+						int offset = numImagesInBuffer - 1;
+						for (int i = 0; i < numImagesInBuffer && i < mixCount; ++i) {
+							frameSurface = imageBuffer[offset - i];
+							if (frameSurface != 0) {
 								SDL_Rect dst2;
 								dst2.x = (screen->w - frameSurface->w) >> 1;
 								dst2.y = (screen->h - frameSurface->h) >> 1;
 								dst2.w = frameSurface->w;
 								dst2.h = frameSurface->h;
-								SDL_SetAlpha(frameSurface, SDL_SRCALPHA, 80/(i+1));
-								SDL_BlitSurface(frameSurface, NULL , screen, &dst2);
+								SDL_SetAlpha(frameSurface, SDL_SRCALPHA, alphaLut[i]);
+								SDL_BlitSurface(frameSurface, 0 , screen, &dst2);
 							}
 						}
-#endif
 						break;
 					}
-					//Image differentiating
+					// Image differentiating
 					case 1: 
 					{
-						//Define for rolling back to some old code for diffing. 
-						//Provided in a transition phase
-#ifdef diff_rollback
-						f = facade->getFrame(activeFrame);
-						if (f != NULL) {
-							frameSurface = IMG_Load(f->getImagePath());
-							if (frameSurface != NULL) {
-								SDL_Surface *tmp = differentiateSurfaces(videoSurface, frameSurface);
-								SDL_Rect dst;
-								dst.x = (screen->w - tmp->w) >> 1;
-								dst.y = (screen->h - tmp->h) >> 1;
-								dst.w = tmp->w;
-								dst.h = tmp->h;
-								SDL_BlitSurface(tmp, NULL, screen, &dst);
-								SDL_FreeSurface(tmp);
-								SDL_FreeSurface(frameSurface);
-							}
-						}
-#else
-						//Buffering here i the paint function is kind of ugly, but there
-						//is good reasons for it being like this. However, if someone can
-						//find a prettier way the code will be gratefull.
 						if (activeFrame != this->activeFrame || lastViewMode != mode) {
-							const unsigned bufferSize = imageBuffer.size();
-							for (unsigned int i = 0; i < bufferSize; ++i) {
-								SDL_FreeSurface(imageBuffer[i]);
-							}
-							imageBuffer.clear();
-							
-							if (activeFrame >= 0) {
-								imageBuffer.insert(imageBuffer.begin(), 
-										IMG_Load(facade->getFrame(activeFrame)->getImagePath()));
-							}
-							
 							this->activeFrame = activeFrame;
 							lastViewMode = mode;	
 						}
 							
 						if (activeFrame >= 0) {
-							SDL_Surface *tmp = differentiateSurfaces(videoSurface, imageBuffer[0]);
+							SDL_Surface *tmp = differentiateSurfaces(videoSurface, imageBuffer.back());
 							SDL_Rect dst;
 							dst.x = (screen->w - tmp->w) >> 1;
 							dst.y = (screen->h - tmp->h) >> 1;
 							dst.w = tmp->w;
 							dst.h = tmp->h;
-							SDL_BlitSurface(tmp, NULL, screen, &dst);
+							SDL_BlitSurface(tmp, 0, screen, &dst);
 							SDL_FreeSurface(tmp);
 						}
-#endif
 						break;
 					}
-					//The playback is handled another way
 				}
 			}
 		}
@@ -331,44 +269,53 @@ void FrameView::paintEvent(QPaintEvent *)
 void FrameView::setActiveFrame(int frameNumber)
 {
 	Logger::get().logDebug("Setting new active frame in FrameView");
- 	const char *fileName = DomainFacade::getFacade()->getFrame(frameNumber)->getImagePath();
-	
-	if (videoSurface) {
-		SDL_FreeSurface(videoSurface);
+	Frame *frame = facade->getFrame(frameNumber);
+	if (frame) {
+		const char *fileName = frame->getImagePath();
+
+		if (videoSurface) {
+			SDL_FreeSurface(videoSurface);
+			videoSurface = 0;
+		}
+		Logger::get().logDebug("Loading image");
+
+		videoSurface = IMG_Load(fileName);
+		if (videoSurface == 0) {
+			printf("IMG_Load: %s\n", IMG_GetError());
+		}
+		Logger::get().logDebug("Loading image finished");
+		this->update();
 	}
-	Logger::get().logDebug("Loading image");
-	
-	videoSurface = IMG_Load(fileName);
-	if (videoSurface == NULL) {
-		printf("IMG_Load: %s\n", IMG_GetError());
+	else {
+		Logger::get().logWarning("Active frame number inside frameview is not valid!");
 	}
-	Logger::get().logDebug("Loading image finished");
-	this->update();
+}
+
+
+void FrameView::addToImageBuffer(SDL_Surface *const image)
+{
+	if (numImagesInBuffer == 5) {
+		SDL_FreeSurface( imageBuffer.front() );
+		imageBuffer.pop_front();
+	}
+	else {
+		++numImagesInBuffer;
+	}
+	imageBuffer.push_back(image);
 }
 
 
 void FrameView::updateClear()
 {
 	SDL_FreeSurface(videoSurface);
-	videoSurface = NULL;
+	videoSurface = 0;
 	this->update();
 }
 
 
-void FrameView::updateNewScene(int)
-{
-
-}
-
-
-void FrameView::updateRemoveScene(int)
-{
-}
-
-
-void FrameView::updateNewActiveScene(int, vector<char*>, Frontend*)
-{
-}
+void FrameView::updateNewScene(int) {}
+void FrameView::updateRemoveScene(int) {}
+void FrameView::updateNewActiveScene(int, vector<char*>, Frontend*) {}
 
 
 void FrameView::updateAnimationChanged(int frameNumber)
@@ -377,35 +324,62 @@ void FrameView::updateAnimationChanged(int frameNumber)
 }
 
 
-void FrameView::updateMoveScene( int, int )
-{
-
-}
+void FrameView::updateMoveScene(int, int) {}
 
 
 bool FrameView::on()
 {
-	this->isPlayingVideo = true;
-	
 	PreferencesTool *prefs = PreferencesTool::get();
 	int activeCmd = prefs->getPreference("activedevice", 0);
-	const char* prepoll = prefs->getPreference(
-			QString("importprepoll%1").arg(activeCmd).ascii(), "");
-	const char* startDeamon = prefs->getPreference(
-			QString("importstartdeamon%1").arg(activeCmd).ascii(), "");
-	const char* stopDeamon = prefs->getPreference(
-			QString("importstopdeamon%1").arg(activeCmd).ascii(), "");
+	
+	const char* prepoll = 
+		prefs->getPreference(QString("importprepoll%1").arg(activeCmd).toLatin1().constData(), "");
+	const char* startDeamon = 
+		prefs->getPreference(QString("importstartdeamon%1").arg(activeCmd).toLatin1().constData(), "");
+	const char* stopDeamon = 
+		prefs->getPreference(QString("importstopdeamon%1").arg(activeCmd).toLatin1().constData(), "");
 	
 	bool isProcess = (strcmp(startDeamon, "") == 0) ? false : true;
-	this->grabber = new CommandLineGrabber(
-			capturedImg, prepoll, startDeamon, stopDeamon, isProcess);
-	this->initCompleted();
+	bool isCameraReady = true;
+	this->grabber = new CommandLineGrabber(capturedImg, isProcess);
+	if ( !grabber->setPrePollCommand(prepoll) ) {
+		QMessageBox::warning(this, tr("Warning"), tr(
+					"Pre poll command does not exists"),
+					QMessageBox::Ok,
+					Qt::NoButton, 
+					Qt::NoButton);
+		//return false;
+		isCameraReady = false;
+	}
+	if ( !grabber->setStartCommand(startDeamon) ) {
+		DomainFacade::getFacade()->getFrontend()->hideProgress();
+		QMessageBox::warning(this, tr("Warning"), tr(
+					"You do not have the given grabber installed on your system"),
+					QMessageBox::Ok,
+					Qt::NoButton, 
+					Qt::NoButton);
+		isCameraReady = false;
+		//return false;
+	}
+	grabber->setStopCommand(stopDeamon);
+	
+	freeProperty(prepoll);
+	freeProperty(startDeamon);
+	freeProperty(stopDeamon);
+
+	if (isCameraReady) {
+		this->initCompleted();
+		this->isPlayingVideo = true;
+	}
+	else {
+		return false;
+	}
 	
 	if ( prefs->getPreference("numberofimports", 1) > 0 ) {
-		//If the grabber is running in it's own process we use a timer.
+		// If the grabber is running in it's own process we use a timer.
 		if (grabber->isGrabberProcess() == true) {
 			if ( grabber->init() ) {
-				grabTimer.start(200);
+				grabTimer.start(150);
 			}
 			else {
 				QMessageBox::warning(this, tr("Warning"), tr(
@@ -413,12 +387,12 @@ bool FrameView::on()
 					"to grab from an invalid device. Please check\n"
 					"your grabber settings in the preferences menu."),
 					QMessageBox::Ok,
-					QMessageBox::NoButton, 
-					QMessageBox::NoButton);
+					Qt::NoButton, 
+					Qt::NoButton);
 				return false;
 			}
 		}
-		//Otherwise a thread is needed
+		// Otherwise a thread is needed
 		else {
 			grabThread = new ImageGrabThread(this, grabber);
 			grabThread->start();
@@ -430,8 +404,8 @@ bool FrameView::on()
 					"to grab from an invalid device. Please check\n"
 					"your grabber settings in the preferences menu."),
 					QMessageBox::Ok,
-					QMessageBox::NoButton, 
-					QMessageBox::NoButton);
+					Qt::NoButton, 
+					Qt::NoButton);
 				return false;
 			}
 		}
@@ -441,12 +415,12 @@ bool FrameView::on()
 				"You have to define an image grabber to use.\n"
 				"This can be set in the preferences menu."),
 				QMessageBox::Ok,
-				QMessageBox::NoButton, 
-				QMessageBox::NoButton);
+				Qt::NoButton, 
+				Qt::NoButton);
 		return false;
 	}
 	
-	//To get the draw function to buffer for onionskinning
+	// To get the draw function buffer for onionskinning
 	lastMixCount = -1;
 	return true;
 }
@@ -454,30 +428,35 @@ bool FrameView::on()
 
 void FrameView::off()
 {
-	if (grabber->isGrabberProcess() == true) {
-		grabber->tearDown();
-		grabTimer.stop();
-		playbackTimer.stop();
+	if ( grabber != 0 ) {
+		if ( grabber->isGrabberProcess() ) {
+			grabber->tearDown();
+			grabTimer.stop();
+			playbackTimer.stop();
+		}
+		delete grabber;
+		grabber = 0;
 	}
-	else {
+
+	if (grabThread != 0) {
 		grabThread->terminate();
 		grabThread->wait();
 		delete grabThread;
-		grabThread = NULL;
+		grabThread = 0;
 	}
 	
 	for (unsigned int i = 0; i < imageBuffer.size(); ++i) {
 		SDL_FreeSurface(imageBuffer[i]);
 	}
 	imageBuffer.clear();
-	
-	delete grabber;
-	grabber = NULL;
+	numImagesInBuffer = 0;
 		
 	this->isPlayingVideo = false;
-	
-	SDL_FreeSurface(videoSurface);
-	videoSurface = NULL;
+
+	if (videoSurface != 0) {
+		SDL_FreeSurface(videoSurface);
+		videoSurface = 0;
+	}
 	this->update();
 }
 
@@ -486,7 +465,7 @@ void FrameView::redraw()
 {
 	if (videoSurface) {
 		SDL_FreeSurface(videoSurface);
-		videoSurface = NULL;
+		videoSurface = 0;
 	}
 	videoSurface = IMG_Load(capturedImg);
 	this->update();
@@ -495,25 +474,28 @@ void FrameView::redraw()
 
 void FrameView::nextPlayBack()
 {
-	//Don't you just love static function variables ^^
 	static unsigned int i = 0;
 	
-	//Need to check the that there is an active scene before checking
-	//what its size is. Therefore I cant use &&.
+	// Need to check that there is an active scene before checking
+	// what its size is.
 
 	if (facade->getActiveSceneNumber() >= 0) {
 		if ((int)i < (mixCount) && i < (unsigned int)facade->getActiveFrameNumber() + 1) {
-			if (videoSurface) {
-				SDL_FreeSurface(videoSurface);
-				videoSurface = NULL;
-			}
 			
+			Frame *frame = 0;
 			if (facade->getActiveFrameNumber() <= (mixCount)) {
-				videoSurface = IMG_Load(DomainFacade::getFacade()->getFrame(i++)->getImagePath());
+				frame = facade->getFrame(i++);
 			}
 			else {
-				videoSurface = IMG_Load(facade->getFrame(
-						facade->getActiveFrameNumber()-(mixCount)+i++)->getImagePath());
+				frame = facade->getFrame(facade->getActiveFrameNumber() - mixCount + i++);
+			}
+				
+			if (frame) {
+				if (videoSurface) {
+					SDL_FreeSurface(videoSurface);
+					videoSurface = 0;
+				}
+				videoSurface = IMG_Load(frame->getImagePath());
 			}
 				
 			this->update();
@@ -523,8 +505,8 @@ void FrameView::nextPlayBack()
 		}
 	}
 	
-	//This code is run if one of the two above tests fail. Can't be an else because
-	//then I would have to have two such elses, and I think the return is better.
+	// This code is run if one of the two above tests fail. Can't be an else because
+	// then I would have to have two such elses, and I think the return is better.
 	i = 0;
 	redraw();
 }
@@ -532,7 +514,7 @@ void FrameView::nextPlayBack()
 
 bool FrameView::setViewMode(int mode)
 {
-	//Going into playback mode.
+	// Going into playback mode.
 	if (mode == 2 && this->mode != 2) {
 		if ( grabber->isGrabberProcess() ) {
 			grabTimer.stop();
@@ -542,11 +524,11 @@ bool FrameView::setViewMode(int mode)
 			return false;
 		}
 	}
-	//Going out of playback mode.
+	// Going out of playback mode.
 	else if (mode != 2 && this->mode == 2) {
 		if ( grabber->isGrabberProcess() ) {
 			playbackTimer.stop();
-			grabTimer.start(200);
+			grabTimer.start(150);
 		}
 	}
 	
@@ -554,52 +536,54 @@ bool FrameView::setViewMode(int mode)
 	return true;
 }
 
+void FrameView::setMixCount(int mixCount)
+{
+	this->mixCount = mixCount;
+}
 
-int FrameView::getViewMode()
+int FrameView::getViewMode() const
 {
 	return mode;
 }
-
 
 void FrameView::setPlaybackSpeed(int playbackSpeed)
 {
 	this->playbackSpeed = playbackSpeed;
 	if ( playbackTimer.isActive() ) {
-		playbackTimer.changeInterval(1000/playbackSpeed);
+		playbackTimer.setInterval(1000 / playbackSpeed);
 	}
 }
 
 
-//The only thing left which is a little expensive is the MapRGB function.
+// The only thing left which is a little expensive is the MapRGB function.
 SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2)
 {
 	int width = s2->w;
 	int height = s2->h;
 	
-	SDL_Surface *diffSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32,
-								0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
+	SDL_Surface *diffSurface = SDL_CreateRGBSurface(
+			SDL_SWSURFACE, width, height, 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
 	
-	//Lock the surfaces before working with the pixels
-	SDL_LockSurface( s1 );
-	SDL_LockSurface( s2 );
-	SDL_LockSurface( diffSurface );
+	// Lock the surfaces before working with the pixels
+	SDL_LockSurface(s1);
+	SDL_LockSurface(s2);
+	SDL_LockSurface(diffSurface);
 	
-	//Pointers to the first byte of the first pixel on the input surfaces.
-	Uint8 *p1 = (Uint8 *)s1->pixels;
-	Uint8 *p2 = (Uint8 *)s2->pixels;
+	// Pointers to the first byte of the first pixel on the input surfaces.
+	Uint8 *p1 = static_cast<Uint8 *>(s1->pixels);
+	Uint8 *p2 = static_cast<Uint8 *>(s2->pixels);
 	
-	//Pointers to the first pixel on the resulting surface
-	Uint32 *pDiff =  (Uint32 *)diffSurface->pixels;
+	// Pointers to the first pixel on the resulting surface
+	Uint32 *pDiff =  static_cast<Uint32 *>(diffSurface->pixels);
 	
 	SDL_PixelFormat fDiff = *diffSurface->format;
 	Uint32  differencePixel;
 	Uint8 dr, dg, db;
-	int offset = 0, pixelOffset = 0;
-	int i, j;
 	
-	//Goes through the surfaces as one-dimensional arrays.
-	for (i = 0; i < height; ++i) {
-		for (j = 1; j < width; ++j) {
+	// Goes through the surfaces as one-dimensional arrays.
+	int offset = 0, pixelOffset = 0;
+	for (int i = 0; i < height; ++i) {
+		for (int j = 1; j < width; ++j) {
 			dr = abs(p1[offset    ] - p2[offset    ]);
 			dg = abs(p1[offset + 1] - p2[offset + 1]);
 			db = abs(p1[offset + 2] - p2[offset + 2]);
@@ -611,11 +595,18 @@ SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2)
 		offset += 3;
 	}
 	
-	//Unlock the surfaces for displaying them.
-	SDL_UnlockSurface( s1 );
-	SDL_UnlockSurface( s2 );
-	SDL_UnlockSurface( diffSurface );
+	// Unlock the surfaces for displaying them.
+	SDL_UnlockSurface(s1);
+	SDL_UnlockSurface(s2);
+	SDL_UnlockSurface(diffSurface);
 	
 	return diffSurface;
 }
 
+
+void FrameView::freeProperty(const char *prop, const char *tag)
+{
+	if (strcmp(prop, tag) != 0) {
+		xmlFree((xmlChar *)prop);
+	}
+}

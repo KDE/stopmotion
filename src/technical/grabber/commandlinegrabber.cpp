@@ -17,7 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "commandlinegrabber.h"
+#include "src/technical/grabber/commandlinegrabber.h"
+#include "src/technical/util.h"
 
 #include <sstream>
 #include <sys/types.h>
@@ -27,14 +28,50 @@
 using namespace std;
 
 
-CommandLineGrabber::CommandLineGrabber(char* filePath, const char* prePoll,
-		const char* startProcess, const char* stopProcess, bool isProcess)
+CommandLineGrabber::CommandLineGrabber(char* filePath, bool isProcess)
 		: ImageGrabber(filePath, isProcess)
 {
 	isInitSuccess = false;
-	this->prePoll 		= parseCommand(prePoll);
-	this->startProcess 	= parseCommand(startProcess);
-	this->stopProcess	= parseCommand(stopProcess);
+	this->prePoll = "";
+	this->startProcess = "";
+	this->stopProcess = "";
+}
+
+
+bool CommandLineGrabber::setPrePollCommand(const char *command) 
+{
+	// This happens if the user doesn't uses pre poll
+	if ( strcmp(command, "") == 0) {
+		return true;
+	}
+	
+	prePoll = parseCommand(command);
+	if (prePoll != "") {
+		return true;
+	}
+	return false;
+}
+
+
+bool CommandLineGrabber::setStartCommand(const char *command)
+{
+	// This happens if the user doesn't uses start command
+	if ( strcmp(command, "") == 0) {
+		return true;
+	}
+	
+	startProcess = parseCommand(command);
+	if (startProcess != "") {
+		return true;
+	}
+	return false;
+}
+
+
+bool CommandLineGrabber::setStopCommand(const char *command)
+{
+	stopProcess	= parseCommand(command);
+	return true;
 }
 
 
@@ -78,10 +115,21 @@ bool CommandLineGrabber::grab()
 string CommandLineGrabber::parseCommand(const char * command)
 {
 	string tmp = command;
-	int index = tmp.find("$IMAGEFILE");
-	if (index != -1) {
-		tmp.replace(index, strlen("$IMAGEFILE"), string(filePath));
+	int spaceIdx = tmp.find(" ", 0);
+	
+	const char *path = Util::checkCommand((tmp.substr(0, spaceIdx)).c_str());
+	if (path != NULL) {
+		tmp.replace(0, spaceIdx, path);
+		delete [] path;
+		path = NULL;
+		
+		int index = tmp.find("$IMAGEFILE");
+		if (index != -1) {
+			tmp.replace(index, strlen("$IMAGEFILE"), string(filePath));
+		}
+		
+		return tmp;
 	}
-	return tmp;
+	return "";
 }
 

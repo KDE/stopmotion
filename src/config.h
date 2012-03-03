@@ -20,11 +20,16 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-//Global defines
-#define QTGUI
-
 //Global includes
 #include <assert.h>
 #include "foundation/logger.h"
+
+//Global defines
+#define QTGUI
+
+namespace stopmotion {
+	extern const char *const htmlDirectory;
+	extern const char *const translationsDirectory;
+};
 
 #endif
