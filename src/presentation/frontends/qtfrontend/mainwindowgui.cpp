@@ -1061,7 +1061,9 @@ void MainWindowGUI::showAboutDialog()
 						"John Steinar Bildøy &lt;johnsbil@haldenfriskole.no&gt;<br>"
 						"Ole-Anders Andreassen &lt;ole-anders.andreassen@sunndal.kommune.no&gt;<br>"
 						"</p>"
-						"<p><b>Translation</b><br></p>") );
+						"<p><b>Translation</b><br>"
+						"George Helebrant &lt;helb@skatekralovice.com&gt; (Czech)<br>"
+						"</p>") );
 	thanksToText->setReadOnly(true);
 	thanksToText->setPaletteBackgroundColor(aboutDialog->paletteBackgroundColor());
 	aboutDialog->addTab(thanksToText, tr("&Thanks To"));

@@ -77,7 +77,10 @@ public:
 private:
 	/** Descriptor to the audio device. */
 	int audioFD;
-	
+
+	/** 0 = play, 1 = stop */
+	int stopPlaying;
+		
 	/** Pointer to the registered audio device. */
 	char *audioDevice;
 	

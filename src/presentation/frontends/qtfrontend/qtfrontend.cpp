@@ -18,7 +18,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "qtfrontend.h"
-#include "src/foundation/preferencestool.h"
 
 #include <qmessagebox.h>
 #include <qtextcodec.h>
@@ -181,50 +180,103 @@ void QtFrontend::initializePreferences()
 	PreferencesTool *prefs = PreferencesTool::get();
 	QString preferencesFile = getenv("HOME");
 	preferencesFile += "/.stopmotion/preferences.xml";
+	QString oldPrefsFile = preferencesFile + ".OLD";
 	
 	// Has to check this before calling setPreferencesFile(...) because
 	// the function creates the file if it doesn't exist.
-	int prefsFileExist = access(preferencesFile.ascii(), F_OK);
+	int prefsFileExists = access(preferencesFile.ascii(), R_OK);
+	
+	if (prefsFileExists != -1) {
+		QString tmp = "/bin/cp " + preferencesFile + " " + oldPrefsFile;
+		system(tmp.ascii());
+	}
 	
 	// If file doesn't exist or has wrong version number
-	if ( !prefs->setPreferencesFile(preferencesFile.ascii(), "0.3") ) {
+	if ( !prefs->setPreferencesFile(preferencesFile.ascii(), "0.4") ) {
 		// File doesn't exist
-		if ( prefsFileExist == -1) {
-			Logger::get().logDebug("Loading default preferences");
-			
-			//Default import options
-			prefs->setPreference("numberofimports", 2);
-			prefs->setPreference("importname0", tr("vgrabbj VGA singleshot").ascii());
-			prefs->setPreference("importdescription0", 
-					tr("The simplest setting. Fairly slow").ascii());
-			prefs->setPreference("importprepoll0",
-					"vgrabbj -f (DEFAULTPATH) -d /dev/video0 -b -D 0 -i vga");
-			prefs->setPreference("importname1", tr("vgrabbj VGA deamon").ascii());
-			prefs->setPreference("importdescription1", 
-					tr("Starts vgrabbj as a deamon. Pretty fast.").ascii());
-			prefs->setPreference("importstartdeamon1", 
-					"vgrabbj -f (DEFAULTPATH) -d /dev/video0 -b -D 0 -i vga -L250");
-			prefs->setPreference("importstopdeamon1", 
-					"kill -9 `ps ax | grep vgrabbj | grep -v grep | cut -b 0-5`");
-			prefs->setPreference("activedevice", 1);
-			
-			// Default export options
-			prefs->setPreference("numEncoders", 1);
-			prefs->setPreference("activeEncoder", 0);
-			prefs->setPreference("encoderName0", "mencoder");
-			prefs->setPreference("encoderDescription0", 
-					tr("Exports from jpeg images to mpeg1 video").ascii());
-			prefs->setPreference("startEncoder0", tr(
-					"mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg "
-					"-ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE").ascii());
-			prefs->setPreference("stopEncoder0", tr("").ascii());
+		if (prefsFileExists == -1) {
+			setDefaultPreferences(prefs);
 		}
 		// Has wrong version number
 		else {
-			// TODO: Add default options for the new version. It's important to *not* remove
-			// any options added by the user
+			int useNewPrefsFile = askQuestion(tr(	
+					"A newer version of the preferences file with few more default\n"
+					"values exists. Do you want to use this one? (Your old preferences\n "
+					"will be saved in ~/.stopmotion/preferences.xml.OLD)"));
+			// Use new preferences
+			if (useNewPrefsFile == 0) { // 0 = yes
+				setDefaultPreferences(prefs);
+				
+			}
+			// Use old preferences
+			else {
+				rename(oldPrefsFile.ascii(), preferencesFile.ascii());
+				prefs->setPreferencesFile(preferencesFile.ascii(), prefs->getOldVersion());
+				prefs->setVersion("0.4");
+			}
 		}
 	}
+}
+	
+
+void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
+{
+	assert(prefs != NULL);
+	Logger::get().logDebug("Setting default preferences");
+
+	// Default import options ------------------------------------------------
+	prefs->setPreference("numberofimports", 2);
+	prefs->setPreference("activedevice", 1);
+
+	// Default import option 1
+	prefs->setPreference("importname0", tr("vgrabbj VGA singleshot").ascii());
+	prefs->setPreference("importdescription0", 
+			tr("The simplest setting. Fairly slow").ascii());
+	prefs->setPreference("importprepoll0",
+			"vgrabbj -f (DEFAULTPATH) -d /dev/video0 -b -D 0 -i vga");
+	prefs->setPreference("importstopdeamon0", "");
+
+	// Default import option 2
+	prefs->setPreference("importname1", tr("vgrabbj VGA deamon").ascii());
+	prefs->setPreference("importdescription1", 
+			tr("Starts vgrabbj as a deamon. Pretty fast.").ascii());
+	prefs->setPreference("importstartdeamon1", 
+			"vgrabbj -f (DEFAULTPATH) -d /dev/video0 -b -D 0 -i vga -L250");
+	prefs->setPreference("importstopdeamon1", 
+			"kill -9 `ps ax | grep vgrabbj | grep -v grep | cut -b 0-5`");
+	// -----------------------------------------------------------------------
+
+	// Default export options ------------------------------------------------
+	prefs->setPreference("numEncoders", 3);
+	prefs->setPreference("activeEncoder", 2);
+
+	// Default export option 1
+	prefs->setPreference("encoderName0", "mencoder");
+	prefs->setPreference("encoderDescription0", 
+			tr("Exports from jpeg images to mpeg1 video").ascii());
+	prefs->setPreference("startEncoder0",
+			"mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg "
+			"-ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE");
+	prefs->setPreference("stopEncoder0", "");
+
+	// Default export option 2
+	prefs->setPreference("encoderName1", "mencoder");
+	prefs->setPreference("encoderDescription1", 
+			tr("Exports from jpeg images to mpeg2 video").ascii());
+	prefs->setPreference("startEncoder1",
+			"mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=4:type=jpg "
+			"-ovc lavc -lavcopts vcodec=mpeg2video -oac copy -o $VIDEOFILE");
+	prefs->setPreference("stopEncoder1", "");
+
+	// Default export option 3
+	prefs->setPreference("encoderName2", "mencoder");
+	prefs->setPreference("encoderDescription2", 
+			tr("Exports from jpeg images to mpeg4 video").ascii());
+	prefs->setPreference("startEncoder2",
+			"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1:$opt -mf type=jpg:fps=8 "
+			"-o $VIDEOFILE mf://$IMAGEPATH/*.jpg");
+	prefs->setPreference("stopEncoder2", "");
+	//-------------------------------------------------------------------------
 }
 
 

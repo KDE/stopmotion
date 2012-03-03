@@ -22,7 +22,12 @@
 #include "src/foundation/logger.h"
 
 #include <sys/ioctl.h>
+#if defined(__linux__)
 #include <linux/soundcard.h>
+#endif
+#if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+#include <sys/soundcard.h>
+#endif	
 #include <fcntl.h>
 #include <errno.h>
 
@@ -40,6 +45,7 @@ OSSDriver::OSSDriver(const char *device)
 {
 	assert(device != NULL);
 	audioFD = -1;
+	stopPlaying = 1;
 	audioDevice = new char[strlen(device) + 1];
 	strcpy(audioDevice, device);
 }
@@ -68,7 +74,7 @@ void OSSDriver::play()
 			
 			// While the ``producer'' has written more than zero
 			// bytes to the buffer
-			while (written > 0) {
+			while (written > 0 && stopPlaying == 0) {
 				// Flush it to the device
 				write(audioFD, audioBuffer, written);
 				// and fill again
@@ -123,6 +129,8 @@ bool OSSDriver::initialize()
 			return false;
 		}
 	}
+	
+	stopPlaying = 0;
 	return true;
 }
 
@@ -148,9 +156,12 @@ void OSSDriver::shutdown()
 	if (audioFD != -1) {
 		Logger::get().logDebug("Shutdowns the audio device");
 		
+		stopPlaying = 1;
+		
+		// Wait for the threads to terminate
 		unsigned int numElem = audioThreads.size();
 		for (unsigned int i = 0; i < numElem; i++) {
-			pthread_cancel(audioThreads[i]);
+			pthread_join(audioThreads[i], NULL);
 		}
 		audioThreads.clear();
 		

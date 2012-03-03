@@ -51,7 +51,6 @@ QPopupMenu* LanguageHandler::createLanguagesMenu(QPopupMenu *parent)
 		languagesMenu->setItemChecked(id, true);
 	}
 	
-	
 	int nr = 2;
 	for(int i=0; i < (int)fileNames.size(); ++i) {
 		QTranslator translator;
@@ -85,23 +84,6 @@ QPopupMenu* LanguageHandler::createLanguagesMenu(QPopupMenu *parent)
 	}
 	
 	return languagesMenu;
-	
-	
-	/*QString infoText =
-		tr("<h4>English</h4> "
-		"<p>Select this menu options to get the <em>English</em> translation of "
-		"the application.</p>");
-	languagesMenu->setWhatsThis(id, infoText);*/
-	/*id = languagesMenu->insertItem( tr("&Norwegian"), 
-			this, SLOT(switchToLanguage(int)) );
-	infoText =
-		tr("<h4>Norwegian</h4> "
-		"<p>Select this menu options to get the <em>Norwegian</em> translation of "
-		"the application.</p>");
-	languagesMenu->setWhatsThis(id, infoText);*/
-	
-
-	
 }
 
 
