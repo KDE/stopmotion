@@ -19,11 +19,21 @@
  ***************************************************************************/
 #include "src/technical/util.h"
 
+#include "src/technical/libng/grab-ng.h"
+
 #include <ext/stdio_filebuf.h>
-#include <istream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <string.h>
+#include <unistd.h>
 #include <cassert>
+#include <istream>
+
 
 using namespace std;
 
@@ -48,6 +58,71 @@ const char* Util::checkCommand(const char *command)
 		return path;
 	}
 	
-	return NULL;
+	return 0;
+}
+
+
+const vector<GrabberDevice> Util::getGrabberDevices()
+{
+	// Ensures ng_init() is called once
+	static int count = 0;
+	if (count++ == 0) {
+		ng_init();
+	}
+	
+	vector<GrabberDevice> devices;
+	const struct ng_vid_driver *driver = 0;
+	void *handle = 0;
+	struct stat st;
+	int fh    = -1;
+	int flags = -1;
+
+	for (int i = 0; ng_dev.video_scan[i] != 0; ++i) {
+		if (lstat(ng_dev.video_scan[i], &st) == -1) {
+			if (errno == ENOENT) {
+				continue;
+			}
+#ifndef NO_DEBUG
+			fprintf(stderr,"%s: %s\n",ng_dev.video_scan[i],strerror(errno));
+#endif
+			continue;
+		}
+
+		fh = open(ng_dev.video_scan[i], O_RDWR);
+		if (fh == -1) {
+			if (ENODEV == errno) {
+				continue;
+			}
+#ifndef NO_DEBUG
+			fprintf(stderr,"%s: %s\n",ng_dev.video_scan[i],strerror(errno));
+#endif
+			continue;
+		}
+		close(fh);
+
+		driver = ng_vid_open(ng_dev.video_scan[i], 0, 0, 0, &handle);
+		if (driver == 0) {
+#ifndef NO_DEBUG
+			fprintf(stderr,"%s: initialization failed\n",ng_dev.video_scan[i]);
+#endif
+			continue;
+		}
+
+		flags = driver->capabilities(handle);
+		if (flags & CAN_CAPTURE) {
+			GrabberDevice d;
+			d.device = ng_dev.video_scan[i];
+			if (driver->get_devname) {
+				d.name = driver->get_devname(handle);
+			}
+			d.type = driver->name;
+			devices.push_back(d);
+		}
+
+		driver->close(handle);
+	}
+
+	vector<GrabberDevice>(devices).swap(devices);
+	return devices;
 }
 

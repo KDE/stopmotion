@@ -37,16 +37,16 @@ AboutDialog::AboutDialog(QWidget *parent)
 	label->setScaledContents(true);
 	layout->addWidget(label);
 	layout->addWidget( new QLabel(
-				"<p>" + tr("This is the stopmotion application for creating stopmotion animations.") + "</p>"
-				"<p>(c) 2005, Fredrik Berg Kjølstad and Bjørn Erik Nilsen</p>"));
+				"<p>" + tr("This is the Stopmotion application for creating stop motion animations.") + "</p>"
+				"<p> &copy; 2005-2006, Bjørn Erik Nilsen and Fredrik Berg Kjølstad </p>"));
 	widget->setLayout(layout);
 	
 	tabWidget->addTab(widget, tr("&About") );
 	
 	tabWidget->addTab( new QLabel(
 				"<p><b>" + tr("Main developers") + "</b><br>"
-				"Fredrik Berg Kjølstad &lt;fredrikbk@hotmail.com&gt;<br>"
-				"Bjørn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;</p>"), 
+				"Bjørn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>" 
+				"Fredrik Berg Kjølstad &lt;fredrikbk@hotmail.com&gt;<br></p>"),
 				tr("A&uthors"));
 	
 	QTextEdit *qte = new QTextEdit;

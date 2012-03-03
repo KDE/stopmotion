@@ -31,6 +31,7 @@ PreferencesMenu::PreferencesMenu(QWidget *parent)
 {
 	importVideoTab = 0;
 	exportVideoTab = 0;
+	videoDeviceTab = 0;
 	tabWidget = new QTabWidget;
 	
 	QPushButton *applyButton = new QPushButton(tr("Apply"), this);
@@ -55,8 +56,8 @@ PreferencesMenu::PreferencesMenu(QWidget *parent)
 	setMaximumWidth(600);
 	setMinimumWidth(600);
 	setModal(false);
-	setAttribute(Qt::WA_DeleteOnClose);
 	
+	makeVideoDeviceTab();
 	makeVideoImportTab();
 	makeVideoExportTab();
 }
@@ -80,11 +81,28 @@ void PreferencesMenu::makeVideoExportTab()
 }
 
 
+void PreferencesMenu::makeVideoDeviceTab()
+{
+	videoDeviceTab = new DeviceTab;
+	videoDeviceTab->initialize();
+	videoDeviceTab->setMinimumHeight(300);
+	tabWidget->addTab(videoDeviceTab, tr("Video &Device"));
+}
+
+
 void PreferencesMenu::apply()
 {
 	setFocus();
+	videoDeviceTab->apply();
 	importVideoTab->apply();
 	exportVideoTab->apply();
 	PreferencesTool::get()->flushPreferences();
+}
+
+
+void PreferencesMenu::display()
+{
+	videoDeviceTab->initialize();
+	this->show();
 }
 

@@ -25,6 +25,7 @@
 #include "src/domain/undo/undohistory.h"
 #include "src/presentation/frontends/frontend.h"
 #include "src/technical/video/videoencoder.h"
+#include "src/technical/util.h"
 
 #include <vector>
 using namespace std;
@@ -288,6 +289,12 @@ public:
 	 * @param alteredFile the file which has been altered.
 	 */
 	void animationChanged(const char *alteredFile);
+
+	/** 
+	 * Returns available grabber devices.
+	 * @return vector containing available devices.
+	 */
+	const vector<GrabberDevice> getGrabberDevices();	
 	 
 protected:
 	/**

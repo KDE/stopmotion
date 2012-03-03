@@ -22,7 +22,6 @@
 #include "src/domain/domainfacade.h"
 #include "src/foundation/preferencestool.h"
 #include "src/technical/video/videoencoder.h"
-#include "src/presentation/frontends/qtfrontend/preferencesmenu.h"
 #include "src/presentation/frontends/qtfrontend/toolsmenu.h"
 #include "src/presentation/frontends/qtfrontend/helpwindow.h"
 #include "src/presentation/frontends/qtfrontend/aboutdialog.h"
@@ -84,6 +83,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	mostRecentMenu      = 0;
 	editMenu            = 0;
 	toolsMenu           = 0;
+	framePreferencesMenu= 0;
 	preferencesMenu     = 0;
 	gotoMenuCloseButton = 0;
 	gotoMenuWidget 		= 0;
@@ -392,10 +392,12 @@ void MainWindowGUI::makeToolsMenu(QHBoxLayout *layout)
 
 void MainWindowGUI::makePreferencesMenu(QVBoxLayout *layout)
 {
-	preferencesMenu = new FramePreferencesMenu(0, soundHandler);
-	//preferencesMenu->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Maximum);
-	layout->addWidget(preferencesMenu);
-	frameBar->setPreferencesMenu(preferencesMenu);
+	framePreferencesMenu = new FramePreferencesMenu(0, soundHandler);
+	layout->addWidget(framePreferencesMenu);
+	frameBar->setPreferencesMenu(framePreferencesMenu);
+	framePreferencesMenu->hide();
+	
+	preferencesMenu = new PreferencesMenu(this);
 	preferencesMenu->hide();
 }
 
@@ -535,7 +537,7 @@ void MainWindowGUI::retranslateStrings()
 	
 	//The submenus
 	toolsMenu->retranslateStrings();
-	preferencesMenu->retranslateStrings();
+	framePreferencesMenu->retranslateStrings();
 }
 
 
@@ -724,7 +726,7 @@ void MainWindowGUI::retranslateHelpText()
 			"<p>In this menu you can set preferences for the "
 			"selected frame/frames, such as <b>subtitles</b>, "
 			"<b>sound effects</b>, etc.</p>");
-	preferencesMenu->setWhatsThis(infoText );
+	framePreferencesMenu->setWhatsThis(infoText );
 	
 	infoText = 
 			tr("<h4>Tool menu</h4> "
@@ -1025,16 +1027,9 @@ void MainWindowGUI::showAboutDialog()
 }
 
 
-/**
- *A lot of this code is modified from a Qt example at:
- *http://doc.trolltech.com/3.3/helpviewer-example.html#x1105
- */
 void MainWindowGUI::showHelpDialog()
 {
 	HelpWindow *help = new HelpWindow(this);
-	//help->setText("/usr/share/doc/stopmotion/html/index.html");
-	//help->setCaption(tr("Stopmotion User Manual"));
-	
 	if ( QApplication::desktop()->width() > 400 && QApplication::desktop()->height() > 500 ) {
 		help->move(40, 40);
 		help->show();
@@ -1048,8 +1043,7 @@ void MainWindowGUI::showHelpDialog()
 
 void MainWindowGUI::showPreferencesMenu()
 {
-	PreferencesMenu *pfm = new PreferencesMenu(this);
-	pfm->show();
+	preferencesMenu->display();
 }
 
 

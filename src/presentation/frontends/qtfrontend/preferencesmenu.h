@@ -22,6 +22,7 @@
 
 #include "importtab.h"
 #include "exporttab.h"
+#include "devicetab.h"
 
 #include <QDialog>
 #include <QTabWidget>
@@ -41,14 +42,17 @@ public:
 	 * @param parent the parent of the widget.
 	 */
 	PreferencesMenu(QWidget *parent = 0);
+	void display();
 	
 private:
 	ImportTab *importVideoTab;
 	ExportTab *exportVideoTab;
+	DeviceTab *videoDeviceTab;
 	QTabWidget *tabWidget;
 
 	void makeVideoImportTab();
 	void makeVideoExportTab();
+	void makeVideoDeviceTab();
 	
 private slots:
 	void apply();

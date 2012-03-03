@@ -33,6 +33,7 @@
 #include "src/application/externalchangemonitor.h"
 #include "src/presentation/frontends/qtfrontend/menuframe.h"
 #include "src/presentation/frontends/qtfrontend/framepreferencesmenu.h"
+#include "src/presentation/frontends/qtfrontend/preferencesmenu.h"
 #include "src/presentation/frontends/qtfrontend/toolsmenu.h"
 
 #include <QtGui>
@@ -120,7 +121,8 @@ private:
 	QMenu *languagesMenu;
 	QMenu *helpMenu;
 	ToolsMenu *toolsMenu;
-	FramePreferencesMenu *preferencesMenu;
+	FramePreferencesMenu *framePreferencesMenu;
+	PreferencesMenu *preferencesMenu;
 	
 	//MenuFrame *gotoMenu;
 	QPushButton *gotoMenuCloseButton;

@@ -327,6 +327,7 @@ void FrameView::updateAnimationChanged(int frameNumber)
 void FrameView::updateMoveScene(int, int) {}
 
 
+// TODO: Refactor this terrible ugly method. This one is really bad!!
 bool FrameView::on()
 {
 	PreferencesTool *prefs = PreferencesTool::get();
@@ -339,6 +340,27 @@ bool FrameView::on()
 	const char* stopDeamon = 
 		prefs->getPreference(QString("importstopdeamon%1").arg(activeCmd).toLatin1().constData(), "");
 	
+	int activeDev = prefs->getPreference("activeVideoDevice", -1);
+	if (activeDev > -1) {
+		const char *device = 
+			prefs->getPreference(QString("device%1").arg(activeDev).toLatin1().constData(), "");
+		QString pre = QString(prepoll).replace("$VIDEODEVICE", device);
+		freeProperty(prepoll);
+		prepoll = pre.toLatin1().constData();
+		QString sd = QString(startDeamon).replace("$VIDEODEVICE", device);
+		freeProperty(startDeamon);
+		startDeamon = sd.toLatin1().constData();
+		freeProperty(device);
+	}
+	else {
+		QMessageBox::warning(this, tr("Warning"), tr(
+			"No video device selected in the preferences menu."),
+			QMessageBox::Ok,
+			Qt::NoButton, 
+			Qt::NoButton);
+		return false;
+	}
+
 	bool isProcess = (strcmp(startDeamon, "") == 0) ? false : true;
 	bool isCameraReady = true;
 	this->grabber = new CommandLineGrabber(capturedImg, isProcess);
@@ -362,9 +384,6 @@ bool FrameView::on()
 		//return false;
 	}
 	grabber->setStopCommand(stopDeamon);
-	
-	freeProperty(prepoll);
-	freeProperty(startDeamon);
 	freeProperty(stopDeamon);
 
 	if (isCameraReady) {
