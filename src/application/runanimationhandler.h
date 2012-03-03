@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -107,6 +107,16 @@ public slots:
 	 * Selects the next frame.
 	 */
 	void selectNextFrame();
+	
+	/**
+	 * Selects the previous scene.
+	 */
+	void selectPreviousScene();
+	
+	/**
+	 * Selects the next scene.
+	 */
+	void selectNextScene();
 	
 	/**
 	 * Sets the speed of the animation in frames per seccond

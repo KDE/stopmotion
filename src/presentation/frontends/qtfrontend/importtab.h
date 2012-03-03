@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,6 +24,7 @@
 #include <qlineedit.h>
 #include <qpushbutton.h>
 #include <qgroupbox.h>
+#include <qlabel.h>
 
 #include <vector>
 using namespace std;
@@ -74,6 +75,7 @@ private slots:
 	
 private:
 	int selectedDevice;
+	int numGrabbers;
 	
 	//Cache these so that i they aren't flushed to the preftool until the user
 	//press ok.
@@ -85,10 +87,20 @@ private:
 	QPushButton *addButton;
 	QPushButton *removeButton;
 	QPushButton *changeButton;
+	QPushButton *closeChangeBoxButton;
 	QLineEdit *prePollEdit;
 	QLineEdit *startDeamonEdit;
 	QLineEdit *stopDeamonEdit;
 	QGroupBox *grabberPreferences;
+	QGridLayout *grid;
+	QGridLayout *grabberGrid;
+	QSpacerItem *space3;
+	QSpacerItem *rightSpace;
+	QSpacerItem *leftSpace;
+	QLabel *prePollLabel;
+	QLabel *startDeamonLabel;
+	QLabel *stopDeamonLabel;
+	QCheckTableItem *checkTableItem;
 	
 	void updateChange(const QString &txt);
 };

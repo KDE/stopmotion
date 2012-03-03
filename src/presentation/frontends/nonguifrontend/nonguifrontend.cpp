@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -150,7 +150,7 @@ void NonGUIFrontend::addFrames(const char *directory)
 
 		while ( (ep = readdir(dp)) ) {
 			char *fileName = new char[256];
-			sprintf(fileName, "%s%s", dir, ep->d_name);
+			snprintf(fileName, 256, "%s%s", dir, ep->d_name);
 			stat(fileName, &st);
 			// is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0 && strstr(fileName, "snd") == NULL ) {
@@ -172,7 +172,7 @@ void NonGUIFrontend::addFrames(const char *directory)
 		}
 		
 		char tmpDir[256] = {0};
-		sprintf(tmpDir, "%s/.stopmotion/tmp/", getenv("HOME"));
+		snprintf(tmpDir, 256, "%s/.stopmotion/tmp/", getenv("HOME"));
 		int success = checkFiles(tmpDir);
 		printf("Successfully copied %d files from %s to %s\n", success, dir, tmpDir);
 	}
@@ -191,10 +191,10 @@ void NonGUIFrontend::save(const char *directory)
 	facadePtr->saveProject(dir);
 	
 	char tmp[256] = {0};
-	sprintf(tmp, "%simages/", dir);
+	snprintf(tmp, 256, "%simages/", dir);
 	int saved = checkFiles(tmp);
 	printf("Successfully saved %d files in %s\n", saved, tmp);
-	sprintf(tmp, "%s/.stopmotion/tmp/", getenv("HOME"));
+	snprintf(tmp, 256, "%s/.stopmotion/tmp/", getenv("HOME"));
 	int numFiles = checkFiles(tmp);
 	printf("Successfully removed %d files from %s\n", saved - numFiles, tmp);
 	
@@ -209,10 +209,10 @@ const char* NonGUIFrontend::getAbsolutePath(const char *path)
 	// isn't an absolute path
 	if (path[0] != '/') {
 		// make it absolute
-		sprintf(tmp, "%s/%s", getenv("PWD"), path);
+		snprintf(tmp, 256, "%s/%s", getenv("PWD"), path);
 	}
 	else {
-		sprintf(tmp, path);
+		strcpy(tmp, path);
 	}
 	
 	struct stat st;
@@ -223,7 +223,7 @@ const char* NonGUIFrontend::getAbsolutePath(const char *path)
 		// and doesn't ends with a '/'
 		if ( tmp[len - 1] != '/' ) {
 			// append a '/'
-			sprintf(tmp, "%s/", tmp);
+			snprintf(tmp, 256, "%s/", tmp);
 		}
 	}
 	
@@ -242,7 +242,7 @@ int NonGUIFrontend::checkFiles(const char *directory)
 		char tmp[256] = {0};
 		
 		while ( (ep = readdir(dp)) ) {
-			sprintf(tmp, "%s%s", directory, ep->d_name);
+			snprintf(tmp, 256, "%s%s", directory, ep->d_name);
 			stat(tmp, &st);
 			// is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0) {

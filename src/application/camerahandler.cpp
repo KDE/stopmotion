@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,6 +21,8 @@
 
 #include "src/domain/domainfacade.h"
 // #include "src/presentation/frontends/qtfrontend/gstvideoview.h"
+#include "src/foundation/preferencestool.h"
+
 #include "graphics/icons/cameraoff.xpm"
 #include "graphics/icons/cameraon.xpm"
 
@@ -31,14 +33,16 @@
 
 
 
-CameraHandler::CameraHandler ( QObject *parent, QStatusBar *sb, const char *name ) 
-		: QObject(parent, name), statusBar(sb)
+CameraHandler::CameraHandler ( QObject *parent, QStatusBar *sb, 
+		ModelHandler* modelHandler, const char *name) 
+		: QObject(parent, name), statusBar(sb), modelHandler(modelHandler)
 {
 	cameraButton = NULL;
 	frameViewStack = NULL;
 	videoView = NULL;
 	frameView = NULL;
-	
+	timer     = NULL;
+
 	isCameraOn = false;
 	sprintf(temp, "%s/.stopmotion/capturedfile.jpg", getenv("HOME") ); 
 	
@@ -127,7 +131,7 @@ void CameraHandler::toggleCamera()
 void CameraHandler::captureFrame()
 {
 	Logger::get().logDebug("Capturing image from webcam");
-	videoView->capture();
+	//videoView->capture();
 	timer->start(50, true);
 }
 
@@ -137,13 +141,17 @@ void CameraHandler::storeFrame()
 	QImage i;
 	i.load(temp);
 	if(i.isNull() == false) {
-		std::vector<char*> frame;
-		frame.push_back(temp);
-		DomainFacade::getFacade()->addFrames(frame);
+		//std::vector<char*> frame;
+		//frame.push_back(temp);
+		
+		modelHandler->addFrame(temp);
+		
+		//DomainFacade::getFacade()->addFrames(frame);
 		
 		if(DomainFacade::getFacade()->getActiveFrameNumber() == 0) {
 			emit capturedFrame();
 		}
+		videoView->capture();
 	}
 	else {
 		timer->start(50, true);
@@ -167,6 +175,22 @@ void CameraHandler::switchToVideoView()
 void CameraHandler::setMixCount(int mixCount)
 {
 	videoView->setMixCount(mixCount);
+	
+	//Storing the new mixcount in the PreferencesTool
+	switch(videoView->getViewMode()) 
+	{
+		case 0: 
+		{
+// 			cout << mixCount << endl;
+			PreferencesTool::get()->setPreference("mixcount", mixCount);
+			break;
+		}
+		case 2:
+		{
+			PreferencesTool::get()->setPreference("playbackcount", mixCount);
+			break;
+		}
+	}
 }
 
 

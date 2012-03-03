@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -34,7 +34,6 @@
 #endif
 #include <qmessagebox.h>
 
-#include <iostream>
 
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
  : VideoView(parent, name, WNoAutoErase)
@@ -46,8 +45,11 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 	videoSurface = NULL;
 	widthConst  = 4;
 	heightConst = 3;
+	lastMixCount = 2;
+	lastViewMode = 0;
 	mode = 0;
-	this->playbackSpeed = playbackSpeed;
+	activeFrame = 0;
+	this->playbackSpeed = PreferencesTool::get()->getPreference("fps", playbackSpeed);
 	facade = DomainFacade::getFacade();
 	
 	char tmp[256];
@@ -72,17 +74,22 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 
 FrameView::~FrameView()
 {
+	//off();
 	SDL_FreeSurface(videoSurface);
-	SDL_FreeSurface(screen);
 	videoSurface = NULL;
+	SDL_FreeSurface(screen);
 	screen = NULL;
+
+	for(unsigned int i=0; i<imageBuffer.size(); i++) {
+		SDL_FreeSurface(imageBuffer[i]);
+	}
+	imageBuffer.clear();
+	
+	delete grabber;
+	grabber = NULL;
+	
 	delete [] capturedImg;
 	capturedImg = NULL;
-	if(grabber) {
-		grabber->tearDown();
-		delete grabber;
-		grabber = NULL;
-	}
 }
 
 
@@ -162,11 +169,13 @@ void FrameView::resizeEvent(QResizeEvent*)
 	}
 }
 
-
+//#define diff_rollback
 void FrameView::paintEvent(QPaintEvent *)
 {
 	//Are static for efficiency.
-	static Frame *f = NULL;
+	#ifdef diff_rollback
+ 	static Frame *f = NULL;
+	#endif
 	static SDL_Surface *frameSurface = NULL;
 	int activeFrame = -1;
 	
@@ -190,9 +199,14 @@ void FrameView::paintEvent(QPaintEvent *)
 				activeFrame = facade->getActiveFrameNumber();
 				switch (mode)
 				{
+					//Image mixing
 					case 0:
 					{
+						//Define for rolling back to some old code for mixing. 
+						//Provided in a transition phase
+						#ifdef mix_rollback
 						for(int i = 1; (i<=mixCount) && (activeFrame-i >= -1); i++) {
+						
 							//This test is needed for when the user closes scenes
 							//when the camera is on.
 							f = facade->getFrame(activeFrame+1-i);
@@ -212,10 +226,52 @@ void FrameView::paintEvent(QPaintEvent *)
 								SDL_FreeSurface(frameSurface);
 							}
 						}
+						#endif
+						
+						#ifndef mix_rollback
+						//Buffering here i the paint function is kind of ugly, but there
+						//is good reasons for it being like this. However, if someone can
+						//find a prettier way the code will be gratefull.
+						if(activeFrame != this->activeFrame || lastMixCount != mixCount
+								|| lastViewMode != mode) {
+							for(unsigned int i=0; i<imageBuffer.size(); i++) {
+								SDL_FreeSurface(imageBuffer[i]);
+							}
+							imageBuffer.clear();
+							
+							for(int i = activeFrame, j=0; i>=0 && j < mixCount; i--, j++) {
+								imageBuffer.insert(imageBuffer.begin()+j, 
+										IMG_Load(facade->getFrame(i)->getImagePath()));
+							}
+							this->activeFrame = activeFrame;
+							lastMixCount = mixCount;
+							lastViewMode = mode;
+						}
+						
+						
+						for(unsigned int i=0; i<imageBuffer.size(); ++i) {
+							frameSurface = imageBuffer[i];
+							
+							if(frameSurface != NULL) {
+								SDL_Rect dst2;
+								dst2.x = (screen->w - frameSurface->w) / 2;
+								dst2.y = (screen->h - frameSurface->h) / 2;
+								dst2.w = frameSurface->w;
+								dst2.h = frameSurface->h;
+								SDL_SetAlpha(frameSurface, SDL_SRCALPHA, 80/(i+1));
+								SDL_BlitSurface(frameSurface, NULL , screen, &dst2);
+							}
+						}
+						#endif
+						
 						break;
 					}
+					//Image differentiating
 					case 1: 
 					{
+						//Define for rolling back to some old code for diffing. 
+						//Provided in a transition phase
+						#ifdef diff_rollback
 						f = facade->getFrame(activeFrame);
 						if(f != NULL) {
 							frameSurface = IMG_Load(f->getImagePath());
@@ -233,8 +289,44 @@ void FrameView::paintEvent(QPaintEvent *)
 								SDL_FreeSurface(frameSurface);
 							}
 						}
+						#endif
+						
+						#ifndef diff_rollback
+						//Buffering here i the paint function is kind of ugly, but there
+						//is good reasons for it being like this. However, if someone can
+						//find a prettier way the code will be gratefull.
+						if(activeFrame != this->activeFrame || lastViewMode != mode) {
+							for(unsigned int i=0; i<imageBuffer.size(); i++) {
+								SDL_FreeSurface(imageBuffer[i]);
+							}
+							imageBuffer.clear();
+							
+							if(activeFrame >= 0) {
+								imageBuffer.insert(imageBuffer.begin(), 
+										IMG_Load(facade->getFrame(activeFrame)->
+										getImagePath()));
+							}
+							
+							this->activeFrame = activeFrame;
+							lastViewMode = mode;	
+						}
+							
+						if(activeFrame >= 0) {
+							SDL_Surface *tmp = differentiateSurfaces(videoSurface, 
+									imageBuffer[0]);
+							SDL_Rect dst;
+							dst.x = (screen->w - tmp->w) / 2;
+							dst.y = (screen->h - tmp->h) / 2;
+							dst.w = tmp->w;
+							dst.h = tmp->h;
+							SDL_BlitSurface(tmp, NULL, screen, &dst);
+							SDL_FreeSurface(tmp);
+						}
+						#endif
+						
 						break;
 					}
+					//The playback is handled another way
 				}
 			}
 		}
@@ -285,7 +377,6 @@ void FrameView::updateNewActiveScene(int, vector<char*>, Frontend*)
 ///@todo Fix the way it checs for change. Only applies to gimp.
 void FrameView::updateAnimationChanged(int frameNumber)
 {
-// 	cout << frameNumber << endl;
 	setActiveFrame(frameNumber);
 }
 
@@ -319,7 +410,6 @@ bool FrameView::on()
 		//If the grabber is running in it's own process we use a timer.
 		if(grabber->isGrabberProcess() == true) {
 			if(grabber->init()) {
-
 				grabTimer.start(200);
 			}
 			else {
@@ -360,6 +450,12 @@ bool FrameView::on()
 				QMessageBox::NoButton);
 		return false;
 	}
+	
+	//To get the draw function to buffer for onionskinning
+	lastMixCount = -1;
+	
+// 	setViewMode(0);
+	
 	return true;
 }
 
@@ -377,6 +473,11 @@ void FrameView::off()
 		delete grabThread;
 		grabThread = NULL;
 	}
+	
+	for(unsigned int i=0; i<imageBuffer.size(); i++) {
+		SDL_FreeSurface(imageBuffer[i]);
+	}
+	imageBuffer.clear();
 	
 	delete grabber;
 	grabber = NULL;
@@ -402,28 +503,36 @@ void FrameView::redraw()
 
 void FrameView::nextPlayBack()
 {
+	//Don't you just love static function variables ^^
 	static unsigned int i = 0;
 	
 	//Need to check the that there is an active scene before checking
-	//what its size is. Therefore I cant use &&
-	int activeScene = facade->getActiveSceneNumber();
-	if( activeScene >= 0 ) {
-		if( i < facade->getSceneSize(activeScene) ) {
+	//what its size is. Therefore I cant use &&.
+
+	if( facade->getActiveSceneNumber() >= 0 ) {
+		if( (int)i < (mixCount) && i < (unsigned int)facade->getActiveFrameNumber()+1 ) {
 			if(videoSurface) {
 				SDL_FreeSurface(videoSurface);
 				videoSurface = NULL;
 			}
-		
-			videoSurface = IMG_Load(DomainFacade::getFacade()->getFrame(i++)->getImagePath());
+			
+			if(facade->getActiveFrameNumber() <= (mixCount)) {
+				videoSurface = IMG_Load(DomainFacade::getFacade()->getFrame(i++)->getImagePath());
+			}
+			else {
+				videoSurface = IMG_Load(facade->getFrame(
+						facade->getActiveFrameNumber()-(mixCount)+i++)->getImagePath());
+			}
+				
 			this->update();
-			//Exit from function/scip redraw(). This is better than having a bool which is
+			//Exit from function/skip redraw(). This is better than having a bool which is
 			//set because this is a play function run "often".
 			return;
 		}
 	}
 	
 	//This code is run if one of the two above tests fail. Can't be an else because
-	//then I would have to have two elses, and I think the return is better.
+	//then I would have to have two such elses, and I think the return is better.
 	i=0;
 	redraw();
 }
@@ -431,7 +540,7 @@ void FrameView::nextPlayBack()
 
 bool FrameView::setViewMode(int mode)
 {
-		//Going into playback mode.
+	//Going into playback mode.
 	if(mode == 2 && this->mode != 2) {
 		if(grabber->isGrabberProcess()) {
 			grabTimer.stop();
@@ -454,6 +563,12 @@ bool FrameView::setViewMode(int mode)
 }
 
 
+int FrameView::getViewMode()
+{
+	return mode;
+}
+
+
 void FrameView::setPlaybackSpeed(int playbackSpeed)
 {
 	this->playbackSpeed = playbackSpeed;
@@ -469,23 +584,25 @@ SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2)
 	int width = s2->w;
 	int height = s2->h;
 	
-	SDL_Surface *difference = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32,
+	SDL_Surface *diffSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32,
 								0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
 	
 	//Lock the surfaces before working with the pixels
 	SDL_LockSurface( s1 );
 	SDL_LockSurface( s2 );
-	SDL_LockSurface( difference );
+	SDL_LockSurface( diffSurface );
 	
-	//Pointers to the first byte of the first pixel on the surfaces.
+	//Pointers to the first byte of the first pixel on the input surfaces.
 	Uint8 *p1 = (Uint8 *)s1->pixels;
 	Uint8 *p2 = (Uint8 *)s2->pixels;
 	
-	SDL_PixelFormat fDiff = *difference->format;
-	Uint32 *pDiff =  (Uint32 *)difference->pixels;
-	Uint32  pixDiff;
+	//Pointers to the first pixel on the resulting surface
+	Uint32 *pDiff =  (Uint32 *)diffSurface->pixels;
+	
+	SDL_PixelFormat fDiff = *diffSurface->format;
+	Uint32  differencePixel;
 	Uint8 dr, dg, db;
-	int offset = 0, dOffset = 0;
+	int offset = 0, pixelOffset = 0;
 	int i, j;
 	
 	//Goes through the surfaces as one-dimensional arrays.
@@ -496,19 +613,38 @@ SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2)
 			dg = abs(p1[offset+1] - p2[offset+1]);
 			db = abs(p1[offset+2] - p2[offset+2]);
 			
-			pixDiff = SDL_MapRGB(&fDiff, dr, dg, db);
+			differencePixel = SDL_MapRGB(&fDiff, dr, dg, db);
 			
-			pDiff[dOffset++] = pixDiff;
+			pDiff[pixelOffset++] = differencePixel;
 			offset += 3;
 		}
-		++dOffset;
+		++pixelOffset;
 		offset += 3;
 	}
 	
 	//Unlock the surfaces for displaying them.
 	SDL_UnlockSurface( s1 );
 	SDL_UnlockSurface( s2 );
-	SDL_UnlockSurface( difference );
+	SDL_UnlockSurface( diffSurface );
 	
-	return difference;
+	return diffSurface;
 }
+
+
+void FrameView::capture()
+{
+	#ifndef rollback
+	/*
+	imageBuffer.insert(imageBuffer.begin() + 0, 
+			IMG_Load(facade->getFrame(facade->getActiveFrameNumber())->getImagePath()));
+	
+	if(facade->getActiveFrameNumber() > 0) {
+		SDL_FreeSurface(imageBuffer.back());
+		//delete imageBuffer.back();
+		imageBuffer.pop_back();
+	}*/
+	
+	#endif
+}
+
+

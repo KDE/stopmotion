@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -133,6 +133,12 @@ public:
 	 * Plays the sounds belonging to this frame.
 	 */
 	void playSounds(AudioDriver *driver);
+	
+	/**
+	 * Checks if this frame is a project frame.
+	 * @return true if a project frame, false otherwise
+	 */
+	bool isProjectFrame();
  
 private:
 	/** Absolute path to a temporary directory (~/.stopmotion/tmp). */

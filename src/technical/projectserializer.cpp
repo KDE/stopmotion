@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -67,7 +67,7 @@ const vector<Scene*> ProjectSerializer::open(const char *filename)
 
 	bool isNewProFile = setProjectFile(filename);
 	char rootDir[256] = {0};
-	sprintf(rootDir, "%s/.stopmotion/packer/", getenv("HOME"));
+	snprintf(rootDir, 256, "%s/.stopmotion/packer/", getenv("HOME"));
 	char *unpackedAs = unpack(projectFile, rootDir);
 	
 	if ( isNewProFile ) {
@@ -164,9 +164,24 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 	AudioFormat *sound = NULL;
 	unsigned int index = 0;
 	
+	// Removes frames which already are saved. Had to do this to prevent
+	// frames to overwrite each other.
+	unsigned int numScenes = sVect.size();
+	for (unsigned int m = 0; m < numScenes; m++) {
+		vector<Frame*> frames = sVect[m]->getFrames();
+		
+		unsigned int numFrames = frames.size();
+		for (unsigned int l = 0; l < numFrames; l++) {
+			frame = frames[l];
+			if ( frame->isProjectFrame() ) {
+				frame->copyToTemp();
+			}
+		}
+	}
+	
 	scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
 	
-	unsigned int numScenes = sVect.size();
+	//unsigned int numScenes = sVect.size();
 	frontend->showProgress("Saving scenes to disk ...", numScenes);
 	for (unsigned int i = 0; i < numScenes; i++) {
 		frontend->updateProgress(i);
@@ -180,6 +195,7 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 		for (unsigned int j = 0; j < numFrames; j++) {
 			frame = frames[j];
 			frame->moveToProjectDir(imagePath, soundPath, ++index);
+			frame->markAsProjectFile();
 			absPath = frame->getImagePath();
 			char *relPath = basename(absPath);
 			node = xmlNewChild(images, NULL, BAD_CAST "img", NULL);
@@ -217,7 +233,7 @@ void ProjectSerializer::getAttributes(xmlNodePtr node, vector<Scene*>& sVect)
 					char tmp[256] = {0};
 					// The node is a image node
 					if ( strcmp(nodeName, "img") == 0 ) {
-						sprintf(tmp, "%s%s", imagePath, filename);
+						snprintf(tmp, 256, "%s%s", imagePath, filename);
 						Frame *f = new Frame(tmp);
 						Scene *s = sVect.back();
 						s->addSavedFrame(f);
@@ -225,7 +241,7 @@ void ProjectSerializer::getAttributes(xmlNodePtr node, vector<Scene*>& sVect)
 					}
 					// The node is a sound node
 					else {
-						sprintf(tmp, "%s%s", soundPath, filename);
+						snprintf(tmp, 256, "%s%s", soundPath, filename);
 						Scene *s = sVect.back();
 						Frame *f = s->getFrame(s->getSize() - 1);
 						f->addSound(tmp);
@@ -275,10 +291,10 @@ void ProjectSerializer::setProjectPaths(const char *unpacked, bool isSave)
 		char *bname = basename(tmp);
 		char *dotPtr = strrchr(bname, '.');
 		strncpy( newDir, bname, strlen(bname) - strlen(dotPtr) );
-		sprintf(bigTmp, "%s/.stopmotion/packer/%s/", getenv("HOME"), newDir);
+		snprintf(bigTmp, 512, "%s/.stopmotion/packer/%s/", getenv("HOME"), newDir);
 	}
 	else {
-		sprintf(bigTmp, "%s", unpacked);
+		snprintf(bigTmp, 512, "%s", unpacked);
 	}
 	
 	projectPath = new char[strlen(bigTmp) + 1];
@@ -289,15 +305,15 @@ void ProjectSerializer::setProjectPaths(const char *unpacked, bool isSave)
 	char *bname= basename(bigTmp);
 	strcpy(tmp, bname);
 	
-	sprintf(bigTmp, "%s%s.dat", projectPath, tmp);
+	snprintf(bigTmp, 512, "%s%s.dat", projectPath, tmp);
 	xmlFile = new char[strlen(bigTmp) + 1];
 	strcpy(xmlFile, bigTmp);
 		
-	sprintf(bigTmp, "%s%s", projectPath, imageDirectory);
+	snprintf(bigTmp, 512, "%s%s", projectPath, imageDirectory);
 	imagePath = new char[strlen(bigTmp) + 1];
 	strcpy(imagePath, bigTmp);
 	
-	sprintf(bigTmp, "%s%s", projectPath, soundDirectory);
+	snprintf(bigTmp, 512, "%s%s", projectPath, soundDirectory);
 	soundPath = new char[strlen(bigTmp) + 1];
 	strcpy(soundPath, bigTmp);
 
@@ -354,7 +370,7 @@ void ProjectSerializer::cleanup()
 {
 	if (projectPath != NULL) {
 		char command[256] = {0};
-		sprintf(command, "rm -rf %s", projectPath);
+		snprintf(command, 256, "rm -rf %s", projectPath);
 		system(command);
 		
 		delete [] projectPath;
@@ -375,7 +391,7 @@ void ProjectSerializer::cleanupPrev()
 {
 	if (prevProPath != NULL) {
 		char command[256] = {0};
-		sprintf(command, "rm -rf %s", prevProPath);
+		snprintf(command, 256, "rm -rf %s", prevProPath);
 		
 		delete [] prevProPath;
 		prevProPath = NULL;

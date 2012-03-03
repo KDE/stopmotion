@@ -66,12 +66,17 @@ void SceneArrowButton::moveIcon()
 }
 
 
-void SceneArrowButton::mouseReleaseEvent( QMouseEvent * )
+void SceneArrowButton::mouseReleaseEvent( QMouseEvent * e )
 {
-	emit clicked();
-	moveTimer->stop();
-	this->iconX = 2;
-	this->repaint();
+	if(isOpened) {
+		emit clicked();
+		moveTimer->stop();
+		this->iconX = 2;
+		this->repaint();
+	}
+	else {
+		e->ignore();
+	}
 }
 
 

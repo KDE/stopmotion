@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -77,20 +77,27 @@ private:
 	QPushButton *removeButton;
 	QPushButton *editButton;
 	QPushButton *browseButton;
-	
+	QPushButton *closeButton;
 	QRadioButton *yesButton;
 	QRadioButton *noButton;
-	
 	QGroupBox *encoderPrefs;
 	QTable *encoderTable;
-	
 	QLineEdit *startEncoder;
 	QLineEdit *stopEncoder;
+	QLabel *startEncoderLabel;
+	QLabel *stopEncoderLabel;
 	QLineEdit *defaultOutput;
-	
 	QLabel *defaultOutputLabel;
+	QGridLayout *mainGrid;
+	QGridLayout *settingsGrid;
+	QSpacerItem *space3;
+	QSpacerItem *rightSpace;
+	QSpacerItem *leftSpace;
+	QLabel *askForOutput;
+	QLabel *infoText;
 	
 	int selectedEncoder;
+	int numEncoders;
 	
 	void makeGUI();
 };

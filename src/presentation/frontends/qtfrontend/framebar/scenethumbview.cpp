@@ -1,6 +1,6 @@
 /***************************************************************************
  *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -30,7 +30,7 @@
 #include <qpushbutton.h>
 #include <qiconset.h>
 
-
+#include <iostream>
 
 SceneThumbView::SceneThumbView(FrameBar *frameBar, QWidget *parent, int number, 
 	const char * name) 
@@ -111,8 +111,11 @@ void SceneThumbView::mousePressEvent(QMouseEvent *e)
 
 void SceneThumbView::mouseReleaseEvent( QMouseEvent * )
 {
-	if(DomainFacade::getFacade()->getActiveSceneNumber() != this->number) {
+	if( (DomainFacade::getFacade()->getActiveSceneNumber() != this->number) &&
+			(frameBar->isOpeningScene() == false) ) {
+		frameBar->setOpeningScene(true);
 		DomainFacade::getFacade()->setActiveScene(number);
+		frameBar->setOpeningScene(false);
 	}
 }
 
@@ -150,11 +153,13 @@ void SceneThumbView::startDrag()
 
 void SceneThumbView::closeScene()
 {
-	if(DomainFacade::getFacade()->getActiveSceneNumber() == this->number) {
-		DomainFacade::getFacade()->setActiveScene(-1);
-	}
-	else {
-		DomainFacade::getFacade()->setActiveScene(number);
+	if(frameBar->isOpeningScene() == false) {
+		if(DomainFacade::getFacade()->getActiveSceneNumber() == this->number) {
+			DomainFacade::getFacade()->setActiveScene(-1);
+		}
+		else {
+			DomainFacade::getFacade()->setActiveScene(number);
+		}
 	}
 }
 

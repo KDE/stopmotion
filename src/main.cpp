@@ -51,19 +51,24 @@ int main(int argc, char **argv)
 	else {
 #ifdef QTGUI
 		QtFrontend *qtFrontend = new QtFrontend(argc, argv);
-		facadePtr->registerFrontend(qtFrontend);
-		bool hasRecovered = init(qtFrontend, facadePtr);
-		if ( hasRecovered == false && argc > 1 && access(argv[1], R_OK) == 0) {
-			facadePtr->openProject(argv[1]);
-			const char *proFile = facadePtr->getProjectFile();
-			if ( proFile != NULL ) {
-				PreferencesTool *pref = PreferencesTool::get();
-				pref->setPreference("mostRecent", proFile);
+		if (qtFrontend != NULL) {
+			facadePtr->registerFrontend(qtFrontend);
+			bool hasRecovered = init(qtFrontend, facadePtr);
+			if ( hasRecovered == false && argc > 1 && access(argv[1], R_OK) == 0) {
+				facadePtr->openProject(argv[1]);
+				const char *proFile = facadePtr->getProjectFile();
+				if ( proFile != NULL ) {
+					PreferencesTool *pref = PreferencesTool::get();
+					pref->setPreference("mostRecent", proFile);
+				}
 			}
+			ret = qtFrontend->run(argc, argv);
+			delete qtFrontend;
+			qtFrontend = NULL;
 		}
-		ret = qtFrontend->run(argc, argv);
-		delete qtFrontend;
-		qtFrontend = NULL;
+		else {
+			printf("Error: Out of memory!\n");
+		}
 #endif
 	}
 	
@@ -103,11 +108,11 @@ bool init(Frontend *frontend, DomainFacade *facadePtr)
 void cleanup()
 {
 	char command[256] = {0};
-	sprintf( command, "rm -rf %s/.stopmotion/tmp/", getenv("HOME") );
+	snprintf( command, 256, "rm -rf %s/.stopmotion/tmp/", getenv("HOME") );
 	system(command);
-	sprintf( command, "rm -rf %s/.stopmotion/trash/", getenv("HOME") );
+	snprintf( command, 256, "rm -rf %s/.stopmotion/trash/", getenv("HOME") );
 	system(command);
-	sprintf( command, "rm -rf %s/.stopmotion/packer/", getenv("HOME") );
+	snprintf( command, 256, "rm -rf %s/.stopmotion/packer/", getenv("HOME") );
 	system(command);
 }
 
@@ -115,11 +120,11 @@ void cleanup()
 bool isRecoveryMode()
 {
 	char tmp[256] = {0};
-	sprintf( tmp, "%s/.stopmotion/tmp/", getenv("HOME") );
+	snprintf( tmp, 256, "%s/.stopmotion/tmp/", getenv("HOME") );
 	if ( access(tmp, F_OK) == -1 ) return false;
-	sprintf( tmp, "%s/.stopmotion/trash/", getenv("HOME") );
+	snprintf( tmp, 256, "%s/.stopmotion/trash/", getenv("HOME") );
 	if ( access(tmp, F_OK) == -1 ) return false;
-	sprintf( tmp, "%s/.stopmotion/packer/", getenv("HOME") );
+	snprintf( tmp, 256, "%s/.stopmotion/packer/", getenv("HOME") );
 	if ( access(tmp, F_OK) == -1 ) return false;
 	
 	// Everything is intact and we have to run in recovery mode
@@ -130,18 +135,18 @@ bool isRecoveryMode()
 void createDirectories()
 {
 	char tmp[256] = {0};
-	sprintf( tmp, "%s/.stopmotion/", getenv("HOME") );
+	snprintf( tmp, 256, "%s/.stopmotion/", getenv("HOME") );
 	
 	// is ~/.stopmotion doesn't exist
 	if ( access(tmp, F_OK) == -1 ) {
 		mkdir(tmp, 0755);
 	}
 	
-	sprintf( tmp, "%s/.stopmotion/tmp/", getenv("HOME") );
+	snprintf( tmp, 256, "%s/.stopmotion/tmp/", getenv("HOME") );
 	mkdir(tmp, 0755);
-	sprintf( tmp, "%s/.stopmotion/trash/", getenv("HOME") );
+	snprintf( tmp, 256, "%s/.stopmotion/trash/", getenv("HOME") );
 	mkdir(tmp, 0755);
-	sprintf( tmp, "%s/.stopmotion/packer/", getenv("HOME") );
+	snprintf( tmp, 256, "%s/.stopmotion/packer/", getenv("HOME") );
 	mkdir(tmp, 0755);
 }
 
@@ -149,7 +154,7 @@ void createDirectories()
 void recover(DomainFacade *facadePtr)
 {
 	char tmp[256] = {0};
-	sprintf( tmp, "%s/.stopmotion/packer/", getenv("HOME") );
+	snprintf( tmp, 256, "%s/.stopmotion/packer/", getenv("HOME") );
 	
 	DIR *dp = opendir(tmp);
 	if (dp) {
@@ -172,7 +177,7 @@ void recover(DomainFacade *facadePtr)
 		closedir(dp);
 	}
 	
-	sprintf( tmp, "%s/.stopmotion/tmp", getenv("HOME") );
+	snprintf( tmp, 256, "%s/.stopmotion/tmp", getenv("HOME") );
 	dp = opendir(tmp);
 	if (dp) {
 		vector<char*> frames;
@@ -182,7 +187,7 @@ void recover(DomainFacade *facadePtr)
 
 		while ( (ep = readdir(dp)) ) {
 			char *fileName = new char[256];
-			sprintf(fileName, "%s/%s", tmp, ep->d_name);
+			snprintf(fileName, 256, "%s/%s", tmp, ep->d_name);
 			stat(fileName, &st);
 			// Is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0) {

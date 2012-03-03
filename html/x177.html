@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN""http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Changing the import settings</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="Stopmotion user manual"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Using Stopmotion with your webcamera"
+HREF="x126.html"><LINK
+REL="NEXT"
+TITLE="Adding sound"
+HREF="x205.html"></HEAD
+><BODY
+CLASS="section"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+><SPAN
+CLASS="application"
+>Stopmotion</SPAN
+> user manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x126.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x205.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="section"
+><H1
+CLASS="section"
+><A
+NAME="AEN177"
+>6. Changing the import settings</A
+></H1
+><P
+>&#13;			If the video importing doesn't work or if you want other settings you
+			can change the way video is imported in Stopmotion.
+		</P
+><P
+>&#13;			This is done through the configure menu 
+			(<SPAN
+CLASS="guimenu"
+><SPAN
+CLASS="accel"
+>S</SPAN
+>ettings</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+><SPAN
+CLASS="accel"
+>C</SPAN
+>onfigure Stopmotion</SPAN
+> (<B
+CLASS="shortcut"
+><B
+CLASS="keycap"
+>Ctrl</B
+>-<B
+CLASS="keycap"
+>P</B
+></B
+>))
+			and you can either choose from one of the predefined settings
+			or create your own.
+			<DIV
+CLASS="figure"
+><A
+NAME="AEN190"
+></A
+><P
+><B
+>Figure 8. 
+					The Video Import config menu
+				</B
+></P
+><P
+><IMG
+SRC="screenshots/config_menu_import.png"></P
+></DIV
+>
+		</P
+><P
+>&#13;			Image importing in Stopmotion works by continously asking an external program
+			to grab a picture from the camera and place it in the .stopmotion directory.
+			Stopmotion then displays this picture, and when this is done continously you 
+			get live video.
+		</P
+><P
+>&#13;			If you want to add a new import program you can do this by pressing the 
+			<SPAN
+CLASS="guimenu"
+><SPAN
+CLASS="accel"
+>A</SPAN
+>dd</SPAN
+>
+			button. A new row appears in the table and you can fill in a name for your
+			setting and a short description.
+		</P
+><P
+>&#13;			You then have to specify the command line options to import pictures. These
+			can be set by selecting your setting and pressing the 
+			<SPAN
+CLASS="guimenu"
+><SPAN
+CLASS="accel"
+>E</SPAN
+>dit</SPAN
+>
+			button.
+		</P
+><P
+>&#13;			There are three things which can be specified here. The prepoll, start deamon
+			and stop deamon fields. If the program for importing the images grabs one image
+			and then exits you can leave the start and stop deamon fields blank. The contents 
+			of the prepoll field is a command which is run before importing a picture. If the 
+			import program is running in the foreground this will typically be the command line 
+			for grabbing the picture. Note that you have to write (DEFAULTPATH) in the command 
+			line on the place you otherwise would have speciefied the path to the file where 
+			the image should be stord. Stopmotion will replace this tag with the correct path 
+			and file name.
+		</P
+><P
+>&#13;			If the program you use for importing the pictures is running as a background/deamon
+			process you have to specify command lines for starting and stoping the deamon.
+			Again you should use the $importpath tag instead of the path to the file (se above).
+			Prepoll could still be used but is not required. One potential use for the prepoll
+			command when the grab program is running as a deamon process is to specify a command
+			line which performes a operation such as scaling or rotating the picture. This
+			command will be called on the pictures every time before importing them meaning
+			the live video will be displayed with the effect.
+		</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x126.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x205.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Using Stopmotion with your webcamera</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Adding sound</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
