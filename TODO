@@ -1,0 +1,9 @@
+#Functionality
+
+
+#Bugs
+-One can drag non-picture file into the program.
+
+
+#Refactoring
+-MainWindowGUI class

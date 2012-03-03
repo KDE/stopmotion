@@ -1,0 +1,334 @@
+/***************************************************************************
+ *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
+ *   bjoern_erik_nilsen@hotmail.com & fredrikbk@hotmail.com                *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+#include "preferencestool.h"
+
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+#include <iostream>
+using namespace std;
+
+
+PreferencesTool* PreferencesTool::preferencesTool = 0;
+
+
+PreferencesTool::PreferencesTool()
+{
+	doc      = NULL;    
+	dtd      = NULL; 
+	rootNode = NULL;
+	
+	preferencesFile = NULL;
+	
+	LIBXML_TEST_VERSION;
+}
+
+
+PreferencesTool::~PreferencesTool()
+{
+	cleanTree();
+	
+	delete[] preferencesFile;
+	preferencesFile = NULL;
+}
+
+
+PreferencesTool* PreferencesTool::get() 
+{
+	//Lazy initialization
+	if(preferencesTool == NULL) {
+		preferencesTool = new PreferencesTool();
+	}
+	return preferencesTool;
+}
+
+
+bool PreferencesTool::setPreferencesFile( const char *filePath, const char *version )
+{
+	xmlNode *node        = NULL;
+	xmlNode *versionNode = NULL;
+ 	char* currentVersion = NULL;
+	
+	if(preferencesFile != NULL) {
+		delete [] preferencesFile;
+		preferencesFile = NULL;
+	}
+	
+	if(doc != NULL) {
+		cleanTree();
+	}
+	
+	//Deepcopies the path
+	preferencesFile = new char[strlen(filePath)+1];
+	strcpy(preferencesFile, filePath);
+	
+	if( fileExists(filePath) ) {
+		//Parse the xml file as an xml tree
+		doc = xmlReadFile(filePath, NULL, 0);
+		if (doc == NULL) {
+			printf("Could not parse the preferences file");
+		}
+		
+		rootNode = xmlDocGetRootElement(doc);
+		
+		
+		node = rootNode->children;
+		for(; node; node = node->next) {
+			if(node->type == XML_ELEMENT_NODE) {
+				if(xmlStrEqual(node->name, BAD_CAST "version")) {
+					versionNode = node;
+				}
+			}
+		}
+		currentVersion = (char*)xmlGetProp(versionNode, BAD_CAST "version");
+		
+		//There are no version in the file
+		if(currentVersion == NULL) {
+			cleanTree();
+		}
+		else {
+			//The version in the file are wrong
+			if(strcmp(currentVersion, version) != 0) {
+				cleanTree();
+			}
+		}
+	}
+	
+	if(rootNode != NULL) {
+		node = rootNode->children;
+		for(; node; node = node->next) {
+			if(node->type == XML_ELEMENT_NODE) {
+				if(xmlStrEqual(node->name, BAD_CAST "preferences")) {
+					preferences = node;
+				}
+			}
+		}
+		
+		if(preferences == NULL) {
+			printf("Error while parsing preferences file");
+		}
+		return true;
+	}
+	//If there are no file, no version or if the version is wrong a new preferences 
+	//file are made.
+	else {
+		//Create the xml tree
+		doc = xmlNewDoc(BAD_CAST "1.0");
+		dtd = xmlCreateIntSubset(doc, BAD_CAST "root", NULL, BAD_CAST filePath);
+		
+		rootNode = xmlNewNode(NULL, BAD_CAST "root");
+		xmlNewProp(rootNode, BAD_CAST "xml:lang", BAD_CAST "en");
+		xmlNewProp(rootNode, BAD_CAST "title", BAD_CAST "Preferences");
+		xmlDocSetRootElement(doc, rootNode);
+		
+		versionNode = xmlNewChild(rootNode, NULL, BAD_CAST "version", NULL);
+		xmlNewProp(versionNode, BAD_CAST "version", BAD_CAST version);
+		preferences = xmlNewChild(rootNode, NULL, BAD_CAST "preferences", NULL);
+		flushPreferences();
+		
+		return false;
+	}
+	
+		/*if( doc != NULL ) {
+		node = rootNode->children;
+		for(; node; node = node->next) {
+			if(node->type == XML_ELEMENT_NODE) {
+				if(xmlStrEqual(node->name, BAD_CAST "version")) {
+					versionNode = node;
+				}
+			}
+		}
+		if(versionNode != NULL) {
+			currentVersion = (char*)xmlGetProp(versionNode, BAD_CAST "version");
+		}
+	}*/
+}
+
+/*
+void PreferencesTool::setVersion(int versionNumber)
+{
+	checkInitialized();
+	xmlNodePtr node = NULL;
+	
+	char tmp[11] = {0};
+	snprintf(tmp, 11, "%d", versionNumber);
+	
+	node = xmlNewChild(rootNode, NULL, BAD_CAST "version", NULL);
+	xmlNewProp(node, BAD_CAST "version", BAD_CAST tmp);
+}
+
+
+int PreferencesTool::getVersion()
+{
+	checkInitialized();
+	xmlNode *node = xmlNewChild(rootNode, NULL, BAD_CAST "version", NULL);;
+	
+	const char *tmp = (const char*)xmlGetProp(node, BAD_CAST "version");
+	return atoi(tmp);
+}*/
+
+
+bool PreferencesTool::setPreference(const char* key, const char* attribute, bool flushLater )
+{
+	checkInitialized();
+	xmlNodePtr node = NULL;
+	node = findNode(key);
+	
+	if( node == NULL ) {
+		node = xmlNewChild(preferences, NULL, BAD_CAST "pref", NULL);
+		xmlNewProp(node, BAD_CAST "key", BAD_CAST key);
+		xmlNewProp(node, BAD_CAST "attribute", BAD_CAST attribute);
+	}
+	else {
+		xmlSetProp(node, BAD_CAST "attribute", BAD_CAST attribute);
+	}
+	
+	return (!flushLater) ? flushPreferences() : true;
+}
+
+
+bool PreferencesTool::setPreference(const char * key, const int attribute, bool flushLater)
+{
+	checkInitialized();
+	xmlNodePtr node = NULL;
+	node = findNode(key);
+	
+	char tmp[11] = {0};
+	snprintf(tmp, 11, "%d", attribute);
+	
+	if( node == NULL ) {
+		node = xmlNewChild(preferences, NULL, BAD_CAST "pref", NULL);
+		xmlNewProp(node, BAD_CAST "key", BAD_CAST key);
+		xmlNewProp(node, BAD_CAST "attribute", BAD_CAST tmp);
+	}
+	else {
+		xmlSetProp(node, BAD_CAST "attribute", BAD_CAST tmp);
+	}
+	
+	return (!flushLater) ? flushPreferences() : true;
+}
+
+
+const char* PreferencesTool::getPreference(const char* key, const char* defaultValue)
+{
+	checkInitialized();
+	
+	xmlNode *node = findNode(key);
+	
+	if(node != NULL) {
+		return (const char*)xmlGetProp(node, BAD_CAST "attribute");
+	}
+	else {
+		return defaultValue;
+	}
+}
+
+
+const int PreferencesTool::getPreference(const char * key, const int defaultValue)
+{
+	checkInitialized();
+		
+	xmlNode *node = findNode(key);
+	
+	if(node != NULL) {
+		const char *tmp = (const char*)xmlGetProp(node, BAD_CAST "attribute");
+		return atoi(tmp);
+	}
+	else {
+		return defaultValue;
+	}
+}
+
+
+void PreferencesTool::removePreference( const char * key )
+{
+	checkInitialized();
+	
+	xmlNode *node = findNode(key);
+		
+	if(node != NULL) {
+		xmlUnlinkNode(node);
+		xmlFreeNode(node);
+		flushPreferences();
+	}
+}
+
+
+bool PreferencesTool::flushPreferences()
+{
+	if( xmlSaveFormatFile(preferencesFile, doc, 1) == -1 ) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+
+xmlNodePtr PreferencesTool::findNode(const char * key)
+{
+	//Search through the preferences for the element with a key which
+	//equals the key parameter.
+	xmlNode *node = preferences->children;
+	for(; node; node = node->next) {
+		if(node->type == XML_ELEMENT_NODE) {
+			if(xmlStrEqual(xmlGetProp(node, BAD_CAST "key"), BAD_CAST key)) {
+				break;
+			}
+		}
+	}
+	return node;
+}
+
+
+bool PreferencesTool::fileExists(const char * filePath)
+{
+	struct stat buf;
+	if( stat(filePath, &buf) == 0 ) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+
+void PreferencesTool::checkInitialized()
+{
+	if(doc == NULL) {
+		printf(	"A preferencesfile has to be specified before "
+				"using the PreferencesTool.");
+		exit(1);
+	}
+}
+
+
+void PreferencesTool::cleanTree()
+{
+	xmlFreeDoc(doc);
+	xmlCleanupParser();
+	
+	doc             = NULL;
+	dtd             = NULL;
+	rootNode        = NULL;
+	preferences     = NULL;
+}
