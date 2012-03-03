@@ -42,6 +42,7 @@ HEADERS += src/config.h \
            src/presentation/frontends/frontend.h \
            stopmotion.desktop \
            stopmotion.mime \
+		   graphics/stopmotion.xpm \
            graphics/stopmotion.png \
            graphics/icons/addframeicon.xpm \
            graphics/icons/cameraoff.xpm \
