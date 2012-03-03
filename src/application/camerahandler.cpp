@@ -20,9 +20,7 @@
 #include "camerahandler.h"
 
 #include "src/domain/domainfacade.h"
-// #include "src/presentation/frontends/qtfrontend/gstvideoview.h"
 #include "src/foundation/preferencestool.h"
-
 #include "graphics/icons/cameraoff.xpm"
 #include "graphics/icons/cameraon.xpm"
 
@@ -141,13 +139,7 @@ void CameraHandler::storeFrame()
 	QImage i;
 	i.load(temp);
 	if(i.isNull() == false) {
-		//std::vector<char*> frame;
-		//frame.push_back(temp);
-		
 		modelHandler->addFrame(temp);
-		
-		//DomainFacade::getFacade()->addFrames(frame);
-		
 		if(DomainFacade::getFacade()->getActiveFrameNumber() == 0) {
 			emit capturedFrame();
 		}
@@ -181,7 +173,6 @@ void CameraHandler::setMixCount(int mixCount)
 	{
 		case 0: 
 		{
-// 			cout << mixCount << endl;
 			PreferencesTool::get()->setPreference("mixcount", mixCount);
 			break;
 		}
