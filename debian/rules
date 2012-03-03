@@ -1,82 +1,16 @@
 #!/usr/bin/make -f
 
-# These are used for cross-compiling and for saving the configure script
-# from having to guess our platform (since we know it already)
-DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
-DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+%:
+	dh $@ --parallel
 
-CFLAGS = -Wall -g
+# Need to compensate for one issue.  Makefile is missing -lX11 -lm
+libs_with_x_n_m=-lSDL -lxml2 -lSDL_image -ltar -lvorbisfile -linotifytools -lQtGui -lQtCore -lpthread  -lX11 -lm
+override_dh_auto_build:
+	dh_auto_build -- LIBS='$(libs_with_x_n_m)'
 
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -O0
-else
-	CFLAGS += -O2
-endif
 
-config: configure
-	dh_testdir
-	# Add here commands to configure the package.
-ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-	echo "QMAKE_STRIP=:" | cat >> stopmotion.pro.in
-endif
-	CFLAGS="$(CFLAGS)" ./configure --prefix=/usr
-	sed -i '/^LIBS/s/$$/ -lX11 -lm/' Makefile
-
-build: build-stamp
-
-build-stamp:  config
-	dh_testdir
-
-	# Add here commands to compile the package.
-	$(MAKE)
-	touch build-stamp
-
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp config.log config.status
-
-	# Add here commands to clean up after the build process.
-	-$(MAKE) distclean
-	dh_clean 
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_clean -k 
-	dh_installdirs
-
-	# Add here commands to install the package into debian/stopmotion.
-	$(MAKE) install prefix=$(CURDIR)/debian/stopmotion
-	install -D -o 0 -g 0 -m 644 stopmotion.desktop $(CURDIR)/debian/stopmotion/usr/share/applications/stopmotion.desktop
-	install -D -o 0 -g 0 -m 644 graphics/stopmotion.png $(CURDIR)/debian/stopmotion/usr/share/pixmaps/stopmotion.png
-	install -D -o 0 -g 0 -m 644 graphics/stopmotion.xpm $(CURDIR)/debian/stopmotion/usr/share/pixmaps/stopmotion.xpm
-
-# Build architecture-independent files here.
-binary-indep: build install
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs 
-	dh_installdocs
-	dh_installexamples
-	dh_install
-	dh_installmenu
-	dh_installmime
-	dh_installman stopmotion.1
-	dh_link
-ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-	dh_strip
-endif
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install 
+# Need to compensate for two issues.  (1) Makefile ignores DESTDIR.
+# (2) Makefile install target does not serialize chmoding installed
+# files after actually installing them, so insist on single thread.
+override_dh_auto_install:
+	dh_auto_install -- prefix='$$(DESTDIR)' --jobs=1

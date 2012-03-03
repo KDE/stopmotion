@@ -1,0 +1,11 @@
+Document: stopmotion-user-manual
+Title: Stopmotion User Manual
+Author: Fredrik Berg Kjoelstad and Bjoern Erik Nilsen
+Abstract: Stopmotion is a program for creating stop motion animation
+ movies from pictures you already have on your harddrive and from
+ pictures you import live from a webcamera.
+Section: Video
+
+Format: HTML
+Index: /usr/share/doc/stopmotion/html/index.html
+Files: /usr/share/doc/stopmotion/html/*
