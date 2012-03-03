@@ -239,14 +239,12 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			"kill -9 $(pidof vgrabbj)");
 	
 	// Default import option 3
-	prefs->setPreference("importname2", tr("dvgrab").toLatin1().constData());
+	prefs->setPreference("importname2", tr("uvccapture").toLatin1().constData());
 	prefs->setPreference("importdescription2", 
-			tr("Grabbing from DV-cam. (EXPERIMENTAL)").toLatin1().constData());
-	prefs->setPreference("importstartdeamon2", 
-			"dvgrab --format jpeg --jpeg-overwrite --jpeg-deinterlace --jpeg-width 640 " 
-			"--jpeg-height 480 --frames 25 $IMAGEFILE");
-	prefs->setPreference("importstopdeamon2", 
-			"kill -9 $(pidof dvgrab)");
+			tr("Grabbing from V4L2 devices").toLatin1().constData());
+	prefs->setPreference("importprepoll2", 
+			"uvccapture -d$VIDEODEVICE -x640 -y480 -o$IMAGEFILE");
+	prefs->setPreference("importstopdeamon2", "");
 	
 	// Default import option 4
 	prefs->setPreference("importname3", tr("videodog singleshot").toLatin1().constData());
