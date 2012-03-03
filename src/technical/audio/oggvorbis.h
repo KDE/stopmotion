@@ -76,7 +76,7 @@ public:
 	 * Function for retrieving the sound path.
 	 * @return the sound path
 	 */
-	const char* getSoundPath();
+	char* getSoundPath();
 	
 private:
 	/** The ogg representation of the file registered in this class. */

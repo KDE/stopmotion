@@ -131,7 +131,7 @@ int OggVorbis::fillBuffer(char *audioBuffer, int numBytes)
 }
 
 
-const char* OggVorbis::getSoundPath()
+char* OggVorbis::getSoundPath()
 {
 	return filename;
 }

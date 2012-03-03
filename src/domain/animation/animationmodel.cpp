@@ -30,7 +30,6 @@ AnimationModel::AnimationModel()
 
 AnimationModel::~AnimationModel()
 {
-	frontend = NULL;
 }
 
 

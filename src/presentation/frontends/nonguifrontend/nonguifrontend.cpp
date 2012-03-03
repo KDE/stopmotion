@@ -153,7 +153,7 @@ void NonGUIFrontend::addFrames(const char *directory)
 			sprintf(fileName, "%s%s", dir, ep->d_name);
 			stat(fileName, &st);
 			// is a regular file, not a directory
-			if ( S_ISREG(st.st_mode) != 0) {
+			if ( S_ISREG(st.st_mode) != 0 && strstr(fileName, "snd") == NULL ) {
 				frames.push_back(fileName);
 			}
 			else {

@@ -286,6 +286,9 @@ private:
 	/** Index of the active scene. */
 	int activeScene;
 	
+	/** Number of sounds added to the model. */
+	int numSounds;
+	
 	/** Variable for checking if there are unsaved changes in the model */
 	bool isChangesSaved;
 	

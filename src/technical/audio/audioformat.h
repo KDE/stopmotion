@@ -68,7 +68,7 @@ public:
 	 * Abstract function for retrieving the sound path.
 	 * @return the sound path
 	 */
-	virtual const char* getSoundPath() = 0;
+	virtual char* getSoundPath() = 0;
 };
 
 #endif

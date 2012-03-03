@@ -41,6 +41,7 @@ Animation::Animation()
 	
 	activeFrame = -1;
 	activeScene = -1;
+	numSounds   = -1;
 	
 	isChangesSaved = true;
 	isAudioDriverInitialized = false;
@@ -72,7 +73,8 @@ const vector<char*> Animation::addFrames(const vector<char*>& frameNames,
 	bool isAddingAborted = false;
 	vector<char*> newImagePaths;
 	unsigned int numberOfCanceledFrames = 0;
-	newImagePaths = scenes[activeScene]->addFrames(frameNames, index, frontend, numberOfCanceledFrames);
+	newImagePaths = scenes[activeScene]->
+			addFrames(frameNames, index, frontend, numberOfCanceledFrames);
 	
 	unsigned int newImagePathsSize = newImagePaths.size();
 		
@@ -154,6 +156,7 @@ void Animation::moveFrames(unsigned int fromFrame, unsigned int toFrame,
 int Animation::addSound(unsigned int frameNumber, const char *sound)
 {
 	Logger::get().logDebug("Adding sound in animation");
+	++numSounds;
 	int ret = scenes[activeScene]->addSound(frameNumber, sound);
 	if (ret == -1) {
 		frontend->reportError(
@@ -161,12 +164,14 @@ int Animation::addSound(unsigned int frameNumber, const char *sound)
 				"Check that you have the right permissions set.\n"
 				"The animation will be runned without sound if you\n"
 				"choose to play.", 0);
+		--numSounds;
 	}
 	else if (ret == -2) {
 		frontend->reportError(
 				"The selected audio file is not valid within the\n" 
 				"given audio format. The animation will be runned\n"
 				"without sound if you choose to play.", 0);
+		--numSounds;
 	}
 	return ret;
 }
@@ -175,10 +180,11 @@ int Animation::addSound(unsigned int frameNumber, const char *sound)
 void Animation::removeSound( unsigned int frameNumber, unsigned int soundNumber )
 {
 	scenes[activeScene]->removeSound(frameNumber, soundNumber);
+	--numSounds;
 }
 
 
-void Animation::setSoundName( unsigned int frameNumber, unsigned int soundNumber, char * soundName )
+void Animation::setSoundName(unsigned int frameNumber, unsigned int soundNumber, char *soundName)
 {
 	scenes[activeScene]->setSoundName(frameNumber, soundNumber, soundName);
 }
@@ -291,7 +297,6 @@ bool Animation::openProject(const char *filename)
 	scenes = serializer->open(filename);
 	if (scenes.size() > 0) {
 		loadSavedScenes();
-// 		externalChangeMonitor->changeWorkDirectory( serializer->getProjectPath() );
 		return true;
 	}
 	return false;
@@ -301,20 +306,14 @@ bool Animation::openProject(const char *filename)
 bool Animation::saveProject(const char *filename)
 {	
 	assert(filename != 0);
-	bool tmp = serializer->save(filename, scenes, frontend);
-	
-	if(tmp) {
-//  		externalChangeMonitor->changeWorkDirectory( serializer->getProjectPath() );
-	}
-	
-	return tmp;
+	return serializer->save(filename, scenes, frontend);
 }
 
 
 bool Animation::newProject()
 {
 	clear();
-	// do something
+	// do something here?
 	return true;
 }
 
@@ -350,22 +349,20 @@ void Animation::activateScene( int sceneNumber )
 	this->activeScene = sceneNumber;
 	if(sceneNumber >= 0) {
 		if(scenes[sceneNumber]->getSize() > 0) {
-			this->notifyNewActiveScene(sceneNumber, scenes[sceneNumber]->getImagePaths(),
-				frontend);
+			this->notifyNewActiveScene(sceneNumber, 
+					scenes[sceneNumber]->getImagePaths(),frontend);
 			setActiveFrame(0);
 		}
 		else {
 			vector<char*> dummy;
-			this->notifyNewActiveScene(sceneNumber, dummy,
-				frontend);
+			this->notifyNewActiveScene(sceneNumber, dummy,frontend);
 			setActiveFrame(-1);
 		}
 	}
 	else {
 		setActiveFrame(-1);
 		vector<char*> dummy;
-		this->notifyNewActiveScene(sceneNumber, dummy,
-			frontend);
+		this->notifyNewActiveScene(sceneNumber, dummy,frontend);
 	}
 }
 
@@ -374,9 +371,7 @@ void Animation::newScene( int index )
 {
 	Scene *s = new Scene();
 	scenes.insert(scenes.begin() + index, s);
-	
 	this->notifyNewScene( index );
-	
 	this->setActiveScene( index );
 }
 
@@ -425,7 +420,7 @@ int Animation::getActiveSceneNumber( )
 bool Animation::initAudioDevice()
 {
 	isAudioDriverInitialized = audioDriver->initialize();
-	if ( !isAudioDriverInitialized ) {
+	if ( !isAudioDriverInitialized && numSounds > -1 ) {
 		frontend->reportError(
 					"Cannot play sound. Check that you have the right\n"
 					"permissions and other programs do not block\n"
