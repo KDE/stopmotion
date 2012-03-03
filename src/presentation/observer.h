@@ -44,6 +44,8 @@ using namespace std;
 class Observer
 {
 public:
+	virtual ~Observer() {}
+	
 	/**
 	 * Abstract function for recieving notification about new frames added to the model.
 	 * 

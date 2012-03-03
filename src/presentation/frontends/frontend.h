@@ -29,8 +29,9 @@
 class Frontend
 {
 
-public:	
-
+public:
+	virtual ~Frontend() {}
+	
 	/**
 	 * Abstract function for starting the application through the frontend.
 	 * @param argc the argc argument from the environment through main.
