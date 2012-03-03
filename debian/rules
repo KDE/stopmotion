@@ -20,6 +20,7 @@ ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 	echo "QMAKE_STRIP=:" | cat >> stopmotion.pro.in
 endif
 	CFLAGS="$(CFLAGS)" ./configure --prefix=/usr
+	sed -i '/^LIBS/s/$$/ -lX11 -lm/' Makefile
 
 build: build-stamp
 

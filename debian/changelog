@@ -1,3 +1,13 @@
+stopmotion (0.6.2-1.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * debian/rules: add math and x11 library to fix FTBFS, Patch from Matthias
+    Klose <doko@ubuntu.com>. (Closes: #565056, #606721)
+  * Fix Crash when read single jpg files. Patch from Ying-Chun Liu (PaulLiu)
+    <paulliu@debian.org>. (Closes: #612762)
+
+ -- Mahyuddin Susanto <udienz@ubuntu.com>  Tue, 10 Jan 2012 19:26:27 +0700
+
 stopmotion (0.6.2-1.1) unstable; urgency=high
 
   * Non-maintainer upload.
