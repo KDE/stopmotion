@@ -23,7 +23,7 @@
 #include <qmessagebox.h>
 #include <qtextcodec.h>
 #include <string.h>
-
+#include <unistd.h>
 
 
 QtFrontend::QtFrontend(int argc, char **argv)
@@ -178,38 +178,52 @@ void QtFrontend::initializePreferences()
 {
 	Logger::get().logDebug("Loading preferencestool");
 	
-	//Initializes the preferences file and sets default preferences
-	//if the file hasn't been made before.
+	PreferencesTool *prefs = PreferencesTool::get();
 	QString preferencesFile = getenv("HOME");
 	preferencesFile += "/.stopmotion/preferences.xml";
-		
-	PreferencesTool *prefs = PreferencesTool::get();
-	//If the file doesn't excist or has the wrong version default preferenses 
-	//are made.
-	if( !prefs->setPreferencesFile(preferencesFile.ascii(), "0.3") ) {
-		Logger::get().logDebug("Loading default preferences");
-		
-		
-		//The default import options
-		prefs->setPreference("numberofimports", 2);
-		
-		prefs->setPreference("importname0", tr("vgrabbj VGA singleshot").ascii());
-		prefs->setPreference("importdescription0", 
-				tr("The simplest setting. Repeatedly asks vgrabbj "
-				"for a picture. Fairly slow").ascii());
-		prefs->setPreference("importprepoll0",
-				"vgrabbj -f (DEFAULTPATH) -d /dev/video0 -b -D 0 -i vga");
-				
-		prefs->setPreference("importname1", tr("vgrabbj VGA deamon").ascii());
-		prefs->setPreference("importdescription1", 
-				tr("Starts vgrabbj as a deamon. Pretty fast.").ascii());
-		
-		prefs->setPreference("importstartdeamon1", 
-				"vgrabbj -f (DEFAULTPATH) -d /dev/video0 -b -D 0 -i vga -L250");
-		prefs->setPreference("importstopdeamon1", 
-				"kill -9 `ps ax | grep vgrabbj | grep -v grep | cut -b 0-5`");
-		
-		prefs->setPreference("activedevice", 1);
+	
+	// Has to check this before calling setPreferencesFile(...) because
+	// the function creates the file if it doesn't exist.
+	int prefsFileExist = access(preferencesFile.ascii(), F_OK);
+	
+	// If file doesn't exist or has wrong version number
+	if ( !prefs->setPreferencesFile(preferencesFile.ascii(), "0.3") ) {
+		// File doesn't exist
+		if ( prefsFileExist == -1) {
+			Logger::get().logDebug("Loading default preferences");
+			
+			//Default import options
+			prefs->setPreference("numberofimports", 2);
+			prefs->setPreference("importname0", tr("vgrabbj VGA singleshot").ascii());
+			prefs->setPreference("importdescription0", 
+					tr("The simplest setting. Fairly slow").ascii());
+			prefs->setPreference("importprepoll0",
+					"vgrabbj -f (DEFAULTPATH) -d /dev/video0 -b -D 0 -i vga");
+			prefs->setPreference("importname1", tr("vgrabbj VGA deamon").ascii());
+			prefs->setPreference("importdescription1", 
+					tr("Starts vgrabbj as a deamon. Pretty fast.").ascii());
+			prefs->setPreference("importstartdeamon1", 
+					"vgrabbj -f (DEFAULTPATH) -d /dev/video0 -b -D 0 -i vga -L250");
+			prefs->setPreference("importstopdeamon1", 
+					"kill -9 `ps ax | grep vgrabbj | grep -v grep | cut -b 0-5`");
+			prefs->setPreference("activedevice", 1);
+			
+			// Default export options
+			prefs->setPreference("numEncoders", 1);
+			prefs->setPreference("activeEncoder", 0);
+			prefs->setPreference("encoderName0", "mencoder");
+			prefs->setPreference("encoderDescription0", 
+					tr("Exports from jpeg images to mpeg1 video").ascii());
+			prefs->setPreference("startEncoder0", tr(
+					"mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg "
+					"-ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE").ascii());
+			prefs->setPreference("stopEncoder0", tr("").ascii());
+		}
+		// Has wrong version number
+		else {
+			// TODO: Add default options for the new version. It's important to *not* remove
+			// any options added by the user
+		}
 	}
 }
 
