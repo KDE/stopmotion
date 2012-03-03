@@ -30,6 +30,7 @@
 #include <QResizeEvent>
 #include <QMessageBox>
 #include <QPaintEvent>
+#include <QApplication>
 #if defined(Q_WS_X11)
 #include <X11/Xlib.h>
 #endif
@@ -170,6 +171,8 @@ void FrameView::updatePlayFrame(int frameNumber)
 
 void FrameView::resizeEvent(QResizeEvent*)
 {	
+	QApplication::syncX();
+
 	// Set the new video mode with the new window size
 	char variable[64];
 	sprintf(variable, "SDL_WINDOWID=0x%lx", winId());
