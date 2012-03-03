@@ -508,13 +508,6 @@ v4l2_close(void *handle)
 	close(h->fd);
 
 	if (NULL != h->attr) {
-		int i;
-		for (i = 0; i < h->nattr; ++i) {
-			if (NULL != h->attr[i].choices) {
-				free(h->attr[i].choices);
-				h->attr[i].choices = NULL;
-			}
-		}
 		free(h->attr);
 		h->attr = NULL;
 	}

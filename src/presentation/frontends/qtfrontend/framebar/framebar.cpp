@@ -309,7 +309,7 @@ void FrameBar::setActiveFrame(int frameNumber)
 		int from = activeFrame + activeScene + 1;
 		int to = selectionFrame + activeScene + 1;
 		int highend = (from < to) ? to : from;
-		int lowend = (from > to) ? to : from;
+		int lowend = (from > to) ? to : from;	
 		
 		if ( highend < static_cast<int>(thumbViews.size()) ) {
 			for (int i = lowend; i <= highend; ++i) {
@@ -317,7 +317,8 @@ void FrameBar::setActiveFrame(int frameNumber)
 			}
 		}
 		
-		thumbViews[thumbNumber]->setSelected(true);
+		if (thumbNumber >= 0)
+			thumbViews[thumbNumber]->setSelected(true);
 		ensureVisible((frameNumber + 1) * (FRAME_WIDTH + SPACE) + FRAME_WIDTH, FRAME_HEIGHT);
 	}
 	
@@ -477,6 +478,8 @@ void FrameBar::updateMoveScene( int sceneNumber, int movePosition )
 
 void FrameBar::moveScene(int sceneNumber, int movePosition)
 {
+	if (thumbViews.size() <= 0)
+		return;
 	if (movePosition < sceneNumber) {
 		for (int i = movePosition; i < sceneNumber; ++i) {
 			thumbViews[i]->move(thumbViews[i]->x() + (FRAME_WIDTH + SPACE), 0 );

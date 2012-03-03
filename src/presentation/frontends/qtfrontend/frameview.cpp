@@ -349,10 +349,10 @@ bool FrameView::on()
 			prefs->getPreference(QString("device%1").arg(activeDev).toLatin1().constData(), "");
 		QString pre = QString(prepoll).replace("$VIDEODEVICE", device);
 		freeProperty(prepoll);
-		prepoll = pre.toLatin1().constData();
+		prepoll = strdup(pre.toLatin1().constData());
 		QString sd = QString(startDeamon).replace("$VIDEODEVICE", device);
 		freeProperty(startDeamon);
-		startDeamon = sd.toLatin1().constData();
+		startDeamon = strdup(sd.toLatin1().constData());
 		freeProperty(device);
 	}
 	else {
@@ -376,6 +376,10 @@ bool FrameView::on()
 		//return false;
 		isCameraReady = false;
 	}
+
+	free(const_cast<char *>(prepoll));
+	prepoll = 0;
+
 	if ( !grabber->setStartCommand(startDeamon) ) {
 		DomainFacade::getFacade()->getFrontend()->hideProgress();
 		QMessageBox::warning(this, tr("Warning"), tr(
@@ -386,6 +390,10 @@ bool FrameView::on()
 		isCameraReady = false;
 		//return false;
 	}
+	
+	free(const_cast<char *>(startDeamon));
+	startDeamon = 0;
+
 	grabber->setStopCommand(stopDeamon);
 	freeProperty(stopDeamon);
 
