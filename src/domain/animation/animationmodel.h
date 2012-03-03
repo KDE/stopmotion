@@ -273,6 +273,12 @@ public:
 	 * @return the project file if it's setted, NULL otherwise.
 	 */
 	virtual const char* getProjectFile() = 0;
+    
+	/**
+	 * Abstract function for retrieving the project path.
+	 * @return the project path if it's setted, NULL otherwise.
+	 */
+        virtual const char* getProjectPath() = 0;
 	
 	/**
 	 * Abstract function for opening a project.

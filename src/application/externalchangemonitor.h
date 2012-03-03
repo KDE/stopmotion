@@ -20,26 +20,17 @@
 #ifndef EXTERNALCHANGEMONITOR_H
 #define EXTERNALCHANGEMONITOR_H
 
-#include "src/config.h"
-
 #include <QObject>
-#include <QTimer>
-#include <QSocketNotifier>
+#include <QStringList>
 
-#include <fam.h>
-
+class QSocketNotifier;
 
 /**
- * Class for listening after changes to the disc representation of the 
+ * Class for listening after changes to the disc representation of the
  * animationmodel.
  *
- * The class use FAM (File Alteration Monitor) register for changes
- * in the project directories. 
- *
- * The use of the QSocketNotifier adds the monitoring of the FAM to the 
- * Qt main event loop and is documented at:
- * http://oss.sgi.com/projects/fam/qt_gtk.html#qt
- * FAM is documented many places most notably in the FAM man page.
+ * The class uses Inotify-tools to listen for changes
+ * in the project directories.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
@@ -49,70 +40,50 @@ class ExternalChangeMonitor : public QObject
 public:
 	/**
 	 * Initializes the ExternalChangeMonitor and registers the animationModel
-	 * to notify of changes when the disk representation of the animation is 
+	 * to notify of changes when the disk representation of the animation is
 	 * changed
 	 */
 	ExternalChangeMonitor(QObject *parent = 0);
-	
+
 	/**
 	 * Calls stopMonitoring and cleans up.
 	 */
 	~ExternalChangeMonitor();
-	
+
 	/**
-	 * Register the current workdirectory for monitorng.
-	 * @param workDirectory the workDirectory to listen for changes in.
+	 * Register the directory for monitoring.
+	 * @param directory the directory to listen for changes in.
 	 */
-	void changeWorkDirectory(const char* workDirectory);
-	
+	void addDirectory(const QString &directory);
+
 	/**
-	 * Creates a FAM connection to the project directories and starts a thread
-	 * which polls the FAM connection for changes in the tmp directory.
-	 *
-	 * To register the working project directory for monitoring also call 
-	 * changeWorkDirectory
+	 * Creates a inotify connection and listens for changes in the project directories.
 	 */
 	void startMonitoring();
-	
-	/**
-	 * Stops the thread polling the FAM connection and tears the connection down.
-	 */
+
 	void stopMonitoring();
-	
+
 	/**
 	 * Suspends the monitoring until resumeMonitor() is called.
 	 */
 	void suspendMonitor();
-	
+
 	/**
 	 * Resumes monitoring the directories.
 	 */
 	void resumeMonitor();
-	
+
 private:
-	static const int TIMER_INTERVAL = 500;
-	
-	/** The connection to the fam deamon */
-	FAMConnection *famConn;
-	FAMRequest    famRequest;
-	
 	/** For polling the file connection through the qt event loop */
 	QSocketNotifier *socketNotifier;
-	
-	QString workDirectory;
-	QString tmpDirectory;
-	
-	QTimer timer;
-	QString fileName;
-	bool refresh;
-	bool running;
-	
+	bool isMonitoring;
+        QStringList directories;
+
 private slots:
 	/**
-	 * Callback function for when the QSocketNotifier recieves a fam event.
+	 * Callback function for when the QSocketNotifier recieves an Inotify event.
 	 */
-	void readFam();
-	void timeout();
+	void readInotifyEvents(int socket);
 };
 
 #endif
