@@ -24,7 +24,6 @@
 #include "src/presentation/frontends/qtfrontend/flexiblelineedit.h"
 #include "src/foundation/preferencestool.h"
 
-#include <QTextEdit>
 #include <QHeaderView>
 
 
@@ -40,6 +39,7 @@ DeviceTab::DeviceTab(QWidget *parent)
 	devicePreferences    = 0;
 	deviceLabel          = 0;
 	checkTableItem       = 0;
+	informationText      = 0;
 	
 	numAutoDetectedDevices = -1;
 	makeGUI();
@@ -50,7 +50,7 @@ void DeviceTab::makeGUI()
 {
 	this->setFocusPolicy(Qt::ClickFocus);
 	
-	QTextEdit *informationText = new QTextEdit;
+	informationText = new QTextEdit;
 	informationText->setReadOnly(true);
 	informationText->setHtml(
 		"<p>" + tr("Below you can set which device Stopmotion should use for grabbing images "
@@ -336,4 +336,29 @@ void DeviceTab::freeProperty(const char *prop, const char *tag)
 	if (strcmp(prop, tag) != 0) {
 		xmlFree((xmlChar *)prop);
 	}
+}
+
+
+void DeviceTab::retranslateStrings()
+{
+	informationText->setHtml(
+		"<p>" + tr("Below you can set which device Stopmotion should use for grabbing images "
+		"and displaying video.") + "<br><br>" + 
+		tr("You can select from the auto-detected devices below or add devices yourself. "
+		"It is not recommended to use devices which is not auto-detected, but feel free to do "
+		"it if you are an advanced user.") + "<br><br>" +
+		tr("The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import.") + 
+		"</p>");
+	
+	QStringList lst;
+	lst << tr("Name") << tr("Description");
+	deviceTable->setHorizontalHeaderLabels(lst);
+
+	addButton->setText( tr("&Add") );
+	removeButton->setText( tr("&Remove") );
+	editButton->setText( tr("&Edit") );
+	
+
+	devicePreferences->setTitle(tr("Video device settings"));
+	deviceLabel->setText( tr("Video Device ($VIDEODEVICE): ") );
 }

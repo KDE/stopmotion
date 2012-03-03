@@ -28,6 +28,7 @@
 #include <QWidget>
 #include <QGroupBox>
 #include <QTableWidget>
+#include <QTextEdit>
 
 
 class DeviceTab : public QWidget
@@ -38,6 +39,7 @@ public:
 	
 	void initialize();
 	void apply();
+	void retranslateStrings();
 
 protected:
 	void resizeEvent(QResizeEvent *event);
@@ -61,6 +63,7 @@ private:
 	QGroupBox *devicePreferences;
 	QLabel *deviceLabel;
 	QTableWidgetItem *checkTableItem;
+	QTextEdit *informationText;
 	std::vector<QString> deviceStrings;
 	std::vector<QString> deviceNameStrings;
 	std::vector<QString> deviceDescriptionStrings;

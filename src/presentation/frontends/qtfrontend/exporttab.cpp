@@ -394,3 +394,33 @@ void ExportTab::browseFiles()
 		defaultOutput->setText(file);
 	}
 }
+
+void ExportTab::retranslateStrings()
+{
+	infoText->setHtml(
+		"<p>" + tr("Below you can set which program/process Stopmotion should use "
+		"for encoding the currently active project to a video file.") + "</p><p>" +
+		tr("You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
+		"the image path and the video file, respectively.") + "</p><p>" +
+		tr("Example with mencoder (jpeg images to mpeg4 video):") + "<br>" +
+		"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1 -mf type=jpg:fps=8 -o "
+		"$VIDEOFILE mf://$IMAGEPATH/*.jpg");
+	
+	QStringList lst;
+	lst << tr("Name") << tr("Description");
+	encoderTable->setHorizontalHeaderLabels(lst);
+
+	addButton->setText( tr("&Add") );
+	removeButton->setText( tr("&Remove") );
+	editButton->setText( tr("&Edit") );
+	
+	askForOutput->setText( 
+			tr("Do you want to be asked for an output file everytime you choose to export?"));
+			   
+	yesButton->setText(tr("Yes"));
+	noButton->setText(tr("No"));
+	defaultOutputLabel->setText( tr("Set default output file:"));
+	browseButton->setText(tr("Browse"));
+	startEncoderLabel->setText(tr("Start encoder:"));
+	stopEncoderLabel->setText(tr("Stop encoder:"));
+}

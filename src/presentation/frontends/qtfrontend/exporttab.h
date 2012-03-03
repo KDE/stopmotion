@@ -57,6 +57,8 @@ public:
 	 * Initializes the table and fills it with starting values.
 	 */
 	void initialize();
+
+	void retranslateStrings();
 	
 protected:
 	void resizeEvent(QResizeEvent *event);
