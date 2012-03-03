@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -109,7 +109,7 @@ public:
 	 * @return the attribute for the given key or "defaultValue" if the key 
 	 * wasn't found.
 	 */
-	const int getPreference(const char* key, const int defaultValue);
+	int getPreference(const char* key, const int defaultValue);
 	
 	/**
 	 * Removes the preference with the key "key". (Which, in practice, means 

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -27,7 +27,7 @@
 #include <sys/types.h>
 #include <libgen.h>
 #include <stdlib.h>
-
+#include <cstring>
 
 const char ProjectSerializer::imageDirectory[] = "images/";
 const char ProjectSerializer::soundDirectory[] = "sounds/";

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,10 +20,12 @@
 #include "src/technical/grabber/commandlinegrabber.h"
 #include "src/technical/util.h"
 
+#include <cstdlib>
 #include <sstream>
 #include <sys/types.h>
 #include <signal.h>
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 

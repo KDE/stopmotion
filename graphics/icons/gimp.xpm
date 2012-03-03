@@ -1,5 +1,5 @@
 /* XPM */
-static char *gimpicon[]={
+static const char *const gimpicon[] = {
 "48 48 52 1",
 "# c None",
 ". c None",

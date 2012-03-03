@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -30,6 +30,9 @@
 QtFrontend::QtFrontend(int argc, char **argv)
 {
 	stApp = new QApplication(argc, argv);
+#if QT_VERSION == 0x040400
+        stApp->setAttribute(Qt::AA_NativeWindows);
+#endif
 	
 	// Need to call this here to get the locale for the language 
 	// which is used by the translator created in mainWindowGUI
@@ -273,8 +276,8 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription0", 
 			tr("Exports from jpeg images to mpeg1 video").toLatin1().constData());
 	prefs->setPreference("startEncoder0",
-			"mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg "
-			"-ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE");
+			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=12:type=jpg "
+			"-ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder0", "");
 
 	// Default export option 2
@@ -282,8 +285,8 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription1", 
 			tr("Exports from jpeg images to mpeg2 video").toLatin1().constData());
 	prefs->setPreference("startEncoder1",
-			"mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=4:type=jpg "
-			"-ovc lavc -lavcopts vcodec=mpeg2video -oac copy -o $VIDEOFILE");
+			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=4:type=jpg "
+			"-ovc lavc -lavcopts vcodec=mpeg2video -oac copy -o \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder1", "");
 
 	// Default export option 3
@@ -292,7 +295,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			tr("Exports from jpeg images to mpeg4 video").toLatin1().constData());
 	prefs->setPreference("startEncoder2",
 			"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1:$opt -mf type=jpg:fps=8 "
-			"-o $VIDEOFILE mf://$IMAGEPATH/*.jpg");
+			"-o \"$VIDEOFILE\" \"mf://$IMAGEPATH/*.jpg\"");
 	prefs->setPreference("stopEncoder2", "");
 	
 	// Default export option 4
@@ -300,7 +303,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription3", 
 			tr("Exports from jpeg images to mpeg4 video").toLatin1().constData());
 	prefs->setPreference("startEncoder3",
-			"ffmpeg -r 10 -b 1800 -i $IMAGEPATH/%06d.jpg $VIDEOFILE");
+			"ffmpeg -r 10 -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder3", "");
 	//-------------------------------------------------------------------------
 }

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -126,3 +126,38 @@ const vector<GrabberDevice> Util::getGrabberDevices()
 	return devices;
 }
 
+bool Util::copyFile(const char *destFileName, const char *srcFileName)
+{
+    assert(destFileName != 0);
+    assert(srcFileName != 0);
+
+    FILE *src = fopen(srcFileName, "rb");
+    if (!src) {
+        fprintf(stderr, "Failed to open '%s' for reading: %s\n", srcFileName, strerror(errno));
+        return false;
+    }
+
+    FILE *dest = fopen(destFileName, "wb");
+    if (!dest) {
+        fprintf(stderr, "Failed to open '%s' for writing: %s\n", destFileName, strerror(errno));
+        fclose (src);
+        return false;
+    }
+
+    char buf[4096];
+    size_t bytesRead;
+    while ((bytesRead = fread(buf, 1, sizeof(buf), src)) > 0) {
+        if (fwrite(buf, 1, bytesRead, dest) != bytesRead) {
+            fprintf (stderr, "Error while writing '%s': %s\n", destFileName, strerror(errno));
+            break;
+        }
+    }
+
+    if (bytesRead == 0 && ferror(src))
+        fprintf(stderr, "Error while reading from file '%s': %s\n", srcFileName, strerror(errno));
+
+    fclose(src);
+    fclose(dest);
+
+    return true;
+}

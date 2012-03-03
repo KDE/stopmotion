@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad     *
- *   bjoern.nilsen@bjoernen.com     & fredrikbk@hotmail.com                *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,6 +20,7 @@
 #include "frame.h"
 
 #include "src/technical/audio/oggvorbis.h"
+#include "src/technical/util.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -104,9 +105,7 @@ int Frame::addSound(const char *filename)
 		// Check if the sound already is inside the tmp directory.
 		// (This can be the fact if we runs in recovery mode.)
 		if ( strstr(filename, "/.stopmotion/tmp/") == NULL ) {
-			char command[512] = {0};
-			snprintf(command, 512, "/bin/cp %s %s", filename, newSoundPath);
-			system(command);
+			Util::copyFile(newSoundPath, filename);
 		}
 		else {
 			rename(filename, newSoundPath);
@@ -247,7 +246,6 @@ void Frame::moveToSoundDir(const char *directory)
 
 void Frame::copyToTemp()
 {
-	char command[512] = {0};
 	char newImagePath[256] = {0};
 	
 	// gets a pointer to the extension
@@ -259,9 +257,7 @@ void Frame::copyToTemp()
 	// the image isn't in the trash directory
 	if (strstr(imagePath, "/.stopmotion/trash/") == NULL) {
 		if (strcmp(imagePath, newImagePath) != 0) {
-			// constructs a copy command and executes it
-			snprintf(command, 512, "/bin/cp %s %s", imagePath, newImagePath);
-			system(command);
+		  Util::copyFile(newImagePath, imagePath);
 		}
 	}
 	else if (strstr(imagePath, "/.stopmotion/packer/") != NULL) {
