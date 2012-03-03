@@ -23,6 +23,7 @@
 #include "src/domain/domainfacade.h"
 
 #include <QChar>
+#include <QProcess>
 
 
 ModelHandler::ModelHandler ( QObject *parent, QStatusBar *sb, FrameBar *frameBar, 
@@ -170,3 +171,53 @@ void ModelHandler::removeScene()
 			getActiveSceneNumber());
 }
 
+
+
+/*!
+    \fn ModelHandler::editCurrentFrame()
+ */
+int ModelHandler::editCurrentFrame()
+{
+	const char *gimpCommand = Util::checkCommand("gimp");
+	if (!gimpCommand) {
+		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
+			tr("You do not have Gimp installed on your system"),
+			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
+		return 1;
+	}
+
+	// Determine the active scene and active frame.
+	int activeScene = DomainFacade::getFacade()->getActiveSceneNumber();
+	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
+
+	if (activeScene < 0 || activeFrame < 0) {
+		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
+			tr("There is no active frame to open"),
+			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
+		return 1;
+	}
+
+	Frame *frame = DomainFacade::getFacade()->getFrame(activeFrame, activeScene);
+	if (!frame) {
+		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
+			tr("The active frame is corrupt"),
+			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
+		return 1;
+	}
+	
+	QStringList argList;
+	// arg0 are the options, and arg1 is the path of the frame.
+	// Start Gimp without splash screen.
+	argList.append(QLatin1String("--no-splash"));	
+	argList.append(QLatin1String(frame->getImagePath()));
+
+	QProcess process;
+	if (!process.startDetached(QLatin1String(gimpCommand), argList)) {
+		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
+			tr("Failed to start Gimp!"),
+			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
+		return 1;
+	}
+	
+	return 0;
+}

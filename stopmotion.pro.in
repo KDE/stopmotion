@@ -60,6 +60,7 @@ HEADERS += src/config.h \
            graphics/icons/videoexport.xpm \
            graphics/icons/whatsthisicon.xpm \
            graphics/icons/windowicon.xpm \
+           graphics/icons/gimp.xpm \
            src/application/soundhandler.h \
            src/presentation/frontends/qtfrontend/framepreferencesmenu.h \
            src/application/editmenuhandler.h \

@@ -34,6 +34,7 @@
 #include "graphics/icons/removeframeicon.xpm"
 #include "graphics/icons/newscene.xpm"
 #include "graphics/icons/removescene.xpm"
+#include "graphics/icons/gimp.xpm"
 
 #include <QToolTip>
 #include <QAction>
@@ -89,6 +90,8 @@ void ToolsMenu::setupUi()
 	cameraHandler->setCameraButton(ui.cameraButton);
 	connect( ui.cameraButton, SIGNAL(clicked()), cameraHandler, SLOT(toggleCamera()) );
 	
+
+
 	ui.captureGroup->hide();
 	connect( cameraHandler, SIGNAL(cameraStateChanged(bool)), this, SLOT(activateCaptureGroup(bool)) );
 	
@@ -164,6 +167,11 @@ void ToolsMenu::setupUi()
 	ui.loopButton->setFocusPolicy( Qt::NoFocus );
 	runAnimationHandler->setLoopButton(ui.loopButton);
 	connect( ui.loopButton, SIGNAL(clicked()), runAnimationHandler, SLOT(toggleLooping()) );
+
+	//Launcher for the Gimp.
+	ui.launchGimp->setIcon(QIcon(QPixmap(gimpicon)));
+	ui.launchGimp->setFocusPolicy(Qt::NoFocus);
+	connect(ui.launchGimp, SIGNAL(clicked()), modelHandler, SLOT(editCurrentFrame()));
 }
 
 
@@ -249,6 +257,13 @@ void ToolsMenu::retranslateStrings()
 			"<p>Click this button to toggle the camera on and off</p> ");
 	ui.cameraButton->setToolTip(infoText);
 	ui.cameraButton->setWhatsThis(infoText );
+	
+	infoText = 
+			tr("<h4>Launch Gimp</h4> "
+			"<p>Click this button to open the active frame in Gimp</p> " 
+			"<p>Note that you can also drag images from the frame bar and drop them on Gimp</p>");
+	ui.launchGimp->setToolTip(infoText);
+	ui.launchGimp->setWhatsThis(infoText );
 	
 	infoText =
 			tr("<h4>Capture Frame (Space)</h4> "
@@ -477,6 +492,7 @@ void ToolsMenu::cameraOn(bool isOn)
 		ui.playButton->setEnabled(false);
 		ui.pauseButton->setEnabled(false);
 		ui.stopButton->setEnabled(false);
+		ui.launchGimp->setEnabled(false);
 		runAnimationHandler->stopAnimation();
  		changeViewingMode(0);
 		ui.viewChooseCombo->setCurrentIndex(0);
@@ -485,6 +501,7 @@ void ToolsMenu::cameraOn(bool isOn)
 		ui.playButton->setEnabled(true);
 		ui.pauseButton->setEnabled(true);
 		ui.stopButton->setEnabled(true);
+		ui.launchGimp->setEnabled(true);
 		if ( captureTimer->isActive() ) {
 			captureTimer->stop();
 		}

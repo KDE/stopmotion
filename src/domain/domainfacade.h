@@ -299,7 +299,7 @@ public:
 protected:
 	/**
 	 * The constructor. It is protected so that it will be impossible for other classes,
-	 * who doesn't inherit from it to instanciate the singleton. 
+	 * which don't inherit from it to instanciate the singleton. 
 	 */
 	DomainFacade();
 	
