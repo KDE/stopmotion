@@ -1,0 +1,23 @@
+From: "Ying-Chun Liu (PaulLiu)" <paulliu@debian.org>
+Date: Thu, 10 Feb 2011 21:25:29 +0800
+Subject: jpg crash
+
+Fix Crash when read single jpg files.
+See: http://bugs.debian.org/612762
+---
+ src/application/modelhandler.cpp |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/application/modelhandler.cpp b/src/application/modelhandler.cpp
+index 6f80882..1417d93 100644
+--- a/src/application/modelhandler.cpp
++++ b/src/application/modelhandler.cpp
+@@ -97,7 +97,7 @@ void ModelHandler::addFrames( const QStringList & fileNames)
+ 		QStringList::Iterator it = names.begin();
+ 		while (it != names.end() ) {
+ 			QString fileName = *it;
+-			char *f = new char[fileName.length()];
++			char *f = new char[fileName.length()+1];
+ 			strcpy(f, fileName.toLatin1().data());
+ 			fNames.push_back(f);
+ 			++it;

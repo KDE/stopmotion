@@ -97,7 +97,7 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 		QStringList::Iterator it = names.begin();
 		while (it != names.end() ) {
 			QString fileName = *it;
-			char *f = new char[fileName.length()+1];
+			char *f = new char[fileName.length()];
 			strcpy(f, fileName.toLatin1().data());
 			fNames.push_back(f);
 			++it;

@@ -236,7 +236,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("importstartdeamon1", 
 			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
 	prefs->setPreference("importstopdeamon1", 
-			"kill -9 $(pidof vgrabbj)");
+			"kill -9 `ps ax | grep vgrabbj | grep -v grep | cut -b 0-5`");
 	
 	// Default import option 3
 	prefs->setPreference("importname2", tr("dvgrab").toLatin1().constData());
@@ -246,7 +246,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			"dvgrab --format jpeg --jpeg-overwrite --jpeg-deinterlace --jpeg-width 640 " 
 			"--jpeg-height 480 --frames 25 $IMAGEFILE");
 	prefs->setPreference("importstopdeamon2", 
-			"kill -9 $(pidof dvgrab)");
+			"kill -9 `ps ax | grep dvgrab | grep -v grep | cut -b 0-5`");
 	
 	// Default import option 4
 	prefs->setPreference("importname3", tr("videodog singleshot").toLatin1().constData());
@@ -264,7 +264,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			"dvgrab --format jpeg --jpeg-overwrite --jpeg-deinterlace --jpeg-width 640 "
 			"--jpeg-height 480 --every 25 $IMAGEFILE &");
 	prefs->setPreference("importstopdeamon4", 
-			"kill -9 $(pidof dvgrab)");
+			"kill -9 `ps ax | grep dvgrab | grep -v grep | cut -b 0-5`");
 	// -----------------------------------------------------------------------
 
 	// Default export options ------------------------------------------------
