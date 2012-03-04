@@ -66,7 +66,7 @@ void PreferencesMenu::makeVideoImportTab()
 {
 	importVideoTab = new ImportTab;
 	importVideoTab->initializeImportValues();	
-	importVideoTab->setMinimumHeight(300);
+	importVideoTab->setMinimumHeight(500);
 	tabWidget->addTab(importVideoTab, tr("Video &Import"));
 }
 

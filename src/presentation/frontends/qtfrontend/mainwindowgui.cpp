@@ -294,7 +294,7 @@ void MainWindowGUI::createActions()
 	quitAct = new QAction(this);
 	quitAct->setIcon(QIcon(quiticon));
 	quitAct->setShortcut(ControlModifier+Key_Q);
-	connect(quitAct, SIGNAL(triggered()), qApp, SLOT(quit()));
+	connect(quitAct, SIGNAL(triggered()), this, SLOT(quitProgram()));
 	
 	//Edit menu
 	undoAct = new QAction(this);
@@ -748,24 +748,27 @@ void MainWindowGUI::retranslateHelpText()
 
 void MainWindowGUI::newProject() 
 {
+  int save = 0;
 	bool b = DomainFacade::getFacade()->isUnsavedChanges();
 	if (b) {
-		int save = QMessageBox::question(this,
+		save = QMessageBox::question(this,
 			tr("Unsaved changes"),
 			tr("There are unsaved changes. Do you want to save?"),
-			tr("&Yes"), tr("&No"), // button 0, button 1, ...
-			QString::null, 0, 1 );
-		if (save == 0) { // user pressed button 0, which is 'yes'
+		        tr("&Save"), tr("Do&n't save"), tr("Abort"), 
+			0, 2 );
+		if (save == 0) { // user pressed button 0, which is 'save'
 			saveProject();
 		}
 	}
-	DomainFacade::getFacade()->newProject();
-	//fileMenu->setItemEnabled(SAVE, false);
-	saveAct->setEnabled(false);
+	if (save != 2) {
+	  DomainFacade::getFacade()->newProject();
+	  //fileMenu->setItemEnabled(SAVE, false);
+	  saveAct->setEnabled(false);
 	
-	DomainFacade::getFacade()->clearHistory();
-	modelSizeChanged(0);
-	toolsMenu->modelSizeChanged(0);
+	  DomainFacade::getFacade()->clearHistory();
+	  modelSizeChanged(0);
+	  toolsMenu->modelSizeChanged(0);
+	}
 }
 
 
@@ -854,6 +857,31 @@ void MainWindowGUI::saveProject()
 	else {
 		saveProjectAs();
 	}
+}
+
+
+/* To be called instead of the default quit method */
+/* Checks whether the project is saved, and asks the user if not. */
+void MainWindowGUI::quitProgram()
+{
+        bool b = DomainFacade::getFacade()->isUnsavedChanges();
+        if (b) {
+                int save = QMessageBox::question(this,
+                                                 tr("Unsaved changes"),
+                                                 tr("There are unsaved changes. Do you want to save?"),
+                                                 tr("&Save"), tr("Do&n't save"), tr("Abort"),
+                                                 0, 2 );
+                if (save == 0) { // user pressed button 0, which is 'save'
+                        saveProject();
+                        exit(0); /* FIXME! Calling exit() is rather brutal. */
+                }
+                if (save == 1) { // user pressed button 1, which is "don't save"
+                  exit(0);
+                }
+        }
+        else {
+          exit(0);
+        }
 }
 
 
