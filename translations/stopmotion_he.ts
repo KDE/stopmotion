@@ -700,7 +700,7 @@ This can be set in the preferences menu.</source>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;שמירה&lt;/h4&gt; &lt;p&gt;&lt;em&gt;שמירת&lt;/em&gt; ההנפשה הנוכחית כקובץ מיזם של Stopmotion. &lt;BR&gt;אם מיזם זה כבר נשמר בעבר הוא ישמור אוטומטית לקובץ שנבחר בעבר.&lt;/p&gt;</translation>
     </message>
     <message>

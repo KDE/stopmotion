@@ -698,7 +698,7 @@ This can be set in the preferences menu.</source>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Guardar&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Guarda&lt;/em&gt; la animación actual como un archivo de proyecto de Stopmotion. &lt;BR&gt;Si este proyecto ya se ha guardado con anterioridad, se vuelve a guardar automáticamente en el archivo previamente seleccionado.&lt;/p&gt;</translation>
     </message>
     <message>

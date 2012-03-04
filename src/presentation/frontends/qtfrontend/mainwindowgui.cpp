@@ -567,7 +567,7 @@ void MainWindowGUI::retranslateHelpText()
 			tr("<h4>Save</h4> "
 			"<p><em>Saves</em> the current animation as a Stopmotion "
 			"project file. <BR>If this project has been saved before it will "
-			"automaticly be saved to the previously selected file.</p>");
+			"automatically be saved to the previously selected file.</p>");
 	saveAct->setWhatsThis(infoText);
 	infoText = 
 			saveAct->toolTip().prepend(tr("Save project"));
