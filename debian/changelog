@@ -1,3 +1,21 @@
+stopmotion (0.6.2-2) unstable; urgency=low
+
+  * Co-hijack package (i.e., add self as co-maintaining uploader)
+  * Update debian packaging.
+    - Simplify with dh mechanisms.
+    - Add doc-base entry.
+    - Tweak build-time link flags without editing generated Makefile.
+    - Add collab-main git VCS repo to debian/control.
+    - Add new project homepage to debian/control.
+    - Address most lintian issues.
+  * Patches
+    - Use source format 3.0 (quilt).
+    - Migrate debian changes to upstream code into quilt patches.
+    - Quilt patches for various upstream spelling errors.
+    - Quilt patch to remove desktop file encoding key.
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Sun, 04 Mar 2012 17:44:08 +0000
+
 stopmotion (0.6.2-1.2) unstable; urgency=low
 
   * Non-maintainer upload.
