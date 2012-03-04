@@ -434,12 +434,12 @@ utilizar. Isto pode ser feito nas preferências.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
-        <source>Start deamon</source>
+        <source>Start daemon</source>
         <translation>Iniciar o demónio</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
-        <source>Stop deamon</source>
+        <source>Stop daemon</source>
         <translation>Parar o demónio</translation>
     </message>
 </context>
@@ -976,12 +976,12 @@ será guardado em ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
-        <source>vgrabbj VGA deamon</source>
+        <source>vgrabbj VGA daemon</source>
         <translation>vgrabbj VGA em demónio</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation>Lança vgrabbj como um demónio. Bastante rápido.</translation>
     </message>
     <message>
@@ -1191,8 +1191,8 @@ será guardado em ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
         <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch 
+to running the image grabbing as a daemon.</source>
         <translation>A leitura funciona por enquanto sómente quando o gravador
 funciona como demónio. Vá ao menu preferências (CTRL+P)
 para configurar a gravação de imagens como demónio.</translation>

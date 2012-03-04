@@ -222,20 +222,18 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	// Default import option 1
 	prefs->setPreference("importname0", tr("vgrabbj").toLatin1().constData());
 	prefs->setPreference("importdescription0", 
-			tr("VGA daemon. Pretty fast.").toLatin1
-().constData());
-	prefs->setPreference("importstartdeamon1", 
-			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
-	prefs->setPreference("importstopdeamon1", 
-			"kill -9 $(pidof vgrabbj)");
-	
+			tr("The simplest setting. Fairly slow").toLatin1().constData());
+	prefs->setPreference("importprepoll0",
+			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga");
+	prefs->setPreference("importstopdaemon0", "");
+
 	// Default import option 2
-	prefs->setPreference("importname1", tr("vgrabbj rotated").toLatin1().constData());
+	prefs->setPreference("importname1", tr("vgrabbj VGA daemon").toLatin1().constData());
 	prefs->setPreference("importdescription1", 
-			tr("It rotates the image 180 degrees").toLatin1().constData());
-	prefs->setPreference("importstartdeamon1", 
-			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250 -R -U");
-	prefs->setPreference("importstopdeamon1", 
+			tr("Starts vgrabbj as a daemon. Pretty fast.").toLatin1().constData());
+	prefs->setPreference("importstartdaemon1", 
+			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
+	prefs->setPreference("importstopdaemon1", 
 			"kill -9 $(pidof vgrabbj)");
 	
 	// Default import option 3
@@ -244,7 +242,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			tr("Grabbing from V4L2 devices").toLatin1().constData());
 	prefs->setPreference("importprepoll2", 
 			"uvccapture -d$VIDEODEVICE -x640 -y480 -o$IMAGEFILE");
-	prefs->setPreference("importstopdeamon2", "");
+	prefs->setPreference("importstopdaemon2", "");
 	
 	// Default import option 4
 	prefs->setPreference("importname3", tr("videodog singleshot").toLatin1().constData());
@@ -252,16 +250,16 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			tr("Videodog.").toLatin1().constData());
 	prefs->setPreference("importprepoll3",
 			"videodog -x 640 -y 480 -w 3 -d $VIDEODEVICE -j -f $IMAGEFILE");
-	prefs->setPreference("importstopdeamon3", "");
+	prefs->setPreference("importstopdaemon3", "");
 	
 	// Default import option 5
 	prefs->setPreference("importname4", tr("dvgrab").toLatin1().constData());
 	prefs->setPreference("importdescription4", 
 			tr("Grabbing from DV-cam.").toLatin1().constData());
-	prefs->setPreference("importstartdeamon4", 
+	prefs->setPreference("importstartdaemon4", 
 			"dvgrab --format jpeg --jpeg-overwrite --jpeg-temp dvtemp.jpeg "
 			"--every 25 $IMAGEFILE &");
-	prefs->setPreference("importstopdeamon4", 
+	prefs->setPreference("importstopdaemon4", 
 			"kill -9 $(pidof dvgrab)");
 	// -----------------------------------------------------------------------
 
@@ -313,14 +311,14 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 	// Replace all occurences of '/dev/xxx' with $VIDEODEVICE (version < 0.7)
 	int numImports = prefs->getPreference("numberofimports", 1);
 	for (int i = 0; i < numImports; ++i) {
-		string start( prefs->getPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(), "") );
+		string start( prefs->getPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(), "") );
 		int index = start.find("(DEFAULTPATH)");
 		if (index != -1) {
 			start.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
 		}
 		QString s(start.c_str());
 		s.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
-		prefs->setPreference( QString("importstartdeamon%1").arg(i).toLatin1().constData(), s.toLatin1().constData());
+		prefs->setPreference( QString("importstartdaemon%1").arg(i).toLatin1().constData(), s.toLatin1().constData());
 
 		string prepoll( prefs->getPreference(QString("importprepoll%1").arg(i).toLatin1().constData(), "") );
 		index = prepoll.find("(DEFAULTPATH)");

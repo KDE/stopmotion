@@ -531,13 +531,13 @@ Detta kan ställas in i inställnings menyn.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
-        <source>Start deamon</source>
-        <translation>Starta deamon</translation>
+        <source>Start daemon</source>
+        <translation>Starta daemon</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
-        <source>Stop deamon</source>
-        <translation>Stoppa deamon</translation>
+        <source>Stop daemon</source>
+        <translation>Stoppa daemon</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="332"/>
@@ -1124,13 +1124,13 @@ kontrollera inställningarna i inställngsmenyn?</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
-        <source>vgrabbj VGA deamon</source>
-        <translation>vgrabbj VGA deamon</translation>
+        <source>vgrabbj VGA daemon</source>
+        <translation>vgrabbj VGA daemon</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
-        <translation>Startar vgrabbj som deamon. Ganska snabb.</translation>
+        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+        <translation>Startar vgrabbj som daemon. Ganska snabb.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="339"/>
@@ -1343,11 +1343,11 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
         <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch 
+to running the image grabbing as a daemon.</source>
         <translation>Uppspelning fungerar för tillfället bara när hämtaren körs
-som deamon. Gå till inställningsmenyn (CTRL+P) för att byta
-till att köra bildhämtningen som deamon.</translation>
+som daemon. Gå till inställningsmenyn (CTRL+P) för att byta
+till att köra bildhämtningen som daemon.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="217"/>
