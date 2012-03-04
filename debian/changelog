@@ -1,4 +1,11 @@
-stopmotion (0.6.2-2) unstable; urgency=low
+stopmotion (0.6.2+git.1.10d2ea43-1) unstable; urgency=low
+
+  * Merge changes from resurrected upstream on sourceforge + tweaks
+  * Remove now-unneeded quilt patches
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Sun, 04 Mar 2012 19:23:55 +0000
+
+stopmotion (0.6.2-2) UNRELEASED; urgency=low
 
   * Co-hijack package (i.e., add self as co-maintaining uploader)
   * Update debian packaging.
