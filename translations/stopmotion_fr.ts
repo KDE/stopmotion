@@ -835,7 +835,7 @@ Ceci peut être fait dans la fenêtre de préférences.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Enregistrer&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Enregistre&lt;/em&gt; l&apos;animation courante sous forme de fichier projet Stopmotion. &lt;BR&gt;Si ce projet a été enregistré précédemment, il sera enregistré automatiquement dans le même fichier (écrasement).&lt;/p&gt;</translation>
     </message>
     <message>

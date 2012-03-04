@@ -634,7 +634,7 @@ utilizar. Isto pode ser feito nas preferências.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Gravar&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Grava&lt;/em&gt; a animação actual como um ficheiro projecto Stopmotion. &lt;BR&gt;Se este projecto já foi gravado antes vai ser automáticamento gravado no ficheiro já seleccionado.&lt;/p&gt;</translation>
     </message>
     <message>
