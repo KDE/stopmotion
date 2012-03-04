@@ -530,12 +530,12 @@ chcete používat.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
-        <source>Start deamon</source>
+        <source>Start daemon</source>
         <translation>Spustit démona</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
-        <source>Stop deamon</source>
+        <source>Stop daemon</source>
         <translation>Zastavit démona</translation>
     </message>
     <message>
@@ -1125,12 +1125,12 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
-        <source>vgrabbj VGA deamon</source>
+        <source>vgrabbj VGA daemon</source>
         <translation>vgrabbj VGA démon</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation>Startuje vgrabbj jako démona. Poměrně rychlé....</translation>
     </message>
     <message>
@@ -1342,8 +1342,8 @@ values exists. Do you want to use this one? (Your old preferences
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
         <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch 
+to running the image grabbing as a daemon.</source>
         <translation>Přehrávání nyní funguje pouze když grabber běží jako démon.
 Toho můžete docílit v menu &quot;Nastavení&quot;.</translation>
     </message>

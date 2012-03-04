@@ -30,7 +30,7 @@ class FrameView;
 
 /**
  * Thread used for polling an external program to update the camera. Only
- * used for polling, not for when the camera is running in deamon mode.
+ * used for polling, not for when the camera is running in daemon mode.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */

@@ -530,13 +530,13 @@ To lahko storite v nastavitvenem meniju.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
-        <source>Start deamon</source>
-        <translation type="unfinished">Začni deamon</translation>
+        <source>Start daemon</source>
+        <translation type="unfinished">Začni daemon</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
-        <source>Stop deamon</source>
-        <translation type="unfinished">Ustavi deamon</translation>
+        <source>Stop daemon</source>
+        <translation type="unfinished">Ustavi daemon</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="332"/>
@@ -1136,12 +1136,12 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
-        <source>vgrabbj VGA deamon</source>
+        <source>vgrabbj VGA daemon</source>
         <translation type="unfinished">vgrabbj VGA prikriti proces</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation type="unfinished">Zažene vgrabbj kot prikriti proces. Deluje hitro.</translation>
     </message>
     <message>
@@ -1341,11 +1341,11 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
         <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch 
+to running the image grabbing as a daemon.</source>
         <translation type="unfinished">Prodvajanje trenutno deluje le ko je  (new line)
-as a deamon. Go to the preferences menu (CTRL+P) to switch (new line)
-to running the image grabbing as a deamon.</translation>
+as a daemon. Go to the preferences menu (CTRL+P) to switch (new line)
+to running the image grabbing as a daemon.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="217"/>

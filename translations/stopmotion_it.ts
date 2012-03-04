@@ -425,12 +425,12 @@ Questo può essere impostato nel menu delle preferenze.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
-        <source>Start deamon</source>
+        <source>Start daemon</source>
         <translation>Avvia demone</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
-        <source>Stop deamon</source>
+        <source>Stop daemon</source>
         <translation>Ferma demone</translation>
     </message>
     <message>
@@ -963,12 +963,12 @@ controllare le impostazioni nel menu delle preferenze?</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
-        <source>vgrabbj VGA deamon</source>
+        <source>vgrabbj VGA daemon</source>
         <translation>demone vgrabbj VGA</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation>Avvia vgrabbj come demone. Molto veloce.</translation>
     </message>
     <message>
@@ -1171,8 +1171,8 @@ Vuoi usarla? (Le vecchie preferenze saranno salvate in ~/.stopmotion/preferences
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
         <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch 
+to running the image grabbing as a daemon.</source>
         <translation>Playback funziona attualmente solo quando la cattura è 
 impostata come demone. Vai al menu delle preferenze (CTRL+P)
 per selezionare la cattura come demone.</translation>
