@@ -79,13 +79,13 @@ private slots:
 	void changeSettings();
 	void closeChangeBox();
 	void updatePrePollString(const QString &txt);
-	void updateStartDeamonString(const QString &txt);
-	void updatestopDeamonString(const QString &txt);
+	void updateStartDaemonString(const QString &txt);
+	void updatestopDaemonString(const QString &txt);
 	
 private:
 	vector<QString>prePollStrings;
-	vector<QString>startDeamonStrings;
-	vector<QString>stopDeamonStrings;
+	vector<QString>startDaemonStrings;
+	vector<QString>stopDaemonStrings;
 	
 	QTableWidget *deviceSelectionTable;
 	QPushButton *addButton;
@@ -93,12 +93,12 @@ private:
 	QPushButton *changeButton;
 	QPushButton *closeChangeBoxButton;
 	QLineEdit *prePollEdit;
-	QLineEdit *startDeamonEdit;
-	QLineEdit *stopDeamonEdit;
+	QLineEdit *startDaemonEdit;
+	QLineEdit *stopDaemonEdit;
 	QGroupBox *grabberPreferences;
 	QLabel *prePollLabel;
-	QLabel *startDeamonLabel;
-	QLabel *stopDeamonLabel;
+	QLabel *startDaemonLabel;
+	QLabel *stopDaemonLabel;
 	QTableWidgetItem *checkTableItem;
 	QTextEdit *informationText;
 	

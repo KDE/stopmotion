@@ -33,14 +33,14 @@ public:
 	/**
 	 * Constructs and initializes the object.
 	 * @param filePath path to the output file grabbed from a device
-	 * @param isProcess true if the process is running in deamon mode, false otherwise
+	 * @param isProcess true if the process is running in daemon mode, false otherwise
 	 */
 	ImageGrabber(char* filePath, bool isProcess = false);
 	virtual ~ImageGrabber() {};
 	
 	/**
-	 * Checks if the process is running in deamon mode.
-	 * @return true if it runs in deamon mode, false otherwise
+	 * Checks if the process is running in daemon mode.
+	 * @return true if it runs in daemon mode, false otherwise
 	 */
 	bool isGrabberProcess();
 	

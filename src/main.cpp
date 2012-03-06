@@ -123,7 +123,7 @@ bool init(Frontend *frontend, DomainFacade *facadePtr)
 	if ( isRecoveryMode() ) {
 		int ret = frontend->askQuestion(
 				"Something caused Stopmotion to exit abnormally\n"
-				"last time it was runned. Do you want to recover?");
+				"last time it was run. Do you want to recover?");
 		// The user wants to recover
 		if (ret == 0) {
 			recover(facadePtr);
