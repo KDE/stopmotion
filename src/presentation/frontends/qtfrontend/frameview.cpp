@@ -46,8 +46,8 @@ const int FrameView::alphaLut[5] = { 128, 64, 43, 32, 26 };
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
  : QWidget(parent), screen(0), videoSurface(0), grabThread(0), grabber(0)
 {
-	char tmp[256];
-	snprintf(tmp, 256, "%s/.stopmotion/capturedfile.jpg", getenv("HOME"));
+	char tmp[PATH_MAX];
+	snprintf(tmp, sizeof(tmp), "%s/.stopmotion/capturedfile.jpg", getenv("HOME"));
 	capturedImg = new char[strlen(tmp) + 1];
 	strcpy(capturedImg, tmp);
 	

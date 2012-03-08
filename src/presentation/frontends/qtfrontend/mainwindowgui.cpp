@@ -101,7 +101,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	changeMonitor       = 0; 
 	lastVisitedDir      = 0;
 	
-	lastVisitedDir = new char[256];
+	lastVisitedDir = new char[PATH_MAX];
 	strcpy( lastVisitedDir, getenv("PWD") );
 	
 	centerWidget = new QWidget;
@@ -904,7 +904,7 @@ void MainWindowGUI::exportToVideo()
 	}
 	else {
 		bool isCanceled = false;
-		char tmp[256];
+		char tmp[PATH_MAX];
 		VideoEncoder enc;
 		
 		sprintf(tmp, "startEncoder%d", active);

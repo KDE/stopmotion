@@ -22,7 +22,7 @@ extern int  ng_chromakey;
 extern int  ng_jpeg_quality;
 extern int  ng_ratio_x;
 extern int  ng_ratio_y;
-extern char ng_v4l_conf[256];
+extern const char *ng_v4l_conf;
 
 #define BUG_ON(condition,message)	if (condition) {\
 	fprintf(stderr,"BUG: %s [%s:%d]\n",\

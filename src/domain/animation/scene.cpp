@@ -136,7 +136,7 @@ char* Scene::addFrame(char* frameName, unsigned int &index)
 	
 	Frame *f = new Frame(frameName);
 	f->copyToTemp();
-	newPath = new char[256];
+	newPath = new char[PATH_MAX];
 	strcpy( newPath, f->getImagePath() );
 	frames.insert(frames.begin() + index, f);
 	++index;
@@ -160,7 +160,7 @@ const vector< char * > Scene::removeFrames( unsigned int fromFrame, const unsign
 		for (unsigned int i = fromFrame; i <= toFrame; ++i) {
 			Frame *f = frames[fromFrame];
 			f->moveToTrash();
-			newPath = new char[256];
+			newPath = new char[PATH_MAX];
 			strcpy(newPath, f->getImagePath());
 			newImagePaths.push_back(newPath);
 			newPath = NULL;
