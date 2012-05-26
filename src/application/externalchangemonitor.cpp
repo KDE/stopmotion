@@ -27,6 +27,8 @@
 #include <inotifytools/inotifytools.h>
 #include <inotifytools/inotify.h>
 
+#include <unistd.h>
+
 /**
  * @todo uniform most of the getenv("home") calls so that it is done once
  * and pasted around.
