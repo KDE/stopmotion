@@ -20,6 +20,7 @@
 #include "scene.h"
 #include <sstream>
 #include <cstring>
+#include <unistd.h>
 
 Scene::Scene()
 {
