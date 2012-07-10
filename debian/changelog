@@ -1,3 +1,10 @@
+stopmotion (0.6.2+git.1.10d2ea43-2) unstable; urgency=low
+
+  * Merge and acknowledge (Thanks Matthias!) NMU
+  * Include a bunch of minor fixes like PATH_MAX, see git for details
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Tue, 10 Jul 2012 09:18:19 +0100
+
 stopmotion (0.6.2+git.1.10d2ea43-1.1) unstable; urgency=low
 
   * Non-maintainer upload.
