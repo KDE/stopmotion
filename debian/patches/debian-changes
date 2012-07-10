@@ -1,0 +1,1504 @@
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ stopmotion (0.6.2+git.1.10d2ea43-1) unstable; urgency=low
+ .
+   * Merge changes from resurrected upstream on sourceforge + tweaks
+   * Remove now-unneeded quilt patches
+Author: Barak A. Pearlmutter <bap@debian.org>
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: http://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: <YYYY-MM-DD>
+
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/stopmotion.desktop
++++ stopmotion-0.6.2+git.1.10d2ea43/stopmotion.desktop
+@@ -1,7 +1,6 @@
+ [Desktop Entry]
+ Name=Stopmotion
+ Icon=stopmotion
+-Encoding=UTF-8
+ Comment=Program to create stop-motion animations
+ Exec=/usr/bin/stopmotion
+ Terminal=false
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_it.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_it.ts
+@@ -425,12 +425,12 @@ Questo può essere impostato nel menu de
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation>Avvia demone</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation>Ferma demone</translation>
+     </message>
+     <message>
+@@ -700,7 +700,7 @@ Questo può essere impostato nel menu de
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation>&lt;h4&gt;Salva&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Salva&lt;/em&gt; l&apos;animazione corrente come progetto Stopmotion. &lt;BR&gt;Se il progetto è stato già salvato verrà automaticamente salvato nel file precedentemente indicato.&lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -963,12 +963,12 @@ controllare le impostazioni nel menu del
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation>demone vgrabbj VGA</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation>Avvia vgrabbj come demone. Molto veloce.</translation>
+     </message>
+     <message>
+@@ -1171,8 +1171,8 @@ Vuoi usarla? (Le vecchie preferenze sara
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation>Playback funziona attualmente solo quando la cattura è 
+ impostata come demone. Vai al menu delle preferenze (CTRL+P)
+ per selezionare la cattura come demone.</translation>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_dk.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_dk.ts
+@@ -421,12 +421,12 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -696,7 +696,7 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -954,12 +954,12 @@ to check your settings in the preference
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -1161,8 +1161,8 @@ values exists. Do you want to use this o
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_kl.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_kl.ts
+@@ -421,12 +421,12 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -696,7 +696,7 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -954,12 +954,12 @@ to check your settings in the preference
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -1161,8 +1161,8 @@ values exists. Do you want to use this o
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_no_nn.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_no_nn.ts
+@@ -558,12 +558,12 @@ Dette kan settes i preferanse-menyen.</t
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation>Start nisse</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation>Stopp nisse</translation>
+     </message>
+     <message>
+@@ -948,7 +948,7 @@ Dette kan settes i preferanse-menyen.</t
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation>&lt;h4&gt;Lagre&lt;/h4&gt;&lt;p&gt;&lt;em&gt;Lagrer&lt;/em&gt; nåværende animasjon som en Stopmotion prosjektfil. &lt;BR&gt; Hvis prosjektet allerede er lagret til fil, vil det automatisk lagre til denne filen. &lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -1265,12 +1265,12 @@ to check your settings in the preference
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
+-        <translation>vgrabbj VGA deamon</translation>
++        <source>vgrabbj VGA daemon</source>
++        <translation>vgrabbj VGA daemon</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation>Starter vgrabbj som en nisse. Veldig kjapt.</translation>
+     </message>
+     <message>
+@@ -1545,8 +1545,8 @@ lagret som ~/.stopmotion/preferences.xml
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation>Playback fungerer kun når du gjører bildefangst-programmet som 
+ en nisse. Gå til preferansemenyen (CTRL+P ) for å sette at 
+ programmet skal kjøres som en nisse.</translation>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_br.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_br.ts
+@@ -421,12 +421,12 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -696,7 +696,7 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -954,12 +954,12 @@ to check your settings in the preference
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -1161,8 +1161,8 @@ values exists. Do you want to use this o
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_de.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_de.ts
+@@ -421,12 +421,12 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation>Hintergrungprozess starten</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation>Hintergrungprozess stoppen</translation>
+     </message>
+     <message>
+@@ -696,7 +696,7 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation>&lt;h4&gt;Speichern&lt;/h4&gt; &lt;p&gt;Speichert die aktuelle Animation als Stopmotion Projektdatei. &lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -958,12 +958,12 @@ die Einstellungen überprüfen ?</transl
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation>vgrabbj VGA Hintergrungprozess</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation>startet vgrabbj als Hintergrungprozess. Ziemlich schnell.</translation>
+     </message>
+     <message>
+@@ -1166,8 +1166,8 @@ Möchten sie diese nutzen ? (Ihre alten
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation>Der Playback-Modus funktioniert nur, wenn der Grabber als Hintergrundprozess
+ läuft. Bitte ändern sie dies im Einstellungs-Menü. </translation>
+     </message>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_fr.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_fr.ts
+@@ -525,12 +525,12 @@ Ceci peut être fait dans la fenêtre de
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation>Lancer le démon</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation>Arrêter le démon</translation>
+     </message>
+     <message>
+@@ -835,7 +835,7 @@ Ceci peut être fait dans la fenêtre de
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation>&lt;h4&gt;Enregistrer&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Enregistre&lt;/em&gt; l&apos;animation courante sous forme de fichier projet Stopmotion. &lt;BR&gt;Si ce projet a été enregistré précédemment, il sera enregistré automatiquement dans le même fichier (écrasement).&lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -1117,12 +1117,12 @@ vos paramètres dans la fenêtre de pré
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation>Démon de capture VGA (vgrabbj)</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation>Lance vgrabbj comme un démon. Plutôt rapide.</translation>
+     </message>
+     <message>
+@@ -1336,8 +1336,8 @@ Voulez-vous utiliser ce fichier ? ( Votr
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_tr.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_tr.ts
+@@ -424,12 +424,12 @@ Seçenekler menüsünden yapabilirsiniz.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation>Servisi başlat</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation>Servisi durdur</translation>
+     </message>
+     <message>
+@@ -699,7 +699,7 @@ Seçenekler menüsünden yapabilirsiniz.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation>&lt;h4&gt;Kaydet&lt;/h4&gt; &lt;p&gt;Animasyonu Stopmotion dosyası olarak kaydeder. Daha önce kaydedilmişse, önceki dosyanın üzerine yazar.&lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -961,12 +961,12 @@ kontrol etmek ister misiniz?</translatio
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation>vgrabbj VGA servis</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation>vgrabbj servis olarak başlat. Hız kazandırır.</translation>
+     </message>
+     <message>
+@@ -1170,8 +1170,8 @@ yeni bir kopyası bulundu. Bunu kullanma
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation>Şu anda, oynatma özeliği sadece yakalayıcıyı servis olarak
+ çalıştırdığınızda kullanabilirsiniz. Seçenekler menüsüne (CTRL-P)
+ gidip görüntü yakalamayı servis olarak açabilirsiniz.</translation>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_fi.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_fi.ts
+@@ -421,12 +421,12 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -696,7 +696,7 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -954,12 +954,12 @@ to check your settings in the preference
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -1161,8 +1161,8 @@ values exists. Do you want to use this o
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_sl.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_sl.ts
+@@ -530,13 +530,13 @@ To lahko storite v nastavitvenem meniju.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
+-        <translation type="unfinished">Začni deamon</translation>
++        <source>Start daemon</source>
++        <translation type="unfinished">Začni daemon</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
+-        <translation type="unfinished">Ustavi deamon</translation>
++        <source>Stop daemon</source>
++        <translation type="unfinished">Ustavi daemon</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="332"/>
+@@ -745,7 +745,7 @@ To lahko storite v nastavitvenem meniju.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation type="unfinished">&lt;h4&gt;Shrani&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Shrani&lt;/em&gt; trenutno izbrano animacijo kot Stopmotion projekt. &lt;BR&gt;Če je bil ta projekt že prej shranjen bo avtomatsko shranjen v prejšnjo datoteko.&lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -1136,12 +1136,12 @@ bodo shranjene v ~/.stopmotion/preferenc
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation type="unfinished">vgrabbj VGA prikriti proces</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation type="unfinished">Zažene vgrabbj kot prikriti proces. Deluje hitro.</translation>
+     </message>
+     <message>
+@@ -1341,11 +1341,11 @@ bodo shranjene v ~/.stopmotion/preferenc
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation type="unfinished">Prodvajanje trenutno deluje le ko je  (new line)
+-as a deamon. Go to the preferences menu (CTRL+P) to switch (new line)
+-to running the image grabbing as a deamon.</translation>
++as a daemon. Go to the preferences menu (CTRL+P) to switch (new line)
++to running the image grabbing as a daemon.</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="217"/>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_se.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_se.ts
+@@ -531,13 +531,13 @@ Detta kan ställas in i inställnings me
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
+-        <translation>Starta deamon</translation>
++        <source>Start daemon</source>
++        <translation>Starta daemon</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
+-        <translation>Stoppa deamon</translation>
++        <source>Stop daemon</source>
++        <translation>Stoppa daemon</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="332"/>
+@@ -841,7 +841,7 @@ Detta kan ställas in i inställnings me
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation>&lt;h4&gt;Spara&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Sparar&lt;/em&gt;animationen som Stopmotionprojektfil. &lt;BR&gt;Om det här projektet har sparats förut kommer det automatiskt sparas till den tidigare valda filen.&lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -1124,13 +1124,13 @@ kontrollera inställningarna i inställn
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
+-        <translation>vgrabbj VGA deamon</translation>
++        <source>vgrabbj VGA daemon</source>
++        <translation>vgrabbj VGA daemon</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+-        <translation>Startar vgrabbj som deamon. Ganska snabb.</translation>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
++        <translation>Startar vgrabbj som daemon. Ganska snabb.</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="339"/>
+@@ -1343,11 +1343,11 @@ kommer sparas i ~/.stopmotion/preference
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation>Uppspelning fungerar för tillfället bara när hämtaren körs
+-som deamon. Gå till inställningsmenyn (CTRL+P) för att byta
+-till att köra bildhämtningen som deamon.</translation>
++som daemon. Gå till inställningsmenyn (CTRL+P) för att byta
++till att köra bildhämtningen som daemon.</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="217"/>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_gr.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_gr.ts
+@@ -421,12 +421,12 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -696,7 +696,7 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -954,12 +954,12 @@ to check your settings in the preference
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -1161,8 +1161,8 @@ values exists. Do you want to use this o
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_es.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_es.ts
+@@ -423,12 +423,12 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation>Iniciar demonio</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation>Detener demonio</translation>
+     </message>
+     <message>
+@@ -698,7 +698,7 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation>&lt;h4&gt;Guardar&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Guarda&lt;/em&gt; la animación actual como un archivo de proyecto de Stopmotion. &lt;BR&gt;Si este proyecto ya se ha guardado con anterioridad, se vuelve a guardar automáticamente en el archivo previamente seleccionado.&lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -961,12 +961,12 @@ sus ajustes en el menú de preferencias?
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation>demonio vgrabbj VGA</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation>Inicia vgrabbj como un demonio. Es bastante rápido.</translation>
+     </message>
+     <message>
+@@ -1168,8 +1168,8 @@ values exists. Do you want to use this o
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation>Actualmente, la previsualización sólo está disponible mientras
+ se emplea el capturador como un demonio. Vaya al
+ menú de preferencias (CTRL+P) para hacer que el capturador
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_pt.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_pt.ts
+@@ -434,12 +434,12 @@ utilizar. Isto pode ser feito nas prefer
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation>Iniciar o demónio</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation>Parar o demónio</translation>
+     </message>
+ </context>
+@@ -634,7 +634,7 @@ utilizar. Isto pode ser feito nas prefer
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation>&lt;h4&gt;Gravar&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Grava&lt;/em&gt; a animação actual como um ficheiro projecto Stopmotion. &lt;BR&gt;Se este projecto já foi gravado antes vai ser automáticamento gravado no ficheiro já seleccionado.&lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -976,12 +976,12 @@ será guardado em ~/.stopmotion/preferen
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation>vgrabbj VGA em demónio</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation>Lança vgrabbj como um demónio. Bastante rápido.</translation>
+     </message>
+     <message>
+@@ -1191,8 +1191,8 @@ será guardado em ~/.stopmotion/preferen
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation>A leitura funciona por enquanto sómente quando o gravador
+ funciona como demónio. Vá ao menu preferências (CTRL+P)
+ para configurar a gravação de imagens como demónio.</translation>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_no_nb.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_no_nb.ts
+@@ -558,12 +558,12 @@ Dette kan settes i preferanse-menyen.</t
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation>Start nisse</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation>Stopp nisse</translation>
+     </message>
+     <message>
+@@ -948,7 +948,7 @@ Dette kan settes i preferanse-menyen.</t
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation>&lt;h4&gt;Lagre&lt;/h4&gt;&lt;p&gt;&lt;em&gt;Lagrer&lt;/em&gt; nåværende animasjon som en Stopmotion prosjektfil. &lt;BR&gt; Hvis prosjektet allerede er lagret til fil, vil det automatisk lagre til denne filen. &lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -1265,12 +1265,12 @@ to check your settings in the preference
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
+-        <translation>vgrabbj VGA deamon</translation>
++        <source>vgrabbj VGA daemon</source>
++        <translation>vgrabbj VGA daemon</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation>Starter vgrabbj som en nisse. Veldig kjapt.</translation>
+     </message>
+     <message>
+@@ -1545,8 +1545,8 @@ lagret som ~/.stopmotion/preferences.xml
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation>Playback fungerer kun når du gjører bildefangst-programmet som 
+ en nisse. Gå til preferansemenyen (CTRL+P ) for å sette at 
+ programmet skal kjøres som en nisse.</translation>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_ru.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_ru.ts
+@@ -421,12 +421,12 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -696,7 +696,7 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -954,12 +954,12 @@ to check your settings in the preference
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -1161,8 +1161,8 @@ values exists. Do you want to use this o
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_no_se.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_no_se.ts
+@@ -421,12 +421,12 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -696,7 +696,7 @@ This can be set in the preferences menu.
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -954,12 +954,12 @@ to check your settings in the preference
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+@@ -1161,8 +1161,8 @@ values exists. Do you want to use this o
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation type="unfinished"></translation>
+     </message>
+     <message>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/translations/stopmotion_cz.ts
++++ stopmotion-0.6.2+git.1.10d2ea43/translations/stopmotion_cz.ts
+@@ -530,12 +530,12 @@ chcete používat.</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
+-        <source>Start deamon</source>
++        <source>Start daemon</source>
+         <translation>Spustit démona</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
+-        <source>Stop deamon</source>
++        <source>Stop daemon</source>
+         <translation>Zastavit démona</translation>
+     </message>
+     <message>
+@@ -745,7 +745,7 @@ chcete používat.</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
+-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
++        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+         <translation>&lt;h4&gt;Uložit&lt;/h4&gt;&lt;p&gt;Uloží animaci do projektu Stopmotion. &lt;br&gt; Pokud byl tento projekt už dříve uložen, bude původní soubor automaticky přepsán novým.&lt;/p&gt;</translation>
+     </message>
+     <message>
+@@ -1125,12 +1125,12 @@ to check your settings in the preference
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
+-        <source>vgrabbj VGA deamon</source>
++        <source>vgrabbj VGA daemon</source>
+         <translation>vgrabbj VGA démon</translation>
+     </message>
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
+-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
++        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
+         <translation>Startuje vgrabbj jako démona. Poměrně rychlé....</translation>
+     </message>
+     <message>
+@@ -1342,8 +1342,8 @@ values exists. Do you want to use this o
+     <message>
+         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
+         <source>Playback only currently works when running the grabber 
+-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+-to running the image grabbing as a deamon.</source>
++as a daemon. Go to the preferences menu (CTRL+P) to switch 
++to running the image grabbing as a daemon.</source>
+         <translation>Přehrávání nyní funguje pouze když grabber běží jako démon.
+ Toho můžete docílit v menu &quot;Nastavení&quot;.</translation>
+     </message>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/manual/x177.html
++++ stopmotion-0.6.2+git.1.10d2ea43/manual/x177.html
+@@ -154,9 +154,9 @@ CLASS="accel"
+ 			button.
+ 		</P
+ ><P
+->&#13;			There are three things which can be specified here. The prepoll, start deamon
+-			and stop deamon fields. If the program for importing the images grabs one image
+-			and then exits you can leave the start and stop deamon fields blank. The contents 
++>&#13;			There are three things which can be specified here. The prepoll, start daemon
++			and stop daemon fields. If the program for importing the images grabs one image
++			and then exits you can leave the start and stop daemon fields blank. The contents 
+ 			of the prepoll field is a command which is run before importing a picture. If the 
+ 			import program is running in the foreground this will typically be the command line 
+ 			for grabbing the picture. Note that you have to write (DEFAULTPATH) in the command 
+@@ -165,11 +165,11 @@ CLASS="accel"
+ 			and file name.
+ 		</P
+ ><P
+->&#13;			If the program you use for importing the pictures is running as a background/deamon
+-			process you have to specify command lines for starting and stoping the deamon.
++>&#13;			If the program you use for importing the pictures is running as a background/daemon
++			process you have to specify command lines for starting and stoping the daemon.
+ 			Again you should use the $importpath tag instead of the path to the file (se above).
+ 			Prepoll could still be used but is not required. One potential use for the prepoll
+-			command when the grab program is running as a deamon process is to specify a command
++			command when the grab program is running as a daemon process is to specify a command
+ 			line which performes a operation such as scaling or rotating the picture. This
+ 			command will be called on the pictures every time before importing them meaning
+ 			the live video will be displayed with the effect.
+@@ -235,4 +235,4 @@ VALIGN="top"
+ ></DIV
+ ></BODY
+ ></HTML
+->
+\ No newline at end of file
++>
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/main.cpp
++++ stopmotion-0.6.2+git.1.10d2ea43/src/main.cpp
+@@ -123,7 +123,7 @@ bool init(Frontend *frontend, DomainFaca
+ 	if ( isRecoveryMode() ) {
+ 		int ret = frontend->askQuestion(
+ 				"Something caused Stopmotion to exit abnormally\n"
+-				"last time it was runned. Do you want to recover?");
++				"last time it was run. Do you want to recover?");
+ 		// The user wants to recover
+ 		if (ret == 0) {
+ 			recover(facadePtr);
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/domain/animation/animation.cpp
++++ stopmotion-0.6.2+git.1.10d2ea43/src/domain/animation/animation.cpp
+@@ -156,14 +156,14 @@ int Animation::addSound(unsigned int fra
+ 		frontend->reportError(
+ 				"Cannot open the selected audio file for reading.\n"
+ 				"Check that you have the right permissions set.\n"
+-				"The animation will be runned without sound if you\n"
++				"The animation will be run without sound if you\n"
+ 				"choose to play.", 0);
+ 		--numSounds;
+ 	}
+ 	else if (ret == -2) {
+ 		frontend->reportError(
+ 				"The selected audio file is not valid within the\n" 
+-				"given audio format. The animation will be runned\n"
++				"given audio format. The animation will be run\n"
+ 				"without sound if you choose to play.", 0);
+ 		--numSounds;
+ 	}
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/application/modelhandler.cpp
++++ stopmotion-0.6.2+git.1.10d2ea43/src/application/modelhandler.cpp
+@@ -97,7 +97,7 @@ void ModelHandler::addFrames( const QStr
+ 		QStringList::Iterator it = names.begin();
+ 		while (it != names.end() ) {
+ 			QString fileName = *it;
+-			char *f = new char[fileName.length()];
++			char *f = new char[fileName.length()+1];
+ 			strcpy(f, fileName.toLatin1().data());
+ 			fNames.push_back(f);
+ 			++it;
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/technical/grabber/imagegrabber.h
++++ stopmotion-0.6.2+git.1.10d2ea43/src/technical/grabber/imagegrabber.h
+@@ -33,14 +33,14 @@ public:
+ 	/**
+ 	 * Constructs and initializes the object.
+ 	 * @param filePath path to the output file grabbed from a device
+-	 * @param isProcess true if the process is running in deamon mode, false otherwise
++	 * @param isProcess true if the process is running in daemon mode, false otherwise
+ 	 */
+ 	ImageGrabber(char* filePath, bool isProcess = false);
+ 	virtual ~ImageGrabber() {};
+ 	
+ 	/**
+-	 * Checks if the process is running in deamon mode.
+-	 * @return true if it runs in deamon mode, false otherwise
++	 * Checks if the process is running in daemon mode.
++	 * @return true if it runs in daemon mode, false otherwise
+ 	 */
+ 	bool isGrabberProcess();
+ 	
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/technical/grabber/commandlinegrabber.h
++++ stopmotion-0.6.2+git.1.10d2ea43/src/technical/grabber/commandlinegrabber.h
+@@ -40,10 +40,10 @@ public:
+ 	/**
+ 	 * Initializes the member variables.
+ 	 * @param filePath path to the output file grabbed from a device
+-	 * @param prePoll the pre-poll command to be runned before grabbing
++	 * @param prePoll the pre-poll command to be run before grabbing
+ 	 * @param startProcess command line for starting the process
+ 	 * @param stopProcess command line for stopping the process
+-	 * @param isProcess true if the process is running in deamon mode, false otherwise
++	 * @param isProcess true if the process is running in daemon mode, false otherwise
+ 	 */
+ 	/*CommandLineGrabber(char* filePath, const char* prePoll, const char* startProcess, 
+ 			const char* stopProcess, bool isProcess = false);*/
+@@ -55,7 +55,7 @@ public:
+ 	bool setStopCommand(const char *command);
+ 	
+ 	/**
+-	 * Starts the grabber if it is marked to be runned in deamon mode.
++	 * Starts the grabber if it is marked to be run in daemon mode.
+ 	 * @return true on success, false otherwise
+ 	 */
+ 	bool init();
+@@ -67,7 +67,7 @@ public:
+ 	bool grab();
+ 	
+ 	/**
+-	 * Shut downs the grabber process either if it is runned in deamon
++	 * Shut downs the grabber process either if it is run in daemon
+ 	 * mode or "single grab" mode.
+ 	 * @return true on success, false otherwise
+ 	 */
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/technical/audio/ossdriver.cpp
++++ stopmotion-0.6.2+git.1.10d2ea43/src/technical/audio/ossdriver.cpp
+@@ -108,7 +108,7 @@ bool OSSDriver::initialize()
+ 	// This means that the call imidiately returns with a return value
+ 	audioFD = open(audioDevice, O_WRONLY | O_NONBLOCK, 0);
+ 	if (audioFD == -1 || audioFD == EBUSY) {
+-		fprintf(stderr, "Cannot open device: %s\n", strerror(errno));
++		fprintf(stderr, "Cannot open device %s: %s\n", audioDevice, strerror(errno));
+ 		return false;
+ 	}
+ 	
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/presentation/frontends/qtfrontend/qtfrontend.cpp
++++ stopmotion-0.6.2+git.1.10d2ea43/src/presentation/frontends/qtfrontend/qtfrontend.cpp
+@@ -227,15 +227,15 @@ void QtFrontend::setDefaultPreferences(P
+ 			tr("The simplest setting. Fairly slow").toLatin1().constData());
+ 	prefs->setPreference("importprepoll0",
+ 			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga");
+-	prefs->setPreference("importstopdeamon0", "");
++	prefs->setPreference("importstopdaemon0", "");
+ 
+ 	// Default import option 2
+-	prefs->setPreference("importname1", tr("vgrabbj VGA deamon").toLatin1().constData());
++	prefs->setPreference("importname1", tr("vgrabbj VGA daemon").toLatin1().constData());
+ 	prefs->setPreference("importdescription1", 
+-			tr("Starts vgrabbj as a deamon. Pretty fast.").toLatin1().constData());
+-	prefs->setPreference("importstartdeamon1", 
++			tr("Starts vgrabbj as a daemon. Pretty fast.").toLatin1().constData());
++	prefs->setPreference("importstartdaemon1", 
+ 			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
+-	prefs->setPreference("importstopdeamon1", 
++	prefs->setPreference("importstopdaemon1", 
+ 			"kill -9 $(pidof vgrabbj)");
+ 	
+ 	// Default import option 3
+@@ -244,7 +244,7 @@ void QtFrontend::setDefaultPreferences(P
+ 			tr("Grabbing from V4L2 devices").toLatin1().constData());
+ 	prefs->setPreference("importprepoll2", 
+ 			"uvccapture -d$VIDEODEVICE -x640 -y480 -o$IMAGEFILE");
+-	prefs->setPreference("importstopdeamon2", "");
++	prefs->setPreference("importstopdaemon2", "");
+ 	
+ 	// Default import option 4
+ 	prefs->setPreference("importname3", tr("videodog singleshot").toLatin1().constData());
+@@ -252,16 +252,16 @@ void QtFrontend::setDefaultPreferences(P
+ 			tr("Videodog.").toLatin1().constData());
+ 	prefs->setPreference("importprepoll3",
+ 			"videodog -x 640 -y 480 -w 3 -d $VIDEODEVICE -j -f $IMAGEFILE");
+-	prefs->setPreference("importstopdeamon3", "");
++	prefs->setPreference("importstopdaemon3", "");
+ 	
+ 	// Default import option 5
+ 	prefs->setPreference("importname4", tr("dvgrab").toLatin1().constData());
+ 	prefs->setPreference("importdescription4", 
+ 			tr("Grabbing from DV-cam.").toLatin1().constData());
+-	prefs->setPreference("importstartdeamon4", 
++	prefs->setPreference("importstartdaemon4", 
+ 			"dvgrab --format jpeg --jpeg-overwrite --jpeg-temp dvtemp.jpeg "
+ 			"--every 25 $IMAGEFILE &");
+-	prefs->setPreference("importstopdeamon4", 
++	prefs->setPreference("importstopdaemon4", 
+ 			"kill -9 $(pidof dvgrab)");
+ 	// -----------------------------------------------------------------------
+ 
+@@ -313,14 +313,14 @@ void QtFrontend::updateOldPreferences(Pr
+ 	// Replace all occurences of '/dev/xxx' with $VIDEODEVICE (version < 0.7)
+ 	int numImports = prefs->getPreference("numberofimports", 1);
+ 	for (int i = 0; i < numImports; ++i) {
+-		string start( prefs->getPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(), "") );
++		string start( prefs->getPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(), "") );
+ 		int index = start.find("(DEFAULTPATH)");
+ 		if (index != -1) {
+ 			start.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
+ 		}
+ 		QString s(start.c_str());
+ 		s.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
+-		prefs->setPreference( QString("importstartdeamon%1").arg(i).toLatin1().constData(), s.toLatin1().constData());
++		prefs->setPreference( QString("importstartdaemon%1").arg(i).toLatin1().constData(), s.toLatin1().constData());
+ 
+ 		string prepoll( prefs->getPreference(QString("importprepoll%1").arg(i).toLatin1().constData(), "") );
+ 		index = prepoll.find("(DEFAULTPATH)");
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/presentation/frontends/qtfrontend/frameview.cpp
++++ stopmotion-0.6.2+git.1.10d2ea43/src/presentation/frontends/qtfrontend/frameview.cpp
+@@ -338,10 +338,10 @@ bool FrameView::on()
+ 	
+ 	const char* prepoll = 
+ 		prefs->getPreference(QString("importprepoll%1").arg(activeCmd).toLatin1().constData(), "");
+-	const char* startDeamon = 
+-		prefs->getPreference(QString("importstartdeamon%1").arg(activeCmd).toLatin1().constData(), "");
+-	const char* stopDeamon = 
+-		prefs->getPreference(QString("importstopdeamon%1").arg(activeCmd).toLatin1().constData(), "");
++	const char* startDaemon = 
++		prefs->getPreference(QString("importstartdaemon%1").arg(activeCmd).toLatin1().constData(), "");
++	const char* stopDaemon = 
++		prefs->getPreference(QString("importstopdaemon%1").arg(activeCmd).toLatin1().constData(), "");
+ 	
+ 	int activeDev = prefs->getPreference("activeVideoDevice", -1);
+ 	if (activeDev > -1) {
+@@ -350,9 +350,9 @@ bool FrameView::on()
+ 		QString pre = QString(prepoll).replace("$VIDEODEVICE", device);
+ 		freeProperty(prepoll);
+ 		prepoll = strdup(pre.toLatin1().constData());
+-		QString sd = QString(startDeamon).replace("$VIDEODEVICE", device);
+-		freeProperty(startDeamon);
+-		startDeamon = strdup(sd.toLatin1().constData());
++		QString sd = QString(startDaemon).replace("$VIDEODEVICE", device);
++		freeProperty(startDaemon);
++		startDaemon = strdup(sd.toLatin1().constData());
+ 		freeProperty(device);
+ 	}
+ 	else {
+@@ -364,7 +364,7 @@ bool FrameView::on()
+ 		return false;
+ 	}
+ 
+-	bool isProcess = (strcmp(startDeamon, "") == 0) ? false : true;
++	bool isProcess = (strcmp(startDaemon, "") == 0) ? false : true;
+ 	bool isCameraReady = true;
+ 	this->grabber = new CommandLineGrabber(capturedImg, isProcess);
+ 	if ( !grabber->setPrePollCommand(prepoll) ) {
+@@ -380,7 +380,7 @@ bool FrameView::on()
+ 	free(const_cast<char *>(prepoll));
+ 	prepoll = 0;
+ 
+-	if ( !grabber->setStartCommand(startDeamon) ) {
++	if ( !grabber->setStartCommand(startDaemon) ) {
+ 		DomainFacade::getFacade()->getFrontend()->hideProgress();
+ 		QMessageBox::warning(this, tr("Warning"), tr(
+ 					"You do not have the given grabber installed on your system"),
+@@ -391,11 +391,11 @@ bool FrameView::on()
+ 		//return false;
+ 	}
+ 	
+-	free(const_cast<char *>(startDeamon));
+-	startDeamon = 0;
++	free(const_cast<char *>(startDaemon));
++	startDaemon = 0;
+ 
+-	grabber->setStopCommand(stopDeamon);
+-	freeProperty(stopDeamon);
++	grabber->setStopCommand(stopDaemon);
++	freeProperty(stopDaemon);
+ 
+ 	if (isCameraReady) {
+ 		this->initCompleted();
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/presentation/frontends/qtfrontend/mainwindowgui.cpp
++++ stopmotion-0.6.2+git.1.10d2ea43/src/presentation/frontends/qtfrontend/mainwindowgui.cpp
+@@ -567,7 +567,7 @@ void MainWindowGUI::retranslateHelpText(
+ 			tr("<h4>Save</h4> "
+ 			"<p><em>Saves</em> the current animation as a Stopmotion "
+ 			"project file. <BR>If this project has been saved before it will "
+-			"automaticly be saved to the previously selected file.</p>");
++			"automatically be saved to the previously selected file.</p>");
+ 	saveAct->setWhatsThis(infoText);
+ 	infoText = 
+ 			saveAct->toolTip().prepend(tr("Save project"));
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/presentation/frontends/qtfrontend/importtab.cpp
++++ stopmotion-0.6.2+git.1.10d2ea43/src/presentation/frontends/qtfrontend/importtab.cpp
+@@ -36,12 +36,12 @@ ImportTab::ImportTab( QWidget *parent )
+ 	changeButton         = 0;
+ 	closeChangeBoxButton = 0;
+ 	prePollEdit          = 0;
+-	startDeamonEdit      = 0;
+-	stopDeamonEdit       = 0;
++	startDaemonEdit      = 0;
++	stopDaemonEdit       = 0;
+ 	grabberPreferences   = 0;
+ 	prePollLabel         = 0;
+-	startDeamonLabel     = 0;
+-	stopDeamonLabel      = 0;
++	startDaemonLabel     = 0;
++	stopDaemonLabel      = 0;
+ 	checkTableItem       = 0;
+ 	informationText      = 0;
+ 	
+@@ -105,15 +105,15 @@ void ImportTab::makeGUI()
+ 	QObject::connect( prePollEdit, SIGNAL(textChanged(const QString &)), 
+ 			this, SLOT(updatePrePollString(const QString &)));
+ 	
+-	startDeamonLabel = new QLabel( tr("Start deamon") );
+-	startDeamonEdit = new FlexibleLineEdit;
+-	QObject::connect( startDeamonEdit, SIGNAL(textChanged(const QString &)), 
+-			this, SLOT(updateStartDeamonString(const QString &)));
+-	
+-	stopDeamonLabel = new QLabel( tr("Stop deamon") );
+-	stopDeamonEdit = new FlexibleLineEdit;
+-	QObject::connect( stopDeamonEdit, SIGNAL(textChanged(const QString &)), 
+-			this, SLOT(updatestopDeamonString(const QString &)) );
++	startDaemonLabel = new QLabel( tr("Start daemon") );
++	startDaemonEdit = new FlexibleLineEdit;
++	QObject::connect( startDaemonEdit, SIGNAL(textChanged(const QString &)), 
++			this, SLOT(updateStartDaemonString(const QString &)));
++	
++	stopDaemonLabel = new QLabel( tr("Stop daemon") );
++	stopDaemonEdit = new FlexibleLineEdit;
++	QObject::connect( stopDaemonEdit, SIGNAL(textChanged(const QString &)), 
++			this, SLOT(updatestopDaemonString(const QString &)) );
+ 	
+ 	QVBoxLayout *mainLayout = new QVBoxLayout;
+ 	mainLayout->addWidget(informationText);
+@@ -140,10 +140,10 @@ void ImportTab::makeGUI()
+ 	grabberPrefsLayout->addLayout(hbLayout);
+ 	grabberPrefsLayout->addWidget(prePollLabel);
+ 	grabberPrefsLayout->addWidget(prePollEdit);
+-	grabberPrefsLayout->addWidget(startDeamonLabel);
+-	grabberPrefsLayout->addWidget(startDeamonEdit);
+-	grabberPrefsLayout->addWidget(stopDeamonLabel);
+-	grabberPrefsLayout->addWidget(stopDeamonEdit);
++	grabberPrefsLayout->addWidget(startDaemonLabel);
++	grabberPrefsLayout->addWidget(startDaemonEdit);
++	grabberPrefsLayout->addWidget(stopDaemonLabel);
++	grabberPrefsLayout->addWidget(stopDaemonEdit);
+ 	grabberPreferences->setLayout(grabberPrefsLayout);
+ }
+ 
+@@ -171,12 +171,12 @@ void ImportTab::initializeImportValues()
+ 		prePollStrings.push_back(QString(prop));
+ 		freeProperty(prop);
+ 		
+-		prop = pref->getPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(), "");
+-		startDeamonStrings.push_back(QString(prop));
++		prop = pref->getPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(), "");
++		startDaemonStrings.push_back(QString(prop));
+ 		freeProperty(prop);
+ 		
+-		prop = pref->getPreference(QString("importstopdeamon%1").arg(i).toLatin1().constData(), "");
+-		stopDeamonStrings.push_back(QString(prop));
++		prop = pref->getPreference(QString("importstopdaemon%1").arg(i).toLatin1().constData(), "");
++		stopDaemonStrings.push_back(QString(prop));
+ 		freeProperty(prop);
+ 	}
+ 	
+@@ -198,8 +198,8 @@ void ImportTab::apply()
+ 			prefs->removePreference(QString("importname%1").arg(i).toLatin1().constData());
+ 			prefs->removePreference(QString("importdescription%1").arg(i).toLatin1().constData());
+ 			prefs->removePreference(QString("importprepoll%1").arg(i).toLatin1().constData());
+-			prefs->removePreference(QString("importstartdeamon%1").arg(i).toLatin1().constData());
+-			prefs->removePreference(QString("importstopdeamon%1").arg(i).toLatin1().constData());
++			prefs->removePreference(QString("importstartdaemon%1").arg(i).toLatin1().constData());
++			prefs->removePreference(QString("importstopdaemon%1").arg(i).toLatin1().constData());
+ 		}
+ 	}
+ 	
+@@ -214,10 +214,10 @@ void ImportTab::apply()
+ 					deviceSelectionTable->item(i, 1)->text().toLatin1().constData(), true);
+ 			prefs->setPreference(QString("importprepoll%1").arg(i).toLatin1().constData(),
+ 					prePollStrings[i].toLatin1().constData(), true);
+-			prefs->setPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(),
+-					startDeamonStrings[i].toLatin1().constData(), true);
+-			prefs->setPreference(QString("importstopdeamon%1").arg(i).toLatin1().constData(),
+-					stopDeamonStrings[i].toLatin1().constData(), true);
++			prefs->setPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(),
++					startDaemonStrings[i].toLatin1().constData(), true);
++			prefs->setPreference(QString("importstopdaemon%1").arg(i).toLatin1().constData(),
++					stopDaemonStrings[i].toLatin1().constData(), true);
+ 		}
+ 	}
+ 	else {
+@@ -243,8 +243,8 @@ void ImportTab::addImportProgram()
+ 	deviceSelectionTable->setCurrentCell(newRow, 0);
+ 
+ 	prePollStrings.push_back("");
+-	startDeamonStrings.push_back("");
+-	stopDeamonStrings.push_back("");
++	startDaemonStrings.push_back("");
++	stopDaemonStrings.push_back("");
+ }
+ 
+ 
+@@ -253,8 +253,8 @@ void ImportTab::removeImportProgram()
+ 	int selectedRow = deviceSelectionTable->currentRow();
+ 	if (selectedRow >= 0) {
+ 		prePollStrings.erase(prePollStrings.begin() + selectedRow);
+-		startDeamonStrings.erase(startDeamonStrings.begin() + selectedRow);
+-		stopDeamonStrings.erase(stopDeamonStrings.begin() + selectedRow);
++		startDaemonStrings.erase(startDaemonStrings.begin() + selectedRow);
++		stopDaemonStrings.erase(stopDaemonStrings.begin() + selectedRow);
+ 		deviceSelectionTable->removeRow(selectedRow);
+ 		contentsChanged(0, 0);
+ 	}
+@@ -285,8 +285,8 @@ void ImportTab::changeSettings()
+ 	int selected = deviceSelectionTable->currentRow();
+ 	if (selected >= 0) {
+ 		prePollEdit->setText(prePollStrings[selected]);
+-		startDeamonEdit->setText(startDeamonStrings[selected]);
+-		stopDeamonEdit->setText(stopDeamonStrings[selected]);
++		startDaemonEdit->setText(startDaemonStrings[selected]);
++		stopDaemonEdit->setText(stopDaemonStrings[selected]);
+ 		grabberPreferences->show();
+ 	}
+ }
+@@ -298,15 +298,15 @@ void ImportTab::updatePrePollString(cons
+ }
+ 
+ 
+-void ImportTab::updateStartDeamonString(const QString &txt)
++void ImportTab::updateStartDaemonString(const QString &txt)
+ {
+-	startDeamonStrings[deviceSelectionTable->currentRow()] = txt;
++	startDaemonStrings[deviceSelectionTable->currentRow()] = txt;
+ }
+ 
+ 
+-void ImportTab::updatestopDeamonString(const QString &txt)
++void ImportTab::updatestopDaemonString(const QString &txt)
+ {
+-	stopDeamonStrings[deviceSelectionTable->currentRow()] = txt;
++	stopDaemonStrings[deviceSelectionTable->currentRow()] = txt;
+ }
+ 
+ 	
+@@ -343,6 +343,6 @@ void ImportTab::retranslateStrings()
+ 	
+ 	grabberPreferences->setTitle( tr("Import device settings") );
+ 	prePollLabel->setText( tr("Pre-poll command") );
+-	startDeamonLabel->setText( tr("Start deamon") );
+-	stopDeamonLabel->setText( tr("Stop deamon") );
++	startDaemonLabel->setText( tr("Start daemon") );
++	stopDaemonLabel->setText( tr("Stop daemon") );
+ }
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/presentation/frontends/qtfrontend/importtab.h
++++ stopmotion-0.6.2+git.1.10d2ea43/src/presentation/frontends/qtfrontend/importtab.h
+@@ -79,13 +79,13 @@ private slots:
+ 	void changeSettings();
+ 	void closeChangeBox();
+ 	void updatePrePollString(const QString &txt);
+-	void updateStartDeamonString(const QString &txt);
+-	void updatestopDeamonString(const QString &txt);
++	void updateStartDaemonString(const QString &txt);
++	void updatestopDaemonString(const QString &txt);
+ 	
+ private:
+ 	vector<QString>prePollStrings;
+-	vector<QString>startDeamonStrings;
+-	vector<QString>stopDeamonStrings;
++	vector<QString>startDaemonStrings;
++	vector<QString>stopDaemonStrings;
+ 	
+ 	QTableWidget *deviceSelectionTable;
+ 	QPushButton *addButton;
+@@ -93,12 +93,12 @@ private:
+ 	QPushButton *changeButton;
+ 	QPushButton *closeChangeBoxButton;
+ 	QLineEdit *prePollEdit;
+-	QLineEdit *startDeamonEdit;
+-	QLineEdit *stopDeamonEdit;
++	QLineEdit *startDaemonEdit;
++	QLineEdit *stopDaemonEdit;
+ 	QGroupBox *grabberPreferences;
+ 	QLabel *prePollLabel;
+-	QLabel *startDeamonLabel;
+-	QLabel *stopDeamonLabel;
++	QLabel *startDaemonLabel;
++	QLabel *stopDaemonLabel;
+ 	QTableWidgetItem *checkTableItem;
+ 	QTextEdit *informationText;
+ 	
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/presentation/frontends/qtfrontend/imagegrabthread.h
++++ stopmotion-0.6.2+git.1.10d2ea43/src/presentation/frontends/qtfrontend/imagegrabthread.h
+@@ -30,7 +30,7 @@ class FrameView;
+ 
+ /**
+  * Thread used for polling an external program to update the camera. Only
+- * used for polling, not for when the camera is running in deamon mode.
++ * used for polling, not for when the camera is running in daemon mode.
+  *
+  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
+  */
+--- stopmotion-0.6.2+git.1.10d2ea43.orig/src/presentation/frontends/qtfrontend/toolsmenu.cpp
++++ stopmotion-0.6.2+git.1.10d2ea43/src/presentation/frontends/qtfrontend/toolsmenu.cpp
+@@ -407,8 +407,8 @@ void ToolsMenu::changeViewingMode(int in
+ 	else {
+ 		QMessageBox::warning(this, tr("Notice"), tr(
+ 				"Playback only currently works when running the grabber \n"
+-				"as a deamon. Go to the preferences menu (CTRL+P) to switch \n"
+-				"to running the image grabbing as a deamon."),
++				"as a daemon. Go to the preferences menu (CTRL+P) to switch \n"
++				"to running the image grabbing as a daemon."),
+ 				QMessageBox::Ok,
+ 				QMessageBox::NoButton, 
+ 				QMessageBox::NoButton);

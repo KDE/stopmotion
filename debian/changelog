@@ -1,3 +1,11 @@
+stopmotion (0.6.2+git.1.10d2ea43-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Fix FTBFS with gcc 4.7 by fixing missing <unistd.h> includes (Cyril
+    Brulebois). Closes: #667383.
+
+ -- Matthias Klose <doko@debian.org>  Tue, 29 May 2012 16:31:58 +0800
+
 stopmotion (0.6.2+git.1.10d2ea43-1) unstable; urgency=low
 
   * Merge changes from resurrected upstream on sourceforge + tweaks
