@@ -148,8 +148,8 @@ void NonGUIFrontend::addFrames(const char *directory)
 		struct stat st;
 
 		while ( (ep = readdir(dp)) ) {
-			char *fileName = new char[256];
-			snprintf(fileName, 256, "%s%s", dir, ep->d_name);
+			char *fileName = new char[PATH_MAX];
+			snprintf(fileName, sizeof(fileName), "%s%s", dir, ep->d_name);
 			stat(fileName, &st);
 			// is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0 && strstr(fileName, "snd") == NULL ) {
@@ -170,8 +170,8 @@ void NonGUIFrontend::addFrames(const char *directory)
 			delete [] frames[i];
 		}
 		
-		char tmpDir[256] = {0};
-		snprintf(tmpDir, 256, "%s/.stopmotion/tmp/", getenv("HOME"));
+		char tmpDir[PATH_MAX] = {0};
+		snprintf(tmpDir, sizeof(tmpDir), "%s/.stopmotion/tmp/", getenv("HOME"));
 		int success = checkFiles(tmpDir);
 		printf("Successfully copied %d files from %s to %s\n", success, dir, tmpDir);
 	}
@@ -189,11 +189,11 @@ void NonGUIFrontend::save(const char *directory)
 	const char *dir = getAbsolutePath(directory);
 	facadePtr->saveProject(dir);
 	
-	char tmp[256] = {0};
-	snprintf(tmp, 256, "%simages/", dir);
+	char tmp[PATH_MAX] = {0};
+	snprintf(tmp, sizeof(tmp), "%simages/", dir);
 	int saved = checkFiles(tmp);
 	printf("Successfully saved %d files in %s\n", saved, tmp);
-	snprintf(tmp, 256, "%s/.stopmotion/tmp/", getenv("HOME"));
+	snprintf(tmp, sizeof(tmp), "%s/.stopmotion/tmp/", getenv("HOME"));
 	int numFiles = checkFiles(tmp);
 	printf("Successfully removed %d files from %s\n", saved - numFiles, tmp);
 	
@@ -203,12 +203,12 @@ void NonGUIFrontend::save(const char *directory)
 
 const char* NonGUIFrontend::getAbsolutePath(const char *path)
 {
-	char *tmp = new char[256];
+	char *tmp = new char[PATH_MAX];
 	
 	// isn't an absolute path
 	if (path[0] != '/') {
 		// make it absolute
-		snprintf(tmp, 256, "%s/%s", getenv("PWD"), path);
+		snprintf(tmp, sizeof(tmp), "%s/%s", getenv("PWD"), path);
 	}
 	else {
 		strcpy(tmp, path);
@@ -222,7 +222,7 @@ const char* NonGUIFrontend::getAbsolutePath(const char *path)
 		// and doesn't ends with a '/'
 		if ( tmp[len - 1] != '/' ) {
 			// append a '/'
-			snprintf(tmp, 256, "%s/", tmp);
+			snprintf(tmp, sizeof(tmp), "%s/", tmp);
 		}
 	}
 	
@@ -238,10 +238,10 @@ int NonGUIFrontend::checkFiles(const char *directory)
 	if (dp) {
 		struct dirent *ep;
 		struct stat st;
-		char tmp[256] = {0};
+		char tmp[PATH_MAX] = {0};
 		
 		while ( (ep = readdir(dp)) ) {
-			snprintf(tmp, 256, "%s%s", directory, ep->d_name);
+			snprintf(tmp, sizeof(tmp), "%s%s", directory, ep->d_name);
 			stat(tmp, &st);
 			// is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0) {

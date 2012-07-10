@@ -40,7 +40,7 @@
 
 struct AudioFile {
 	unsigned int belongsTo;
-	char filename[256];
+	char filename[PATH_MAX];
 };
 
 bool init(Frontend *frontend, DomainFacade *facadePtr);
@@ -57,8 +57,8 @@ int main(int argc, char **argv)
 	bool hasCorrectPermissions = true;
 	
 	// Check if ~./stopmotion directory exists, create it if not
-	char tmp[256] = {0};
-	snprintf( tmp, 256, "%s/.stopmotion/", getenv("HOME") );
+	char tmp[PATH_MAX] = {0};
+	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/", getenv("HOME") );
 	if ( access(tmp, F_OK) == -1 ) {
 		mkdir(tmp, 0755);
 	}
@@ -145,24 +145,24 @@ bool init(Frontend *frontend, DomainFacade *facadePtr)
 // cleanup the directories
 void cleanup()
 {
-	char command[256] = {0};
-	snprintf( command, 256, "rm -rf %s/.stopmotion/tmp/", getenv("HOME") );
+	char command[PATH_MAX] = {0};
+	snprintf( command, sizeof(command), "rm -rf %s/.stopmotion/tmp/", getenv("HOME") );
 	system(command);
-	snprintf( command, 256, "rm -rf %s/.stopmotion/trash/", getenv("HOME") );
+	snprintf( command, sizeof(command), "rm -rf %s/.stopmotion/trash/", getenv("HOME") );
 	system(command);
-	snprintf( command, 256, "rm -rf %s/.stopmotion/packer/", getenv("HOME") );
+	snprintf( command, sizeof(command), "rm -rf %s/.stopmotion/packer/", getenv("HOME") );
 	system(command);
 }
 
 
 bool isRecoveryMode()
 {
-	char tmp[256] = {0};
-	snprintf( tmp, 256, "%s/.stopmotion/tmp/", getenv("HOME") );
+	char tmp[PATH_MAX] = {0};
+	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/tmp/", getenv("HOME") );
 	if ( access(tmp, F_OK) == -1 ) return false;
-	snprintf( tmp, 256, "%s/.stopmotion/trash/", getenv("HOME") );
+	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/trash/", getenv("HOME") );
 	if ( access(tmp, F_OK) == -1 ) return false;
-	snprintf( tmp, 256, "%s/.stopmotion/packer/", getenv("HOME") );
+	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/packer/", getenv("HOME") );
 	if ( access(tmp, F_OK) == -1 ) return false;
 	
 	// Everything is intact and we have to run in recovery mode
@@ -172,20 +172,20 @@ bool isRecoveryMode()
 
 void createDirectories()
 {
-	char tmp[256] = {0};
-	snprintf( tmp, 256, "%s/.stopmotion/tmp/", getenv("HOME") );
+	char tmp[PATH_MAX] = {0};
+	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/tmp/", getenv("HOME") );
 	mkdir(tmp, 0755);
-	snprintf( tmp, 256, "%s/.stopmotion/trash/", getenv("HOME") );
+	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/trash/", getenv("HOME") );
 	mkdir(tmp, 0755);
-	snprintf( tmp, 256, "%s/.stopmotion/packer/", getenv("HOME") );
+	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/packer/", getenv("HOME") );
 	mkdir(tmp, 0755);
 }
 
 
 void recover(DomainFacade *facadePtr)
 {
-	char tmp[256] = {0};
-	snprintf( tmp, 256, "%s/.stopmotion/packer/", getenv("HOME") );
+	char tmp[PATH_MAX] = {0};
+	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/packer/", getenv("HOME") );
 	
 	DIR *dp = opendir(tmp);
 	if (dp) {
@@ -211,7 +211,7 @@ void recover(DomainFacade *facadePtr)
 		closedir(dp);
 	}
 	
-	snprintf( tmp, 256, "%s/.stopmotion/tmp", getenv("HOME") );
+	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/tmp", getenv("HOME") );
 	dp = opendir(tmp);
 	if (dp) {
 		vector<char*> frames;
@@ -220,8 +220,8 @@ void recover(DomainFacade *facadePtr)
 		struct stat st;
 
 		while ( (ep = readdir(dp)) ) {
-			char *fileName = new char[256];
-			snprintf(fileName, 256, "%s/%s", tmp, ep->d_name);
+			char *fileName = new char[PATH_MAX];
+			snprintf(fileName, sizeof(fileName), "%s/%s", tmp, ep->d_name);
 			stat(fileName, &st);
 			// Is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0) {
@@ -231,8 +231,8 @@ void recover(DomainFacade *facadePtr)
 				}
 				// Sound file
 				else {
-					char buf[256] = {0};
-					char index[256] = {0};
+					char buf[PATH_MAX] = {0};
+					char index[PATH_MAX] = {0};
 					
 					char *firstDelim = strchr(fileName, '_');
 					strcpy(buf, firstDelim + 1);

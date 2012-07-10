@@ -2,7 +2,9 @@
 /config.log
 /config.status
 /moc_*.cpp
+/src/config.cpp
 /stopmotion
+/stopmotion.pro
 /ui_helpbrowser.h
 /ui_toolsmenu.h
 Makefile
