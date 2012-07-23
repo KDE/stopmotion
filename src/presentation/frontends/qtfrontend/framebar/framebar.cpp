@@ -42,7 +42,7 @@ static QImage tryReadImage(const char *filename)
         return QImage();
     }
 
-    QImageReader imageReader(filename);
+    QImageReader imageReader(QString::fromLocal8Bit(filename));
     const QImage image = imageReader.read();
     if (!image.isNull())
         return image;

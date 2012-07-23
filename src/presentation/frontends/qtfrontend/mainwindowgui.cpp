@@ -777,7 +777,7 @@ void MainWindowGUI::openProject()
 	QString file = QFileDialog::
 		getOpenFileName(this, tr("Choose project file"), lastVisitedDir, "Stopmotion (*.sto)");
 	if ( !file.isNull() ) {
-		openProject( file.toLatin1().constData() );
+		openProject( file.toLocal8Bit().constData() );
 	}
 }
 
