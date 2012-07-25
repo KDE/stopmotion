@@ -50,7 +50,8 @@ void ModelHandler::setRemoveFramesButton( QPushButton * removeFramesButton )
 
 void ModelHandler::chooseFrame()
 {
-	fileDialog = new QFileDialog((MainWindowGUI*)parent(), tr("Choose frames to add"), lastVisitedDir);
+	fileDialog = new QFileDialog((MainWindowGUI*)parent(), tr("Choose frames to add"),
+			QString::fromLocal8Bit(lastVisitedDir));
 	QStringList filters;
 	filters << "Images (*.png *.jpg *.jpeg  *.gif *.PNG *.JPG *.JPEG *.GIF)"
 			<< "Joint Photographic Ex. Gr. (*.jpg *.jpeg *.JPG *.JPEG)"
@@ -89,16 +90,16 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 	// done by drag 'n drop
 	if ( fileDialog != NULL ) {
 		fileDialog->hide();
-		strcpy( lastVisitedDir, fileDialog->directory().path().toLatin1().constData() );
+		strcpy( lastVisitedDir, fileDialog->directory().path().toLocal8Bit().constData() );
 	}
 	
 	if ( !names.isEmpty() ) {
 		vector<char*> fNames;
 		QStringList::Iterator it = names.begin();
 		while (it != names.end() ) {
-			QString fileName = *it;
-			char *f = new char[fileName.length()];
-			strcpy(f, fileName.toLatin1().data());
+			QByteArray fileName = it->toLocal8Bit();
+			char *f = new char[fileName.length() + 1];
+			strcpy(f, fileName.constData());
 			fNames.push_back(f);
 			++it;
 		}
@@ -122,7 +123,7 @@ void ModelHandler::addFrame( const QString &fileName )
 {
 	if (fileDialog != NULL) {
 		fileDialog->hide();
-		strcpy( lastVisitedDir, fileDialog->directory().path().toLatin1().constData() );
+		strcpy( lastVisitedDir, fileDialog->directory().path().toLocal8Bit().constData() );
 	}
 	
 	QStringList fileNames;
