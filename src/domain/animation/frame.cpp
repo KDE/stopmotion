@@ -136,7 +136,6 @@ void Frame::removeSound(unsigned int soundNumber)
 	delete sounds[soundNumber];
 	sounds[soundNumber] = NULL;
 	sounds.erase(sounds.begin() + soundNumber);
-	--soundNum;
 }
 
 
@@ -260,13 +259,9 @@ void Frame::copyToTemp()
 		  Util::copyFile(newImagePath, imagePath);
 		}
 	}
-	else if (strstr(imagePath, "/.stopmotion/packer/") != NULL) {
-		rename(imagePath, newImagePath);
-	}
 	else {
 		if (strcmp(imagePath, newImagePath) != 0) {
 			rename(imagePath, newImagePath);
-			--trashNum;
 		}
 	}
 	
@@ -307,7 +302,6 @@ void Frame::moveToTrash()
 	sounds.clear();
 
 	++trashNum;
-	--tmpNum;
 }
 
 
