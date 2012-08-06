@@ -25,7 +25,7 @@
 
 #include <cstring>
 #include <unistd.h>
-
+#include <sstream>
 
 QtFrontend::QtFrontend(int &argc, char **argv)
 {
@@ -167,20 +167,21 @@ void QtFrontend::initializePreferences()
 	Logger::get().logDebug("Loading preferencestool");
 	
 	PreferencesTool *prefs = PreferencesTool::get();
-	QString preferencesFile = getenv("HOME");
+	string preferencesFile = getenv("HOME");
 	preferencesFile += "/.stopmotion/preferences.xml";
-	QString oldPrefsFile = preferencesFile + ".OLD";
-	
+	string oldPrefsFile = preferencesFile + ".OLD";
+
 	// Has to check this before calling setPreferencesFile(...) because
 	// the function creates the file if it doesn't exist.
-	int prefsFileExists = access(preferencesFile.toLatin1().constData(), R_OK);
+	int prefsFileExists = access(preferencesFile.c_str(), R_OK);
 	if (prefsFileExists != -1) {
-		QString tmp = "/bin/cp " + preferencesFile + " " + oldPrefsFile;
-		system(tmp.toLatin1().constData());
+		ostringstream copyCmd;
+		copyCmd << "/bin/cp " << preferencesFile << " " << oldPrefsFile;
+		system(copyCmd.str().c_str());
 	}
 
 	// If file doesn't exist or has wrong version number
-	if ( !prefs->setPreferencesFile(preferencesFile.toLatin1().constData(), "0.8") ) {
+	if ( !prefs->setPreferencesFile(preferencesFile.c_str(), "0.8") ) {
 		// File doesn't exist
 		if (prefsFileExists == -1) {
 			setDefaultPreferences(prefs);
@@ -191,15 +192,15 @@ void QtFrontend::initializePreferences()
 					"A newer version of the preferences file with few more default\n"
 					"values exists. Do you want to use this one? (Your old preferences\n "
 					"will be saved in ~/.stopmotion/preferences.xml.OLD)"));
-			int useNewPrefsFile = askQuestion(question.toLatin1().constData());
+			int useNewPrefsFile = askQuestion(question.toUtf8());
 			// Use new preferences
 			if (useNewPrefsFile == 0) { // 0 = yes
 				setDefaultPreferences(prefs);
 			}
 			// Use old preferences
 			else {
-				rename(oldPrefsFile.toLatin1().constData(), preferencesFile.toLatin1().constData());
-				prefs->setPreferencesFile(preferencesFile.toLatin1().constData(), prefs->getOldVersion());
+				rename(oldPrefsFile.c_str(), preferencesFile.c_str());
+				prefs->setPreferencesFile(preferencesFile.c_str(), prefs->getOldVersion());
 				
 				// Update version
 				prefs->setVersion("0.8");
@@ -338,7 +339,7 @@ int QtFrontend::askQuestion(const char *question)
 {
 	int ret = QMessageBox::question(0,
 			tr("Question"),
-			QString(question),
+			QString::fromUtf8(question),
 			QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
 	if (ret == QMessageBox::Yes) {
 		return 0;

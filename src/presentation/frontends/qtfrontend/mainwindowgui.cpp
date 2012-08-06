@@ -844,8 +844,8 @@ void MainWindowGUI::saveProjectAs()
 
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
-                QString path = QString::fromLocal8Bit(DomainFacade::getFacade()->getProjectPath());
-                path += QLatin1String("images/");
+                string path = DomainFacade::getFacade()->getProjectPath();
+                path += "images/";
 		changeMonitor->addDirectory(path);
 		//fileMenu->setItemEnabled(SAVE, true);
 		saveAct->setEnabled(true);
@@ -938,7 +938,7 @@ void MainWindowGUI::exportToVideo()
 				isCanceled = true;	
 			}
 			else {
-				enc.setOutputFile( file.toLatin1().constData() );
+				enc.setOutputFile( file.toLocal8Bit().constData() );
 			}
 		}
 		else {
@@ -974,7 +974,7 @@ void MainWindowGUI::exportToCinerella()
 				"Cinerella (*.XXX)");
 	
 	if ( !file.isNull() ) {
-		DomainFacade::getFacade()->exportToCinerella( file.toLatin1().constData() );
+		DomainFacade::getFacade()->exportToCinerella( file.toLocal8Bit().constData() );
 	}
 }
 
