@@ -352,6 +352,6 @@ int QtFrontend::runExternalCommand(const char *command)
 {	
 	ExternalCommand *ec = new ExternalCommand;
 	ec->show();
-	ec->run( QString(command) );
+	ec->run( QString::fromLocal8Bit(command) );
 	return 0;
 }
