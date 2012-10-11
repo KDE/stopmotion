@@ -105,8 +105,8 @@ HEADERS += src/config.h \
 		   src/technical/libng/struct-v4l.h \
 		   src/technical/libng/videodev2.h \
 		   src/technical/libng/videodev.h \
-		   src/presentation/frontends/qtfrontend/devicetab.h
-		   
+		   src/presentation/frontends/qtfrontend/devicetab.h \
+		   src/domain/undo/command.h
 
 FORMS 	+= src/presentation/frontends/qtfrontend/helpbrowser.ui \
 		   src/presentation/frontends/qtfrontend/toolsmenu.ui
@@ -171,7 +171,8 @@ SOURCES += src/config.cpp \
 		   src/technical/libng/struct-v4l.c \
 		   src/technical/libng/plugins/drv0-v4l2.c \
 		   src/technical/libng/plugins/drv1-v4l.c \
-		   src/presentation/frontends/qtfrontend/devicetab.cpp
+		   src/presentation/frontends/qtfrontend/devicetab.cpp \
+		   src/domain/undo/command.cpp
 
 TRANSLATIONS += translations/stopmotion_no_nb.ts \
                 translations/stopmotion_no_nn.ts \
