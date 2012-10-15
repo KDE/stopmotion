@@ -1,6 +1,22 @@
-/*
- * command.h
- */
+/***************************************************************************
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
 
 #ifndef COMMAND_H_
 #define COMMAND_H_
@@ -11,6 +27,7 @@ class CommandHistoryAdder;
 /**
  * Adds c to the history via a. For use in Command::Do.
  * Might throw an exception. If so, c is deleted.
+ * @author Tim Band
  */
 void AddToCommandHistory(CommandHistoryAdder& a, Command& c);
 
@@ -29,6 +46,7 @@ class CommandListPopEmpty {
 /**
  * Interface for visitors that want to find out which files are referenced by a
  * command or history.
+ * @author Tim Band
  */
 class FileNameVisitor {
 protected:
@@ -40,6 +58,7 @@ public:
 /**
  * Base class of all command classes, objects of which are manipulated by the
  * undo system. Most commands should derive from CommandAtomic.
+ * @author Tim Band
  */
 class Command {
 	Command(const Command&);
@@ -66,6 +85,7 @@ public:
 /**
  * Base class of all 'atomic' command classes, that is, ones that will not
  * throw exceptions in their operation (except perhaps in a preparation method)
+ * @author Tim Band
  */
 class CommandAtomic : public Command {
 public:
@@ -89,6 +109,7 @@ class CommandList;
  * will be in the correct state: with all parts not yet performed still on the
  * redo stack (or undo if undoing) and the inverses of all the parts so far
  * performed on the undo stack (or redo if undoing).
+ * @author Tim Band
  */
 class CommandComposite : public Command {
 	CommandList* cs;
@@ -106,6 +127,7 @@ public:
 
 /**
  * Command history for undo and redo.
+ * @author Tim Band
  */
 class CommandHistory {
 	CommandList* past;
