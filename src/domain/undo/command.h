@@ -160,6 +160,10 @@ public:
 	 */
 	void Do(Command&);
 	/**
+	 * Clears all the undo history (and future)
+	 */
+	void Clear();
+	/**
 	 * Calls v.Add(f) for each filename f referenced by the commands in the
 	 * history.
 	 */

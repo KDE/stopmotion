@@ -104,7 +104,7 @@ public:
 	 * list.
 	 */
 	void Accept(FileNameVisitor& v) const {
-		for (clist::iterator i = cs.begin(); i != cs.end(); ++i) {
+		for (clist::const_iterator i = cs.begin(); i != cs.end(); ++i) {
 			(*i)->Accept(v);
 		}
 	}
@@ -199,6 +199,11 @@ void CommandHistory::Do(Command& c) {
 	future->Clear();
 	future->Push(c);
 	Redo();
+}
+
+void CommandHistory::Clear() {
+	future->Clear();
+	past->Clear();
 }
 
 void CommandHistory::Accept(FileNameVisitor& v) const {
