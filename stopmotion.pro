@@ -1,5 +1,6 @@
 HEADERS += src/config.h \
            src/domain/domainfacade.h \
+           src/domain/filenamevisitor.h \
            src/foundation/logger.h \
            src/presentation/observer.h \
            src/domain/animation/animation.h \

@@ -21,6 +21,8 @@
 #ifndef COMMAND_H_
 #define COMMAND_H_
 
+#include "src/domain/filenamevisitor.h"
+
 class Command;
 class CommandHistoryAdder;
 
@@ -41,18 +43,6 @@ class CommandDoubleAddToHistory {
  * Internal exception; attempt to remove an item from an empty command list
  */
 class CommandListPopEmpty {
-};
-
-/**
- * Interface for visitors that want to find out which files are referenced by a
- * command or history.
- * @author Tim Band
- */
-class FileNameVisitor {
-protected:
-	virtual ~FileNameVisitor();
-public:
-	virtual void AddFile(const char*) = 0;
 };
 
 /**
