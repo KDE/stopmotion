@@ -32,6 +32,7 @@
 
 using namespace std;
 
+class FileNameVisitor;
 
 /**
  * Implementation of the animationmodel containing the data about the animation.
@@ -265,11 +266,17 @@ public:
 	 * @return true on success, false otherwise
 	 */
 	bool exportToCinerella(const char *file);
-	
+
+	/**
+	 * Has v visit all the files referenced (images and sounds)
+	 */
+	void Accept(FileNameVisitor& v) const;
+
 private:
+	typedef vector<Scene*> sceneVector;
 	/** All of the scenes in the animation. */
-	vector<Scene*> scenes;
-	
+	sceneVector scenes;
+
 	/** Serializer to be used on saving and loading of the project. */
 	ProjectSerializer *serializer;
 	

@@ -481,3 +481,11 @@ bool Animation::exportToCinerella(const char*)
 {
 	return false;
 }
+
+void Animation::Accept(FileNameVisitor& v) const {
+	for (sceneVector::const_iterator i = scenes.begin();
+			i != scenes.end();
+			++i) {
+		(*i)->Accept(v);
+	}
+}
