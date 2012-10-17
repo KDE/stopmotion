@@ -23,12 +23,12 @@
 #include "src/config.h"
 #include "src/technical/audio/audioformat.h"
 #include "src/technical/audio/audiodriver.h"
-#include "src/domain/filenamevisitor.h"
 
 #include <vector>
 #include <string>
 using namespace std;
 
+class FileNameVisitor;
 
 /**
  * Class representing the frames in the animation

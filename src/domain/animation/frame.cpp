@@ -21,6 +21,7 @@
 
 #include "src/technical/audio/oggvorbis.h"
 #include "src/technical/util.h"
+#include "src/domain/filenamevisitor.h"
 
 #include <string.h>
 #include <stdio.h>

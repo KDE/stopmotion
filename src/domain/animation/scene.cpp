@@ -20,6 +20,7 @@
 #include "scene.h"
 #include <sstream>
 #include <cstring>
+#include "src/domain/filenamevisitor.h"
 
 Scene::Scene()
 {

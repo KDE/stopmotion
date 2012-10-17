@@ -23,8 +23,8 @@
 #include "src/config.h"
 #include "frame.h"
 #include "src/presentation/frontends/frontend.h"
-#include "src/domain/filenamevisitor.h"
 
+class FileNameVisitor;
 
 /**
  * Class representing the scenes in the animation

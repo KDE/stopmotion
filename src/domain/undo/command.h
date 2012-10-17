@@ -21,10 +21,9 @@
 #ifndef COMMAND_H_
 #define COMMAND_H_
 
-#include "src/domain/filenamevisitor.h"
-
 class Command;
 class CommandHistoryAdder;
+class FileNameVisitor;
 
 /**
  * Adds c to the history via a. For use in Command::Do.
