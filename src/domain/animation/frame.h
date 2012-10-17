@@ -23,6 +23,7 @@
 #include "src/config.h"
 #include "src/technical/audio/audioformat.h"
 #include "src/technical/audio/audiodriver.h"
+#include "src/domain/filenamevisitor.h"
 
 #include <vector>
 #include <string>
@@ -140,7 +141,12 @@ public:
 	 * @return true if a project frame, false otherwise
 	 */
 	bool isProjectFrame();
- 
+
+	/**
+	 * Has v visit all the files referenced (image and sounds)
+	 */
+	void Accept(FileNameVisitor& v) const;
+
 private:
 	/** Absolute path to a temporary directory (~/.stopmotion/tmp). */
 	static char tempPath[256];
@@ -151,9 +157,11 @@ private:
 	/** Absolute path to the image file. The image can either be in a project 
 	 * directory, the tmp directory or the trash directory. */
 	char *imagePath; // absolute path
-	
+
+	typedef vector<AudioFormat*> soundVector;
+
 	/** Contains the sounds beloning to this frame. */
-	vector<AudioFormat*> sounds;
+	soundVector sounds;
 	
 	/** Contains the sound names beloning to this frame. The names are user
 	 * defined e.g. Speech 1. */

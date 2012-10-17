@@ -346,3 +346,11 @@ bool Frame::isProjectFrame()
 	return isProjectFile;
 }
 
+void Frame::Accept(FileNameVisitor& v) const {
+	v.Visit(imagePath);
+	for(soundVector::const_iterator i = sounds.begin();
+			i != sounds.end();
+			++i) {
+		v.Visit((*i)->getSoundPath());
+	}
+}
