@@ -225,3 +225,10 @@ vector<char *> Scene::getImagePaths( )
 	return imagePaths;
 }
 
+void Scene::Accept(FileNameVisitor& v) const {
+	for (frameVector::const_iterator i = frames.begin();
+			i != frames.end();
+			++i) {
+		(*i)->Accept(v);
+	}
+}

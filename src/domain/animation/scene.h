@@ -23,6 +23,7 @@
 #include "src/config.h"
 #include "frame.h"
 #include "src/presentation/frontends/frontend.h"
+#include "src/domain/filenamevisitor.h"
 
 
 /**
@@ -160,8 +161,14 @@ public:
 	void setSoundName(unsigned int frameNumber, unsigned int soundNumber,
 			char* soundName);
 		
+	/**
+	 * Has v visit all the files referenced (images and sounds)
+	 */
+	void Accept(FileNameVisitor& v) const;
+
 private:
-	vector<Frame*> frames;
+	typedef vector<Frame*> frameVector;
+	frameVector frames;
 };
 
 #endif
