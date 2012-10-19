@@ -58,15 +58,6 @@ public:
 		return *cs.front();
 	}
 	/**
-	 * Removes the first command from the list, and deletes it.
-	 */
-	void Pop() {
-		if (Empty())
-			throw CommandListPopEmpty();
-		delete cs.front();
-		cs.pop_front();
-	}
-	/**
 	 * Adds a command to the front of the list.
 	 */
 	void Push(Command& c) {
@@ -110,6 +101,18 @@ public:
 			(*i)->Accept(v);
 		}
 	}
+	/**
+	 * Returns true if there is exactly one command in the list, false
+	 * otherwise
+	 */
+	bool Singleton() const {
+		return cs.size() == 1;
+	}
+	/**
+	 * Executes the command at the front (if it exists) and puts its inverse
+	 * onto the front of 'to'
+	 */
+	void ExecuteFront(CommandList& to);
 };
 
 /**
@@ -133,6 +136,15 @@ public:
 	}
 };
 
+void CommandList::ExecuteFront(CommandList& to) {
+	if (Empty())
+		return;
+	CommandHistoryAdder adder(to);
+	cs.front()->Do(adder);
+	delete cs.front();
+	cs.pop_front();
+}
+
 void AddToCommandHistory(CommandHistoryAdder& a, Command& c) {
 	std::auto_ptr<Command> deleter(&c);
 	a.Add(c);
@@ -154,7 +166,7 @@ void Command::Accept(FileNameVisitor& v) const {
 void CommandAtomic::Do(CommandHistoryAdder& adder) {
 	Command& c = DoAtomic();
 	adder.Add(c);
-	delete &c;
+	delete this;
 }
 
 CommandHistory::CommandHistory() : past(0), future(0) {
@@ -175,26 +187,12 @@ bool CommandHistory::CanRedo() {
 	return !future->Empty();
 }
 
-/**
- * Takes the first command from 'from' (if there is one), executes it and puts
- * its inverse onto the front of 'to'
- * @author Tim Band
- */
-void MoveHistory(CommandList& to, CommandList& from) {
-	if (from.Empty())
-		return;
-	CommandHistoryAdder adder(to);
-	Command& current = from.Front();
-	current.Do(adder);
-	to.Pop();
-}
-
 void CommandHistory::Undo() {
-	MoveHistory(*future, *past);
+	past->ExecuteFront(*future);
 }
 
 void CommandHistory::Redo() {
-	MoveHistory(*past, *future);
+	future->ExecuteFront(*past);
 }
 
 void CommandHistory::Do(Command& c) {
@@ -226,11 +224,21 @@ void CommandComposite::Add(Command& c) {
 }
 
 void CommandComposite::Do(CommandHistoryAdder& adder) {
-	CommandComposite *c = new CommandComposite();
-	AddToCommandHistory(adder, *c);
-	while (!cs->Empty()) {
-		MoveHistory(*c->cs, *cs);
+	if (cs->Empty()) {
+		// nothing to be done here
+	} else if (cs->Singleton()) {
+		// Special case for a singleton; this will mean that instead of
+		// creating a singleton composite inverse, we just create the
+		// inverse of a singleton.
+		cs->Front().Do(adder);
+	} else {
+		CommandComposite *c = new CommandComposite();
+		AddToCommandHistory(adder, *c);
+		while (!cs->Empty()) {
+			cs->ExecuteFront(*c->cs);
+		}
 	}
+	delete this;
 }
 
 void CommandComposite::Accept(FileNameVisitor& v) const {
