@@ -348,10 +348,10 @@ bool Frame::isProjectFrame()
 }
 
 void Frame::Accept(FileNameVisitor& v) const {
-	v.Visit(imagePath);
+	v.VisitImage(imagePath);
 	for(soundVector::const_iterator i = sounds.begin();
 			i != sounds.end();
 			++i) {
-		v.Visit((*i)->getSoundPath());
+		v.VisitSound((*i)->getSoundPath());
 	}
 }

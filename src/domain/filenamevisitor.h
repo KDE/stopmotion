@@ -30,7 +30,10 @@ class FileNameVisitor {
 protected:
 	virtual ~FileNameVisitor();
 public:
-	virtual void Visit(const char*) = 0;
+	/** Called to report an image file referenced. */
+	virtual void VisitImage(const char*) = 0;
+	/** Called to report a sound file referenced. */
+	virtual void VisitSound(const char*) = 0;
 };
 
 #endif /* FILENAMEVISITOR_H_ */
