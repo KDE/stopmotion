@@ -222,19 +222,21 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("activedevice", 1);
 
 	// Default import option 1
-	prefs->setPreference("importname0", tr("vgrabbj VGA singleshot").toLatin1().constData());
+	prefs->setPreference("importname0", tr("vgrabbj").toLatin1().constData());
 	prefs->setPreference("importdescription0", 
-			tr("The simplest setting. Fairly slow").toLatin1().constData());
-	prefs->setPreference("importprepoll0",
-			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga");
-	prefs->setPreference("importstopdeamon0", "");
-
-	// Default import option 2
-	prefs->setPreference("importname1", tr("vgrabbj VGA deamon").toLatin1().constData());
-	prefs->setPreference("importdescription1", 
-			tr("Starts vgrabbj as a deamon. Pretty fast.").toLatin1().constData());
+			tr("VGA daemon. Pretty fast.").toLatin1
+().constData());
 	prefs->setPreference("importstartdeamon1", 
 			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
+	prefs->setPreference("importstopdeamon1", 
+			"kill -9 $(pidof vgrabbj)");
+	
+	// Default import option 2
+	prefs->setPreference("importname1", tr("vgrabbj rotated").toLatin1().constData());
+	prefs->setPreference("importdescription1", 
+			tr("It rotates the image 180 degrees").toLatin1().constData());
+	prefs->setPreference("importstartdeamon1", 
+			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250 -R -U");
 	prefs->setPreference("importstopdeamon1", 
 			"kill -9 $(pidof vgrabbj)");
 	
