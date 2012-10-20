@@ -217,10 +217,10 @@ void ToolsMenu::retranslateStrings()
 	ui.viewChooseCombo->addItem( tr("Auto") );
 	
 	ui.unitChooseCombo->clear();
-	ui.unitChooseCombo->addItem("");
-	ui.unitChooseCombo->addItem( tr("Pr sec") );
-	ui.unitChooseCombo->addItem( tr("Pr min") );
-	ui.unitChooseCombo->addItem( tr("Pr hr") );
+	ui.unitChooseCombo->addItem("Off");
+	ui.unitChooseCombo->addItem( tr("Per second") );
+	ui.unitChooseCombo->addItem( tr("Per minute") );
+	ui.unitChooseCombo->addItem( tr("Per hour") );
 	ui.unitChooseCombo->setCurrentIndex(0);
 	
 	//Tooltip and whatsthis text
