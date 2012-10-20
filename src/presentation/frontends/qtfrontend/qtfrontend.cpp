@@ -40,9 +40,7 @@ QtFrontend::QtFrontend(int &argc, char **argv)
 	
 	mw = new MainWindowGUI(stApp);
 	mw->setWindowTitle("Stopmotion");
-	mw->resize(751, 593);
-	mw->move(20, 20);
-	mw->show();
+	mw->showMaximized();
 	
 	progressDialog = 0;
 	progressBar = 0;
