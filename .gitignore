@@ -1,0 +1,6 @@
+*.o
+/stopmotion
+/translations/stopmotion_*.qm
+Makefile
+moc_*.cpp
+ui_*.h
