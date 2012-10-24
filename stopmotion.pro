@@ -183,6 +183,7 @@ TRANSLATIONS += translations/stopmotion_no_nb.ts \
                 translations/stopmotion_dk.ts \
                 translations/stopmotion_fi.ts \
                 translations/stopmotion_gr.ts \
+                translations/stopmotion_he.ts \
                 translations/stopmotion_ru.ts \
                 translations/stopmotion_es.ts \
                 translations/stopmotion_kl.ts \
