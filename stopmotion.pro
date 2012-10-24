@@ -21,7 +21,7 @@ HEADERS += src/config.h \
            src/presentation/frontends/qtfrontend/flexiblelineedit.h \
            src/presentation/frontends/frontend.h \
 		   graphics/stopmotion.xpm \
-		   graphics/stopmotion_logo.xpm \ 
+		   graphics/stopmotion_logo.xpm \
            graphics/icons/addframeicon.xpm \
            graphics/icons/cameraoff.xpm \
            graphics/icons/cameraon.xpm \
@@ -253,8 +253,8 @@ htmldoc.extra += $(INSTALL_DIR) manual/screenshots $(INSTALL_ROOT)/usr/share/doc
 dummy.path = /usr/bin
 dummy.extra += chmod 644 $(INSTALL_ROOT)/usr/share/stopmotion/translations/*.qm $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/*.html \
 	$(INSTALL_ROOT)/usr/share/doc/stopmotion/html/graphic/* $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/icons/* $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/screenshots/*;
-dummy.extra += chmod 755 $(INSTALL_ROOT)/usr/share/stopmotion/translations $(INSTALL_ROOT)/usr/bin/$(QMAKE_TARGET) \ 
-	$(INSTALL_ROOT)/usr/share/doc/stopmotion/html $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/graphic $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/icons \ 
+dummy.extra += chmod 755 $(INSTALL_ROOT)/usr/share/stopmotion/translations $(INSTALL_ROOT)/usr/bin/$(QMAKE_TARGET) \
+	$(INSTALL_ROOT)/usr/share/doc/stopmotion/html $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/graphic $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/icons \
 	$(INSTALL_ROOT)/usr/share/doc/stopmotion/html/screenshots;
 
 INSTALLS += target translations htmldoc dummy
