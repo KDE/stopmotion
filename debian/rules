@@ -3,14 +3,11 @@
 %:
 	dh $@ --parallel
 
-# Need to compensate for one issue.  Makefile is missing -lX11 -lm
-libs_with_x_n_m=-lSDL -lxml2 -lSDL_image -ltar -lvorbisfile -linotifytools -lQtGui -lQtCore -lpthread  -lX11 -lm
-override_dh_auto_build:
-	dh_auto_build -- LIBS='$(libs_with_x_n_m)'
+override_dh_auto_configure:
+	@echo "generating binary translation files translations/*.qm"
+	lrelease stopmotion.pro
+	dh_auto_configure
 
-
-# Need to compensate for two issues.  (1) Makefile ignores DESTDIR.
-# (2) Makefile install target does not serialize chmoding installed
-# files after actually installing them, so insist on single thread.
+# prevent attempt when parallel to chmod installed *.qm before they're installed
 override_dh_auto_install:
-	dh_auto_install -- prefix='$$(DESTDIR)' --jobs=1
+	dh_auto_install --max-parallel=1
