@@ -45,7 +45,7 @@ struct SDL_Surface;
  * by grabbing through the harddrive.
  *
  * Note: I'm considering redesigning the entire framework around this class, both
- * to make it more intuiative and to work with dynamic plugins for filters such
+ * to make it more intuitive and to work with dynamic plugins for filters such
  * as onionskinning, diffing, you name it! (plugins are cool) =) However this is
  * not very important and is left for a weekend where i'm bored :p
  *
@@ -60,7 +60,7 @@ public:
 	* @param parent the parent widget.
 	* @param name the name of this widget.
 	* @param playbackSpeed which speed the playback has to be played in if
-	* the playback mode is choosen
+	* the playback mode is chosen
 	*/
 	FrameView(QWidget *parent=0, const char *name=0, int playbackSpeed = 10);
 	
@@ -82,24 +82,24 @@ public:
 	void initCompleted();
 	
 	/**
-	 * Function to recieven notification when a frame is added.
+	 * Function to receive notification when a frame is added.
 	 * @param frames paths to the frames
 	 */
 	void updateAdd(const vector<char*>& frames, unsigned int, Frontend*);
 	
 	/**
-	 *Function to recieve notification when one or more frames are deleted.
+	 *Function to receive notification when one or more frames are deleted.
 	 */
 	void updateRemove(unsigned int, unsigned int);
 	
 	/**
-	 *Function to recieve notification when one or more frames are moved.
+	 *Function to receive notification when one or more frames are moved.
 	 *
 	 */
 	void updateMove(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition);
 	
 	/**
-	 *Function to recieve notification when a new frame is selected.
+	 *Function to receive notification when a new frame is selected.
 	 */
 	void updateNewActiveFrame(int frameNumber);
 	
@@ -109,27 +109,27 @@ public:
 	void updateClear();
 	
 	/**
-	 * Function to recieve notification when a frame is to be played.
+	 * Function to receive notification when a frame is to be played.
 	 * @param frameNumber the frame to be played
 	 */
 	void updatePlayFrame(int frameNumber);
 	
 	/**
-	 * Function to recieve notification when a new scene is added to the
+	 * Function to receive notification when a new scene is added to the
 	 * model.
 	 * @param index the index of the new scene.
 	 */
 	void updateNewScene(int index);
 	
 	/**
-	 * Function to recueve notification when a scene is removed from
+	 * Function to receive notification when a scene is removed from
 	 * the model.
 	 * @param sceneNumber the scene which has been removed from the model.
 	 */
 	void updateRemoveScene(int sceneNumber);
 	
 	/**
-	 * Function which recieve notification when a scene in the animation
+	 * Function which receive notification when a scene in the animation
 	 * has been moved.
 	 * @param sceneNumber the scene which have been moved.
 	 * @param movePosition the position the scene has been moved to.
@@ -137,11 +137,11 @@ public:
 	void updateMoveScene(int sceneNumber, int movePosition);
 	
 	/**
-	 * Function which recieves notification when a scene is selected as the
-	 * active scene in the animationmodel.
+	 * Function which receives notification when a scene is selected as the
+	 * active scene in the animation model.
 	 * @param sceneNumber the new active scene.
 	 * @param frames paths to the pictures in the scene.
-	 * @param frontend the frontend for getting a progressbar when adding 
+	 * @param frontend the frontend for getting a progress bar when adding
 	 * opening the new active scene.
 	 */
 	void updateNewActiveScene(int sceneNumber, vector<char*> frames,
@@ -169,7 +169,7 @@ public:
 	 *             0: Image mixing/onion skinning\n
 	 *             1: Image differentiating\n
 	 *             2: Playback\n
-	 * @return true if the mode was succesfully changed
+	 * @return true if the mode was successfully changed
 	 */
 	bool setViewMode(int mode);
 	
@@ -183,7 +183,7 @@ public:
 	
 	/**
 	 * Sets the speed for the playback.
-	 * @param playbackSpeed the speed to be setted
+	 * @param playbackSpeed the speed to be set
 	 */
 	void setPlaybackSpeed(int playbackSpeed);
 
@@ -206,11 +206,13 @@ protected:
 	void paintEvent(QPaintEvent *);
 	
 private:
-	static const int alphaLut[5];
+	static const int imageBufferSize = 5;
+	static const int alphaLut[imageBufferSize];
 	
 	SDL_Surface *screen;
 	SDL_Surface *videoSurface;
-	deque<SDL_Surface*>imageBuffer;;
+	SDL_Surface* imageBuffer[imageBufferSize];
+	int imageBufferStart;
 	
 	QTimer grabTimer;
 	QTimer playbackTimer;
@@ -230,7 +232,6 @@ private:
 	int mixCount;
 	int lastMixCount;
 	int lastViewMode;
-	int numImagesInBuffer;
 
 	/**
 	 * Loads the new active frames picture into the frameview.
@@ -238,7 +239,23 @@ private:
 	 */
 	void setActiveFrame(int frameNumber);
 
-	void addToImageBuffer(SDL_Surface *const image);
+	void clearImageBuffer();
+
+	/**
+	 * Returns where frameNumber is in the image buffer, clamped
+	 * to [0, imageBufferSize]
+	 */
+	int relativeToImageBuffer(int frameNumber);
+
+	/**
+	 * removes the image from imageBuffer[bufferNumber]
+	 */
+	void clearImageBuffer(int bufferNumber);
+
+	/**
+	 * loads the appropriate image into imageBuffer[bufferNumber]
+	 */
+	SDL_Surface* loadImageBuffer(int bufferNumber);
 	
 	/**
 	 * Highly tweaked/optimized homemade function for taking the rgb differences 

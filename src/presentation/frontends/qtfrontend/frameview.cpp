@@ -62,7 +62,10 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 	mixCount = 2;
 	lastMixCount = 2;
 	lastViewMode = 0;
-	numImagesInBuffer = 0;
+	imageBufferStart = -imageBufferSize;
+	for (int i = 0; i != imageBufferSize; ++i) {
+		imageBuffer[i] = 0;
+	}
 	
 	connect(&grabTimer, SIGNAL(timeout()), this, SLOT(redraw()));
 	connect(&playbackTimer, SIGNAL(timeout()),this, SLOT(nextPlayBack()));
@@ -89,11 +92,7 @@ FrameView::~FrameView()
 		videoSurface = 0;
 	}
 
-	for (unsigned int i = 0; i < imageBuffer.size(); ++i) {
-		SDL_FreeSurface(imageBuffer[i]);
-	}
-	imageBuffer.clear();
-	numImagesInBuffer = 0;
+	clearImageBuffer();
 	
 	// Freeing resources allocated to SDL and shutdown
 	SDL_Quit();
@@ -130,22 +129,134 @@ void FrameView::initCompleted()
 	emit cameraReady();
 }
 
-
-void FrameView::updateAdd(const vector<char*> &frames, unsigned int, Frontend*) 
+void FrameView::clearImageBuffer()
 {
-	if (isPlayingVideo) {
-		addToImageBuffer( IMG_Load(frames[0]) );
+	for (int i = 0; i != imageBufferSize; ++i) {
+		if (imageBuffer[i]) {
+			SDL_FreeSurface( imageBuffer[i] );
+		}
+		imageBuffer[i] = 0;
+	}
+}
+
+int FrameView::relativeToImageBuffer(int frameNumber)
+{
+	frameNumber -= imageBufferStart;
+	if (frameNumber < 0)
+		return 0;
+	if (imageBufferSize < frameNumber)
+		return imageBufferSize;
+	return frameNumber;
+}
+
+void FrameView::clearImageBuffer(int bufferNumber)
+{
+	assert(0 <= bufferNumber && bufferNumber < imageBufferSize);
+	if (imageBuffer[bufferNumber]) {
+		SDL_FreeSurface( imageBuffer[bufferNumber] );
+		imageBuffer[bufferNumber] = 0;
+	}
+}
+
+SDL_Surface* FrameView::loadImageBuffer(int bufferNumber)
+{
+	if (bufferNumber < 0
+			|| imageBufferSize <= bufferNumber
+			|| imageBufferStart + bufferNumber < 0) {
+		return 0;
+	}
+	if (imageBuffer[bufferNumber]) {
+		return imageBuffer[bufferNumber];
+	}
+	Frame *frame = facade->getFrame(imageBufferStart + bufferNumber);
+	if (!frame) {
+		return 0;
+	}
+	const char *fileName = frame->getImagePath();
+	SDL_Surface* s = IMG_Load(fileName);
+	imageBuffer[bufferNumber] = s;
+	return s;
+}
+
+void FrameView::updateAdd(const vector<char*> &frames,
+		unsigned int position, Frontend*)
+{
+	int begin = relativeToImageBuffer(position);
+	int end = relativeToImageBuffer(position + frames.size());
+	int num = end - begin;
+	// erase final num frames
+	for (int i = imageBufferSize - num; i != imageBufferSize; ++i) {
+		clearImageBuffer(i);
+	}
+	// move (imageBufferSize - num) frames from begin onward by num positions (nulling sources)
+	int from = imageBufferSize - num;
+	int to = imageBufferSize;
+	while (from != begin) {
+		--from;
+		--to;
+		imageBuffer[to] = imageBuffer[from];
+		imageBuffer[from] = 0;
 	}
 }
 
 
-void FrameView::updateRemove(unsigned int, unsigned int) {}
-void FrameView::updateMove(unsigned int, unsigned int, unsigned int) {}
+void FrameView::updateRemove(unsigned int begin, unsigned int end)
+{
+	end = relativeToImageBuffer(end + 1);
+	begin = relativeToImageBuffer(begin);
+	int num = end - begin;
+	// erase [begin, end]
+	for (int i = begin; i != end; ++i) {
+		clearImageBuffer(i);
+	}
+	// move (imageBufferSize - num) frames to begin backward by num positions (nulling sources)
+	int to = begin;
+	int from = end;
+	while (from != imageBufferSize) {
+		imageBuffer[to] = imageBuffer[from];
+		imageBuffer[from] = 0;
+		++from;
+		++to;
+	}
+}
 
+void FrameView::updateMove(unsigned int begin, unsigned int end,
+		unsigned int destination)
+{
+	// too tricky!
+	clearImageBuffer();
+}
 
 void FrameView::updateNewActiveFrame(int frameNumber)
 {
 	if (frameNumber > -1) {
+		const int bufferSize = imageBufferSize;
+		int newImageBufferStart = frameNumber - imageBufferSize + 1;
+		int imageBufferMove = imageBufferStart - newImageBufferStart;
+		if (imageBufferMove < 0) {
+			int m = min(bufferSize, -imageBufferMove);
+			int i = 0;
+			for (; i != imageBufferSize - m; ++i) {
+				imageBuffer[i] = imageBuffer[i + m];
+				imageBuffer[i + m] = 0;
+			}
+			for (; i != imageBufferSize; ++i) {
+				clearImageBuffer(i);
+			}
+		} else if (0 < imageBufferMove) {
+			int m = min(bufferSize, imageBufferMove);
+			int i = imageBufferSize;
+			while (i != m) {
+				--i;
+				imageBuffer[i] = imageBuffer[i - m];
+				imageBuffer[i - m] = 0;
+			}
+			while (i != 0) {
+				--i;
+				clearImageBuffer(i);
+			}
+		}
+		imageBufferStart = newImageBufferStart;
 		setActiveFrame(frameNumber);
 	}
 	else {
@@ -226,9 +337,9 @@ void FrameView::paintEvent(QPaintEvent *)
 							lastViewMode = mode;
 						}
 						
-						int offset = numImagesInBuffer - 1;
-						for (int i = 0; i < numImagesInBuffer && i < mixCount; ++i) {
-							frameSurface = imageBuffer[offset - i];
+						int offset = imageBufferSize - 1;
+						for (int i = 0; i < imageBufferSize && i < mixCount; ++i) {
+							frameSurface = loadImageBuffer(offset - i);
 							if (frameSurface != 0) {
 								SDL_Rect dst2;
 								dst2.x = (screen->w - frameSurface->w) >> 1;
@@ -250,7 +361,8 @@ void FrameView::paintEvent(QPaintEvent *)
 						}
 							
 						if (activeFrame >= 0) {
-							SDL_Surface *tmp = differentiateSurfaces(videoSurface, imageBuffer.back());
+							SDL_Surface *tmp = differentiateSurfaces(videoSurface,
+									loadImageBuffer(imageBufferSize - 1));
 							SDL_Rect dst;
 							dst.x = (screen->w - tmp->w) >> 1;
 							dst.y = (screen->h - tmp->h) >> 1;
@@ -295,31 +407,26 @@ void FrameView::setActiveFrame(int frameNumber)
 }
 
 
-void FrameView::addToImageBuffer(SDL_Surface *const image)
-{
-	if (numImagesInBuffer == 5) {
-		SDL_FreeSurface( imageBuffer.front() );
-		imageBuffer.pop_front();
-	}
-	else {
-		++numImagesInBuffer;
-	}
-	imageBuffer.push_back(image);
-}
-
-
 void FrameView::updateClear()
 {
+	clearImageBuffer();
 	SDL_FreeSurface(videoSurface);
 	videoSurface = 0;
 	this->update();
 }
 
 
-void FrameView::updateNewScene(int) {}
-void FrameView::updateRemoveScene(int) {}
-void FrameView::updateNewActiveScene(int, vector<char*>, Frontend*) {}
+void FrameView::updateNewScene(int)
+{
+	clearImageBuffer();
+}
 
+void FrameView::updateRemoveScene(int) {}
+
+void FrameView::updateNewActiveScene(int, vector<char*>, Frontend*)
+{
+	clearImageBuffer();
+}
 
 void FrameView::updateAnimationChanged(int frameNumber)
 {
@@ -474,12 +581,6 @@ void FrameView::off()
 		delete grabThread;
 		grabThread = 0;
 	}
-	
-	for (unsigned int i = 0; i < imageBuffer.size(); ++i) {
-		SDL_FreeSurface(imageBuffer[i]);
-	}
-	imageBuffer.clear();
-	numImagesInBuffer = 0;
 		
 	this->isPlayingVideo = false;
 
