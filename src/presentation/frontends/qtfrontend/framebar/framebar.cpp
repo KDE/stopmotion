@@ -354,7 +354,8 @@ void FrameBar::setActiveFrame(int frameNumber)
 		
 		if (thumbNumber >= 0)
 			thumbViews[thumbNumber]->setSelected(true);
-		ensureVisible((frameNumber + 1) * (FRAME_WIDTH + SPACE) + FRAME_WIDTH, FRAME_HEIGHT);
+		ensureVisible(thumbNumber * (FRAME_WIDTH + SPACE) + FRAME_WIDTH/2,
+				FRAME_HEIGHT/2, FRAME_WIDTH/2, FRAME_HEIGHT/2);
 	}
 	
 	activeFrame = frameNumber;
