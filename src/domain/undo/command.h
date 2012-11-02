@@ -22,6 +22,7 @@
 #define COMMAND_H_
 
 class Command;
+class CommandList;
 class CommandHistoryAdder;
 class FileNameVisitor;
 
@@ -88,8 +89,6 @@ public:
 	 */
 	virtual Command& DoAtomic() = 0;
 };
-
-class CommandList;
 
 /**
  * Command made up of other commands. If execution of the composite is
