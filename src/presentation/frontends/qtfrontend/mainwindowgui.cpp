@@ -776,7 +776,10 @@ void MainWindowGUI::newProject()
 void MainWindowGUI::openProject()
 {
 	QString file = QFileDialog::
-		getOpenFileName(this, tr("Choose project file"), lastVisitedDir, "Stopmotion (*.sto)");
+		getOpenFileName(this,
+				tr("Choose project file"),
+				QString::fromLocal8Bit(lastVisitedDir),
+				"Stopmotion (*.sto)");
 	if ( !file.isNull() ) {
 		openProject( file.toLatin1().constData() );
 	}
@@ -835,7 +838,10 @@ void MainWindowGUI::openThirdMostRecent()
 void MainWindowGUI::saveProjectAs()
 {
 	QString file = QFileDialog::
-		getSaveFileName(this, tr("Save As"), lastVisitedDir, "Stopmotion (*.sto)");
+		getSaveFileName(this,
+				tr("Save As"),
+				QString::fromLocal8Bit(lastVisitedDir),
+				"Stopmotion (*.sto)");
 
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
@@ -926,7 +932,9 @@ void MainWindowGUI::exportToVideo()
 		const char *output = prefs->getPreference(tmp, "");	
 		if (strcmp(output, "") == 0) {
 			QString file = QFileDialog::
-				getSaveFileName(this, tr("Export to video file"), lastVisitedDir);
+				getSaveFileName(this,
+						tr("Export to video file"),
+						QString::fromLocal8Bit(lastVisitedDir));
 			if ( file.isEmpty() ) {
 				isCanceled = true;	
 			}
@@ -961,7 +969,10 @@ void MainWindowGUI::exportToVideo()
 void MainWindowGUI::exportToCinerella()
 {
 	QString file = QFileDialog::
-		getSaveFileName(this, tr("Export to file"), lastVisitedDir, "Cinerella (*.XXX)");
+		getSaveFileName(this,
+				tr("Export to file"),
+				QString::fromLocal8Bit(lastVisitedDir),
+				"Cinerella (*.XXX)");
 	
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->exportToCinerella( file.toLatin1().constData() );
