@@ -80,7 +80,7 @@ public:
 	
 	/**
 	 * Returns the sounds belonging to this frame.
-	 * @return a vector containing audio objects which kan be played
+	 * @return a vector containing audio objects which can be played
 	 * with the implemented audio driver
 	 */
 	vector<AudioFormat*>& getSounds();
@@ -137,13 +137,14 @@ public:
 	void playSounds(AudioDriver *driver);
 	
 	/**
-	 * Checks if this frame is a project frame.
+	 * Checks if this frame is in the project directory (as opposed to the
+	 * temporary directory).
 	 * @return true if a project frame, false otherwise
 	 */
 	bool isProjectFrame();
 
 	/**
-	 * Has v visit all the files referenced (image and sounds)
+	 * Makes v visit all the files referenced (image and sounds)
 	 */
 	void Accept(FileNameVisitor& v) const;
 
@@ -160,10 +161,10 @@ private:
 
 	typedef vector<AudioFormat*> soundVector;
 
-	/** Contains the sounds beloning to this frame. */
+	/** Contains the sounds belonging to this frame. */
 	soundVector sounds;
 	
-	/** Contains the sound names beloning to this frame. The names are user
+	/** Contains the sound names belonging to this frame. The names are user
 	 * defined e.g. Speech 1. */
 	vector<string> soundNames;
 	
@@ -181,7 +182,7 @@ private:
 	void moveToSoundDir(const char *directory);
 	
 	/**
-	 * Moves the images to an image directory.
+	 * Moves the image to an image directory.
 	 * @param directory the directory where the project files are stored
 	 * @param imgNum the number of the image which is used to set a filename
 	 */
