@@ -6,10 +6,10 @@ See http://linuxstopmotion.org for more info.
 
 INSTALLATION
 ------------
-1) lrelease stopmotion.pro   (to generate compiled translation files)
-2) qmake stopmotion.pro      (to generate Makefile)
-3) make                      (to build the software)
-4) make install              (to install things)
+0) lrelease stopmotion.pro   # to generate compiled translation files
+1) qmake stopmotion.pro      # to generate Makefile
+2) make                      # to build the software
+3) make install              # to install things
  
 You need the following libraries installed to compile:
     - Qt4
