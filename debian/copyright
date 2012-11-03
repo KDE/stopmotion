@@ -3,6 +3,11 @@ Mon,  13 Mar 2005 05:06:15 +0100.
 
 It was downloaded from: http://developer.skolelinux.no/info/studentgrupper/2005-hig-stopmotion
 
+After a reboot, upstream development is available at
+ git://git.code.sf.net/p/linuxstopmotion/code
+and there is a fork used for pushing debian patches upstream at
+ git://git.code.sf.net/u/bpearlmutter/linuxstopmotion
+
 Upstream Authors: Bjoern Erik Nilsen <bjoern.nilsen@hig.no> and 
                   Fredrik Berg Kjoelstad <fredrik.kjoelstad@hig.no>
 
