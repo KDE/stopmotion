@@ -6,7 +6,7 @@ See http://linuxstopmotion.org for more info.
 
 INSTALLATION
 ------------
-1) ./configure
+1) qmake stopmotion.pro
 2) make
 3) make install
 
