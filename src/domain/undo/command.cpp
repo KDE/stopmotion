@@ -110,9 +110,14 @@ public:
 	}
 	/**
 	 * Executes the command at the front (if it exists) and puts its inverse
-	 * onto the front of 'to'
+	 * onto the front of 'to'.
+	 * @param to The list to receive the inverse command.
+	 * @param parts The maximum number of sub-parts to be executed, or
+	 * Command::allParts if there is to be no limit. If not all sub-parts are
+	 * executed, the remainder remain on the front of this command list.
+	 * @return The actual number of sub-parts executed.
 	 */
-	void ExecuteFront(CommandList& to);
+	int ExecuteFront(CommandList& to, int parts);
 };
 
 /**
@@ -136,13 +141,16 @@ public:
 	}
 };
 
-void CommandList::ExecuteFront(CommandList& to) {
-	if (Empty())
-		return;
+int CommandList::ExecuteFront(CommandList& to, int parts) {
+	if (Empty() || parts == 0)
+		return 0;
 	CommandHistoryAdder adder(to);
-	cs.front()->Do(adder);
-	delete cs.front();
-	cs.pop_front();
+	int p = cs.front()->Do(adder, parts);
+	if (parts <= p) {
+		delete cs.front();
+		cs.pop_front();
+	}
+	return p;
 }
 
 void AddToCommandHistory(CommandHistoryAdder& a, Command& c) {
@@ -163,10 +171,13 @@ Command::~Command() {
 void Command::Accept(FileNameVisitor& v) const {
 }
 
-void CommandAtomic::Do(CommandHistoryAdder& adder) {
+int CommandAtomic::Do(CommandHistoryAdder& adder, int parts) {
+	if (parts == 0)
+		return 0;
 	Command& c = DoAtomic();
 	adder.Add(c);
 	delete this;
+	return 1;
 }
 
 CommandHistory::CommandHistory() : past(0), future(0) {
@@ -188,11 +199,19 @@ bool CommandHistory::CanRedo() {
 }
 
 void CommandHistory::Undo() {
-	past->ExecuteFront(*future);
+	past->ExecuteFront(*future, Command::allParts);
+}
+
+void CommandHistory::Undo(int parts) {
+	past->ExecuteFront(*future, parts);
 }
 
 void CommandHistory::Redo() {
-	future->ExecuteFront(*past);
+	future->ExecuteFront(*past, Command::allParts);
+}
+
+void CommandHistory::Redo(int parts) {
+	future->ExecuteFront(*past, parts);
 }
 
 void CommandHistory::Do(Command& c) {
@@ -223,22 +242,28 @@ void CommandComposite::Add(Command& c) {
 	cs->Add(c);
 }
 
-void CommandComposite::Do(CommandHistoryAdder& adder) {
+int CommandComposite::Do(CommandHistoryAdder& adder, int parts) {
+	if (parts == 0)
+		return 0;
+	int actualParts = 0;
 	if (cs->Empty()) {
 		// nothing to be done here
 	} else if (cs->Singleton()) {
 		// Special case for a singleton; this will mean that instead of
 		// creating a singleton composite inverse, we just create the
 		// inverse of a singleton.
-		cs->Front().Do(adder);
+		actualParts = cs->Front().Do(adder, parts);
 	} else {
 		CommandComposite *c = new CommandComposite();
 		AddToCommandHistory(adder, *c);
-		while (!cs->Empty()) {
-			cs->ExecuteFront(*c->cs);
+		while (!cs->Empty() && actualParts != parts) {
+			actualParts += cs->ExecuteFront(*c->cs, parts);
 		}
 	}
-	delete this;
+	if (parts <= actualParts) {
+		delete this;
+	}
+	return actualParts;
 }
 
 void CommandComposite::Accept(FileNameVisitor& v) const {

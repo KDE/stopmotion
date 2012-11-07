@@ -54,6 +54,7 @@ class Command {
 	Command(const Command&);
 	Command& operator=(const Command&);
 public:
+	static const int allParts = -1;
 	Command();
 	virtual ~Command() = 0;
 	/**
@@ -64,8 +65,15 @@ public:
 	 * yet to be performed and (2) the object (already) added to 'adder'
 	 * must represent the inverse of all the actions that have so far been
 	 * performed successfully.
+	 * @param adder Proxy for the command list that the inverse will be
+	 * added to.
+	 * @param parts The maximum number of sub-parts to be executed. If there
+	 * are more sub-parts than this, the remaining parts remain as part of
+	 * this command and only the inverses of the parts executed are pushed to
+	 * adder. Pass in Command::allParts for all the sub-parts to be executed.
+	 * @return Number of sub-parts actually executed.
 	 */
-	virtual void Do(CommandHistoryAdder& adder) = 0;
+	virtual int Do(CommandHistoryAdder& adder, int parts) = 0;
 	/**
 	 * calls v.Add(f) for each file f referenced by the command
 	 */
@@ -80,7 +88,7 @@ public:
 class CommandAtomic : public Command {
 public:
 	// do not override further
-	void Do(CommandHistoryAdder& adder);
+	int Do(CommandHistoryAdder& adder, int parts);
 	/**
 	 * Perform the action itself, relinquishing ownership of any owned
 	 * objects that have been passed to others (for example nulling their
@@ -109,7 +117,7 @@ public:
 	 * previously added commands).
 	 */
 	void Add(Command&);
-	void Do(CommandHistoryAdder& adder);
+	int Do(CommandHistoryAdder& adder, int parts);
 	void Accept(FileNameVisitor& v) const;
 };
 
@@ -138,9 +146,23 @@ public:
 	 */
 	void Undo();
 	/**
+	 * Undoes the last action in the history, if any
+	 * @param parts The maximum number of sub-parts to be executed. If this is
+	 * fewer than the actual number of sub-parts in the command, the remainder
+	 * remain on the Undo stack.
+	 */
+	void Undo(int parts);
+	/**
 	 * Redoes the next action in the history, if any.
 	 */
 	void Redo();
+	/**
+	 * Redoes the next action in the history, if any.
+	 * @param parts The maximum number of sub-parts to be executed. If this is
+	 * fewer than the actual number of sub-parts in the command, the remainder
+	 * remain on the Redo stack.
+	 */
+	void Redo(int parts);
 	/**
 	 * Executes the command c, placing its inverse into the undo history,
 	 * deleting the Redo history. Any partial composite function remaining
