@@ -23,27 +23,7 @@
 
 class Command;
 class CommandList;
-class CommandHistoryAdder;
 class FileNameVisitor;
-
-/**
- * Adds c to the history via a. For use in Command::Do.
- * Might throw an exception. If so, c is deleted.
- * @author Tim Band
- */
-void AddToCommandHistory(CommandHistoryAdder& a, Command& c);
-
-/**
- * Internal exception; command attempted to add two inverses to the history
- */
-class CommandDoubleAddToHistory {
-};
-
-/**
- * Internal exception; attempt to remove an item from an empty command list
- */
-class CommandListPopEmpty {
-};
 
 /**
  * Base class of all command classes, objects of which are manipulated by the
@@ -65,15 +45,15 @@ public:
 	 * yet to be performed and (2) the object (already) added to 'adder'
 	 * must represent the inverse of all the actions that have so far been
 	 * performed successfully.
-	 * @param adder Proxy for the command list that the inverse will be
-	 * added to.
+	 * @param inverseStack The command list that the inverse will be added to.
+	 * Add to this by calling inverseStack.FillNull()
 	 * @param parts The maximum number of sub-parts to be executed. If there
 	 * are more sub-parts than this, the remaining parts remain as part of
 	 * this command and only the inverses of the parts executed are pushed to
 	 * adder. Pass in Command::allParts for all the sub-parts to be executed.
 	 * @return Number of sub-parts actually executed.
 	 */
-	virtual int Do(CommandHistoryAdder& adder, int parts) = 0;
+	virtual int Do(CommandList& inverseStack, int parts) = 0;
 	/**
 	 * calls v.Add(f) for each file f referenced by the command
 	 */
@@ -88,7 +68,7 @@ public:
 class CommandAtomic : public Command {
 public:
 	// do not override further
-	int Do(CommandHistoryAdder& adder, int parts);
+	int Do(CommandList& inverseStack, int parts);
 	/**
 	 * Perform the action itself, relinquishing ownership of any owned
 	 * objects that have been passed to others (for example nulling their
@@ -117,7 +97,7 @@ public:
 	 * previously added commands).
 	 */
 	void Add(Command&);
-	int Do(CommandHistoryAdder& adder, int parts);
+	int Do(CommandList& inverseStack, int parts);
 	void Accept(FileNameVisitor& v) const;
 };
 

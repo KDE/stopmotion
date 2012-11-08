@@ -32,6 +32,25 @@ class CommandList {
 	typedef std::list<Command*> clist;
 	clist cs;
 public:
+	/**
+	 * Construct a NullAdder on the stack to be able to use FillNull() to add
+	 * a command to the command list without the risk of an exception being
+	 * thrown.
+	 */
+	class NullAdder {
+		CommandList& cl;
+		NullAdder(const NullAdder&);
+		NullAdder& operator=(const NullAdder&);
+	public:
+		NullAdder(CommandList& c) : cl(c) {
+			cl.cs.push_front(0);
+		}
+		~NullAdder() {
+			if (!cl.cs.empty() && !cl.cs.front())
+				cl.cs.pop_front();
+		}
+	};
+	friend class NullAdder;
 	CommandList() {
 	}
 	~CommandList() {
@@ -70,15 +89,8 @@ public:
 		cs.push_back(&c);
 	}
 	/**
-	 * Creates a temporary space at the front of the list, to be filled
-	 * with FillNull.
-	 */
-	void PushNull() {
-		cs.push_front(0);
-	}
-	/**
-	 * Fills a previously-pushed null with c. There must be no calls to
-	 * Push, Pop, Splice or Clear in between the call to PushNull and
+	 * Fills a previously-added null with c. There must be no calls to
+	 * Push, Pop, Splice or Clear in between the construction of NullAdder and
 	 * FillNull. Will not throw an exception.
 	 */
 	void FillNull(Command& c) {
@@ -120,43 +132,16 @@ public:
 	int ExecuteFront(CommandList& to, int parts);
 };
 
-/**
- * Allows adding a command to a history without the risk of an exception being
- * thrown.
- * @author Tim Band
- */
-class CommandHistoryAdder {
-	CommandList& history;
-	CommandList splicer;
-public:
-	CommandHistoryAdder(CommandList& h) : history(h) {
-		splicer.PushNull();
-	}
-	void Add(Command& c) {
-		if (!splicer.Empty()) {
-			throw CommandDoubleAddToHistory();
-		splicer.FillNull(c);
-		history.Splice(splicer);
-		}
-	}
-};
-
 int CommandList::ExecuteFront(CommandList& to, int parts) {
 	if (Empty() || parts == 0)
 		return 0;
-	CommandHistoryAdder adder(to);
-	int p = cs.front()->Do(adder, parts);
+	NullAdder na(to);
+	int p = cs.front()->Do(to, parts);
 	if (parts <= p) {
 		delete cs.front();
 		cs.pop_front();
 	}
 	return p;
-}
-
-void AddToCommandHistory(CommandHistoryAdder& a, Command& c) {
-	std::auto_ptr<Command> deleter(&c);
-	a.Add(c);
-	deleter.release();
 }
 
 FileNameVisitor::~FileNameVisitor() {
@@ -171,11 +156,11 @@ Command::~Command() {
 void Command::Accept(FileNameVisitor& v) const {
 }
 
-int CommandAtomic::Do(CommandHistoryAdder& adder, int parts) {
+int CommandAtomic::Do(CommandList& cs, int parts) {
 	if (parts == 0)
 		return 0;
 	Command& c = DoAtomic();
-	adder.Add(c);
+	cs.FillNull(c);
 	delete this;
 	return 1;
 }
@@ -242,7 +227,7 @@ void CommandComposite::Add(Command& c) {
 	cs->Add(c);
 }
 
-int CommandComposite::Do(CommandHistoryAdder& adder, int parts) {
+int CommandComposite::Do(CommandList& invs, int parts) {
 	if (parts == 0)
 		return 0;
 	int actualParts = 0;
@@ -252,10 +237,10 @@ int CommandComposite::Do(CommandHistoryAdder& adder, int parts) {
 		// Special case for a singleton; this will mean that instead of
 		// creating a singleton composite inverse, we just create the
 		// inverse of a singleton.
-		actualParts = cs->Front().Do(adder, parts);
+		actualParts = cs->Front().Do(invs, parts);
 	} else {
 		CommandComposite *c = new CommandComposite();
-		AddToCommandHistory(adder, *c);
+		invs.FillNull(*c);
 		while (!cs->Empty() && actualParts != parts) {
 			actualParts += cs->ExecuteFront(*c->cs, parts);
 		}
