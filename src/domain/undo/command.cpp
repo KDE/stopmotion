@@ -153,13 +153,12 @@ public:
 };
 
 int CommandList::ExecuteFront(CommandList& to, int parts) {
-	if (Empty() || parts == 0)
+	if (Empty())
 		return 0;
 	NullAdder na(to);
 	int p = cs.front()->Do(to, parts);
-	// TODO this doesn't work! the front command will have been deleted
-	// unless it aborted with too many parts! Should throw instead?
-	RemoveImpotentFront();
+	// remove deleted command
+	cs.pop_front();
 	return p;
 }
 
@@ -177,7 +176,7 @@ void Command::Accept(FileNameVisitor& v) const {
 
 int CommandAtomic::Do(CommandList& cs, int parts) {
 	if (parts == 0)
-		return 0;
+		throw CompositeInterruptedException();
 	Command& c = DoAtomic();
 	cs.FillNull(c);
 	delete this;
@@ -251,8 +250,6 @@ void CommandComposite::Add(Command& c) {
 }
 
 int CommandComposite::Do(CommandList& invs, int parts) {
-	if (parts == 0)
-		return 0;
 	int actualParts = 0;
 	if (cs->Impotent()) {
 		// nothing to be done here
@@ -264,13 +261,13 @@ int CommandComposite::Do(CommandList& invs, int parts) {
 	} else {
 		CommandComposite *c = new CommandComposite();
 		invs.FillNull(*c);
-		while (!cs->Empty() && actualParts != parts) {
-			actualParts += cs->ExecuteFront(*c->cs, parts);
+		while (!cs->Empty()) {
+			int newParts = cs->ExecuteFront(*c->cs, parts);
+			parts -= newParts;
+			actualParts += newParts;
 		}
 	}
-	if (parts <= actualParts) {
-		delete this;
-	}
+	delete this;
 	return actualParts;
 }
 

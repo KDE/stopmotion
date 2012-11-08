@@ -26,6 +26,14 @@ class CommandList;
 class FileNameVisitor;
 
 /**
+ * Exception generated when a composite command is told to execute fewer parts
+ * than it has (it is thrown after the specified number of parts have already
+ * been executed)
+ */
+class CompositeInterruptedException {
+};
+
+/**
  * Base class of all command classes, objects of which are manipulated by the
  * undo system. Most commands should derive from CommandAtomic.
  * @author Tim Band
