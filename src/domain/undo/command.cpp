@@ -46,8 +46,7 @@ public:
 			cl.cs.push_front(0);
 		}
 		~NullAdder() {
-			if (!cl.cs.empty() && !cl.cs.front())
-				cl.cs.pop_front();
+			cl.RemoveImpotentFront();
 		}
 	};
 	friend class NullAdder;
@@ -55,6 +54,20 @@ public:
 	}
 	~CommandList() {
 		Clear();
+	}
+	/**
+	 * Removes an impotent command from the front of the list, if any
+	 */
+	void RemoveImpotentFront() {
+		if (!cs.empty()) {
+			Command* c = cs.front();
+			if (c && c->Impotent()) {
+				delete c;
+				c == 0;
+			}
+			if (!c)
+				cs.pop_front();
+		}
 	}
 	/**
 	 * Removes all commands from the list
@@ -113,6 +126,13 @@ public:
 			(*i)->Accept(v);
 		}
 	}
+	bool Impotent() const {
+		for (clist::const_iterator i = cs.begin(); i != cs.end(); ++i) {
+			if (*i && !(*i)->Impotent())
+				return false;
+		}
+		return true;
+	}
 	/**
 	 * Returns true if there is exactly one command in the list, false
 	 * otherwise
@@ -137,10 +157,9 @@ int CommandList::ExecuteFront(CommandList& to, int parts) {
 		return 0;
 	NullAdder na(to);
 	int p = cs.front()->Do(to, parts);
-	if (parts <= p) {
-		delete cs.front();
-		cs.pop_front();
-	}
+	// TODO this doesn't work! the front command will have been deleted
+	// unless it aborted with too many parts! Should throw instead?
+	RemoveImpotentFront();
 	return p;
 }
 
@@ -163,6 +182,10 @@ int CommandAtomic::Do(CommandList& cs, int parts) {
 	cs.FillNull(c);
 	delete this;
 	return 1;
+}
+
+bool CommandAtomic::Impotent() const {
+	return false;
 }
 
 CommandHistory::CommandHistory() : past(0), future(0) {
@@ -231,7 +254,7 @@ int CommandComposite::Do(CommandList& invs, int parts) {
 	if (parts == 0)
 		return 0;
 	int actualParts = 0;
-	if (cs->Empty()) {
+	if (cs->Impotent()) {
 		// nothing to be done here
 	} else if (cs->Singleton()) {
 		// Special case for a singleton; this will mean that instead of
@@ -253,4 +276,8 @@ int CommandComposite::Do(CommandList& invs, int parts) {
 
 void CommandComposite::Accept(FileNameVisitor& v) const {
 	cs->Accept(v);
+}
+
+bool CommandComposite::Impotent() const {
+	return cs->Impotent();
 }

@@ -58,6 +58,11 @@ public:
 	 * calls v.Add(f) for each file f referenced by the command
 	 */
 	virtual void Accept(FileNameVisitor& v) const;
+	/**
+	 * Returns true if and only if there are no CommandAtomic-derived commands
+	 * anywhere within this command.
+	 */
+	virtual bool Impotent() const = 0;
 };
 
 /**
@@ -69,6 +74,8 @@ class CommandAtomic : public Command {
 public:
 	// do not override further
 	int Do(CommandList& inverseStack, int parts);
+	// do not override further (all CommandAtomics are potent)
+	bool Impotent() const;
 	/**
 	 * Perform the action itself, relinquishing ownership of any owned
 	 * objects that have been passed to others (for example nulling their
@@ -99,6 +106,7 @@ public:
 	void Add(Command&);
 	int Do(CommandList& inverseStack, int parts);
 	void Accept(FileNameVisitor& v) const;
+	bool Impotent() const;
 };
 
 /**
