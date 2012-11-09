@@ -46,11 +46,11 @@ public:
 	Command();
 	virtual ~Command() = 0;
 	/**
-	 * Performs its action, calling 'adder' once only to add its inverse
-	 * to the history. For exception safety the following conditions must
-	 * be met: At each point where an exception might be thrown (1) the
-	 * 'this' object must represent only the remaining parts of the action
-	 * yet to be performed and (2) the object (already) added to 'adder'
+	 * Performs its action, creating a NullAdder from inverseStack once only to
+	 * add its inverse to the history. For exception safety the following
+	 * conditions must be met: At each point where an exception might be thrown
+	 * (1) the 'this' object must represent only the remaining parts of the
+	 * action yet to be performed and (2) the object (already) added to 'adder'
 	 * must represent the inverse of all the actions that have so far been
 	 * performed successfully.
 	 * @param inverseStack The command list that the inverse will be added to.
