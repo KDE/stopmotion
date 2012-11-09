@@ -26,6 +26,17 @@ class CommandList;
 class FileNameVisitor;
 
 /**
+ * Observes the completion of individual atomic commands within a composite
+ * command.
+ */
+class PartialCommandObserver {
+protected:
+	virtual ~PartialCommandObserver() = 0;
+public:
+	virtual void AtomicComplete() = 0;
+};
+
+/**
  * Exception generated when a composite command is told to execute fewer parts
  * than it has (it is thrown after the specified number of parts have already
  * been executed)
@@ -59,9 +70,12 @@ public:
 	 * are more sub-parts than this, the remaining parts remain as part of
 	 * this command and only the inverses of the parts executed are pushed to
 	 * adder. Pass in Command::allParts for all the sub-parts to be executed.
+	 * @param partObserver partObserver.AtomicComplete is to be called after
+	 * each sub-command in any composite.
 	 * @return Number of sub-parts actually executed.
 	 */
-	virtual int Do(CommandList& inverseStack, int parts) = 0;
+	virtual int Do(CommandList& inverseStack, int parts,
+			PartialCommandObserver* partObserver) = 0;
 	/**
 	 * calls v.Add(f) for each file f referenced by the command
 	 */
@@ -81,7 +95,8 @@ public:
 class CommandAtomic : public Command {
 public:
 	// do not override further
-	int Do(CommandList& inverseStack, int parts);
+	int Do(CommandList& inverseStack, int parts,
+		PartialCommandObserver* partObserver);
 	// do not override further (all CommandAtomics are potent)
 	bool Impotent() const;
 	/**
@@ -112,7 +127,8 @@ public:
 	 * previously added commands).
 	 */
 	void Add(Command&);
-	int Do(CommandList& inverseStack, int parts);
+	int Do(CommandList& inverseStack, int parts,
+		PartialCommandObserver* partObserver);
 	void Accept(FileNameVisitor& v) const;
 	bool Impotent() const;
 };
@@ -124,6 +140,7 @@ public:
 class CommandHistory {
 	CommandList* past;
 	CommandList* future;
+	PartialCommandObserver* partObserver;
 public:
 	CommandHistory();
 	~CommandHistory();
@@ -174,6 +191,10 @@ public:
 	 * history.
 	 */
 	void Accept(FileNameVisitor& v) const;
+	/**
+	 * Sets the part command observer.
+	 */
+	void SetPartialCommandObserver(PartialCommandObserver* ob);
 };
 
 #endif /* COMMAND_H_ */
