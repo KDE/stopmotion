@@ -223,15 +223,15 @@ public:
 			}
 			if (normalChar)
 				WriteChar(c);
-			else if (c == ' ')
-				WriteChar(' ');
-			else if (c == '\r')
-				WriteChar('\r');
-			else if (c == '\n')
-				WriteChar('\n');
-			else if (c == '\\')
+			else if (strchr("\r\n\\\"", c)) {
 				WriteChar('\\');
-			else {
+				if (c == '\r')
+					WriteChar('r');
+				else if (c == '\n')
+					WriteChar('n');
+				else
+					WriteChar(c);
+			} else {
 				WriteChar('\\');
 				bool started = false;
 				int32_t power = 64;
