@@ -42,12 +42,34 @@ class StringReader {
 		char* end;
 		int32_t& lenOut;
 	public:
+		/**
+		 * Constructs a Writer operating on a buffer.
+		 * @param out The start of the buffer. After destruction of this
+		 * `Writer`, will hold a null-terminated string of all the characters
+		 * written, but only if `lengthOut` holds a value no greater than
+		 * `max`.
+		 * @param max The length of the buffer. This Writer will not write any
+		 * characters beyond `out + max - 1`.
+		 * @param lengthOut After the destruction of this `Writer`, `lengthOut`
+		 * will hold the number of characters that were attempted to be
+		 * written to the buffer. If this is no greater than `max`, `out` will
+		 * hold a null-terminated string of the characters written.
+		 */
 		Writer(char* out, int max, int32_t& lengthOut)
 			: start(out), p(out), end(out + max), lenOut(lengthOut) {
 		}
+		/**
+		 * Destructor null-terminates the string (if there is room) and sets
+		 * `lengthOut` to be the number of characters (including the null
+		 * termination character) attempted to be written to `out`.
+		 */
 		~Writer() {
+			(*this)('\0');
 			lenOut = p - start;
 		}
+		/**
+		 * Outputs a character if it will fit in the buffer.
+		 */
 		void operator()(char c) {
 			if (p < end) {
 				*p = c;
@@ -56,26 +78,63 @@ class StringReader {
 		}
 	};
 public:
+	/**
+	 * Indicates whether the end of the input buffer has been reached.
+	 */
 	enum IsEof {
 		isNotEof = 0,
 		isEof = 1
 	};
+	/**
+	 * Indicates whether the end of a line has been reached.
+	 */
 	enum IsEol {
 		isNotEol = 0,
 		isEol = 1
 	};
+	/**
+	 * Indicates whether the parse succeeded.
+	 */
 	enum ParseSucceeded {
 		parseFailed = 0,
 		parseSucceeded = 1
 	};
+	/**
+	 * Constructs a `StringReader`.
+	 * @param input The null-terminated buffer to read.
+	 */
 	StringReader(const char* input) {
 		p = input;
 		end = p + strlen(input);
 	}
+	/**
+	 * Constructs a `StringReader`.
+	 * @param input The buffer to read. Need not be null-terminated; can
+	 * contain nulls. Should contain exactly one `endChar`, and that at its
+	 * end.
+	 * @param endChar The character indicating the end of the buffer.
+	 */
 	StringReader(const char* input, int endChar) {
 		p = input;
 		end = strchr(input, endChar);
 	}
+	/**
+	 * Constructs a `StringReader`.
+	 * @param input The start of the buffer to read.
+	 * @param inputEnd The end of the buffer to read.
+	 */
+	StringReader(const char* input, const char* endInput) {
+		p = input;
+		end = endInput;
+	}
+	/**
+	 * Gets the next character from the input buffer, as long as it isn't an
+	 * end-of-line character.
+	 * @param out Stores the character output, only if `isNotEol` is returned.
+	 * @return `isNotEol` on success; in this case `out` will be set. `isEol`
+	 * if we are at the end of the buffer or the next character is a line-
+	 * termination character, in which case `out` will not be set.
+	 */
 	IsEol GetCharFromLine(char& out) {
 		if (p == end)
 			return isEol;
@@ -84,6 +143,12 @@ public:
 		out = *p;
 		return isNotEol;
 	}
+	/**
+	 * Consume an end-of-line marker (\r, \n or \r\n), if present at the
+	 * position we are reading from.
+	 * @return `isEof` if we have reached the end of the buffer, whether or not
+	 * we consumed an end-of-line marker. `isNotEof` otherwise.
+	 */
 	IsEof ChompEol() {
 		if (p != end && *p == '\r') {
 			++p;
@@ -93,6 +158,11 @@ public:
 		}
 		return p == end? isEof : isNotEof;
 	}
+	/**
+	 * Consume whitespace.
+	 * @return `isEof` if we reached the end of the buffer, whether or not we
+	 * consumed any space. `isNotEof` otherwise.
+	 */
 	IsEof ChompSpace() {
 		while (p != end) {
 			if (*p != ' ')
@@ -101,6 +171,10 @@ public:
 		}
 		return isEof;
 	}
+	/**
+	 * Consumes a quote, if present.
+	 * returns true if a quote was consumed, false otherwise.
+	 */
 	bool GetQuote() {
 		if (p != end && *p == '"') {
 			++p;
@@ -108,12 +182,30 @@ public:
 		}
 		return false;
 	}
+	/**
+	 * Tests whether we are at the end of the current line.
+	 * @return true if we are at the end of the buffer or the next character is
+	 * an end-of-line marker.
+	 */
 	bool IsEndOfLine() {
 		return p == end || *p == '\n' || *p == '\r';
 	}
+	/**
+	 * Tests whether we are at an argument-delimiting character.
+	 * @returns true if we are at a whitespace, the end of the line or the end
+	 * of the buffer. false otherwise.
+	 */
 	bool IsFinishedArgument() {
 		return *p == ' ' || IsEndOfLine();
 	}
+	/**
+	 * Consumes a decimal digit, if one is next in the buffer. Does not consume
+	 * non-digit characters.
+	 * @param digit The digit output, if `parseSuceeded` is returned.
+	 * @return `parseSucceeded` on success; in this case `digit` will be set.
+	 * `parseFailed` if the next character is not a digit. In this case `digit`
+	 * will not be set and no characters will have been consumed.
+	 */
 	ParseSucceeded GetDigit(int32_t& digit) {
 		if (p == end)
 			return parseFailed;
@@ -123,6 +215,10 @@ public:
 		++p;
 		return parseSucceeded;
 	}
+	/**
+	 * As for `GetDigit` but '8' and '9' are not considered digits and are
+	 * not consumed.
+	 */
 	ParseSucceeded GetOctalDigit(int32_t& digit) {
 		if (p == end)
 			return parseFailed;
@@ -132,7 +228,17 @@ public:
 		++p;
 		return parseSucceeded;
 	}
-	ParseSucceeded GetNumber(uint32_t& out) {
+	/**
+	 * Consume a number, possibly negative (although '+' is not consumed and
+	 * causes a parse failure).
+	 * @param `out` The parsed number; only if `parseSucceeded` is returned.
+	 * @return `parseSucceeded` if the next characters were possibly a '-',
+	 * a string of numbers then an argument delimiter. All except the
+	 * delimiter are consumed. `out` is set to the parsed number. In other
+	 * cases, no characters are consumed, `out` is not set and `parseFailed` is
+	 * returned.
+	 */
+	ParseSucceeded GetNumber(int32_t& out) {
 		const char *old = p;
 		if (isEof == ChompSpace())
 			return parseFailed;
@@ -155,16 +261,38 @@ public:
 		p = old;
 		return parseFailed;
 	}
+	/**
+	 * Gets a string. The string must be in double quotes and the final quote
+	 * must be followed by an argument delimiter. The string and its quotes are
+	 * consumed. Line terminations within the string are not permitted.
+	 * Double quotes and backslashes must be quoted with backslashes. '\r' and
+	 * '\n' must be used for carriage return and line-feed characters. \nnn can
+	 * be used for ASCII codes in octal-- these must not be followed by another
+	 * digit (if present, this should be quoted in octal as well).
+	 * @param length The length of the string that would be required to hold
+	 * the string parsed (or the actual length if no greater than `maxLength`)
+	 * @param out The output buffer; will be null-terminated as long as
+	 * `length` returns no greater than `maxLength`.
+	 * @param maxLength The length of the output buffer.
+	 * @return `parseSuccessful` on success. `length` is set and `out` is
+	 * filled. `parseFailed` on failure. Nothing is consumed. Some of `out` may
+	 * have been set and `length` may have been overwritten.
+	 */
 	ParseSucceeded GetString(int32_t& length, char* out, int32_t maxLength) {
+		const char *old = p;
 		ChompSpace();
-		if (!GetQuote())
+		if (!GetQuote()) {
+			p = old;
 			return parseFailed;
+		}
 		Writer w(out, maxLength, length);
 		char c;
 		while (!GetQuote()) {
 			// normal state
-			if (GetCharFromLine(c) == isEol)
+			if (GetCharFromLine(c) == isEol) {
+				p = old;
 				return parseFailed;
+			}
 			if (c != '\\') {
 				w(c);
 			} else {
@@ -196,21 +324,77 @@ public:
 
 class StringWriter {
 	bool startOfLine;
+	char* start;
+	char* p;
+	char* end;
 public:
-	StringWriter() : startOfLine(true) {
+	StringWriter() : startOfLine(true), start(0), p(0), end(0) {
 	}
+	/**
+	 * Sets the memory for this StringWriter to write into.
+	 * It will not write beyond bufferEnd. StringWriter will not put a null at
+	 * the end of its string unless TerminateBuffer is called.
+	 */
+	void SetBuffer(char* bufferStart, char* bufferEnd) {
+		start = p = bufferStart;
+		end = bufferEnd;
+	}
+	/**
+	 * Returns true if and only if the characters written so
+	 * far have all fitted in the buffer provided by SetBuffer.
+	 */
+	bool FitsInBuffer() const {
+		return p <= end;
+	}
+	/**
+	 * Returns the number of characters that would have been written to the
+	 * buffer if it has been long enough. If it was long enough, this will be
+	 * the length of the string written into the buffer passed in SetBuffer.
+	 */
+	long Length() const {
+		return p - start;
+	}
+	/**
+	 * Writes a null to the string. Any further calls to writing functions will
+	 * overwrite this null.
+	 * @return If the null fits into the buffer, returns bufferStart as passed
+	 * to SetBuffer. If the null does not fit, returns 0.
+	 */
+	char* TerminateBuffer() {
+		if (p < end) {
+			*p = '\0';
+			return start;
+		}
+		return 0;
+	}
+	/**
+	 * Writes a single character to the buffer, if there is room for it.
+	 */
+	void WriteChar(char c) {
+		if (p < end) {
+			*p = c;
+			++p;
+		}
+	}
+	/**
+	 * Writes a space to the buffer, if we are not at the start of a line.
+	 */
 	void BeginArgument() {
 		if (!startOfLine) {
 			WriteChar(' ');
 		}
 		startOfLine = false;
 	}
-	void WriteChar(char c) {
-		// TODO: output a character (what should the output buffer look like?)
-	}
-	void WriteOctalDigit(int32_t d) {
+	/**
+	 * Writes a decimal (or octal!) digit, if there is room.
+	 */
+	void WriteDigit(int32_t d) {
 		WriteChar(static_cast<char>('0' + d));
 	}
+	/**
+	 * Writes a string surrounded by double quotes. Writes as much as will fit.
+	 * @param s The null-terminated string to write.
+	 */
 	void WriteString(const char* s) {
 		BeginArgument();
 		WriteChar('"');
@@ -243,13 +427,18 @@ public:
 					if (digit != 0)
 						started = true;
 					if (started || power == 1)
-						WriteOctalDigit(digit);
+						WriteDigit(digit);
 				}
 				allowDigits = false;
 			}
 		}
 		WriteChar('"');
 	}
+	/**
+	 * Writes a decimal number to the buffer. Writes as many digits as will
+	 * fit. Writes negative numbers preceded with '-' and positive numbers
+	 * without prefix.
+	 */
 	void WriteNumber(int32_t n) {
 		BeginArgument();
 		if (n < 0) {
