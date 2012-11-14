@@ -320,6 +320,26 @@ public:
 		}
 		return parseSucceeded;
 	}
+	/**
+	 * Reads an identifier.
+	 * @param length The length of the string that would be required to hold
+	 * the string parsed (or the actual length if no greater than `maxLength`)
+	 * @param out The output buffer; will be null-terminated as long as
+	 * `length` returns no greater than `maxLength`.
+	 * @param maxLength The length of the output buffer.
+	 * @return `parseSuccessful` on success. `length` is set and `out` is
+	 * filled. `parseFailed` on failure. No non-whitespace characters will have
+	 * been consumed.
+	 */
+	ParseSucceeded GetIdentifier(int32_t& length, char* out, int32_t maxLength) {
+		if (isEol == ChompSpace())
+			return parseFailed;
+		Writer w(out, maxLength, length);
+		while (!IsFinishedArgument()) {
+			w(*p);
+			++p;
+		}
+	}
 };
 
 class StringWriter {
@@ -454,6 +474,16 @@ public:
 			n %= power;
 			power /= 10;
 			WriteChar('0' + digit);
+		}
+	}
+	/**
+	 * Writes an identifier, which must not contain whitespace or backslashes.
+	 * @param id The null-terminated string to write.
+	 */
+	void WriteIdentifier(const char* id) {
+		BeginArgument();
+		while (*id) {
+			WriteChar(*id);
 		}
 	}
 };
