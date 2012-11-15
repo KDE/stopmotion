@@ -68,12 +68,22 @@ public:
 class CommandAndDescriptionFactory : public CommandFactory {
 public:
 	/**
-	 * Callback type for receiving the command's string
+	 * For receiving the command's string representation during calls to Make
+	 * methods.
 	 */
-	typedef void SetName_t(const char*);
-	CommandAndDescriptionFactory();
-	~CommandAndDescriptionFactory();
-	virtual void SetNameCallback(SetName_t* fn) = 0;
+	class Logger {
+	protected:
+		virtual ~Logger();
+	public:
+		virtual void WriteCommand(const char*);
+	};
+	virtual ~CommandAndDescriptionFactory() = 0;
+	/**
+	 * Sets the logger to be called on each call to a Make method.
+	 * @param logger The logger to use until the next cal to SetNameCallback.
+	 * Ownership is not passed.
+	 */
+	virtual void SetLogger(Logger* logger) = 0;
 };
 
 /**

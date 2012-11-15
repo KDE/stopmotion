@@ -351,6 +351,13 @@ public:
 	StringWriter() : startOfLine(true), start(0), p(0), end(0) {
 	}
 	/**
+	 * Begins a new line, reusing the same buffer.
+	 */
+	void Reset() {
+		startOfLine = true;
+		p = start;
+	}
+	/**
 	 * Sets the memory for this StringWriter to write into.
 	 * It will not write beyond bufferEnd. StringWriter will not put a null at
 	 * the end of its string unless TerminateBuffer is called.
@@ -371,7 +378,7 @@ public:
 	 * buffer if it has been long enough. If it was long enough, this will be
 	 * the length of the string written into the buffer passed in SetBuffer.
 	 */
-	long Length() const {
+	int32_t Length() const {
 		return p - start;
 	}
 	/**
@@ -522,6 +529,61 @@ public:
 			return 0;
 		return i->second;
 	}
+};
+
+CommandAndDescriptionFactory::~CommandAndDescriptionFactory() {
+}
+
+class RealCommandAndDescriptionFactory : public CommandAndDescriptionFactory {
+	CommandFactory* delegate;
+	Logger* logger;
+	const char* name;
+	mutable char* buffer;
+	mutable int32_t bufferLength;
+public:
+	RealCommandAndDescriptionFactory() : delegate(0), logger(0), name(0),
+			buffer(0), bufferLength(0) {
+	}
+	~RealCommandAndDescriptionFactory() {
+		delegate = 0;
+		logger = 0;
+		name = 0;
+		DestroyBuffer();
+	}
+	void DestroyBuffer() const {
+		delete[] buffer;
+		buffer = 0;
+		bufferLength = 0;
+	}
+	void ReallocateBuffer(int32_t length) const {
+		DestroyBuffer();
+		buffer = new char[length];
+		bufferLength = length;
+	}
+	void SetName(const char* n) {
+		name = n;
+	}
+	void SetLogger(Logger* l) {
+		logger = l;
+	}
+	Command& Make() const {
+		// TODO: reuse same writer and buffer
+		StringWriter w;
+		w.SetBuffer(buffer, buffer + bufferLength);
+		while (true) {
+			w.WriteIdentifier(name);
+			w.TerminateBuffer();
+			if (w.FitsInBuffer())
+				break;
+			ReallocateBuffer(w.Length());
+			w.SetBuffer(buffer, buffer + bufferLength);
+		}
+		return delegate->Make();
+	}
+	Command& Make(int32_t a) const {
+	}
+	Command& Make(int32_t, int32_t) const;
+	Command& Make(int32_t, const char*) const;
 };
 
 // To create a command in the first place:
