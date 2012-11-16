@@ -40,9 +40,7 @@ QtFrontend::QtFrontend(int &argc, char **argv)
 	
 	mw = new MainWindowGUI(stApp);
 	mw->setWindowTitle("Stopmotion");
-	mw->resize(751, 593);
-	mw->move(20, 20);
-	mw->show();
+	mw->showMaximized();
 	
 	progressDialog = 0;
 	progressBar = 0;
@@ -223,19 +221,21 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("activedevice", 1);
 
 	// Default import option 1
-	prefs->setPreference("importname0", tr("vgrabbj VGA singleshot").toLatin1().constData());
+	prefs->setPreference("importname0", tr("vgrabbj").toLatin1().constData());
 	prefs->setPreference("importdescription0", 
-			tr("The simplest setting. Fairly slow").toLatin1().constData());
-	prefs->setPreference("importprepoll0",
-			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga");
-	prefs->setPreference("importstopdeamon0", "");
-
-	// Default import option 2
-	prefs->setPreference("importname1", tr("vgrabbj VGA deamon").toLatin1().constData());
-	prefs->setPreference("importdescription1", 
-			tr("Starts vgrabbj as a deamon. Pretty fast.").toLatin1().constData());
+			tr("VGA daemon. Pretty fast.").toLatin1
+().constData());
 	prefs->setPreference("importstartdeamon1", 
 			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
+	prefs->setPreference("importstopdeamon1", 
+			"kill -9 $(pidof vgrabbj)");
+	
+	// Default import option 2
+	prefs->setPreference("importname1", tr("vgrabbj rotated").toLatin1().constData());
+	prefs->setPreference("importdescription1", 
+			tr("It rotates the image 180 degrees").toLatin1().constData());
+	prefs->setPreference("importstartdeamon1", 
+			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250 -R -U");
 	prefs->setPreference("importstopdeamon1", 
 			"kill -9 $(pidof vgrabbj)");
 	
@@ -284,7 +284,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription1", 
 			tr("Exports from jpeg images to mpeg2 video").toLatin1().constData());
 	prefs->setPreference("startEncoder1",
-			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=4:type=jpg "
+			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=12:type=jpg "
 			"-ovc lavc -lavcopts vcodec=mpeg2video -oac copy -o \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder1", "");
 
@@ -293,7 +293,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription2", 
 			tr("Exports from jpeg images to mpeg4 video").toLatin1().constData());
 	prefs->setPreference("startEncoder2",
-			"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1:$opt -mf type=jpg:fps=8 "
+			"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1:$opt -mf type=jpg:fps=12 "
 			"-o \"$VIDEOFILE\" \"mf://$IMAGEPATH/*.jpg\"");
 	prefs->setPreference("stopEncoder2", "");
 	
@@ -302,7 +302,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription3", 
 			tr("Exports from jpeg images to mpeg4 video").toLatin1().constData());
 	prefs->setPreference("startEncoder3",
-			"ffmpeg -r 10 -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
+			"ffmpeg -r 12 -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder3", "");
 	//-------------------------------------------------------------------------
 }

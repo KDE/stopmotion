@@ -496,48 +496,6 @@ public:
 	}
 };
 
-class CommandReplayer {
-	typedef std::map<std::string, CommandFactory*> map_t;
-	map_t reg;
-public:
-	CommandReplayer() {
-	}
-	/**
-	 * Deletes all the command factories owned.
-	 */
-	~CommandReplayer() {
-		for (map_t::iterator i = reg.begin(); i != reg.end(); ++i)
-			delete i->second;
-	}
-	/**
-	 * Registers a factory.
-	 * @param name The name by which the factory will be invoked.
-	 * @param f The factory. Ownership is passed. If registration fails, f is
-	 * deleted.
-	 */
-	void AddFactory(const char* name, CommandFactory* f) {
-		std::auto_ptr<CommandFactory> a(f);
-		reg[name] = f;
-		a.release();
-	}
-	/**
-	 * Returns the factory previously registered by name, or 0 if there was no
-	 * such registration.
-	 */
-	CommandFactory* GetFactory(const char* name) {
-		map_t::iterator i = reg.find(name);
-		if (i == reg.end())
-			return 0;
-		return i->second;
-	}
-};
-
-CommandFactory::~CommandFactory() {
-}
-
-CommandAndDescriptionFactory::~CommandAndDescriptionFactory() {
-}
-
 class RealCommandAndDescriptionFactory : public CommandAndDescriptionFactory {
 	CommandFactory* delegate;
 	mutable Logger* logger;
@@ -624,6 +582,62 @@ public:
 		return delegate->Make(a, b);
 	}
 };
+
+class CommandReplayer {
+	typedef std::map<std::string, CommandFactory*> map_t;
+	map_t reg;
+	RealCommandAndDescriptionFactory* describer;
+public:
+	CommandReplayer() : describer(0) {
+		describer = new RealCommandAndDescriptionFactory();
+	}
+	/**
+	 * Deletes all the command factories owned.
+	 */
+	~CommandReplayer() {
+		for (map_t::iterator i = reg.begin(); i != reg.end(); ++i)
+			delete i->second;
+	}
+	/**
+	 * Registers a factory.
+	 * @param name The name by which the factory will be invoked.
+	 * @param f The factory. Ownership is passed. If registration fails, f is
+	 * deleted.
+	 */
+	void AddFactory(const char* name, CommandFactory* f) {
+		std::auto_ptr<CommandFactory> a(f);
+		reg[name] = f;
+		a.release();
+	}
+	/**
+	 * Returns the factory previously registered by name, or 0 if there was no
+	 * such registration.
+	 * @param The name as a null-terminated string. Ownership is not passed.
+	 * @returns The  command factory. Ownership is not returned.
+	 */
+	CommandFactory* GetFactory(const char* name) {
+		map_t::iterator i = reg.find(name);
+		if (i == reg.end())
+			return 0;
+		return i->second;
+	}
+	/**
+	 * Returns the factory previously registered by name wrapped in a
+	 * CommandAndDescriptionFactory, or 0 if no factory has been registered
+	 * with this replayer by this name.
+	 * @param The name as a null-terminated string. Ownership is not passed.
+	 * @returns The wrapped command factory. Ownership is not returned.
+	 */
+	CommandFactory* GetCommandAndDescriptionFactory(const char* name) {
+		describer->SetDelegate();
+	}
+};
+
+CommandFactory::~CommandFactory() {
+}
+
+CommandAndDescriptionFactory::~CommandAndDescriptionFactory() {
+}
 
 // To create a command in the first place:
 // Get CommandAndDescription Factory

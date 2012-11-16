@@ -18,9 +18,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "scene.h"
+#include "src/domain/filenamevisitor.h"
+
 #include <sstream>
 #include <cstring>
-#include "src/domain/filenamevisitor.h"
+#include <unistd.h>
 
 Scene::Scene()
 {

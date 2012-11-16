@@ -26,6 +26,7 @@
 
 #include <inotifytools/inotifytools.h>
 #include <inotifytools/inotify.h>
+#include <unistd.h>
 
 typedef std::set<std::string>::iterator dirIterator;
 
