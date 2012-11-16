@@ -339,6 +339,7 @@ public:
 			w(*p);
 			++p;
 		}
+		return parseSucceeded;
 	}
 };
 
@@ -531,15 +532,39 @@ public:
 	}
 };
 
+CommandFactory::~CommandFactory() {
+}
+
 CommandAndDescriptionFactory::~CommandAndDescriptionFactory() {
 }
 
 class RealCommandAndDescriptionFactory : public CommandAndDescriptionFactory {
 	CommandFactory* delegate;
-	Logger* logger;
+	mutable Logger* logger;
 	const char* name;
 	mutable char* buffer;
 	mutable int32_t bufferLength;
+	mutable StringWriter writer;
+
+	void DestroyBuffer() const {
+		delete[] buffer;
+		buffer = 0;
+		bufferLength = 0;
+	}
+	/**
+	 * Reallocates the buffer if `writer` required more than currently
+	 * allocated. Returns true if a reallocation was necessary, false if all
+	 * the text fitted.
+	 */
+	bool ReallocateBufferIfNecessary() const {
+		if (writer.FitsInBuffer())
+			return false;
+		DestroyBuffer();
+		int32_t length = writer.Length();
+		buffer = new char[length];
+		bufferLength = length;
+		return true;
+	}
 public:
 	RealCommandAndDescriptionFactory() : delegate(0), logger(0), name(0),
 			buffer(0), bufferLength(0) {
@@ -550,40 +575,54 @@ public:
 		name = 0;
 		DestroyBuffer();
 	}
-	void DestroyBuffer() const {
-		delete[] buffer;
-		buffer = 0;
-		bufferLength = 0;
-	}
-	void ReallocateBuffer(int32_t length) const {
-		DestroyBuffer();
-		buffer = new char[length];
-		bufferLength = length;
-	}
+	/**
+	 * Sets the name of the command being produced. This will be written to the
+	 * logger at the start of every line, to indicate what is being made.
+	 * @param n Null-terminated string representing the name of the command
+	 * produced by the factory passed to SetFactory. Ownership is not passed.
+	 */
 	void SetName(const char* n) {
 		name = n;
 	}
 	void SetLogger(Logger* l) {
 		logger = l;
 	}
+	/**
+	 * Sets the factory that will actually produce the commands.
+	 * @param f The delegate factory. Ownership is not passed.
+	 */
+	void SetDelegate(CommandFactory* f) {
+		delegate = f;
+	}
 	Command& Make() const {
-		// TODO: reuse same writer and buffer
-		StringWriter w;
-		w.SetBuffer(buffer, buffer + bufferLength);
-		while (true) {
-			w.WriteIdentifier(name);
-			w.TerminateBuffer();
-			if (w.FitsInBuffer())
-				break;
-			ReallocateBuffer(w.Length());
-			w.SetBuffer(buffer, buffer + bufferLength);
-		}
+		do {
+			writer.WriteIdentifier(name);
+		} while (ReallocateBufferIfNecessary());
 		return delegate->Make();
 	}
 	Command& Make(int32_t a) const {
+		do {
+			writer.WriteIdentifier(name);
+			writer.WriteNumber(a);
+		} while (ReallocateBufferIfNecessary());
+		return delegate->Make(a);
 	}
-	Command& Make(int32_t, int32_t) const;
-	Command& Make(int32_t, const char*) const;
+	Command& Make(int32_t a, int32_t b) const {
+		do {
+			writer.WriteIdentifier(name);
+			writer.WriteNumber(a);
+			writer.WriteNumber(b);
+		} while (ReallocateBufferIfNecessary());
+		return delegate->Make(a, b);
+	}
+	Command& Make(int32_t a, const char* b) const {
+		do {
+			writer.WriteIdentifier(name);
+			writer.WriteNumber(a);
+			writer.WriteString(b);
+		} while (ReallocateBufferIfNecessary());
+		return delegate->Make(a, b);
+	}
 };
 
 // To create a command in the first place:

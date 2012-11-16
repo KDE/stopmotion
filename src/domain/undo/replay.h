@@ -41,23 +41,25 @@ class CommandFactory {
 	CommandFactory(const CommandFactory&); // no copy
 	CommandFactory& operator=(const CommandFactory&); // no copy
 public:
+	CommandFactory() {
+	}
 	virtual ~CommandFactory() = 0;
 	/**
 	 * Make a command with no parameters.
 	 */
-	virtual Command& Make() const;
+	virtual Command& Make() const = 0;
 	/**
 	 * Make a command from a single integer
 	 */
-	virtual Command& Make(int32_t) const;
+	virtual Command& Make(int32_t) const = 0;
 	/**
 	 * Make a command from two integers
 	 */
-	virtual Command& Make(int32_t, int32_t) const;
+	virtual Command& Make(int32_t, int32_t) const = 0;
 	/**
 	 * Make a command from an integer and a string
 	 */
-	virtual Command& Make(int32_t, const char*) const;
+	virtual Command& Make(int32_t, const char*) const = 0;
 };
 
 /**
@@ -80,7 +82,7 @@ public:
 	virtual ~CommandAndDescriptionFactory() = 0;
 	/**
 	 * Sets the logger to be called on each call to a Make method.
-	 * @param logger The logger to use until the next cal to SetNameCallback.
+	 * @param logger The logger to use until the next call to SetNameCallback.
 	 * Ownership is not passed.
 	 */
 	virtual void SetLogger(Logger* logger) = 0;
