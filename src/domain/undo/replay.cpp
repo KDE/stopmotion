@@ -496,42 +496,75 @@ public:
 	}
 };
 
-class RealCommandAndDescriptionFactory : public CommandAndDescriptionFactory {
-	CommandFactory* delegate;
-	mutable Logger* logger;
-	const char* name;
-	mutable char* buffer;
-	mutable int32_t bufferLength;
-	mutable StringWriter writer;
-
-	void DestroyBuffer() const {
+class Buffer {
+	char* buffer;
+	int32_t bufferLength;
+public:
+	Buffer() : buffer(0), bufferLength(0) {
+	}
+	~Buffer() {
+		Destroy();
+	}
+	const char* Get() const {
+		return buffer;
+	}
+	char* Get() {
+		return buffer;
+	}
+	int32_t Length() const {
+		return bufferLength;
+	}
+	void Destroy() {
 		delete[] buffer;
 		buffer = 0;
 		bufferLength = 0;
 	}
+	/**
+	 * Reallocates the buffer if `length` is longer than the current buffer
+	 * allocated. Returns true if a reallocation was necessary, false if
+	 * `length` is no greater than the length of the current buffer.
+	 */
+	bool Reallocate(int length) {
+		if (length < bufferLength)
+			return false;
+		Destroy();
+		buffer = new char[length];
+		bufferLength = length;
+		return true;
+	}
+};
+
+class RealCommandAndDescriptionFactory : public CommandAndDescriptionFactory {
+	CommandFactory* delegate;
+	mutable Logger* logger;
+	const char* name;
+	mutable Buffer buffer;
+	mutable StringWriter writer;
+
 	/**
 	 * Reallocates the buffer if `writer` required more than currently
 	 * allocated. Returns true if a reallocation was necessary, false if all
 	 * the text fitted.
 	 */
 	bool ReallocateBufferIfNecessary() const {
-		if (writer.FitsInBuffer())
-			return false;
-		DestroyBuffer();
-		int32_t length = writer.Length();
-		buffer = new char[length];
-		bufferLength = length;
-		return true;
+		return buffer.Reallocate(writer.Length());
+	}
+	void EndWrite() const {
+		const char* s = writer.TerminateBuffer();
+		if (s && logger)
+			logger->WriteCommand(s);
+	}
+	void Done() const {
+		if (logger)
+			logger->CommandMade();
 	}
 public:
-	RealCommandAndDescriptionFactory() : delegate(0), logger(0), name(0),
-			buffer(0), bufferLength(0) {
+	RealCommandAndDescriptionFactory() : delegate(0), logger(0), name(0) {
 	}
 	~RealCommandAndDescriptionFactory() {
 		delegate = 0;
 		logger = 0;
 		name = 0;
-		DestroyBuffer();
 	}
 	/**
 	 * Sets the name of the command being produced. This will be written to the
@@ -555,31 +588,43 @@ public:
 	Command& Make() const {
 		do {
 			writer.WriteIdentifier(name);
+			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		return delegate->Make();
+		Command& c = delegate->Make();
+		Done();
+		return c;
 	}
 	Command& Make(int32_t a) const {
 		do {
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
+			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		return delegate->Make(a);
+		Command& c = delegate->Make(a);
+		Done();
+		return c;
 	}
 	Command& Make(int32_t a, int32_t b) const {
 		do {
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
 			writer.WriteNumber(b);
+			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		return delegate->Make(a, b);
+		Command& c = delegate->Make(a, b);
+		Done();
+		return c;
 	}
 	Command& Make(int32_t a, const char* b) const {
 		do {
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
 			writer.WriteString(b);
+			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		return delegate->Make(a, b);
+		Command& c = delegate->Make(a, b);
+		Done();
+		return c;
 	}
 };
 
@@ -587,6 +632,42 @@ class CommandReplayer {
 	typedef std::map<std::string, CommandFactory*> map_t;
 	map_t reg;
 	RealCommandAndDescriptionFactory* describer;
+	Buffer buffer;
+
+	/**
+	 * Gets an identifier from a StringReader and puts it into the buffer.
+	 */
+	void GetIdentifier(StringReader& r) {
+		int32_t len;
+		do {
+			if (r.GetIdentifier(len, buffer.Get(), buffer.Length())
+					== StringReader::parseFailed)
+				throw CommandFactoryParseFailureException();
+		} while (buffer.Reallocate(len));
+	}
+	/**
+	 * Gets a string from a StringReader and puts it into the buffer.
+	 * Returns whether the parse succeeded or not.
+	 */
+	StringReader::ParseSucceeded GetString(StringReader& r) {
+		int32_t len;
+		do {
+			if (r.GetString(len, buffer.Get(), buffer.Length())
+					== StringReader::parseFailed)
+				return StringReader::parseFailed;
+		} while (buffer.Reallocate(len));
+		return StringReader::parseSucceeded;
+	}
+	/**
+	 * Gets a number from a StringReader and returns it. Throws an
+	 * exception on parse failure.
+	 */
+	int32_t GetNumber(StringReader& r) {
+		int32_t ret;
+		if (r.GetNumber(ret) == StringReader::parseFailed)
+			throw CommandFactoryParseFailureException();
+		return ret;
+	}
 public:
 	CommandReplayer() : describer(0) {
 		describer = new RealCommandAndDescriptionFactory();
@@ -629,7 +710,22 @@ public:
 	 * @returns The wrapped command factory. Ownership is not returned.
 	 */
 	CommandFactory* GetCommandAndDescriptionFactory(const char* name) {
-		describer->SetDelegate();
+		CommandFactory* del = GetFactory(name);
+		if (!del)
+			return 0;
+		describer->SetDelegate(del);
+		return describer;
+	}
+	/**
+	 * Parses a string (as a command type followed by arguments) to create a
+	 * command.
+	 * @param null or end-of-line terminated string representing the command to
+	 * be created
+	 * @return The constructed command.
+	 */
+	Command& MakeCommand(const char* s) {
+		StringReader r(s);
+		//TODO
 	}
 };
 
@@ -637,6 +733,10 @@ CommandFactory::~CommandFactory() {
 }
 
 CommandAndDescriptionFactory::~CommandAndDescriptionFactory() {
+}
+
+Command& MakeCommand(CommandReplayer& r, const char* s) {
+	r.MakeCommand(s);
 }
 
 // To create a command in the first place:

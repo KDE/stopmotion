@@ -31,6 +31,12 @@
 class CommandFactoryIncorrectParametersException {
 };
 
+/**
+ * Exception thrown by MakeCommand if the parsing of the command failed.
+ */
+class CommandFactoryParseFailureException {
+};
+
 class Command;
 
 /**
@@ -77,7 +83,14 @@ public:
 	protected:
 		virtual ~Logger();
 	public:
-		virtual void WriteCommand(const char*);
+		/**
+		 * For receiving the serialized command.
+		 */
+		virtual void WriteCommand(const char*) = 0;
+		/**
+		 * Indicates that the command has been successfully constructed.
+		 */
+		virtual void CommandMade() = 0;
 	};
 	virtual ~CommandAndDescriptionFactory() = 0;
 	/**
