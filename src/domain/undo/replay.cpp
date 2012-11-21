@@ -100,6 +100,12 @@ public:
 		parseSucceeded = 1
 	};
 	/**
+	 * Constructs a StringReader without a buffer. The buffer must be set with
+	 * SetBuffer before use.
+	 */
+	StringReader() : p(0), end(0) {
+	}
+	/**
 	 * Constructs a `StringReader`.
 	 * @param input The null-terminated buffer to read.
 	 */
@@ -109,23 +115,28 @@ public:
 	}
 	/**
 	 * Constructs a `StringReader`.
-	 * @param input The buffer to read. Need not be null-terminated; can
-	 * contain nulls. Should contain exactly one `endChar`, and that at its
-	 * end.
-	 * @param endChar The character indicating the end of the buffer.
-	 */
-	StringReader(const char* input, int endChar) {
-		p = input;
-		end = strchr(input, endChar);
-	}
-	/**
-	 * Constructs a `StringReader`.
 	 * @param input The start of the buffer to read.
 	 * @param inputEnd The end of the buffer to read.
 	 */
-	StringReader(const char* input, const char* endInput) {
+	StringReader(const char* input, const char* endInput)
+		: p(input), end(endInput) {
+	}
+	/**
+	 * Sets the buffer to be read.
+	 * @param input The start of the buffer to read.
+	 * @param inputEnd The end of the buffer to read.
+	 */
+	void SetBuffer(const char* input, const char* endInput) {
 		p = input;
 		end = endInput;
+	}
+	/**
+	 * Sets the buffer to be read.
+	 * @param input The null-terminated string to read.
+	 */
+	void SetBuffer(const char* input) {
+		p = input;
+		end = input + strlen(input);
 	}
 	/**
 	 * Gets the next character from the input buffer, as long as it isn't an
@@ -196,7 +207,34 @@ public:
 	 * of the buffer. false otherwise.
 	 */
 	bool IsFinishedArgument() {
-		return *p == ' ' || IsEndOfLine();
+		return *p == ' ' || *p == '!' || *p == '.' || IsEndOfLine();
+	}
+	/**
+	 * Return the end-of-command marker, which is zero or more dots followed by
+	 * zero or one exclamation mark followed by the end of the line.
+	 * @param dotCount Number of dots read, if parseSucceeded is returned.
+	 * @param exclamation True if there was an exclamation mark and
+	 * parseSceeded is returned.
+	 * @return parseSucceeded if this is an end-of-command marker, parseFailed
+	 * if not. If parseFailed, dotCount and exclamation may be set to arbitrary
+	 * values, and the parse will be returned to how it was before the call.
+	 */
+	ParseSucceeded GetEndOfCommand(int32_t& dotCount, bool& exclamation) {
+		const char* old = p;
+		dotCount = 0;
+		exclamation = false;
+		char c;
+		while (isEol != GetCharFromLine(c)) {
+			if (!exclamation && c == '.') {
+				++dotCount;
+			} else if (!exclamation && c == '!') {
+				exclamation = true;
+			} else {
+				p = old;
+				return parseFailed;
+			}
+		}
+		return parseSucceeded;
 	}
 	/**
 	 * Consumes a decimal digit, if one is next in the buffer. Does not consume
@@ -633,43 +671,64 @@ class CommandReplayer {
 	map_t reg;
 	RealCommandAndDescriptionFactory* describer;
 	Buffer buffer;
+	StringReader reader;
+	/**
+	 * Number of dots following the command, if it parsed successfully.
+	 */
+	int32_t dotCount;
+	/**
+	 * Whether an exclamation mark follows the command, if it parsed
+	 * successfully.
+	 */
+	bool exclamation;
 
+	void FailParse() {
+		throw CommandFactoryParseFailureException();
+	}
 	/**
 	 * Gets an identifier from a StringReader and puts it into the buffer.
 	 */
-	void GetIdentifier(StringReader& r) {
+	void GetIdentifier() {
 		int32_t len;
 		do {
-			if (r.GetIdentifier(len, buffer.Get(), buffer.Length())
+			if (reader.GetIdentifier(len, buffer.Get(), buffer.Length())
 					== StringReader::parseFailed)
-				throw CommandFactoryParseFailureException();
+				FailParse();
 		} while (buffer.Reallocate(len));
 	}
 	/**
 	 * Gets a string from a StringReader and puts it into the buffer.
 	 * Returns whether the parse succeeded or not.
 	 */
-	StringReader::ParseSucceeded GetString(StringReader& r) {
+	bool GetString() {
 		int32_t len;
 		do {
-			if (r.GetString(len, buffer.Get(), buffer.Length())
+			if (reader.GetString(len, buffer.Get(), buffer.Length())
 					== StringReader::parseFailed)
-				return StringReader::parseFailed;
+				return false;
 		} while (buffer.Reallocate(len));
-		return StringReader::parseSucceeded;
+		return true;
 	}
 	/**
 	 * Gets a number from a StringReader and returns it. Throws an
 	 * exception on parse failure.
 	 */
-	int32_t GetNumber(StringReader& r) {
+	int32_t GetNumber() {
 		int32_t ret;
-		if (r.GetNumber(ret) == StringReader::parseFailed)
-			throw CommandFactoryParseFailureException();
+		if (reader.GetNumber(ret) == StringReader::parseFailed)
+			FailParse();
 		return ret;
 	}
+	/**
+	 * Parses the end of the string that was passed into reader.
+	 * @return true if we are at the end of the command, false otherwise.
+	 */
+	bool GetEnd() {
+		return reader.GetEndOfCommand(dotCount, exclamation)
+				== StringReader::parseSucceeded;
+	}
 public:
-	CommandReplayer() : describer(0) {
+	CommandReplayer() : describer(0), dotCount(0), exclamation(false) {
 		describer = new RealCommandAndDescriptionFactory();
 	}
 	/**
@@ -724,8 +783,30 @@ public:
 	 * @return The constructed command.
 	 */
 	Command& MakeCommand(const char* s) {
-		StringReader r(s);
-		//TODO
+		reader.SetBuffer(s);
+		GetIdentifier();
+		std::string id = buffer.Get();
+		map_t::iterator cfi = reg.find(id);
+		if (cfi == reg.end())
+			FailParse();
+		if (GetEnd()) {
+			return cfi->second->Make();
+		}
+		int32_t n1 = GetNumber();
+		if (GetEnd()) {
+			return cfi->second->Make(n1);
+		}
+		if (GetString()) {
+			std::string s2 = buffer.Get();
+			if (GetEnd()) {
+				return cfi->second->Make(n1, s2.c_str());
+			}
+		}
+		int32_t n2 = GetNumber();
+		if (!GetEnd()) {
+			FailParse();
+		}
+		return cfi->second->Make(n1, n2);
 	}
 };
 
@@ -736,7 +817,7 @@ CommandAndDescriptionFactory::~CommandAndDescriptionFactory() {
 }
 
 Command& MakeCommand(CommandReplayer& r, const char* s) {
-	r.MakeCommand(s);
+	return r.MakeCommand(s);
 }
 
 // To create a command in the first place:
