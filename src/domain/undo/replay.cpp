@@ -370,7 +370,8 @@ public:
 	 * been consumed.
 	 */
 	ParseSucceeded GetIdentifier(int32_t& length, char* out, int32_t maxLength) {
-		if (isEol == ChompSpace())
+		ChompSpace();
+		if (IsEndOfLine())
 			return parseFailed;
 		Writer w(out, maxLength, length);
 		while (!IsFinishedArgument()) {
@@ -466,7 +467,7 @@ public:
 		WriteChar('"');
 		bool allowDigits = true;
 		while (s) {
-			char c = *s;
+			unsigned char c = *reinterpret_cast<const unsigned char*>(s);
 			bool normalChar = false;
 			if (32 < c && c < 128) {
 				normalChar = allowDigits || c < '0' || '9' < c;
@@ -788,7 +789,7 @@ public:
 		std::string id = buffer.Get();
 		map_t::iterator cfi = reg.find(id);
 		if (cfi == reg.end())
-			FailParse();
+			throw CommandFactoryNoSuchCommandException();
 		if (GetEnd()) {
 			return cfi->second->Make();
 		}
@@ -809,6 +810,10 @@ public:
 		return cfi->second->Make(n1, n2);
 	}
 };
+
+CommandReplayer* MakeCommandReplayer() {
+	return new CommandReplayer();
+}
 
 CommandFactory::~CommandFactory() {
 }

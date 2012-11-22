@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 #include "command.h"
-#include "src/domain/filenamevisitor.h"
+#include "../filenamevisitor.h"
 
 #include <list>
 #include <memory>

@@ -37,6 +37,12 @@ class CommandFactoryIncorrectParametersException {
 class CommandFactoryParseFailureException {
 };
 
+/**
+ * Exception thrown by MakeCommand if the parsing of the command failed.
+ */
+class CommandFactoryNoSuchCommandException {
+};
+
 class Command;
 
 /**
