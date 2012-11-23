@@ -121,6 +121,12 @@ public:
 	StringReader(const char* input, const char* endInput)
 		: p(input), end(endInput) {
 	}
+	const char* GetPos() const {
+		return p;
+	}
+	void SetPos(const char* pos) {
+		p = pos;
+	}
 	/**
 	 * Sets the buffer to be read.
 	 * @param input The start of the buffer to read.
@@ -564,7 +570,7 @@ public:
 	 * `length` is no greater than the length of the current buffer.
 	 */
 	bool Reallocate(int length) {
-		if (length < bufferLength)
+		if (length <= bufferLength)
 			return false;
 		Destroy();
 		buffer = new char[length];
@@ -691,7 +697,9 @@ class CommandReplayer {
 	 */
 	void GetIdentifier() {
 		int32_t len;
+		const char* pos = reader.GetPos();
 		do {
+			reader.SetPos(pos);
 			if (reader.GetIdentifier(len, buffer.Get(), buffer.Length())
 					== StringReader::parseFailed)
 				FailParse();
@@ -703,7 +711,9 @@ class CommandReplayer {
 	 */
 	bool GetString() {
 		int32_t len;
+		const char* pos = reader.GetPos();
 		do {
+			reader.SetPos(pos);
 			if (reader.GetString(len, buffer.Get(), buffer.Length())
 					== StringReader::parseFailed)
 				return false;
