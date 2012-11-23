@@ -63,7 +63,7 @@ public:
 			Command* c = cs.front();
 			if (c && c->Impotent()) {
 				delete c;
-				c == 0;
+				c = 0;
 			}
 			if (!c)
 				cs.pop_front();
@@ -175,7 +175,7 @@ Command::Command() {
 Command::~Command() {
 }
 
-void Command::Accept(FileNameVisitor& v) const {
+void Command::Accept(FileNameVisitor&) const {
 }
 
 int CommandAtomic::Do(CommandList& cs, int parts,
