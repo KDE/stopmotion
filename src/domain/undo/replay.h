@@ -115,35 +115,33 @@ public:
  * CommandReplayer with RegisterCommandFactory().
  * @author Tim Band
  */
-class CommandReplayer;
-
-/**
- * Contructs a new command replayer.
- * @author Tim Band
- */
-CommandReplayer* MakeCommandReplayer();
-
-/**
- * Registers the command factory with a command replayer.
- * @author Tim Band
- */
-void RegisterCommandFactory(CommandReplayer& replayer,
-		const char* name, CommandFactory& factory);
-
-/**
- * Makes a command from a string.
- * @author Tim Band
- */
-Command& MakeCommand(CommandReplayer&, const char*);
-
-/**
- * Gets a command factory that produces the command specified. This command
- * factory should not be used after any subsequent call to GetCommandFactory()
- * with the same CommandReplayer.
- * @param commandName The name of the command that will be constructed.
- * @author Tim Band
- */
-const CommandAndDescriptionFactory& GetCommandFactory(CommandReplayer&,
-		const char* commandName);
+class CommandReplayer {
+public:
+	/**
+	 * Constructs a new command replayer.
+	 */
+	static CommandReplayer* Make();
+	virtual ~CommandReplayer() = 0;
+	/**
+	 * Registers the command factory with a command replayer.
+	 */
+	virtual void RegisterCommandFactory(const char* name,
+			CommandFactory& factory) = 0;
+	/**
+	 * Makes a command from a string.
+	 */
+	virtual Command& MakeCommand(const char*) = 0;
+	/**
+	 * Gets a command factory that produces the command specified. This command
+	 * factory should not be used after any subsequent call to GetCommandFactory()
+	 * with the same CommandReplayer.
+	 * @param commandName The name of the command that will be constructed.
+	 * @return Command factory that constructs items of the specified type, as
+	 * well as logging the construction to a CommandAndDescriptionFactory::Logger.
+	 * Returns 0 if there is no command factory matching the name given.
+	 */
+	virtual const CommandAndDescriptionFactory* GetCommandFactory(
+			const char* commandName) = 0;
+};
 
 #endif /* REPLAY_H_ */

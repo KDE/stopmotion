@@ -158,6 +158,7 @@ public:
 		if (*p == '\n' || *p == '\r')
 			return isEol;
 		out = *p;
+		++p;
 		return isNotEol;
 	}
 	/**
@@ -293,6 +294,7 @@ public:
 				sign = -1;
 			else
 				return parseFailed;
+			++p;
 		}
 		int32_t soFar = n;
 		while (GetDigit(n) == parseSucceeded) {
@@ -673,7 +675,7 @@ public:
 	}
 };
 
-class CommandReplayer {
+class RealCommandReplayer : public CommandReplayer {
 	typedef std::map<std::string, CommandFactory*> map_t;
 	map_t reg;
 	RealCommandAndDescriptionFactory* describer;
@@ -739,13 +741,13 @@ class CommandReplayer {
 				== StringReader::parseSucceeded;
 	}
 public:
-	CommandReplayer() : describer(0), dotCount(0), exclamation(false) {
+	RealCommandReplayer() : describer(0), dotCount(0), exclamation(false) {
 		describer = new RealCommandAndDescriptionFactory();
 	}
 	/**
 	 * Deletes all the command factories owned.
 	 */
-	~CommandReplayer() {
+	~RealCommandReplayer() {
 		for (map_t::iterator i = reg.begin(); i != reg.end(); ++i)
 			delete i->second;
 	}
@@ -755,9 +757,9 @@ public:
 	 * @param f The factory. Ownership is passed. If registration fails, f is
 	 * deleted.
 	 */
-	void AddFactory(const char* name, CommandFactory* f) {
-		std::auto_ptr<CommandFactory> a(f);
-		reg[name] = f;
+	void RegisterCommandFactory(const char* name, CommandFactory& f) {
+		std::auto_ptr<CommandFactory> a(&f);
+		reg[name] = &f;
 		a.release();
 	}
 	/**
@@ -779,7 +781,7 @@ public:
 	 * @param The name as a null-terminated string. Ownership is not passed.
 	 * @returns The wrapped command factory. Ownership is not returned.
 	 */
-	CommandFactory* GetCommandAndDescriptionFactory(const char* name) {
+	const CommandAndDescriptionFactory* GetCommandFactory(const char* name) {
 		CommandFactory* del = GetFactory(name);
 		if (!del)
 			return 0;
@@ -821,18 +823,17 @@ public:
 	}
 };
 
-CommandReplayer* MakeCommandReplayer() {
-	return new CommandReplayer();
+CommandReplayer* CommandReplayer::Make() {
+	return new RealCommandReplayer();
+}
+
+CommandReplayer::~CommandReplayer() {
 }
 
 CommandFactory::~CommandFactory() {
 }
 
 CommandAndDescriptionFactory::~CommandAndDescriptionFactory() {
-}
-
-Command& MakeCommand(CommandReplayer& r, const char* s) {
-	return r.MakeCommand(s);
 }
 
 // To create a command in the first place:
