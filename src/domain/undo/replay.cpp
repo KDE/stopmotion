@@ -662,16 +662,90 @@ public:
 		Done();
 		return c;
 	}
-	Command& Make(int32_t a, const char* b) const {
+	Command& Make(int32_t a, int32_t b, int32_t c) const {
 		do {
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
-			writer.WriteString(b);
+			writer.WriteNumber(b);
+			writer.WriteNumber(c);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& c = delegate->Make(a, b);
+		Command& com = delegate->Make(a, b, c);
+		Done();
+		return com;
+	}
+	Command& Make(int32_t a, int32_t b, int32_t c, int32_t d) const {
+		do {
+			writer.WriteIdentifier(name);
+			writer.WriteNumber(a);
+			writer.WriteNumber(b);
+			writer.WriteNumber(c);
+			writer.WriteNumber(d);
+			EndWrite();
+		} while (ReallocateBufferIfNecessary());
+		Command& com = delegate->Make(a, b, c, d);
+		Done();
+		return com;
+	}
+	Command& Make(int32_t a, int32_t b, int32_t c, int32_t d, int32_t e) const {
+		do {
+			writer.WriteIdentifier(name);
+			writer.WriteNumber(a);
+			writer.WriteNumber(b);
+			writer.WriteNumber(c);
+			writer.WriteNumber(d);
+			writer.WriteNumber(e);
+			EndWrite();
+		} while (ReallocateBufferIfNecessary());
+		Command& com = delegate->Make(a, b, c, d, e);
+		Done();
+		return com;
+	}
+	Command& Make(const char* s) const {
+		do {
+			writer.WriteIdentifier(name);
+			writer.WriteString(s);
+			EndWrite();
+		} while (ReallocateBufferIfNecessary());
+		Command& c = delegate->Make(s);
 		Done();
 		return c;
+	}
+	Command& Make(int32_t a, const char* s) const {
+		do {
+			writer.WriteIdentifier(name);
+			writer.WriteNumber(a);
+			writer.WriteString(s);
+			EndWrite();
+		} while (ReallocateBufferIfNecessary());
+		Command& c = delegate->Make(a, s);
+		Done();
+		return c;
+	}
+	Command& Make(int32_t a, int32_t b, const char* s) const {
+		do {
+			writer.WriteIdentifier(name);
+			writer.WriteNumber(a);
+			writer.WriteNumber(b);
+			writer.WriteString(s);
+			EndWrite();
+		} while (ReallocateBufferIfNecessary());
+		Command& c = delegate->Make(a, b, s);
+		Done();
+		return c;
+	}
+	Command& Make(int32_t a, int32_t b, int32_t c, const char* s) const {
+		do {
+			writer.WriteIdentifier(name);
+			writer.WriteNumber(a);
+			writer.WriteNumber(b);
+			writer.WriteNumber(c);
+			writer.WriteString(s);
+			EndWrite();
+		} while (ReallocateBufferIfNecessary());
+		Command& com = delegate->Make(a, b, c, s);
+		Done();
+		return com;
 	}
 };
 
@@ -805,6 +879,12 @@ public:
 		if (GetEnd()) {
 			return cfi->second->Make();
 		}
+		if (GetString()) {
+			std::string s1 = buffer.Get();
+			if (GetEnd()) {
+				return cfi->second->Make(s1.c_str());
+			}
+		}
 		int32_t n1 = GetNumber();
 		if (GetEnd()) {
 			return cfi->second->Make(n1);
@@ -816,10 +896,34 @@ public:
 			}
 		}
 		int32_t n2 = GetNumber();
+		if (GetEnd()) {
+			return cfi->second->Make(n1, n2);
+		}
+		if (GetString()) {
+			std::string s3 = buffer.Get();
+			if (GetEnd()) {
+				return cfi->second->Make(n1, n2, s3.c_str());
+			}
+		}
+		int32_t n3 = GetNumber();
+		if (GetEnd()) {
+			return cfi->second->Make(n1, n2, n3);
+		}
+		if (GetString()) {
+			std::string s4 = buffer.Get();
+			if (GetEnd()) {
+				return cfi->second->Make(n1, n2, n3, s4.c_str());
+			}
+		}
+		int32_t n4 = GetNumber();
+		if (GetEnd()) {
+			return cfi->second->Make(n1, n2, n3, n4);
+		}
+		int32_t n5 = GetNumber();
 		if (!GetEnd()) {
 			FailParse();
 		}
-		return cfi->second->Make(n1, n2);
+		return cfi->second->Make(n1, n2, n3, n4, n5);
 	}
 };
 
@@ -831,6 +935,46 @@ CommandReplayer::~CommandReplayer() {
 }
 
 CommandFactory::~CommandFactory() {
+}
+
+Command& CommandFactory::Make() const {
+	throw CommandFactoryIncorrectParametersException();
+}
+
+Command& CommandFactory::Make(int32_t) const {
+	throw CommandFactoryIncorrectParametersException();
+}
+
+Command& CommandFactory::Make(int32_t, int32_t) const {
+	throw CommandFactoryIncorrectParametersException();
+}
+
+Command& CommandFactory::Make(int32_t, int32_t, int32_t) const {
+	throw CommandFactoryIncorrectParametersException();
+}
+
+Command& CommandFactory::Make(int32_t, int32_t, int32_t, int32_t) const {
+	throw CommandFactoryIncorrectParametersException();
+}
+
+Command& CommandFactory::Make(int32_t, int32_t, int32_t, int32_t, int32_t) const {
+	throw CommandFactoryIncorrectParametersException();
+}
+
+Command& CommandFactory::Make(const char*) const {
+	throw CommandFactoryIncorrectParametersException();
+}
+
+Command& CommandFactory::Make(int32_t, const char*) const {
+	throw CommandFactoryIncorrectParametersException();
+}
+
+Command& CommandFactory::Make(int32_t, int32_t, const char*) const {
+	throw CommandFactoryIncorrectParametersException();
+}
+
+Command& CommandFactory::Make(int32_t, int32_t, int32_t, const char*) const {
+	throw CommandFactoryIncorrectParametersException();
 }
 
 CommandAndDescriptionFactory::~CommandAndDescriptionFactory() {

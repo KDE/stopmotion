@@ -59,19 +59,43 @@ public:
 	/**
 	 * Make a command with no parameters.
 	 */
-	virtual Command& Make() const = 0;
+	virtual Command& Make() const;
 	/**
 	 * Make a command from a single integer
 	 */
-	virtual Command& Make(int32_t) const = 0;
+	virtual Command& Make(int32_t) const;
 	/**
 	 * Make a command from two integers
 	 */
-	virtual Command& Make(int32_t, int32_t) const = 0;
+	virtual Command& Make(int32_t, int32_t) const;
+	/**
+	 * Make a command from three integers
+	 */
+	virtual Command& Make(int32_t, int32_t, int32_t) const;
+	/**
+	 * Make a command from four integers
+	 */
+	virtual Command& Make(int32_t, int32_t, int32_t, int32_t) const;
+	/**
+	 * Make a command from five integers
+	 */
+	virtual Command& Make(int32_t, int32_t, int32_t, int32_t, int32_t) const;
+	/**
+	 * Make a command from a string
+	 */
+	virtual Command& Make(const char*) const;
 	/**
 	 * Make a command from an integer and a string
 	 */
-	virtual Command& Make(int32_t, const char*) const = 0;
+	virtual Command& Make(int32_t, const char*) const;
+	/**
+	 * Make a command from two integers and a string
+	 */
+	virtual Command& Make(int32_t, int32_t, const char*) const;
+	/**
+	 * Make a command from three integers and a string
+	 */
+	virtual Command& Make(int32_t, int32_t, int32_t, const char*) const;
 };
 
 /**
