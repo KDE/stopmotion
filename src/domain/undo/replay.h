@@ -114,13 +114,10 @@ public:
 		virtual ~Logger();
 	public:
 		/**
-		 * For receiving the serialized command.
+		 * For receiving the serialized command. This function is allowed to
+		 * throw an exception.
 		 */
 		virtual void WriteCommand(const char*) = 0;
-		/**
-		 * Indicates that the command has been successfully constructed.
-		 */
-		virtual void CommandMade() = 0;
 	};
 	virtual ~CommandAndDescriptionFactory() = 0;
 	/**

@@ -399,6 +399,12 @@ public:
 	StringWriter() : startOfLine(true), start(0), p(0), end(0) {
 	}
 	/**
+	 * Returns the buffer
+	 */
+	const char* Buffer() const {
+		return start;
+	}
+	/**
 	 * Begins a new line, reusing the same buffer.
 	 */
 	void Reset() {
@@ -597,13 +603,11 @@ class RealCommandAndDescriptionFactory : public CommandAndDescriptionFactory {
 		return buffer.Reallocate(writer.Length());
 	}
 	void EndWrite() const {
-		const char* s = writer.TerminateBuffer();
-		if (s && logger)
-			logger->WriteCommand(s);
+		writer.TerminateBuffer();
 	}
 	void Done() const {
 		if (logger)
-			logger->CommandMade();
+			logger->WriteCommand(writer.Buffer());
 	}
 public:
 	RealCommandAndDescriptionFactory() : delegate(0), logger(0), name(0) {
@@ -637,9 +641,9 @@ public:
 			writer.WriteIdentifier(name);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& c = delegate->Make();
+		std::auto_ptr<Command> com(&delegate->Make());
 		Done();
-		return c;
+		return *com.release();
 	}
 	Command& Make(int32_t a) const {
 		do {
@@ -647,9 +651,9 @@ public:
 			writer.WriteNumber(a);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& c = delegate->Make(a);
+		std::auto_ptr<Command> com(&delegate->Make(a));
 		Done();
-		return c;
+		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b) const {
 		do {
@@ -658,9 +662,9 @@ public:
 			writer.WriteNumber(b);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& c = delegate->Make(a, b);
+		std::auto_ptr<Command> com(&delegate->Make(a, b));
 		Done();
-		return c;
+		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b, int32_t c) const {
 		do {
@@ -670,9 +674,9 @@ public:
 			writer.WriteNumber(c);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& com = delegate->Make(a, b, c);
+		std::auto_ptr<Command> com(&delegate->Make(a, b, c));
 		Done();
-		return com;
+		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b, int32_t c, int32_t d) const {
 		do {
@@ -683,9 +687,9 @@ public:
 			writer.WriteNumber(d);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& com = delegate->Make(a, b, c, d);
+		std::auto_ptr<Command> com(&delegate->Make(a, b, c, d));
 		Done();
-		return com;
+		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b, int32_t c, int32_t d, int32_t e) const {
 		do {
@@ -697,9 +701,9 @@ public:
 			writer.WriteNumber(e);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& com = delegate->Make(a, b, c, d, e);
+		std::auto_ptr<Command> com(&delegate->Make(a, b, c, d, e));
 		Done();
-		return com;
+		return *com.release();
 	}
 	Command& Make(const char* s) const {
 		do {
@@ -707,9 +711,9 @@ public:
 			writer.WriteString(s);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& c = delegate->Make(s);
+		std::auto_ptr<Command> com(&delegate->Make(s));
 		Done();
-		return c;
+		return *com.release();
 	}
 	Command& Make(int32_t a, const char* s) const {
 		do {
@@ -718,9 +722,9 @@ public:
 			writer.WriteString(s);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& c = delegate->Make(a, s);
+		std::auto_ptr<Command> com(&delegate->Make(a, s));
 		Done();
-		return c;
+		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b, const char* s) const {
 		do {
@@ -730,9 +734,9 @@ public:
 			writer.WriteString(s);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& c = delegate->Make(a, b, s);
+		std::auto_ptr<Command> com(&delegate->Make(a, b, s));
 		Done();
-		return c;
+		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b, int32_t c, const char* s) const {
 		do {
@@ -743,9 +747,9 @@ public:
 			writer.WriteString(s);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
-		Command& com = delegate->Make(a, b, c, s);
+		std::auto_ptr<Command> com(&delegate->Make(a, b, c, s));
 		Done();
-		return com;
+		return *com.release();
 	}
 };
 
