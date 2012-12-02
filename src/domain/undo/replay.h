@@ -99,11 +99,14 @@ public:
 };
 
 /**
- * Command factory that makes a specific sort of command and, simultaneously,
- * makes the string that would produce the same thing when passed to
- * MakeCommand().
+ * General factory for commands. Either constructs a command from a line of
+ * text describing the command and its parameters, or produces such a line of
+ * text.
+ * The specific commands are produced by CommandFactorys registers with the
+ * CommandReplayer with RegisterCommandFactory().
+ * @author Tim Band
  */
-class CommandAndDescriptionFactory : public CommandFactory {
+class CommandReplayer {
 public:
 	/**
 	 * For receiving the command's string representation during calls to Make
@@ -119,30 +122,16 @@ public:
 		 */
 		virtual void WriteCommand(const char*) = 0;
 	};
-	virtual ~CommandAndDescriptionFactory() = 0;
-	/**
-	 * Sets the logger to be called on each call to a Make method.
-	 * @param logger The logger to use until the next call to SetNameCallback.
-	 * Ownership is not passed.
-	 */
-	virtual void SetLogger(Logger* logger) = 0;
-};
-
-/**
- * General factory for commands. Either constructs a command from a line of
- * text describing the command and its parameters, or produces such a line of
- * text.
- * The specific commands are produced by CommandFactorys registers with the
- * CommandReplayer with RegisterCommandFactory().
- * @author Tim Band
- */
-class CommandReplayer {
-public:
 	/**
 	 * Constructs a new command replayer.
 	 */
 	static CommandReplayer* Make();
 	virtual ~CommandReplayer() = 0;
+	/**
+	 * Set the logger for the CommandAndDescriptionFactories returned by
+	 * GetCommandFactory. Ownership is not passed.
+	 */
+	virtual void SetLogger(Logger* logger) = 0;
 	/**
 	 * Registers the command factory with a command replayer.
 	 */
@@ -161,7 +150,7 @@ public:
 	 * well as logging the construction to a CommandAndDescriptionFactory::Logger.
 	 * Returns 0 if there is no command factory matching the name given.
 	 */
-	virtual const CommandAndDescriptionFactory* GetCommandFactory(
+	virtual const CommandFactory* GetCommandFactory(
 			const char* commandName) = 0;
 };
 

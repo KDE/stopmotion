@@ -587,9 +587,9 @@ public:
 	}
 };
 
-class RealCommandAndDescriptionFactory : public CommandAndDescriptionFactory {
+class RealCommandAndDescriptionFactory : public CommandFactory {
 	CommandFactory* delegate;
-	mutable Logger* logger;
+	mutable CommandReplayer::Logger* logger;
 	const char* name;
 	mutable Buffer buffer;
 	mutable StringWriter writer;
@@ -626,7 +626,7 @@ public:
 	void SetName(const char* n) {
 		name = n;
 	}
-	void SetLogger(Logger* l) {
+	void SetLogger(CommandReplayer::Logger* l) {
 		logger = l;
 	}
 	/**
@@ -829,6 +829,9 @@ public:
 		for (map_t::iterator i = reg.begin(); i != reg.end(); ++i)
 			delete i->second;
 	}
+	void SetLogger(Logger* l) {
+		describer->SetLogger(l);
+	}
 	/**
 	 * Registers a factory.
 	 * @param name The name by which the factory will be invoked.
@@ -859,7 +862,7 @@ public:
 	 * @param The name as a null-terminated string. Ownership is not passed.
 	 * @returns The wrapped command factory. Ownership is not returned.
 	 */
-	const CommandAndDescriptionFactory* GetCommandFactory(const char* name) {
+	const CommandFactory* GetCommandFactory(const char* name) {
 		CommandFactory* del = GetFactory(name);
 		if (!del)
 			return 0;
@@ -979,9 +982,6 @@ Command& CommandFactory::Make(int32_t, int32_t, const char*) const {
 
 Command& CommandFactory::Make(int32_t, int32_t, int32_t, const char*) const {
 	throw CommandFactoryIncorrectParametersException();
-}
-
-CommandAndDescriptionFactory::~CommandAndDescriptionFactory() {
 }
 
 // To create a command in the first place:

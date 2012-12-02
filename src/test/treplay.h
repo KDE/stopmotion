@@ -14,12 +14,18 @@ class TestCommandFactory : public QObject
 {
 	Q_OBJECT
 	CommandReplayer* cr;
+	char* str;	// output from RandomString
+	char* strNext;
+	int32_t strAllocLen;
+	void AddCharToRandomString(char);
 public:
 	TestCommandFactory();
 	~TestCommandFactory();
+	const char* RandomString();
 private slots:
 	void emptyCommandReplayerThrows();
 	void allMakeCallsParse();
+	void parsingDescriptionIsCloning();
 };
 
 #endif /* TREPLAY_H_ */
