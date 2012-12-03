@@ -114,7 +114,7 @@ public:
 	 */
 	class Logger {
 	protected:
-		virtual ~Logger();
+		virtual ~Logger() = 0;
 	public:
 		/**
 		 * For receiving the serialized command. This function is allowed to

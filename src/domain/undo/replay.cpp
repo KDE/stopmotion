@@ -454,8 +454,8 @@ public:
 	void WriteChar(char c) {
 		if (p < end) {
 			*p = c;
-			++p;
 		}
+		++p;
 	}
 	/**
 	 * Writes a space to the buffer, if we are not at the start of a line.
@@ -480,8 +480,9 @@ public:
 		BeginArgument();
 		WriteChar('"');
 		bool allowDigits = true;
-		while (s) {
+		while (*s) {
 			unsigned char c = *reinterpret_cast<const unsigned char*>(s);
+			++s;
 			bool normalChar = false;
 			if (32 < c && c < 128) {
 				normalChar = allowDigits || c < '0' || '9' < c;
@@ -545,6 +546,7 @@ public:
 		BeginArgument();
 		while (*id) {
 			WriteChar(*id);
+			++id;
 		}
 	}
 };
@@ -587,7 +589,7 @@ public:
 	}
 };
 
-class RealCommandAndDescriptionFactory : public CommandFactory {
+class CommandAndDescriptionFactory : public CommandFactory {
 	CommandFactory* delegate;
 	mutable CommandReplayer::Logger* logger;
 	const char* name;
@@ -610,9 +612,9 @@ class RealCommandAndDescriptionFactory : public CommandFactory {
 			logger->WriteCommand(writer.Buffer());
 	}
 public:
-	RealCommandAndDescriptionFactory() : delegate(0), logger(0), name(0) {
+	CommandAndDescriptionFactory() : delegate(0), logger(0), name(0) {
 	}
-	~RealCommandAndDescriptionFactory() {
+	~CommandAndDescriptionFactory() {
 		delegate = 0;
 		logger = 0;
 		name = 0;
@@ -756,7 +758,7 @@ public:
 class RealCommandReplayer : public CommandReplayer {
 	typedef std::map<std::string, CommandFactory*> map_t;
 	map_t reg;
-	RealCommandAndDescriptionFactory* describer;
+	CommandAndDescriptionFactory* describer;
 	Buffer buffer;
 	StringReader reader;
 	/**
@@ -769,6 +771,9 @@ class RealCommandReplayer : public CommandReplayer {
 	 */
 	bool exclamation;
 
+	/**
+	 * Throws an exception to say that the parse has failed.
+	 */
 	void FailParse() {
 		throw CommandFactoryParseFailureException();
 	}
@@ -820,7 +825,7 @@ class RealCommandReplayer : public CommandReplayer {
 	}
 public:
 	RealCommandReplayer() : describer(0), dotCount(0), exclamation(false) {
-		describer = new RealCommandAndDescriptionFactory();
+		describer = new CommandAndDescriptionFactory();
 	}
 	/**
 	 * Deletes all the command factories owned.
@@ -844,29 +849,19 @@ public:
 		a.release();
 	}
 	/**
-	 * Returns the factory previously registered by name, or 0 if there was no
-	 * such registration.
-	 * @param The name as a null-terminated string. Ownership is not passed.
-	 * @returns The  command factory. Ownership is not returned.
-	 */
-	CommandFactory* GetFactory(const char* name) {
-		map_t::iterator i = reg.find(name);
-		if (i == reg.end())
-			return 0;
-		return i->second;
-	}
-	/**
 	 * Returns the factory previously registered by name wrapped in a
-	 * CommandAndDescriptionFactory, or 0 if no factory has been registered
-	 * with this replayer by this name.
+	 * decorator that logs the command. Returns 0 if no factory has been
+	 * registered with this replayer by this name.
 	 * @param The name as a null-terminated string. Ownership is not passed.
 	 * @returns The wrapped command factory. Ownership is not returned.
 	 */
 	const CommandFactory* GetCommandFactory(const char* name) {
-		CommandFactory* del = GetFactory(name);
-		if (!del)
+		map_t::iterator i = reg.find(name);
+		if (i == reg.end())
 			return 0;
-		describer->SetDelegate(del);
+		describer->SetDelegate(i->second);
+		// we'll use our own copy of the name in case the argument gets deleted
+		describer->SetName(i->first.c_str());
 		return describer;
 	}
 	/**
@@ -982,6 +977,9 @@ Command& CommandFactory::Make(int32_t, int32_t, const char*) const {
 
 Command& CommandFactory::Make(int32_t, int32_t, int32_t, const char*) const {
 	throw CommandFactoryIncorrectParametersException();
+}
+
+CommandReplayer::Logger::~Logger() {
 }
 
 // To create a command in the first place:
