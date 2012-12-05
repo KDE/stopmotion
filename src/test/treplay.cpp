@@ -236,46 +236,87 @@ int32_t randomInt() {
 }
 
 void TestCommandFactory::parsingDescriptionIsCloning() {
+	char description[512];
+	const size_t desLen = sizeof(description)/sizeof(description[0]) - 1;
+	description[desLen] = '\0';
 	CloneLogger cl(*cr);
 	cr->SetLogger(&cl);
 	for (int i = 0; i != 100; ++i) {
 		const char* commandName = rand() % 2 == 0? "et" : "sec";
 		const CommandFactory* cf = cr->GetCommandFactory(commandName);
-		Command* c = 0;
+		std::auto_ptr<Command> c;
+		int32_t i1, i2, i3, i4, i5;
+		std::string s1;
 		switch(rand() % 10) {
 		case 0:
-			c = &cf->Make();
+			snprintf(description, sizeof(description)/sizeof(description[0]), "Make()");
+			c.reset(&cf->Make());
 			break;
 		case 1:
-			c = &cf->Make(randomInt());
+			i1 = randomInt();
+			snprintf(description, sizeof(description)/sizeof(description[0]), "Make(%d)", i1);
+			c.reset(&cf->Make(i1));
 			break;
 		case 2:
-			c = &cf->Make(randomInt(), randomInt());
+			i1 = randomInt();
+			i2 = randomInt();
+			snprintf(description, sizeof(description)/sizeof(description[0]), "Make(%d, %d)", i1, i2);
+			c.reset(&cf->Make(i1, i2));
 			break;
 		case 3:
-			c = &cf->Make(randomInt(), randomInt(), randomInt());
+			i1 = randomInt();
+			i2 = randomInt();
+			i3 = randomInt();
+			snprintf(description, sizeof(description)/sizeof(description[0]), "Make(%d, %d, %d)", i1, i2, i3);
+			c.reset(&cf->Make(i1, i2, i3));
 			break;
 		case 4:
-			c = &cf->Make(randomInt(), randomInt(), randomInt(), randomInt());
+			i1 = randomInt();
+			i2 = randomInt();
+			i3 = randomInt();
+			i4 = randomInt();
+			snprintf(description, sizeof(description)/sizeof(description[0]), "Make(%d, %d, %d, %d)", i1, i2, i3, i4);
+			c.reset(&cf->Make(i1, i2, i3, i4));
 			break;
 		case 5:
-			c = &cf->Make(randomInt(), randomInt(), randomInt(), randomInt(), randomInt());
+			i1 = randomInt();
+			i2 = randomInt();
+			i3 = randomInt();
+			i4 = randomInt();
+			i5 = randomInt();
+			snprintf(description, sizeof(description)/sizeof(description[0]), "Make(%d, %d, %d, %d, %d)", i1, i2, i3, i4, i5);
+			c.reset(&cf->Make(i1, i2, i3, i4, i5));
 			break;
 		case 6:
-			c = &cf->Make(RandomString());
+			s1 = RandomString();
+			snprintf(description, sizeof(description)/sizeof(description[0]), "Make(%s)", s1.c_str());
+			c.reset(&cf->Make(s1.c_str()));
 			break;
 		case 7:
-			c = &cf->Make(randomInt(), RandomString());
+			i1 = randomInt();
+			s1 = RandomString();
+			snprintf(description, sizeof(description)/sizeof(description[0]), "Make(%d, %s)", i1, s1.c_str());
+			c.reset(&cf->Make(i1, s1.c_str()));
 			break;
 		case 8:
-			c = &cf->Make(randomInt(), randomInt(), RandomString());
+			i1 = randomInt();
+			i2 = randomInt();
+			s1 = RandomString();
+			snprintf(description, sizeof(description)/sizeof(description[0]), "Make(%d, %d, %s)", i1, i2, s1.c_str());
+			c.reset(&cf->Make(i1, i2, s1.c_str()));
 			break;
 		case 9:
-			c = &cf->Make(randomInt(), randomInt(), randomInt(), RandomString());
+			i1 = randomInt();
+			i2 = randomInt();
+			i3 = randomInt();
+			s1 = RandomString();
+			snprintf(description, sizeof(description)/sizeof(description[0]), "Make(%d, %d, %d, %s)", i1, i2, i3, s1.c_str());
+			c.reset(&cf->Make(i1, i2, i3, s1.c_str()));
 			break;
 		}
-		QVERIFY(*static_cast<const EmptyTestCommandFactory::EtCommand*>(c)
-				== *static_cast<const EmptyTestCommandFactory::EtCommand*>(cl.GetClone()));
+		QVERIFY2(*static_cast<const EmptyTestCommandFactory::EtCommand*>(c.get())
+				== *static_cast<const EmptyTestCommandFactory::EtCommand*>(cl.GetClone()),
+				description);
 	}
 	cr->SetLogger(0);
 }
