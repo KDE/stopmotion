@@ -320,3 +320,60 @@ void TestCommandFactory::parsingDescriptionIsCloning() {
 	}
 	cr->SetLogger(0);
 }
+
+class AddCharFactory : public CommandFactory {
+	std::string* model;
+public:
+	class AddChar : public CommandAtomic {
+		std::string* m;
+		char c;
+		int32_t p;
+	public:
+		AddChar(std::string& model, int32_t character, int32_t position)
+			: m(&model), c(character % 128), p(position) {
+		}
+		Command& DoAtomic();
+	};
+	AddCharFactory(std::string& m) : model(&m) {
+	}
+	Command& Make(int32_t character, int32_t position) const {
+		return *new AddChar(*model, character, position);
+	}
+};
+
+class DelCharFactory : public CommandFactory {
+	std::string* model;
+public:
+	class DelChar : public CommandAtomic {
+		std::string* m;
+		int32_t p;
+	public:
+		DelChar(std::string& model, int32_t position)
+			: m(&model), p(position) {
+		}
+		Command& DoAtomic();
+	};
+	DelCharFactory(std::string& m) : model(&m) {
+	}
+	Command& Make(int32_t position) const {
+		return *new DelChar(*model, position);
+	}
+};
+
+Command& AddCharFactory::AddChar::DoAtomic() {
+	int32_t pos = (p < 0? -p : p) % p % m->size();
+	// insert might throw, so use an auto_ptr to avoid leaks.
+	std::auto_ptr<Command> inv(new DelCharFactory::DelChar(*m, pos));
+	std::string::iterator i = m->begin();
+	i += pos;
+	m->insert(i, c);
+	return *inv.release();
+}
+
+Command& DelCharFactory::DelChar::DoAtomic() {
+	int32_t pos = (p < 0? -p : p) % m->size();
+	char removedChar = (*m)[pos];
+	Command* inv = new AddCharFactory::AddChar(*m, pos, removedChar);
+	m->erase(pos, 1);
+	return *inv;
+}
