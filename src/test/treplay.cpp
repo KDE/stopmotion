@@ -124,7 +124,7 @@ public:
 };
 
 TestCommandFactory::TestCommandFactory() : str(0), strNext(0), strAllocLen(0) {
-	cr = CommandReplayer::Make();
+	cr = new CommandReplayer();
 	cr->RegisterCommandFactory("et", *new EmptyTestCommandFactory("et"));
 	cr->RegisterCommandFactory("sec", *new EmptyTestCommandFactory("sec"));
 }
@@ -371,9 +371,45 @@ Command& AddCharFactory::AddChar::DoAtomic() {
 }
 
 Command& DelCharFactory::DelChar::DoAtomic() {
+	if (m->size() == 0) {
+		return *new CommandNull;
+	}
 	int32_t pos = (p < 0? -p : p) % m->size();
 	char removedChar = (*m)[pos];
 	Command* inv = new AddCharFactory::AddChar(*m, pos, removedChar);
 	m->erase(pos, 1);
 	return *inv;
+}
+
+void TestCommandFactory::replaySequenceProducesSameOutput() {
+	std::string s1;
+	std::string s2;
+	std::auto_ptr<AddCharFactory> af(new AddCharFactory(s1));
+	std::auto_ptr<DelCharFactory> df(new DelCharFactory(s1));
+	std::auto_ptr<CommandReplayer> rep(new CommandReplayer());
+	rep->RegisterCommandFactory("add", *af);
+	rep->RegisterCommandFactory("del", *df);
+	// construct a logger
+	//...
+	for (int i = 0; i != 100; ++i) {
+		s1 = RandomString();
+		s2 = s1;
+		int32_t probePos = rand();
+		int32_t commandType;
+		while (0 != (commandType = rand() % 45)) {
+			std::auto_ptr<Command> c;
+			switch (commandType) {
+			case 1:
+			case 2:
+				c.reset(&rep->GetCommandFactory("add")->Make(rand(), rand()));
+				break;
+			default:
+				c.reset(&rep->GetCommandFactory("del")->Make(rand()));
+				break;
+			}
+			// execute command
+		}
+		// replay commands from log
+		//...
+	}
 }

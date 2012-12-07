@@ -26,6 +26,7 @@ private slots:
 	void emptyCommandReplayerThrows();
 	void allMakeCallsParse();
 	void parsingDescriptionIsCloning();
+	void replaySequenceProducesSameOutput();
 };
 
 #endif /* TREPLAY_H_ */
