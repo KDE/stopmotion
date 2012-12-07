@@ -192,6 +192,10 @@ bool CommandAtomic::Impotent() const {
 	return false;
 }
 
+Command& CommandNull::DoAtomic() {
+	return *new CommandNull;
+}
+
 CommandHistory::CommandHistory() : past(0), future(0), partObserver(0) {
 	past = new CommandList();
 	future = new CommandList();
@@ -291,4 +295,7 @@ void CommandComposite::Accept(FileNameVisitor& v) const {
 
 bool CommandComposite::Impotent() const {
 	return cs->Impotent();
+}
+
+PartialCommandObserver::~PartialCommandObserver() {
 }

@@ -109,6 +109,14 @@ public:
 };
 
 /**
+ * Command that does nothing.
+ */
+class CommandNull : public CommandAtomic {
+public:
+	Command& DoAtomic();
+};
+
+/**
  * Command made up of other commands. If execution of the composite is
  * interrupted by an exception being thrown then (provided that all the
  * commands making it up are well-behaved in this regard) the command history
