@@ -98,6 +98,9 @@ public:
 	virtual Command& Make(int32_t, int32_t, int32_t, const char*) const;
 };
 
+class CommandReplayerImpl;
+class CommandAndDescriptionFactory;
+
 /**
  * General factory for commands. Either constructs a command from a line of
  * text describing the command and its parameters, or produces such a line of
@@ -107,6 +110,8 @@ public:
  * @author Tim Band
  */
 class CommandReplayer {
+	CommandReplayerImpl* pImpl;
+	CommandAndDescriptionFactory* describer;
 public:
 	/**
 	 * For receiving the command's string representation during calls to Make
@@ -125,22 +130,22 @@ public:
 	/**
 	 * Constructs a new command replayer.
 	 */
-	static CommandReplayer* Make();
-	virtual ~CommandReplayer() = 0;
+	CommandReplayer();
+	~CommandReplayer();
 	/**
 	 * Set the logger for the CommandAndDescriptionFactories returned by
 	 * GetCommandFactory. Ownership is not passed.
 	 */
-	virtual void SetLogger(Logger* logger) = 0;
+	void SetLogger(Logger* logger);
 	/**
 	 * Registers the command factory with a command replayer.
 	 */
-	virtual void RegisterCommandFactory(const char* name,
-			CommandFactory& factory) = 0;
+	void RegisterCommandFactory(const char* name,
+			CommandFactory& factory);
 	/**
 	 * Makes a command from a string.
 	 */
-	virtual Command& MakeCommand(const char*) = 0;
+	Command& MakeCommand(const char*);
 	/**
 	 * Gets a command factory that produces the command specified. This command
 	 * factory should not be used after any subsequent call to GetCommandFactory()
@@ -150,8 +155,8 @@ public:
 	 * well as logging the construction to a CommandAndDescriptionFactory::Logger.
 	 * Returns 0 if there is no command factory matching the name given.
 	 */
-	virtual const CommandFactory* GetCommandFactory(
-			const char* commandName) = 0;
+	const CommandFactory* GetCommandFactory(
+			const char* commandName);
 };
 
 #endif /* REPLAY_H_ */

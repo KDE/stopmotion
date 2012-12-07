@@ -525,7 +525,8 @@ public:
 			n = -n;
 		}
 		int power = 1;
-		while (power * 10 <= n) {
+		int nOver10 = n / 10;
+		while (power <= nOver10) {
 			power *= 10;
 		}
 		while (power) {
@@ -766,10 +767,9 @@ public:
 	}
 };
 
-class RealCommandReplayer : public CommandReplayer {
+class CommandReplayerImpl {
 	typedef std::map<std::string, CommandFactory*> map_t;
 	map_t reg;
-	CommandAndDescriptionFactory* describer;
 	Buffer buffer;
 	StringReader reader;
 	/**
@@ -781,7 +781,16 @@ class RealCommandReplayer : public CommandReplayer {
 	 * successfully.
 	 */
 	bool exclamation;
-
+public:
+	CommandReplayerImpl() : dotCount(0), exclamation(false) {
+	}
+	/**
+	 * Deletes all the command factories owned.
+	 */
+	~CommandReplayerImpl() {
+		for (map_t::iterator i = reg.begin(); i != reg.end(); ++i)
+			delete i->second;
+	}
 	/**
 	 * Throws an exception to say that the parse has failed.
 	 */
@@ -834,46 +843,19 @@ class RealCommandReplayer : public CommandReplayer {
 		return reader.GetEndOfCommand(dotCount, exclamation)
 				== StringReader::parseSucceeded;
 	}
-public:
-	RealCommandReplayer() : describer(0), dotCount(0), exclamation(false) {
-		describer = new CommandAndDescriptionFactory();
-	}
-	/**
-	 * Deletes all the command factories owned.
-	 */
-	~RealCommandReplayer() {
-		for (map_t::iterator i = reg.begin(); i != reg.end(); ++i)
-			delete i->second;
-	}
-	void SetLogger(Logger* l) {
-		describer->SetLogger(l);
-	}
-	/**
-	 * Registers a factory.
-	 * @param name The name by which the factory will be invoked.
-	 * @param f The factory. Ownership is passed. If registration fails, f is
-	 * deleted.
-	 */
 	void RegisterCommandFactory(const char* name, CommandFactory& f) {
 		std::auto_ptr<CommandFactory> a(&f);
 		reg[name] = &f;
 		a.release();
 	}
-	/**
-	 * Returns the factory previously registered by name wrapped in a
-	 * decorator that logs the command. Returns 0 if no factory has been
-	 * registered with this replayer by this name.
-	 * @param The name as a null-terminated string. Ownership is not passed.
-	 * @returns The wrapped command factory. Ownership is not returned.
-	 */
-	const CommandFactory* GetCommandFactory(const char* name) {
+	CommandFactory* GetCommandFactory(const char* name,
+			const char*& nameCopy) {
 		map_t::iterator i = reg.find(name);
 		if (i == reg.end())
 			return 0;
-		describer->SetDelegate(i->second);
-		// we'll use our own copy of the name in case the argument gets deleted
-		describer->SetName(i->first.c_str());
-		return describer;
+		// copy of the name that is owned by us, so won't be deleted
+		nameCopy = i->first.c_str();
+		return i->second;
 	}
 	/**
 	 * Parses a string (as a command type followed by arguments) to create a
@@ -940,8 +922,44 @@ public:
 	}
 };
 
-CommandReplayer* CommandReplayer::Make() {
-	return new RealCommandReplayer();
+CommandReplayer::CommandReplayer() :
+			describer(0) {
+	pImpl = new CommandReplayerImpl();
+	describer = new CommandAndDescriptionFactory();
+}
+
+void CommandReplayer::SetLogger(Logger* l) {
+	describer->SetLogger(l);
+}
+
+/**
+ * Registers a factory.
+ * @param name The name by which the factory will be invoked.
+ * @param f The factory. Ownership is passed. If registration fails, f is
+ * deleted.
+ */
+void CommandReplayer::RegisterCommandFactory(const char* name, CommandFactory& f) {
+	pImpl->RegisterCommandFactory(name, f);
+}
+
+/**
+ * Returns the factory previously registered by name wrapped in a
+ * decorator that logs the command. Returns 0 if no factory has been
+ * registered with this replayer by this name.
+ * @param The name as a null-terminated string. Ownership is not passed.
+ * @returns The wrapped command factory. Ownership is not returned.
+ */
+const CommandFactory* CommandReplayer::GetCommandFactory(const char* name) {
+	const char* nameCopy;
+	CommandFactory* delegate = pImpl->GetCommandFactory(name, nameCopy);
+	describer->SetDelegate(delegate);
+	// we'll use our own copy of the name in case the argument gets deleted
+	describer->SetName(nameCopy);
+	return describer;
+}
+
+Command& CommandReplayer::MakeCommand(const char* s) {
+	return pImpl->MakeCommand(s);
 }
 
 CommandReplayer::~CommandReplayer() {
