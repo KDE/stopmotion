@@ -2,7 +2,8 @@ TEMPLATE = app
 TARGET = test
 QT += core
 CONFIG += qtestlib
-HEADERS += ../domain/undo/command.h \
+HEADERS += ../domain/undo/logger.h \
+    ../domain/undo/command.h \
     ../domain/undo/replay.h
 HEADERS += treplay.h
 SOURCES += tmain.cpp \
