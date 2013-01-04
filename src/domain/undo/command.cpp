@@ -76,6 +76,7 @@ public:
 		for (clist::iterator i = cs.begin(); i != cs.end(); ++i) {
 			delete *i;
 		}
+		cs.clear();
 	}
 	/**
 	 * Returns true if and only if the command list is empty.

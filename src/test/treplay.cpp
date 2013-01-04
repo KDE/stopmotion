@@ -363,7 +363,7 @@ public:
 };
 
 Command& AddCharFactory::AddChar::DoAtomic() {
-	int32_t pos = (p < 0? -p : p) % p % m->size();
+	int32_t pos = (p < 0? -p : p) % (m->size() + 1);
 	// insert might throw, so use an auto_ptr to avoid leaks.
 	std::auto_ptr<Command> inv(new DelCharFactory::DelChar(*m, pos));
 	std::string::iterator i = m->begin();
@@ -395,22 +395,24 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 	rep->RegisterCommandFactory("del", *df);
 	FILE* logFile = tmpfile();
 	std::auto_ptr<FileCommandLogger> logger(new FileCommandLogger);
+	logger->SetLogFile(logFile);
 	rep->SetLogger(logger->GetLogger());
 	history.SetPartialCommandObserver(logger->GetPartialCommandObserver());
 	for (int i = 0; i != 100; ++i) {
+		rewind(logFile);
 		history.Clear();
 		finalString = RandomString();
 		originalString = finalString;
 		int32_t commandType;
 		while (0 != (commandType = rand() % 45)) {
-			std::auto_ptr<Command> c;
+			Command* c;
 			switch (commandType) {
 			case 1:
 			case 2:
-				c.reset(&rep->GetCommandFactory("add")->Make(rand(), rand()));
+				c = &rep->GetCommandFactory("add")->Make(rand(), rand());
 				break;
 			default:
-				c.reset(&rep->GetCommandFactory("del")->Make(rand()));
+				c = &rep->GetCommandFactory("del")->Make(rand());
 				break;
 			}
 			history.Do(*c);
@@ -422,8 +424,7 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 		const size_t bufferSize = sizeof(lineBuffer)/sizeof(lineBuffer[0]) - 1;
 		lineBuffer[bufferSize] = '\0';
 		while (fgets(lineBuffer, bufferSize, logFile)) {
-			std::auto_ptr<Command> c(&rep->MakeCommand(lineBuffer));
-			history.Do(*c);
+			history.Do(rep->MakeCommand(lineBuffer));
 		}
 		QCOMPARE(finalString, finalString1);
 	}
