@@ -22,22 +22,30 @@
 
 #include "command.h"
 
+#include <iosfwd>
+
 class FileCommandLoggerImpl;
+class PartialCommandObserver;
+class CommandReplayer;
+class CommandLogger;
+
+class LoggerWriteFailedException {
+};
 
 /**
  * Logs commands to a file
  */
-class FileCommandLogger :
-		public PartialCommandObserver,
-		public CommandReplayer::Logger {
+class FileCommandLogger {
 	FileCommandLoggerImpl* pImpl;
 public:
 	FileCommandLogger();
-	~FileCommandLogger() {
-	}
-	void AtomicComplete();
-	void WriteCommand(const char*);
+	~FileCommandLogger();
+	void SetLogFile(FILE* fileHandle);
 	void CommandComplete();
+	PartialCommandObserver* GetPartialCommandObserver();
+	const PartialCommandObserver* GetPartialCommandObserver() const;
+	CommandLogger* GetLogger();
+	const CommandLogger* GetLogger() const;
 };
 
 #endif /* LOGGER_H_ */

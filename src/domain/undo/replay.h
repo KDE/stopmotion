@@ -102,6 +102,21 @@ class CommandReplayerImpl;
 class CommandAndDescriptionFactory;
 
 /**
+ * For receiving the command's string representation during calls to Make
+ * methods.
+ */
+class CommandLogger {
+protected:
+	virtual ~CommandLogger() = 0;
+public:
+	/**
+	 * For receiving the serialized command. This function is allowed to
+	 * throw an exception.
+	 */
+	virtual void WriteCommand(const char*) = 0;
+};
+
+/**
  * General factory for commands. Either constructs a command from a line of
  * text describing the command and its parameters, or produces such a line of
  * text.
@@ -114,20 +129,6 @@ class CommandReplayer {
 	CommandAndDescriptionFactory* describer;
 public:
 	/**
-	 * For receiving the command's string representation during calls to Make
-	 * methods.
-	 */
-	class Logger {
-	protected:
-		virtual ~Logger() = 0;
-	public:
-		/**
-		 * For receiving the serialized command. This function is allowed to
-		 * throw an exception.
-		 */
-		virtual void WriteCommand(const char*) = 0;
-	};
-	/**
 	 * Constructs a new command replayer.
 	 */
 	CommandReplayer();
@@ -136,7 +137,7 @@ public:
 	 * Set the logger for the CommandAndDescriptionFactories returned by
 	 * GetCommandFactory. Ownership is not passed.
 	 */
-	void SetLogger(Logger* logger);
+	void SetLogger(CommandLogger* logger);
 	/**
 	 * Registers the command factory with a command replayer.
 	 */

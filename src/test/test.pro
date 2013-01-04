@@ -8,7 +8,9 @@ HEADERS += ../domain/undo/logger.h \
 HEADERS += treplay.h
 SOURCES += tmain.cpp \
     treplay.cpp
-SOURCES += ../domain/undo/command.cpp \
+SOURCES += ../domain/undo/logger.cpp \
+    ../domain/undo/command.cpp \
     ../domain/undo/replay.cpp
 FORMS += 
 RESOURCES += 
+INCLUDEPATH += ../..

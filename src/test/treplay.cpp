@@ -6,9 +6,11 @@
 #include <limits>
 #include <stdint.h>
 #include <cstdlib>
+#include <stdio.h>
 
-#include "../domain/undo/replay.h"
-#include "../domain/undo/command.h"
+#include "src/domain/undo/replay.h"
+#include "src/domain/undo/command.h"
+#include "src/domain/undo/logger.h"
 
 static const int32_t no_num = std::numeric_limits<int32_t>::min();
 
@@ -179,7 +181,7 @@ void TestCommandFactory::emptyCommandReplayerThrows() {
 			"CommandFactoryNoSuchCommandException");
 }
 
-class CloneLogger : public CommandReplayer::Logger {
+class CloneLogger : public CommandLogger {
 	CommandReplayer& cr;
 	std::auto_ptr<Command> clone;
 public:
@@ -382,19 +384,23 @@ Command& DelCharFactory::DelChar::DoAtomic() {
 }
 
 void TestCommandFactory::replaySequenceProducesSameOutput() {
-	std::string s1;
-	std::string s2;
-	std::auto_ptr<AddCharFactory> af(new AddCharFactory(s1));
-	std::auto_ptr<DelCharFactory> df(new DelCharFactory(s1));
+	char lineBuffer[512];
+	CommandHistory history;
+	std::string finalString;
+	std::string originalString;
+	std::auto_ptr<AddCharFactory> af(new AddCharFactory(finalString));
+	std::auto_ptr<DelCharFactory> df(new DelCharFactory(finalString));
 	std::auto_ptr<CommandReplayer> rep(new CommandReplayer());
 	rep->RegisterCommandFactory("add", *af);
 	rep->RegisterCommandFactory("del", *df);
-	// construct a logger
-	//...
+	FILE* logFile = tmpfile();
+	std::auto_ptr<FileCommandLogger> logger(new FileCommandLogger);
+	rep->SetLogger(logger->GetLogger());
+	history.SetPartialCommandObserver(logger->GetPartialCommandObserver());
 	for (int i = 0; i != 100; ++i) {
-		s1 = RandomString();
-		s2 = s1;
-		int32_t probePos = rand();
+		history.Clear();
+		finalString = RandomString();
+		originalString = finalString;
 		int32_t commandType;
 		while (0 != (commandType = rand() % 45)) {
 			std::auto_ptr<Command> c;
@@ -407,9 +413,18 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 				c.reset(&rep->GetCommandFactory("del")->Make(rand()));
 				break;
 			}
-			// execute command
+			history.Do(*c);
 		}
-		// replay commands from log
-		//...
+		std::string finalString1 = finalString;
+		finalString = originalString;
+		rewind(logFile);
+		history.Clear();
+		const size_t bufferSize = sizeof(lineBuffer)/sizeof(lineBuffer[0]) - 1;
+		lineBuffer[bufferSize] = '\0';
+		while (fgets(lineBuffer, bufferSize, logFile)) {
+			std::auto_ptr<Command> c(&rep->MakeCommand(lineBuffer));
+			history.Do(*c);
+		}
+		QCOMPARE(finalString, finalString1);
 	}
 }

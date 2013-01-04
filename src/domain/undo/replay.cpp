@@ -589,7 +589,7 @@ public:
 
 class CommandAndDescriptionFactory : public CommandFactory {
 	CommandFactory* delegate;
-	mutable CommandReplayer::Logger* logger;
+	mutable CommandLogger* logger;
 	const char* name;
 	mutable Buffer buffer;
 	mutable StringWriter writer;
@@ -630,7 +630,7 @@ public:
 	void SetName(const char* n) {
 		name = n;
 	}
-	void SetLogger(CommandReplayer::Logger* l) {
+	void SetLogger(CommandLogger* l) {
 		logger = l;
 	}
 	/**
@@ -928,7 +928,7 @@ CommandReplayer::CommandReplayer() :
 	describer = new CommandAndDescriptionFactory();
 }
 
-void CommandReplayer::SetLogger(Logger* l) {
+void CommandReplayer::SetLogger(CommandLogger* l) {
 	describer->SetLogger(l);
 }
 
@@ -1008,7 +1008,7 @@ Command& CommandFactory::Make(int32_t, int32_t, int32_t, const char*) const {
 	throw CommandFactoryIncorrectParametersException();
 }
 
-CommandReplayer::Logger::~Logger() {
+CommandLogger::~CommandLogger() {
 }
 
 // To create a command in the first place:
