@@ -332,7 +332,7 @@ public:
 		int32_t p;
 	public:
 		AddChar(std::string& model, int32_t character, int32_t position)
-			: m(&model), c(character % 128), p(position) {
+			: m(&model), c(Nice(character)), p(position) {
 		}
 		Command& DoAtomic();
 		static char Nice(int32_t c) {
@@ -343,7 +343,7 @@ public:
 					"0123456789@*"[c%64];
 		}
 	};
-	AddCharFactory(std::string& m) : model(&m) {
+	AddCharFactory(std::string* m) : model(m) {
 	}
 	Command& Make(int32_t character, int32_t position) const {
 		return *new AddChar(*model, character, position);
@@ -362,7 +362,7 @@ public:
 		}
 		Command& DoAtomic();
 	};
-	DelCharFactory(std::string& m) : model(&m) {
+	DelCharFactory(std::string* m) : model(m) {
 	}
 	Command& Make(int32_t position) const {
 		return *new DelChar(*model, position);
@@ -395,18 +395,17 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 	CommandHistory history;
 	std::string finalString;
 	std::string originalString;
-	std::auto_ptr<AddCharFactory> af(new AddCharFactory(finalString));
-	std::auto_ptr<DelCharFactory> df(new DelCharFactory(finalString));
+	std::auto_ptr<AddCharFactory> af(new AddCharFactory(&finalString));
+	std::auto_ptr<DelCharFactory> df(new DelCharFactory(&finalString));
 	std::auto_ptr<CommandReplayer> rep(new CommandReplayer());
 	rep->RegisterCommandFactory("add", *af);
 	rep->RegisterCommandFactory("del", *df);
-	FILE* logFile = tmpfile();
 	std::auto_ptr<FileCommandLogger> logger(new FileCommandLogger);
-	logger->SetLogFile(logFile);
 	rep->SetLogger(logger->GetLogger());
 	history.SetPartialCommandObserver(logger->GetPartialCommandObserver());
 	for (int i = 0; i != 100; ++i) {
-		rewind(logFile);
+		FILE* logFile = tmpfile();
+		logger->SetLogFile(logFile);
 		history.Clear();
 		finalString = RandomString();
 		originalString = finalString;
@@ -423,9 +422,11 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 				break;
 			}
 			history.Do(*c);
+			logger->CommandComplete();
 		}
-		std::string finalString1 = finalString;
+		std::string expected = finalString;
 		finalString = originalString;
+		fflush(logFile);
 		rewind(logFile);
 		history.Clear();
 		const size_t bufferSize = sizeof(lineBuffer)/sizeof(lineBuffer[0]) - 1;
@@ -433,6 +434,6 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 		while (fgets(lineBuffer, bufferSize, logFile)) {
 			history.Do(rep->MakeCommand(lineBuffer));
 		}
-		QCOMPARE(finalString.c_str(), finalString1.c_str());
+		QCOMPARE(finalString.c_str(), expected.c_str());
 	}
 }

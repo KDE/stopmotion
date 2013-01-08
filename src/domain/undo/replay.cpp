@@ -641,8 +641,8 @@ public:
 		delegate = f;
 	}
 	Command& Make() const {
-		writer.Reset();
 		do {
+			writer.Reset();
 			writer.WriteIdentifier(name);
 			EndWrite();
 		} while (ReallocateBufferIfNecessary());
@@ -651,8 +651,8 @@ public:
 		return *com.release();
 	}
 	Command& Make(int32_t a) const {
-		writer.Reset();
 		do {
+			writer.Reset();
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
 			EndWrite();
@@ -662,8 +662,8 @@ public:
 		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b) const {
-		writer.Reset();
 		do {
+			writer.Reset();
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
 			writer.WriteNumber(b);
@@ -674,8 +674,8 @@ public:
 		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b, int32_t c) const {
-		writer.Reset();
 		do {
+			writer.Reset();
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
 			writer.WriteNumber(b);
@@ -687,8 +687,8 @@ public:
 		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b, int32_t c, int32_t d) const {
-		writer.Reset();
 		do {
+			writer.Reset();
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
 			writer.WriteNumber(b);
@@ -701,8 +701,8 @@ public:
 		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b, int32_t c, int32_t d, int32_t e) const {
-		writer.Reset();
 		do {
+			writer.Reset();
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
 			writer.WriteNumber(b);
@@ -716,8 +716,8 @@ public:
 		return *com.release();
 	}
 	Command& Make(const char* s) const {
-		writer.Reset();
 		do {
+			writer.Reset();
 			writer.WriteIdentifier(name);
 			writer.WriteString(s);
 			EndWrite();
@@ -727,8 +727,8 @@ public:
 		return *com.release();
 	}
 	Command& Make(int32_t a, const char* s) const {
-		writer.Reset();
 		do {
+			writer.Reset();
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
 			writer.WriteString(s);
@@ -739,8 +739,8 @@ public:
 		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b, const char* s) const {
-		writer.Reset();
 		do {
+			writer.Reset();
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
 			writer.WriteNumber(b);
@@ -752,8 +752,8 @@ public:
 		return *com.release();
 	}
 	Command& Make(int32_t a, int32_t b, int32_t c, const char* s) const {
-		writer.Reset();
 		do {
+			writer.Reset();
 			writer.WriteIdentifier(name);
 			writer.WriteNumber(a);
 			writer.WriteNumber(b);
