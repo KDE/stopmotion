@@ -335,6 +335,13 @@ public:
 			: m(&model), c(character % 128), p(position) {
 		}
 		Command& DoAtomic();
+		static char Nice(int32_t c) {
+			if (c < 0)
+				c = 1 - c;
+			return "abcdefghijklmnopqrstuvwxyz"
+					"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+					"0123456789@*"[c%64];
+		}
 	};
 	AddCharFactory(std::string& m) : model(&m) {
 	}
@@ -404,7 +411,7 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 		finalString = RandomString();
 		originalString = finalString;
 		int32_t commandType;
-		while (0 != (commandType = rand() % 45)) {
+		while (0 != (commandType = rand() % 5)) {
 			Command* c;
 			switch (commandType) {
 			case 1:
@@ -426,6 +433,6 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 		while (fgets(lineBuffer, bufferSize, logFile)) {
 			history.Do(rep->MakeCommand(lineBuffer));
 		}
-		QCOMPARE(finalString, finalString1);
+		QCOMPARE(finalString.c_str(), finalString1.c_str());
 	}
 }
