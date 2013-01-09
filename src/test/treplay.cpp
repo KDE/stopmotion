@@ -336,11 +336,23 @@ public:
 		}
 		Command& DoAtomic();
 		static char Nice(int32_t c) {
+			// Make sure any valid character maps to itself.
+			// This makes constructing inverses easy (otherwise we would need
+			// an UnNice function)
+			if ('0' <= c && c <= 'z')
+			{
+				if ('a' <= c || c <= '9')
+					return c;
+				if ('A' <= c && c <= 'Z')
+					return c;
+				if (c == '@' || c == '=')
+					return c;
+			}
 			if (c < 0)
 				c = 1 - c;
 			return "abcdefghijklmnopqrstuvwxyz"
 					"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-					"0123456789@*"[c%64];
+					"0123456789@="[c%64];
 		}
 	};
 	AddCharFactory(std::string* m) : model(m) {
@@ -370,7 +382,7 @@ public:
 };
 
 Command& AddCharFactory::AddChar::DoAtomic() {
-	int32_t pos = (p < 0? -p : p) % (m->size() + 1);
+	int32_t pos = (p < 0? 1 - p : p) % (m->size() + 1);
 	// insert might throw, so use an auto_ptr to avoid leaks.
 	std::auto_ptr<Command> inv(new DelCharFactory::DelChar(*m, pos));
 	std::string::iterator i = m->begin();
@@ -383,9 +395,9 @@ Command& DelCharFactory::DelChar::DoAtomic() {
 	if (m->size() == 0) {
 		return *new CommandNull;
 	}
-	int32_t pos = (p < 0? -p : p) % m->size();
+	int32_t pos = (p < 0? 1 - p : p) % m->size();
 	char removedChar = (*m)[pos];
-	Command* inv = new AddCharFactory::AddChar(*m, pos, removedChar);
+	Command* inv = new AddCharFactory::AddChar(*m, removedChar, pos);
 	m->erase(pos, 1);
 	return *inv;
 }
@@ -435,5 +447,10 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 			history.Do(rep->MakeCommand(lineBuffer));
 		}
 		QCOMPARE(finalString.c_str(), expected.c_str());
+		// and check that the reproduced history undoes all the way back
+		while (history.CanUndo()) {
+			history.Undo();
+		}
+		QCOMPARE(finalString.c_str(), originalString.c_str());
 	}
 }
