@@ -452,5 +452,10 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 			history.Undo();
 		}
 		QCOMPARE(finalString.c_str(), originalString.c_str());
+		// finally check that the reproduced history redoes all the way
+		while (history.CanRedo()) {
+			history.Redo();
+		}
+		QCOMPARE(finalString.c_str(), expected.c_str());
 	}
 }
