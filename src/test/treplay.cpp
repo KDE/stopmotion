@@ -402,60 +402,114 @@ Command& DelCharFactory::DelChar::DoAtomic() {
 	return *inv;
 }
 
-void TestCommandFactory::replaySequenceProducesSameOutput() {
-	char lineBuffer[512];
+class AddDelTestBed {
+	enum { lineBufferSize = 512 };
+	char lineBuffer[lineBufferSize];
 	CommandHistory history;
 	std::string finalString;
 	std::string originalString;
-	std::auto_ptr<AddCharFactory> af(new AddCharFactory(&finalString));
-	std::auto_ptr<DelCharFactory> df(new DelCharFactory(&finalString));
-	std::auto_ptr<CommandReplayer> rep(new CommandReplayer());
-	rep->RegisterCommandFactory("add", *af);
-	rep->RegisterCommandFactory("del", *df);
-	std::auto_ptr<FileCommandLogger> logger(new FileCommandLogger);
-	rep->SetLogger(logger->GetLogger());
-	history.SetPartialCommandObserver(logger->GetPartialCommandObserver());
-	for (int i = 0; i != 100; ++i) {
-		FILE* logFile = tmpfile();
+	std::string expected;
+	std::auto_ptr<AddCharFactory> af;
+	std::auto_ptr<DelCharFactory> df;
+	std::auto_ptr<CommandReplayer> rep;
+	std::auto_ptr<FileCommandLogger> logger;
+	FILE* logFile;
+public:
+	AddDelTestBed() :
+			af(new AddCharFactory(&finalString)),
+			df(new DelCharFactory(&finalString)),
+			rep(new CommandReplayer()),
+			logger(new FileCommandLogger),
+			logFile(0) {
+		rep->RegisterCommandFactory("add", *af);
+		rep->RegisterCommandFactory("del", *df);
+		rep->SetLogger(logger->GetLogger());
+		history.SetPartialCommandObserver(logger->GetPartialCommandObserver());
+		lineBuffer[lineBufferSize - 1] = '\0';
+	}
+	void Init(const char* initialString) {
+		finalString = initialString;
+		originalString = finalString;
+		logFile = tmpfile();
 		logger->SetLogFile(logFile);
 		history.Clear();
-		finalString = RandomString();
-		originalString = finalString;
-		int32_t commandType;
-		while (0 != (commandType = rand() % 5)) {
-			Command* c;
-			switch (commandType) {
-			case 1:
-			case 2:
-				c = &rep->GetCommandFactory("add")->Make(rand(), rand());
-				break;
-			default:
-				c = &rep->GetCommandFactory("del")->Make(rand());
-				break;
-			}
-			history.Do(*c);
-			logger->CommandComplete();
-		}
-		std::string expected = finalString;
+	}
+	void ResetToOriginal() {
+		expected = finalString;
 		finalString = originalString;
 		fflush(logFile);
 		rewind(logFile);
 		history.Clear();
-		const size_t bufferSize = sizeof(lineBuffer)/sizeof(lineBuffer[0]) - 1;
-		lineBuffer[bufferSize] = '\0';
-		while (fgets(lineBuffer, bufferSize, logFile)) {
-			history.Do(rep->MakeCommand(lineBuffer));
-		}
-		QCOMPARE(finalString.c_str(), expected.c_str());
-		// and check that the reproduced history undoes all the way back
-		while (history.CanUndo()) {
-			history.Undo();
-		}
-		QCOMPARE(finalString.c_str(), originalString.c_str());
-		// finally check that the reproduced history redoes all the way
-		while (history.CanRedo()) {
-			history.Redo();
-		}
+	}
+	CommandReplayer& Replayer() {
+		return *rep;
+	}
+	void ExecuteCommand(Command& c) {
+		history.Do(c);
+		logger->CommandComplete();
+	}
+	void CheckRunsEqual() {
 		QCOMPARE(finalString.c_str(), expected.c_str());
 	}
+	void CheckAsOriginal() {
+		QCOMPARE(finalString.c_str(), originalString.c_str());
+	}
+	bool ExecuteLineFromFile() {
+		if (!fgets(lineBuffer, lineBufferSize, logFile))
+			return false;
+		Command& c = rep->MakeCommand(lineBuffer);
+		history.Do(c);
+	}
+	bool Undo() {
+		if (!history.CanUndo())
+			return false;
+		history.Undo();
+		return true;
+	}
+	bool Redo() {
+		if (!history.CanRedo())
+			return false;
+		history.Redo();
+		return true;
+	}
+};
+
+void TestCommandFactory::replaySequenceProducesSameOutput() {
+	AddDelTestBed test;
+	for (int i = 0; i != 100; ++i) {
+		test.Init(RandomString());
+		int32_t commandType;
+		while (0 != (commandType = rand() % 5)) {
+			Command* c;
+			const CommandFactory* cf;
+			switch (commandType) {
+			case 1:
+			case 2:
+				cf = test.Replayer().GetCommandFactory("add");
+				c = &cf->Make(rand(), rand());
+				break;
+			default:
+				cf = test.Replayer().GetCommandFactory("del");
+				c = &cf->Make(rand());
+				break;
+			}
+			test.ExecuteCommand(*c);
+		}
+		test.ResetToOriginal();
+		const char* lineBuffer;
+		while (test.ExecuteLineFromFile()) {
+		}
+		test.CheckRunsEqual();
+		// and check that the reproduced history undoes all the way back
+		while (test.Undo()) {
+		}
+		test.CheckAsOriginal();
+		// finally check that the reproduced history redoes all the way
+		while (test.Redo()) {
+		}
+		test.CheckRunsEqual();
+	}
+}
+
+void TestCommandFactory::undoPutsModelBack() {
 }
