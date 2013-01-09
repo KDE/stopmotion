@@ -434,8 +434,10 @@ public:
 		logger->SetLogFile(logFile);
 		history.Clear();
 	}
-	void ResetToOriginal() {
+	void SetExpected() {
 		expected = finalString;
+	}
+	void ResetToOriginal() {
 		finalString = originalString;
 		fflush(logFile);
 		rewind(logFile);
@@ -459,6 +461,7 @@ public:
 			return false;
 		Command& c = rep->MakeCommand(lineBuffer);
 		history.Do(c);
+		return true;
 	}
 	bool Undo() {
 		if (!history.CanUndo())
@@ -472,31 +475,39 @@ public:
 		history.Redo();
 		return true;
 	}
+	bool ExecuteRandomCommand() {
+		int32_t commandType = rand() % 5;
+		if (commandType == 0)
+			return false;
+		Command* c;
+		const CommandFactory* cf;
+		switch (commandType) {
+		case 1:
+		case 2:
+			cf = rep->GetCommandFactory("add");
+			c = &cf->Make(rand(), rand());
+			break;
+		default:
+			cf = rep->GetCommandFactory("del");
+			c = &cf->Make(rand());
+			break;
+		}
+		ExecuteCommand(*c);
+		return true;
+	}
+	void ExecuteRandomCommands() {
+		while (ExecuteRandomCommand()) {
+		}
+	}
 };
 
 void TestCommandFactory::replaySequenceProducesSameOutput() {
 	AddDelTestBed test;
 	for (int i = 0; i != 100; ++i) {
 		test.Init(RandomString());
-		int32_t commandType;
-		while (0 != (commandType = rand() % 5)) {
-			Command* c;
-			const CommandFactory* cf;
-			switch (commandType) {
-			case 1:
-			case 2:
-				cf = test.Replayer().GetCommandFactory("add");
-				c = &cf->Make(rand(), rand());
-				break;
-			default:
-				cf = test.Replayer().GetCommandFactory("del");
-				c = &cf->Make(rand());
-				break;
-			}
-			test.ExecuteCommand(*c);
-		}
+		test.ExecuteRandomCommands();
+		test.SetExpected();
 		test.ResetToOriginal();
-		const char* lineBuffer;
 		while (test.ExecuteLineFromFile()) {
 		}
 		test.CheckRunsEqual();
@@ -512,4 +523,15 @@ void TestCommandFactory::replaySequenceProducesSameOutput() {
 }
 
 void TestCommandFactory::undoPutsModelBack() {
+	AddDelTestBed test;
+	for (int i = 0; i != 100; ++i) {
+		test.Init(RandomString());
+		while (!test.ExecuteRandomCommand()) {
+		}
+		test.SetExpected();
+		test.Undo();
+		test.CheckAsOriginal();
+		test.Redo();
+		test.CheckRunsEqual();
+	}
 }
