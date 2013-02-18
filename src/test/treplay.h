@@ -28,6 +28,7 @@ private slots:
 	void parsingDescriptionIsCloning();
 	void replaySequenceProducesSameOutput();
 	void undoPutsModelBack();
+	void replayIsRobust();
 };
 
 #endif /* TREPLAY_H_ */

@@ -12,6 +12,8 @@
 #include "src/domain/undo/command.h"
 #include "src/domain/undo/logger.h"
 
+#include "oomtestutil.h"
+
 static const int32_t no_num = std::numeric_limits<int32_t>::min();
 
 // Test factory for commands just to test parsing: the commands produced are
@@ -25,6 +27,9 @@ public:
 	EmptyTestCommandFactory() : name("") {
 	}
 	class EtCommand : public CommandAtomic {
+		static void onExecute() {
+			QFAIL("EtCommand should never be executed");
+		}
 	public:
 		std::string name;
 		std::string s1;
@@ -39,7 +44,7 @@ public:
 				  i1(no_num), i2(no_num), i3(no_num), i4(no_num), i5(no_num) {
 		}
 		Command& DoAtomic() {
-			// This will fail if this command is ever executed.
+			onExecute();
 			return *this;
 		}
 		bool operator==(const EtCommand& other) const {
@@ -534,4 +539,15 @@ void TestCommandFactory::undoPutsModelBack() {
 		test.Redo();
 		test.CheckRunsEqual();
 	}
+}
+
+void TestCommandFactory::replayIsRobust() {
+	SetMallocsUntilFailure(0);
+	QVERIFY2(0 == malloc(1), "SetMallocsUntilFailure(0) not working");
+	SetMallocsUntilFailure(1);
+	void* shouldSucceed = malloc(1);
+	QVERIFY2(shouldSucceed,
+			"SetMallocsUntilFailure not allowing mallocs at all");
+	free(shouldSucceed);
+	QVERIFY2(0 == malloc(1), "SetMallocsUntilFailure(1) not working");
 }
