@@ -18,8 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef MOCKMALLOC_H_
-#define MOCKMALLOC_H_
+#ifndef OOMTESTUTIL_H_
+#define OOMTESTUTIL_H_
 
 /**
  * Set the number of successful memory allocations until one will fail.
