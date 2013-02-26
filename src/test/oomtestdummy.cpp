@@ -18,37 +18,15 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <dlfcn.h>
-
-// need to avoid name mangling for malloc if using C++
-extern "C" {
-void* malloc(size_t);
-}
-
-typedef void* malloc_t (size_t);
-
-long MallocsUntilFailure = 0;
-
-malloc_t* RealMalloc;
+// This file contains dummy functions, just so that the executable will link.
+// These functions will only be called if oomtestutil.so is not preloaded,
+// which would indicate a user error. An alternative to this implementation
+// would be to remove the OomTestUtilLoaded function and make
+// SetMallocsUntilFailure fail an assertion in this dummy code.
 
 bool OomTestUtilLoaded() {
-	return true;
+	return false;
 }
 
-void Init() {
-	RealMalloc = (malloc_t*)dlsym(RTLD_NEXT, "malloc");
-}
-
-void* malloc(size_t bytes) {
-	if (0 < MallocsUntilFailure &&
-			0 == __sync_sub_and_fetch(&MallocsUntilFailure, 1))
-		return 0;
-	void* r = RealMalloc(bytes);
-	return r;
-}
-
-void SetMallocsUntilFailure(int successes) {
-	if (!RealMalloc)
-		Init();
-	MallocsUntilFailure = successes + 1;
+void SetMallocsUntilFailure(int) {
 }

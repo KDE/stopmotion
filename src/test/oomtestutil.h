@@ -22,6 +22,12 @@
 #define OOMTESTUTIL_H_
 
 /**
+ * Returns true if the oomtestutil.so has been preloaded, and false if it has
+ * not.
+ */
+bool OomTestUtilLoaded();
+
+/**
  * Set the number of successful memory allocations until one will fail.
  */
 void SetMallocsUntilFailure(int successes);
