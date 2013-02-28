@@ -21,5 +21,5 @@ $(SLIB): oomtestutil.cpp
 # must be executed with LD_LIBRARY_PATH=. as well as LD_PRELOAD=oomtestutil.so
 # So the shell command to execute the test executable is:
 # LD_PRELOAD=./testoomutil.so LD_LIBRARY_PATH=. ./testoom
-$(EXE): testoom.cpp oomtestdummy.cpp
+$(EXE): testoom.cpp oomteststub.cpp
 	gcc -o $@ $^ -ldl

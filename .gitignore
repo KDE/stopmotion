@@ -15,4 +15,6 @@
 /src/test/Makefile
 /src/test/Makefile.Debug
 /src/test/Makefile.Release
+*.so
+*~
 
