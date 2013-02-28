@@ -3,7 +3,7 @@
 #include "oomtestutil.h"
 
 int main(int argc, char** argv) {
-	assert(OomTestUtilLoaded());
+	assert(LoadOomTestUtil());
 	SetMallocsUntilFailure(0);
 	assert(malloc(1) == 0);
 	void* shouldBeAllocated1 = malloc(1);

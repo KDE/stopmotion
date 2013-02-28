@@ -22,13 +22,16 @@
 #define OOMTESTUTIL_H_
 
 /**
- * Returns true if the oomtestutil.so has been preloaded, and false if it has
- * not.
+ * Installs the SetMallocsUntilFailure function.
+ * Returns true on success, false on failure.
+ * SetMallocsUntilFailure will not work unless this function has been called
+ * and has returned true.
  */
-bool OomTestUtilLoaded();
+bool LoadOomTestUtil();
 
 /**
- * Set the number of successful memory allocations until one will fail.
+ * Sets the number of successful memory allocations until one will fail.
+ * Will not work unless LoadOomTestUtil() has been called and returned true.
  */
 void SetMallocsUntilFailure(int successes);
 

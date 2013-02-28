@@ -18,15 +18,27 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-// This file contains dummy functions, just so that the executable will link.
-// These functions will only be called if oomtestutil.so is not preloaded,
-// which would indicate a user error. An alternative to this implementation
-// would be to remove the OomTestUtilLoaded function and make
-// SetMallocsUntilFailure fail an assertion in this dummy code.
+#include <dlfcn.h>
 
-bool OomTestUtilLoaded() {
-	return false;
+typedef void SetMallocsUntilFailure_t(int);
+typedef void Init_t(void);
+
+static SetMallocsUntilFailure_t* smuf;
+
+bool LoadOomTestUtil() {
+	// Using dlopen might cause a malloc, which would not work when we have not
+	// yet wired up the real malloc by calling Init, so we have to use
+	// RTLD_DEFAULT.
+	// RTLD_NEXT and RTLD_DEFAULT are only available with GNU tools.
+	Init_t* init = (Init_t*)dlsym(RTLD_DEFAULT, "Init");
+	smuf = (SetMallocsUntilFailure_t*)dlsym(RTLD_DEFAULT, "SetMallocsUntilFailure");
+	if (!init || !smuf)
+		return false;
+	init();
+	return true;
 }
 
-void SetMallocsUntilFailure(int) {
+void SetMallocsUntilFailure(int successes) {
+	if (smuf)
+		smuf(successes);
 }

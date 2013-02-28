@@ -19,10 +19,13 @@
  ***************************************************************************/
 
 #include <dlfcn.h>
+#include <assert.h>
 
 // need to avoid name mangling for malloc if using C++
 extern "C" {
 void* malloc(size_t);
+void SetMallocsUntilFailure(int successes);
+void Init();
 }
 
 typedef void* malloc_t (size_t);
@@ -31,12 +34,9 @@ long MallocsUntilFailure = 0;
 
 malloc_t* RealMalloc;
 
-bool OomTestUtilLoaded() {
-	return true;
-}
-
 void Init() {
 	RealMalloc = (malloc_t*)dlsym(RTLD_NEXT, "malloc");
+	assert(RealMalloc);
 }
 
 void* malloc(size_t bytes) {
