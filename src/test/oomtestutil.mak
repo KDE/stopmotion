@@ -38,4 +38,4 @@ $(MAIN): testoom.cpp oomtestutil.h
 # Library switches like -ldl should be at the end of the options list or their
 # symbols won't be seen by object files specified after them.
 $(EXE): $(MAIN) $(STUB)
-	gcc -o $@ $^ -ldl
+	g++ -o $@ $^ -ldl
