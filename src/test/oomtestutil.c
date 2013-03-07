@@ -21,34 +21,46 @@
 #include <dlfcn.h>
 #include <assert.h>
 
-// need to avoid name mangling for malloc if using C++
-extern "C" {
-void* malloc(size_t);
-void SetMallocsUntilFailure(int successes);
-void Init();
-}
+// Don't really need this line unless, for some reason, this functionality is
+// placed into a C++ file.
+#include "oomtestutil.h"
 
+// make malloc_t a type alias for the type of the malloc function. Now we can
+// declare a pointer to a malloc function with something like:
+// malloc_t* mallocFnPtr;
 typedef void* malloc_t (size_t);
 
+// in a C++ file you would also need:
+//extern "C" {
+//malloc_t malloc;
+//}
+
+// Which future malloc should return 0 instead of attempting to allocate memory
 long MallocsUntilFailure = 0;
 
-malloc_t* RealMalloc;
+// Pointer to the original libc malloc function, set up by Init().
+// If in a C++ file, it would be better to leave out the = 0; uninitialized
+// globals are always set to 0 anyway in C++, and this happens before any
+// constructors happen, whereas (I believe) this assignment to zero might
+// happen after some constructors have run. It makes no difference in C,
+// though.
+malloc_t* RealMalloc = 0;
 
+// Initialization function sets up the pointer to the original malloc function.
 void Init() {
 	RealMalloc = (malloc_t*)dlsym(RTLD_NEXT, "malloc");
 	assert(RealMalloc);
 }
 
+// Our malloc does its own processing, then calls the libc malloc, if
+// applicable.
 void* malloc(size_t bytes) {
 	if (0 < MallocsUntilFailure &&
 			0 == __sync_sub_and_fetch(&MallocsUntilFailure, 1))
 		return 0;
-	void* r = RealMalloc(bytes);
-	return r;
+	return RealMalloc(bytes);
 }
 
-void SetMallocsUntilFailure(int successes) {
-	if (!RealMalloc)
-		Init();
+void RealSetMallocsUntilFailure(int successes) {
 	MallocsUntilFailure = successes + 1;
 }

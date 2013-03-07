@@ -3,7 +3,10 @@
 #include "oomtestutil.h"
 
 int main(int argc, char** argv) {
+	// Test that the user remembered LD_PRELOAD=./oomtestutil.so
 	assert(LoadOomTestUtil());
+
+	// Test that oomtestutil itself works
 	SetMallocsUntilFailure(0);
 	assert(malloc(1) == 0);
 	void* shouldBeAllocated1 = malloc(1);
@@ -14,5 +17,9 @@ int main(int argc, char** argv) {
 	assert(shouldBeAllocated2);
 	free(shouldBeAllocated2);
 	assert(malloc(2) == 0);
-	printf("Success!\n");
+
+	// your tests here
+	//...
+
+	printf("success!\n");
 }

@@ -1,25 +1,41 @@
 EXE=testoom
 SLIB=oomtestutil.so
-ALL_PRODUCTS=$(EXE) $(SLIB)
+STUB=oomteststub.o
+MAIN=testoom.o
+ALL_PRODUCTS=$(EXE) $(SLIB) $(STUB) $(MAIN)
 
 all: $(ALL_PRODUCTS)
 
 clean:
 	rm $(ALL_PRODUCTS)
 
+# -ldl sets the dl library as a dependency of oomtestutil.so. This library
+# contains dlsym().
 # The -ldl switch here isn't strictly necessary, as the host executable will
 # always have the dl library loaded anyway. Still, dl really is a dependency,
 # so we shall add it here. You can do as you please. 
 # Utility library must be in a -shared object for LD_PRELOAD to be able to
 # load it at all.
+# -D_GNU_SOURCE allows us to use the GNU extensions. For some reason
+# _GNU_SOURCE is defined automatically for C++ source but not for C.
 # -fpic doesn't seem to be required.
-$(SLIB): oomtestutil.cpp
-	gcc -shared -o $@ $< -ldl
+$(SLIB): oomtestutil.c
+	gcc -D_GNU_SOURCE -shared -o $@ $< -ldl
 
-# -ldl must be at the end of the options list.
-# If the dummy library is not placed on the usual library path, the executable
-# must be executed with LD_LIBRARY_PATH=. as well as LD_PRELOAD=oomtestutil.so
-# So the shell command to execute the test executable is:
-# LD_PRELOAD=./testoomutil.so LD_LIBRARY_PATH=. ./testoom
-$(EXE): testoom.cpp oomteststub.cpp
+# We shall produce an object file that must be linked into any executable that
+# wants to use our OOM testing utility. The executable must also be linked with
+# -ldl. Object files do not allow us to specify dependencies, so using -ldl
+# here does not help.
+$(STUB): oomteststub.c oomtestutil.h
+	g++ -D_GNU_SOURCE -c -o $@ $<
+
+# The shell command to execute the test executable with our OOM utility and
+# its version of malloc is:
+# LD_PRELOAD=./testoomutil.so ./testoom
+$(MAIN): testoom.cpp oomtestutil.h
+	gcc -c -o $@ $<
+
+# Library switches like -ldl should be at the end of the options list or their
+# symbols won't be seen by object files specified after them.
+$(EXE): $(MAIN) $(STUB)
 	gcc -o $@ $^ -ldl

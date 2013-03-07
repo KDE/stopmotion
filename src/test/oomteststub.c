@@ -20,22 +20,31 @@
 
 #include <dlfcn.h>
 
+// Don't really need this line unless, for some reason, this functionality is
+// placed into a C++ file.
+#include "oomtestutil.h"
+
 typedef void SetMallocsUntilFailure_t(int);
 typedef void Init_t(void);
 
 static SetMallocsUntilFailure_t* smuf;
 
-bool LoadOomTestUtil() {
+int LoadOomTestUtil() {
 	// Using dlopen might cause a malloc, which would not work when we have not
 	// yet wired up the real malloc by calling Init, so we have to use
 	// RTLD_DEFAULT.
-	// RTLD_NEXT and RTLD_DEFAULT are only available with GNU tools.
+	// RTLD_DEFAULT searches all the libraries in the order that they were
+	// loaded in order to find the requested symbol. RTLD_NEXT begins the
+	// search with the library after the one we are calling from.
+	// RTLD_NEXT and RTLD_DEFAULT are only available with the GNU dl library;
+	// standard C dl libraries do not have this functionality.
 	Init_t* init = (Init_t*)dlsym(RTLD_DEFAULT, "Init");
-	smuf = (SetMallocsUntilFailure_t*)dlsym(RTLD_DEFAULT, "SetMallocsUntilFailure");
+	smuf = (SetMallocsUntilFailure_t*)dlsym(RTLD_DEFAULT,
+			"RealSetMallocsUntilFailure");
 	if (!init || !smuf)
-		return false;
+		return 0;
 	init();
-	return true;
+	return 1;
 }
 
 void SetMallocsUntilFailure(int successes) {

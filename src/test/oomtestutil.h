@@ -21,18 +21,28 @@
 #ifndef OOMTESTUTIL_H_
 #define OOMTESTUTIL_H_
 
+// Need to make sure that these function names are not mangled in case we
+// include this file from a C++ source file.
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Installs the SetMallocsUntilFailure function.
- * Returns true on success, false on failure.
+ * Returns 1 on success, 0 on failure.
  * SetMallocsUntilFailure will not work unless this function has been called
  * and has returned true.
  */
-bool LoadOomTestUtil();
+int LoadOomTestUtil();
 
 /**
  * Sets the number of successful memory allocations until one will fail.
  * Will not work unless LoadOomTestUtil() has been called and returned true.
  */
 void SetMallocsUntilFailure(int successes);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
