@@ -48,6 +48,9 @@ int main(int argc, char** argv) {
 		a2.push_front(6);
 		threw = false;
 		try {
+			printf("Trying %d mallocs until failure\n", successfulMallocs);
+			SetMallocsUntilFailure(successfulMallocs);
+			++successfulMallocs;
 			MoveBetweenLists(a1, a2);
 		} catch (...) {
 			threw = true;
