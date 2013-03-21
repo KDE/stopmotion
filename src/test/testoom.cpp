@@ -2,6 +2,8 @@
 #include <malloc.h>
 #include "oomtestutil.h"
 
+#include "check.h"
+
 #include <list>
 
 // This is the function we are going to OOM-test.
@@ -33,6 +35,8 @@ int main(int argc, char** argv) {
 	free(shouldBeAllocated2);
 	assert(malloc(2) == 0);
 	printf("success!\n");
+
+	run_tests();
 
 	// Now here's how you might use it
 	int successfulMallocs = 0;

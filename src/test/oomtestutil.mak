@@ -32,7 +32,7 @@ $(STUB): oomteststub.c oomtestutil.h
 # The shell command to execute the test executable with our OOM utility and
 # its version of malloc is:
 # LD_PRELOAD=./testoomutil.so ./testoom
-$(MAIN): testoom.cpp oomtestutil.h
+$(MAIN): testoom.cpp oomtestutil.h check.h
 	gcc -c -o $@ $<
 
 # Library switches like -ldl should be at the end of the options list or their
