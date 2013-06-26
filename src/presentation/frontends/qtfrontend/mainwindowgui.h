@@ -280,7 +280,7 @@ private slots:
         /** 
          * Quits gracefully (asking the user to save unsaved work)
          */
-        void quitProgram();
+        void closeEvent(QCloseEvent *event);
 	
 	/**
 	 * Saves the project to a given filename from the user.

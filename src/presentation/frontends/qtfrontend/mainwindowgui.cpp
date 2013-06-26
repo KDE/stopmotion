@@ -295,9 +295,9 @@ void MainWindowGUI::createActions()
 	quitAct = new QAction(this);
 	quitAct->setIcon(QIcon(quiticon));
 	quitAct->setShortcut(ControlModifier+Key_Q);
-	connect(quitAct, SIGNAL(triggered()), this, SLOT(quitProgram()));
+    connect(quitAct, SIGNAL(triggered()), this, SLOT(close()));
 	
-	//Edit menu
+    //Edit menu
 	undoAct = new QAction(this);
 	undoAct->setIcon(QIcon(undoicon));
 	undoAct->setShortcut(ControlModifier+Key_Z);
@@ -869,7 +869,7 @@ void MainWindowGUI::saveProject()
 
 /* To be called instead of the default quit method */
 /* Checks whether the project is saved, and asks the user if not. */
-void MainWindowGUI::quitProgram()
+void MainWindowGUI::closeEvent(QCloseEvent *event)
 {
         bool b = DomainFacade::getFacade()->isUnsavedChanges();
         if (b) {
@@ -880,14 +880,17 @@ void MainWindowGUI::quitProgram()
                                                  0, 2 );
                 if (save == 0) { // user pressed button 0, which is 'save'
                         saveProject();
-                        exit(0); /* FIXME! Calling exit() is rather brutal. */
+                        event->accept();
                 }
                 if (save == 1) { // user pressed button 1, which is "don't save"
-                  exit(0);
+                    event->accept();
+                }
+                if (save == 2) { // user pressed button 2, which is "abort"
+                    event->ignore();
                 }
         }
         else {
-          exit(0);
+            event->accept();
         }
 }
 
