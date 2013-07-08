@@ -23,8 +23,8 @@ You need the following libraries installed to compile:
     - XML2
     - vorbisfile
     - FAM/Gamin
-	- pkg-config
-
+    - pkg-config
+    - libinotifytools0-dev
 
 WHO CAN USE IT
 --------------
