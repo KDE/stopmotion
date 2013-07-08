@@ -950,7 +950,7 @@ void CommandReplayer::RegisterCommandFactory(const char* name, CommandFactory& f
  * @returns The wrapped command factory. Ownership is not returned.
  */
 const CommandFactory* CommandReplayer::GetCommandFactory(const char* name) {
-	const char* nameCopy;
+	const char* nameCopy = 0;
 	CommandFactory* delegate = pImpl->GetCommandFactory(name, nameCopy);
 	describer->SetDelegate(delegate);
 	// we'll use our own copy of the name in case the argument gets deleted

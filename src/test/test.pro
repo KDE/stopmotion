@@ -10,10 +10,10 @@ HEADERS += treplay.h \
 SOURCES += ../domain/undo/logger.cpp \
     ../domain/undo/command.cpp \
     ../domain/undo/replay.cpp
-SOURCES += oomtestdummy.cpp \
+SOURCES += oomteststub.c \
     tmain.cpp \
     treplay.cpp
 FORMS += 
 RESOURCES += 
 INCLUDEPATH += ../..
-LIBS += 
+LIBS += -ldl
