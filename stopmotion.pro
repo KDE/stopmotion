@@ -211,11 +211,9 @@ INCLUDEPATH += . \
     $$system(sdl-config --cflags | sed -e 's/-I//g') \
     $$system(xml2-config --cflags | sed -e 's/-I//g')
 LIBS += $$system(sdl-config --libs) \
-    $$system(xml2-config --libs) \
-    -lSDL_image \
-    -ltar \
-    -lvorbisfile \
-    -linotifytools
+        $$system(xml2-config --libs) \
+        -lSDL_image -ltar -lvorbisfile -linotifytools -lX11
+
 DISTFILES += src/config.cpp.in \
     graphics/stopmotion.png \
     stopmotion.pro.in \
