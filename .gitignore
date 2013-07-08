@@ -2,6 +2,7 @@
 /Makefile.Debug
 /Makefile.Release
 /stopmotion
+stopmotion.pro.user
 /ui_*.h
 /debug
 /release
@@ -15,6 +16,8 @@
 /src/test/Makefile
 /src/test/Makefile.Debug
 /src/test/Makefile.Release
+moc_*.cpp
 *.so
+*.o
 *~
 
