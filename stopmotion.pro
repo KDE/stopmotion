@@ -213,7 +213,7 @@ INCLUDEPATH += . \
 
 LIBS += $$system(sdl-config --libs) \
         $$system(xml2-config --libs) \
-        -lSDL_image -ltar -lvorbisfile -linotifytools
+        -lSDL_image -ltar -lvorbisfile -linotifytools -lX11
 
 DISTFILES += src/config.cpp.in \
              graphics/stopmotion.png \
