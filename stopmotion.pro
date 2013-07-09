@@ -1,3 +1,5 @@
+CONFIG += release \
+    warn_off
 HEADERS += src/domain/undo/logger.h \
     src/config.h \
     src/domain/domainfacade.h \
@@ -231,10 +233,17 @@ DISTFILES += src/config.cpp.in \
     $$system(ls -x translations/*.qm)
 DISTFILES -= stopmotion.pro \
     src/config.cpp
-CONFIG += release \
-    warn_off
 DEFINES += NO_DEBUG
 TEMPLATE = app
+
+release:DESTDIR=.
+release:OBJECTS_DIR=build/release
+debug:DESTDIR=build/debug
+debug:OBJECTS_DIR=build/debug
+MOC_DIR = build
+RCC_DIR = build
+UI_DIR = build
+
 target.path = /usr/bin
 translations.path = /usr/share/stopmotion/translations
 translations.files = translations/*.qm
