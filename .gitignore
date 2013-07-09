@@ -21,3 +21,7 @@ moc_*.cpp
 *.o
 *~
 
+build/
+src/test/test-d
+src/test/test
+src/test/testoom

@@ -38,6 +38,8 @@ int LoadOomTestUtil() {
 	// search with the library after the one we are calling from.
 	// RTLD_NEXT and RTLD_DEFAULT are only available with the GNU dl library;
 	// standard C dl libraries do not have this functionality.
+	if (smuf)
+		return 1;  // already initialized
 	Init_t* init = (Init_t*)dlsym(RTLD_DEFAULT, "Init");
 	smuf = (SetMallocsUntilFailure_t*)dlsym(RTLD_DEFAULT,
 			"RealSetMallocsUntilFailure");

@@ -11,27 +11,24 @@ clean:
 
 # -ldl sets the dl library as a dependency of oomtestutil.so. This library
 # contains dlsym().
-# The -ldl switch here isn't strictly necessary, as the host executable will
-# always have the dl library loaded anyway. Still, dl really is a dependency,
-# so we shall add it here. You can do as you please. 
 # Utility library must be in a -shared object for LD_PRELOAD to be able to
 # load it at all.
 # -D_GNU_SOURCE allows us to use the GNU extensions. For some reason
 # _GNU_SOURCE is defined automatically for C++ source but not for C.
 # -fpic doesn't seem to be required.
 $(SLIB): oomtestutil.c
-	gcc -D_GNU_SOURCE -shared -o $@ $< -ldl
+	gcc -D_GNU_SOURCE -g -shared -o $@ $< -ldl
 
 # We shall produce an object file that must be linked into any executable that
 # wants to use our OOM testing utility. The executable must also be linked with
 # -ldl. Object files do not allow us to specify dependencies, so using -ldl
 # here does not help.
 $(STUB): oomteststub.c oomtestutil.h
-	g++ -D_GNU_SOURCE -c -o $@ $<
+	g++ -D_GNU_SOURCE -g -c -o $@ $<
 
 # The shell command to execute the test executable with our OOM utility and
 # its version of malloc is:
-# LD_PRELOAD=./testoomutil.so ./testoom
+# LD_PRELOAD=./oomtestutil.so ./testoom
 $(MAIN): testoom.cpp oomtestutil.h check.h
 	gcc -c -o $@ $<
 

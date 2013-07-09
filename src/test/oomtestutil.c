@@ -58,6 +58,8 @@ void* malloc(size_t bytes) {
 	if (0 < MallocsUntilFailure &&
 			0 == __sync_sub_and_fetch(&MallocsUntilFailure, 1))
 		return 0;
+	if (!RealMalloc)
+		Init();
 	return RealMalloc(bytes);
 }
 

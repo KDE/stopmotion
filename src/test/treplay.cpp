@@ -542,6 +542,7 @@ void TestCommandFactory::undoPutsModelBack() {
 }
 
 void TestCommandFactory::replayIsRobust() {
+	LoadOomTestUtil();
 	SetMallocsUntilFailure(0);
 	QVERIFY2(0 == malloc(1), "SetMallocsUntilFailure(0) not working");
 	SetMallocsUntilFailure(1);
