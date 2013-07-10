@@ -1,5 +1,6 @@
-/*   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+/***************************************************************************
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,7 +27,6 @@
  * Exception thrown by CommandFactory if a method that hasn't been overridden
  * is called. This represents an attempt to make a command with incorrect
  * parameters.
- * @author Tim Band
  */
 class CommandFactoryIncorrectParametersException {
 };
@@ -47,7 +47,6 @@ class Command;
 
 /**
  * Produces one sort of command.
- * @author Tim Band
  */
 class CommandFactory {
 	CommandFactory(const CommandFactory&); // no copy
@@ -122,7 +121,6 @@ public:
  * text.
  * The specific commands are produced by CommandFactorys registers with the
  * CommandReplayer with RegisterCommandFactory().
- * @author Tim Band
  */
 class CommandReplayer {
 	CommandReplayerImpl* pImpl;

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -47,7 +47,6 @@ class CompositeInterruptedException {
 /**
  * Base class of all command classes, objects of which are manipulated by the
  * undo system. Most commands should derive from CommandAtomic.
- * @author Tim Band
  */
 class Command {
 	Command(const Command&);
@@ -90,7 +89,6 @@ public:
 /**
  * Base class of all 'atomic' command classes, that is, ones that will not
  * throw exceptions in their operation (except perhaps in a preparation method)
- * @author Tim Band
  */
 class CommandAtomic : public Command {
 public:
@@ -123,7 +121,6 @@ public:
  * will be in the correct state: with all parts not yet performed still on the
  * redo stack (or undo if undoing) and the inverses of all the parts so far
  * performed on the undo stack (or redo if undoing).
- * @author Tim Band
  */
 class CommandComposite : public Command {
 	CommandList* cs;
@@ -143,7 +140,6 @@ public:
 
 /**
  * Command history for undo and redo.
- * @author Tim Band
  */
 class CommandHistory {
 	CommandList* past;

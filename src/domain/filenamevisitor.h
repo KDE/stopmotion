@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2012 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,7 +24,6 @@
 /**
  * Interface for visitors that want to find out which files are referenced by a
  * command, frame, scene, animation or undo history.
- * @author Tim Band
  */
 class FileNameVisitor {
 protected:
