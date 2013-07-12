@@ -43,58 +43,48 @@ class CommandFactoryParseFailureException {
 class CommandFactoryNoSuchCommandException {
 };
 
+/**
+ * Thrown if a command factory attempts to read a parameter from the log files
+ * that is of the wrong type, is not present or otherwise does not parse.
+ */
+class IncorrectParameterException {
+};
+
+/**
+ * A command factory reads the parameters for its command from here. They
+ * either come from a log file (if it is being replayed) or from the
+ * application.
+ */
+class Parameters {
+public:
+	virtual ~Parameters() = 0;
+	/**
+	 * Returns an integer. Might throw IncorrectParameterException if
+	 * unsuccessful, but this behaviour must not be relied upon.
+	 */
+	virtual int32_t GetInteger() = 0;
+	/**
+	 * Returns the length of string read, which may be greater than maxLength
+	 * although no more than maxLength characters will be output into out.
+	 * Might throw IncorrectParameterException if unsuccessful, but this
+	 * behaviour must not be relied upon.
+	 */
+	virtual int32_t GetString(char* out, int32_t maxLength) = 0;
+};
+
 class Command;
 
 /**
  * Produces one sort of command.
  */
 class CommandFactory {
-	CommandFactory(const CommandFactory&); // no copy
-	CommandFactory& operator=(const CommandFactory&); // no copy
 public:
-	CommandFactory() {
-	}
 	virtual ~CommandFactory() = 0;
 	/**
-	 * Make a command with no parameters.
+	 * Creates a command from the Parameters given in ps, returning ownership
+	 * of the command, not taking ownership of ps.
 	 */
-	virtual Command& Make() const;
-	/**
-	 * Make a command from a single integer
-	 */
-	virtual Command& Make(int32_t) const;
-	/**
-	 * Make a command from two integers
-	 */
-	virtual Command& Make(int32_t, int32_t) const;
-	/**
-	 * Make a command from three integers
-	 */
-	virtual Command& Make(int32_t, int32_t, int32_t) const;
-	/**
-	 * Make a command from four integers
-	 */
-	virtual Command& Make(int32_t, int32_t, int32_t, int32_t) const;
-	/**
-	 * Make a command from five integers
-	 */
-	virtual Command& Make(int32_t, int32_t, int32_t, int32_t, int32_t) const;
-	/**
-	 * Make a command from a string
-	 */
-	virtual Command& Make(const char*) const;
-	/**
-	 * Make a command from an integer and a string
-	 */
-	virtual Command& Make(int32_t, const char*) const;
-	/**
-	 * Make a command from two integers and a string
-	 */
-	virtual Command& Make(int32_t, int32_t, const char*) const;
-	/**
-	 * Make a command from three integers and a string
-	 */
-	virtual Command& Make(int32_t, int32_t, int32_t, const char*) const;
+	virtual Command* Create(Parameters& ps) = 0;
 };
 
 class CommandReplayerImpl;
@@ -113,6 +103,38 @@ public:
 	 * throw an exception.
 	 */
 	virtual void WriteCommand(const char*) = 0;
+};
+
+class UnknownCommandException {
+};
+
+class CommandNameAlreadyUsedException {
+};
+
+class Executor {
+public:
+	virtual ~Executor() = 0;
+	/**
+	 * Executes a command, logging it and putting its inverse onto the undo
+	 * stack. Be careful that the argument list exactly matches what the
+	 * command expects; in particular, all integers should be int32_t. If you
+	 * supply a command factory, you should also supply a wrapper for this
+	 * Execute function to make sure this is done correctly, for example:
+	 * void ExecuteAddFrame(Executor& e, const char* filename, int32_t sceneNo,
+	 *     int32_t frameNo) {
+	 *   e.Execute("addf", filename, sceneNo, frameNo);
+	 * }
+	 */
+	virtual void Execute(const char* name, ...) = 0;
+	/**
+	 * Make a command available for execution. Ownership of 'factory' is
+	 * passed. It is assumed that 'name' endures for the lifetime of the
+	 * Executor (ideally name should be a static constant, not heap
+	 * allocated; for example executor.AddCommand("addf", addFactory);).
+	 * Throws CommandNameAlreadyUsedException if a factory has already
+	 * been registered under 'name'.
+	 */
+	virtual void AddCommand(const char* name, CommandFactory* factory) = 0;
 };
 
 /**

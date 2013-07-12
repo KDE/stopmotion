@@ -23,6 +23,7 @@
 #include <string>
 #include <string.h>
 #include <stdint.h>
+#include <stdarg.h>
 #include <memory>
 
 /**
@@ -588,428 +589,82 @@ public:
 	}
 };
 
-class CommandAndDescriptionFactory : public CommandFactory {
-	CommandFactory* delegate;
-	mutable CommandLogger* logger;
-	const char* name;
-	mutable Buffer buffer;
-	mutable StringWriter writer;
+CommandFactory::~CommandFactory() {
+}
 
-	/**
-	 * Reallocates the buffer if `writer` required more than currently
-	 * allocated. Returns true if a reallocation was necessary, false if all
-	 * the text fitted. If the buffer was reallocated, the writer is reset;
-	 * any existing text is not copied.
-	 */
-	bool ReallocateBufferIfNecessary() const {
-		if (!buffer.Reallocate(writer.Length()))
-			return false;
-		writer.SetBuffer(buffer.Get(), buffer.Get() + buffer.Length());
-		return true;
-	}
-	void EndWrite() const {
-		writer.TerminateBuffer();
-	}
-	void Done() const {
-		if (logger)
-			logger->WriteCommand(writer.Buffer());
-	}
+Executor::~Executor() {
+}
+
+class VaListParameters : public Parameters {
+	va_list& args;
+	CommandLogger* logger;
 public:
-	CommandAndDescriptionFactory() : delegate(0), logger(0), name(0) {
+	VaListParameters(va_list& a, const char* name,
+			CommandLogger* commandLogger)
+			: args(a), logger(commandLogger) {
+		//TODO write name to the log
 	}
-	~CommandAndDescriptionFactory() {
-		delegate = 0;
-		logger = 0;
-		name = 0;
+	~VaListParameters() {
+		va_end(args);
 	}
-	/**
-	 * Sets the name of the command being produced. This will be written to the
-	 * logger at the start of every line, to indicate what is being made.
-	 * @param n Null-terminated string representing the name of the command
-	 * produced by the factory passed to SetFactory. Ownership is not passed.
-	 */
-	void SetName(const char* n) {
-		name = n;
+	int32_t GetInteger() {
+		int32_t r = va_arg(args, int32_t);
+		//TODO write r to the log
+		return r;
 	}
-	void SetLogger(CommandLogger* l) {
-		logger = l;
+	int32_t GetString(char* out, int32_t maxLength) {
+		const char* s = va_arg(args, const char*);
+		int len = strncpy(out, s, maxLength);
+		//TODO write 'out' to the log
+		return len;
 	}
-	/**
-	 * Sets the factory that will actually produce the commands.
-	 * @param f The delegate factory. Ownership is not passed.
-	 */
-	void SetDelegate(CommandFactory* f) {
-		delegate = f;
-	}
-	Command& Make() const {
-		do {
-			writer.Reset();
-			writer.WriteIdentifier(name);
-			EndWrite();
-		} while (ReallocateBufferIfNecessary());
-		std::auto_ptr<Command> com(&delegate->Make());
-		Done();
-		return *com.release();
-	}
-	Command& Make(int32_t a) const {
-		do {
-			writer.Reset();
-			writer.WriteIdentifier(name);
-			writer.WriteNumber(a);
-			EndWrite();
-		} while (ReallocateBufferIfNecessary());
-		std::auto_ptr<Command> com(&delegate->Make(a));
-		Done();
-		return *com.release();
-	}
-	Command& Make(int32_t a, int32_t b) const {
-		do {
-			writer.Reset();
-			writer.WriteIdentifier(name);
-			writer.WriteNumber(a);
-			writer.WriteNumber(b);
-			EndWrite();
-		} while (ReallocateBufferIfNecessary());
-		std::auto_ptr<Command> com(&delegate->Make(a, b));
-		Done();
-		return *com.release();
-	}
-	Command& Make(int32_t a, int32_t b, int32_t c) const {
-		do {
-			writer.Reset();
-			writer.WriteIdentifier(name);
-			writer.WriteNumber(a);
-			writer.WriteNumber(b);
-			writer.WriteNumber(c);
-			EndWrite();
-		} while (ReallocateBufferIfNecessary());
-		std::auto_ptr<Command> com(&delegate->Make(a, b, c));
-		Done();
-		return *com.release();
-	}
-	Command& Make(int32_t a, int32_t b, int32_t c, int32_t d) const {
-		do {
-			writer.Reset();
-			writer.WriteIdentifier(name);
-			writer.WriteNumber(a);
-			writer.WriteNumber(b);
-			writer.WriteNumber(c);
-			writer.WriteNumber(d);
-			EndWrite();
-		} while (ReallocateBufferIfNecessary());
-		std::auto_ptr<Command> com(&delegate->Make(a, b, c, d));
-		Done();
-		return *com.release();
-	}
-	Command& Make(int32_t a, int32_t b, int32_t c, int32_t d, int32_t e) const {
-		do {
-			writer.Reset();
-			writer.WriteIdentifier(name);
-			writer.WriteNumber(a);
-			writer.WriteNumber(b);
-			writer.WriteNumber(c);
-			writer.WriteNumber(d);
-			writer.WriteNumber(e);
-			EndWrite();
-		} while (ReallocateBufferIfNecessary());
-		std::auto_ptr<Command> com(&delegate->Make(a, b, c, d, e));
-		Done();
-		return *com.release();
-	}
-	Command& Make(const char* s) const {
-		do {
-			writer.Reset();
-			writer.WriteIdentifier(name);
-			writer.WriteString(s);
-			EndWrite();
-		} while (ReallocateBufferIfNecessary());
-		std::auto_ptr<Command> com(&delegate->Make(s));
-		Done();
-		return *com.release();
-	}
-	Command& Make(int32_t a, const char* s) const {
-		do {
-			writer.Reset();
-			writer.WriteIdentifier(name);
-			writer.WriteNumber(a);
-			writer.WriteString(s);
-			EndWrite();
-		} while (ReallocateBufferIfNecessary());
-		std::auto_ptr<Command> com(&delegate->Make(a, s));
-		Done();
-		return *com.release();
-	}
-	Command& Make(int32_t a, int32_t b, const char* s) const {
-		do {
-			writer.Reset();
-			writer.WriteIdentifier(name);
-			writer.WriteNumber(a);
-			writer.WriteNumber(b);
-			writer.WriteString(s);
-			EndWrite();
-		} while (ReallocateBufferIfNecessary());
-		std::auto_ptr<Command> com(&delegate->Make(a, b, s));
-		Done();
-		return *com.release();
-	}
-	Command& Make(int32_t a, int32_t b, int32_t c, const char* s) const {
-		do {
-			writer.Reset();
-			writer.WriteIdentifier(name);
-			writer.WriteNumber(a);
-			writer.WriteNumber(b);
-			writer.WriteNumber(c);
-			writer.WriteString(s);
-			EndWrite();
-		} while (ReallocateBufferIfNecessary());
-		std::auto_ptr<Command> com(&delegate->Make(a, b, c, s));
-		Done();
-		return *com.release();
+	void Flush() {
+		//TODO flush logged line to the log
 	}
 };
 
-class CommandReplayerImpl {
-	typedef std::map<std::string, CommandFactory*> map_t;
-	map_t reg;
-	Buffer buffer;
-	StringReader reader;
-	/**
-	 * Number of dots following the command, if it parsed successfully.
-	 */
-	int32_t dotCount;
-	/**
-	 * Whether an exclamation mark follows the command, if it parsed
-	 * successfully.
-	 */
-	bool exclamation;
+class ConcreteExecutor : public Executor {
+	CommandHistory history;
+	typedef std::map<std::string, CommandFactory*> FactoryMap;
+	FactoryMap factories;
 public:
-	CommandReplayerImpl() : dotCount(0), exclamation(false) {
+	ConcreteExecutor() {
 	}
-	/**
-	 * Deletes all the command factories owned.
-	 */
-	~CommandReplayerImpl() {
-		for (map_t::iterator i = reg.begin(); i != reg.end(); ++i)
+	~ConcreteExecutor() {
+		for (FactoryMap::iterator i = factories.begin();
+				i != factories.end(); ++i) {
 			delete i->second;
+		}
 	}
-	/**
-	 * Throws an exception to say that the parse has failed.
-	 */
-	void FailParse() {
-		throw CommandFactoryParseFailureException();
+	void Execute(const char* name, ...) {
+		std::string n(name);
+		CommandFactory* f = factories.find(n);
+		if (f == factories.end())
+			throw UnknownCommandException();
+		va_list args;
+		va_start(args, name);
+		VaListParameters vps(args);
+		Command* c = f->Create(vps);
+		history.Do(*c);
 	}
-	/**
-	 * Gets an identifier from a StringReader and puts it into the buffer.
-	 */
-	void GetIdentifier() {
-		int32_t len;
-		const char* pos = reader.GetPos();
-		do {
-			reader.SetPos(pos);
-			if (reader.GetIdentifier(len, buffer.Get(), buffer.Length())
-					== StringReader::parseFailed)
-				FailParse();
-		} while (buffer.Reallocate(len));
-	}
-	/**
-	 * Gets a string from a StringReader and puts it into the buffer.
-	 * Returns whether the parse succeeded or not.
-	 */
-	bool GetString() {
-		int32_t len;
-		const char* pos = reader.GetPos();
-		do {
-			reader.SetPos(pos);
-			if (reader.GetString(len, buffer.Get(), buffer.Length())
-					== StringReader::parseFailed)
-				return false;
-		} while (buffer.Reallocate(len));
-		return true;
-	}
-	/**
-	 * Gets a number from a StringReader and returns it. Throws an
-	 * exception on parse failure.
-	 */
-	int32_t GetNumber() {
-		int32_t ret;
-		if (reader.GetNumber(ret) == StringReader::parseFailed)
-			FailParse();
-		return ret;
-	}
-	/**
-	 * Parses the end of the string that was passed into reader.
-	 * @return true if we are at the end of the command, false otherwise.
-	 */
-	bool GetEnd() {
-		return reader.GetEndOfCommand(dotCount, exclamation)
-				== StringReader::parseSucceeded;
-	}
-	void RegisterCommandFactory(const char* name, CommandFactory& f) {
-		std::auto_ptr<CommandFactory> a(&f);
-		reg[name] = &f;
-		a.release();
-	}
-	CommandFactory* GetCommandFactory(const char* name,
-			const char*& nameCopy) {
-		map_t::iterator i = reg.find(name);
-		if (i == reg.end())
-			return 0;
-		// copy of the name that is owned by us, so won't be deleted
-		nameCopy = i->first.c_str();
-		return i->second;
-	}
-	/**
-	 * Parses a string (as a command type followed by arguments) to create a
-	 * command.
-	 * @param null or end-of-line terminated string representing the command to
-	 * be created
-	 * @return The constructed command.
-	 */
-	Command& MakeCommand(const char* s) {
-		reader.SetBuffer(s);
-		GetIdentifier();
-		std::string id = buffer.Get();
-		map_t::iterator cfi = reg.find(id);
-		if (cfi == reg.end())
-			throw CommandFactoryNoSuchCommandException();
-		if (GetEnd()) {
-			return cfi->second->Make();
-		}
-		if (GetString()) {
-			std::string s1 = buffer.Get();
-			if (GetEnd()) {
-				return cfi->second->Make(s1.c_str());
-			}
-		}
-		int32_t n1 = GetNumber();
-		if (GetEnd()) {
-			return cfi->second->Make(n1);
-		}
-		if (GetString()) {
-			std::string s2 = buffer.Get();
-			if (GetEnd()) {
-				return cfi->second->Make(n1, s2.c_str());
-			}
-		}
-		int32_t n2 = GetNumber();
-		if (GetEnd()) {
-			return cfi->second->Make(n1, n2);
-		}
-		if (GetString()) {
-			std::string s3 = buffer.Get();
-			if (GetEnd()) {
-				return cfi->second->Make(n1, n2, s3.c_str());
-			}
-		}
-		int32_t n3 = GetNumber();
-		if (GetEnd()) {
-			return cfi->second->Make(n1, n2, n3);
-		}
-		if (GetString()) {
-			std::string s4 = buffer.Get();
-			if (GetEnd()) {
-				return cfi->second->Make(n1, n2, n3, s4.c_str());
-			}
-		}
-		int32_t n4 = GetNumber();
-		if (GetEnd()) {
-			return cfi->second->Make(n1, n2, n3, n4);
-		}
-		int32_t n5 = GetNumber();
-		if (!GetEnd()) {
-			FailParse();
-		}
-		return cfi->second->Make(n1, n2, n3, n4, n5);
+	void AddCommand(const char* name, CommandFactory* factory) {
+		std::auto_ptr<CommandFactory> f = factory;
+		std::string n(name);
+		if (factories.find(n))
+			throw UnknownCommandException();
+		std::pair<std::string, CommandFactory*> p(n, factory);
+		factories.insert(p);
+		f.release();
 	}
 };
 
-CommandReplayer::CommandReplayer() :
-			describer(0) {
-	pImpl = new CommandReplayerImpl();
-	describer = new CommandAndDescriptionFactory();
-}
-
-void CommandReplayer::SetLogger(CommandLogger* l) {
-	describer->SetLogger(l);
-}
-
-/**
- * Registers a factory.
- * @param name The name by which the factory will be invoked.
- * @param f The factory. Ownership is passed. If registration fails, f is
- * deleted.
- */
-void CommandReplayer::RegisterCommandFactory(const char* name, CommandFactory& f) {
-	pImpl->RegisterCommandFactory(name, f);
-}
-
-/**
- * Returns the factory previously registered by name wrapped in a
- * decorator that logs the command. Returns 0 if no factory has been
- * registered with this replayer by this name.
- * @param The name as a null-terminated string. Ownership is not passed.
- * @returns The wrapped command factory. Ownership is not returned.
- */
-const CommandFactory* CommandReplayer::GetCommandFactory(const char* name) {
-	const char* nameCopy = 0;
-	CommandFactory* delegate = pImpl->GetCommandFactory(name, nameCopy);
-	describer->SetDelegate(delegate);
-	// we'll use our own copy of the name in case the argument gets deleted
-	describer->SetName(nameCopy);
-	return describer;
-}
-
-Command& CommandReplayer::MakeCommand(const char* s) {
-	return pImpl->MakeCommand(s);
-}
-
-CommandReplayer::~CommandReplayer() {
+CommandLogger::~CommandLogger() {
 }
 
 CommandFactory::~CommandFactory() {
 }
 
-Command& CommandFactory::Make() const {
-	throw CommandFactoryIncorrectParametersException();
-}
-
-Command& CommandFactory::Make(int32_t) const {
-	throw CommandFactoryIncorrectParametersException();
-}
-
-Command& CommandFactory::Make(int32_t, int32_t) const {
-	throw CommandFactoryIncorrectParametersException();
-}
-
-Command& CommandFactory::Make(int32_t, int32_t, int32_t) const {
-	throw CommandFactoryIncorrectParametersException();
-}
-
-Command& CommandFactory::Make(int32_t, int32_t, int32_t, int32_t) const {
-	throw CommandFactoryIncorrectParametersException();
-}
-
-Command& CommandFactory::Make(int32_t, int32_t, int32_t, int32_t, int32_t) const {
-	throw CommandFactoryIncorrectParametersException();
-}
-
-Command& CommandFactory::Make(const char*) const {
-	throw CommandFactoryIncorrectParametersException();
-}
-
-Command& CommandFactory::Make(int32_t, const char*) const {
-	throw CommandFactoryIncorrectParametersException();
-}
-
-Command& CommandFactory::Make(int32_t, int32_t, const char*) const {
-	throw CommandFactoryIncorrectParametersException();
-}
-
-Command& CommandFactory::Make(int32_t, int32_t, int32_t, const char*) const {
-	throw CommandFactoryIncorrectParametersException();
-}
-
-CommandLogger::~CommandLogger() {
+Parameters::~Parameters() {
 }
 
 // To create a command in the first place:
