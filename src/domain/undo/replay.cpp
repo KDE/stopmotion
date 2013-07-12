@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include "replay.h"
+#include "command.h"
 #include <map>
 #include <string>
 #include <string.h>
@@ -614,9 +615,10 @@ public:
 	}
 	int32_t GetString(char* out, int32_t maxLength) {
 		const char* s = va_arg(args, const char*);
-		int len = strncpy(out, s, maxLength);
+		strncpy(out, s, maxLength - 1);
+		out[maxLength - 1] = '\0';
 		//TODO write 'out' to the log
-		return len;
+		return strlen(out);
 	}
 	void Flush() {
 		//TODO flush logged line to the log
@@ -625,10 +627,12 @@ public:
 
 class ConcreteExecutor : public Executor {
 	CommandHistory history;
+	CommandLogger* logger;
 	typedef std::map<std::string, CommandFactory*> FactoryMap;
 	FactoryMap factories;
 public:
 	ConcreteExecutor() {
+		//TODO initialise logger
 	}
 	~ConcreteExecutor() {
 		for (FactoryMap::iterator i = factories.begin();
@@ -638,19 +642,20 @@ public:
 	}
 	void Execute(const char* name, ...) {
 		std::string n(name);
-		CommandFactory* f = factories.find(n);
-		if (f == factories.end())
+		FactoryMap::iterator found = factories.find(n);
+		if (found == factories.end())
 			throw UnknownCommandException();
+		CommandFactory* f = found->second;
 		va_list args;
 		va_start(args, name);
-		VaListParameters vps(args);
+		VaListParameters vps(args, name, logger);
 		Command* c = f->Create(vps);
 		history.Do(*c);
 	}
 	void AddCommand(const char* name, CommandFactory* factory) {
-		std::auto_ptr<CommandFactory> f = factory;
+		std::auto_ptr<CommandFactory> f(factory);
 		std::string n(name);
-		if (factories.find(n))
+		if (factories.find(n) == factories.end())
 			throw UnknownCommandException();
 		std::pair<std::string, CommandFactory*> p(n, factory);
 		factories.insert(p);
@@ -659,9 +664,6 @@ public:
 };
 
 CommandLogger::~CommandLogger() {
-}
-
-CommandFactory::~CommandFactory() {
 }
 
 Parameters::~Parameters() {
