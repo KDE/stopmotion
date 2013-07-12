@@ -183,7 +183,8 @@ public:
 	/**
 	 * Executes the command c, placing its inverse into the undo history,
 	 * deleting the Redo history. Any partial composite function remaining
-	 * after a thrown exception will be on the Redo stack.
+	 * after a thrown exception will be on the Redo stack. Ownership of
+	 * the command is passed.
 	 */
 	void Do(Command&);
 	/**
