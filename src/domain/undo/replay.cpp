@@ -530,29 +530,45 @@ Executor::~Executor() {
 class VaListParameters : public Parameters {
 	va_list& args;
 	CommandLogger* logger;
+	StringWriter writer;
 public:
+	/**
+	 * Construct a Parameters facade over a variable argument list.
+	 * @param a The va_list, which must have had va_start called on it.
+	 * va_end should not be called after use.
+	 * @param name The name of the command being constructed (i.e.
+	 * the @c name parameter of @c Execute)
+	 * @param commandLogger The logger that will receive a string
+	 * representation of the command and its parameters. Ownership is
+	 * not passed.
+	 */
 	VaListParameters(va_list& a, const char* name,
 			CommandLogger* commandLogger)
 			: args(a), logger(commandLogger) {
-		//TODO write name to the log
+		writer.WriteIdentifier(name);
 	}
 	~VaListParameters() {
 		va_end(args);
+		logger = 0;
 	}
 	int32_t GetInteger() {
 		int32_t r = va_arg(args, int32_t);
-		//TODO write r to the log
+		writer.WriteInteger(r);
 		return r;
 	}
 	int32_t GetString(char* out, int32_t maxLength) {
 		const char* s = va_arg(args, const char*);
 		strncpy(out, s, maxLength - 1);
 		out[maxLength - 1] = '\0';
-		//TODO write 'out' to the log
+		writer.WriteString(s);
 		return strlen(out);
 	}
+	/**
+	 * Write the command out to the command logger.
+	 */
 	void Flush() {
-		//TODO flush logged line to the log
+		logger->WriteCommand(writer.Result());
+		writer.Reset();
 	}
 };
 
