@@ -631,8 +631,8 @@ class ConcreteExecutor : public Executor {
 	typedef std::map<std::string, CommandFactory*> FactoryMap;
 	FactoryMap factories;
 public:
-	ConcreteExecutor() {
-		//TODO initialise logger
+	ConcreteExecutor(CommandLogger* commandLogger)
+			: logger(commandLogger) {
 	}
 	~ConcreteExecutor() {
 		for (FactoryMap::iterator i = factories.begin();
