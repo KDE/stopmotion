@@ -395,40 +395,23 @@ public:
 
 class StringWriter {
 	bool startOfLine;
-	char* start;
-	char* p;
-	char* end;
+	std::string buffer;
 public:
-	StringWriter() : startOfLine(true), start(0), p(0), end(0) {
+	StringWriter() : startOfLine(true) {
 	}
 	/**
-	 * Returns the buffer
+	 * Returns the written string.
+	 * @return The null-terminated string written to.
 	 */
-	const char* Buffer() const {
-		return start;
+	const char* Result() const {
+		return buffer.c_str();
 	}
 	/**
 	 * Begins a new line, reusing the same buffer.
 	 */
 	void Reset() {
 		startOfLine = true;
-		p = start;
-	}
-	/**
-	 * Sets the memory for this StringWriter to write into.
-	 * It will not write beyond bufferEnd. StringWriter will not put a null at
-	 * the end of its string unless TerminateBuffer is called.
-	 */
-	void SetBuffer(char* bufferStart, char* bufferEnd) {
-		start = p = bufferStart;
-		end = bufferEnd;
-	}
-	/**
-	 * Returns true if and only if the characters written so
-	 * far have all fitted in the buffer provided by SetBuffer.
-	 */
-	bool FitsInBuffer() const {
-		return p <= end;
+		buffer.clear();
 	}
 	/**
 	 * Returns the number of characters that would have been written to the
@@ -436,26 +419,13 @@ public:
 	 * the length of the string written into the buffer passed in SetBuffer.
 	 */
 	int32_t Length() const {
-		return p - start;
+		return buffer.length();
 	}
 	/**
-	 * Writes a null to the string. Any further calls to writing functions will
-	 * overwrite this null.
-	 * @return If the null fits into the buffer, returns bufferStart as passed
-	 * to SetBuffer. If the null does not fit, returns 0.
-	 */
-	char* TerminateBuffer() {
-		WriteChar('\0');
-		return FitsInBuffer()? start : 0;
-	}
-	/**
-	 * Writes a single character to the buffer, if there is room for it.
+	 * Writes a single character to the buffer.
 	 */
 	void WriteChar(char c) {
-		if (p < end) {
-			*p = c;
-		}
-		++p;
+		buffer.append(1, c);
 	}
 	/**
 	 * Writes a space to the buffer, if we are not at the start of a line.
@@ -467,13 +437,13 @@ public:
 		startOfLine = false;
 	}
 	/**
-	 * Writes a decimal (or octal!) digit, if there is room.
+	 * Writes a decimal (or octal!) digit.
 	 */
 	void WriteDigit(int32_t d) {
 		WriteChar(static_cast<char>('0' + d));
 	}
 	/**
-	 * Writes a string surrounded by double quotes. Writes as much as will fit.
+	 * Writes a string surrounded by double quotes.
 	 * @param s The null-terminated string to write.
 	 */
 	void WriteString(const char* s) {
@@ -517,9 +487,8 @@ public:
 		WriteChar('"');
 	}
 	/**
-	 * Writes a decimal number to the buffer. Writes as many digits as will
-	 * fit. Writes negative numbers preceded with '-' and positive numbers
-	 * without prefix.
+	 * Writes a decimal integer to the buffer. Writes negative numbers preceded
+	 * with '-' and positive numbers without prefix.
 	 */
 	void WriteInteger(int32_t n) {
 		BeginArgument();
@@ -549,44 +518,6 @@ public:
 			WriteChar(*id);
 			++id;
 		}
-	}
-};
-
-class Buffer {
-	char* buffer;
-	int32_t bufferLength;
-public:
-	Buffer() : buffer(0), bufferLength(0) {
-	}
-	~Buffer() {
-		Destroy();
-	}
-	const char* Get() const {
-		return buffer;
-	}
-	char* Get() {
-		return buffer;
-	}
-	int32_t Length() const {
-		return bufferLength;
-	}
-	void Destroy() {
-		delete[] buffer;
-		buffer = 0;
-		bufferLength = 0;
-	}
-	/**
-	 * Reallocates the buffer if `length` is longer than the current buffer
-	 * allocated. Returns true if a reallocation was necessary, false if
-	 * `length` is no greater than the length of the current buffer.
-	 */
-	bool Reallocate(int length) {
-		if (length <= bufferLength)
-			return false;
-		Destroy();
-		buffer = new char[length];
-		bufferLength = length;
-		return true;
 	}
 };
 
