@@ -22,6 +22,7 @@
 #define REPLAY_H_
 
 #include <stdint.h>
+#include <memory>
 
 /**
  * Exception thrown by CommandFactory if a method that hasn't been overridden
@@ -120,21 +121,26 @@ public:
 	 * command expects; in particular, all integers should be int32_t. If you
 	 * supply a command factory, you should also supply a wrapper for this
 	 * Execute function to make sure this is done correctly, for example:
+	 * @code{.cpp}
 	 * void ExecuteAddFrame(Executor& e, const char* filename, int32_t sceneNo,
 	 *     int32_t frameNo) {
 	 *   e.Execute("addf", filename, sceneNo, frameNo);
 	 * }
+	 * @endcode
 	 */
 	virtual void Execute(const char* name, ...) = 0;
 	/**
-	 * Make a command available for execution. Ownership of 'factory' is
-	 * passed. It is assumed that 'name' endures for the lifetime of the
-	 * Executor (ideally name should be a static constant, not heap
-	 * allocated; for example executor.AddCommand("addf", addFactory);).
+	 * Make a command available for execution. It is assumed that @c name
+	 * endures for the lifetime of the Executor. Ideally name should be a
+	 * static constant, not heap allocated; for example
+	 * @code{.cpp}
+	 * executor.AddCommand("addf", addFactory);
+	 * @endcode
 	 * Throws CommandNameAlreadyUsedException if a factory has already
-	 * been registered under 'name'.
+	 * been registered under @c name.
 	 */
-	virtual void AddCommand(const char* name, CommandFactory* factory) = 0;
+	virtual void AddCommand(const char* name,
+			std::auto_ptr<CommandFactory>factory) = 0;
 };
 
 /**

@@ -286,7 +286,7 @@ public:
 	 * cases, no characters are consumed, `out` is not set and `parseFailed` is
 	 * returned.
 	 */
-	ParseSucceeded GetNumber(int32_t& out) {
+	ParseSucceeded GetInteger(int32_t& out) {
 		const char *old = p;
 		if (isEof == ChompSpace())
 			return parseFailed;
@@ -521,7 +521,7 @@ public:
 	 * fit. Writes negative numbers preceded with '-' and positive numbers
 	 * without prefix.
 	 */
-	void WriteNumber(int32_t n) {
+	void WriteInteger(int32_t n) {
 		BeginArgument();
 		if (n < 0) {
 			WriteChar('-');
@@ -652,14 +652,14 @@ public:
 		Command* c = f->Create(vps);
 		history.Do(*c);
 	}
-	void AddCommand(const char* name, CommandFactory* factory) {
-		std::auto_ptr<CommandFactory> f(factory);
+	void AddCommand(const char* name,
+			std::auto_ptr<CommandFactory> factory) {
 		std::string n(name);
 		if (factories.find(n) == factories.end())
 			throw UnknownCommandException();
-		std::pair<std::string, CommandFactory*> p(n, factory);
+		std::pair<std::string, CommandFactory*> p(n, factory.get());
 		factories.insert(p);
-		f.release();
+		factory.release();
 	}
 };
 
