@@ -393,6 +393,28 @@ public:
 	}
 };
 
+class StringReaderParameters : public Parameters {
+	StringReader& reader;
+public:
+	StringReaderParameters(StringReader& r) : reader(r) {
+	}
+	~StringReaderParameters() {
+	}
+	int32_t GetInteger() {
+		int32_t r;
+		if (StringReader::parseFailed == reader.GetInteger(r))
+			throw IncorrectParameterException();
+		return r;
+	}
+	int32_t GetString(char* out, int32_t maxLength) {
+		int32_t len;
+		if (StringReader::parseFailed == reader.GetString(len, out, maxLength))
+			throw IncorrectParameterException();
+		return len;
+	}
+};
+
+
 class StringWriter {
 	bool startOfLine;
 	std::string buffer;
