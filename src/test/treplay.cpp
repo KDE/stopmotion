@@ -21,12 +21,12 @@
 #include <QtTest/QtTest>
 #include "moc_treplay.cpp"
 
-#include <string>
 #include <memory>
 #include <limits>
 #include <stdint.h>
 #include <cstdlib>
 #include <stdio.h>
+#include <sstream>
 
 #include "src/domain/undo/replay.h"
 #include "src/domain/undo/command.h"
@@ -36,31 +36,34 @@
 
 static const int32_t no_num = std::numeric_limits<int32_t>::min();
 
-// Test factory for commands just to test parsing: the commands produced are
-// not for execution.
+/**
+ * Test factory for commands that test parsing. When executed, they write a
+ * string of their contents to a list of strings.
+ */
 class EmptyTestCommandFactory : public CommandFactory {
 	std::string name;
+	typedef TestCommandFactory::output_t output_t;
+	output_t& output;
 public:
-	EmptyTestCommandFactory(const char* nameForCommand)
-			: name(nameForCommand) {
-	}
-	EmptyTestCommandFactory() : name("") {
+	EmptyTestCommandFactory(const char* nameForCommand,
+			output_t& executionOutput)
+			: name(nameForCommand), output(executionOutput) {
 	}
 	class EtCommand : public CommandAtomic {
-		static void onExecute() {
-			QFAIL("EtCommand should never be executed");
-		}
 	public:
 		std::string name;
+		output_t& output;
 		std::string s1;
 		int32_t i1;
 		int32_t i2;
-		EtCommand(std::string commandName)
-				: name(commandName), s1(""),
-				  i1(no_num), i2(no_num) {
+		EtCommand(std::string commandName, output_t& out)
+				: name(commandName), output(out),
+				  s1(""), i1(no_num), i2(no_num) {
 		}
 		Command& DoAtomic() {
-			onExecute();
+			std::stringstream ss;
+			ss << name << ",i:" << i1 << ",s:" << s1 << ",i:" << i2;
+			output.push_back(ss.str());
 			return *this;
 		}
 		bool operator==(const EtCommand& other) const {
@@ -76,22 +79,48 @@ public:
 	~EmptyTestCommandFactory() {
 	}
 	Command* Create(Parameters& ps) {
-		EtCommand* e = new EtCommand(name);
+		EtCommand* e = new EtCommand(name, output);
 		e->i1 = ps.GetInteger();
-		e->s1 = ps.GetString();
+		ps.GetString(e->s1);
 		e->i2 = ps.GetInteger();
 		return e;
 	}
 };
 
-TestCommandFactory::TestCommandFactory() : str(0), strNext(0), strAllocLen(0) {
-	cr = new CommandReplayer();
-	cr->RegisterCommandFactory("et", *new EmptyTestCommandFactory("et"));
-	cr->RegisterCommandFactory("sec", *new EmptyTestCommandFactory("sec"));
+/**
+ * Re-executes the command that is logged.
+ */
+class CloneLogger : public CommandLogger {
+	Executor* ex;
+public:
+	CloneLogger() : ex(0) {
+	}
+	~CloneLogger() {
+	}
+	/** @param e Ownership is not passed. */
+	void SetExecutor(Executor* e) {
+		ex = e;
+	}
+	void WriteCommand(const char* lineToLog) {
+		ex->ExecuteFromLog(lineToLog);
+	}
+};
+
+TestCommandFactory::TestCommandFactory()
+		: ce(0), cl(0), str(0), strNext(0), strAllocLen(0) {
+	cl = new CloneLogger();
+	ce = MakeExecutor(cl);
+	cl->SetExecutor(ce);
+	std::auto_ptr<CommandFactory> et(
+			new EmptyTestCommandFactory("et", executionOutput));
+	std::auto_ptr<CommandFactory> sec(
+			new EmptyTestCommandFactory("sec", executionOutput));
+	ce->AddCommand("et", et);
+	ce->AddCommand("sec", sec);
 }
 
 TestCommandFactory::~TestCommandFactory() {
-	delete cr;
+	delete ce;
 	delete[] str;
 }
 
@@ -132,42 +161,19 @@ const char* TestCommandFactory::RandomString() {
 
 void TestCommandFactory::emptyCommandReplayerThrows() {
 	try {
-		cr->MakeCommand("fakeCommand");
-	} catch (CommandFactoryNoSuchCommandException& e) {
+		ce->Execute("fakeCommand");
+	} catch (UnknownCommandException& e) {
 		return;
 	}
 	QFAIL("Empty CommandReplayer did not throw "
 			"CommandFactoryNoSuchCommandException");
 }
 
-class CloneLogger : public CommandLogger {
-	CommandReplayer& cr;
-	std::auto_ptr<Command> clone;
-public:
-	CloneLogger(CommandReplayer& replayer) : cr(replayer) {
-	}
-	~CloneLogger() {
-	}
-	void WriteCommand(const char* lineToLog) {
-		clone.reset(&cr.MakeCommand(lineToLog));
-	}
-	const Command* GetClone() const {
-		return clone.get();
-	}
-};
-
-void TestEtCommand(Command* c,
-		int32_t exi1, int32_t exi2, const char* exs) {
-	EmptyTestCommandFactory::EtCommand* e
-			= static_cast<EmptyTestCommandFactory::EtCommand*>(c);
-	QCOMPARE(e->i1, exi1);
-	QCOMPARE(e->i2, exi2);
-	QCOMPARE(e->s1.c_str(), exs);
-}
-
-void TestCommandFactory::allMakeCallsParse() {
-	std::auto_ptr<Command> cii(&cr->MakeCommand("et -5 \"hello world!\" 412345"));
-	TestEtCommand(cii.get(), -5, 412345, "hello world!");
+void TestCommandFactory::canParseFromLog() {
+	executionOutput.clear();
+	ce->ExecuteFromLog("et -5 \"hello world!\" 412345");
+	QCOMPARE(executionOutput.begin()->c_str(),
+			"et,i:-5,s:hello world!,i:412345");
 }
 
 int32_t randomInt() {
@@ -178,23 +184,18 @@ void TestCommandFactory::parsingDescriptionIsCloning() {
 	char description[512];
 	const size_t desLen = sizeof(description)/sizeof(description[0]) - 1;
 	description[desLen] = '\0';
-	CloneLogger cl(*cr);
-	cr->SetLogger(&cl);
+	executionOutput.clear();
 	for (int i = 0; i != 100; ++i) {
 		const char* commandName = rand() % 2 == 0? "et" : "sec";
-		const CommandFactory* cf = cr->GetCommandFactory(commandName);
-		std::auto_ptr<Command> c;
 		int32_t i1 = randomInt();
 		int32_t i2 = randomInt();
 		std::string s1 = RandomString();
-		snprintf(description, sizeof(description)/sizeof(description[0]),
-				"Make(%d, %s, %d)", i1, s1.c_str(), i2);
-		c.reset(cf->Create(i1, s1.c_str(), i2));
-		QVERIFY2(*static_cast<const EmptyTestCommandFactory::EtCommand*>(c.get())
-				== *static_cast<const EmptyTestCommandFactory::EtCommand*>(cl.GetClone()),
-				description);
+		ce->Execute(commandName, i1, s1.c_str(), i2);
+		output_t::iterator eo1 = executionOutput.begin();
+		output_t::iterator eo2 = eo1;
+		++eo2;
+		QCOMPARE(eo1->c_str(), eo2->c_str());
 	}
-	cr->SetLogger(0);
 }
 
 class AddCharFactory : public CommandFactory {
@@ -286,21 +287,20 @@ class AddDelTestBed {
 	std::string finalString;
 	std::string originalString;
 	std::string expected;
-	std::auto_ptr<AddCharFactory> af;
-	std::auto_ptr<DelCharFactory> df;
-	std::auto_ptr<CommandReplayer> rep;
+	std::auto_ptr<CommandFactory> af;
+	std::auto_ptr<CommandFactory> df;
 	std::auto_ptr<FileCommandLogger> logger;
+	std::auto_ptr<Executor> ex;
 	FILE* logFile;
 public:
 	AddDelTestBed() :
 			af(new AddCharFactory(&finalString)),
 			df(new DelCharFactory(&finalString)),
-			rep(new CommandReplayer()),
 			logger(new FileCommandLogger),
+			ex(MakeExecutor(logger->GetLogger())),
 			logFile(0) {
-		rep->RegisterCommandFactory("add", *af);
-		rep->RegisterCommandFactory("del", *df);
-		rep->SetLogger(logger->GetLogger());
+		ex->AddCommand("add", af);
+		ex->AddCommand("del", df);
 		history.SetPartialCommandObserver(logger->GetPartialCommandObserver());
 		lineBuffer[lineBufferSize - 1] = '\0';
 	}
@@ -320,9 +320,6 @@ public:
 		rewind(logFile);
 		history.Clear();
 	}
-	CommandReplayer& Replayer() {
-		return *rep;
-	}
 	void ExecuteCommand(Command& c) {
 		history.Do(c);
 		logger->CommandComplete();
@@ -336,8 +333,7 @@ public:
 	bool ExecuteLineFromFile() {
 		if (!fgets(lineBuffer, lineBufferSize, logFile))
 			return false;
-		Command& c = rep->MakeCommand(lineBuffer);
-		history.Do(c);
+		ex->ExecuteFromLog(lineBuffer);
 		return true;
 	}
 	bool Undo() {
@@ -356,20 +352,22 @@ public:
 		int32_t commandType = rand() % 5;
 		if (commandType == 0)
 			return false;
-		Command* c;
-		const CommandFactory* cf;
 		switch (commandType) {
 		case 1:
 		case 2:
-			cf = rep->GetCommandFactory("add");
-			c = &cf->Make(rand(), rand());
-			break;
-		default:
-			cf = rep->GetCommandFactory("del");
-			c = &cf->Make(rand());
+		{
+			int32_t ch = rand();
+			int32_t pos = rand();
+			ex->Execute("add", ch, pos);
 			break;
 		}
-		ExecuteCommand(*c);
+		default:
+		{
+			int32_t pos = rand();
+			ex->Execute("del", pos);
+			break;
+		}
+		}
 		return true;
 	}
 	void ExecuteRandomCommands() {

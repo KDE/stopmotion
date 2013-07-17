@@ -21,15 +21,24 @@
 #ifndef TREPLAY_H_
 #define TREPLAY_H_
 
-class CommandReplayer;
+#include <list>
+#include <string>
+
+class Executor;
+class CloneLogger;
 
 class TestCommandFactory : public QObject
 {
 	Q_OBJECT
-	CommandReplayer* cr;
+	Executor* ce;
+	CloneLogger* cl;
 	char* str;	// output from RandomString
 	char* strNext;
 	int32_t strAllocLen;
+public:
+	typedef std::list<std::string> output_t;
+private:
+	output_t executionOutput;
 	void AddCharToRandomString(char);
 public:
 	TestCommandFactory();
@@ -37,7 +46,7 @@ public:
 	const char* RandomString();
 private slots:
 	void emptyCommandReplayerThrows();
-	void allMakeCallsParse();
+	void canParseFromLog();
 	void parsingDescriptionIsCloning();
 	void replaySequenceProducesSameOutput();
 	void undoPutsModelBack();

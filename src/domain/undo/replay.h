@@ -23,26 +23,7 @@
 
 #include <stdint.h>
 #include <memory>
-
-/**
- * Exception thrown by CommandFactory if a method that hasn't been overridden
- * is called. This represents an attempt to make a command with incorrect
- * parameters.
- */
-class CommandFactoryIncorrectParametersException {
-};
-
-/**
- * Exception thrown by MakeCommand if the parsing of the command failed.
- */
-class CommandFactoryParseFailureException {
-};
-
-/**
- * Exception thrown by MakeCommand if the parsing of the command failed.
- */
-class CommandFactoryNoSuchCommandException {
-};
+#include <string>
 
 /**
  * Thrown if a command factory attempts to read a parameter from the log files
@@ -70,7 +51,7 @@ public:
 	 * Might throw IncorrectParameterException if unsuccessful, but this
 	 * behaviour must not be relied upon.
 	 */
-	virtual int32_t GetString(char* out, int32_t maxLength) = 0;
+	virtual void GetString(std::string& out) = 0;
 };
 
 class Command;
@@ -130,6 +111,12 @@ public:
 	 */
 	virtual void Execute(const char* name, ...) = 0;
 	/**
+	 * Executes the command described by (the first line of) @c line, a line
+	 * from a command log previously written by a call to @ Execute.
+	 * @param line Null- or line-ending-terminated string; a line from the log.
+	 */
+	virtual void ExecuteFromLog(const char* line) = 0;
+	/**
 	 * Make a command available for execution. It is assumed that @c name
 	 * endures for the lifetime of the Executor. Ideally name should be a
 	 * static constant, not heap allocated; for example
@@ -144,46 +131,8 @@ public:
 };
 
 /**
- * General factory for commands. Either constructs a command from a line of
- * text describing the command and its parameters, or produces such a line of
- * text.
- * The specific commands are produced by CommandFactorys registers with the
- * CommandReplayer with RegisterCommandFactory().
+ * @param logger The logger to be used; ownership is not passed.
  */
-class CommandReplayer {
-	CommandReplayerImpl* pImpl;
-	CommandAndDescriptionFactory* describer;
-public:
-	/**
-	 * Constructs a new command replayer.
-	 */
-	CommandReplayer();
-	~CommandReplayer();
-	/**
-	 * Set the logger for the CommandAndDescriptionFactories returned by
-	 * GetCommandFactory. Ownership is not passed.
-	 */
-	void SetLogger(CommandLogger* logger);
-	/**
-	 * Registers the command factory with a command replayer.
-	 */
-	void RegisterCommandFactory(const char* name,
-			CommandFactory& factory);
-	/**
-	 * Makes a command from a string.
-	 */
-	Command& MakeCommand(const char*);
-	/**
-	 * Gets a command factory that produces the command specified. This command
-	 * factory should not be used after any subsequent call to GetCommandFactory()
-	 * with the same CommandReplayer.
-	 * @param commandName The name of the command that will be constructed.
-	 * @return Command factory that constructs items of the specified type, as
-	 * well as logging the construction to a CommandAndDescriptionFactory::Logger.
-	 * Returns 0 if there is no command factory matching the name given.
-	 */
-	const CommandFactory* GetCommandFactory(
-			const char* commandName);
-};
+Executor* MakeExecutor(CommandLogger* logger);
 
 #endif /* REPLAY_H_ */

@@ -34,52 +34,6 @@
 class StringReader {
 	const char* p;
 	const char* end;
-	/**
-	 * Writes out characters, but never more than the maximum allowed.
-	 * Upon deletion, writes out the number of characters that were requested
-	 * to be written out.
-	 */
-	class Writer {
-		char* start;
-		char* p;
-		char* end;
-		int32_t& lenOut;
-	public:
-		/**
-		 * Constructs a Writer operating on a buffer.
-		 * @param out The start of the buffer. After destruction of this
-		 * `Writer`, will hold a null-terminated string of all the characters
-		 * written, but only if `lengthOut` holds a value no greater than
-		 * `max`.
-		 * @param max The length of the buffer. This Writer will not write any
-		 * characters beyond `out + max - 1`.
-		 * @param lengthOut After the destruction of this `Writer`, `lengthOut`
-		 * will hold the number of characters that were attempted to be
-		 * written to the buffer. If this is no greater than `max`, `out` will
-		 * hold a null-terminated string of the characters written.
-		 */
-		Writer(char* out, int max, int32_t& lengthOut)
-			: start(out), p(out), end(out + max), lenOut(lengthOut) {
-		}
-		/**
-		 * Destructor null-terminates the string (if there is room) and sets
-		 * `lengthOut` to be the number of characters (including the null
-		 * termination character) attempted to be written to `out`.
-		 */
-		~Writer() {
-			(*this)('\0');
-			lenOut = p - start;
-		}
-		/**
-		 * Outputs a character if it will fit in the buffer.
-		 */
-		void operator()(char c) {
-			if (p < end) {
-				*p = c;
-			}
-			++p;
-		}
-	};
 public:
 	/**
 	 * Indicates whether the end of the input buffer has been reached.
@@ -103,13 +57,13 @@ public:
 		parseSucceeded = 1
 	};
 	/**
-	 * Constructs a StringReader without a buffer. The buffer must be set with
-	 * SetBuffer before use.
+	 * Constructs a @c StringReader without a buffer. The buffer must be set with
+	 * @c SetBuffer before use.
 	 */
 	StringReader() : p(0), end(0) {
 	}
 	/**
-	 * Constructs a `StringReader`.
+	 * Constructs a @c StringReader.
 	 * @param input The null-terminated buffer to read.
 	 */
 	StringReader(const char* input) {
@@ -117,7 +71,7 @@ public:
 		end = p + strlen(input);
 	}
 	/**
-	 * Constructs a `StringReader`.
+	 * Constructs a @c StringReader.
 	 * @param input The start of the buffer to read.
 	 * @param inputEnd The end of the buffer to read.
 	 */
@@ -318,23 +272,19 @@ public:
 	 * '\n' must be used for carriage return and line-feed characters. \nnn can
 	 * be used for ASCII codes in octal-- these must not be followed by another
 	 * digit (if present, this should be quoted in octal as well).
-	 * @param length The length of the string that would be required to hold
-	 * the string parsed (or the actual length if no greater than `maxLength`)
-	 * @param out The output buffer; will be null-terminated as long as
-	 * `length` returns no greater than `maxLength`.
-	 * @param maxLength The length of the output buffer.
-	 * @return `parseSuccessful` on success. `length` is set and `out` is
-	 * filled. `parseFailed` on failure. Nothing is consumed. Some of `out` may
-	 * have been set and `length` may have been overwritten.
+	 * @param out Returns the parsed and decoded string.
+	 * @return @c parseSuccessful on success. @c out is filled.
+	 * @c parseFailed on failure. Nothing is consumed. Some of @c out may
+	 * have been set.
 	 */
-	ParseSucceeded GetString(int32_t& length, char* out, int32_t maxLength) {
+	ParseSucceeded GetString(std::string& out) {
+		out.clear();
 		const char *old = p;
 		ChompSpace();
 		if (!GetQuote()) {
 			p = old;
 			return parseFailed;
 		}
-		Writer w(out, maxLength, length);
 		char c;
 		while (!GetQuote()) {
 			// normal state
@@ -343,18 +293,18 @@ public:
 				return parseFailed;
 			}
 			if (c != '\\') {
-				w(c);
+				out.append(1, c);
 			} else {
 				// backslash state
 				if (GetCharFromLine(c) == isEol)
 					// line continuation
 					ChompEol();
 				if (c == ' ')
-					w(' ');
+					out.append(1, ' ');
 				else if (c == 'n')
-					w('\n');
+					out.append(1, '\n');
 				else if (c == 'r')
-					w('\r');
+					out.append(1, '\r');
 				else if ('0' <= c && c <= '7') {
 					// octal
 					int32_t soFar = c - '0';
@@ -362,31 +312,28 @@ public:
 					while (parseSucceeded == GetOctalDigit(n)) {
 						soFar = soFar * 8 + n;
 					}
+					out.append(1, soFar);
 				}
 				else
-					w(c);
+					out.append(1, c);
 			}
 		}
 		return parseSucceeded;
 	}
 	/**
 	 * Reads an identifier.
-	 * @param length The length of the string that would be required to hold
-	 * the string parsed (or the actual length if no greater than `maxLength`)
-	 * @param out The output buffer; will be null-terminated as long as
-	 * `length` returns no greater than `maxLength`.
-	 * @param maxLength The length of the output buffer.
-	 * @return `parseSuccessful` on success. `length` is set and `out` is
-	 * filled. `parseFailed` on failure. No non-whitespace characters will have
+	 * @param out Returns the parsed and decoded string.
+	 * @return @c parseSuccessful on success. @c out is filled.
+	 * @c parseFailed on failure. No non-whitespace characters will have
 	 * been consumed.
 	 */
-	ParseSucceeded GetIdentifier(int32_t& length, char* out, int32_t maxLength) {
+	ParseSucceeded GetIdentifier(std::string& out) {
+		out.clear();
 		ChompSpace();
 		if (IsEndOfLine())
 			return parseFailed;
-		Writer w(out, maxLength, length);
 		while (!IsFinishedArgument()) {
-			w(*p);
+			out.append(1, *p);
 			++p;
 		}
 		return parseSucceeded;
@@ -406,11 +353,9 @@ public:
 			throw IncorrectParameterException();
 		return r;
 	}
-	int32_t GetString(char* out, int32_t maxLength) {
-		int32_t len;
-		if (StringReader::parseFailed == reader.GetString(len, out, maxLength))
+	void GetString(std::string& out) {
+		if (StringReader::parseFailed == reader.GetString(out))
 			throw IncorrectParameterException();
-		return len;
 	}
 };
 
@@ -578,12 +523,9 @@ public:
 		writer.WriteInteger(r);
 		return r;
 	}
-	int32_t GetString(char* out, int32_t maxLength) {
+	void GetString(std::string& out) {
 		const char* s = va_arg(args, const char*);
-		strncpy(out, s, maxLength - 1);
-		out[maxLength - 1] = '\0';
-		writer.WriteString(s);
-		return strlen(out);
+		out.assign(s);
 	}
 	/**
 	 * Write the command out to the command logger.
@@ -599,6 +541,13 @@ class ConcreteExecutor : public Executor {
 	CommandLogger* logger;
 	typedef std::map<std::string, CommandFactory*> FactoryMap;
 	FactoryMap factories;
+	CommandFactory* Factory(const char* name) {
+		std::string n(name);
+		FactoryMap::iterator found = factories.find(n);
+		if (found == factories.end())
+			throw UnknownCommandException();
+		return found->second;
+	}
 public:
 	ConcreteExecutor(CommandLogger* commandLogger)
 			: logger(commandLogger) {
@@ -610,27 +559,36 @@ public:
 		}
 	}
 	void Execute(const char* name, ...) {
-		std::string n(name);
-		FactoryMap::iterator found = factories.find(n);
-		if (found == factories.end())
-			throw UnknownCommandException();
-		CommandFactory* f = found->second;
+		CommandFactory* f = Factory(name);
 		va_list args;
 		va_start(args, name);
 		VaListParameters vps(args, name, logger);
 		Command* c = f->Create(vps);
+		vps.Flush();
+		history.Do(*c);
+	}
+	void ExecuteFromLog(const char* line) {
+		StringReader reader;
+		reader.SetBuffer(line);
+		std::string id;
+		reader.GetIdentifier(id);
+		CommandFactory* f = Factory(id.c_str());
+		StringReaderParameters sps(reader);
+		Command*c = f->Create(sps);
 		history.Do(*c);
 	}
 	void AddCommand(const char* name,
 			std::auto_ptr<CommandFactory> factory) {
 		std::string n(name);
-		if (factories.find(n) == factories.end())
-			throw UnknownCommandException();
 		std::pair<std::string, CommandFactory*> p(n, factory.get());
 		factories.insert(p);
 		factory.release();
 	}
 };
+
+Executor* MakeExecutor(CommandLogger* logger) {
+	return new ConcreteExecutor(logger);
+}
 
 CommandLogger::~CommandLogger() {
 }
