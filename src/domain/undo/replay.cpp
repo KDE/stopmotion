@@ -525,6 +525,7 @@ public:
 	}
 	void GetString(std::string& out) {
 		const char* s = va_arg(args, const char*);
+		writer.WriteString(s);
 		out.assign(s);
 	}
 	/**
@@ -595,47 +596,3 @@ CommandLogger::~CommandLogger() {
 
 Parameters::~Parameters() {
 }
-
-// To create a command in the first place:
-// Get CommandAndDescription Factory
-// Make command
-// Allocate redo space
-// Write command description to log
-// Put command on redo stack
-// Execute command
-// Set a flag saying that "Done" must be written to the log before
-// any other command.
-// What about partial command executions?
-// Write "Part" after each one, I suppose...
-// Need composites to be partially doable...
-
-// To replay a command from the log:
-// Parse command and arguments.
-// If it is a domain command:
-//   Get command factory (not CommandAndDescription factory)
-//   Make command
-//   execute command
-
-// It will be very good to have application commands (undo, redo, save) as
-// objects themselves, so that we can do an "optimize" operation on opening.
-
-// There are three different types of operation on the whole history that might
-// be useful at startup or shutdown:
-// 1) purge old files
-// 2) trim undo length
-// 3) optimize history (prune unreachable branches) -- speeds up recovery
-// But how do we determine which files are "old"? We can tell the order in
-// which they were created from their timestamps, but that doesn't tell us when
-// they were deleted. Ideally we'd remove the least recently deleted.
-// An unoptimized history will tell us the order; we need to do a depth-first
-// walk (walking earlier branches first). Perhaps we only prune branches if
-// they are old enough that we want to purge their files.
-// If we have a setting for number of frames to keep, we can use that.
-// So, don't prune unreachable branches; only prune old commands. That means
-// walking the tree looking for files. We only have the tree at startup, so
-// have to do it then. In fact, we don't have the tree, we only have the list
-// of application commands; we infer the tree from the Undos and Redos. This
-// means that the walk is already naturally in order. Store the latest access
-// of each file. This means we must perform this operation as we optimzie
-// the tree so that we know (for example) which files are being unreferenced in
-// an undo operation.
