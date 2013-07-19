@@ -575,7 +575,7 @@ public:
 		if (StringReader::parseSucceeded == reader.GetIdentifier(id)) {
 			CommandFactory* f = Factory(id.c_str());
 			StringReaderParameters sps(reader);
-			Command*c = f->Create(sps);
+			Command* c = f->Create(sps);
 			history.Do(*c);
 			return true;
 		}

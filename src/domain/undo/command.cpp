@@ -196,7 +196,7 @@ Command& CommandNull::DoAtomic() {
 	return *new CommandNull;
 }
 
-CommandHistory::CommandHistory() : past(0), future(0), partObserver(0) {
+CommandHistory::CommandHistory() : past(0), future(0) {
 	past = new CommandList();
 	future = new CommandList();
 }
@@ -214,26 +214,26 @@ bool CommandHistory::CanRedo() {
 	return !future->Empty();
 }
 
-void CommandHistory::Undo() {
-	past->ExecuteFront(*future, Command::allParts, partObserver);
+void CommandHistory::Undo(PartialCommandObserver* ob) {
+	past->ExecuteFront(*future, Command::allParts, ob);
 }
 
-void CommandHistory::Undo(int parts) {
-	past->ExecuteFront(*future, parts, partObserver);
+void CommandHistory::Undo(int parts, PartialCommandObserver* ob) {
+	past->ExecuteFront(*future, parts, ob);
 }
 
-void CommandHistory::Redo() {
-	future->ExecuteFront(*past, Command::allParts, partObserver);
+void CommandHistory::Redo(PartialCommandObserver* ob) {
+	future->ExecuteFront(*past, Command::allParts, ob);
 }
 
-void CommandHistory::Redo(int parts) {
-	future->ExecuteFront(*past, parts, partObserver);
+void CommandHistory::Redo(int parts, PartialCommandObserver* ob) {
+	future->ExecuteFront(*past, parts, ob);
 }
 
-void CommandHistory::Do(Command& c) {
+void CommandHistory::Do(Command& c, PartialCommandObserver* ob) {
 	future->Clear();
 	future->Push(c);
-	Redo();
+	Redo(ob);
 }
 
 void CommandHistory::Clear() {
@@ -244,10 +244,6 @@ void CommandHistory::Clear() {
 void CommandHistory::Accept(FileNameVisitor& v) const {
 	future->Accept(v);
 	past->Accept(v);
-}
-
-void CommandHistory::SetPartialCommandObserver(PartialCommandObserver* ob) {
-	partObserver = ob;
 }
 
 CommandComposite::CommandComposite() : cs(0) {

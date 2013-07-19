@@ -144,7 +144,6 @@ public:
 class CommandHistory {
 	CommandList* past;
 	CommandList* future;
-	PartialCommandObserver* partObserver;
 public:
 	CommandHistory();
 	~CommandHistory();
@@ -160,33 +159,35 @@ public:
 	bool CanRedo();
 	/**
 	 * Undoes the last action in the history, if any.
+	 * @param partObserver monitors how many parts actually get executed;
+	 * useful in the case that a compound command is
 	 */
-	void Undo();
+	void Undo(PartialCommandObserver* partObserver = 0);
 	/**
 	 * Undoes the last action in the history, if any
 	 * @param parts The maximum number of sub-parts to be executed. If this is
 	 * fewer than the actual number of sub-parts in the command, the remainder
 	 * remain on the Undo stack.
 	 */
-	void Undo(int parts);
+	void Undo(int parts, PartialCommandObserver* partObserver = 0);
 	/**
 	 * Redoes the next action in the history, if any.
 	 */
-	void Redo();
+	void Redo(PartialCommandObserver* partObserver = 0);
 	/**
 	 * Redoes the next action in the history, if any.
 	 * @param parts The maximum number of sub-parts to be executed. If this is
 	 * fewer than the actual number of sub-parts in the command, the remainder
 	 * remain on the Redo stack.
 	 */
-	void Redo(int parts);
+	void Redo(int parts, PartialCommandObserver* partObserver = 0);
 	/**
 	 * Executes the command c, placing its inverse into the undo history,
 	 * deleting the Redo history. Any partial composite function remaining
 	 * after a thrown exception will be on the Redo stack. Ownership of
 	 * the command is passed.
 	 */
-	void Do(Command&);
+	void Do(Command& c, PartialCommandObserver* partObserver = 0);
 	/**
 	 * Clears all the undo history (and future)
 	 */
@@ -196,10 +197,6 @@ public:
 	 * history.
 	 */
 	void Accept(FileNameVisitor& v) const;
-	/**
-	 * Sets the part command observer.
-	 */
-	void SetPartialCommandObserver(PartialCommandObserver* ob);
 };
 
 #endif /* COMMAND_H_ */
