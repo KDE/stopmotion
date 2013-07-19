@@ -312,8 +312,7 @@ public:
 	void Init(const char* initialString) {
 		finalString = initialString;
 		originalString = finalString;
-		//logFile = tmpfile();
-		logFile = fopen("/home/tim/log.txt", "w+");
+		logFile = tmpfile();
 		// ownership of logFile is passed here
 		logger->SetLogFile(logFile);
 		ex->ClearHistory();
