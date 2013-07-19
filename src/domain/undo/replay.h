@@ -32,6 +32,9 @@
 class IncorrectParameterException {
 };
 
+class MalformedLineException {
+};
+
 /**
  * A command factory reads the parameters for its command from here. They
  * either come from a log file (if it is being replayed) or from the
@@ -114,8 +117,11 @@ public:
 	 * Executes the command described by (the first line of) @c line, a line
 	 * from a command log previously written by a call to @ Execute.
 	 * @param line Null- or line-ending-terminated string; a line from the log.
+	 * @return true if a command was executed, false if the line was empty.
+	 * @throws MalformedLineException if the line is neither empty nor starts
+	 * with a command name.
 	 */
-	virtual void ExecuteFromLog(const char* line) = 0;
+	virtual bool ExecuteFromLog(const char* line) = 0;
 	/**
 	 * Make a command available for execution. It is assumed that @c name
 	 * endures for the lifetime of the Executor. Ideally name should be a
@@ -128,6 +134,20 @@ public:
 	 */
 	virtual void AddCommand(const char* name,
 			std::auto_ptr<CommandFactory>factory) = 0;
+	/**
+	 * Clears the undo and redo stacks.
+	 */
+	virtual void ClearHistory() = 0;
+	/**
+	 * Undoes the most recent command.
+	 * @return true on success, false if nothing was on the undo stack.
+	 */
+	virtual bool Undo() = 0;
+	/**
+	 * Redoes the most recently undone command.
+	 * @return true on success, false if nothing was on the redo stack.
+	 */
+	virtual bool Redo() = 0;
 };
 
 /**

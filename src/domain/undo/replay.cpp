@@ -568,15 +568,20 @@ public:
 		vps.Flush();
 		history.Do(*c);
 	}
-	void ExecuteFromLog(const char* line) {
+	bool ExecuteFromLog(const char* line) {
 		StringReader reader;
 		reader.SetBuffer(line);
 		std::string id;
-		reader.GetIdentifier(id);
-		CommandFactory* f = Factory(id.c_str());
-		StringReaderParameters sps(reader);
-		Command*c = f->Create(sps);
-		history.Do(*c);
+		if (StringReader::parseSucceeded == reader.GetIdentifier(id)) {
+			CommandFactory* f = Factory(id.c_str());
+			StringReaderParameters sps(reader);
+			Command*c = f->Create(sps);
+			history.Do(*c);
+			return true;
+		}
+		if (StringReader::parseSucceeded == reader.IsEndOfLine())
+			return false;
+		throw MalformedLineException();
 	}
 	void AddCommand(const char* name,
 			std::auto_ptr<CommandFactory> factory) {
@@ -584,6 +589,21 @@ public:
 		std::pair<std::string, CommandFactory*> p(n, factory.get());
 		factories.insert(p);
 		factory.release();
+	}
+	void ClearHistory() {
+		history.Clear();
+	}
+	bool Undo() {
+		if (!history.CanUndo())
+			return false;
+		history.Undo();
+		return true;
+	}
+	bool Redo() {
+		if (!history.CanRedo())
+			return false;
+		history.Redo();
+		return true;
 	}
 };
 

@@ -73,6 +73,7 @@ public:
 		buffer.append("!\n");
 		newlineRequired = false;
 		WriteBuffer();
+		fflush(fh);
 	}
 };
 

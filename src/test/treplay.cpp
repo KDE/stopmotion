@@ -290,7 +290,6 @@ Command& DelCharFactory::DelChar::DoAtomic() {
 class AddDelTestBed {
 	enum { lineBufferSize = 512 };
 	char lineBuffer[lineBufferSize];
-	CommandHistory history;
 	std::string finalString;
 	std::string originalString;
 	std::string expected;
@@ -308,15 +307,16 @@ public:
 			logFile(0) {
 		ex->AddCommand("add", af);
 		ex->AddCommand("del", df);
-		history.SetPartialCommandObserver(logger->GetPartialCommandObserver());
 		lineBuffer[lineBufferSize - 1] = '\0';
 	}
 	void Init(const char* initialString) {
 		finalString = initialString;
 		originalString = finalString;
-		logFile = tmpfile();
+		//logFile = tmpfile();
+		logFile = fopen("/home/tim/log.txt", "w+");
+		// ownership of logFile is passed here
 		logger->SetLogFile(logFile);
-		history.Clear();
+		ex->ClearHistory();
 	}
 	void SetExpected() {
 		expected = finalString;
@@ -325,11 +325,7 @@ public:
 		finalString = originalString;
 		fflush(logFile);
 		rewind(logFile);
-		history.Clear();
-	}
-	void ExecuteCommand(Command& c) {
-		history.Do(c);
-		logger->CommandComplete();
+		ex->ClearHistory();
 	}
 	void CheckRunsEqual() {
 		QCOMPARE(finalString.c_str(), expected.c_str());
@@ -344,16 +340,10 @@ public:
 		return true;
 	}
 	bool Undo() {
-		if (!history.CanUndo())
-			return false;
-		history.Undo();
-		return true;
+		return ex->Undo();
 	}
 	bool Redo() {
-		if (!history.CanRedo())
-			return false;
-		history.Redo();
-		return true;
+		return ex->Redo();
 	}
 	bool ExecuteRandomCommand() {
 		int32_t commandType = rand() % 5;
@@ -379,6 +369,7 @@ public:
 	}
 	void ExecuteRandomCommands() {
 		while (ExecuteRandomCommand()) {
+			logger->CommandComplete();
 		}
 	}
 };
