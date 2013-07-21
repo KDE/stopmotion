@@ -192,8 +192,18 @@ bool CommandAtomic::Impotent() const {
 	return false;
 }
 
-Command& CommandNull::DoAtomic() {
-	return *new CommandNull;
+class CommandNull : public CommandAtomic {
+public:
+	Command& DoAtomic() {
+		return *new CommandNull;
+	}
+	bool Impotent() const {
+		return true;
+	}
+};
+
+Command* CreateNullCommand() {
+	return new CommandNull;
 }
 
 CommandHistory::CommandHistory() : past(0), future(0) {

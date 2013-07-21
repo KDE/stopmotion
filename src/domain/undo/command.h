@@ -107,12 +107,12 @@ public:
 };
 
 /**
- * Command that does nothing.
+ * Creates a command that does nothing. This can be used whenever a command's
+ * @c DoAtomic function discovers that it does nothing, and it wants to return
+ * an inverse that also does nothing.
+ * @return New command that does nothing. Ownership is passed.
  */
-class CommandNull : public CommandAtomic {
-public:
-	Command& DoAtomic();
-};
+Command* CreateNullCommand();
 
 /**
  * Command made up of other commands. If execution of the composite is

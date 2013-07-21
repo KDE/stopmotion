@@ -36,13 +36,6 @@
 
 static const int32_t no_num = std::numeric_limits<int32_t>::min();
 
-class NullCommand : public CommandAtomic {
-public:
-	Command& DoAtomic() {
-		return *new NullCommand();
-	}
-};
-
 /**
  * Test factory for commands that test parsing. When executed, they write a
  * string of their contents to a list of strings.
@@ -71,7 +64,7 @@ public:
 			std::stringstream ss;
 			ss << name << ",i:" << i1 << ",s:" << s1 << ",i:" << i2;
 			output.push_back(ss.str());
-			return *new NullCommand();
+			return *CreateNullCommand();
 		}
 		bool operator==(const EtCommand& other) const {
 			return name == other.name
@@ -278,7 +271,7 @@ Command& AddCharFactory::AddChar::DoAtomic() {
 
 Command& DelCharFactory::DelChar::DoAtomic() {
 	if (m->size() == 0) {
-		return *new CommandNull;
+		return *CreateNullCommand();
 	}
 	int32_t pos = (p < 0? 1 - p : p) % m->size();
 	char removedChar = (*m)[pos];
