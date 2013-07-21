@@ -111,7 +111,7 @@ HEADERS += src/domain/undo/logger.h \
     src/technical/libng/videodev.h \
     src/presentation/frontends/qtfrontend/devicetab.h \
     src/domain/undo/command.h \
-    src/domain/undo/replay.h
+    src/domain/undo/executor.h
 FORMS += src/presentation/frontends/qtfrontend/helpbrowser.ui \
     src/presentation/frontends/qtfrontend/toolsmenu.ui
 SOURCES += src/config.cpp \
@@ -176,7 +176,7 @@ SOURCES += src/config.cpp \
     src/technical/libng/plugins/drv1-v4l.c \
     src/presentation/frontends/qtfrontend/devicetab.cpp \
     src/domain/undo/command.cpp \
-    src/domain/undo/replay.cpp
+    src/domain/undo/executor.cpp
 TRANSLATIONS += translations/stopmotion_no_nb.ts \
     translations/stopmotion_no_nn.ts \
     translations/stopmotion_no_se.ts \

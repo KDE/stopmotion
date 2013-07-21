@@ -3,15 +3,15 @@ QT += core
 CONFIG += qtestlib debug
 HEADERS += ../domain/undo/logger.h \
     ../domain/undo/command.h \
-    ../domain/undo/replay.h
-HEADERS += treplay.h \
+    ../domain/undo/executor.h
+HEADERS += texecutor.h \
     oomtestutil.h
 SOURCES += ../domain/undo/logger.cpp \
     ../domain/undo/command.cpp \
-    ../domain/undo/replay.cpp
+    ../domain/undo/executor.cpp
 SOURCES += \
     tmain.cpp \
-    treplay.cpp
+    texecutor.cpp
 FORMS += 
 RESOURCES += 
 INCLUDEPATH += ../..
