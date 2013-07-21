@@ -18,8 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef REPLAY_H_
-#define REPLAY_H_
+#ifndef EXECUTOR_H_
+#define EXECUTOR_H_
 
 #include <stdint.h>
 #include <memory>
@@ -155,4 +155,4 @@ public:
  */
 Executor* MakeExecutor(CommandLogger* logger);
 
-#endif /* REPLAY_H_ */
+#endif /* EXECUTOR_H_ */

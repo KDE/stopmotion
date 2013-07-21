@@ -17,9 +17,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include "texecutor.h"
 
 #include <QtTest/QtTest>
-#include "moc_treplay.cpp"
 
 #include <memory>
 #include <limits>
@@ -28,7 +28,7 @@
 #include <stdio.h>
 #include <sstream>
 
-#include "src/domain/undo/replay.h"
+#include "src/domain/undo/executor.h"
 #include "src/domain/undo/command.h"
 #include "src/domain/undo/logger.h"
 

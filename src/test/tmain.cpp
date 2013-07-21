@@ -20,7 +20,7 @@
 
 #include <QtTest/QtTest>
 
-#include "treplay.h"
+#include "texecutor.h"
 
 int max(int a, int b) {
 	return a < b? b : a;

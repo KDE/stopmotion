@@ -18,11 +18,13 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef TREPLAY_H_
-#define TREPLAY_H_
+#ifndef TEXECUTOR_H_
+#define TEXECUTOR_H_
 
+#include <stdint.h>
 #include <list>
 #include <string>
+#include <QObject>
 
 class Executor;
 class CloneLogger;
@@ -53,4 +55,4 @@ private slots:
 	void replayIsRobust();
 };
 
-#endif /* TREPLAY_H_ */
+#endif /* TEXECUTOR_H_ */
