@@ -20,7 +20,10 @@
 
 #include "executor.h"
 #include "command.h"
+#include "random.h"
+
 #include <map>
+#include <vector>
 #include <string>
 #include <string.h>
 #include <stdint.h>
@@ -532,7 +535,9 @@ public:
 	 * Write the command out to the command logger.
 	 */
 	void Flush() {
-		logger->WriteCommand(writer.Result());
+		if (logger) {
+			logger->WriteCommand(writer.Result());
+		}
 		writer.Reset();
 	}
 };
@@ -542,6 +547,8 @@ class ConcreteExecutor : public Executor {
 	CommandLogger* logger;
 	typedef std::map<std::string, CommandFactory*> FactoryMap;
 	FactoryMap factories;
+	// does not own its factories
+	std::vector<CommandFactory*> constructiveCommands;
 	CommandFactory* Factory(const char* name) {
 		std::string n(name);
 		FactoryMap::iterator found = factories.find(n);
@@ -550,8 +557,7 @@ class ConcreteExecutor : public Executor {
 		return found->second;
 	}
 public:
-	ConcreteExecutor(CommandLogger* commandLogger)
-			: logger(commandLogger) {
+	ConcreteExecutor() : logger(0) {
 	}
 	~ConcreteExecutor() {
 		for (FactoryMap::iterator i = factories.begin();
@@ -583,11 +589,47 @@ public:
 			return false;
 		throw MalformedLineException();
 	}
+	void ExecuteRandomCommands(RandomSource& rng) {
+		int n = factories.size();
+		if (n == 0)
+			throw UnknownCommandException();
+		std::vector<CommandFactory*> factoriesByIndex;
+		for (FactoryMap::iterator i = factories.begin();
+				i != factories.end(); ++i) {
+			factoriesByIndex.push_back(i->second);
+		}
+		while (true) {
+			int r = rng.GetUniform(n);
+			if (r == n)
+				return;
+			Command* c = factoriesByIndex[r]->CreateRandom(rng);
+			history.Do(*c);
+		}
+	}
+	virtual void ExecuteRandomConstructiveCommands(RandomSource& rng) {
+		int n = constructiveCommands.size();
+		if (n == 0)
+			throw UnknownCommandException();
+		while (true) {
+			int r = rng.GetUniform(n);
+			if (r == n)
+				return;
+			Command* c = constructiveCommands[r]->CreateRandom(rng);
+			history.Do(*c);
+		}
+	}
+	void SetCommandLogger(CommandLogger* log) {
+		logger = log;
+	}
 	void AddCommand(const char* name,
-			std::auto_ptr<CommandFactory> factory) {
+			std::auto_ptr<CommandFactory> factory, bool constructive) {
 		std::string n(name);
 		std::pair<std::string, CommandFactory*> p(n, factory.get());
+		if (constructive)
+			constructiveCommands.reserve(constructiveCommands.size() + 1);
 		factories.insert(p);
+		if (constructive)
+			constructiveCommands.push_back(factory.get());
 		factory.release();
 	}
 	void ClearHistory() {
@@ -607,8 +649,8 @@ public:
 	}
 };
 
-Executor* MakeExecutor(CommandLogger* logger) {
-	return new ConcreteExecutor(logger);
+Executor* MakeExecutor() {
+	return new ConcreteExecutor();
 }
 
 CommandLogger::~CommandLogger() {

@@ -50,8 +50,7 @@ private slots:
 	void emptyCommandReplayerThrows();
 	void canParseFromLog();
 	void parsingDescriptionIsCloning();
-	void replaySequenceProducesSameOutput();
-	void undoPutsModelBack();
+	void testUndo();
 	void replayIsRobust();
 };
 

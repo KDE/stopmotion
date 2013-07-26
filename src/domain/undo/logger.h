@@ -41,6 +41,8 @@ class FileCommandLogger {
 public:
 	FileCommandLogger();
 	~FileCommandLogger();
+	FileCommandLogger(const FileCommandLogger&); // unimplemented
+	FileCommandLogger& operator=(const FileCommandLogger&); //unimplemented
 	void SetLogFile(FILE* fileHandle);
 	void CommandComplete();
 	PartialCommandObserver* GetPartialCommandObserver();

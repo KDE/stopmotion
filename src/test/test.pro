@@ -8,10 +8,12 @@ HEADERS += texecutor.h \
     oomtestutil.h
 SOURCES += ../domain/undo/logger.cpp \
     ../domain/undo/command.cpp \
-    ../domain/undo/executor.cpp
+    ../domain/undo/executor.cpp \
+    ../domain/undo/random.cpp
 SOURCES += \
     tmain.cpp \
-    texecutor.cpp
+    texecutor.cpp \
+    testundo.cpp
 FORMS += 
 RESOURCES += 
 INCLUDEPATH += ../..

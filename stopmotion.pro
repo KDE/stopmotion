@@ -176,7 +176,8 @@ SOURCES += src/config.cpp \
     src/technical/libng/plugins/drv1-v4l.c \
     src/presentation/frontends/qtfrontend/devicetab.cpp \
     src/domain/undo/command.cpp \
-    src/domain/undo/executor.cpp
+    src/domain/undo/executor.cpp \
+    src/domain/undo/random.cpp
 TRANSLATIONS += translations/stopmotion_no_nb.ts \
     translations/stopmotion_no_nn.ts \
     translations/stopmotion_no_se.ts \

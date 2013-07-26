@@ -58,6 +58,7 @@ public:
 };
 
 class Command;
+class RandomSource;
 
 /**
  * Produces one sort of command.
@@ -66,10 +67,27 @@ class CommandFactory {
 public:
 	virtual ~CommandFactory() = 0;
 	/**
-	 * Creates a command from the Parameters given in ps, returning ownership
-	 * of the command, not taking ownership of ps.
+	 * Creates a command from the Parameters given in ps.
+	 * @param The source of parameters to use, ownership is not passed.
+	 * @return The command created, ownership is returned.
 	 */
 	virtual Command* Create(Parameters& ps) = 0;
+	/**
+	 * Creates a random command for testing. You can that a collection of
+	 * command factories work together by registering them with an
+	 * @c Executor and passing the @c Executor to the functions in
+	 * @c testundo.h as part of unit tests. Please make sure that there is a
+	 * good chance of any edge cases being generated.
+	 * @param rng A random number generator to use. This must be used as the
+	 * source for all randomness; please do not use @c rand() directly.
+	 * @return a Command of the type that @c Create creates, using parameters
+	 * that makes sense with the current state of the model. This command will
+	 * be executed with the model as it is now.
+	 * @note
+	 * If no sensible command of this type can be generated (for example, a
+	 * deletion from an empty model), please return @c CreateNullCommand().
+	 */
+	virtual Command* CreateRandom(RandomSource& rng) = 0;
 };
 
 class CommandReplayerImpl;
@@ -90,6 +108,13 @@ public:
 	virtual void WriteCommand(const char*) = 0;
 };
 
+/**
+ * Thrown if @ref CommandFactory::Execute is called with a name for which no
+ * command has been added, or if @ref CommandFactory::ExecuteRandomCommands is
+ * called on a @ref CommandFactory which has had no commands added, or if
+ * @ref CommandFactory::ExecuteRandomConstructiveCommands is called
+ * on a @ref CommandFactory which has had no constructive commands set.
+ */
 class UnknownCommandException {
 };
 
@@ -102,8 +127,8 @@ public:
 	/**
 	 * Executes a command, logging it and putting its inverse onto the undo
 	 * stack. Be careful that the argument list exactly matches what the
-	 * command expects; in particular, all integers should be int32_t. If you
-	 * supply a command factory, you should also supply a wrapper for this
+	 * command expects; in particular, all integers should be @c int32_t. If
+	 * you supply a command factory, you should also supply a wrapper for this
 	 * Execute function to make sure this is done correctly, for example:
 	 * @code{.cpp}
 	 * void ExecuteAddFrame(Executor& e, const char* filename, int32_t sceneNo,
@@ -115,7 +140,7 @@ public:
 	virtual void Execute(const char* name, ...) = 0;
 	/**
 	 * Executes the command described by (the first line of) @c line, a line
-	 * from a command log previously written by a call to @ Execute.
+	 * from a command log previously written by a call to @ref Execute.
 	 * @param line Null- or line-ending-terminated string; a line from the log.
 	 * @return true if a command was executed, false if the line was empty.
 	 * @throws MalformedLineException if the line is neither empty nor starts
@@ -123,17 +148,44 @@ public:
 	 */
 	virtual bool ExecuteFromLog(const char* line) = 0;
 	/**
+	 * Executes a random set of commands. Used for testing.
+	 */
+	virtual void ExecuteRandomCommands(RandomSource& rng) = 0;
+	/**
+	 * Executes a random set of commands. Used for testing for constructing
+	 * fresh models from empty models. Only commands that were added with the
+	 * @c constructive parameter of @ref AddCommand set to @c true are used.
+	 */
+	virtual void ExecuteRandomConstructiveCommands(RandomSource& rng) = 0;
+	/**
 	 * Make a command available for execution. It is assumed that @c name
 	 * endures for the lifetime of the Executor. Ideally name should be a
 	 * static constant, not heap allocated; for example
 	 * @code{.cpp}
-	 * executor.AddCommand("addf", addFactory);
+	 * executor.AddCommand("addf", addFactory, true);
 	 * @endcode
-	 * Throws CommandNameAlreadyUsedException if a factory has already
+	 * @throws CommandNameAlreadyUsedException if a factory has already
 	 * been registered under @c name.
+	 * @param name The name of the command. Will need to be supplied in a
+	 * call to @ref Execute in order to use @c factory.
+	 * @param factory The factory that makes these sort of commands.
+	 * @param constructive If true is passed, test code will use this
+	 * factory to construct initial model states from empty models. Therefore
+	 * @c true should be passed whenever the command is useful in constructing
+	 * an initial state. For example, an add operation is constructive, but a
+	 * delete or a move is not.
+	 * @ref ExecuteRandomConstructiveCommands uses only those factories
+	 * passed here with @c constructive set to @c true.
 	 */
 	virtual void AddCommand(const char* name,
-			std::auto_ptr<CommandFactory>factory) = 0;
+			std::auto_ptr<CommandFactory>factory,
+			bool constructive = false) = 0;
+	/**
+	 * Sets the logger to be used to record commands executed.
+	 * @param logger The logger to be set. Ownership is not passed.
+	 * Pass NULL to get no logging.
+	 */
+	virtual void SetCommandLogger(CommandLogger* logger) = 0;
 	/**
 	 * Clears the undo and redo stacks.
 	 */
@@ -151,8 +203,9 @@ public:
 };
 
 /**
- * @param logger The logger to be used; ownership is not passed.
+ * Create a new executor.
+ * @return The new @ref Executor; ownership is returned.
  */
-Executor* MakeExecutor(CommandLogger* logger);
+Executor* MakeExecutor();
 
 #endif /* EXECUTOR_H_ */

@@ -31,7 +31,9 @@
 #include "src/domain/undo/executor.h"
 #include "src/domain/undo/command.h"
 #include "src/domain/undo/logger.h"
+#include "src/domain/undo/random.h"
 
+#include "testundo.h"
 #include "oomtestutil.h"
 
 static const int32_t no_num = std::numeric_limits<int32_t>::min();
@@ -85,6 +87,13 @@ public:
 		e->i2 = ps.GetInteger();
 		return e;
 	}
+	void Fail(const char* s) {
+		QFAIL(s);
+	}
+	Command* CreateRandom(RandomSource&) {
+		Fail("should not be calling EmptyTestCommandFactory::CreateRandom");
+		return CreateNullCommand();
+	}
 };
 
 /**
@@ -109,7 +118,8 @@ public:
 TestCommandFactory::TestCommandFactory()
 		: ce(0), cl(0), str(0), strNext(0), strAllocLen(0) {
 	cl = new CloneLogger();
-	ce = MakeExecutor(cl);
+	ce = MakeExecutor();
+	ce->SetCommandLogger(cl);
 	cl->SetExecutor(ce);
 	std::auto_ptr<CommandFactory> et(
 			new EmptyTestCommandFactory("et", executionOutput));
@@ -198,6 +208,11 @@ void TestCommandFactory::parsingDescriptionIsCloning() {
 	}
 }
 
+namespace {
+const char alphanumeric[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+			"abcdefghijklmnopqrstuvwxyz";
+}
+
 class AddCharFactory : public CommandFactory {
 	std::string* model;
 public:
@@ -207,28 +222,9 @@ public:
 		int32_t p;
 	public:
 		AddChar(std::string& model, int32_t character, int32_t position)
-			: m(&model), c(Nice(character)), p(position) {
+			: m(&model), c(character), p(position) {
 		}
 		Command& DoAtomic();
-		static char Nice(int32_t c) {
-			// Make sure any valid character maps to itself.
-			// This makes constructing inverses easy (otherwise we would need
-			// an UnNice function)
-			if ('0' <= c && c <= 'z')
-			{
-				if ('a' <= c || c <= '9')
-					return c;
-				if ('A' <= c && c <= 'Z')
-					return c;
-				if (c == '@' || c == '=')
-					return c;
-			}
-			if (c < 0)
-				c = 1 - c;
-			return "abcdefghijklmnopqrstuvwxyz"
-					"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-					"0123456789@="[c%64];
-		}
 	};
 	AddCharFactory(std::string* m) : model(m) {
 	}
@@ -236,6 +232,11 @@ public:
 		int32_t character = ps.GetInteger();
 		int32_t position = ps.GetInteger();
 		return new AddChar(*model, character, position);
+	}
+	Command* CreateRandom(RandomSource& rng) {
+		int32_t index = rng.GetUniform(sizeof(alphanumeric) - 1);
+		int32_t position = rng.GetUniform(model->length());
+		return new AddChar(*model, alphanumeric[index], position);
 	}
 };
 
@@ -257,14 +258,20 @@ public:
 		int32_t position = ps.GetInteger();
 		return new DelChar(*model, position);
 	}
+	Command* CreateRandom(RandomSource& rng) {
+		int32_t len = model->length();
+		if (len == 0)
+			return CreateNullCommand();
+		int32_t position = rng.GetUniform(len - 1);
+		return new DelChar(*model, position);
+	}
 };
 
 Command& AddCharFactory::AddChar::DoAtomic() {
-	int32_t pos = (p < 0? 1 - p : p) % (m->size() + 1);
 	// insert might throw, so use an auto_ptr to avoid leaks.
-	std::auto_ptr<Command> inv(new DelCharFactory::DelChar(*m, pos));
+	std::auto_ptr<Command> inv(new DelCharFactory::DelChar(*m, p));
 	std::string::iterator i = m->begin();
-	i += pos;
+	i += p;
 	m->insert(i, c);
 	return *inv.release();
 }
@@ -273,12 +280,29 @@ Command& DelCharFactory::DelChar::DoAtomic() {
 	if (m->size() == 0) {
 		return *CreateNullCommand();
 	}
-	int32_t pos = (p < 0? 1 - p : p) % m->size();
-	char removedChar = (*m)[pos];
-	Command* inv = new AddCharFactory::AddChar(*m, removedChar, pos);
-	m->erase(pos, 1);
+	char removedChar = (*m)[p];
+	Command* inv = new AddCharFactory::AddChar(*m, removedChar, p);
+	m->erase(p, 1);
 	return *inv;
 }
+
+class StringModelTestHelper : public ModelTestHelper {
+	// not owned
+	std::string* s;
+public:
+	StringModelTestHelper(std::string& model) : s(&model) {
+	}
+	~StringModelTestHelper() {
+	}
+	void ResetModel(Executor&) {
+		s->clear();
+	}
+	Hash HashModel(const Executor&) {
+		Hash h;
+		h.Add(s->c_str());
+		return h;
+	}
+};
 
 class AddDelTestBed {
 	enum { lineBufferSize = 512 };
@@ -291,14 +315,17 @@ class AddDelTestBed {
 	std::auto_ptr<FileCommandLogger> logger;
 	std::auto_ptr<Executor> ex;
 	FILE* logFile;
+	StringModelTestHelper helper;
 public:
 	AddDelTestBed() :
 			af(new AddCharFactory(&finalString)),
 			df(new DelCharFactory(&finalString)),
 			logger(new FileCommandLogger),
-			ex(MakeExecutor(logger->GetLogger())),
-			logFile(0) {
-		ex->AddCommand("add", af);
+			ex(MakeExecutor()),
+			logFile(0),
+			helper(finalString) {
+		ex->SetCommandLogger(logger->GetLogger());
+		ex->AddCommand("add", af, true);
 		ex->AddCommand("del", df);
 		lineBuffer[lineBufferSize - 1] = '\0';
 	}
@@ -310,95 +337,14 @@ public:
 		logger->SetLogFile(logFile);
 		ex->ClearHistory();
 	}
-	void SetExpected() {
-		expected = finalString;
-	}
-	void ResetToOriginal() {
-		finalString = originalString;
-		fflush(logFile);
-		rewind(logFile);
-		ex->ClearHistory();
-	}
-	void CheckRunsEqual() {
-		QCOMPARE(finalString.c_str(), expected.c_str());
-	}
-	void CheckAsOriginal() {
-		QCOMPARE(finalString.c_str(), originalString.c_str());
-	}
-	bool ExecuteLineFromFile() {
-		if (!fgets(lineBuffer, lineBufferSize, logFile))
-			return false;
-		ex->ExecuteFromLog(lineBuffer);
-		return true;
-	}
-	bool Undo() {
-		return ex->Undo();
-	}
-	bool Redo() {
-		return ex->Redo();
-	}
-	bool ExecuteRandomCommand() {
-		int32_t commandType = rand() % 5;
-		if (commandType == 0)
-			return false;
-		switch (commandType) {
-		case 1:
-		case 2:
-		{
-			int32_t ch = rand();
-			int32_t pos = rand();
-			ex->Execute("add", ch, pos);
-			break;
-		}
-		default:
-		{
-			int32_t pos = rand();
-			ex->Execute("del", pos);
-			break;
-		}
-		}
-		return true;
-	}
-	void ExecuteRandomCommands() {
-		while (ExecuteRandomCommand()) {
-			logger->CommandComplete();
-		}
+	void TestUndo() {
+		::TestUndo(*ex, helper);
 	}
 };
 
-void TestCommandFactory::replaySequenceProducesSameOutput() {
+void TestCommandFactory::testUndo() {
 	AddDelTestBed test;
-	for (int i = 0; i != 100; ++i) {
-		test.Init(RandomString());
-		test.ExecuteRandomCommands();
-		test.SetExpected();
-		test.ResetToOriginal();
-		while (test.ExecuteLineFromFile()) {
-		}
-		test.CheckRunsEqual();
-		// and check that the reproduced history undoes all the way back
-		while (test.Undo()) {
-		}
-		test.CheckAsOriginal();
-		// finally check that the reproduced history redoes all the way
-		while (test.Redo()) {
-		}
-		test.CheckRunsEqual();
-	}
-}
-
-void TestCommandFactory::undoPutsModelBack() {
-	AddDelTestBed test;
-	for (int i = 0; i != 100; ++i) {
-		test.Init(RandomString());
-		while (!test.ExecuteRandomCommand()) {
-		}
-		test.SetExpected();
-		test.Undo();
-		test.CheckAsOriginal();
-		test.Redo();
-		test.CheckRunsEqual();
-	}
+	test.TestUndo();
 }
 
 void TestCommandFactory::replayIsRobust() {

@@ -102,6 +102,10 @@ public:
 	 * objects that have been passed to others (for example nulling their
 	 * pointers), and returning an inverse command. Any exception thrown
 	 * must be thrown before any part of the action has taken place.
+	 * @note
+	 * It is perfectly acceptable to leave this CommandAtomic in an
+	 * unusable state after this function, as it will be deleted after
+	 * returning.
 	 */
 	virtual Command& DoAtomic() = 0;
 };
