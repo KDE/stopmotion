@@ -1,12 +1,12 @@
 TEMPLATE = app
 QT += core
 CONFIG += qtestlib debug
-HEADERS += ../domain/undo/logger.h \
+HEADERS += ../domain/undo/filelogger.h \
     ../domain/undo/command.h \
     ../domain/undo/executor.h
 HEADERS += texecutor.h \
     oomtestutil.h
-SOURCES += ../domain/undo/logger.cpp \
+SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/undo/command.cpp \
     ../domain/undo/executor.cpp \
     ../domain/undo/random.cpp

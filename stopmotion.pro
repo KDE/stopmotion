@@ -1,6 +1,6 @@
 CONFIG += release \
     warn_off
-HEADERS += src/domain/undo/logger.h \
+HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
     src/domain/domainfacade.h \
     src/domain/filenamevisitor.h \
