@@ -18,8 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef LOGGER_H_
-#define LOGGER_H_
+#ifndef FILELOGGER_H_
+#define FILELOGGER_H_
 
 #include "command.h"
 
@@ -51,4 +51,4 @@ public:
 	const CommandLogger* GetLogger() const;
 };
 
-#endif /* LOGGER_H_ */
+#endif /* FILELOGGER_H_ */
