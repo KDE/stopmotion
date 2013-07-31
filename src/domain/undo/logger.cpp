@@ -70,7 +70,8 @@ public:
 		newlineRequired = true;
 	}
 	void CommandComplete() {
-		buffer.append("!\n");
+		if (newlineRequired)
+			buffer.append("!\n");
 		newlineRequired = false;
 		WriteBuffer();
 		fflush(fh);
