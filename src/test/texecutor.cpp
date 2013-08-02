@@ -30,7 +30,8 @@
 
 #include "src/domain/undo/executor.h"
 #include "src/domain/undo/command.h"
-#include "src/domain/undo/logger.h"
+#include "src/domain/undo/commandlogger.h"
+#include "src/domain/undo/filelogger.h"
 #include "src/domain/undo/random.h"
 
 #include "testundo.h"
@@ -101,8 +102,20 @@ public:
  */
 class CloneLogger : public CommandLogger {
 	Executor* ex;
+	std::string command;
+	bool alreadyIn;
+	class AlreadyIn {
+		bool& r;
+	public:
+		AlreadyIn(bool& a) : r(a) {
+			r = true;
+		}
+		~AlreadyIn() {
+			r = false;
+		}
+	};
 public:
-	CloneLogger() : ex(0) {
+	CloneLogger() : ex(0), alreadyIn(false) {
 	}
 	~CloneLogger() {
 	}
@@ -111,7 +124,14 @@ public:
 		ex = e;
 	}
 	void WriteCommand(const char* lineToLog) {
-		ex->ExecuteFromLog(lineToLog);
+		command = lineToLog;
+	}
+	void CommandComplete() {
+		if (!alreadyIn) {
+			// Make sure we don't recursively call ourselves
+			AlreadyIn a(alreadyIn);
+			ex->ExecuteFromLog(command.c_str());
+		}
 	}
 };
 

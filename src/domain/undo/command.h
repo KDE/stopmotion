@@ -24,6 +24,7 @@
 class Command;
 class CommandList;
 class FileNameVisitor;
+class CommandLogger;
 
 /**
  * Observes the completion of individual atomic commands within a composite
@@ -190,8 +191,15 @@ public:
 	 * deleting the Redo history. Any partial composite function remaining
 	 * after a thrown exception will be on the Redo stack. Ownership of
 	 * the command is passed.
+	 * @param c The command to be executed.
+	 * @param logger @c CommandComplete will be called on @c logger if the
+	 * execution is successful.
+	 * @param partObserver @c AtomicComplete will be called on
+	 * @c partObserver for each atomic command within a composite command
+	 * that is successfully executed.
 	 */
-	void Do(Command& c, PartialCommandObserver* partObserver = 0);
+	void Do(Command& c, CommandLogger* logger,
+			PartialCommandObserver* partObserver = 0);
 	/**
 	 * Clears all the undo history (and future)
 	 */

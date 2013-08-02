@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include "filelogger.h"
+#include "commandlogger.h"
 #include "executor.h"
 
 #include <stdio.h>
@@ -88,10 +89,6 @@ FileCommandLogger::~FileCommandLogger() {
 
 void FileCommandLogger::SetLogFile(FILE* f) {
 	pImpl->SetLogFile(f);
-}
-
-void FileCommandLogger::CommandComplete() {
-	pImpl->CommandComplete();
 }
 
 PartialCommandObserver* FileCommandLogger::GetPartialCommandObserver() {

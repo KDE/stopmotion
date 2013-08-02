@@ -92,21 +92,7 @@ public:
 
 class CommandReplayerImpl;
 class CommandAndDescriptionFactory;
-
-/**
- * For receiving the command's string representation during calls to Make
- * methods.
- */
-class CommandLogger {
-protected:
-	virtual ~CommandLogger() = 0;
-public:
-	/**
-	 * For receiving the serialized command. This function is allowed to
-	 * throw an exception.
-	 */
-	virtual void WriteCommand(const char*) = 0;
-};
+class CommandLogger;
 
 /**
  * Thrown if @ref CommandFactory::Execute is called with a name for which no

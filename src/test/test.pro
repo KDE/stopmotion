@@ -3,11 +3,13 @@ QT += core
 CONFIG += qtestlib debug
 HEADERS += ../domain/undo/filelogger.h \
     ../domain/undo/command.h \
+    ../domain/undo/commandlogger.h \
     ../domain/undo/executor.h
 HEADERS += texecutor.h \
     oomtestutil.h
 SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/undo/command.cpp \
+    ../domain/undo/commandlogger.cpp \
     ../domain/undo/executor.cpp \
     ../domain/undo/random.cpp
 SOURCES += \

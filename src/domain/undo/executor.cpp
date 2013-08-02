@@ -21,6 +21,7 @@
 #include "executor.h"
 #include "command.h"
 #include "random.h"
+#include "commandlogger.h"
 
 #include <map>
 #include <vector>
@@ -572,7 +573,7 @@ public:
 		VaListParameters vps(args, name, logger);
 		Command* c = f->Create(vps);
 		vps.Flush();
-		history.Do(*c);
+		history.Do(*c, logger);
 	}
 	bool ExecuteFromLog(const char* line) {
 		StringReader reader;
@@ -582,7 +583,7 @@ public:
 			CommandFactory* f = Factory(id.c_str());
 			StringReaderParameters sps(reader);
 			Command* c = f->Create(sps);
-			history.Do(*c);
+			history.Do(*c, logger);
 			return true;
 		}
 		if (StringReader::parseSucceeded == reader.IsEndOfLine())
@@ -603,7 +604,7 @@ public:
 			if (r == n)
 				return;
 			Command* c = factoriesByIndex[r]->CreateRandom(rng);
-			history.Do(*c);
+			history.Do(*c, logger);
 		}
 	}
 	virtual void ExecuteRandomConstructiveCommands(RandomSource& rng) {
@@ -615,7 +616,7 @@ public:
 			if (r == n)
 				return;
 			Command* c = constructiveCommands[r]->CreateRandom(rng);
-			history.Do(*c);
+			history.Do(*c, logger);
 		}
 	}
 	void SetCommandLogger(CommandLogger* log) {
@@ -651,9 +652,6 @@ public:
 
 Executor* MakeExecutor() {
 	return new ConcreteExecutor();
-}
-
-CommandLogger::~CommandLogger() {
 }
 
 Parameters::~Parameters() {

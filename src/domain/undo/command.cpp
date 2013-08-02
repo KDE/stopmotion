@@ -20,6 +20,7 @@
 
 #include "command.h"
 #include "../filenamevisitor.h"
+#include "commandlogger.h"
 
 #include <list>
 #include <memory>
@@ -240,10 +241,14 @@ void CommandHistory::Redo(int parts, PartialCommandObserver* ob) {
 	future->ExecuteFront(*past, parts, ob);
 }
 
-void CommandHistory::Do(Command& c, PartialCommandObserver* ob) {
+void CommandHistory::Do(Command& c, CommandLogger* logger,
+		PartialCommandObserver* ob) {
 	future->Clear();
 	future->Push(c);
 	Redo(ob);
+	if (logger) {
+		logger->CommandComplete();
+	}
 }
 
 void CommandHistory::Clear() {

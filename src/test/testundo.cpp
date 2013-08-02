@@ -21,7 +21,8 @@
 #include "testundo.h"
 
 #include "src/domain/undo/executor.h"
-#include "src/domain/undo/logger.h"
+#include "src/domain/undo/commandlogger.h"
+#include "src/domain/undo/filelogger.h"
 #include "src/domain/undo/random.h"
 
 #include <sstream>
@@ -55,6 +56,10 @@ public:
 		}
 		if (delegate)
 			delegate->WriteCommand(command);
+	}
+	void CommandComplete() {
+		if (delegate)
+			delegate->CommandComplete();
 	}
 	void SetDelegate(CommandLogger* newLogger) {
 		delegate = newLogger;
@@ -132,7 +137,6 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 		stringLogger.SetDelegate(fileLogger.GetLogger());
 		e.ExecuteRandomCommands(rng);
 		Hash finalState(helper.HashModel(e));
-		fileLogger.CommandComplete();
 		std::string doLog(logString);
 		e.SetCommandLogger(0);
 		rewind(logFile);
