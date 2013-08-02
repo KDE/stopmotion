@@ -131,6 +131,9 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 		helper.ResetModel(e);
 		e.ExecuteRandomConstructiveCommands(rng);
 		std::string constructLog(logString);
+		if (constructLog.empty()) {
+			constructLog = "<no commands>\n";
+		}
 		logString.clear();
 		e.ClearHistory();
 		Hash initialState(helper.HashModel(e));
@@ -138,6 +141,9 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 		e.ExecuteRandomCommands(rng);
 		Hash finalState(helper.HashModel(e));
 		std::string doLog(logString);
+		if (doLog.empty()) {
+			doLog = "<no commands>\n";
+		}
 		e.SetCommandLogger(0);
 		rewind(logFile);
 
@@ -151,9 +157,9 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 		if (helper.HashModel(e) != finalState) {
 			std::stringstream ss;
 			ss << "Failed to replay to final state on test "
-					<< i << "[construction commands:\n"
+					<< i << "\n[construction commands:\n"
 					<< constructLog
-					<< "do commands:\n"	<< doLog << "]\n";
+					<< "do commands:\n"	<< doLog << "]";
 			QFAIL(ss.str().c_str());
 		}
 
@@ -165,7 +171,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			ss << "Failed to undo to initial state on test "
 					<< i << "[construction commands:\n"
 					<< constructLog
-					<< "do commands:\n"	<< doLog << "]\n";
+					<< "do commands:\n"	<< doLog << "]";
 			QFAIL(ss.str().c_str());
 		}
 		while (e.Redo()) {
@@ -175,7 +181,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			ss << "Failed to redo to final state on test "
 					<< i << "[construction commands:\n"
 					<< constructLog
-					<< "do commands:\n"	<< doLog << "]\n";
+					<< "do commands:\n"	<< doLog << "]";
 			QFAIL(ss.str().c_str());
 		}
 	}
