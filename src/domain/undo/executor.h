@@ -46,8 +46,12 @@ public:
 	/**
 	 * Returns an integer. Might throw IncorrectParameterException if
 	 * unsuccessful, but this behaviour must not be relied upon.
+	 * @param min The minimum permissible value that could be returned.
+	 * @param max The maximum permissible value that could be returned.
+	 * @note @c min and @c max are used by @ref TestUndo in order to create
+	 * commands that are appropriate for testing.
 	 */
-	virtual int32_t GetInteger() = 0;
+	virtual int32_t GetInteger(int32_t min, int32_t max) = 0;
 	/**
 	 * Returns the length of string read, which may be greater than maxLength
 	 * although no more than maxLength characters will be output into out.
@@ -72,22 +76,6 @@ public:
 	 * @return The command created, ownership is returned.
 	 */
 	virtual Command* Create(Parameters& ps) = 0;
-	/**
-	 * Creates a random command for testing. You can that a collection of
-	 * command factories work together by registering them with an
-	 * @c Executor and passing the @c Executor to the functions in
-	 * @c testundo.h as part of unit tests. Please make sure that there is a
-	 * good chance of any edge cases being generated.
-	 * @param rng A random number generator to use. This must be used as the
-	 * source for all randomness; please do not use @c rand() directly.
-	 * @return a Command of the type that @c Create creates, using parameters
-	 * that makes sense with the current state of the model. This command will
-	 * be executed with the model as it is now.
-	 * @note
-	 * If no sensible command of this type can be generated (for example, a
-	 * deletion from an empty model), please return @c CreateNullCommand().
-	 */
-	virtual Command* CreateRandom(RandomSource& rng) = 0;
 };
 
 class CommandReplayerImpl;

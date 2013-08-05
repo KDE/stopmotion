@@ -351,7 +351,7 @@ public:
 	}
 	~StringReaderParameters() {
 	}
-	int32_t GetInteger() {
+	int32_t GetInteger(int32_t, int32_t) {
 		int32_t r;
 		if (StringReader::parseFailed == reader.GetInteger(r))
 			throw IncorrectParameterException();
@@ -500,7 +500,6 @@ Executor::~Executor() {
 
 class VaListParameters : public Parameters {
 	va_list& args;
-	CommandLogger* logger;
 	StringWriter writer;
 public:
 	/**
@@ -513,16 +512,14 @@ public:
 	 * representation of the command and its parameters. Ownership is
 	 * not passed.
 	 */
-	VaListParameters(va_list& a, const char* name,
-			CommandLogger* commandLogger)
-			: args(a), logger(commandLogger) {
+	VaListParameters(va_list& a, const char* name)
+			: args(a) {
 		writer.WriteIdentifier(name);
 	}
 	~VaListParameters() {
 		va_end(args);
-		logger = 0;
 	}
-	int32_t GetInteger() {
+	int32_t GetInteger(int32_t, int32_t) {
 		int32_t r = va_arg(args, int32_t);
 		writer.WriteInteger(r);
 		return r;
@@ -532,13 +529,31 @@ public:
 		writer.WriteString(s);
 		out.assign(s);
 	}
-	/**
-	 * Write the command out to the command logger.
-	 */
-	void Flush() {
-		if (logger) {
-			logger->WriteCommand(writer.Result());
-		}
+	void WriteCommand(CommandLogger* logger) {
+		logger->WriteCommand(writer.Result());
+		writer.Reset();
+	}
+};
+
+class RandomParameters : public Parameters {
+	StringWriter writer;
+	RandomSource rs;
+public:
+	RandomParameters(RandomSource& rng, const char* name)
+			: rs(rng) {
+		writer.WriteIdentifier(name);
+	}
+	int32_t GetInteger(int32_t min, int32_t max) {
+		int32_t r = rs.GetUniform(min, max);
+		writer.WriteInteger(r);
+		return r;
+	}
+	void GetString(std::string& out) {
+		rs.GetAlphanumeric(out);
+		writer.WriteString(out.c_str());
+	}
+	void WriteCommand(CommandLogger* logger) {
+		logger->WriteCommand(writer.Result());
 		writer.Reset();
 	}
 };
@@ -549,7 +564,7 @@ class ConcreteExecutor : public Executor {
 	typedef std::map<std::string, CommandFactory*> FactoryMap;
 	FactoryMap factories;
 	// does not own its factories
-	std::vector<CommandFactory*> constructiveCommands;
+	std::vector<std::string> constructiveCommands;
 	CommandFactory* Factory(const char* name) {
 		std::string n(name);
 		FactoryMap::iterator found = factories.find(n);
@@ -570,9 +585,9 @@ public:
 		CommandFactory* f = Factory(name);
 		va_list args;
 		va_start(args, name);
-		VaListParameters vps(args, name, logger);
+		VaListParameters vps(args, name);
 		Command* c = f->Create(vps);
-		vps.Flush();
+		vps.WriteCommand(logger);
 		history.Do(*c, logger);
 	}
 	bool ExecuteFromLog(const char* line) {
@@ -594,16 +609,19 @@ public:
 		int n = factories.size();
 		if (n == 0)
 			throw UnknownCommandException();
-		std::vector<CommandFactory*> factoriesByIndex;
+		std::vector<std::string> factoryNames;
 		for (FactoryMap::iterator i = factories.begin();
 				i != factories.end(); ++i) {
-			factoriesByIndex.push_back(i->second);
+			factoryNames.push_back(i->first);
 		}
 		while (true) {
 			int r = rng.GetUniform(n);
 			if (r == n)
 				return;
-			Command* c = factoriesByIndex[r]->CreateRandom(rng);
+			std::string& name(factoryNames[r]);
+			RandomParameters rps(rng, name.c_str());
+			Command* c = factories[name]->Create(rps);
+			rps.WriteCommand(logger);
 			history.Do(*c, logger);
 		}
 	}
@@ -615,7 +633,10 @@ public:
 			int r = rng.GetUniform(n);
 			if (r == n)
 				return;
-			Command* c = constructiveCommands[r]->CreateRandom(rng);
+			std::string& name(constructiveCommands[r]);
+			RandomParameters rps(rng, name.c_str());
+			Command* c = factories[name]->Create(rps);
+			rps.WriteCommand(logger);
 			history.Do(*c, logger);
 		}
 	}
@@ -630,7 +651,7 @@ public:
 			constructiveCommands.reserve(constructiveCommands.size() + 1);
 		factories.insert(p);
 		if (constructive)
-			constructiveCommands.push_back(factory.get());
+			constructiveCommands.push_back(n);
 		factory.release();
 	}
 	void ClearHistory() {
