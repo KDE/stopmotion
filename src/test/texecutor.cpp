@@ -83,17 +83,13 @@ public:
 	}
 	Command* Create(Parameters& ps) {
 		EtCommand* e = new EtCommand(name, output);
-		e->i1 = ps.GetInteger();
+		e->i1 = ps.GetInteger(0, 99);
 		ps.GetString(e->s1);
-		e->i2 = ps.GetInteger();
+		e->i2 = ps.GetInteger(0, 99);
 		return e;
 	}
 	void Fail(const char* s) {
 		QFAIL(s);
-	}
-	Command* CreateRandom(RandomSource&) {
-		Fail("should not be calling EmptyTestCommandFactory::CreateRandom");
-		return CreateNullCommand();
 	}
 };
 
@@ -249,14 +245,9 @@ public:
 	AddCharFactory(std::string* m) : model(m) {
 	}
 	Command* Create(Parameters& ps) {
-		int32_t character = ps.GetInteger();
-		int32_t position = ps.GetInteger();
+		int32_t character = ps.GetInteger(0, sizeof(alphanumeric) - 1);
+		int32_t position = ps.GetInteger(0, model->length());
 		return new AddChar(*model, character, position);
-	}
-	Command* CreateRandom(RandomSource& rng) {
-		int32_t index = rng.GetUniform(sizeof(alphanumeric) - 1);
-		int32_t position = rng.GetUniform(model->length());
-		return new AddChar(*model, alphanumeric[index], position);
 	}
 };
 
@@ -275,14 +266,10 @@ public:
 	DelCharFactory(std::string* m) : model(m) {
 	}
 	Command* Create(Parameters& ps) {
-		int32_t position = ps.GetInteger();
-		return new DelChar(*model, position);
-	}
-	Command* CreateRandom(RandomSource& rng) {
 		int32_t len = model->length();
 		if (len == 0)
 			return CreateNullCommand();
-		int32_t position = rng.GetUniform(len - 1);
+		int32_t position = ps.GetInteger(0, len - 1);
 		return new DelChar(*model, position);
 	}
 };
