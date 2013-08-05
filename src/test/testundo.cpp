@@ -120,9 +120,10 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 	FILE* logFile = tmpfile();
 	// ownership of logFile is passed here
 	fileLogger.SetLogFile(logFile);
-	RandomSource rng;
-	RandomSource rng2(rng);
 	for (int i = 0; i != 100; ++i) {
+		rewind(logFile);
+		RandomSource rng;
+		RandomSource rng2(rng);
 		// get hashes for initial and final states
 		// and logs to say what was done
 		logString.clear();

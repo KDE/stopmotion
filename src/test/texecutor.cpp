@@ -245,7 +245,8 @@ public:
 	AddCharFactory(std::string* m) : model(m) {
 	}
 	Command* Create(Parameters& ps) {
-		int32_t character = ps.GetInteger(0, sizeof(alphanumeric) - 1);
+		int32_t i = ps.GetInteger(0, sizeof(alphanumeric) - 1);
+		int32_t character = alphanumeric[i];
 		int32_t position = ps.GetInteger(0, model->length());
 		return new AddChar(*model, character, position);
 	}

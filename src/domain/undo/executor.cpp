@@ -621,7 +621,8 @@ public:
 			std::string& name(factoryNames[r]);
 			RandomParameters rps(rng, name.c_str());
 			Command* c = factories[name]->Create(rps);
-			rps.WriteCommand(logger);
+			if (logger)
+				rps.WriteCommand(logger);
 			history.Do(*c, logger);
 		}
 	}
@@ -636,7 +637,8 @@ public:
 			std::string& name(constructiveCommands[r]);
 			RandomParameters rps(rng, name.c_str());
 			Command* c = factories[name]->Create(rps);
-			rps.WriteCommand(logger);
+			if (logger)
+				rps.WriteCommand(logger);
 			history.Do(*c, logger);
 		}
 	}
