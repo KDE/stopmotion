@@ -269,7 +269,7 @@ public:
 	Command* Create(Parameters& ps) {
 		int32_t len = model->length();
 		if (len == 0)
-			return CreateNullCommand();
+			return 0;
 		int32_t position = ps.GetInteger(0, len - 1);
 		return new DelChar(*model, position);
 	}

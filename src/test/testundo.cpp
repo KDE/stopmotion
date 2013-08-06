@@ -121,7 +121,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 	// ownership of logFile is passed here
 	fileLogger.SetLogFile(logFile);
 	for (int i = 0; i != 100; ++i) {
-		rewind(logFile);
+		freopen(0, "w", logFile);
 		RandomSource rng;
 		RandomSource rng2(rng);
 		// get hashes for initial and final states
@@ -146,7 +146,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			doLog = "<no commands>\n";
 		}
 		e.SetCommandLogger(0);
-		rewind(logFile);
+		freopen(0, "r", logFile);
 
 		// recreate the initial state and see if executing from
 		// the log file produces the same output

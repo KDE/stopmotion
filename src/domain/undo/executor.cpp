@@ -624,9 +624,11 @@ public:
 			std::string& name(factoryNames[r]);
 			RandomParameters rps(rng, name.c_str());
 			Command* c = factories[name]->Create(rps);
-			if (logger)
-				rps.WriteCommand(logger);
-			history.Do(*c, logger);
+			if (c) {
+				if (logger)
+					rps.WriteCommand(logger);
+				history.Do(*c, logger);
+			}
 		}
 	}
 	virtual void ExecuteRandomConstructiveCommands(RandomSource& rng) {
@@ -640,9 +642,11 @@ public:
 			std::string& name(constructiveCommands[r]);
 			RandomParameters rps(rng, name.c_str());
 			Command* c = factories[name]->Create(rps);
-			if (logger)
-				rps.WriteCommand(logger);
-			history.Do(*c, logger);
+			if (c) {
+				if (logger)
+					rps.WriteCommand(logger);
+				history.Do(*c, logger);
+			}
 		}
 	}
 	void SetCommandLogger(CommandLogger* log) {

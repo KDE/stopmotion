@@ -76,7 +76,9 @@ public:
 	/**
 	 * Creates a command from the Parameters given in ps.
 	 * @param The source of parameters to use, ownership is not passed.
-	 * @return The command created, ownership is returned.
+	 * @return The command created, ownership is returned. @c NULL is returned
+	 * if no such command can be created at the moment (for example a delete
+	 * when the model is empty).
 	 */
 	virtual Command* Create(Parameters& ps) = 0;
 };
