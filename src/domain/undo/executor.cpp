@@ -590,8 +590,10 @@ public:
 		va_start(args, name);
 		VaListParameters vps(args, name);
 		Command* c = f->Create(vps);
-		vps.WriteCommand(logger);
-		history.Do(*c, logger);
+		if (c) {
+			vps.WriteCommand(logger);
+			history.Do(*c, logger);
+		}
 	}
 	bool ExecuteFromLog(const char* line) {
 		StringReader reader;
@@ -601,6 +603,10 @@ public:
 			CommandFactory* f = Factory(id.c_str());
 			StringReaderParameters sps(reader);
 			Command* c = f->Create(sps);
+			// It is an error if a command executed from a log is invalid.
+			// This would mean that the log has become out-of-sync with the
+			// model.
+			assert(c);
 			history.Do(*c, logger);
 			return true;
 		}
