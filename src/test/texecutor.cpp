@@ -83,9 +83,9 @@ public:
 	}
 	Command* Create(Parameters& ps) {
 		EtCommand* e = new EtCommand(name, output);
-		e->i1 = ps.GetInteger(0, 99);
+		e->i1 = ps.GetInteger(-RAND_MAX/2, RAND_MAX/2);
 		ps.GetString(e->s1);
-		e->i2 = ps.GetInteger(0, 99);
+		e->i2 = ps.GetInteger(-RAND_MAX/2, RAND_MAX/2);
 		return e;
 	}
 	void Fail(const char* s) {
