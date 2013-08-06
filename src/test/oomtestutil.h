@@ -44,7 +44,7 @@ void SetMallocsUntilFailure(int successes);
 /**
  * Sets that there will be no artificial memory allocation failures.
  */
-void CancelMallocFailure();
+void CancelAnyMallocFailure();
 
 /**
  * Returns a counter of the number of (successful or unsuccessful) calls to

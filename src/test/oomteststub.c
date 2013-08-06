@@ -57,7 +57,7 @@ void SetMallocsUntilFailure(int successes) {
 		smuf(successes);
 }
 
-void CancelMallocFailure() {
+void CancelAnyMallocFailure() {
 	if (smuf)
 		smuf(-1);
 }

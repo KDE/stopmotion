@@ -125,11 +125,12 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 	// ownership of logFile is passed here
 	fileLogger.SetLogFile(logFile);
 	for (int i = 0; i != 100; ++i) {
-		CancelMallocFailure();
+		CancelAnyMallocFailure();
 		freopen(0, "w", logFile);
 		RandomSource rng;
 		RandomSource rng2(rng);
 		RandomSource rng3(rng);
+		RandomSource rng4(rng);
 		// get hashes for initial and final states
 		// and logs to say what was done
 		logString.clear();
@@ -194,9 +195,8 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 		}
 		unsigned long mallocCount = undoneMallocCount - startMallocCount;
 		if (oomLoaded && 0 < mallocCount) {
+			// Test undoing after an Out-Of-Memory failure
 			int32_t failAt = rng.GetUniform(mallocCount);
-			// test that, if an allocation fails, we still have a working
-			// undo.
 			e.SetCommandLogger(0);
 			helper.ResetModel(e);
 			e.ExecuteRandomConstructiveCommands(rng3);
@@ -210,22 +210,57 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			} catch (std::bad_alloc&) {
 				failed = true;
 			}
-			CancelMallocFailure();
+			CancelAnyMallocFailure();
 			while (e.Undo()) {
-				if (helper.HashModel(e) != initialState) {
-					std::stringstream ss;
-					ss << "Failed to undo to initial state ";
-					if (failed) {
-						ss << "(after malloc failure) " << failAt;
-					} else {
-						ss << "(even though there was no malloc failure)";
-					}
-					ss << " on test " << i
-							<< "\n[construction commands:\n"
-							<< constructLog
-							<< "do commands:\n"	<< doLog << "]";
-					QFAIL(ss.str().c_str());
+			}
+			if (helper.HashModel(e) != initialState) {
+				std::stringstream ss;
+				ss << "Failed to undo to initial state ";
+				if (failed) {
+					ss << "(after malloc failure) " << failAt;
+				} else {
+					ss << "(even though there was no malloc failure)";
 				}
+				ss << " on test " << i
+						<< "\n[construction commands:\n"
+						<< constructLog
+						<< "do commands:\n"	<< doLog << "]";
+				QFAIL(ss.str().c_str());
+			}
+
+			// Test redoing after an Out-Of-Memory failure
+			int32_t failAt2 = rng.GetUniform(mallocCount);
+			e.SetCommandLogger(0);
+			helper.ResetModel(e);
+			e.ExecuteRandomConstructiveCommands(rng4);
+			e.ClearHistory();
+			e.ExecuteRandomCommands(rng4);
+			SetMallocsUntilFailure(failAt2);
+			failed = false;
+			try {
+				while (e.Undo()) {
+				}
+				while (e.Redo()) {
+				}
+			} catch (std::bad_alloc&) {
+				failed = true;
+			}
+			CancelAnyMallocFailure();
+			while (e.Redo()) {
+			}
+			if (helper.HashModel(e) != finalState) {
+				std::stringstream ss;
+				ss << "Failed to redo to final state ";
+				if (failed) {
+					ss << "(after malloc failure) " << failAt;
+				} else {
+					ss << "(even though there was no malloc failure)";
+				}
+				ss << " on test " << i
+						<< "\n[construction commands:\n"
+						<< constructLog
+						<< "do commands:\n"	<< doLog << "]";
+				QFAIL(ss.str().c_str());
 			}
 		}
 	}
