@@ -25,9 +25,11 @@
 #include "oomtestutil.h"
 
 typedef void SetMallocsUntilFailure_t(int);
+typedef unsigned long MallocsSoFar_t(void);
 typedef void Init_t(void);
 
 static SetMallocsUntilFailure_t* smuf;
+static MallocsSoFar_t* msf;
 
 int LoadOomTestUtil() {
 	// Using dlopen might cause a malloc, which would not work when we have not
@@ -38,11 +40,12 @@ int LoadOomTestUtil() {
 	// search with the library after the one we are calling from.
 	// RTLD_NEXT and RTLD_DEFAULT are only available with the GNU dl library;
 	// standard C dl libraries do not have this functionality.
-	if (smuf)
+	if (smuf && msf)
 		return 1;  // already initialized
 	Init_t* init = (Init_t*)dlsym(RTLD_DEFAULT, "Init");
 	smuf = (SetMallocsUntilFailure_t*)dlsym(RTLD_DEFAULT,
 			"RealSetMallocsUntilFailure");
+	msf = (MallocsSoFar_t*)dlsym(RTLD_DEFAULT, "RealMallocsSoFar");
 	if (!init || !smuf)
 		return 0;
 	init();
@@ -52,4 +55,15 @@ int LoadOomTestUtil() {
 void SetMallocsUntilFailure(int successes) {
 	if (smuf)
 		smuf(successes);
+}
+
+void CancelMallocFailure() {
+	if (smuf)
+		smuf(-1);
+}
+
+unsigned long MallocsSoFar() {
+	if (msf)
+		return msf();
+	return 0;
 }

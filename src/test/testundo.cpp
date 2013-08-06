@@ -20,6 +20,8 @@
 
 #include "testundo.h"
 
+#include "src/test/oomtestutil.h"
+
 #include "src/domain/undo/executor.h"
 #include "src/domain/undo/commandlogger.h"
 #include "src/domain/undo/filelogger.h"
@@ -114,6 +116,8 @@ bool ExecuteLineFromFile(Executor& e, FILE* logFile) {
 }
 
 void TestUndo(Executor& e, ModelTestHelper& helper) {
+	bool oomLoaded = LoadOomTestUtil();
+	QVERIFY2(oomLoaded, "Oom Test Util not loaded!");
 	FileCommandLogger fileLogger;
 	std::string logString;
 	StringLoggerWrapper stringLogger(&logString);
@@ -121,9 +125,11 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 	// ownership of logFile is passed here
 	fileLogger.SetLogFile(logFile);
 	for (int i = 0; i != 100; ++i) {
+		CancelMallocFailure();
 		freopen(0, "w", logFile);
 		RandomSource rng;
 		RandomSource rng2(rng);
+		RandomSource rng3(rng);
 		// get hashes for initial and final states
 		// and logs to say what was done
 		logString.clear();
@@ -153,6 +159,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 		helper.ResetModel(e);
 		e.ExecuteRandomConstructiveCommands(rng2);
 		e.ClearHistory();
+		unsigned long startMallocCount = MallocsSoFar();
 		while (ExecuteLineFromFile(e, logFile)) {
 		}
 		if (helper.HashModel(e) != finalState) {
@@ -163,14 +170,14 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 					<< "do commands:\n"	<< doLog << "]";
 			QFAIL(ss.str().c_str());
 		}
-
 		// test Undo and Redo on the same data
 		while (e.Undo()) {
 		}
+		unsigned long undoneMallocCount = MallocsSoFar();
 		if (helper.HashModel(e) != initialState) {
 			std::stringstream ss;
 			ss << "Failed to undo to initial state on test "
-					<< i << "[construction commands:\n"
+					<< i << "\n[construction commands:\n"
 					<< constructLog
 					<< "do commands:\n"	<< doLog << "]";
 			QFAIL(ss.str().c_str());
@@ -180,10 +187,46 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 		if (helper.HashModel(e) != finalState) {
 			std::stringstream ss;
 			ss << "Failed to redo to final state on test "
-					<< i << "[construction commands:\n"
+					<< i << "\n[construction commands:\n"
 					<< constructLog
 					<< "do commands:\n"	<< doLog << "]";
 			QFAIL(ss.str().c_str());
+		}
+		unsigned long mallocCount = undoneMallocCount - startMallocCount;
+		if (oomLoaded && 0 < mallocCount) {
+			int32_t failAt = rng.GetUniform(mallocCount);
+			// test that, if an allocation fails, we still have a working
+			// undo.
+			e.SetCommandLogger(0);
+			helper.ResetModel(e);
+			e.ExecuteRandomConstructiveCommands(rng3);
+			e.ClearHistory();
+			SetMallocsUntilFailure(failAt);
+			bool failed = false;
+			try {
+				e.ExecuteRandomCommands(rng3);
+				while (e.Undo()) {
+				}
+			} catch (std::bad_alloc&) {
+				failed = true;
+			}
+			CancelMallocFailure();
+			while (e.Undo()) {
+				if (helper.HashModel(e) != initialState) {
+					std::stringstream ss;
+					ss << "Failed to undo to initial state ";
+					if (failed) {
+						ss << "(after malloc failure) " << failAt;
+					} else {
+						ss << "(even though there was no malloc failure)";
+					}
+					ss << " on test " << i
+							<< "\n[construction commands:\n"
+							<< constructLog
+							<< "do commands:\n"	<< doLog << "]";
+					QFAIL(ss.str().c_str());
+				}
+			}
 		}
 	}
 }

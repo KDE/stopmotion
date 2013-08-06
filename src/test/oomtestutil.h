@@ -30,16 +30,28 @@ extern "C" {
 /**
  * Installs the SetMallocsUntilFailure function.
  * Returns 1 on success, 0 on failure.
- * SetMallocsUntilFailure will not work unless this function has been called
- * and has returned true.
+ * @ref SetMallocsUntilFailure will not work unless this function has been
+ * called and has returned 1.
  */
 int LoadOomTestUtil();
 
 /**
  * Sets the number of successful memory allocations until one will fail.
- * Will not work unless LoadOomTestUtil() has been called and returned true.
+ * Will not work unless @ref LoadOomTestUtil has been called and returned 1.
  */
 void SetMallocsUntilFailure(int successes);
+
+/**
+ * Sets that there will be no artificial memory allocation failures.
+ */
+void CancelMallocFailure();
+
+/**
+ * Returns a counter of the number of (successful or unsuccessful) calls to
+ * @c malloc so far. Will not work unless @ref LoadOomTestUtil has been called
+ * and returned 1.
+ */
+unsigned long MallocsSoFar();
 
 #ifdef __cplusplus
 }
