@@ -26,10 +26,12 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <memory>
+
 #include <string.h>
 #include <stdint.h>
 #include <stdarg.h>
-#include <memory>
+#include <assert.h>
 
 /**
  * Reads a space-separated list of strings and numbers. Strings are quoted,
@@ -519,8 +521,9 @@ public:
 	~VaListParameters() {
 		va_end(args);
 	}
-	int32_t GetInteger(int32_t, int32_t) {
+	int32_t GetInteger(int32_t min, int32_t max) {
 		int32_t r = va_arg(args, int32_t);
+		assert(min <= r && r <= max);
 		writer.WriteInteger(r);
 		return r;
 	}

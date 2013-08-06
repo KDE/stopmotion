@@ -46,10 +46,13 @@ public:
 	/**
 	 * Returns an integer. Might throw IncorrectParameterException if
 	 * unsuccessful, but this behaviour must not be relied upon.
-	 * @param min The minimum permissible value that could be returned.
-	 * @param max The maximum permissible value that could be returned.
+	 * @param min The minimum permissible value that could be returned based
+	 * on the current state of the model being altered.
+	 * @param max The maximum permissible value that could be returned based
+	 * on the current state of the model being altered.
 	 * @note @c min and @c max are used by @ref TestUndo in order to create
-	 * commands that are appropriate for testing.
+	 * commands that are appropriate for testing. They are also used to assert
+	 * that the values passed to @ref Executor::Execute are within range.
 	 */
 	virtual int32_t GetInteger(int32_t min, int32_t max) = 0;
 	/**
