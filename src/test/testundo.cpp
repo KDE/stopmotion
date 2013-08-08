@@ -118,15 +118,10 @@ bool ExecuteLineFromFile(Executor& e, FILE* logFile) {
 void TestUndo(Executor& e, ModelTestHelper& helper) {
 	bool oomLoaded = LoadOomTestUtil();
 	QVERIFY2(oomLoaded, "Oom Test Util not loaded!");
-	FileCommandLogger fileLogger;
 	std::string logString;
 	StringLoggerWrapper stringLogger(&logString);
-	FILE* logFile = tmpfile();
-	// ownership of logFile is passed here
-	fileLogger.SetLogFile(logFile);
 	for (int i = 0; i != 100; ++i) {
 		CancelAnyMallocFailure();
-		freopen(0, "w", logFile);
 		Hash initialState;
 		Hash finalState;
 		std::string constructLog;
@@ -139,6 +134,10 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			// get hashes for initial and final states
 			// and logs to say what was done
 			RandomSource rng(initial);
+			FileCommandLogger fileLogger;
+			FILE* logFile = tmpfile();
+			// ownership of logFile is passed here
+			fileLogger.SetLogFile(logFile);
 			logString.clear();
 			stringLogger.SetDelegate(0);
 			e.SetCommandLogger(&stringLogger);
@@ -160,15 +159,14 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			if (doLog.empty()) {
 				doLog = "<no commands>\n";
 			}
-		}
-		{
-		// recreate the initial state and see if executing from
-		// the log file produces the same output
-			RandomSource rng(initial);
+			stringLogger.SetDelegate(0);
+			// recreate the initial state and see if executing from
+			// the log file produces the same output
+			RandomSource rng2(initial);
 			e.SetCommandLogger(0);
 			freopen(0, "r", logFile);
 			helper.ResetModel(e);
-			e.ExecuteRandomConstructiveCommands(rng);
+			e.ExecuteRandomConstructiveCommands(rng2);
 			e.ClearHistory();
 			while (ExecuteLineFromFile(e, logFile)) {
 			}
@@ -205,6 +203,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			}
 			totalMallocCount = doMallocCount + undoMallocCount;
 		}
+
 		if (oomLoaded && 0 < totalMallocCount) {
 			RandomSource rng(initial);
 			// Test undoing after an Out-Of-Memory failure
@@ -240,6 +239,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 				QFAIL(ss.str().c_str());
 			}
 		}
+
 		if (oomLoaded && 0 < totalMallocCount) {
 			RandomSource rng(initial);
 			// Test redoing after an Out-Of-Memory failure
@@ -286,7 +286,10 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			helper.ResetModel(e);
 			e.ExecuteRandomConstructiveCommands(rng);
 			e.ClearHistory();
-			freopen(0, "w", logFile);
+			FileCommandLogger fileLogger;
+			FILE* logFile = tmpfile();
+			// ownership of logFile is passed here
+			fileLogger.SetLogFile(logFile);
 			stringLogger.SetDelegate(fileLogger.GetLogger());
 			e.SetCommandLogger(&stringLogger);
 			logString.clear();
@@ -320,6 +323,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 				}
 			}
 			CancelAnyMallocFailure();
+			stringLogger.SetDelegate(0);
 		}
 	}
 }
