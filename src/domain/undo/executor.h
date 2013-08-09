@@ -32,7 +32,18 @@
 class IncorrectParameterException {
 };
 
+/**
+ * Thrown if a line from the log parses correctly but has extra unexpected
+ * characters at its end.
+ */
 class MalformedLineException {
+};
+
+/**
+ * Thrown if the parameters for a command (from the log or from a caller) are
+ * inappropriate for the current state of the model.
+ */
+class ParametersOutOfRangeException {
 };
 
 /**

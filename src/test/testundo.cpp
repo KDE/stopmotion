@@ -168,9 +168,14 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			helper.ResetModel(e);
 			e.ExecuteRandomConstructiveCommands(rng2);
 			e.ClearHistory();
-			while (ExecuteLineFromFile(e, logFile)) {
+			bool failed = false;
+			try {
+				while (ExecuteLineFromFile(e, logFile)) {
+				}
+			} catch (ParametersOutOfRangeException&) {
+				failed = true;
 			}
-			if (helper.HashModel(e) != finalState) {
+			if (failed || helper.HashModel(e) != finalState) {
 				std::stringstream ss;
 				ss << "Failed to replay to final state on test "
 						<< i << "\n[construction commands:\n"
@@ -309,9 +314,14 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 				helper.ResetModel(e);
 				e.ExecuteRandomConstructiveCommands(rng2);
 				freopen(0, "r", logFile);
-				while (ExecuteLineFromFile(e, logFile)) {
+				bool failed = false;
+				try {
+					while (ExecuteLineFromFile(e, logFile)) {
+					}
+				} catch (ParametersOutOfRangeException&) {
+					failed = true;
 				}
-				if (helper.HashModel(e) != afterFailureState) {
+				if (failed || helper.HashModel(e) != afterFailureState) {
 					std::stringstream ss;
 					ss << "Failed to replay only successful commands from the log\n"
 							<< "after failure at " << failAt << "\non test"

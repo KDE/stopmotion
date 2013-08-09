@@ -31,7 +31,6 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdarg.h>
-#include <assert.h>
 
 /**
  * Reads a space-separated list of strings and numbers. Strings are quoted,
@@ -523,7 +522,8 @@ public:
 	}
 	int32_t GetInteger(int32_t min, int32_t max) {
 		int32_t r = va_arg(args, int32_t);
-		assert(min <= r && r <= max);
+		if(r < min || max < r)
+			throw ParametersOutOfRangeException();
 		writer.WriteInteger(r);
 		return r;
 	}
@@ -606,7 +606,8 @@ public:
 			// It is an error if a command executed from a log is invalid.
 			// This would mean that the log has become out-of-sync with the
 			// model.
-			assert(c);
+			if (!c)
+				throw ParametersOutOfRangeException();
 			history.Do(*c, logger);
 			return true;
 		}
