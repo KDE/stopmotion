@@ -26,7 +26,6 @@
 #include <iosfwd>
 
 class FileCommandLoggerImpl;
-class PartialCommandObserver;
 class CommandReplayer;
 class CommandLogger;
 
@@ -44,8 +43,6 @@ public:
 	FileCommandLogger(const FileCommandLogger&); // unimplemented
 	FileCommandLogger& operator=(const FileCommandLogger&); //unimplemented
 	void SetLogFile(FILE* fileHandle);
-	PartialCommandObserver* GetPartialCommandObserver();
-	const PartialCommandObserver* GetPartialCommandObserver() const;
 	CommandLogger* GetLogger();
 	const CommandLogger* GetLogger() const;
 };

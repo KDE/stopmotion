@@ -52,7 +52,7 @@ public:
 			output_t& executionOutput)
 			: name(nameForCommand), output(executionOutput) {
 	}
-	class EtCommand : public CommandAtomic {
+	class EtCommand : public Command {
 	public:
 		std::string name;
 		output_t& output;
@@ -63,11 +63,11 @@ public:
 				: name(commandName), output(out),
 				  s1(""), i1(no_num), i2(no_num) {
 		}
-		Command& DoAtomic() {
+		Command* Do() {
 			std::stringstream ss;
 			ss << name << ",i:" << i1 << ",s:" << s1 << ",i:" << i2;
 			output.push_back(ss.str());
-			return *CreateNullCommand();
+			return CreateNullCommand();
 		}
 		bool operator==(const EtCommand& other) const {
 			return name == other.name
@@ -236,7 +236,7 @@ const char alphanumeric[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 class AddCharFactory : public CommandFactory {
 	std::string* model;
 public:
-	class AddChar : public CommandAtomic {
+	class AddChar : public Command {
 		std::string* m;
 		char c;
 		int32_t p;
@@ -244,7 +244,7 @@ public:
 		AddChar(std::string& model, int32_t character, int32_t position)
 			: m(&model), c(character), p(position) {
 		}
-		Command& DoAtomic();
+		Command* Do();
 	};
 	AddCharFactory(std::string* m) : model(m) {
 	}
@@ -259,14 +259,14 @@ public:
 class DelCharFactory : public CommandFactory {
 	std::string* model;
 public:
-	class DelChar : public CommandAtomic {
+	class DelChar : public Command {
 		std::string* m;
 		int32_t p;
 	public:
 		DelChar(std::string& model, int32_t position)
 			: m(&model), p(position) {
 		}
-		Command& DoAtomic();
+		Command* Do();
 	};
 	DelCharFactory(std::string* m) : model(m) {
 	}
@@ -279,23 +279,23 @@ public:
 	}
 };
 
-Command& AddCharFactory::AddChar::DoAtomic() {
+Command* AddCharFactory::AddChar::Do() {
 	// insert might throw, so use an auto_ptr to avoid leaks.
 	std::auto_ptr<Command> inv(new DelCharFactory::DelChar(*m, p));
 	std::string::iterator i = m->begin();
 	i += p;
 	m->insert(i, c);
-	return *inv.release();
+	return inv.release();
 }
 
-Command& DelCharFactory::DelChar::DoAtomic() {
+Command* DelCharFactory::DelChar::Do() {
 	if (m->size() == 0) {
-		return *CreateNullCommand();
+		return CreateNullCommand();
 	}
 	char removedChar = (*m)[p];
 	Command* inv = new AddCharFactory::AddChar(*m, removedChar, p);
 	m->erase(p, 1);
-	return *inv;
+	return inv;
 }
 
 class StringModelTestHelper : public ModelTestHelper {

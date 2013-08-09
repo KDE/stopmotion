@@ -46,7 +46,8 @@ public:
 			cl.cs.push_front(0);
 		}
 		~NullAdder() {
-			cl.RemoveImpotentFront();
+			if (!cl.cs.front())
+				cl.cs.pop_front();
 		}
 	};
 	friend class NullAdder;
@@ -54,20 +55,6 @@ public:
 	}
 	~CommandList() {
 		Clear();
-	}
-	/**
-	 * Removes an impotent command from the front of the list, if any
-	 */
-	void RemoveImpotentFront() {
-		if (!cs.empty()) {
-			Command* c = cs.front();
-			if (c && c->Impotent()) {
-				delete c;
-				c = 0;
-			}
-			if (!c)
-				cs.pop_front();
-		}
 	}
 	/**
 	 * Removes all commands from the list
@@ -127,13 +114,6 @@ public:
 			(*i)->Accept(v);
 		}
 	}
-	bool Impotent() const {
-		for (clist::const_iterator i = cs.begin(); i != cs.end(); ++i) {
-			if (*i && !(*i)->Impotent())
-				return false;
-		}
-		return true;
-	}
 	/**
 	 * Returns true if there is exactly one command in the list, false
 	 * otherwise
@@ -145,26 +125,20 @@ public:
 	 * Executes the command at the front (if it exists) and puts its inverse
 	 * onto the front of 'to'.
 	 * @param to The list to receive the inverse command.
-	 * @param parts The maximum number of sub-parts to be executed, or
-	 * Command::allParts if there is to be no limit. If not all sub-parts are
-	 * executed, the remainder remain on the front of this command list.
-	 * @param partObserver partObserver.AtomicComplete() is called once for
-	 * each sub-part of any composite.
-	 * @return The actual number of sub-parts executed.
 	 */
-	int ExecuteFront(CommandList& to, int parts,
-			PartialCommandObserver* partObserver);
+	void ExecuteFront(CommandList& to);
 };
 
-int CommandList::ExecuteFront(CommandList& to, int parts,
-		PartialCommandObserver* partObserver) {
+void CommandList::ExecuteFront(CommandList& to) {
 	if (Empty())
-		return 0;
+		return;
 	NullAdder na(to);
-	int p = cs.front()->Do(to, parts, partObserver);
+	Command* c = cs.front();
+	Command* inv = c->Do();
+	to.FillNull(*inv);
+	delete c;
 	// remove deleted command
 	cs.pop_front();
-	return p;
 }
 
 FileNameVisitor::~FileNameVisitor() {
@@ -179,27 +153,10 @@ Command::~Command() {
 void Command::Accept(FileNameVisitor&) const {
 }
 
-int CommandAtomic::Do(CommandList& cs, int parts,
-		PartialCommandObserver*) {
-	if (parts == 0)
-		throw CompositeInterruptedException();
-	Command& c = DoAtomic();
-	cs.FillNull(c);
-	delete this;
-	return 1;
-}
-
-bool CommandAtomic::Impotent() const {
-	return false;
-}
-
-class CommandNull : public CommandAtomic {
+class CommandNull : public Command {
 public:
-	Command& DoAtomic() {
-		return *new CommandNull;
-	}
-	bool Impotent() const {
-		return true;
+	Command* Do() {
+		return new CommandNull;
 	}
 };
 
@@ -225,27 +182,18 @@ bool CommandHistory::CanRedo() {
 	return !future->Empty();
 }
 
-void CommandHistory::Undo(PartialCommandObserver* ob) {
-	past->ExecuteFront(*future, Command::allParts, ob);
+void CommandHistory::Undo() {
+	past->ExecuteFront(*future);
 }
 
-void CommandHistory::Undo(int parts, PartialCommandObserver* ob) {
-	past->ExecuteFront(*future, parts, ob);
+void CommandHistory::Redo() {
+	future->ExecuteFront(*past);
 }
 
-void CommandHistory::Redo(PartialCommandObserver* ob) {
-	future->ExecuteFront(*past, Command::allParts, ob);
-}
-
-void CommandHistory::Redo(int parts, PartialCommandObserver* ob) {
-	future->ExecuteFront(*past, parts, ob);
-}
-
-void CommandHistory::Do(Command& c, CommandLogger* logger,
-		PartialCommandObserver* ob) {
+void CommandHistory::Do(Command& c, CommandLogger* logger) {
 	future->Clear();
 	future->Push(c);
-	Redo(ob);
+	Redo();
 	if (logger) {
 		logger->CommandComplete();
 	}
@@ -259,54 +207,4 @@ void CommandHistory::Clear() {
 void CommandHistory::Accept(FileNameVisitor& v) const {
 	future->Accept(v);
 	past->Accept(v);
-}
-
-CommandComposite::CommandComposite() : cs(0) {
-	cs = new CommandList();
-}
-
-CommandComposite::~CommandComposite() {
-	delete cs;
-}
-
-void CommandComposite::Add(Command& c) {
-	cs->Add(c);
-}
-
-int CommandComposite::Do(CommandList& invs, int parts,
-		PartialCommandObserver* partObserver) {
-	int actualParts = 0;
-	if (cs->Impotent()) {
-		// nothing to be done here
-	} else if (cs->Singleton()) {
-		// Special case for a singleton; this will mean that instead of
-		// creating a singleton composite inverse, we just create the
-		// inverse of a singleton.
-		actualParts = cs->Front().Do(invs, parts, partObserver);
-		if (partObserver)
-			partObserver->AtomicComplete();
-	} else {
-		CommandComposite *c = new CommandComposite();
-		invs.FillNull(*c);
-		while (!cs->Empty()) {
-			int newParts = cs->ExecuteFront(*c->cs, parts, partObserver);
-			parts -= newParts;
-			actualParts += newParts;
-			if (partObserver)
-				partObserver->AtomicComplete();
-		}
-	}
-	delete this;
-	return actualParts;
-}
-
-void CommandComposite::Accept(FileNameVisitor& v) const {
-	cs->Accept(v);
-}
-
-bool CommandComposite::Impotent() const {
-	return cs->Impotent();
-}
-
-PartialCommandObserver::~PartialCommandObserver() {
 }

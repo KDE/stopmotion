@@ -26,8 +26,7 @@
 #include <string>
 
 class FileCommandLoggerImpl :
-		public CommandLogger,
-		public PartialCommandObserver {
+		public CommandLogger {
 	FILE* fh;
 	std::string buffer;
 	bool newlineRequired;
@@ -62,9 +61,6 @@ public:
 		Close();
 		fh = f;
 	}
-	void AtomicComplete() {
-		buffer.push_back('.');
-	}
 	void WriteCommand(const char* c) {
 		WriteBuffer();
 		buffer.append(c);
@@ -89,15 +85,6 @@ FileCommandLogger::~FileCommandLogger() {
 
 void FileCommandLogger::SetLogFile(FILE* f) {
 	pImpl->SetLogFile(f);
-}
-
-PartialCommandObserver* FileCommandLogger::GetPartialCommandObserver() {
-	return pImpl;
-}
-
-const PartialCommandObserver*
-		FileCommandLogger::GetPartialCommandObserver() const {
-	return pImpl;
 }
 
 CommandLogger* FileCommandLogger::GetLogger() {
