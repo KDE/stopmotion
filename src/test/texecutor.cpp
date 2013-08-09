@@ -126,7 +126,11 @@ public:
 		if (!alreadyIn) {
 			// Make sure we don't recursively call ourselves
 			AlreadyIn a(alreadyIn);
-			ex->ExecuteFromLog(command.c_str());
+			// Some tests are not logging; don't try to execute "!"
+			if (!command.empty()) {
+				command.append(1, '!');
+				ex->ExecuteFromLog(command.c_str());
+			}
 		}
 	}
 };
@@ -197,7 +201,7 @@ void TestCommandFactory::emptyCommandReplayerThrows() {
 
 void TestCommandFactory::canParseFromLog() {
 	executionOutput.clear();
-	ce->ExecuteFromLog("et -5 \"hello world!\" 412345");
+	ce->ExecuteFromLog("et -5 \"hello world!\" 412345!");
 	QCOMPARE(executionOutput.begin()->c_str(),
 			"et,i:-5,s:hello world!,i:412345");
 }

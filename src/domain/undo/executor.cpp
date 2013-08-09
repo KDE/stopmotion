@@ -608,7 +608,13 @@ public:
 			// model.
 			if (!c)
 				throw ParametersOutOfRangeException();
-			history.Do(*c, logger);
+			int32_t subcommands;
+			bool finished;
+			if (StringReader::parseFailed
+					== reader.GetEndOfCommand(subcommands, finished))
+				throw MalformedLineException();
+			if (finished)
+				history.Do(*c, logger);
 			return true;
 		}
 		if (StringReader::parseSucceeded == reader.IsEndOfLine())
