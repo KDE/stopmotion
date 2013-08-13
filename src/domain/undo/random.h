@@ -51,19 +51,17 @@ public:
 	/**
 	 * Random integer between 0 and RAND_MAX.
 	 */
-	int Get();
+	int get();
 	/**
 	 * Gets a random integer. The distribution is uniform between min and max
 	 * inclusive.
-	 * TODO: add logging!
 	 */
-	int32_t GetUniform(int32_t min, int32_t max);
+	int32_t getUniform(int32_t min, int32_t max);
 	/**
 	 * Gets a random integer. The distribution is uniform between 0 and max
 	 * inclusive.
-	 * TODO: add logging!
 	 */
-	int32_t GetUniform(int32_t max);
+	int32_t getUniform(int32_t max);
 	/**
 	 * Gets a random string from the characters in the null-terminated
 	 * string provided.
@@ -72,21 +70,13 @@ public:
 	 * which to chose (uniformly).
 	 * @param [in] allowNulls true to allow nulls also in the string, false to
 	 * disallow.
-	 * TODO: add logging!
 	 */
-	void GetString(std::string& out, const char* characters,
+	void getString(std::string& out, const char* characters,
 			bool allowNulls = false);
 	/**
 	 * Gets a random string of alphanumeric characters.
-	 * TODO: add logging!
 	 */
-	void GetAlphanumeric(std::string& out);
+	void getAlphanumeric(std::string& out);
 };
-
-/**
- * Returns a new randomness source.
- * @return Ownership is passed.
- */
-RandomSource* CreateRandomSource();
 
 #endif /* RANDOM_H_ */

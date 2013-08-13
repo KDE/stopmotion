@@ -54,12 +54,12 @@ public:
 	CommandList() {
 	}
 	~CommandList() {
-		Clear();
+		clear();
 	}
 	/**
 	 * Removes all commands from the list
 	 */
-	void Clear() {
+	void clear() {
 		for (clist::iterator i = cs.begin(); i != cs.end(); ++i) {
 			delete *i;
 		}
@@ -68,25 +68,25 @@ public:
 	/**
 	 * Returns true if and only if the command list is empty.
 	 */
-	bool Empty() const {
+	bool empty() const {
 		return cs.empty();
 	}
 	/**
 	 * Returns the command at the front of the list
 	 */
-	Command& Front() const {
+	Command& front() const {
 		return *cs.front();
 	}
 	/**
 	 * Adds a command to the front of the list.
 	 */
-	void Push(Command& c) {
+	void push(Command& c) {
 		cs.push_front(&c);
 	}
 	/**
 	 * Adds a command to the back of the list.
 	 */
-	void Add(Command& c) {
+	void add(Command& c) {
 		cs.push_back(&c);
 	}
 	/**
@@ -94,7 +94,7 @@ public:
 	 * Push, Pop, Splice or Clear in between the construction of NullAdder and
 	 * FillNull. Will not throw an exception.
 	 */
-	void FillNull(Command& c) {
+	void fillNull(Command& c) {
 		cs.front() = &c;
 	}
 	/**
@@ -102,23 +102,23 @@ public:
 	 * the list. This function will not throw an exception. newCommands
 	 * will be empty after this call.
 	 */
-	void Splice(CommandList& newCommands) {
+	void splice(CommandList& newCommands) {
 		cs.splice(cs.begin(), newCommands.cs);
 	}
 	/**
 	 * Calls v.Add(f) for each filename f referenced by the commands in the
 	 * list.
 	 */
-	void Accept(FileNameVisitor& v) const {
+	void accept(FileNameVisitor& v) const {
 		for (clist::const_iterator i = cs.begin(); i != cs.end(); ++i) {
-			(*i)->Accept(v);
+			(*i)->accept(v);
 		}
 	}
 	/**
 	 * Returns true if there is exactly one command in the list, false
 	 * otherwise
 	 */
-	bool Singleton() const {
+	bool singleton() const {
 		return cs.size() == 1;
 	}
 	/**
@@ -126,16 +126,16 @@ public:
 	 * onto the front of 'to'.
 	 * @param to The list to receive the inverse command.
 	 */
-	void ExecuteFront(CommandList& to);
+	void executeFront(CommandList& to);
 };
 
-void CommandList::ExecuteFront(CommandList& to) {
-	if (Empty())
+void CommandList::executeFront(CommandList& to) {
+	if (empty())
 		return;
 	NullAdder na(to);
 	Command* c = cs.front();
-	Command* inv = c->Do();
-	to.FillNull(*inv);
+	Command* inv = c->execute();
+	to.fillNull(*inv);
 	delete c;
 	// remove deleted command
 	cs.pop_front();
@@ -150,17 +150,17 @@ Command::Command() {
 Command::~Command() {
 }
 
-void Command::Accept(FileNameVisitor&) const {
+void Command::accept(FileNameVisitor&) const {
 }
 
 class CommandNull : public Command {
 public:
-	Command* Do() {
+	Command* execute() {
 		return new CommandNull;
 	}
 };
 
-Command* CreateNullCommand() {
+Command* createNullCommand() {
 	return new CommandNull;
 }
 
@@ -174,37 +174,37 @@ CommandHistory::~CommandHistory() {
 	delete future;
 }
 
-bool CommandHistory::CanUndo() {
-	return !past->Empty();
+bool CommandHistory::canUndo() {
+	return !past->empty();
 }
 
-bool CommandHistory::CanRedo() {
-	return !future->Empty();
+bool CommandHistory::canRedo() {
+	return !future->empty();
 }
 
-void CommandHistory::Undo() {
-	past->ExecuteFront(*future);
+void CommandHistory::undo() {
+	past->executeFront(*future);
 }
 
-void CommandHistory::Redo() {
-	future->ExecuteFront(*past);
+void CommandHistory::redo() {
+	future->executeFront(*past);
 }
 
-void CommandHistory::Do(Command& c, CommandLogger* logger) {
-	future->Clear();
-	future->Push(c);
-	Redo();
+void CommandHistory::execute(Command& c, CommandLogger* logger) {
+	future->clear();
+	future->push(c);
+	redo();
 	if (logger) {
-		logger->CommandComplete();
+		logger->commandComplete();
 	}
 }
 
-void CommandHistory::Clear() {
-	future->Clear();
-	past->Clear();
+void CommandHistory::clear() {
+	future->clear();
+	past->clear();
 }
 
-void CommandHistory::Accept(FileNameVisitor& v) const {
-	future->Accept(v);
-	past->Accept(v);
+void CommandHistory::accept(FileNameVisitor& v) const {
+	future->accept(v);
+	past->accept(v);
 }

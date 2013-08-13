@@ -65,14 +65,14 @@ public:
 	 * commands that are appropriate for testing. They are also used to assert
 	 * that the values passed to @ref Executor::Execute are within range.
 	 */
-	virtual int32_t GetInteger(int32_t min, int32_t max) = 0;
+	virtual int32_t getInteger(int32_t min, int32_t max) = 0;
 	/**
 	 * Returns the length of string read, which may be greater than maxLength
 	 * although no more than maxLength characters will be output into out.
 	 * Might throw IncorrectParameterException if unsuccessful, but this
 	 * behaviour must not be relied upon.
 	 */
-	virtual void GetString(std::string& out) = 0;
+	virtual void getString(std::string& out) = 0;
 };
 
 class Command;
@@ -91,7 +91,7 @@ public:
 	 * if no such command can be created at the moment (for example a delete
 	 * when the model is empty).
 	 */
-	virtual Command* Create(Parameters& ps) = 0;
+	virtual Command* create(Parameters& ps) = 0;
 };
 
 class CommandReplayerImpl;
@@ -100,9 +100,9 @@ class CommandLogger;
 
 /**
  * Thrown if @ref CommandFactory::Execute is called with a name for which no
- * command has been added, or if @ref CommandFactory::ExecuteRandomCommands is
+ * command has been added, or if @ref CommandFactory::executeRandomCommands is
  * called on a @ref CommandFactory which has had no commands added, or if
- * @ref CommandFactory::ExecuteRandomConstructiveCommands is called
+ * @ref CommandFactory::executeRandomConstructiveCommands is called
  * on a @ref CommandFactory which has had no constructive commands set.
  */
 class UnknownCommandException {
@@ -127,32 +127,32 @@ public:
 	 * }
 	 * @endcode
 	 */
-	virtual void Execute(const char* name, ...) = 0;
+	virtual void execute(const char* name, ...) = 0;
 	/**
 	 * Executes the command described by (the first line of) @c line, a line
-	 * from a command log previously written by a call to @ref Execute.
+	 * from a command log previously written by a call to @ref execute.
 	 * @param line Null- or line-ending-terminated string; a line from the log.
 	 * @return true if a command was executed, false if the line was empty.
 	 * @throws MalformedLineException if the line is neither empty nor starts
 	 * with a command name.
 	 */
-	virtual bool ExecuteFromLog(const char* line) = 0;
+	virtual bool executeFromLog(const char* line) = 0;
 	/**
 	 * Executes a random set of commands. Used for testing.
 	 */
-	virtual void ExecuteRandomCommands(RandomSource& rng) = 0;
+	virtual void executeRandomCommands(RandomSource& rng) = 0;
 	/**
 	 * Executes a random set of commands. Used for testing for constructing
 	 * fresh models from empty models. Only commands that were added with the
-	 * @c constructive parameter of @ref AddCommand set to @c true are used.
+	 * @c constructive parameter of @ref addCommand set to @c true are used.
 	 */
-	virtual void ExecuteRandomConstructiveCommands(RandomSource& rng) = 0;
+	virtual void executeRandomConstructiveCommands(RandomSource& rng) = 0;
 	/**
 	 * Make a command available for execution. It is assumed that @c name
 	 * endures for the lifetime of the Executor. Ideally name should be a
 	 * static constant, not heap allocated; for example
 	 * @code{.cpp}
-	 * executor.AddCommand("addf", addFactory, true);
+	 * executor.addCommand("addf", addFactory, true);
 	 * @endcode
 	 * @throws CommandNameAlreadyUsedException if a factory has already
 	 * been registered under @c name.
@@ -164,10 +164,10 @@ public:
 	 * @c true should be passed whenever the command is useful in constructing
 	 * an initial state. For example, an add operation is constructive, but a
 	 * delete or a move is not.
-	 * @ref ExecuteRandomConstructiveCommands uses only those factories
+	 * @ref executeRandomConstructiveCommands uses only those factories
 	 * passed here with @c constructive set to @c true.
 	 */
-	virtual void AddCommand(const char* name,
+	virtual void addCommand(const char* name,
 			std::auto_ptr<CommandFactory>factory,
 			bool constructive = false) = 0;
 	/**
@@ -175,27 +175,27 @@ public:
 	 * @param logger The logger to be set. Ownership is not passed.
 	 * Pass NULL to get no logging.
 	 */
-	virtual void SetCommandLogger(CommandLogger* logger) = 0;
+	virtual void setCommandLogger(CommandLogger* logger) = 0;
 	/**
 	 * Clears the undo and redo stacks.
 	 */
-	virtual void ClearHistory() = 0;
+	virtual void clearHistory() = 0;
 	/**
 	 * Undoes the most recent command.
 	 * @return true on success, false if nothing was on the undo stack.
 	 */
-	virtual bool Undo() = 0;
+	virtual bool undo() = 0;
 	/**
 	 * Redoes the most recently undone command.
 	 * @return true on success, false if nothing was on the redo stack.
 	 */
-	virtual bool Redo() = 0;
+	virtual bool redo() = 0;
 };
 
 /**
  * Create a new executor.
  * @return The new @ref Executor; ownership is returned.
  */
-Executor* MakeExecutor();
+Executor* makeExecutor();
 
 #endif /* EXECUTOR_H_ */

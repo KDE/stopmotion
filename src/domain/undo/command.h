@@ -46,20 +46,20 @@ public:
 	 * @note This command will be deleted immediately after this call, so it is
 	 * perfectly safe to leave it in an unusable state.
 	 */
-	virtual Command* Do() = 0;
+	virtual Command* execute() = 0;
 	/**
 	 * calls v.Add(f) for each file f referenced by the command
 	 */
-	virtual void Accept(FileNameVisitor& v) const;
+	virtual void accept(FileNameVisitor& v) const;
 };
 
 /**
  * Creates a command that does nothing. This can be used whenever a command's
- * @c DoAtomic function discovers that it does nothing, and it wants to return
+ * @c execute function discovers that it does nothing, and it wants to return
  * an inverse that also does nothing.
  * @return New command that does nothing. Ownership is passed.
  */
-Command* CreateNullCommand();
+Command* createNullCommand();
 
 /**
  * Command history for undo and redo.
@@ -74,39 +74,39 @@ public:
 	 * Returns 'true' if and only if Undo will perform an action, i.e. if
 	 * there are any actions in the history to undo.
 	 */
-	bool CanUndo();
+	bool canUndo();
 	/**
 	 * Returns 'true' if and only if Redo will perform an action, i.e. if
 	 * there are any actions in the history to redo.
 	 */
-	bool CanRedo();
+	bool canRedo();
 	/**
 	 * Undoes the last action in the history, if any.
 	 */
-	void Undo();
+	void undo();
 	/**
 	 * Redoes the next action in the history, if any.
 	 */
-	void Redo();
+	void redo();
 	/**
 	 * Executes the command c, placing its inverse into the undo history,
 	 * deleting the Redo history. Any partial composite function remaining
 	 * after a thrown exception will be on the Redo stack. Ownership of
 	 * the command is passed.
 	 * @param c The command to be executed.
-	 * @param logger @c CommandComplete will be called on @c logger if the
+	 * @param logger @c commandComplete will be called on @c logger if the
 	 * execution is successful.
 	 */
-	void Do(Command& c, CommandLogger* logger);
+	void execute(Command& c, CommandLogger* logger);
 	/**
 	 * Clears all the undo history (and future)
 	 */
-	void Clear();
+	void clear();
 	/**
-	 * Calls v.Add(f) for each filename f referenced by the commands in the
+	 * Calls v.add(f) for each filename f referenced by the commands in the
 	 * history.
 	 */
-	void Accept(FileNameVisitor& v) const;
+	void accept(FileNameVisitor& v) const;
 };
 
 #endif /* COMMAND_H_ */

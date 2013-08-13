@@ -83,10 +83,10 @@ public:
 	StringReader(const char* input, const char* endInput)
 		: p(input), end(endInput) {
 	}
-	const char* GetPos() const {
+	const char* getPos() const {
 		return p;
 	}
-	void SetPos(const char* pos) {
+	void setPos(const char* pos) {
 		p = pos;
 	}
 	/**
@@ -94,7 +94,7 @@ public:
 	 * @param input The start of the buffer to read.
 	 * @param inputEnd The end of the buffer to read.
 	 */
-	void SetBuffer(const char* input, const char* endInput) {
+	void setBuffer(const char* input, const char* endInput) {
 		p = input;
 		end = endInput;
 	}
@@ -102,7 +102,7 @@ public:
 	 * Sets the buffer to be read.
 	 * @param input The null-terminated string to read.
 	 */
-	void SetBuffer(const char* input) {
+	void setBuffer(const char* input) {
 		p = input;
 		end = input + strlen(input);
 	}
@@ -114,7 +114,7 @@ public:
 	 * if we are at the end of the buffer or the next character is a line-
 	 * termination character, in which case `out` will not be set.
 	 */
-	IsEol GetCharFromLine(char& out) {
+	IsEol getCharFromLine(char& out) {
 		if (p == end)
 			return isEol;
 		if (*p == '\n' || *p == '\r')
@@ -129,7 +129,7 @@ public:
 	 * @return `isEof` if we have reached the end of the buffer, whether or not
 	 * we consumed an end-of-line marker. `isNotEof` otherwise.
 	 */
-	IsEof ChompEol() {
+	IsEof chompEol() {
 		if (p != end && *p == '\r') {
 			++p;
 		}
@@ -143,7 +143,7 @@ public:
 	 * @return `isEof` if we reached the end of the buffer, whether or not we
 	 * consumed any space. `isNotEof` otherwise.
 	 */
-	IsEof ChompSpace() {
+	IsEof chompSpace() {
 		while (p != end) {
 			if (*p != ' ')
 				return isNotEof;
@@ -155,7 +155,7 @@ public:
 	 * Consumes a quote, if present.
 	 * returns true if a quote was consumed, false otherwise.
 	 */
-	bool GetQuote() {
+	bool getQuote() {
 		if (p != end && *p == '"') {
 			++p;
 			return true;
@@ -167,7 +167,7 @@ public:
 	 * @return true if we are at the end of the buffer or the next character is
 	 * an end-of-line marker.
 	 */
-	bool IsEndOfLine() {
+	bool isEndOfLine() {
 		return p == end || *p == '\n' || *p == '\r';
 	}
 	/**
@@ -175,8 +175,8 @@ public:
 	 * @returns true if we are at a whitespace, the end of the line or the end
 	 * of the buffer. false otherwise.
 	 */
-	bool IsFinishedArgument() {
-		return *p == ' ' || *p == '!' || *p == '.' || IsEndOfLine();
+	bool isFinishedArgument() {
+		return *p == ' ' || *p == '!' || *p == '.' || isEndOfLine();
 	}
 	/**
 	 * Return the end-of-command marker, which is zero or more dots followed by
@@ -188,12 +188,12 @@ public:
 	 * if not. If parseFailed, dotCount and exclamation may be set to arbitrary
 	 * values, and the parse will be returned to how it was before the call.
 	 */
-	ParseSucceeded GetEndOfCommand(int32_t& dotCount, bool& exclamation) {
+	ParseSucceeded getEndOfCommand(int32_t& dotCount, bool& exclamation) {
 		const char* old = p;
 		dotCount = 0;
 		exclamation = false;
 		char c;
-		while (isEol != GetCharFromLine(c)) {
+		while (isEol != getCharFromLine(c)) {
 			if (!exclamation && c == '.') {
 				++dotCount;
 			} else if (!exclamation && c == '!') {
@@ -213,7 +213,7 @@ public:
 	 * `parseFailed` if the next character is not a digit. In this case `digit`
 	 * will not be set and no characters will have been consumed.
 	 */
-	ParseSucceeded GetDigit(int32_t& digit) {
+	ParseSucceeded getDigit(int32_t& digit) {
 		if (p == end)
 			return parseFailed;
 		if (*p < '0' || '9' < *p)
@@ -226,7 +226,7 @@ public:
 	 * As for `GetDigit` but '8' and '9' are not considered digits and are
 	 * not consumed.
 	 */
-	ParseSucceeded GetOctalDigit(int32_t& digit) {
+	ParseSucceeded getOctalDigit(int32_t& digit) {
 		if (p == end)
 			return parseFailed;
 		if (*p < '0' || '7' < *p)
@@ -245,13 +245,13 @@ public:
 	 * cases, no characters are consumed, `out` is not set and `parseFailed` is
 	 * returned.
 	 */
-	ParseSucceeded GetInteger(int32_t& out) {
+	ParseSucceeded getInteger(int32_t& out) {
 		const char *old = p;
-		if (isEof == ChompSpace())
+		if (isEof == chompSpace())
 			return parseFailed;
 		int32_t n = 0;
 		int32_t sign = 1;
-		if (GetDigit(n) == parseFailed) {
+		if (getDigit(n) == parseFailed) {
 			if (*p == '-')
 				sign = -1;
 			else
@@ -259,10 +259,10 @@ public:
 			++p;
 		}
 		int32_t soFar = n;
-		while (GetDigit(n) == parseSucceeded) {
+		while (getDigit(n) == parseSucceeded) {
 			soFar = soFar * 10 + n;
 		}
-		if (IsFinishedArgument()) {
+		if (isFinishedArgument()) {
 			out = soFar * sign;
 			return parseSucceeded;
 		}
@@ -282,18 +282,18 @@ public:
 	 * @c parseFailed on failure. Nothing is consumed. Some of @c out may
 	 * have been set.
 	 */
-	ParseSucceeded GetString(std::string& out) {
+	ParseSucceeded getString(std::string& out) {
 		out.clear();
 		const char *old = p;
-		ChompSpace();
-		if (!GetQuote()) {
+		chompSpace();
+		if (!getQuote()) {
 			p = old;
 			return parseFailed;
 		}
 		char c;
-		while (!GetQuote()) {
+		while (!getQuote()) {
 			// normal state
-			if (GetCharFromLine(c) == isEol) {
+			if (getCharFromLine(c) == isEol) {
 				p = old;
 				return parseFailed;
 			}
@@ -301,9 +301,9 @@ public:
 				out.append(1, c);
 			} else {
 				// backslash state
-				if (GetCharFromLine(c) == isEol)
+				if (getCharFromLine(c) == isEol)
 					// line continuation
-					ChompEol();
+					chompEol();
 				if (c == ' ')
 					out.append(1, ' ');
 				else if (c == 'n')
@@ -314,7 +314,7 @@ public:
 					// octal
 					int32_t soFar = c - '0';
 					int32_t n;
-					while (parseSucceeded == GetOctalDigit(n)) {
+					while (parseSucceeded == getOctalDigit(n)) {
 						soFar = soFar * 8 + n;
 					}
 					out.append(1, soFar);
@@ -332,12 +332,12 @@ public:
 	 * @c parseFailed on failure. No non-whitespace characters will have
 	 * been consumed.
 	 */
-	ParseSucceeded GetIdentifier(std::string& out) {
+	ParseSucceeded getIdentifier(std::string& out) {
 		out.clear();
-		ChompSpace();
-		if (IsEndOfLine())
+		chompSpace();
+		if (isEndOfLine())
 			return parseFailed;
-		while (!IsFinishedArgument()) {
+		while (!isFinishedArgument()) {
 			out.append(1, *p);
 			++p;
 		}
@@ -352,14 +352,14 @@ public:
 	}
 	~StringReaderParameters() {
 	}
-	int32_t GetInteger(int32_t, int32_t) {
+	int32_t getInteger(int32_t, int32_t) {
 		int32_t r;
-		if (StringReader::parseFailed == reader.GetInteger(r))
+		if (StringReader::parseFailed == reader.getInteger(r))
 			throw IncorrectParameterException();
 		return r;
 	}
-	void GetString(std::string& out) {
-		if (StringReader::parseFailed == reader.GetString(out))
+	void getString(std::string& out) {
+		if (StringReader::parseFailed == reader.getString(out))
 			throw IncorrectParameterException();
 	}
 };
@@ -375,13 +375,13 @@ public:
 	 * Returns the written string.
 	 * @return The null-terminated string written to.
 	 */
-	const char* Result() const {
+	const char* result() const {
 		return buffer.c_str();
 	}
 	/**
 	 * Begins a new line, reusing the same buffer.
 	 */
-	void Reset() {
+	void reset() {
 		startOfLine = true;
 		buffer.clear();
 	}
@@ -390,37 +390,37 @@ public:
 	 * buffer if it has been long enough. If it was long enough, this will be
 	 * the length of the string written into the buffer passed in SetBuffer.
 	 */
-	int32_t Length() const {
+	int32_t length() const {
 		return buffer.length();
 	}
 	/**
 	 * Writes a single character to the buffer.
 	 */
-	void WriteChar(char c) {
+	void writeChar(char c) {
 		buffer.append(1, c);
 	}
 	/**
 	 * Writes a space to the buffer, if we are not at the start of a line.
 	 */
-	void BeginArgument() {
+	void beginArgument() {
 		if (!startOfLine) {
-			WriteChar(' ');
+			writeChar(' ');
 		}
 		startOfLine = false;
 	}
 	/**
 	 * Writes a decimal (or octal!) digit.
 	 */
-	void WriteDigit(int32_t d) {
-		WriteChar(static_cast<char>('0' + d));
+	void writeDigit(int32_t d) {
+		writeChar(static_cast<char>('0' + d));
 	}
 	/**
 	 * Writes a string surrounded by double quotes.
 	 * @param s The null-terminated string to write.
 	 */
-	void WriteString(const char* s) {
-		BeginArgument();
-		WriteChar('"');
+	void writeString(const char* s) {
+		beginArgument();
+		writeChar('"');
 		bool allowDigits = true;
 		while (*s) {
 			unsigned char c = *reinterpret_cast<const unsigned char*>(s);
@@ -430,17 +430,17 @@ public:
 				normalChar = allowDigits || c < '0' || '9' < c;
 			}
 			if (normalChar)
-				WriteChar(c);
+				writeChar(c);
 			else if (strchr("\r\n\\\"", c)) {
-				WriteChar('\\');
+				writeChar('\\');
 				if (c == '\r')
-					WriteChar('r');
+					writeChar('r');
 				else if (c == '\n')
-					WriteChar('n');
+					writeChar('n');
 				else
-					WriteChar(c);
+					writeChar(c);
 			} else {
-				WriteChar('\\');
+				writeChar('\\');
 				bool started = false;
 				int32_t power = 64;
 				int32_t ci = c;
@@ -451,21 +451,21 @@ public:
 					if (digit != 0)
 						started = true;
 					if (started || power == 1)
-						WriteDigit(digit);
+						writeDigit(digit);
 				}
 				allowDigits = false;
 			}
 		}
-		WriteChar('"');
+		writeChar('"');
 	}
 	/**
 	 * Writes a decimal integer to the buffer. Writes negative numbers preceded
 	 * with '-' and positive numbers without prefix.
 	 */
-	void WriteInteger(int32_t n) {
-		BeginArgument();
+	void writeInteger(int32_t n) {
+		beginArgument();
 		if (n < 0) {
-			WriteChar('-');
+			writeChar('-');
 			n = -n;
 		}
 		int power = 1;
@@ -477,17 +477,17 @@ public:
 			int32_t digit = n / power;
 			n %= power;
 			power /= 10;
-			WriteChar('0' + digit);
+			writeChar('0' + digit);
 		}
 	}
 	/**
 	 * Writes an identifier, which must not contain whitespace or backslashes.
 	 * @param id The null-terminated string to write.
 	 */
-	void WriteIdentifier(const char* id) {
-		BeginArgument();
+	void writeIdentifier(const char* id) {
+		beginArgument();
 		while (*id) {
-			WriteChar(*id);
+			writeChar(*id);
 			++id;
 		}
 	}
@@ -515,26 +515,26 @@ public:
 	 */
 	VaListParameters(va_list& a, const char* name)
 			: args(a) {
-		writer.WriteIdentifier(name);
+		writer.writeIdentifier(name);
 	}
 	~VaListParameters() {
 		va_end(args);
 	}
-	int32_t GetInteger(int32_t min, int32_t max) {
+	int32_t getInteger(int32_t min, int32_t max) {
 		int32_t r = va_arg(args, int32_t);
 		if(r < min || max < r)
 			throw ParametersOutOfRangeException();
-		writer.WriteInteger(r);
+		writer.writeInteger(r);
 		return r;
 	}
-	void GetString(std::string& out) {
+	void getString(std::string& out) {
 		const char* s = va_arg(args, const char*);
-		writer.WriteString(s);
+		writer.writeString(s);
 		out.assign(s);
 	}
-	void WriteCommand(CommandLogger* logger) {
-		logger->WriteCommand(writer.Result());
-		writer.Reset();
+	void writeCommand(CommandLogger* logger) {
+		logger->writeCommand(writer.result());
+		writer.reset();
 	}
 };
 
@@ -544,20 +544,20 @@ class RandomParameters : public Parameters {
 public:
 	RandomParameters(RandomSource& rng, const char* name)
 			: rs(rng) {
-		writer.WriteIdentifier(name);
+		writer.writeIdentifier(name);
 	}
-	int32_t GetInteger(int32_t min, int32_t max) {
-		int32_t r = rs.GetUniform(min, max);
-		writer.WriteInteger(r);
+	int32_t getInteger(int32_t min, int32_t max) {
+		int32_t r = rs.getUniform(min, max);
+		writer.writeInteger(r);
 		return r;
 	}
-	void GetString(std::string& out) {
-		rs.GetAlphanumeric(out);
-		writer.WriteString(out.c_str());
+	void getString(std::string& out) {
+		rs.getAlphanumeric(out);
+		writer.writeString(out.c_str());
 	}
-	void WriteCommand(CommandLogger* logger) {
-		logger->WriteCommand(writer.Result());
-		writer.Reset();
+	void writeCommand(CommandLogger* logger) {
+		logger->writeCommand(writer.result());
+		writer.reset();
 	}
 };
 
@@ -584,25 +584,25 @@ public:
 			delete i->second;
 		}
 	}
-	void Execute(const char* name, ...) {
+	void execute(const char* name, ...) {
 		CommandFactory* f = Factory(name);
 		va_list args;
 		va_start(args, name);
 		VaListParameters vps(args, name);
-		Command* c = f->Create(vps);
+		Command* c = f->create(vps);
 		if (c) {
-			vps.WriteCommand(logger);
-			history.Do(*c, logger);
+			vps.writeCommand(logger);
+			history.execute(*c, logger);
 		}
 	}
-	bool ExecuteFromLog(const char* line) {
+	bool executeFromLog(const char* line) {
 		StringReader reader;
-		reader.SetBuffer(line);
+		reader.setBuffer(line);
 		std::string id;
-		if (StringReader::parseSucceeded == reader.GetIdentifier(id)) {
+		if (StringReader::parseSucceeded == reader.getIdentifier(id)) {
 			CommandFactory* f = Factory(id.c_str());
 			StringReaderParameters sps(reader);
-			Command* c = f->Create(sps);
+			Command* c = f->create(sps);
 			// It is an error if a command executed from a log is invalid.
 			// This would mean that the log has become out-of-sync with the
 			// model.
@@ -611,17 +611,17 @@ public:
 			int32_t subcommands;
 			bool finished;
 			if (StringReader::parseFailed
-					== reader.GetEndOfCommand(subcommands, finished))
+					== reader.getEndOfCommand(subcommands, finished))
 				throw MalformedLineException();
 			if (finished)
-				history.Do(*c, logger);
+				history.execute(*c, logger);
 			return true;
 		}
-		if (StringReader::parseSucceeded == reader.IsEndOfLine())
+		if (StringReader::parseSucceeded == reader.isEndOfLine())
 			return false;
 		throw MalformedLineException();
 	}
-	void ExecuteRandomCommands(RandomSource& rng) {
+	void executeRandomCommands(RandomSource& rng) {
 		int n = factories.size();
 		if (n == 0)
 			throw UnknownCommandException();
@@ -631,41 +631,41 @@ public:
 			factoryNames.push_back(i->first);
 		}
 		while (true) {
-			int r = rng.GetUniform(n);
+			int r = rng.getUniform(n);
 			if (r == n)
 				return;
 			std::string& name(factoryNames[r]);
 			RandomParameters rps(rng, name.c_str());
-			Command* c = factories[name]->Create(rps);
+			Command* c = factories[name]->create(rps);
 			if (c) {
 				if (logger)
-					rps.WriteCommand(logger);
-				history.Do(*c, logger);
+					rps.writeCommand(logger);
+				history.execute(*c, logger);
 			}
 		}
 	}
-	virtual void ExecuteRandomConstructiveCommands(RandomSource& rng) {
+	virtual void executeRandomConstructiveCommands(RandomSource& rng) {
 		int n = constructiveCommands.size();
 		if (n == 0)
 			throw UnknownCommandException();
 		while (true) {
-			int r = rng.GetUniform(n);
+			int r = rng.getUniform(n);
 			if (r == n)
 				return;
 			std::string& name(constructiveCommands[r]);
 			RandomParameters rps(rng, name.c_str());
-			Command* c = factories[name]->Create(rps);
+			Command* c = factories[name]->create(rps);
 			if (c) {
 				if (logger)
-					rps.WriteCommand(logger);
-				history.Do(*c, logger);
+					rps.writeCommand(logger);
+				history.execute(*c, logger);
 			}
 		}
 	}
-	void SetCommandLogger(CommandLogger* log) {
+	void setCommandLogger(CommandLogger* log) {
 		logger = log;
 	}
-	void AddCommand(const char* name,
+	void addCommand(const char* name,
 			std::auto_ptr<CommandFactory> factory, bool constructive) {
 		std::string n(name);
 		std::pair<std::string, CommandFactory*> p(n, factory.get());
@@ -676,24 +676,24 @@ public:
 			constructiveCommands.push_back(n);
 		factory.release();
 	}
-	void ClearHistory() {
-		history.Clear();
+	void clearHistory() {
+		history.clear();
 	}
-	bool Undo() {
-		if (!history.CanUndo())
+	bool undo() {
+		if (!history.canUndo())
 			return false;
-		history.Undo();
+		history.undo();
 		return true;
 	}
-	bool Redo() {
-		if (!history.CanRedo())
+	bool redo() {
+		if (!history.canRedo())
 			return false;
-		history.Redo();
+		history.redo();
 		return true;
 	}
 };
 
-Executor* MakeExecutor() {
+Executor* makeExecutor() {
 	return new ConcreteExecutor();
 }
 

@@ -31,19 +31,19 @@ class FileCommandLoggerImpl :
 	std::string buffer;
 	bool newlineRequired;
 public:
-	void Close() {
+	void close() {
 		if (fh) {
-			WriteBuffer();
+			writeBuffer();
 			fclose(fh);
 		}
 		fh = 0;
 	}
-	void AppendNewline() {
+	void appendNewline() {
 		if (newlineRequired)
 			buffer.push_back('\n');
 	}
-	void WriteBuffer() {
-		AppendNewline();
+	void writeBuffer() {
+		appendNewline();
 		while (!buffer.empty()) {
 			ssize_t s = fwrite(buffer.c_str(), 1, buffer.length(), fh);
 			if (s < 0) {
@@ -55,22 +55,22 @@ public:
 	FileCommandLoggerImpl() : fh(0), newlineRequired(false) {
 	}
 	~FileCommandLoggerImpl() {
-		Close();
+		close();
 	}
-	void SetLogFile(FILE* f) {
-		Close();
+	void setLogFile(FILE* f) {
+		close();
 		fh = f;
 	}
-	void WriteCommand(const char* c) {
-		WriteBuffer();
+	void writeCommand(const char* c) {
+		writeBuffer();
 		buffer.append(c);
 		newlineRequired = true;
 	}
-	void CommandComplete() {
+	void commandComplete() {
 		if (newlineRequired)
 			buffer.append("!\n");
 		newlineRequired = false;
-		WriteBuffer();
+		writeBuffer();
 		fflush(fh);
 	}
 };
@@ -83,14 +83,14 @@ FileCommandLogger::~FileCommandLogger() {
 	delete pImpl;
 }
 
-void FileCommandLogger::SetLogFile(FILE* f) {
-	pImpl->SetLogFile(f);
+void FileCommandLogger::setLogFile(FILE* f) {
+	pImpl->setLogFile(f);
 }
 
-CommandLogger* FileCommandLogger::GetLogger() {
+CommandLogger* FileCommandLogger::getLogger() {
 	return pImpl;
 }
 
-const CommandLogger* FileCommandLogger::GetLogger() const {
+const CommandLogger* FileCommandLogger::getLogger() const {
 	return pImpl;
 }

@@ -124,13 +124,28 @@ public:
 	 * @return the new path to the picture file for the undo object.
 	 */
 	char* addFrame(char* frameName, unsigned int &index);
+
+	/**
+	 * Adds a frame at @c index.
+	 * @param f The frame to add.
+	 * @param index The index at which to add the frame. Must be between
+	 * 0 and @code{.cpp} getSize() @endcode inclusive.
+	 */
+	void addFrame(Frame* f, int index);
+
+	/**
+	 * Reserves space for @c count more frames to be added without the risk of
+	 * an exception being thrown.
+	 * @param count The number of frames that need to be added.
+	 */
+	void reserveFrames(int count);
 	
 	/**
 	 * Adds an already saved frame.
 	 * @param f the frame to add
 	 */
 	void addSavedFrame(Frame *f);
-	
+
 	/**
 	 * Adds a sound located at the path ``sound'' to the frame at location frameNumber 
 	 * in the scene.

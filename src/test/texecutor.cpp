@@ -63,11 +63,11 @@ public:
 				: name(commandName), output(out),
 				  s1(""), i1(no_num), i2(no_num) {
 		}
-		Command* Do() {
+		Command* execute() {
 			std::stringstream ss;
 			ss << name << ",i:" << i1 << ",s:" << s1 << ",i:" << i2;
 			output.push_back(ss.str());
-			return CreateNullCommand();
+			return createNullCommand();
 		}
 		bool operator==(const EtCommand& other) const {
 			return name == other.name
@@ -81,11 +81,11 @@ public:
 	};
 	~EmptyTestCommandFactory() {
 	}
-	Command* Create(Parameters& ps) {
+	Command* create(Parameters& ps) {
 		EtCommand* e = new EtCommand(name, output);
-		e->i1 = ps.GetInteger(-RAND_MAX/2, RAND_MAX/2);
-		ps.GetString(e->s1);
-		e->i2 = ps.GetInteger(-RAND_MAX/2, RAND_MAX/2);
+		e->i1 = ps.getInteger(-RAND_MAX/2, RAND_MAX/2);
+		ps.getString(e->s1);
+		e->i2 = ps.getInteger(-RAND_MAX/2, RAND_MAX/2);
 		return e;
 	}
 	void Fail(const char* s) {
@@ -119,17 +119,17 @@ public:
 	void SetExecutor(Executor* e) {
 		ex = e;
 	}
-	void WriteCommand(const char* lineToLog) {
+	void writeCommand(const char* lineToLog) {
 		command = lineToLog;
 	}
-	void CommandComplete() {
+	void commandComplete() {
 		if (!alreadyIn) {
 			// Make sure we don't recursively call ourselves
 			AlreadyIn a(alreadyIn);
 			// Some tests are not logging; don't try to execute "!"
 			if (!command.empty()) {
 				command.append(1, '!');
-				ex->ExecuteFromLog(command.c_str());
+				ex->executeFromLog(command.c_str());
 			}
 		}
 	}
@@ -138,15 +138,15 @@ public:
 TestCommandFactory::TestCommandFactory()
 		: ce(0), cl(0), str(0), strNext(0), strAllocLen(0) {
 	cl = new CloneLogger();
-	ce = MakeExecutor();
-	ce->SetCommandLogger(cl);
+	ce = makeExecutor();
+	ce->setCommandLogger(cl);
 	cl->SetExecutor(ce);
 	std::auto_ptr<CommandFactory> et(
 			new EmptyTestCommandFactory("et", executionOutput));
 	std::auto_ptr<CommandFactory> sec(
 			new EmptyTestCommandFactory("sec", executionOutput));
-	ce->AddCommand("et", et);
-	ce->AddCommand("sec", sec);
+	ce->addCommand("et", et);
+	ce->addCommand("sec", sec);
 }
 
 TestCommandFactory::~TestCommandFactory() {
@@ -191,7 +191,7 @@ const char* TestCommandFactory::RandomString() {
 
 void TestCommandFactory::emptyCommandReplayerThrows() {
 	try {
-		ce->Execute("fakeCommand");
+		ce->execute("fakeCommand");
 	} catch (UnknownCommandException& e) {
 		return;
 	}
@@ -201,7 +201,7 @@ void TestCommandFactory::emptyCommandReplayerThrows() {
 
 void TestCommandFactory::canParseFromLog() {
 	executionOutput.clear();
-	ce->ExecuteFromLog("et -5 \"hello world!\" 412345!");
+	ce->executeFromLog("et -5 \"hello world!\" 412345!");
 	QCOMPARE(executionOutput.begin()->c_str(),
 			"et,i:-5,s:hello world!,i:412345");
 }
@@ -220,7 +220,7 @@ void TestCommandFactory::parsingDescriptionIsCloning() {
 		int32_t i1 = randomInt();
 		int32_t i2 = randomInt();
 		std::string s1 = RandomString();
-		ce->Execute(commandName, i1, s1.c_str(), i2);
+		ce->execute(commandName, i1, s1.c_str(), i2);
 		output_t::iterator eo1 = executionOutput.begin();
 		output_t::iterator eo2 = eo1;
 		++eo2;
@@ -244,14 +244,14 @@ public:
 		AddChar(std::string& model, int32_t character, int32_t position)
 			: m(&model), c(character), p(position) {
 		}
-		Command* Do();
+		Command* execute();
 	};
 	AddCharFactory(std::string* m) : model(m) {
 	}
-	Command* Create(Parameters& ps) {
-		int32_t i = ps.GetInteger(0, sizeof(alphanumeric) - 1);
+	Command* create(Parameters& ps) {
+		int32_t i = ps.getInteger(0, sizeof(alphanumeric) - 1);
 		int32_t character = alphanumeric[i];
-		int32_t position = ps.GetInteger(0, model->length());
+		int32_t position = ps.getInteger(0, model->length());
 		return new AddChar(*model, character, position);
 	}
 };
@@ -266,20 +266,20 @@ public:
 		DelChar(std::string& model, int32_t position)
 			: m(&model), p(position) {
 		}
-		Command* Do();
+		Command* execute();
 	};
 	DelCharFactory(std::string* m) : model(m) {
 	}
-	Command* Create(Parameters& ps) {
+	Command* create(Parameters& ps) {
 		int32_t len = model->length();
 		if (len == 0)
 			return 0;
-		int32_t position = ps.GetInteger(0, len - 1);
+		int32_t position = ps.getInteger(0, len - 1);
 		return new DelChar(*model, position);
 	}
 };
 
-Command* AddCharFactory::AddChar::Do() {
+Command* AddCharFactory::AddChar::execute() {
 	// insert might throw, so use an auto_ptr to avoid leaks.
 	std::auto_ptr<Command> inv(new DelCharFactory::DelChar(*m, p));
 	std::string::iterator i = m->begin();
@@ -288,9 +288,9 @@ Command* AddCharFactory::AddChar::Do() {
 	return inv.release();
 }
 
-Command* DelCharFactory::DelChar::Do() {
+Command* DelCharFactory::DelChar::execute() {
 	if (m->size() == 0) {
-		return CreateNullCommand();
+		return createNullCommand();
 	}
 	char removedChar = (*m)[p];
 	Command* inv = new AddCharFactory::AddChar(*m, removedChar, p);
@@ -333,12 +333,12 @@ public:
 			af(new AddCharFactory(&finalString)),
 			df(new DelCharFactory(&finalString)),
 			logger(new FileCommandLogger),
-			ex(MakeExecutor()),
+			ex(makeExecutor()),
 			logFile(0),
 			helper(finalString) {
-		ex->SetCommandLogger(logger->GetLogger());
-		ex->AddCommand("add", af, true);
-		ex->AddCommand("del", df);
+		ex->setCommandLogger(logger->getLogger());
+		ex->addCommand("add", af, true);
+		ex->addCommand("del", df);
 		lineBuffer[lineBufferSize - 1] = '\0';
 	}
 	void Init(const char* initialString) {
@@ -346,8 +346,8 @@ public:
 		originalString = finalString;
 		logFile = tmpfile();
 		// ownership of logFile is passed here
-		logger->SetLogFile(logFile);
-		ex->ClearHistory();
+		logger->setLogFile(logFile);
+		ex->clearHistory();
 	}
 	void TestUndo() {
 		::TestUndo(*ex, helper);

@@ -30,9 +30,9 @@ protected:
 	virtual ~FileNameVisitor();
 public:
 	/** Called to report an image file referenced. */
-	virtual void VisitImage(const char*) = 0;
+	virtual void visitImage(const char*) = 0;
 	/** Called to report a sound file referenced. */
-	virtual void VisitSound(const char*) = 0;
+	virtual void visitSound(const char*) = 0;
 };
 
 #endif /* FILENAMEVISITOR_H_ */

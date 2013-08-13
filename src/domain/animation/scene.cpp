@@ -147,6 +147,14 @@ char* Scene::addFrame(char* frameName, unsigned int &index)
 	return newPath;
 }
 
+void Scene::addFrame(Frame* f, int index) {
+	frames.insert(frames.begin() + index, f);
+}
+
+void Scene::reserveFrames(int count) {
+	frames.reserve(frames.size() + count);
+}
+
 
 void Scene::addSavedFrame(Frame *f)
 {

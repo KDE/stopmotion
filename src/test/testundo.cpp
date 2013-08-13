@@ -51,17 +51,17 @@ public:
 	StringLoggerWrapper& operator=(const StringLoggerWrapper&);// unimplemented
 	~StringLoggerWrapper() {
 	}
-	void WriteCommand(const char* command) {
+	void writeCommand(const char* command) {
 		if (out) {
 			out->append(command);
 			out->append(1, '\n');
 		}
 		if (delegate)
-			delegate->WriteCommand(command);
+			delegate->writeCommand(command);
 	}
-	void CommandComplete() {
+	void commandComplete() {
 		if (delegate)
-			delegate->CommandComplete();
+			delegate->commandComplete();
 	}
 	void SetDelegate(CommandLogger* newLogger) {
 		delegate = newLogger;
@@ -111,7 +111,7 @@ bool ExecuteLineFromFile(Executor& e, FILE* logFile) {
 	static char lineBuffer[lineBufferSize];
 	if (!fgets(lineBuffer, lineBufferSize, logFile))
 		return false;
-	e.ExecuteFromLog(lineBuffer);
+	e.executeFromLog(lineBuffer);
 	return true;
 }
 
@@ -137,23 +137,23 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			FileCommandLogger fileLogger;
 			FILE* logFile = tmpfile();
 			// ownership of logFile is passed here
-			fileLogger.SetLogFile(logFile);
+			fileLogger.setLogFile(logFile);
 			logString.clear();
 			stringLogger.SetDelegate(0);
-			e.SetCommandLogger(&stringLogger);
+			e.setCommandLogger(&stringLogger);
 			helper.ResetModel(e);
 			unsigned long startDoMallocCount = MallocsSoFar();
-			e.ExecuteRandomConstructiveCommands(rng);
+			e.executeRandomConstructiveCommands(rng);
 			doMallocCount = MallocsSoFar() - startDoMallocCount;
 			constructLog = logString;
 			if (constructLog.empty()) {
 				constructLog = "<no commands>\n";
 			}
 			logString.clear();
-			e.ClearHistory();
+			e.clearHistory();
 			initialState = helper.HashModel(e);
-			stringLogger.SetDelegate(fileLogger.GetLogger());
-			e.ExecuteRandomCommands(rng);
+			stringLogger.SetDelegate(fileLogger.getLogger());
+			e.executeRandomCommands(rng);
 			finalState = helper.HashModel(e);
 			doLog = logString;
 			if (doLog.empty()) {
@@ -163,11 +163,11 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			// recreate the initial state and see if executing from
 			// the log file produces the same output
 			RandomSource rng2(initial);
-			e.SetCommandLogger(0);
+			e.setCommandLogger(0);
 			freopen(0, "r", logFile);
 			helper.ResetModel(e);
-			e.ExecuteRandomConstructiveCommands(rng2);
-			e.ClearHistory();
+			e.executeRandomConstructiveCommands(rng2);
+			e.clearHistory();
 			bool failed = false;
 			try {
 				while (ExecuteLineFromFile(e, logFile)) {
@@ -185,7 +185,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			}
 			// test Undo and Redo on the same data
 			unsigned long startUndoMallocCount = MallocsSoFar();
-			while (e.Undo()) {
+			while (e.undo()) {
 			}
 			unsigned long undoMallocCount = MallocsSoFar() - startUndoMallocCount;
 			if (helper.HashModel(e) != initialState) {
@@ -196,7 +196,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 						<< "do commands:\n"	<< doLog << "]";
 				QFAIL(ss.str().c_str());
 			}
-			while (e.Redo()) {
+			while (e.redo()) {
 			}
 			if (helper.HashModel(e) != finalState) {
 				std::stringstream ss;
@@ -212,22 +212,22 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 		if (oomLoaded && 0 < totalMallocCount) {
 			RandomSource rng(initial);
 			// Test undoing after an Out-Of-Memory failure
-			int32_t failAt = generalRng.GetUniform(totalMallocCount);
-			e.SetCommandLogger(0);
+			int32_t failAt = generalRng.getUniform(totalMallocCount);
+			e.setCommandLogger(0);
 			helper.ResetModel(e);
-			e.ExecuteRandomConstructiveCommands(rng);
-			e.ClearHistory();
+			e.executeRandomConstructiveCommands(rng);
+			e.clearHistory();
 			SetMallocsUntilFailure(failAt);
 			bool failed = false;
 			try {
-				e.ExecuteRandomCommands(rng);
-				while (e.Undo()) {
+				e.executeRandomCommands(rng);
+				while (e.undo()) {
 				}
 			} catch (std::bad_alloc&) {
 				failed = true;
 			}
 			CancelAnyMallocFailure();
-			while (e.Undo()) {
+			while (e.undo()) {
 			}
 			if (helper.HashModel(e) != initialState) {
 				std::stringstream ss;
@@ -248,24 +248,24 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 		if (oomLoaded && 0 < totalMallocCount) {
 			RandomSource rng(initial);
 			// Test redoing after an Out-Of-Memory failure
-			int32_t failAt2 = generalRng.GetUniform(totalMallocCount);
-			e.SetCommandLogger(0);
+			int32_t failAt2 = generalRng.getUniform(totalMallocCount);
+			e.setCommandLogger(0);
 			helper.ResetModel(e);
-			e.ExecuteRandomConstructiveCommands(rng);
-			e.ClearHistory();
-			e.ExecuteRandomCommands(rng);
+			e.executeRandomConstructiveCommands(rng);
+			e.clearHistory();
+			e.executeRandomCommands(rng);
 			SetMallocsUntilFailure(failAt2);
 			bool failed = false;
 			try {
-				while (e.Undo()) {
+				while (e.undo()) {
 				}
-				while (e.Redo()) {
+				while (e.redo()) {
 				}
 			} catch (std::bad_alloc&) {
 				failed = true;
 			}
 			CancelAnyMallocFailure();
-			while (e.Redo()) {
+			while (e.redo()) {
 			}
 			if (helper.HashModel(e) != finalState) {
 				std::stringstream ss;
@@ -287,32 +287,32 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			// test that commands that fail do not get replayed from the log
 			RandomSource rng(initial);
 			CancelAnyMallocFailure();
-			e.SetCommandLogger(0);
+			e.setCommandLogger(0);
 			helper.ResetModel(e);
-			e.ExecuteRandomConstructiveCommands(rng);
-			e.ClearHistory();
+			e.executeRandomConstructiveCommands(rng);
+			e.clearHistory();
 			FileCommandLogger fileLogger;
 			FILE* logFile = tmpfile();
 			// ownership of logFile is passed here
-			fileLogger.SetLogFile(logFile);
-			stringLogger.SetDelegate(fileLogger.GetLogger());
-			e.SetCommandLogger(&stringLogger);
+			fileLogger.setLogFile(logFile);
+			stringLogger.SetDelegate(fileLogger.getLogger());
+			e.setCommandLogger(&stringLogger);
 			logString.clear();
-			int32_t failAt = generalRng.GetUniform(doMallocCount);
+			int32_t failAt = generalRng.getUniform(doMallocCount);
 			SetMallocsUntilFailure(failAt);
 			try {
-				e.ExecuteRandomCommands(rng);
+				e.executeRandomCommands(rng);
 			} catch (std::bad_alloc&) {
 				CancelAnyMallocFailure();
 				std::string beforeFailureLog(logString);
 				logString.clear();
-				e.ExecuteRandomCommands(rng);
+				e.executeRandomCommands(rng);
 				std::string afterFailureLog(logString);
 				Hash afterFailureState(helper.HashModel(e));
 				RandomSource rng2(initial);
-				e.SetCommandLogger(0);
+				e.setCommandLogger(0);
 				helper.ResetModel(e);
-				e.ExecuteRandomConstructiveCommands(rng2);
+				e.executeRandomConstructiveCommands(rng2);
 				freopen(0, "r", logFile);
 				bool failed = false;
 				try {

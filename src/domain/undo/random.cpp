@@ -27,7 +27,7 @@
 class RandomImpl {
 	~RandomImpl() {
 		if (nextChunk)
-			nextChunk->DelRef();
+			nextChunk->delRef();
 		nextChunk = 0;
 	}
 	RandomImpl() : refCount(1), nextIndex(0), nextChunk(0) {
@@ -42,25 +42,25 @@ class RandomImpl {
 	int nextIndex;
 	RandomImpl* nextChunk;
 public:
-	static RandomImpl* Create() {
+	static RandomImpl* create() {
 		return new RandomImpl;
 	}
-	void AddRef() {
+	void addRef() {
 		++refCount;
 	}
-	void DelRef() {
+	void delRef() {
 		--refCount;
 		if (refCount == 0)
 			delete this;
 	}
-	static int Get(RandomImpl*& pImpl, int& index) {
+	static int get(RandomImpl*& pImpl, int& index) {
 		if (index == chunkSize) {
 			if (!pImpl->nextChunk) {
-				pImpl->nextChunk = Create();
+				pImpl->nextChunk = create();
 			}
 			RandomImpl* nc = pImpl->nextChunk;
-			nc->AddRef();
-			pImpl->DelRef();
+			nc->addRef();
+			pImpl->delRef();
 			pImpl = nc;
 			index = 0;
 		}
@@ -74,49 +74,45 @@ public:
 	}
 };
 
-RandomSource::RandomSource() : impl(RandomImpl::Create()), index(0) {
+RandomSource::RandomSource() : impl(RandomImpl::create()), index(0) {
 }
 
 RandomSource::RandomSource(const RandomSource& other)
 		: impl(other.impl), index(other.index) {
-	impl->AddRef();
+	impl->addRef();
 }
 
 RandomSource::~RandomSource() {
-	impl->DelRef();
+	impl->delRef();
 }
 
-int RandomSource::Get() {
-	return RandomImpl::Get(impl, index);
+int RandomSource::get() {
+	return RandomImpl::get(impl, index);
 }
 
-int32_t RandomSource::GetUniform(int32_t min, int32_t max) {
-	int64_t r = Get();
+int32_t RandomSource::getUniform(int32_t min, int32_t max) {
+	int64_t r = get();
 	return r * (max + 1 - min) / ((int64_t) RAND_MAX + 1) + min;
 }
 
-int32_t RandomSource::GetUniform(int32_t max) {
-	return GetUniform(0, max);
+int32_t RandomSource::getUniform(int32_t max) {
+	return getUniform(0, max);
 }
 
-void RandomSource::GetString(std::string& out,
+void RandomSource::getString(std::string& out,
 		const char* characters, bool allowNulls) {
 	int n = strlen(characters) + allowNulls? 1 : 0;
 	out.clear();
 	while (true) {
-		int r = GetUniform(n);
+		int r = getUniform(n);
 		if (n == r)
 			return;
 		out.append(1, characters[r]);
 	}
 }
 
-void RandomSource::GetAlphanumeric(std::string& out) {
-	GetString(out,
+void RandomSource::getAlphanumeric(std::string& out) {
+	getString(out,
 			"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
 			false);
-}
-
-RandomSource* CreateRandomSource() {
-	return new RandomSource;
 }

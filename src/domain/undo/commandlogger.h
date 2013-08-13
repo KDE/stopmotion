@@ -39,11 +39,11 @@ public:
 	 * @param text The text of the command to be written to the log. Should
 	 * not contain any nulls or line delimiters.
 	 */
-	virtual void WriteCommand(const char* text) = 0;
+	virtual void writeCommand(const char* text) = 0;
 	/**
 	 * Indicates that the command has been successfully executed.
 	 */
-	virtual void CommandComplete() = 0;
+	virtual void commandComplete() = 0;
 };
 
 #endif /* COMMANDLOGGER_H_ */
