@@ -20,8 +20,6 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include "src/technical/util.h"
-
 #include <string>
 #include <vector>
 
