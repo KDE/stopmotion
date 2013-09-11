@@ -39,13 +39,15 @@ public:
 	WorkspaceFile(const char* filename);
 	/**
 	 * Takes ownership of the file owned by @c t, thereby preventing it from
-	 * being deleted when @c t is destroyed.
+	 * being deleted when @c t is destroyed. @c t is emptied by this operation
+	 * and so cannot be used again.
 	 */
 	WorkspaceFile(TemporaryWorkspaceFile t);
 	~WorkspaceFile();
 	/**
 	 * Takes ownership of the file owned by @c t, thereby preventing it from
-	 * being deleted when @c t is destroyed.
+	 * being deleted when @c t is destroyed. @c t is emptied by this operation
+	 * and so cannot be used again.
 	 */
 	WorkspaceFile& operator=(TemporaryWorkspaceFile t);
 	/**
@@ -60,6 +62,10 @@ public:
 	 * (i.e. @c ~/.stopmotion/tmp but specified relative to /, not ~).
 	 */
 	const char* path() const;
+	/**
+	 * Clears (creating if necessary) the workspace directory
+	 */
+	static void clear();
 };
 
 class TemporaryWorkspaceFile {

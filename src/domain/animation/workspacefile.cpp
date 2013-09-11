@@ -26,11 +26,43 @@
 #include <sstream>
 #include <memory.h>
 
+namespace {
+
+uint32_t imageNum;
+
+uint32_t nextImageNumber() {
+	return ++imageNum;
+}
+
+class workspacePath_t {
+};
+
+workspacePath_t workspacePath;
+
+std::ostream& operator<<(std::ostream& s, workspacePath_t) {
+	s << getenv("HOME");
+	s << "/.stopmotion/tmp/";
+	return s;
+}
+
+}
+
+void WorkspaceFile::clear() {
+	std::stringstream ps;
+	ps << workspacePath;
+	const char* path = ps.str().c_str();
+	std::stringstream rm;
+	rm << "rm -rf " << path;
+	system(rm.str().c_str());
+	mkdir(path, 0755);
+	//TODO what about failure? Probably can only inform the user and close
+	imageNum = 0;
+}
+
 WorkspaceFile::WorkspaceFile(const char* filename)
 		: fullPath(0), namePart(0) {
 	std::stringstream path;
-	path << getenv("HOME");
-	path << "/.stopmotion/tmp/";
+	path << workspacePath;
 	int nameStartIndex = path.tellp();
 	path << filename;
 	unsigned int size = path.tellp() + 1;
@@ -47,9 +79,10 @@ WorkspaceFile::WorkspaceFile(TemporaryWorkspaceFile t)
 WorkspaceFile& WorkspaceFile::operator=(TemporaryWorkspaceFile t) {
 	unsigned int size = strlen(t.path) + 1;
 	delete[] fullPath;
-	fullPath = new char[size];
-	strncpy(fullPath, t.path, size);
-	namePart = fullPath + (t.namePart - t.path);
+	fullPath = t.path;
+	namePart = t.namePart;
+	t.path = 0;
+	t.namePart = 0;
 	t.toBeDeleted = false;
 	return *this;
 }
@@ -77,8 +110,7 @@ TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename)
 		namePart = strrchr(path,'/') + 1;
 	} else {
 		std::stringstream p;
-		p << getenv("HOME");
-		p << "/.stopmotion/tmp/";
+		p << workspacePath;
 		int indexOfName = p.tellp();
 		p.fill(0);
 		p.width(8);
