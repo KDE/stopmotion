@@ -109,10 +109,10 @@ public:
 	/**
 	 * Gets the next character from the input buffer, as long as it isn't an
 	 * end-of-line character.
-	 * @param out Stores the character output, only if `isNotEol` is returned.
-	 * @return `isNotEol` on success; in this case `out` will be set. `isEol`
-	 * if we are at the end of the buffer or the next character is a line-
-	 * termination character, in which case `out` will not be set.
+	 * @param out Stores the character output, only if @c isNotEol is returned.
+	 * @return @c isNotEol on success; in this case @c out will be set.
+	 * @c isEol if we are at the end of the buffer or the next character is a
+	 * line-termination character, in which case @c out will not be set.
 	 */
 	IsEol getCharFromLine(char& out) {
 		if (p == end)
@@ -126,8 +126,8 @@ public:
 	/**
 	 * Consume an end-of-line marker (\r, \n or \r\n), if present at the
 	 * position we are reading from.
-	 * @return `isEof` if we have reached the end of the buffer, whether or not
-	 * we consumed an end-of-line marker. `isNotEof` otherwise.
+	 * @return @c isEof if we have reached the end of the buffer, whether or
+	 * not we consumed an end-of-line marker. @c isNotEof otherwise.
 	 */
 	IsEof chompEol() {
 		if (p != end && *p == '\r') {
@@ -140,8 +140,8 @@ public:
 	}
 	/**
 	 * Consume whitespace.
-	 * @return `isEof` if we reached the end of the buffer, whether or not we
-	 * consumed any space. `isNotEof` otherwise.
+	 * @return @c isEof if we reached the end of the buffer, whether or not we
+	 * consumed any space. @c isNotEof otherwise.
 	 */
 	IsEof chompSpace() {
 		while (p != end) {
@@ -208,10 +208,10 @@ public:
 	/**
 	 * Consumes a decimal digit, if one is next in the buffer. Does not consume
 	 * non-digit characters.
-	 * @param digit The digit output, if `parseSuceeded` is returned.
-	 * @return `parseSucceeded` on success; in this case `digit` will be set.
-	 * `parseFailed` if the next character is not a digit. In this case `digit`
-	 * will not be set and no characters will have been consumed.
+	 * @param digit The digit output, if @c parseSuceeded is returned.
+	 * @return @c parseSucceeded on success; in this case @c digit will be set.
+	 * @c parseFailed if the next character is not a digit. In this case
+	 * @c digit will not be set and no characters will have been consumed.
 	 */
 	ParseSucceeded getDigit(int32_t& digit) {
 		if (p == end)
@@ -223,7 +223,7 @@ public:
 		return parseSucceeded;
 	}
 	/**
-	 * As for `GetDigit` but '8' and '9' are not considered digits and are
+	 * As for @c GetDigit but '8' and '9' are not considered digits and are
 	 * not consumed.
 	 */
 	ParseSucceeded getOctalDigit(int32_t& digit) {
@@ -238,12 +238,12 @@ public:
 	/**
 	 * Consume a number, possibly negative (although '+' is not consumed and
 	 * causes a parse failure).
-	 * @param `out` The parsed number; only if `parseSucceeded` is returned.
-	 * @return `parseSucceeded` if the next characters were possibly a '-',
+	 * @param @c out The parsed number; only if @c parseSucceeded is returned.
+	 * @return @c parseSucceeded if the next characters were possibly a '-',
 	 * a string of numbers then an argument delimiter. All except the
-	 * delimiter are consumed. `out` is set to the parsed number. In other
-	 * cases, no characters are consumed, `out` is not set and `parseFailed` is
-	 * returned.
+	 * delimiter are consumed. @c out is set to the parsed number. In other
+	 * cases, no characters are consumed, @c out is not set and @c parseFailed
+	 * is returned.
 	 */
 	ParseSucceeded getInteger(int32_t& out) {
 		const char *old = p;
