@@ -268,7 +268,7 @@ public:
 	bool exportToCinerella(const char *file);
 
 	/**
-	 * Has v visit all the files referenced (images and sounds)
+	 * Have v visit all the files referenced (images and sounds)
 	 */
 	void Accept(FileNameVisitor& v) const;
 
