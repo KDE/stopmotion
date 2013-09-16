@@ -23,23 +23,54 @@
 #include "src/technical/util.h"
 
 #include <stdio.h>
+#include <unistd.h>
 #include <sstream>
 #include <memory.h>
 
 namespace {
 
-uint32_t imageNum;
+uint32_t fileNum;
 
-uint32_t nextImageNumber() {
-	return ++imageNum;
+uint32_t nextFileNumber() {
+	return ++fileNum;
 }
 
-class workspacePath_t {
+/**
+ * Gets a fresh filename in the workspace that doesn't clash with any other
+ * file.
+ * @param [out] path Will get a @code{.cpp} new char[] @endcode containing
+ * the full path to the new file.
+ * @param [out] namePart Will get a pointer into @c path that points to the
+ * basename part of the path.
+ * @param [in] extension Characters that must come at the end of the filename,
+ * for example ".jpg".
+ */
+void getFreshFilename(char*& path, const char*& namePart,
+		const char* extension) {
+	std::stringstream p;
+	int indexOfName = 0;
+	do {
+		p.str("");
+		p << workspacePath;
+		indexOfName = p.tellp();
+		p.fill(0);
+		p.width(8);
+		p <<  nextFileNumber();
+		p << extension;
+		// keep going until we find a filename that doesn't already exist.
+	} while (0 != access(p.str().c_str(), F_OK));
+	int size = p.tellp() + 1;
+	path = new char[size];
+	strncpy(path, p.str().c_str(), size);
+	namePart = path + indexOfName;
+}
+
+class WorkspacePath {
 };
 
-workspacePath_t workspacePath;
+WorkspacePath workspacePath;
 
-std::ostream& operator<<(std::ostream& s, workspacePath_t) {
+std::ostream& operator<<(std::ostream& s, WorkspacePath) {
 	s << getenv("HOME");
 	s << "/.stopmotion/tmp/";
 	return s;
@@ -56,24 +87,38 @@ void WorkspaceFile::clear() {
 	system(rm.str().c_str());
 	mkdir(path, 0755);
 	//TODO what about failure? Probably can only inform the user and close
-	imageNum = 0;
+	fileNum = 0;
 }
 
-WorkspaceFile::WorkspaceFile(const char* filename)
+WorkspaceFile::WorkspaceFile()
 		: fullPath(0), namePart(0) {
-	std::stringstream path;
-	path << workspacePath;
-	int nameStartIndex = path.tellp();
-	path << filename;
-	unsigned int size = path.tellp() + 1;
+}
+
+WorkspaceFile::WorkspaceFile(const char* basename)
+		: fullPath(0), namePart(0) {
+	// prevent new files from clashing with this one.
+	// This isn't really necessary, as we ensure that new files don't
+	// overwrite old ones, but it will make sure that new files have
+	// greater numbers than old ones, which might be nice.
+	char* endDigits;
+	uint32_t num = static_cast<uint32_t>(
+			strtoul(basename, &endDigits, 10));
+	if (fileNum < num) {
+		fileNum = num;
+	}
+	std::stringstream p;
+	p << workspacePath;
+	int indexOfName = p.tellp();
+	p << basename;
+	int size = p.tellp() + 1;
 	fullPath = new char[size];
-	strncpy(fullPath, path.str().c_str(), size);
-	namePart = fullPath + nameStartIndex;
+	strncpy(fullPath, p.str().c_str(), size);
+	namePart = fullPath + indexOfName;
 }
 
-WorkspaceFile::WorkspaceFile(TemporaryWorkspaceFile t)
+WorkspaceFile::WorkspaceFile(const char* extension, FreshFilename)
 		: fullPath(0), namePart(0) {
-	*this = t;
+	getFreshFilename(fullPath, namePart, extension);
 }
 
 WorkspaceFile& WorkspaceFile::operator=(TemporaryWorkspaceFile t) {
@@ -99,6 +144,13 @@ const char* WorkspaceFile::path() const {
 	return fullPath;
 }
 
+void TemporaryWorkspaceFile::copyToWorkspace(const char* filename) {
+	const char* extension = strrchr(filename,'.');
+	getFreshFilename(path, namePart, extension);
+	Util::copyFile(path, filename);
+	toBeDeleted = true;
+}
+
 TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename)
 		: path(0), namePart(0), toBeDeleted(false) {
 	// not a totally fullproof test...
@@ -109,21 +161,13 @@ TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename)
 		strncpy(path, filename, size);
 		namePart = strrchr(path,'/') + 1;
 	} else {
-		std::stringstream p;
-		p << workspacePath;
-		int indexOfName = p.tellp();
-		p.fill(0);
-		p.width(8);
-		p <<  nextImageNumber();
-		const char* extension = strrchr(path,'.');
-		p << extension;
-		int size = p.tellp() + 1;
-		path = new char[size];
-		strncpy(path, p.str().c_str(), size);
-		namePart = path + indexOfName;
-		Util::copyFile(path, filename);
-		toBeDeleted = true;
+		copyToWorkspace(filename);
 	}
+}
+
+TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename,
+		ForceCopy) : path(0), namePart(0), toBeDeleted(false) {
+	copyToWorkspace(filename);
 }
 
 TemporaryWorkspaceFile::~TemporaryWorkspaceFile() {

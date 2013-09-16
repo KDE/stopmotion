@@ -29,25 +29,33 @@ class WorkspaceFile {
 	WorkspaceFile(const WorkspaceFile&);
 	WorkspaceFile& operator=(const WorkspaceFile);
 public:
+	enum FreshFilename {
+		freshFilename
+	};
 	/**
-	 * Sets filename as the owned file.
-	 * @note The file is not kept open by this class.
-	 * @param filename The file name (just name and extension, without path)
-	 * of the file, which must be in the workspace directory
-	 * ({@c ~/.stopmotion/tmp})
+	 * Creates a WorkspaceFile referring to no file. Both @ref basename and
+	 * @ref path will return null until a @ref TemporaryWorkspaceFile is
+	 * assigned to it.
 	 */
-	WorkspaceFile(const char* filename);
+	WorkspaceFile();
 	/**
-	 * Takes ownership of the file owned by @c t, thereby preventing it from
-	 * being deleted when @c t is destroyed. @c t is emptied by this operation
-	 * and so cannot be used again.
+	 * Refers to a file already in the workspace. The file counter will be
+	 * advanced if necessary to avoid new files from clashing with this one.
+	 * @param basename the file name (including extension) relative to the
+	 * workspace directory.
 	 */
-	WorkspaceFile(TemporaryWorkspaceFile t);
+	WorkspaceFile(const char* basename);
+	/**
+	 * Creates a fresh filename without a file corresponding to it.
+	 * @param extension Characters that must terminate the name, for
+	 * example ".jpg".
+	 */
+	WorkspaceFile(const char* extension, FreshFilename);
 	~WorkspaceFile();
 	/**
 	 * Takes ownership of the file owned by @c t, thereby preventing it from
 	 * being deleted when @c t is destroyed. @c t is emptied by this operation
-	 * and so cannot be used again.
+	 * and so cannot be used again. This operation will not fail.
 	 */
 	WorkspaceFile& operator=(TemporaryWorkspaceFile t);
 	/**
@@ -75,16 +83,29 @@ class TemporaryWorkspaceFile {
 	TemporaryWorkspaceFile(const TemporaryWorkspaceFile&);
 	TemporaryWorkspaceFile& operator=(const TemporaryWorkspaceFile);
 	friend class WorkspaceFile;
+	void copyToWorkspace(const char* filename);
 public:
+	enum ForceCopy {
+		forceCopy
+	};
 	/**
 	 * Copy file with path @c filename into the workspace directory
-	 * (@c ~/.stopmotion/tmp ) unless it is already in this directory.
+	 * ({@c ~/.stopmotion/tmp}) unless it is already in this directory.
 	 * A freshly-copied file will be deleted on destruction unless a
 	 * @ref WorkspaceFile is constructed from it beforehand.
 	 * @note The file is not kept open by this class.
 	 * @param filename The full path to the file.
 	 */
 	TemporaryWorkspaceFile(const char* filename);
+	/**
+	 * Copy file with path @c filename into the workspace directory,
+	 * even if it is already in this directory. The file will be deleted on
+	 * destruction unless it has been assigned to a @ref WorkspaceFile
+	 * beforehand.
+	 * @note The file is not kept open by this class.
+	 * @param filename The full path to the file.
+	 */
+	TemporaryWorkspaceFile(const char* filename, ForceCopy);
 	~TemporaryWorkspaceFile();
 };
 
