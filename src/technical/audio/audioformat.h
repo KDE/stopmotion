@@ -20,6 +20,7 @@
 #ifndef AUDIOFORMAT_H
 #define AUDIOFORMAT_H
 
+class TemporaryWorkspaceFile;
 
 /**
  * Interface to be used by the implemented audio formats. They
@@ -41,7 +42,7 @@ public:
 	 * -1 = cannot open file for reading
 	 * -2 = not a valid audio format file
 	 */
-	virtual int setFilename(const char* filename) = 0;
+	virtual int setFilename(TemporaryWorkspaceFile& filename) = 0;
 	
 	/**
 	 * Abstract function for opening the file registered with setFilename.

@@ -48,12 +48,12 @@ OggVorbis::~OggVorbis()
 }
 
 
-int OggVorbis::setFilename(const char *filename)
+int OggVorbis::setFilename(TemporaryWorkspaceFile& filename)
 {
-	assert(filename != NULL);
+	assert(filename.path() != NULL);
 
 	// Opens the file and tests for vorbis-ness
-	FILE *f = fopen(filename, "r");
+	FILE *f = fopen(filename.path(), "r");
 	if (f) {
 		if (oggFile != NULL) {
 			free(oggFile);
@@ -78,14 +78,7 @@ int OggVorbis::setFilename(const char *filename)
 		ov_clear(oggFile);
 		free(oggFile);
 		oggFile = NULL;
-		// The given filename is a valid ogg file and we wants
-		// to save it for later usage.
-		if (this->filename != NULL) {
-			delete [] this->filename;
-			this->filename = NULL;
-		}
-		this->filename = new char[strlen(filename) + 1];
-		strcpy(this->filename, filename);
+		this->filename = filename;
 	}
 	else {
 		Logger::get().logDebug("Cannot open file for reading");
@@ -98,7 +91,7 @@ int OggVorbis::setFilename(const char *filename)
 
 int OggVorbis::open()
 {
-	FILE *f = fopen(filename, "r");
+	FILE *f = fopen(filename.path(), "r");
 	if (f) {
 		oggFile = (OggVorbis_File*)malloc( sizeof(OggVorbis_File) );
 		if (oggFile == NULL) {

@@ -23,7 +23,7 @@
 #include "audioformat.h"
 
 #include <vorbis/vorbisfile.h>
-
+#include "workspacefile.h"
 
 /**
  * Class for decoding of oggvorbis data to raw PCM data.
@@ -49,7 +49,7 @@ public:
 	 * -1 = cannot open file for reading
 	 * -2 = not a valid oggVorbis file
 	 */
-	int setFilename(const char* filename);
+	int setFilename(TemporaryWorkspaceFile& filename);
 	
 	/**
 	 * Function for opening the file registered with setFilename.
@@ -83,7 +83,7 @@ private:
 	OggVorbis_File *oggFile;
 	
 	/** The filename registred in this class. Hopefully a valid ogg file. */
-	char *filename;
+	WorkspaceFile filename;
 };
 
 #endif

@@ -23,6 +23,10 @@
 
 class TemporaryWorkspaceFile;
 
+/**
+ * Represents the filename of a file in the workspace (~/.stopmotion/tmp/).
+ * The file is not held open, nor is it deleted on destruction.
+ */
 class WorkspaceFile {
 	char* fullPath;
 	const char* namePart;
@@ -39,13 +43,6 @@ public:
 	 */
 	WorkspaceFile();
 	/**
-	 * Refers to a file already in the workspace. The file counter will be
-	 * advanced if necessary to avoid new files from clashing with this one.
-	 * @param basename the file name (including extension) relative to the
-	 * workspace directory.
-	 */
-	WorkspaceFile(const char* basename);
-	/**
 	 * Creates a fresh filename without a file corresponding to it.
 	 * @param extension Characters that must terminate the name, for
 	 * example ".jpg".
@@ -57,7 +54,7 @@ public:
 	 * being deleted when @c t is destroyed. @c t is emptied by this operation
 	 * and so cannot be used again. This operation will not fail.
 	 */
-	WorkspaceFile& operator=(TemporaryWorkspaceFile t);
+	WorkspaceFile& operator=(TemporaryWorkspaceFile& t);
 	/**
 	 * Gets the file's basename.
 	 * @return The file's name (i.e. with no directory part but including any
@@ -76,8 +73,13 @@ public:
 	static void clear();
 };
 
+/**
+ * Represents the filename of a newly-created file in the workspace
+ * (~/.stopmotion/tmp/). This file will be deleted upon destruction unless it
+ * has been assigned to a @ref WorkspaceFile beforehand.
+ */
 class TemporaryWorkspaceFile {
-	char* path;
+	char* fullPath;
 	const char* namePart;
 	bool toBeDeleted;
 	TemporaryWorkspaceFile(const TemporaryWorkspaceFile&);
@@ -87,6 +89,9 @@ class TemporaryWorkspaceFile {
 public:
 	enum ForceCopy {
 		forceCopy
+	};
+	enum AlreadyAWorkspaceFile {
+		alreadyAWorkspaceFile
 	};
 	/**
 	 * Copy file with path @c filename into the workspace directory
@@ -106,7 +111,29 @@ public:
 	 * @param filename The full path to the file.
 	 */
 	TemporaryWorkspaceFile(const char* filename, ForceCopy);
+	/**
+	 * Refers to a file already in the workspace. The file counter will be
+	 * advanced if necessary to avoid new files from clashing with this one.
+	 * This file will not be deleted on destruction.
+	 * @param basename the file name (including extension) relative to the
+	 * workspace directory.
+	 */
+	TemporaryWorkspaceFile(const char* basename, AlreadyAWorkspaceFile);
 	~TemporaryWorkspaceFile();
+	/**
+	 * Returns the path of the file.
+	 * @return Ownership is not returned.
+	 */
+	const char* path() {
+		return fullPath;
+	}
+	/**
+	 * Returns the basename (with extension) of the file.
+	 * @return Ownership is not returned.
+	 */
+	const char* basename() {
+		return namePart;
+	}
 };
 
 #endif /* WORKSPACEFILE_H_ */
