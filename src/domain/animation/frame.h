@@ -38,6 +38,28 @@ class FileNameVisitor;
 class Frame
 {
 public:
+	class Sound {
+		AudioFormat* af;
+		const char* name;
+	public:
+		Sound();
+		~Sound();
+		/**
+		 * Opens an audio file.
+		 * @param filename The filename to open. Ownership is not passed.
+		 * @return 0 for success, less than zero for failure. See
+		 * @ref AudioFormat::setFilename for error return value meanings.
+		 */
+		int open(const char* filename);
+		/**
+		 * Sets or resets the (human-readable) name of this sound.
+		 * @param name The new name or NULL for no name. Ownership is passed.
+		 * @return The old name or NULL for no name. Ownership is returned.
+		 */
+		const char* setName(const char* name);
+		AudioFormat* getAudio();
+		const char* getName() const;
+	};
 	/** Number of files in the temporary directory. */
 	static unsigned int tmpNum;
 	
@@ -45,12 +67,10 @@ public:
 	static unsigned int trashNum;
 	
 	/**
-	 * Creates a frame with the picture in the file with name
-	 * filename,
-	 *
-	 * @param filename the filename of the picture for this frame.
+	 * Creates a frame with the specified file for its picture.
+	 * @param file The picture for this frame.
 	 */
-	 Frame(const char *filename); 
+	 Frame(TemporaryWorkspaceFile& file);
 	 
 	/**
 	 * Cleans up after the frame
@@ -65,12 +85,30 @@ public:
 	 * -2 = not a valid audio file
 	 */
 	int addSound(const char *filename);
-	
+
+	/**
+	 * Adds a sound.
+	 * @param sound Ownership is passed. May not be null.
+	 * @param index Must be between 0 and @code{.cpp} getNumberOfSounds() - 1
+	 * @endcode
+	 * @note This is guaranteed not to fail for @c n calls after a call to
+	 * @code{.cpp} preallocateSounds(n) @endcode
+	 */
+	void addSound(Sound* sound, int index);
+
+	/**
+	 * Allocates space for @c extra more calls to @ref addSound
+	 * @param extra Number of slots to reserve.
+	 */
+	void preallocateSounds(int extra);
+
 	/**
 	 * Removes sound number soundNumber from this frame.
-	 * @param soundNumber 
+	 * @param soundNumber The index of the sound to remove. Must be between
+	 * 0 and @code{.cpp} getNumberOfSounds() - 1 @encode
+	 * @return The sound that was removed. Ownership is returned.
 	 */
-	void removeSound( unsigned int soundNumber );
+	Sound* removeSound(int index);
 	
 	/**
 	 * Returns the number of sounds in this frame.
@@ -91,15 +129,15 @@ public:
 	 * @param soundNumber the number of the sound to change the name of.
 	 * @param soundName the new name of the sound.
 	 */
-	void setSoundName(unsigned int soundNumber, char* soundName);
+	void setSoundName(unsigned int soundNumber, const char* soundName);
 	
 	/**
 	 * Retrieves the name of the sound at index soundNumber in this frame.
 	 * @param soundNumber the sound to return.
 	 * @return the sound at index soundNumber in this frame.
 	 */
-	char* getSoundName(unsigned int soundNumber);
-	 
+	const char* getSoundName(unsigned int soundNumber);
+
 	/**
 	 * Retrieves the absolute path to the picture of this frame.
 	 * @return the absolute path to the picture of this frame.
@@ -121,11 +159,6 @@ public:
 	 */
 	void copyToTemp();
 	 
-	/**
-	 * Moves the files belonging to this frame to a trash directory.
-	 */
-	void moveToTrash();
-	  
 	/**
 	 * Sets this frame as a valid project file.
 	 */
@@ -159,22 +192,15 @@ private:
 	 * directory, the tmp directory or the trash directory. */
 	char *imagePath; // absolute path
 
-	typedef vector<AudioFormat*> soundVector;
+	typedef vector<Sound*> soundVector;
 
 	/** Contains the sounds belonging to this frame. */
 	soundVector sounds;
-	
-	/** Contains the sound names belonging to this frame. The names are user
-	 * defined e.g. Speech 1. */
-	vector<string> soundNames;
 	
 	/** True if this frame is saved to a project file. It is also true if the
 	 * frame is loaded from a previously saved project. */
 	bool isProjectFile;
 	
-	/** Number of sounds belonging to this frame. */
-	int soundNum;
-
 	/**
 	 * Moves the sounds to a sound directory.
 	 * @param directory the directory to move the sounds to

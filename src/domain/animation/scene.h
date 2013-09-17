@@ -69,7 +69,7 @@ public:
 	 * @return the frame at position frameNumber.
 	 */
 	Frame* getFrame(unsigned int frameNumber);
-	
+
 	/**
 	 * Adds the frames in the vector frameNames to the vector at position
 	 * index.
@@ -86,18 +86,14 @@ public:
 	const vector<char*> addFrames(const vector<char*>& frameNames,
 			unsigned int index, Frontend *frontend, 
 			unsigned int &numberOfCanceledFrames );
-	
+
 	/**
-	 * Remove the frames at the positions from fromFrame to toFrame (inclusive) 
-	 * from the scene.
-	 * @param fromFrame the first frame to remove from the scene.
-	 * @param toFrame the last frame to remove from the scene.
-	 * @return the new paths where the frame pictures has been moved. This is
-	 * for the undo object.
+	 * Removes a frame from the scene.
+	 * @param frame The frame to remove.
+	 * @return The removed frame. Ownership is returned.
 	 */
-	const vector<char*> removeFrames(unsigned int fromFrame, 
-			const unsigned int toFrame);
-	
+	Frame* removeFrame(unsigned int frame);
+
 	/**
 	 * Moves the frames at the positions from fromFrame to toFrame (inclusive)
 	 * to the position movePosition inside the scene.
@@ -107,7 +103,7 @@ public:
 	 */
 	void moveFrames(unsigned int fromFrame, unsigned int toFrame, 
 			unsigned int movePosition);
-	 
+
 	/**
 	 * Cleans frames from the scene without moving them around. Used when the user
 	 * aborts while adding frames.
@@ -174,7 +170,7 @@ public:
 	 * @param soundName the new name for the sound.
 	 */
 	void setSoundName(unsigned int frameNumber, unsigned int soundNumber,
-			char* soundName);
+			const char* soundName);
 		
 	/**
 	 * Has v visit all the files referenced (images and sounds)

@@ -30,6 +30,7 @@
 #include <unistd.h>
 #include <sstream>
 #include <libgen.h>
+#include <memory>
 
 
 unsigned int Frame::tmpNum   = 0;
@@ -38,6 +39,39 @@ char Frame::tempPath[256]   = {0};
 char Frame::trashPath[256]  = {0};
 
 
+Frame::Sound::Sound() : af(0), name(0) {
+}
+
+Frame::Sound::~Sound() {
+	delete af;
+	delete name;
+}
+
+//TODO: change this for a WorkspaceFile
+int Frame::Sound::open(const char* filename) {
+	std::auto_ptr<AudioFormat> a(new OggVorbis());
+	int ret = a->setFilename(filename);
+	if (ret == 0) {
+		af = a.release();
+	}
+	return ret;
+}
+
+const char* Frame::Sound::setName(const char* n) {
+	const char* r = name;
+	name = n;
+	return r;
+}
+
+AudioFormat* Frame::Sound::getAudio() {
+	return af;
+}
+
+const char* Frame::Sound::getName() const {
+	return name;
+}
+
+//TODO: change this for a WorkspaceFile
 Frame::Frame(const char *filename)
 {
 	assert(filename != NULL);
@@ -49,7 +83,6 @@ Frame::Frame(const char *filename)
 	imagePath = new char[len];
 	strcpy(imagePath, filename);
 	isProjectFile = false;
-	soundNum = -1;
 	
 	assert(tempPath  != NULL);
 	assert(trashPath != NULL);
@@ -125,18 +158,19 @@ int Frame::addSound(const char *filename)
 	return 1;
 }
 
+void Frame::addSound(Frame::Sound* sound, int index) {
+	sounds.insert(sounds.begin() + index, sound);
+}
 
-void Frame::removeSound(unsigned int soundNumber)
+void Frame::preallocateSounds(int extra) {
+	sounds.reserve(sounds.size() + extra);
+}
+
+Frame::Sound* Frame::removeSound(int soundNumber)
 {
-	assert(sounds[soundNumber] != NULL);
-	
-	AudioFormat *f = sounds[soundNumber];
-	if ( access( f->getSoundPath(), F_OK ) == 0 ) {
-		unlink( f->getSoundPath() );
-	}
-	delete sounds[soundNumber];
-	sounds[soundNumber] = NULL;
+	Frame::Sound* s = sounds[s];
 	sounds.erase(sounds.begin() + soundNumber);
+	return s;
 }
 
 
@@ -152,15 +186,15 @@ vector<AudioFormat*>& Frame::getSounds()
 }
 
 
-void Frame::setSoundName(unsigned int soundNumber, char* soundName)
+void Frame::setSoundName(unsigned int soundNumber, const char* soundName)
 {
 	soundNames[soundNumber] = soundName;
 }
 
 
-char* Frame::getSoundName(unsigned int soundNumber)
+const char* Frame::getSoundName(unsigned int soundNumber)
 {
-	return (char*)soundNames[soundNumber].c_str();
+	return soundNames[soundNumber].c_str();
 }
 
 
@@ -222,13 +256,13 @@ void Frame::moveToSoundDir(const char *directory)
 	// to the sounds directory
 	unsigned int numSounds = sounds.size();
 	for (unsigned int i = 0; i < numSounds; ++i) {
-		AudioFormat *f = sounds[i];
+		AudioFormat *f = sounds[i]->getAudio();
 		char *soundPath = f->getSoundPath();
 		
 		// Create a new sound path
 		char newSoundPath[256] = {0};	
 		snprintf(newSoundPath, 256, "%s%s_snd_%d%s", 
-			directory, imgId, ++soundNum, strrchr(soundPath,'.'));
+			directory, imgId, i, strrchr(soundPath,'.'));
 		
 		if (access(soundPath, F_OK) == 0) {
 			// Move from old path to new path
@@ -276,36 +310,6 @@ void Frame::copyToTemp()
 }
 
 
-void Frame::moveToTrash()
-{
-	char newImagePath[256] = {0};
-	
-	char *dotPtr = strrchr(imagePath,'.');
-	snprintf(newImagePath, 256, "%strash_%d%s", trashPath, trashNum, dotPtr);
-
-	rename(imagePath, newImagePath);
-	
-	delete [] imagePath;
-	imagePath = new char[strlen(newImagePath) + 1];
-	strcpy(imagePath, newImagePath);
-	
-	// Remove all of the sounds added to this frame. This should be
-	// added to the undo history in the future.
-	unsigned int numSounds = sounds.size();
-	for (unsigned int i = 0; i < numSounds; ++i) {
-		AudioFormat *f = sounds[i];
-		if (access(f->getSoundPath(), F_OK) == 0) {
-			unlink( f->getSoundPath() );
-		}
-		delete sounds[i];
-		sounds[i] = NULL;
-	}
-	sounds.clear();
-
-	++trashNum;
-}
-
-
 void Frame::markAsProjectFile()
 {
 	isProjectFile = true;
@@ -317,7 +321,7 @@ void Frame::playSounds(AudioDriver *driver)
 	unsigned int numElem = sounds.size();
 	if (numElem > 0) {
 		for (unsigned int i = 0; i < numElem; ++i) {
-				driver->addAudioFile(sounds[i]);
+				driver->addAudioFile(sounds[i]->getAudio()));
 		}
 		driver->playInThread();
 	}

@@ -161,30 +161,11 @@ void Scene::addSavedFrame(Frame *f)
 	frames.push_back(f);
 }
 
-
-const vector< char * > Scene::removeFrames( unsigned int fromFrame, const unsigned int toFrame )
-{
-	vector<char*> newImagePaths;
-	char *newPath;
-	
-	if ( toFrame < frames.size() ) { 
-		for (unsigned int i = fromFrame; i <= toFrame; ++i) {
-			Frame *f = frames[fromFrame];
-			f->moveToTrash();
-			newPath = new char[256];
-			strcpy(newPath, f->getImagePath());
-			newImagePaths.push_back(newPath);
-			newPath = NULL;
-			delete frames[fromFrame];
-			frames.erase(frames.begin() + fromFrame);
-		}
-	}
-	
-	// trim to size :)
-	vector<char*>(newImagePaths).swap(newImagePaths);
-	return newImagePaths;
+Frame* Scene::removeFrame(unsigned int frame) {
+	Frame* f = frames[frame];
+	frames.erase(frames.begin() + frame);
+	return f;
 }
-
 
 void Scene::moveFrames( unsigned int fromFrame, unsigned int toFrame, 
 		unsigned int movePosition )
@@ -220,7 +201,7 @@ void Scene::removeSound( unsigned int frameNumber, unsigned int soundNumber )
 
 
 void Scene::setSoundName( unsigned int frameNumber, unsigned int soundNumber, 
-		char * soundName )
+		const char * soundName )
 {
 	frames[frameNumber]->setSoundName(soundNumber, soundName);
 }
