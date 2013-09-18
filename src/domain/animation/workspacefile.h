@@ -21,6 +21,8 @@
 #ifndef WORKSPACEFILE_H_
 #define WORKSPACEFILE_H_
 
+#include <stdint.h>
+
 class TemporaryWorkspaceFile;
 
 /**
@@ -71,6 +73,18 @@ public:
 	 * Clears (creating if necessary) the workspace directory
 	 */
 	static void clear();
+	/**
+	 * Returns the current sound number counter. This is cleared by a call to
+	 * {@ref clear}. Remember to call {@ref nextSoundNumber} if the sound
+	 * number actually gets used.
+	 * @return One more than the number of calls to {@ref nextSoundNumber}
+	 * since the last call to {@ref clear}.
+	 */
+	static uint32_t getSoundNumber();
+	/**
+	 * Increments the sound counter.
+	 */
+	static void nextSoundNumber();
 };
 
 /**

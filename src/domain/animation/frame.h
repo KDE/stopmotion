@@ -23,6 +23,7 @@
 #include "src/config.h"
 #include "src/technical/audio/audioformat.h"
 #include "src/technical/audio/audiodriver.h"
+#include "workspacefile.h"
 
 #include <vector>
 #include <string>
@@ -35,12 +36,11 @@ class FileNameVisitor;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class Frame
-{
+class Frame {
 public:
 	class Sound {
 		AudioFormat* af;
-		const char* name;
+		WorkspaceFile name;
 	public:
 		Sound();
 		~Sound();
@@ -50,7 +50,7 @@ public:
 		 * @return 0 for success, less than zero for failure. See
 		 * @ref AudioFormat::setFilename for error return value meanings.
 		 */
-		int open(const char* filename);
+		int open(TemporaryWorkspaceFile& filename);
 		/**
 		 * Sets or resets the (human-readable) name of this sound.
 		 * @param name The new name or NULL for no name. Ownership is passed.
@@ -60,23 +60,18 @@ public:
 		AudioFormat* getAudio();
 		const char* getName() const;
 	};
-	/** Number of files in the temporary directory. */
-	static unsigned int tmpNum;
-	
-	/** Number of files in the trash directory. */
-	static unsigned int trashNum;
-	
+
 	/**
 	 * Creates a frame with the specified file for its picture.
 	 * @param file The picture for this frame.
 	 */
 	 Frame(TemporaryWorkspaceFile& file);
-	 
+
 	/**
 	 * Cleans up after the frame
 	 */
 	 ~Frame();
-	 
+
 	/**
 	 * Adds the sound in the file filename to this frame.
 	 * @param filename the name of the file where the sound is.
@@ -84,7 +79,7 @@ public:
 	 * -1 = file is not readable
 	 * -2 = not a valid audio file
 	 */
-	int addSound(const char *filename);
+	int addSound(TemporaryWorkspaceFile& filename);
 
 	/**
 	 * Adds a sound.
@@ -109,32 +104,29 @@ public:
 	 * @return The sound that was removed. Ownership is returned.
 	 */
 	Sound* removeSound(int index);
-	
+
 	/**
 	 * Returns the number of sounds in this frame.
 	 * @return the number of sounds in this frame.
 	 */
 	unsigned int getNumberOfSounds();
-	
-	/**
-	 * Returns the sounds belonging to this frame.
-	 * @return a vector containing audio objects which can be played
-	 * with the implemented audio driver
-	 */
-	vector<AudioFormat*>& getSounds();
-	
+
 	/**
 	 * Sets the name of the sound at index soundNumber in this frame to 
 	 * soundName
 	 * @param soundNumber the number of the sound to change the name of.
-	 * @param soundName the new name of the sound.
+	 * @param soundName the new name of the sound. Ownership is passed; must
+	 * have been allocated with new char[].
+	 * @return The old name for this sound. Ownership is returned; must be
+	 * freed with delete[].
 	 */
-	void setSoundName(unsigned int soundNumber, const char* soundName);
-	
+	const char* setSoundName(unsigned int soundNumber, const char* soundName);
+
 	/**
 	 * Retrieves the name of the sound at index soundNumber in this frame.
 	 * @param soundNumber the sound to return.
-	 * @return the sound at index soundNumber in this frame.
+	 * @return the sound at index soundNumber in this frame. Ownership is
+	 * not returned.
 	 */
 	const char* getSoundName(unsigned int soundNumber);
 
@@ -142,39 +134,12 @@ public:
 	 * Retrieves the absolute path to the picture of this frame.
 	 * @return the absolute path to the picture of this frame.
 	 */
-	char* getImagePath();
-	 
-	/**
-	 * Moves sounds and images belonging to this frame into project directories.
-	 * @param imageDir the image directory to move images into
-	 * @param soundDir the sound directory to move sounds into
-	 * @param imgNum a number describing the position of this frame relative
-	 * to the other frames. E.g. 000005 if this frame is number five in the sequence
-	 * of frames.
-	 */
-	void moveToProjectDir(const char *imageDir, const char *soundDir, unsigned int imgNum);
-	 
-	/**
-	 * Copies the files belonging to this frame to a temporary directory.
-	 */
-	void copyToTemp();
-	 
-	/**
-	 * Sets this frame as a valid project file.
-	 */
-	void markAsProjectFile();
-	
+	const char* getImagePath();
+
 	/**
 	 * Plays the sounds belonging to this frame.
 	 */
 	void playSounds(AudioDriver *driver);
-	
-	/**
-	 * Checks if this frame is in the project directory (as opposed to the
-	 * temporary directory).
-	 * @return true if a project frame, false otherwise
-	 */
-	bool isProjectFrame();
 
 	/**
 	 * Makes v visit all the files referenced (image and sounds)
@@ -182,44 +147,13 @@ public:
 	void Accept(FileNameVisitor& v) const;
 
 private:
-	/** Absolute path to a temporary directory (~/.stopmotion/tmp). */
-	static char tempPath[256];
-	
-	/** Absolute path to a trash directory (~/.stopmotion/trash). */
-	static char trashPath[256];
-	
-	/** Absolute path to the image file. The image can either be in a project 
-	 * directory, the tmp directory or the trash directory. */
-	char *imagePath; // absolute path
 
-	typedef vector<Sound*> soundVector;
+	WorkspaceFile imagePath;
+
+	typedef vector<Sound*> SoundVector;
 
 	/** Contains the sounds belonging to this frame. */
-	soundVector sounds;
-	
-	/** True if this frame is saved to a project file. It is also true if the
-	 * frame is loaded from a previously saved project. */
-	bool isProjectFile;
-	
-	/**
-	 * Moves the sounds to a sound directory.
-	 * @param directory the directory to move the sounds to
-	 */
-	void moveToSoundDir(const char *directory);
-	
-	/**
-	 * Moves the image to an image directory.
-	 * @param directory the directory where the project files are stored
-	 * @param imgNum the number of the image which is used to set a filename
-	 */
-	void moveToImageDir(const char *directory, unsigned int imgNum);
-	
-	/**
-	 * Gets the id of an image. This is just the filename of the image without
-	 * extension.
-	 * @return an id for the image
-	 */
-	char* getImageId();
+	SoundVector sounds;
 };
 
 #endif

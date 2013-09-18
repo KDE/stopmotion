@@ -22,6 +22,7 @@
 #include "src/foundation/logger.h"
 #include "src/technical/audio/ossdriver.h"
 #include "src/technical/video/videofactory.h"
+#include "workspacefile.h"
 
 #include <vector>
 #include <iostream>
@@ -286,8 +287,7 @@ void Animation::clear()
 	activeFrame = -1;
 	activeScene = -1;
 	isChangesSaved = true;
-	Frame::tmpNum = 0;
-	Frame::trashNum = 0;
+	WorkspaceFile::clear();
 	notifyClear();
 }
 

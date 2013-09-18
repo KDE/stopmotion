@@ -30,6 +30,7 @@
 namespace {
 
 uint32_t fileNum;
+uint32_t soundNumber;
 
 uint32_t nextFileNumber() {
 	return ++fileNum;
@@ -88,6 +89,15 @@ void WorkspaceFile::clear() {
 	mkdir(path, 0755);
 	//TODO what about failure? Probably can only inform the user and close
 	fileNum = 0;
+	soundNumber = 0;
+}
+
+uint32_t WorkspaceFile::getSoundNumber() {
+	return soundNumber;
+}
+
+void WorkspaceFile::nextSoundNumber() {
+	++soundNumber;
 }
 
 WorkspaceFile::WorkspaceFile()
