@@ -122,7 +122,8 @@ public:
 	char* addFrame(char* frameName, unsigned int &index);
 
 	/**
-	 * Adds a frame at @c index.
+	 * Adds a frame at @c index. Will not fail if {@ref preallocateFrames}
+	 * has been called with the appropriate number beforehand.
 	 * @param f The frame to add.
 	 * @param index The index at which to add the frame. Must be between
 	 * 0 and @code{.cpp} getSize() @endcode inclusive.
@@ -134,7 +135,7 @@ public:
 	 * an exception being thrown.
 	 * @param count The number of frames that need to be added.
 	 */
-	void reserveFrames(int count);
+	void preallocateFrames(int count);
 	
 	/**
 	 * Adds an already saved frame.

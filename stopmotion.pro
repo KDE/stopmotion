@@ -69,6 +69,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/framepreferencesmenu.h \
     src/application/editmenuhandler.h \
     src/domain/animation/scene.h \
+    src/domain/animation/scenevector.h \
     src/technical/projectserializer.h \
     src/technical/packer.h \
     src/presentation/frontends/qtfrontend/licence.h \
@@ -122,6 +123,7 @@ SOURCES += src/config.cpp \
     src/domain/animation/animation.cpp \
     src/domain/animation/animationmodel.cpp \
     src/domain/animation/frame.cpp \
+    src/domain/animation/scenevector.cpp \
     src/presentation/frontends/nonguifrontend/nonguifrontend.cpp \
     src/presentation/frontends/qtfrontend/mainwindowgui.cpp \
     src/presentation/frontends/qtfrontend/qtfrontend.cpp \

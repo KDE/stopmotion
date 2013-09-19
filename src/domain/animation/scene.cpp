@@ -151,7 +151,7 @@ void Scene::addFrame(Frame* f, int index) {
 	frames.insert(frames.begin() + index, f);
 }
 
-void Scene::reserveFrames(int count) {
+void Scene::preallocateFrames(int count) {
 	frames.reserve(frames.size() + count);
 }
 
