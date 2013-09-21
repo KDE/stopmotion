@@ -32,6 +32,11 @@
 #include <stdint.h>
 #include <stdarg.h>
 
+// help out Eclipse's C++ parsing
+#ifndef INT32_MAX
+#define INT32_MAX 0x7FFFFFFF
+#endif
+
 /**
  * Reads a space-separated list of strings and numbers. Strings are quoted,
  * quotes within strings can be escaped with backslashes.
@@ -499,9 +504,53 @@ CommandFactory::~CommandFactory() {
 Executor::~Executor() {
 }
 
+/**
+ * Write to the log as the parameters are read from some other Parameters.
+ * Also checks that the values produced are within the ranges specified,
+ * throwing a {@ref ParametersOutOfRangeException} if a value is out-of-range.
+ */
+class WriterParametersWrapper : public Parameters {
+	Parameters& delegate;
+	StringWriter writer;
+public:
+	/**
+	 * Construct a Parametes wrapper around another Parameters. Provides the
+	 * same parameters as this delegate, but writes out the command as it goes.
+	 * @param p The delegate.
+	 * @param name The name of the command (to write to the logger).
+	 */
+	WriterParametersWrapper(Parameters& p, const char* name)
+			: delegate(p) {
+		writer.writeIdentifier(name);
+	}
+	~WriterParametersWrapper() {
+	}
+	int32_t getInteger(int32_t min, int32_t max) {
+		int32_t r = delegate.getInteger(min, max);
+		if(r < min || max < r)
+			throw ParametersOutOfRangeException();
+		writer.writeInteger(r);
+		return r;
+	}
+	int32_t getHowMany() {
+		int32_t r = delegate.getHowMany();
+		if (r < 0)
+			throw ParametersOutOfRangeException();
+		writer.writeInteger(r);
+		return r;
+	}
+	void getString(std::string& out) {
+		delegate.getString(out);
+		writer.writeString(out.c_str());
+	}
+	void writeCommand(CommandLogger* logger) {
+		logger->writeCommand(writer.result());
+		writer.reset();
+	}
+};
+
 class VaListParameters : public Parameters {
 	va_list& args;
-	StringWriter writer;
 public:
 	/**
 	 * Construct a Parameters facade over a variable argument list.
@@ -513,51 +562,35 @@ public:
 	 * representation of the command and its parameters. Ownership is
 	 * not passed.
 	 */
-	VaListParameters(va_list& a, const char* name)
+	VaListParameters(va_list& a)
 			: args(a) {
-		writer.writeIdentifier(name);
 	}
 	~VaListParameters() {
 		va_end(args);
 	}
 	int32_t getInteger(int32_t min, int32_t max) {
-		int32_t r = va_arg(args, int32_t);
-		if(r < min || max < r)
-			throw ParametersOutOfRangeException();
-		writer.writeInteger(r);
-		return r;
+		return va_arg(args, int32_t);
 	}
 	void getString(std::string& out) {
 		const char* s = va_arg(args, const char*);
-		writer.writeString(s);
 		out.assign(s);
-	}
-	void writeCommand(CommandLogger* logger) {
-		logger->writeCommand(writer.result());
-		writer.reset();
 	}
 };
 
 class RandomParameters : public Parameters {
-	StringWriter writer;
 	RandomSource rs;
 public:
-	RandomParameters(RandomSource& rng, const char* name)
+	RandomParameters(RandomSource& rng)
 			: rs(rng) {
-		writer.writeIdentifier(name);
 	}
 	int32_t getInteger(int32_t min, int32_t max) {
-		int32_t r = rs.getUniform(min, max);
-		writer.writeInteger(r);
-		return r;
+		return rs.getUniform(min, max);
+	}
+	int32_t getHowMany() {
+		return 1 + rs.getLogInt(60);
 	}
 	void getString(std::string& out) {
 		rs.getAlphanumeric(out);
-		writer.writeString(out.c_str());
-	}
-	void writeCommand(CommandLogger* logger) {
-		logger->writeCommand(writer.result());
-		writer.reset();
 	}
 };
 
@@ -588,10 +621,20 @@ public:
 		CommandFactory* f = Factory(name);
 		va_list args;
 		va_start(args, name);
-		VaListParameters vps(args, name);
+		VaListParameters vpsd(args);
+		WriterParametersWrapper vps(vpsd, name);
 		Command* c = f->create(vps);
 		if (c) {
 			vps.writeCommand(logger);
+			history.execute(*c, logger);
+		}
+	}
+	void execute(const char* name, Parameters& params) {
+		WriterParametersWrapper pw(params, name);
+		CommandFactory* f = Factory(name);
+		Command* c = f->create(pw);
+		if (c) {
+			pw.writeCommand(logger);
 			history.execute(*c, logger);
 		}
 	}
@@ -635,7 +678,8 @@ public:
 			if (r == n)
 				return;
 			std::string& name(factoryNames[r]);
-			RandomParameters rps(rng, name.c_str());
+			RandomParameters rpsd(rng);
+			WriterParametersWrapper rps(rpsd, name.c_str());
 			Command* c = factories[name]->create(rps);
 			if (c) {
 				if (logger)
@@ -653,7 +697,8 @@ public:
 			if (r == n)
 				return;
 			std::string& name(constructiveCommands[r]);
-			RandomParameters rps(rng, name.c_str());
+			RandomParameters rpsd(rng);
+			WriterParametersWrapper rps(rpsd, name.c_str());
 			Command* c = factories[name]->create(rps);
 			if (c) {
 				if (logger)
@@ -698,4 +743,8 @@ Executor* makeExecutor() {
 }
 
 Parameters::~Parameters() {
+}
+
+int32_t Parameters::getHowMany() {
+	return getInteger(1, INT32_MAX);
 }

@@ -67,6 +67,12 @@ public:
 	 */
 	virtual int32_t getInteger(int32_t min, int32_t max) = 0;
 	/**
+	 * Returns an integer from 1 to {@c 1^31-1}. Test code assumes that smaller
+	 * numbers are just as good a test as larger numbers, unlike
+	 * {@ref getInteger}, which assumes the full range must be tested.
+	 */
+	virtual int32_t getHowMany();
+	/**
 	 * Returns the length of string read, which may be greater than maxLength
 	 * although no more than maxLength characters will be output into out.
 	 * Might throw IncorrectParameterException if unsuccessful, but this
@@ -126,8 +132,16 @@ public:
 	 *   e.Execute("addf", filename, sceneNo, frameNo);
 	 * }
 	 * @endcode
+	 * @param name The name with which the command's factory was registered.
 	 */
 	virtual void execute(const char* name, ...) = 0;
+	/**
+	 * Executes a command, logging it and putting its inverse onto the undo
+	 * stack.
+	 * @param name The name with which the command's factory was registered.
+	 * @param params Supplier of the parameters to the command.
+	 */
+	virtual void execute(const char* name, Parameters& params) = 0;
 	/**
 	 * Executes the command described by (the first line of) @c line, a line
 	 * from a command log previously written by a call to @ref execute.
@@ -194,7 +208,7 @@ public:
 
 /**
  * Create a new executor.
- * @return The new @ref Executor; ownership is returned.
+ * @return The new {@ref Executor}; ownership is returned.
  */
 Executor* makeExecutor();
 
