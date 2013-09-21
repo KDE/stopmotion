@@ -30,6 +30,8 @@ class Frame::Sound;
 class SceneVector {
 	std::vector<Scene*> scenes;
 public:
+	SceneVector();
+	~SceneVector();
 	int sceneCount() const;
 	/**
 	 * Adds a scene to the animation.

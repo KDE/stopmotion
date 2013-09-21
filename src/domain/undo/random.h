@@ -63,6 +63,17 @@ public:
 	 */
 	int32_t getUniform(int32_t max);
 	/**
+	 * Gets a random nonnegative integer. For each possible return value n,
+	 * given that the return value is at least n, the probability that it is
+	 * greater than n is @code{.cpp} p/100 @endcode. In other words, pick a
+	 * high value of {@c p} to get mostly large results, a low value to get
+	 * mostly small results.
+	 * @param 100 times the probability of incrementing the result at each
+	 * stage. Must be between 1 and 99.
+	 * @return A random number from 1 upwards.
+	 */
+	int32_t getLogInt(int32_t p);
+	/**
 	 * Gets a random string from the characters in the null-terminated
 	 * string provided.
 	 * @param [out] out The resulting random string.

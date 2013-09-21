@@ -157,7 +157,7 @@ void Frame::playSounds(AudioDriver *driver)
 }
 
 
-void Frame::Accept(FileNameVisitor& v) const {
+void Frame::accept(FileNameVisitor& v) const {
 	v.visitImage(imagePath.path());
 	for(SoundVector::const_iterator i = sounds.begin();
 			i != sounds.end();

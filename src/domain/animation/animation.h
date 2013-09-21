@@ -26,6 +26,7 @@
 #include "src/technical/projectserializer.h"
 #include "src/technical/audio/ossdriver.h"
 #include "frame.h"
+#include "scenevector.h"
 
 #include <vector>
 #include <libxml/tree.h>
@@ -36,8 +37,6 @@ class FileNameVisitor;
 
 /**
  * Implementation of the animationmodel containing the data about the animation.
- *
- * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
 class Animation : public AnimationModel
 {
@@ -59,8 +58,8 @@ public:
 	 * @return a vector containing paths to the images which has been
 	 * copied to a temporary directory
 	 */
-	const vector<char*> addFrames(const vector<char*>& frameNames, 
-			unsigned int index);
+	const vector<const char*> addFrames(
+			const vector<const char*>& frameNames, unsigned int index);
 	
 	/**
 	 * Removes the frames between (inclusive) fromFrame and toFrame from 
@@ -273,9 +272,10 @@ public:
 	void Accept(FileNameVisitor& v) const;
 
 private:
-	typedef vector<Scene*> sceneVector;
 	/** All of the scenes in the animation. */
-	sceneVector scenes;
+	SceneVector scenes;
+
+	Executor* executor;
 
 	/** Serializer to be used on saving and loading of the project. */
 	ProjectSerializer *serializer;
@@ -299,7 +299,7 @@ private:
 	bool isAudioDriverInitialized;
 	
 	/**
-	 * Loads frames into the model. This acts excatly like the addframes
+	 * Loads frames into the model. This acts exactly like the {@ref addFrames}
 	 * function except that it does not moves the frames to a temporary directory.
 	 * It also registers the frame to be a valid project frame.
 	 */

@@ -13,13 +13,11 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/mainwindowgui.h \
     src/presentation/frontends/qtfrontend/qtfrontend.h \
     src/application/runanimationhandler.h \
-    src/domain/undo/undo.h \
     src/domain/undo/undoadd.h \
     src/domain/undo/undomove.h \
     src/domain/undo/undoremove.h \
     src/application/camerahandler.h \
     src/presentation/frontends/qtfrontend/frameview.h \
-    src/domain/undo/undohistory.h \
     src/presentation/frontends/qtfrontend/flexiblespinbox.h \
     src/presentation/frontends/qtfrontend/menuframe.h \
     src/presentation/frontends/qtfrontend/flexiblelineedit.h \
@@ -133,7 +131,6 @@ SOURCES += src/config.cpp \
     src/domain/undo/undoremove.cpp \
     src/application/camerahandler.cpp \
     src/presentation/frontends/qtfrontend/frameview.cpp \
-    src/domain/undo/undohistory.cpp \
     src/presentation/frontends/qtfrontend/flexiblespinbox.cpp \
     src/presentation/frontends/qtfrontend/menuframe.cpp \
     src/presentation/frontends/qtfrontend/flexiblelineedit.cpp \

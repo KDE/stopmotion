@@ -122,7 +122,7 @@ public:
 	 * destruction unless it has been assigned to a @ref WorkspaceFile
 	 * beforehand.
 	 * @note The file is not kept open by this class.
-	 * @param filename The full path to the file.
+	 * @param filename The full path to the file. Ownership is not passed.
 	 */
 	TemporaryWorkspaceFile(const char* filename, ForceCopy);
 	/**
@@ -130,7 +130,7 @@ public:
 	 * advanced if necessary to avoid new files from clashing with this one.
 	 * This file will not be deleted on destruction.
 	 * @param basename the file name (including extension) relative to the
-	 * workspace directory.
+	 * workspace directory. Ownership is not passed.
 	 */
 	TemporaryWorkspaceFile(const char* basename, AlreadyAWorkspaceFile);
 	~TemporaryWorkspaceFile();

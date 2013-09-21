@@ -24,6 +24,16 @@
 
 #include <memory>
 
+SceneVector::SceneVector() {
+}
+
+SceneVector::~SceneVector() {
+	for (std::vector<Scene*>::iterator i = scenes.begin();
+			i != scenes.end(); ++i) {
+		delete *i;
+	}
+}
+
 int SceneVector::sceneCount() const {
 	return scenes.size();
 }

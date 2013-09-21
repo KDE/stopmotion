@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 // This is not thread safe, but could easily be made so
 class RandomImpl {
@@ -97,6 +98,15 @@ int32_t RandomSource::getUniform(int32_t min, int32_t max) {
 
 int32_t RandomSource::getUniform(int32_t max) {
 	return getUniform(0, max);
+}
+
+int32_t RandomSource::getLogInt(int32_t p) {
+	assert(0 < p && p < 100);
+	int32_t r = 0;
+	while (getUniform(0,99) < r) {
+		++r;
+	}
+	return r;
 }
 
 void RandomSource::getString(std::string& out,

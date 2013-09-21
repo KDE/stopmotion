@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 Stopmotion contributors                            *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,70 +18,107 @@
  ***************************************************************************/
 #include "undoadd.h"
 
+#include "src/domain/animation/scenevector.h"
+#include "src/domain/animation/frame.h"
+#include "src/domain/animation/workspacefile.h"
 
+UndoAdd::UndoAdd(SceneVector& model, int toScene, int toFrame, int count)
+		: sv(model), scene(toScene), frame(toFrame) {
+	frames.reserve(count);
+}
 
-UndoAdd::UndoAdd(int fromIndex, const vector<char*>& frameNames, int activeScene)
-		: fromIndex(fromIndex), activeScene(activeScene)
-{
-	//Performing a deep-copy
-	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
-		this->frameNames.push_back(frameNames[i]);
+UndoAdd::~UndoAdd() {
+	for (std::vector<Frame*>::iterator i = frames.begin();
+			i != frames.end(); ++i) {
+		delete *i;
 	}
 }
 
+void UndoAdd::addFrame(Frame* frame) {
+	frames.push_back(frame);
+}
 
-UndoAdd::~UndoAdd()
-{
-	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
-		delete [] frameNames[i];
-		frameNames[i] = NULL;
+Command* UndoAdd::execute() {
+	UndoDelete* inverse = new UndoDelete(sv, scene, frame, frames.size());
+	sv.addFrames(scene, frame, frames);
+	// ownership has been passed, so we must forget the frames
+	frames.clear();
+	return inverse;
+}
+
+void UndoAdd::accept(FileNameVisitor& v) const {
+	for (std::vector<Frame*>::iterator i = frames.begin();
+			i != frames.end(); ++i) {
+		(*i)->accept(v);
 	}
 }
 
+UndoAddFactory::Parameters::Parameters(int scene, int frame, int count)
+		: sc(scene), fr(frame), frameCount(count), twfs(0), twfCount(0),
+		  parameterCount(0) {
+	twfs = (TemporaryWorkspaceFile*) malloc(
+			frameCount * sizeof(TemporaryWorkspaceFile));
+}
 
-void UndoAdd::undo(AnimationModel *a)
-{
-	//Setting the active scene to the scene which the frames were originally added to.
-	a->setActiveScene(activeScene);
-	
-	// Give animation model order to remove frames in the range 'fromIndex -> end of vector'.
-	vector<char*> newImagePaths = a->removeFrames(fromIndex, fromIndex + 
-			frameNames.size() - 1 );
-
-	// Deallocates the old allocated image paths.
-	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
-		delete [] frameNames[i];
-		frameNames[i] = NULL;
+UndoAddFactory::Parameters::~Parameters() {
+	for (int i = 0; i != twfCount; ++i) {
+		twfs[i].~TemporaryWorkspaceFile();
 	}
-	
-	// Setting new image paths.
-	numElem = newImagePaths.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
-		frameNames[i] = newImagePaths[i];
+	free(twfs);
+}
+
+const char* UndoAddFactory::Parameters::addFrame(const char* filename) {
+	assert (twfCount != frameCount);
+	TemporaryWorkspaceFile* p = twfs + twfCount;
+	new (p) TemporaryWorkspaceFile(filename);
+	++twfCount;
+	return p->path();
+}
+
+int32_t UndoAddFactory::Parameters::getInteger(int32_t min, int32_t max) {
+	assert(parameterCount < 2);
+	++parameterCount;
+	return parameterCount == 0? sc : fr;
+}
+
+int32_t UndoAddFactory::Parameters::getHowMany() {
+	assert(parameterCount == 2);
+	++parameterCount;
+	return frameCount;
+}
+
+void UndoAddFactory::Parameters::getString(std::string& out) {
+	assert(3 <= parameterCount);
+	int index = parameterCount - 3;
+	++parameterCount;
+	out.assign(twfs[index].basename());
+}
+
+void UndoAddFactory::Parameters::retainFiles() {
+	// use this to empty out the TemporaryWorkspaceFiles
+	WorkspaceFile dummy;
+	for (int i = 0; i != twfCount; ++i) {
+		dummy = twfs[i];
 	}
 }
 
+UndoAddFactory::UndoAddFactory(SceneVector& model) : sv(model) {
+}
 
-void UndoAdd::redo(AnimationModel *a)
-{
-	//Setting the active scene to the scene which the frames were originally added to.
-	a->setActiveScene(activeScene);
-	
-	vector<char*> newImagePaths = a->addFrames(frameNames, fromIndex);
-	
-	// Deallocates the old allocated image paths.
-	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
-		delete [] frameNames[i];
-		frameNames[i] = NULL;
+UndoAddFactory::~UndoAddFactory() {
+}
+
+Command* UndoAddFactory::create(::Parameters& ps) {
+	int scene = ps.getInteger(0, sv.sceneCount() - 1);
+	int frame = ps.getInteger(0, sv.frameCount(scene));
+	int count = ps.getHowMany();
+	UndoAdd* add = new UndoAdd(sv, scene, frame, count);
+	std::string frameName;
+	for (int i = 0; i != count; ++i) {
+		ps.getString(frameName);
+		TemporaryWorkspaceFile twf(frameName.c_str(),
+				TemporaryWorkspaceFile::alreadyAWorkspaceFile);
+		add->addFrame(new Frame(twf));
 	}
-	
-	// Setting new image paths.
-	numElem = newImagePaths.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
-		frameNames[i] = newImagePaths[i];
-	}
+	return add;
 }

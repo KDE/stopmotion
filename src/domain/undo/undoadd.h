@@ -20,48 +20,67 @@
 #ifndef UNDOADD_H
 #define UNDOADD_H
 
-#include "undo.h"
+#include "command.h"
 
 #include <vector>
 
+class Frame;
+class SceneVector;
 
-/**
- *The UndoAdd class for undoing addFrames(...) calls to the domain.
- *@author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
- */
-class UndoAdd : public Undo
-{
+class UndoAdd : public Command {
 public:
-
 	/**
-	 * Sets up the UndoAdd command object with the information needed to undo and
-	 * redo the add command.
-	 * @param fromIndex the index of the first frame added. Used for undoing the 
-	 * command
-	 * @param frameNames the name of the frame added. Used for redoing the command.
-	 * @param activeScene the scene the frames were added to.
+	 * @param count The number of frames to reserve; {@ref addFrame} can
+	 * subsequently be called this many times without throwing an exception.
 	 */
-	UndoAdd(int fromIndex,  const vector<char*>& frameNames, int activeScene);
-	
-	virtual ~UndoAdd();
-	
+	UndoAdd(SceneVector& model, int toScene, int toFrame, int count);
+	~UndoAdd();
 	/**
-	 * Abstract function for undoing the command represented by this undo object.
-	 * @param a the model to perform the undo command on.
+	 * Adds a frame to the add command.
+	 * @param frame Ownership is passed.
 	 */
-	void undo(AnimationModel *a);
-	
-	/**
-	 * Abstract function for redoing (performing) the command represented by this 
-	 *undo object.
-	 * @param a the model to perform the redo command on.
-	 */
-	void redo(AnimationModel *a);
-	
+	void addFrame(Frame* frame);
+	Command* execute();
+	void accept(FileNameVisitor& v) const;
 private:
-	vector<char*> frameNames;
-	int fromIndex;
-	int activeScene;
+	SceneVector& sv;
+	std::vector<Frame*> frames;
+	int scene;
+	int frame;
+};
+
+class UndoAddFactory : public CommandFactory {
+public:
+	UndoAddFactory(SceneVector& model);
+	~UndoAddFactory();
+	Command* create(::Parameters& ps);
+	class Parameters : public ::Parameters {
+		int sc;
+		int fr;
+		int frameCount;
+		TemporaryWorkspaceFile* twfs;
+		int twfCount;
+		int parameterCount;
+	public:
+		Parameters(int scene, int frame, int count);
+		~Parameters();
+		/**
+		 * Add a frame.
+		 * @filename The filename of the image. Ownership is not passed.
+		 * @return The full path of the workspace file created.
+		 */
+		const char* addFrame(const char* filename);
+		int32_t getInteger(int32_t min, int32_t max);
+		int32_t getHowMany();
+		void getString(std::string& out);
+		/**
+		 * If this function is not called before destruction, copied files
+		 * held by this function are deleted.
+		 */
+		void retainFiles();
+	};
+private:
+	SceneVector& sv;
 };
 
 #endif

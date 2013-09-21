@@ -65,12 +65,12 @@ public:
 	 * Creates a frame with the specified file for its picture.
 	 * @param file The picture for this frame.
 	 */
-	 Frame(TemporaryWorkspaceFile& file);
+	Frame(TemporaryWorkspaceFile& file);
 
 	/**
 	 * Cleans up after the frame
 	 */
-	 ~Frame();
+	~Frame();
 
 	/**
 	 * Adds the sound in the file filename to this frame.
@@ -144,7 +144,7 @@ public:
 	/**
 	 * Makes v visit all the files referenced (image and sounds)
 	 */
-	void Accept(FileNameVisitor& v) const;
+	void accept(FileNameVisitor& v) const;
 
 private:
 

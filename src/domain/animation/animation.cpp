@@ -23,32 +23,36 @@
 #include "src/technical/audio/ossdriver.h"
 #include "src/technical/video/videofactory.h"
 #include "workspacefile.h"
+#include "src/domain/undo/command.h"
+#include "src/domain/undo/executor.h"
+#include "src/domain/undo/undoadd.h"
 
 #include <vector>
 #include <iostream>
 
+namespace {
+const char* commandAddFrames = "add-frames";
+}
 
-Animation::Animation()
-{
-	serializer  = new ProjectSerializer();
-	audioDriver = new OSSDriver("/dev/dsp");
-	
-	activeFrame = -1;
-	activeScene = -1;
-	numSounds   = -1;
-	
-	isChangesSaved = true;
-	isAudioDriverInitialized = false;
+Executor* makeAnimationCommandExecutor(SceneVector& model) {
+	std::auto_ptr<Executor> ex(makeExecutor());
+	std::auto_ptr<CommandFactory> factory(new UndoAddFactory(model));
+	ex->addCommand(commandAddFrames, factory, true);
+	return ex.release();
 }
 
 
-Animation::~Animation()
-{
-	unsigned int numElem = scenes.size();
-	for (unsigned int i = 0; i < numElem; i++) {
-		delete scenes[i];
-	}
-	
+Animation::Animation()
+		: serializer(0), executor(0), audioDriver(0),
+		  activeFrame(-1), activeScene(-1), numSounds(-1),
+		  isChangesSaved(true), isAudioDriverInitialized(false) {
+	serializer  = new ProjectSerializer();
+	executor = makeAnimationCommandExecutor(scenes);
+	audioDriver = new OSSDriver("/dev/dsp");
+}
+
+
+Animation::~Animation() {
 	serializer->cleanup();
 	delete serializer;
 	serializer = NULL;
@@ -57,55 +61,41 @@ Animation::~Animation()
 }
 
 
-const vector<char*> Animation::addFrames(const vector<char*>& frameNames, 
-		unsigned int index)
-{
-	if (this->getActiveSceneNumber() < 0) {
-		this->newScene(0);
+const vector<const char*> Animation::addFrames(
+		const vector<const char*>& frameNames, unsigned int index) {
+	if (getActiveSceneNumber() < 0) {
+		newScene(0);
 	}
-	
+
 	bool isAddingAborted = false;
-	vector<char*> newImagePaths;
-	unsigned int numberOfCanceledFrames = 0;
-	newImagePaths = scenes[activeScene]->
-			addFrames(frameNames, index, frontend, numberOfCanceledFrames);
-	
-	unsigned int newImagePathsSize = newImagePaths.size();
-		
-	if (newImagePathsSize == 1) {
-		this->notifyAdd(newImagePaths, index );
+	int count = frameNames.size();
+	UndoAddFactory::Parameters params(getActiveSceneNumber(),
+			index, count);
+	vector<const char*> newImagePaths(count);
+	bool showingProgress = 1 < count;
+	if (showingProgress) {
+		frontend->showProgress("Importing frames from disk ...", count);
 	}
-	else if (newImagePathsSize > 1) { 
-		this->notifyAdd(newImagePaths, index );
-		isAddingAborted = frontend->isOperationAborted();
+	for (vector<const char*>::iterator i = frameNames.begin();
+			i != frameNames.end(); ++i) {
+		//TODO Handle failure to copy path. Should try to continue with the
+		// rest, log an error and show a warning to the user that some could not
+		// be added and why (permissions error or whatever). Also, we shouldn't
+		// add to newImagePaths (obviously)
+		const char* newPath = params.addFrame(*i);
+		newImagePaths.push_back(newPath);
+		if (frontend->isOperationAborted()) {
+			vector<const char*> dummy(0);
+			return dummy;
+		}
+		if (showingProgress)
+			frontend->updateProgress(newImagePaths.size());
 	}
-	else if (newImagePathsSize == 0) {
-		return newImagePaths;
-	}
-	
-	// The user has aborted the operation either when importing frames
-	// or adding frames. The cleanup routine is equal for both cases, the
-	// only difference is the number of frames added to the 'frames' vector.
-	if (newImagePathsSize == 0 || isAddingAborted) {
-		scenes[activeScene]->cleanFrames(index, index + numberOfCanceledFrames);
-		newImagePaths.clear();
-	}
-	else {
-		this->isChangesSaved = false;
-	}
-	
-	if (newImagePathsSize != 1) {
-		frontend->updateProgress(frameNames.size() * 2);
+	if (0 < newImagePaths.size())
+		executor->execute(commandAddFrames, params);
+	if (showingProgress)
 		frontend->hideProgress();
-	}
-	
-	if (newImagePathsSize == 1) {
-		this->setActiveFrame(index );
-	}
-	else if (newImagePathsSize > 1 && !isAddingAborted) {
-		this->setActiveFrame(index + newImagePathsSize - 1);
-	}
-	
+	setActiveFrame(index + newImagePaths.size() - 1);
 	return newImagePaths;
 }
 
