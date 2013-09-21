@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,48 +19,33 @@
 #ifndef UNDOREMOVE_H
 #define UNDOREMOVE_H
 
-#include "undo.h"
+#include "command.h"
 
-
-/**
- *The UndoAdd class for undoing removeFrames calls(...) to the domain.
- *@author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
- */
-class UndoRemove : public Undo
-{
+class UndoRemove : public Command {
+	SceneVector& sv;
+	int sc;
+	int fr;
+	int frameCount;
 public:
+	/**
+	 * Constructs a command that removes frames from a scene.
+	 * @param model The animation to be changed.
+	 * @param scene The scene from which the frames were removed.
+	 * @param fromFrame The index of the first frame to be removed.
+	 * @param frameCount The number of frames to remove.
+	 */
+	UndoRemove(SceneVector& model,
+			int scene, int fromFrame, int frameCount);
+	~UndoRemove();
+	Command* execute();
+};
 
-	/**
-	 * Sets up the UndoAdd command object with the information needed to undo and
-	 * redo the add commands.
-	 *
-	 * Note: The needed information ``toIndex'' is extracted from the length of the
-	 * frameNames vector.
-	 * @param frameNames the paths to the frames which has been removed.
-	 * @param fromIndex the index of the first removed frame.
-	 * @param activeScene the scene from which the frames were removed.
-	 */
-	 UndoRemove(const vector<char*>& frameNames, unsigned int fromIndex, int activeScene);
-	
-	virtual ~UndoRemove();
-	
-	/**
-	 * Abstract function for undoing the command represented by this undo object.
-	 * @param a the model to perform the undo command on.
-	 */
-	void undo(AnimationModel *a);
-	
-	/**
-	 * Abstract function for redoing (performing) the command represented by this 
-	 * undo object.
-	 * @param a the model to perform the redo command on.
-	 */
-	void redo(AnimationModel *a);
-	
-private:
-	vector<char*> frameNames;
-	unsigned int fromIndex;
-	int activeScene;
+class UndoRemoveFactory : public CommandFactory {
+	SceneVector& sv;
+public:
+	UndoRemoveFactory(SceneVector& model);
+	~UndoRemoveFactory();
+	Command* create(Parameters& ps);
 };
 
 #endif

@@ -39,7 +39,7 @@ void UndoAdd::addFrame(Frame* frame) {
 }
 
 Command* UndoAdd::execute() {
-	UndoDelete* inverse = new UndoDelete(sv, scene, frame, frames.size());
+	UndoRemove* inverse = new UndoRemove(sv, scene, frame, frames.size());
 	sv.addFrames(scene, frame, frames);
 	// ownership has been passed, so we must forget the frames
 	frames.clear();

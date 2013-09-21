@@ -38,8 +38,7 @@ class FileNameVisitor;
 /**
  * Implementation of the animationmodel containing the data about the animation.
  */
-class Animation : public AnimationModel
-{
+class Animation : public AnimationModel {
 public:
 	/**
 	 * Initializes the variables of the animation to starting values.
@@ -66,10 +65,8 @@ public:
 	 * the animation.
 	 * @param fromFrame the first frame to remove.
 	 * @param toFrame the last frame to remove.
-	 * @return a vector containing paths to the images in the given range,
-	 * which are moved to a trash directory.
 	 */
-	const vector<char*> removeFrames(unsigned int fromFrame, 
+	void removeFrames(unsigned int fromFrame,
 			const unsigned int toFrame);
 	
 	/**

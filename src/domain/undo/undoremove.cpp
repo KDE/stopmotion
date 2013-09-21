@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,69 +17,37 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "undoremove.h"
+#include "undoadd.h"
 
-
-UndoRemove::UndoRemove(const vector<char*>& frameNames, unsigned int fromIndex, 
-		int activeScene)
-		: fromIndex(fromIndex), activeScene(activeScene)
-{
-	unsigned int size = frameNames.size();
-	for (unsigned int i = 0; i < size; ++i) {
-		this->frameNames.push_back(frameNames[i]);
-	}
+UndoRemove::UndoRemove(SceneVector& model,
+		int scene, int fromFrame, int count)
+		: sv(model), sc(scene), fr(fromFrame), frameCount(count) {
 }
 
-
-UndoRemove::~UndoRemove()
-{
-	unsigned int size = frameNames.size();
-	for (unsigned int i = 0; i < size; ++i) {
-		delete [] frameNames[i];
-		frameNames[i] = NULL;
-	}
+UndoRemove::~UndoRemove() {
 }
 
-
-void UndoRemove::undo(AnimationModel* a)
-{
-	//Setting the active scene to the scene which the frames were removed from.
-	a->setActiveScene(activeScene);
-		
-	vector<char*> newImagePaths = a->addFrames(frameNames, fromIndex);
-	
-	// Deallocates the old allocated image paths.
-	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
-		delete [] frameNames[i];
-		frameNames[i] = NULL;
+Command* UndoRemove::execute() {
+	std::auto_ptr<UndoAdd> inv(new UndoAdd(sv, sc, fr, frameCount));
+	std::vector<Frame*> removed;
+	sv.removeFrames(sc, fr, frameCount, removed);
+	for (std::vector<Frame*>::iterator i = removed.begin();
+			i != removed.end(); ++i) {
+		inv->addFrame(*i);
 	}
-	
-	// Setting new image paths.
-	numElem = newImagePaths.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
-		frameNames[i] = newImagePaths[i];
-	}
+	return inv.release();
 }
 
+UndoRemoveFactory::UndoRemoveFactory(SceneVector& model)
+		: sv(model) {
+}
 
-void UndoRemove::redo(AnimationModel* a)
-{
-	//Setting the active scene to the scene which the frames were removed from.
-	a->setActiveScene(activeScene);
-	
-	vector<char*> newImagePaths = a->removeFrames( fromIndex, fromIndex + 
-			frameNames.size() - 1 );
-			
-	// Deallocates the old allocated image paths.
-	unsigned int numElem = frameNames.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
-		delete [] frameNames[i];
-		frameNames[i] = NULL;
-	}
+UndoRemoveFactory::~UndoRemoveFactory() {
+}
 
-	// Setting new image paths.
-	numElem = newImagePaths.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
-		frameNames[i] = newImagePaths[i];
-	}
+Command* UndoRemoveFactory::create(Parameters& ps) {
+	int32_t scene = ps.getInteger(0, sv.sceneCount() - 1);
+	int32_t frame = ps.getInteger(0, sv.frameCount(scene) - 1);
+	int32_t count = ps.getHowMany();
+	return new UndoRemove(sv, scene, frame, count);
 }

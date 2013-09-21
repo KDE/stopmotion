@@ -31,13 +31,15 @@
 #include <iostream>
 
 namespace {
-const char* commandAddFrames = "add-frames";
+const char* commandAddFrames = "addf";
+const char* commandRemoveFrames = "delf";
 }
 
 Executor* makeAnimationCommandExecutor(SceneVector& model) {
 	std::auto_ptr<Executor> ex(makeExecutor());
 	std::auto_ptr<CommandFactory> factory(new UndoAddFactory(model));
 	ex->addCommand(commandAddFrames, factory, true);
+	ex->addCommand(commandRemoveFrames, factory, false);
 	return ex.release();
 }
 
@@ -100,25 +102,11 @@ const vector<const char*> Animation::addFrames(
 }
 
 
-const vector<char*> Animation::removeFrames(unsigned int fromFrame, unsigned int toFrame )
-{
+void Animation::removeFrames(unsigned int fromFrame,
+		unsigned int toFrame ) {
 	assert(fromFrame <= toFrame);
-	vector<char*> newImagePaths;
-	
-	if(activeFrame >= 0) {
-		newImagePaths = scenes[activeScene]->removeFrames(fromFrame, toFrame);
-		
-		this->notifyRemove(fromFrame, toFrame);
-		
-		if( toFrame < scenes[activeScene]->getSize() ) {
-			this->setActiveFrame(toFrame);
-		}
-		else {
-			this->setActiveFrame(scenes[activeScene]->getSize()-1);
-		}
-		isChangesSaved = false;
-	}
-	return newImagePaths;
+	executor->execute(commandRemoveFrames, activeFrame, fromFrame,
+			toFrame - fromFrame - 1);
 }
 
 
