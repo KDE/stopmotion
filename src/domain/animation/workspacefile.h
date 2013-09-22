@@ -87,6 +87,9 @@ public:
 	static void nextSoundNumber();
 };
 
+class CopyFailedException {
+};
+
 /**
  * Represents the filename of a newly-created file in the workspace
  * (~/.stopmotion/tmp/). This file will be deleted upon destruction unless it
@@ -99,6 +102,9 @@ class TemporaryWorkspaceFile {
 	TemporaryWorkspaceFile(const TemporaryWorkspaceFile&);
 	TemporaryWorkspaceFile& operator=(const TemporaryWorkspaceFile);
 	friend class WorkspaceFile;
+	/**
+	 * @throws CopyFailedException if the copy failed.
+	 */
 	void copyToWorkspace(const char* filename);
 public:
 	enum ForceCopy {
@@ -114,6 +120,7 @@ public:
 	 * @ref WorkspaceFile is constructed from it beforehand.
 	 * @note The file is not kept open by this class.
 	 * @param filename The full path to the file.
+	 * @throws CopyFailedException if the copy failed.
 	 */
 	TemporaryWorkspaceFile(const char* filename);
 	/**
@@ -123,6 +130,7 @@ public:
 	 * beforehand.
 	 * @note The file is not kept open by this class.
 	 * @param filename The full path to the file. Ownership is not passed.
+	 * @throws CopyFailedException if the copy failed.
 	 */
 	TemporaryWorkspaceFile(const char* filename, ForceCopy);
 	/**

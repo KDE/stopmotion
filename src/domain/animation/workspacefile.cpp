@@ -135,7 +135,10 @@ const char* WorkspaceFile::path() const {
 void TemporaryWorkspaceFile::copyToWorkspace(const char* filename) {
 	const char* extension = strrchr(filename,'.');
 	getFreshFilename(fullPath, namePart, extension);
-	Util::copyFile(fullPath, filename);
+	toBeDeleted = false;
+	if (!Util::copyFile(fullPath, filename)) {
+		throw CopyFailedException();
+	}
 	toBeDeleted = true;
 }
 

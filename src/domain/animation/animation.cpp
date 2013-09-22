@@ -78,14 +78,15 @@ const vector<const char*> Animation::addFrames(
 	if (showingProgress) {
 		frontend->showProgress("Importing frames from disk ...", count);
 	}
+	std::string error;
 	for (vector<const char*>::iterator i = frameNames.begin();
 			i != frameNames.end(); ++i) {
-		//TODO Handle failure to copy path. Should try to continue with the
-		// rest, log an error and show a warning to the user that some could not
-		// be added and why (permissions error or whatever). Also, we shouldn't
-		// add to newImagePaths (obviously)
-		const char* newPath = params.addFrame(*i);
-		newImagePaths.push_back(newPath);
+		try {
+			const char* newPath = params.addFrame(*i);
+			newImagePaths.push_back(newPath);
+		} catch (CopyFailedException&) {
+			error += "Cannot read file " + *i + "\n";
+		}
 		if (frontend->isOperationAborted()) {
 			vector<const char*> dummy(0);
 			return dummy;
@@ -97,6 +98,8 @@ const vector<const char*> Animation::addFrames(
 		executor->execute(commandAddFrames, params);
 	if (showingProgress)
 		frontend->hideProgress();
+	if (!error.empty())
+		frontend->reportError(error.c_str(), 0);
 	setActiveFrame(index + newImagePaths.size() - 1);
 	return newImagePaths;
 }

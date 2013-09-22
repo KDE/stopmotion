@@ -62,30 +62,13 @@ public:
 	 * @return the number of frames in the scene.
 	 */
 	unsigned int getSize();
-	 
+
 	/**
 	 * Retrieves the frame at position frameNumber in the scene.
 	 * @param frameNumber the number of the frame to retrieve.
 	 * @return the frame at position frameNumber.
 	 */
 	Frame* getFrame(unsigned int frameNumber);
-
-	/**
-	 * Adds the frames in the vector frameNames to the vector at position
-	 * index.
-	 * @param frameNames the paths to the pictures of the frames to add to the
-	 * scene.
-	 * @param index the location to add the frames to.
-	 * @param frontend the frontend for process handling.
-	 * @param numberOfCanceledFrames reference transfered int for setting how many
-	 * frames was canceled in case the user aborts the adding while this functions
-	 * runs.
-	 * @return the new paths of the frames for the undo object, or NULL if the 
-	 * operation was canceled.
-	 */
-	const vector<char*> addFrames(const vector<char*>& frameNames,
-			unsigned int index, Frontend *frontend, 
-			unsigned int &numberOfCanceledFrames );
 
 	/**
 	 * Removes a frame from the scene.
@@ -112,15 +95,6 @@ public:
 	 */
 	void cleanFrames(unsigned int fromFrame, unsigned int toFrame);
 	
-	/**
-	 * Creates a frame with the picture at location frameName and adds it at position
-	 * at position index in the scene.
-	 * @param frameName the path to the picture to the frame to create.
-	 * @param index the place to create the frame.
-	 * @return the new path to the picture file for the undo object.
-	 */
-	char* addFrame(char* frameName, unsigned int &index);
-
 	/**
 	 * Adds a frame at @c index. Will not fail if {@ref preallocateFrames}
 	 * has been called with the appropriate number beforehand.
