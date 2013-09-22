@@ -37,26 +37,19 @@ public:
 	/**
 	 * Initializes the scene
 	 */
-	 Scene(); 
-	 
+	 Scene();
+
 	/**
 	 * Cleans up the scene and delete the frames.
 	 */
 	 ~Scene();
-	 
+
 	/**
 	 *Temporary functions to assist in an orderly transfer of functionality from
 	 *Animation, without having to break the project for big time-periods.
 	 */
 	vector<Frame*>& getFrames();
-	
-	/**
-	 * Retrieves the image paths of all the frames in this scene. 
-	 *(This is an convenience function and is used when opening scenes)
-	 * @return the image paths of all the frames in this scene.
-	 */
-	vector<char*> getImagePaths();
-	
+
 	/**
 	 * Retrieves the size of the scene (the number of frames in it).
 	 * @return the number of frames in the scene.
@@ -84,7 +77,7 @@ public:
 	 * @param toFrame the lst frame to move.
 	 * @param movePosition the position to move the frames to.
 	 */
-	void moveFrames(unsigned int fromFrame, unsigned int toFrame, 
+	void moveFrames(unsigned int fromFrame, unsigned int toFrame,
 			unsigned int movePosition);
 
 	/**
@@ -94,7 +87,7 @@ public:
 	 * @param toFrame the last frame to remove.
 	 */
 	void cleanFrames(unsigned int fromFrame, unsigned int toFrame);
-	
+
 	/**
 	 * Adds a frame at @c index. Will not fail if {@ref preallocateFrames}
 	 * has been called with the appropriate number beforehand.
@@ -110,7 +103,7 @@ public:
 	 * @param count The number of frames that need to be added.
 	 */
 	void preallocateFrames(int count);
-	
+
 	/**
 	 * Adds an already saved frame.
 	 * @param f the frame to add
@@ -118,7 +111,7 @@ public:
 	void addSavedFrame(Frame *f);
 
 	/**
-	 * Adds a sound located at the path ``sound'' to the frame at location frameNumber 
+	 * Adds a sound located at the path ``sound'' to the frame at location frameNumber
 	 * in the scene.
 	 * @param frameNumber the frame to add the sound to.
 	 * @param sound the path to the sound file containing the sound.
@@ -127,7 +120,7 @@ public:
 	 * -2 = not a valid audio file
 	 */
 	int addSound(unsigned int frameNumber, const char *sound);
-	
+
 	/**
 	 * Removes the the sound with the number soundNumber from the frame at location
 	 * frameNumber.
@@ -136,7 +129,7 @@ public:
 	 * frameNumber.
 	 */
 	void removeSound(unsigned int frameNumber, unsigned int soundNumber);
-	
+
 	/**
 	 * Sets the name of the sound at index soundNumber in the frame at location
 	 * frameNumber to soundName.
@@ -146,7 +139,7 @@ public:
 	 */
 	void setSoundName(unsigned int frameNumber, unsigned int soundNumber,
 			const char* soundName);
-		
+
 	/**
 	 * Has v visit all the files referenced (images and sounds)
 	 */

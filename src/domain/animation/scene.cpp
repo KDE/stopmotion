@@ -116,20 +116,10 @@ void Scene::setSoundName( unsigned int frameNumber, unsigned int soundNumber,
 }
 
 
-vector<char *> Scene::getImagePaths( )
-{
-	vector<char*> imagePaths;
-	unsigned int size = frames.size();
-	for (unsigned int i = 0; i < size; ++i) {
-		imagePaths.push_back(frames[i]->getImagePath());
-	}
-	return imagePaths;
-}
-
 void Scene::Accept(FileNameVisitor& v) const {
 	for (frameVector::const_iterator i = frames.begin();
 			i != frames.end();
 			++i) {
-		(*i)->Accept(v);
+		(*i)->accept(v);
 	}
 }

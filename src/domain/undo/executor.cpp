@@ -568,7 +568,7 @@ public:
 	~VaListParameters() {
 		va_end(args);
 	}
-	int32_t getInteger(int32_t min, int32_t max) {
+	int32_t getInteger(int32_t, int32_t) {
 		return va_arg(args, int32_t);
 	}
 	void getString(std::string& out) {
