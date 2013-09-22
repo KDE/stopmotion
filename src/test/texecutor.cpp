@@ -285,6 +285,7 @@ Command* AddCharFactory::AddChar::execute() {
 	std::string::iterator i = m->begin();
 	i += p;
 	m->insert(i, c);
+	delete this;
 	return inv.release();
 }
 
@@ -295,6 +296,7 @@ Command* DelCharFactory::DelChar::execute() {
 	char removedChar = (*m)[p];
 	Command* inv = new AddCharFactory::AddChar(*m, removedChar, p);
 	m->erase(p, 1);
+	delete this;
 	return inv;
 }
 

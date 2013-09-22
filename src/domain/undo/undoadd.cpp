@@ -43,6 +43,7 @@ Command* UndoAdd::execute() {
 	sv.addFrames(scene, frame, frames);
 	// ownership has been passed, so we must forget the frames
 	frames.clear();
+	delete this;
 	return inverse;
 }
 

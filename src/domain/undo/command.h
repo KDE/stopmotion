@@ -42,9 +42,10 @@ public:
 	 * be updated until the inverse command has been constructed and all
 	 * necessary memory preallocations have been done to enable an atomic
 	 * update of the model.
-	 * @return The inverse command, ownership is relinquished.
-	 * @note This command will be deleted immediately after this call, so it is
-	 * perfectly safe to leave it in an unusable state.
+	 * @par
+	 * This command must delete itself within the {@c execute} method, unless
+	 * it returns itself as its own inverse or otherwise recycles itself.
+	 * @return The inverse command; ownership is relinquished.
 	 */
 	virtual Command* execute() = 0;
 	/**

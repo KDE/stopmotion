@@ -35,6 +35,7 @@ Command* UndoRemove::execute() {
 			i != removed.end(); ++i) {
 		inv->addFrame(*i);
 	}
+	delete this;
 	return inv.release();
 }
 

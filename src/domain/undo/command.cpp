@@ -136,8 +136,8 @@ void CommandList::executeFront(CommandList& to) {
 	Command* c = cs.front();
 	Command* inv = c->execute();
 	to.fillNull(*inv);
-	delete c;
-	// remove deleted command
+	// remove command c, which should have been deleted or recycled by
+	// execute()
 	cs.pop_front();
 }
 
@@ -156,7 +156,8 @@ void Command::accept(FileNameVisitor&) const {
 class CommandNull : public Command {
 public:
 	Command* execute() {
-		return new CommandNull;
+		// a null command is its own inverse
+		return this;
 	}
 };
 
