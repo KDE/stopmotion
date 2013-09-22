@@ -25,7 +25,10 @@
 #include "workspacefile.h"
 #include "src/domain/undo/command.h"
 #include "src/domain/undo/executor.h"
+
 #include "src/domain/undo/undoadd.h"
+#include "src/domain/undo/undoremove.h"
+#include "src/domain/undo/undomove.h"
 
 #include <vector>
 #include <iostream>
@@ -33,13 +36,17 @@
 namespace {
 const char* commandAddFrames = "addf";
 const char* commandRemoveFrames = "delf";
+const char* commandMoveFrames = "movf";
 }
 
 Executor* makeAnimationCommandExecutor(SceneVector& model) {
 	std::auto_ptr<Executor> ex(makeExecutor());
-	std::auto_ptr<CommandFactory> factory(new UndoAddFactory(model));
-	ex->addCommand(commandAddFrames, factory, true);
-	ex->addCommand(commandRemoveFrames, factory, false);
+	std::auto_ptr<CommandFactory> add(new UndoAddFactory(model));
+	ex->addCommand(commandAddFrames, add, true);
+	std::auto_ptr<CommandFactory> remove(new UndoRemoveFactory(model));
+	ex->addCommand(commandRemoveFrames, remove, false);
+	std::auto_ptr<CommandFactory> move(new UndoMoveFactory(model));
+	ex->addCommand(commandMoveFrames, move, false);
 	return ex.release();
 }
 
@@ -94,8 +101,10 @@ const vector<const char*> Animation::addFrames(
 		if (showingProgress)
 			frontend->updateProgress(newImagePaths.size());
 	}
-	if (0 < newImagePaths.size())
+	if (0 < newImagePaths.size()) {
 		executor->execute(commandAddFrames, params);
+		isChangesSaved = false;
+	}
 	if (showingProgress)
 		frontend->hideProgress();
 	if (!error.empty())
@@ -110,18 +119,20 @@ void Animation::removeFrames(unsigned int fromFrame,
 	assert(fromFrame <= toFrame);
 	executor->execute(commandRemoveFrames, activeFrame, fromFrame,
 			toFrame - fromFrame - 1);
+	isChangesSaved = false;
 }
 
 
 void Animation::moveFrames(unsigned int fromFrame, unsigned int toFrame, 
-		unsigned int movePosition)
-{
-	unsigned int framesSize = scenes[activeScene]->getSize();
-	if ( (fromFrame < framesSize) && (toFrame < framesSize) && (movePosition < framesSize) && 
-			((movePosition < fromFrame) || (movePosition > toFrame)) ) {
-		
-		scenes[activeScene]->moveFrames(fromFrame, toFrame, movePosition);
-		
+		unsigned int movePosition) {
+	assert(fromFrame <= toFrame);
+	int framesSize = scenes.frameCount(activeScene);
+	assert(toFrame < framesSize);
+	assert(movePosition < framesSize);
+	if (movePosition < fromFrame || toFrame < movePosition) {
+		executor->execute(commandMoveFrames,
+				activeScene, fromFrame, toFrame - fromFrame + 1,
+				activeScene, movePosition);
 		isChangesSaved = false;
 		this->notifyMove(fromFrame, toFrame, movePosition);
 		this->setActiveFrame(movePosition);

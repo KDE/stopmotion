@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,34 +16,49 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "undomove.h"
 
-
-UndoMove::UndoMove(unsigned int fromFrame, unsigned int toFrame, 
-		unsigned int movePosition, int activeScene)
-		: fromFrame(fromFrame), toFrame(toFrame), movePosition(movePosition), 
-		activeScene(activeScene)
-{
+	SceneVector sv;
+	int fromSc;
+	int fromFr;
+	int frameCount;
+	int toSc;
+	int toFr;
+UndoMove::UndoMove(SceneVector& model, int fromScene, int fromFrame, int count,
+		int toScene, int toFrame)
+		: sv(model), fromSc(fromScene), fromFr(fromFrame), frameCount(count),
+		  toSc(toScene), toFr(toFrame) {
 }
 
-
-void UndoMove::undo(AnimationModel *a)
-{
-	//Setting the active scene to the scene which the frames were originally added to.
-	a->setActiveScene(activeScene);
-	
-	if (movePosition < fromFrame) {
-		a->moveFrames(movePosition, movePosition+(toFrame-fromFrame), toFrame);
-	}
-	else {
-		a->moveFrames(movePosition-(toFrame-fromFrame), movePosition, fromFrame);
-	}
+UndoMove::~UndoMove() {
 }
 
+template<typename T> void swap(T& a, T& b) {
+	T t(a);
+	a = b;
+	b = t;
+}
 
-void UndoMove::redo(AnimationModel *a)
-{
-	//Setting the active scene to the scene which the frames were originally added to.
-	a->setActiveScene(activeScene);
-	a->moveFrames(fromFrame, toFrame, movePosition);
+Command* UndoMove::execute() {
+	sv.moveFrames(fromSc, fromFr, frameCount, toSc, toFr);
+	swap(fromSc, toSc);
+	swap(fromFr, toFr);
+	return this;
+}
+
+UndoMoveFactory::UndoMoveFactory(SceneVector& model) : sv(model) {
+}
+
+UndoMoveFactory::~UndoMoveFactory() {
+}
+
+Command* UndoMoveFactory::create(Parameters& ps) {
+	int fs = ps.getInteger(0, sv.sceneCount() - 1);
+	int framesInScene = sv.frameCount(fs);
+	int ff = ps.getInteger(0, framesInScene - 1);
+	int fc = ps.getInteger(0, framesInScene - ff);
+	int ts = ps.getInteger(0, sv.sceneCount() - 1);
+	int tf = ps.getInteger(0, sv.frameCount(ts));
+	return UndoMove(fs, ff, fc, ts, tf);
 }

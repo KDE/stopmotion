@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,46 +19,30 @@
 #ifndef UNDOMOVE_H
 #define UNDOMOVE_H
 
-#include "undo.h"
+#include "command.h"
 
+class SceneVector;
 
-/**
- *Superclass for all undo command objects. 
- *The undo objects can be called upon to undo operations the user has done.
- *@author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
- */
-class UndoMove : public Undo
-{
+class UndoMove : public Command {
+	SceneVector sv;
+	int fromSc;
+	int fromFr;
+	int frameCount;
+	int toSc;
+	int toFr;
 public:
+	UndoMove(SceneVector& model, int fromScene, int fromFrame, int count,
+			int toScene, int toFrame);
+	~UndoMove();
+	Command* execute();
+};
 
-	/**
-	 * Sets up the UndoAdd command object with the information needed to undo and
-	 * redo the add commands.
-	 * @param fromFrame the first of the frames which were moved.
-	 * @param toFrame the last of the frames which were moved.
-	 * @param movePosition the position the frames was moved to.
-	 * @param activeScene the scene the frames were moved within.
-	 */
-	UndoMove(unsigned int fromFrame, unsigned int toFrame, 
-		unsigned int movePosition, int activeScene);
-	
-	
-	/**
-	 * Abstract function for undoing the command represented by this undo object.
-	 * @param a the model to perform the undo command on.
-	 */
-	void undo(AnimationModel *a);
-	
-	/**
-	 * Abstract function for redoing (performing) the command represented by this 
-	 * undo object.
-	 * @param a the model to perform the redo command on.
-	 */
-	void redo(AnimationModel *a);
-	
-private:
-	unsigned int fromFrame, toFrame, movePosition;
-	int activeScene;
+class UndoMoveFactory : public CommandFactory {
+	SceneVector& sv;
+public:
+	UndoMoveFactory(SceneVector& model);
+	~UndoMoveFactory();
+	Command* create(Parameters& ps);
 };
 
 #endif

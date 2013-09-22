@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -50,6 +49,7 @@ private:
 };
 
 class UndoAddFactory : public CommandFactory {
+	SceneVector& sv;
 public:
 	UndoAddFactory(SceneVector& model);
 	~UndoAddFactory();
@@ -79,8 +79,6 @@ public:
 		 */
 		void retainFiles();
 	};
-private:
-	SceneVector& sv;
 };
 
 #endif
