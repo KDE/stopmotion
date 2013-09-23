@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors.              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -29,6 +28,7 @@
 #include "src/domain/undo/undoadd.h"
 #include "src/domain/undo/undoremove.h"
 #include "src/domain/undo/undomove.h"
+#include "src/domain/undo/undoaddsound.h"
 
 #include <vector>
 #include <iostream>
@@ -37,6 +37,7 @@ namespace {
 const char* commandAddFrames = "addf";
 const char* commandRemoveFrames = "delf";
 const char* commandMoveFrames = "movf";
+const char* commandAddSound = "adds";
 }
 
 Executor* makeAnimationCommandExecutor(SceneVector& model) {
@@ -47,13 +48,15 @@ Executor* makeAnimationCommandExecutor(SceneVector& model) {
 	ex->addCommand(commandRemoveFrames, remove, false);
 	std::auto_ptr<CommandFactory> move(new UndoMoveFactory(model));
 	ex->addCommand(commandMoveFrames, move, false);
+	std::auto_ptr<CommandFactory> addSound(new UndoAddSoundFactory(model));
+	ex->addCommand(commandAddSound, addSound, true);
 	return ex.release();
 }
 
 
 Animation::Animation()
 		: serializer(0), executor(0), audioDriver(0),
-		  activeFrame(-1), activeScene(-1), numSounds(-1),
+		  activeFrame(-1), activeScene(-1),
 		  isChangesSaved(true), isAudioDriverInitialized(false) {
 	serializer  = new ProjectSerializer();
 	executor = makeAnimationCommandExecutor(scenes);
@@ -71,7 +74,7 @@ Animation::~Animation() {
 
 
 const vector<const char*> Animation::addFrames(
-		const vector<const char*>& frameNames, unsigned int index) {
+		const vector<const char*>& frameNames, int32_t index) {
 	if (getActiveSceneNumber() < 0) {
 		newScene(0);
 	}
@@ -114,8 +117,7 @@ const vector<const char*> Animation::addFrames(
 }
 
 
-void Animation::removeFrames(unsigned int fromFrame,
-		unsigned int toFrame ) {
+void Animation::removeFrames(int32_t fromFrame, int32_t toFrame) {
 	assert(fromFrame <= toFrame);
 	executor->execute(commandRemoveFrames, activeFrame, fromFrame,
 			toFrame - fromFrame - 1);
@@ -123,8 +125,8 @@ void Animation::removeFrames(unsigned int fromFrame,
 }
 
 
-void Animation::moveFrames(unsigned int fromFrame, unsigned int toFrame, 
-		unsigned int movePosition) {
+void Animation::moveFrames(int32_t fromFrame, int32_t toFrame,
+		int32_t movePosition) {
 	assert(fromFrame <= toFrame);
 	int framesSize = scenes.frameCount(activeScene);
 	assert(toFrame < framesSize);
@@ -140,27 +142,35 @@ void Animation::moveFrames(unsigned int fromFrame, unsigned int toFrame,
 }
 
 
-int Animation::addSound(unsigned int frameNumber, const char *sound)
-{
+int Animation::addSound(int32_t frameNumber, const char *soundFile) {
 	Logger::get().logDebug("Adding sound in animation");
-	++numSounds;
-	int ret = scenes[activeScene]->addSound(frameNumber, sound);
-	if (ret == -1) {
+	std::auto_ptr<Frame::Sound> sound(new Frame::Sound());
+	stringstream ss;
+	ss << "Sound" << WorkspaceFile::getSoundNumber();
+	unsigned int size = ss.tellp() + 1;
+	char* soundName = new char[size];
+	strncpy(soundName, ss.str().c_str(), size);
+	char* oldName = sound->setName(soundName);
+	assert(oldName == NULL);
+	int32_t index = sv.soundCount(activeScene, frameNumber);
+	try {
+		executor->execute(commandAddSound, activeScene, frameNumber,
+				index, soundFile, soundName);
+	} catch (CouldNotOpenFileException&) {
 		frontend->reportError(
 				"Cannot open the selected audio file for reading.\n"
 				"Check that you have the right permissions set.\n"
-				"The animation will be runned without sound if you\n"
+				"The animation will run without this sound if you\n"
 				"choose to play.", 0);
-		--numSounds;
-	}
-	else if (ret == -2) {
+		return -1;
+	} catch (InvalidAudioFormatException&) {
 		frontend->reportError(
-				"The selected audio file is not valid within the\n" 
-				"given audio format. The animation will be runned\n"
-				"without sound if you choose to play.", 0);
-		--numSounds;
+				"The selected audio file is not a recognized\n"
+				"audio format. The animation will run without\n"
+				"this sound if you choose to play.", 0);
+		return -2;
 	}
-	return ret;
+	WorkspaceFile::nextSoundNumber();
 }
 
 

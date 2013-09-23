@@ -22,6 +22,12 @@
 
 class TemporaryWorkspaceFile;
 
+class CouldNotOpenFileException {
+};
+
+class InvalidAudioFormatException {
+};
+
 /**
  * Interface to be used by the implemented audio formats. They
  * will be responsible for decoding from their own format to raw PCM.
@@ -38,11 +44,11 @@ public:
 	 * format file. This function checks that the file can be opened and that
 	 * it is a valid audio format file.
 	 * @param filename the filename to register
-	 * @return zero on success, less than zero on failure.
-	 * -1 = cannot open file for reading
-	 * -2 = not a valid audio format file
+	 * @throws CouldNotOpenFileException if the file count not be read.
+	 * @throws InvalidAudioFormatException if the file contents could not be
+	 * recognized
 	 */
-	virtual int setFilename(TemporaryWorkspaceFile& filename) = 0;
+	virtual void setFilename(TemporaryWorkspaceFile& filename) = 0;
 	
 	/**
 	 * Abstract function for opening the file registered with setFilename.

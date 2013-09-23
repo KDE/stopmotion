@@ -39,12 +39,13 @@ void UndoAdd::addFrame(Frame* frame) {
 }
 
 Command* UndoAdd::execute() {
-	UndoRemove* inverse = new UndoRemove(sv, scene, frame, frames.size());
+	std::auto_ptr<UndoRemove> inverse(
+			new UndoRemove(sv, scene, frame, frames.size()));
 	sv.addFrames(scene, frame, frames);
 	// ownership has been passed, so we must forget the frames
 	frames.clear();
 	delete this;
-	return inverse;
+	return inverse.release();
 }
 
 void UndoAdd::accept(FileNameVisitor& v) const {
@@ -96,10 +97,8 @@ void UndoAddFactory::Parameters::getString(std::string& out) {
 }
 
 void UndoAddFactory::Parameters::retainFiles() {
-	// use this to empty out the TemporaryWorkspaceFiles
-	WorkspaceFile dummy;
 	for (int i = 0; i != twfCount; ++i) {
-		dummy = twfs[i];
+		twfs[i].retainFile();
 	}
 }
 

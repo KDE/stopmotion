@@ -45,11 +45,8 @@ public:
 	 * function checks that the file can be opened and that it is a valid
 	 * ogg file.
 	 * @param filename the filename to register
-	 * @return zero on success, less than zero on failure.
-	 * -1 = cannot open file for reading
-	 * -2 = not a valid oggVorbis file
 	 */
-	int setFilename(TemporaryWorkspaceFile& filename);
+	void setFilename(TemporaryWorkspaceFile& filename);
 	
 	/**
 	 * Function for opening the file registered with setFilename.

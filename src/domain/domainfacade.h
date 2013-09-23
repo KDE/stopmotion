@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors.              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,7 +21,6 @@
 
 #include "src/config.h"
 #include "animation/animationmodel.h"
-#include "src/domain/undo/undohistory.h"
 #include "src/presentation/frontends/frontend.h"
 #include "src/technical/video/videoencoder.h"
 #include "src/technical/util.h"
@@ -30,6 +28,7 @@
 #include <vector>
 using namespace std;
 
+class CommandHistory;
 
 /**
  * Singleton facade for the domain level. All requests into the domain layer
@@ -318,7 +317,7 @@ private:
 	
 	/**Container where one can register and retrieve undo objects for undo and
 	 remove operations*/
-	UndoHistory *undoHistory;
+	CommandHistory *undoHistory;
 };
 
 #endif

@@ -35,7 +35,7 @@ DomainFacade* DomainFacade::domainFacade = 0;
 DomainFacade::DomainFacade()
 {
 	animationModel = new Animation();
-	undoHistory = new UndoHistory();
+	undoHistory = new CommandHistory();
 	domainFacade = NULL;
 }
 

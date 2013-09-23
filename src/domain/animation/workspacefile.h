@@ -143,6 +143,12 @@ public:
 	TemporaryWorkspaceFile(const char* basename, AlreadyAWorkspaceFile);
 	~TemporaryWorkspaceFile();
 	/**
+	 * Prevents the file from being deleted on destruction.
+	 */
+	void retainFile() {
+		toBeDeleted = false;
+	}
+	/**
 	 * Returns the path of the file.
 	 * @return Ownership is not returned.
 	 */

@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,33 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UNDOMOVE_H
-#define UNDOMOVE_H
+
+#ifndef UNDOADDSOUND_H_
+#define UNDOADDSOUND_H_
 
 #include "command.h"
 
 class SceneVector;
+class Frame;
+class Frame::Sound;
 
-class UndoMove : public Command {
+class UndoAddSound : public Command {
 	SceneVector sv;
-	int32_t fromSc;
-	int32_t fromFr;
-	int32_t frameCount;
-	int32_t toSc;
-	int32_t toFr;
+	int32_t sc;
+	int32_t fr;
+	int32_t index;
+	Frame::Sound* snd;
 public:
-	UndoMove(SceneVector& model, int fromScene, int fromFrame, int count,
-			int toScene, int toFrame);
-	~UndoMove();
+	UndoAddSound(SceneVector& model, int32_t scene, int32_t frame,
+			int32_t soundNumber, Frame::Sound* sound);
+	~UndoAddSound();
 	Command* execute();
+	void accept(FileNameVisitor& v) const;
 };
 
-class UndoMoveFactory : public CommandFactory {
+class UndoAddSoundFactory : public CommandFactory {
 	SceneVector& sv;
 public:
-	UndoMoveFactory(SceneVector& model);
-	~UndoMoveFactory();
+	UndoAddSoundFactory(SceneVector& model);
+	~UndoAddSoundFactory();
 	Command* create(Parameters& ps);
 };
 
-#endif
+#endif /* UNDOADDSOUND_H_ */

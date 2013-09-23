@@ -45,18 +45,25 @@ public:
 		Sound();
 		~Sound();
 		/**
-		 * Opens an audio file.
+		 * Opens an audio file. See {@ref AudioFormat::setFilename} for
+		 * exceptions that might be thrown.
 		 * @param filename The filename to open. Ownership is not passed.
-		 * @return 0 for success, less than zero for failure. See
-		 * @ref AudioFormat::setFilename for error return value meanings.
+		 * @todo We need a way of mocking this for testing.
 		 */
-		int open(TemporaryWorkspaceFile& filename);
+		void open(TemporaryWorkspaceFile& filename);
 		/**
 		 * Sets or resets the (human-readable) name of this sound.
 		 * @param name The new name or NULL for no name. Ownership is passed.
 		 * @return The old name or NULL for no name. Ownership is returned.
 		 */
 		const char* setName(const char* name);
+
+		/**
+		 * Sets the (human-readable) name of this sound. May only be used when
+		 * there is no name already set for the sound.
+		 * @param n The name to set.
+		 */
+		void setName(std::string& n);
 		AudioFormat* getAudio();
 		const char* getName() const;
 	};

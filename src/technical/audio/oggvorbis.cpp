@@ -48,7 +48,7 @@ OggVorbis::~OggVorbis()
 }
 
 
-int OggVorbis::setFilename(TemporaryWorkspaceFile& filename)
+void OggVorbis::setFilename(TemporaryWorkspaceFile& filename)
 {
 	assert(filename.path() != NULL);
 
@@ -71,7 +71,7 @@ int OggVorbis::setFilename(TemporaryWorkspaceFile& filename)
 			fclose(f);
 			free(oggFile);
 			oggFile = NULL;
-			return -2;
+			throw InvalidAudioFormatException();
 		}
 		
 		// This also closes the file stream (f)
@@ -82,10 +82,8 @@ int OggVorbis::setFilename(TemporaryWorkspaceFile& filename)
 	}
 	else {
 		Logger::get().logDebug("Cannot open file for reading");
-		return -1;
+		throw CouldNotOpenFileException();
 	}
-	
-	return 0;
 }
 
 

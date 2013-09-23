@@ -43,19 +43,24 @@ Frame::Sound::~Sound() {
 /**
  *@todo check audio type (ogg, mp3, wav ...)
  */
-int Frame::Sound::open(TemporaryWorkspaceFile& filename) {
+void Frame::Sound::open(TemporaryWorkspaceFile& filename) {
 	std::auto_ptr<AudioFormat> a(new OggVorbis());
-	int ret = a->setFilename(filename);
-	if (ret == 0) {
-		af = a.release();
-	}
-	return ret;
+	a->setFilename(filename);
+	af = a.release();
 }
 
 const char* Frame::Sound::setName(const char* n) {
 	const char* r = name;
 	name = n;
 	return r;
+}
+
+void Frame::Sound::setName(std::string& n) {
+	assert(!name);
+	int size = n.size();
+	char* a = new char[size];
+	name = a;
+	strncpy(a, n.c_str(), size);
 }
 
 AudioFormat* Frame::Sound::getAudio() {
@@ -82,8 +87,7 @@ Frame::~Frame() {
 }
 
 
-const char* Frame::getImagePath()
-{
+const char* Frame::getImagePath() {
 	assert(imagePath.path() != NULL);
 	Logger::get().logDebug("Retrieving picture from frame: ");
 	Logger::get().logDebug(imagePath.path());
@@ -135,8 +139,8 @@ unsigned int Frame::getNumberOfSounds( )
 }
 
 
-const char* Frame::setSoundName(unsigned int soundNumber, const char* soundName)
-{
+const char* Frame::setSoundName(unsigned int soundNumber,
+		const char* soundName) {
 	return sounds[soundNumber]->setName(soundName);
 }
 
@@ -146,8 +150,7 @@ const char* Frame::getSoundName(unsigned int soundNumber) {
 }
 
 
-void Frame::playSounds(AudioDriver *driver)
-{
+void Frame::playSounds(AudioDriver *driver) {
 	SoundVector::iterator i = sounds.begin();
 	for (; i != sounds.end(); ++i) {
 		driver->addAudioFile((*i)->getAudio());

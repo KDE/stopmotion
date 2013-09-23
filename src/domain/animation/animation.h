@@ -58,7 +58,7 @@ public:
 	 * copied to a temporary directory
 	 */
 	const vector<const char*> addFrames(
-			const vector<const char*>& frameNames, unsigned int index);
+			const vector<const char*>& frameNames, int32_t index);
 	
 	/**
 	 * Removes the frames between (inclusive) fromFrame and toFrame from 
@@ -66,8 +66,7 @@ public:
 	 * @param fromFrame the first frame to remove.
 	 * @param toFrame the last frame to remove.
 	 */
-	void removeFrames(unsigned int fromFrame,
-			const unsigned int toFrame);
+	void removeFrames(int32_t fromFrame, int32_t toFrame);
 	
 	/**
 	 * Move the frames from fromFrame (inclusive) to toFrame to toPosition.
@@ -75,8 +74,8 @@ public:
 	 * @param toFrame the last frame to move.
 	 * @param movePosition the posititon to move the frames to.
 	 */
-	void moveFrames(unsigned int fromFrame, unsigned int toFrame, 
-			unsigned int movePosition);
+	void moveFrames(int32_t fromFrame, int32_t toFrame,
+			int32_t movePosition);
 	
 	/**
 	 * Adds the sound from the file "sound" to frame
@@ -87,7 +86,7 @@ public:
 	 * -1 = file is not readable
 	 * -2 = not a valid audio file
 	 */
-	int addSound(unsigned int frameNumber, const char *filename);
+	int addSound(int32_t frameNumber, const char *filename);
 	
 	/**
 	 * Removes the sound with index soundNumber from the frame with index
@@ -95,7 +94,7 @@ public:
 	 * @param frameNumber the index of the frame to remove a sound from.
 	 * @param soundNumber the index of the sound to remove from the frame.
 	 */
-	void removeSound(unsigned int frameNumber, unsigned int soundNumber);
+	void removeSound(int32_t frameNumber, int32_t soundNumber);
 	
 	/**
 	 * Sets the name of the sound with index soundNumber in the frame with
@@ -104,7 +103,7 @@ public:
 	 * @param soundNumber the index to the sound to change the name of.
 	 * @param soundName the new name of the sound.
 	 */
-	void setSoundName(unsigned int frameNumber, unsigned int soundNumber,
+	void setSoundName(int32_t frameNumber, int32_t soundNumber,
 			char* soundName);
 	
 	/**
@@ -204,7 +203,7 @@ public:
 	 * Sets the scene with at position sceneNumber as the active scene.
 	 * @param sceneNumber the number of the new active scene.
 	 */
-	void setActiveScene(int sceneNumber);
+	void setActiveScene(int32_t sceneNumber);
 	
 	/**
 	 * Returns the number of the currently active scene.
@@ -216,20 +215,20 @@ public:
 	 * Create and adds a new scene to the animation at position ``index''.
 	 * @param index the position to add the new scene.
 	 */
-	void newScene(int index);
+	void newScene(int32_t index);
 	
 	/**
 	 * Removes the scene at the location sceneNumber from the animation.
 	 * @param sceneNumber the scene to be removed from the animation.
 	 */
-	void removeScene(int sceneNumber);
+	void removeScene(int32_t sceneNumber);
 	
 	/**
 	 * Moves the scene at position sceneNumber to the position movePosition.
 	 * @param sceneNumber the number of the scene to move.
 	 * @param movePosition the position to move the scene to.
 	 */
-	void moveScene(int sceneNumber, int movePosition);
+	void moveScene(int32_t sceneNumber, int32_t movePosition);
 	
 	/**
 	 * Initializes the audio device so it is ready to play sounds.
@@ -281,20 +280,17 @@ private:
 	AudioDriver *audioDriver;
 	
 	/** Index of the active frame. */
-	int activeFrame;
-	
+	int32_t activeFrame;
+
 	/** Index of the active scene. */
-	int activeScene;
-	
-	/** Number of sounds added to the model. */
-	int numSounds;
-	
+	int32_t activeScene;
+
 	/** Variable for checking if there are unsaved changes in the model */
 	bool isChangesSaved;
-	
+
 	/** Variable for checking if the audio device is successfully initialized. */
 	bool isAudioDriverInitialized;
-	
+
 	/**
 	 * Loads frames into the model. This acts exactly like the {@ref addFrames}
 	 * function except that it does not moves the frames to a temporary directory.

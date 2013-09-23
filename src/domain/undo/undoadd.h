@@ -55,12 +55,12 @@ public:
 	~UndoAddFactory();
 	Command* create(::Parameters& ps);
 	class Parameters : public ::Parameters {
-		int sc;
-		int fr;
-		int frameCount;
+		int32_t sc;
+		int32_t fr;
+		int32_t frameCount;
 		TemporaryWorkspaceFile* twfs;
-		int twfCount;
-		int parameterCount;
+		int32_t twfCount;
+		int32_t parameterCount;
 	public:
 		Parameters(int scene, int frame, int count);
 		~Parameters();
