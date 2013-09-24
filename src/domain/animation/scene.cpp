@@ -95,7 +95,7 @@ void Scene::moveFrames( unsigned int fromFrame, unsigned int toFrame,
 }
 
 
-void Scene::Accept(FileNameVisitor& v) const {
+void Scene::accept(FileNameVisitor& v) const {
 	for (frameVector::const_iterator i = frames.begin();
 			i != frames.end();
 			++i) {

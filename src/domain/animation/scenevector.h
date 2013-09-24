@@ -32,6 +32,14 @@ class SceneVector {
 public:
 	SceneVector();
 	~SceneVector();
+	/**
+	 * Clears the animation so that there are no scenes and no frames.
+	 */
+	void clear();
+	/**
+	 * Returns the number of scenes in the animation.
+	 * @return The number of scenes.
+	 */
 	int sceneCount() const;
 	/**
 	 * Adds a scene to the animation.
@@ -188,6 +196,7 @@ public:
 	 * @throws Nothing.
 	 */
 	Frame::Sound* removeSound(int scene, int frame, int soundNumber);
+	void accept(FileNameVisitor& v) const;
 };
 
 #endif /* SCENEVECTOR_H_ */

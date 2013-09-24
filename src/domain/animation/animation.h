@@ -112,15 +112,14 @@ public:
 	 * @param sceneNumber the number of the scene to retrieve the frame from
 	 * @return the frame with the number frameNumber.
 	 */
-	Frame* getFrame(unsigned int frameNumber, unsigned int sceneNumber);
+	Frame* getFrame(int frameNumber, int sceneNumber);
 
 	/**
-	 * Overloaded function for convenience. Assumes the scene to retrieve there
-	 * frame from is the active scene.
+	 * Retrieves the requested frame from the active scene.
 	 * @param frameNumber the number of the frame to retrieve.
 	 * @return the frame at location frameNumber in the active scene.
 	 */
-	Frame* getFrame(unsigned int frameNumber);
+	Frame* getFrame(int frameNumber);
 
 	/**
 	 * Returns the size of the model.
@@ -265,7 +264,7 @@ public:
 	/**
 	 * Have v visit all the files referenced (images and sounds)
 	 */
-	void Accept(FileNameVisitor& v) const;
+	void accept(FileNameVisitor& v) const;
 
 private:
 	/** All of the scenes in the animation. */

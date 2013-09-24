@@ -194,22 +194,20 @@ void Animation::setSoundName(int32_t frameNumber, int32_t soundNumber,
 }
 
 
-Frame* Animation::getFrame(unsigned int frameNumber, unsigned int sceneNumber)
-{
-	if (frameNumber < scenes[sceneNumber]->getSize()) {
-		Logger::get().logDebug("Retrieving frame from Animation");	
-		return scenes[sceneNumber]->getFrame(frameNumber);
+Frame* Animation::getFrame(int frameNumber, int sceneNumber) {
+	if (frameNumber < scenes.frameCount(sceneNumber)) {
+		Logger::get().logDebug("Retrieving frame from Animation");
+		return scenes.getScene(sceneNumber)->getFrame(frameNumber);
 	}
 	else {
-		Logger::get().logWarning("Requesting a frame which is not " 
-				"in the animation (framenumber out of bounds)");
+		Logger::get().logWarning("Requesting a frame which is not "
+				"in the animation (frame number out of bounds)");
 		return NULL;
 	}
 }
 
 
-Frame * Animation::getFrame( unsigned int frameNumber )
-{
+Frame* Animation::getFrame(int frameNumber) {
 	if (activeScene >= 0) {
 		return getFrame(frameNumber, activeScene);
 	}
@@ -219,34 +217,30 @@ Frame * Animation::getFrame( unsigned int frameNumber )
 }
 
 
-unsigned int Animation::getModelSize() 
-{
+unsigned int Animation::getModelSize() {
 	unsigned int modelSize = 0;
-	unsigned int size = scenes.size();
-	for (unsigned int i = 0; i < size; ++i) {
-		modelSize += scenes[i]->getSize();
+	unsigned int sceneCount = scenes.sceneCount();
+	for (unsigned int i = 0; i < sceneCount; ++i) {
+		modelSize += scenes.frameCount(i);
 	}
 	return modelSize;
 }
 
 
-unsigned int Animation::getSceneSize( int sceneNumber )
-{
-	if ( sceneNumber > -1 && sceneNumber < int(scenes.size()) ) {
-		return scenes[sceneNumber]->getSize();
+unsigned int Animation::getSceneSize(int sceneNumber) {
+	if (sceneNumber > -1 && sceneNumber < scenes.sceneCount()) {
+		return scenes.frameCount(sceneNumber);
 	}
 	return 0;
 }
 
 
-unsigned int Animation::getNumberOfScenes( )
-{
-	return scenes.size();
+unsigned int Animation::getNumberOfScenes() {
+	return scenes.sceneCount();
 }
 
 
-void Animation::setActiveFrame(int frameNumber)
-{
+void Animation::setActiveFrame(int frameNumber) {
 	if (activeScene >= 0 || frameNumber == -1) {
 		this->activeFrame = frameNumber;
 		this->notifyNewActiveFrame(frameNumber);
@@ -254,8 +248,7 @@ void Animation::setActiveFrame(int frameNumber)
 }
 
 
-void Animation::playFrame(int frameNumber)
-{
+void Animation::playFrame(int frameNumber) {
 	if (isAudioDriverInitialized) {
 		Frame *f = getFrame(frameNumber);
 		if (f) {
@@ -266,33 +259,24 @@ void Animation::playFrame(int frameNumber)
 }
 
 
-int Animation::getActiveFrameNumber()
-{
+int Animation::getActiveFrameNumber() {
 	return activeFrame;
 }
 
 
-const char* Animation::getProjectFile()
-{
+const char* Animation::getProjectFile() {
 	return serializer->getProjectFile();
 }
 
-const char* Animation::getProjectPath()
-{
+const char* Animation::getProjectPath() {
 	return serializer->getProjectPath();
 }
 
 
-void Animation::clear()
-{
+void Animation::clear() {
 	serializer->cleanup();
-	
-	unsigned int size = scenes.size();
-	for (unsigned int i = 0; i < size; ++i) {
-		delete scenes[i];
-	}
 	scenes.clear();
-	
+	executor->clearHistory();
 	activeFrame = -1;
 	activeScene = -1;
 	isChangesSaved = true;
@@ -301,12 +285,11 @@ void Animation::clear()
 }
 
 
-bool Animation::openProject(const char *filename)
-{
+bool Animation::openProject(const char *filename) {
 	clear();
 	assert(filename != 0);
 	scenes = serializer->open(filename);
-	if (scenes.size() > 0) {
+	if (scenes.sceneCount() > 0) {
 		loadSavedScenes();
 		return true;
 	}
@@ -314,26 +297,23 @@ bool Animation::openProject(const char *filename)
 }
 
 
-bool Animation::saveProject(const char *filename)
-{	
+bool Animation::saveProject(const char *filename) {
 	assert(filename != 0);
 	return serializer->save(filename, scenes, frontend);
 }
 
 
-bool Animation::newProject()
-{
+bool Animation::newProject() {
 	clear();
 	// do something here?
 	return true;
 }
 
 
-void Animation::loadSavedScenes()
-{
+void Animation::loadSavedScenes() {
 	Logger::get().logDebug("Loading scenes in Animation:");
-	
-	unsigned int numElem = scenes.size();
+
+	unsigned int numElem = scenes.sceneCount();
 	for (unsigned int i = 0; i < numElem; ++i) {
 		notifyNewScene(i);
 	}
@@ -341,26 +321,23 @@ void Animation::loadSavedScenes()
 }
 
 
-bool Animation::isUnsavedChanges()
-{
+bool Animation::isUnsavedChanges() {
 	return !isChangesSaved;
 }
 
 
-void Animation::setActiveScene( int sceneNumber)
-{
+void Animation::setActiveScene(int sceneNumber) {
 	if (sceneNumber != activeScene) {
 		activateScene(sceneNumber);
 	}
 }
 
 
-void Animation::activateScene( int sceneNumber )
-{
+void Animation::activateScene(int sceneNumber) {
 	this->activeScene = sceneNumber;
 	if (sceneNumber >= 0) {
-		if (scenes[sceneNumber]->getSize() > 0) {
-			this->notifyNewActiveScene(sceneNumber, 
+		if (0 < scenes.frameCount(sceneNumber)) {
+			this->notifyNewActiveScene(sceneNumber,
 					scenes[sceneNumber]->getImagePaths(),frontend);
 			setActiveFrame(0);
 		}
@@ -397,12 +374,12 @@ void Animation::removeScene( int sceneNumber )
 		else {
 			activateScene( sceneNumber - 1 );
 		}
-		
+
 		delete scenes[sceneNumber];
 		scenes.erase(scenes.begin() + sceneNumber);
 		this->notifyRemoveScene( sceneNumber);
 	}
-	
+
 }
 
 
@@ -410,27 +387,25 @@ void Animation::moveScene( int sceneNumber, int movePosition )
 {
 	if (sceneNumber != movePosition) {
 		this->setActiveScene(-1);
-		
+
 		Scene *tmp;
 		tmp = scenes[sceneNumber];
 		scenes.erase(scenes.begin() + sceneNumber);
 		scenes.insert(scenes.begin() + movePosition, tmp);
-		
+
 		this->notifyMoveScene(sceneNumber, movePosition);
 	}
 }
 
 
-int Animation::getActiveSceneNumber( )
-{
+int Animation::getActiveSceneNumber() {
 	return activeScene;
 }
 
 
-bool Animation::initAudioDevice()
-{
+bool Animation::initAudioDevice() {
 	isAudioDriverInitialized = audioDriver->initialize();
-	if ( !isAudioDriverInitialized && numSounds > -1 ) {
+	if (!isAudioDriverInitialized) {
 		frontend->reportError(
 					"Cannot play sound. Check that you have the right\n"
 					"permissions and other programs do not block\n"
@@ -441,24 +416,23 @@ bool Animation::initAudioDevice()
 }
 
 
-void Animation::shutdownAudioDevice()
-{
+void Animation::shutdownAudioDevice() {
 	audioDriver->shutdown();
 	isAudioDriverInitialized = false;
 }
 
 
-void Animation::animationChanged(const char *alteredFile)
-{
+void Animation::animationChanged(const char *alteredFile) {
 	assert(alteredFile != NULL);
 	if (activeScene == -1) {
 		return;
 	}
-	
-	int size = scenes[activeScene]->getSize();
+
+	int size = scenes.frameCount(activeScene);
+	Scene* scene = scenes.getScene(activeScene);
 	int changedFrame = -1;
 	for (int i = 0; i < size; ++i) {
-		Frame *f = scenes[activeScene]->getFrame(i);
+		Frame *f = scene->getFrame(i);
 		if (f) {
 			if (strcmp(f->getImagePath(), alteredFile) == 0) {
 				changedFrame = i;
@@ -466,15 +440,14 @@ void Animation::animationChanged(const char *alteredFile)
 			}
 		}
 	}
-	
+
 	if (changedFrame >= 0) {
 		notifyAnimationChanged(changedFrame);
 	}
 }
 
 
-bool Animation::exportToVideo(VideoEncoder * encoder)
-{
+bool Animation::exportToVideo(VideoEncoder * encoder) {
 	VideoFactory factory(serializer, frontend);
 	frontend->showProgress("Exporting ...", 0);
 	if (factory.createVideoFile(encoder) != NULL) {
@@ -486,15 +459,10 @@ bool Animation::exportToVideo(VideoEncoder * encoder)
 }
 
 
-bool Animation::exportToCinerella(const char*)
-{
+bool Animation::exportToCinerella(const char*) {
 	return false;
 }
 
-void Animation::Accept(FileNameVisitor& v) const {
-	for (sceneVector::const_iterator i = scenes.begin();
-			i != scenes.end();
-			++i) {
-		(*i)->Accept(v);
-	}
+void Animation::accept(FileNameVisitor& v) const {
+	scenes.accept(v);
 }

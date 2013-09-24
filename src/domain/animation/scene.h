@@ -113,7 +113,7 @@ public:
 	/**
 	 * Has v visit all the files referenced (images and sounds)
 	 */
-	void Accept(FileNameVisitor& v) const;
+	void accept(FileNameVisitor& v) const;
 
 private:
 	typedef vector<Frame*> frameVector;
