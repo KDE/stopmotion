@@ -40,6 +40,7 @@ const char* commandRemoveFrames = "delf";
 const char* commandMoveFrames = "movf";
 const char* commandAddSound = "addsnd";
 const char* commandRemoveSound = "delsnd";
+const char* commandRenameSound = "rensnd";
 }
 
 Executor* makeAnimationCommandExecutor(SceneVector& model) {
@@ -54,6 +55,8 @@ Executor* makeAnimationCommandExecutor(SceneVector& model) {
 	ex->addCommand(commandAddSound, addSound, true);
 	std::auto_ptr<CommandFactory> removeSound(new UndoRemoveSoundFactory(model));
 	ex->addCommand(commandRemoveSound, removeSound, true);
+	std::auto_ptr<CommandFactory> renameSound(new UndoRenameSoundFactory(model));
+	ex->addCommand(commandRenameSound, renameSound, false);
 	return ex.release();
 }
 
@@ -184,9 +187,10 @@ void Animation::removeSound(int32_t frameNumber,int32_t soundNumber) {
 }
 
 
-void Animation::setSoundName(unsigned int frameNumber, unsigned int soundNumber, char *soundName)
-{
-	scenes[activeScene]->setSoundName(frameNumber, soundNumber, soundName);
+void Animation::setSoundName(int32_t frameNumber, int32_t soundNumber,
+		const char *soundName) {
+	executor->execute(commandRenameSound, activeScene,
+			frameNumber, soundNumber, soundName);
 }
 
 
