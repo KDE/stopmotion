@@ -29,6 +29,7 @@
 #include "src/domain/undo/undoremove.h"
 #include "src/domain/undo/undomove.h"
 #include "src/domain/undo/undoaddsound.h"
+#include "src/domain/undo/undoremovesound.h"
 
 #include <vector>
 #include <iostream>
@@ -37,7 +38,8 @@ namespace {
 const char* commandAddFrames = "addf";
 const char* commandRemoveFrames = "delf";
 const char* commandMoveFrames = "movf";
-const char* commandAddSound = "adds";
+const char* commandAddSound = "addsnd";
+const char* commandRemoveSound = "delsnd";
 }
 
 Executor* makeAnimationCommandExecutor(SceneVector& model) {
@@ -50,6 +52,8 @@ Executor* makeAnimationCommandExecutor(SceneVector& model) {
 	ex->addCommand(commandMoveFrames, move, false);
 	std::auto_ptr<CommandFactory> addSound(new UndoAddSoundFactory(model));
 	ex->addCommand(commandAddSound, addSound, true);
+	std::auto_ptr<CommandFactory> removeSound(new UndoRemoveSoundFactory(model));
+	ex->addCommand(commandRemoveSound, removeSound, true);
 	return ex.release();
 }
 
@@ -174,10 +178,9 @@ int Animation::addSound(int32_t frameNumber, const char *soundFile) {
 }
 
 
-void Animation::removeSound( unsigned int frameNumber, unsigned int soundNumber )
-{
-	scenes[activeScene]->removeSound(frameNumber, soundNumber);
-	--numSounds;
+void Animation::removeSound(int32_t frameNumber,int32_t soundNumber) {
+	executor->execute(commandRemoveSound,
+			activeScene, frameNumber, soundNumber);
 }
 
 

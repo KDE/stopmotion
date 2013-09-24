@@ -74,6 +74,12 @@ public:
 	 */
 	const Scene* getScene(int which) const;
 	/**
+	 * Returns the scene requested.
+	 * @param which The number of the scene to be returned.
+	 * @return The scene requested.
+	 */
+	Scene* getScene(int which);
+	/**
 	 * Returns the number of frames in scene number @c scene.
 	 * @param scene The number of the scene to query.
 	 * @return The number of frames in scene number @c scene.

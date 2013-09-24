@@ -61,7 +61,7 @@ public:
 	 * @param frameNumber the number of the frame to retrieve.
 	 * @return the frame at position frameNumber.
 	 */
-	Frame* getFrame(unsigned int frameNumber);
+	Frame* getFrame(int frameNumber);
 
 	/**
 	 * Removes a frame from the scene.
@@ -109,36 +109,6 @@ public:
 	 * @param f the frame to add
 	 */
 	void addSavedFrame(Frame *f);
-
-	/**
-	 * Adds a sound located at the path ``sound'' to the frame at location frameNumber
-	 * in the scene.
-	 * @param frameNumber the frame to add the sound to.
-	 * @param sound the path to the sound file containing the sound.
-	 * @return zero on success, less than zero on failure;
-	 * -1 = file is not readable
-	 * -2 = not a valid audio file
-	 */
-	int addSound(unsigned int frameNumber, const char *sound);
-
-	/**
-	 * Removes the the sound with the number soundNumber from the frame at location
-	 * frameNumber.
-	 * @param frameNumber the frame to remove the sound from.
-	 * @param soundNumber the index of the sound to remove from the frame at index
-	 * frameNumber.
-	 */
-	void removeSound(unsigned int frameNumber, unsigned int soundNumber);
-
-	/**
-	 * Sets the name of the sound at index soundNumber in the frame at location
-	 * frameNumber to soundName.
-	 * @param frameNumber the frame containing the sound to change the name of.
-	 * @param soundNumber the sound to change the name of.
-	 * @param soundName the new name for the sound.
-	 */
-	void setSoundName(unsigned int frameNumber, unsigned int soundNumber,
-			const char* soundName);
 
 	/**
 	 * Has v visit all the files referenced (images and sounds)

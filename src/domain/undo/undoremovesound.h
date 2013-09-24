@@ -18,54 +18,30 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "undoaddsound.h"
-#include "undoremovesound.h"
-#include "src/domain/animation/frame.h"
+#ifndef UNDOREMOVESOUND_H_
+#define UNDOREMOVESOUND_H_
 
+#include "command.h"
+
+class UndoRemoveSound : public Command {
 	SceneVector sv;
 	int32_t sc;
 	int32_t fr;
 	int32_t index;
-	Frame::Sound* snd;
-UndoAddSound::UndoAddSound(SceneVector& model, int32_t scene, int32_t frame,
-		int32_t soundNumber, Frame::Sound* sound)
-	: sv(model), sc(scene), fr(frame), index(soundNumber),
-	  snd(sound) {
-}
-
-UndoAddSound::~UndoAddSound() {
-	delete snd;
-}
-
-Command* UndoAddSound::execute() {
-	std::auto_ptr inv(new UndoRemoveSound(sv, sc, fr, index));
-	sv.addSound(sc, fr, index, snd);
-	delete this;
-	return inv.release();
+public:
+	UndoRemoveSound(SceneVector& model, int32_t scene, int32_t frame,
+			int32_t soundNumber);
+	~UndoRemoveSound();
+	Command* execute();
 };
 
-void UndoAddSound::accept(FileNameVisitor& v) const {
-	v.visitSound(snd->getAudio()->getSoundPath());
-}
+class UndoRemoveSoundFactory : public CommandFactory {
+	SceneVector& sv;
+public:
+	UndoRemoveSoundFactory(SceneVector& model);
+	~UndoRemoveSoundFactory();
+	Command* create(Parameters& ps);
+};
 
-UndoAddSoundFactory::UndoAddSoundFactory(SceneVector& model) : sv(model) {
-}
-
-UndoAddSoundFactory::~UndoAddSoundFactory() {
-}
-
-Command* UndoAddSoundFactory::create(Parameters& ps) {
-	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
-	int32_t fr = ps.getInteger(0, sv.frameCount(sc));
-	int32_t index = ps.getInteger(0, sv.soundCount(sc, fr));
-	std::string filename;
-	ps.getString(filename);
-	std::string humanName;
-	ps.getString(humanName);
-	std::auto_ptr<Frame::Sound> sound = new Frame::Sound();
-	sound->setName(humanName);
-	auto_ptr<Command> r(new UndoAddSound(sv, sc, fr, index, sound));
-	TemporaryWorkspaceFile twf(filename);
-	sound->open(twf);
-	return r.release();
-}
+#endif /* UNDOREMOVESOUND_H_ */
+s

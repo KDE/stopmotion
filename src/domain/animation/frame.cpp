@@ -125,16 +125,19 @@ void Frame::preallocateSounds(int extra) {
 	sounds.reserve(sounds.size() + extra);
 }
 
-Frame::Sound* Frame::removeSound(int soundNumber)
-{
+Frame::Sound* Frame::removeSound(int soundNumber) {
 	Frame::Sound* s = sounds[s];
 	sounds.erase(sounds.begin() + soundNumber);
 	return s;
 }
 
 
-unsigned int Frame::getNumberOfSounds( )
-{
+Frame::Sound* Frame::getSound(int index) {
+	return sounds[index];
+}
+
+
+int Frame::getNumberOfSounds( ) {
 	return sounds.size();
 }
 

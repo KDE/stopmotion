@@ -67,6 +67,10 @@ const Scene* SceneVector::getScene(int which) const {
 	return scenes[which];
 }
 
+Scene* SceneVector::getScene(int which) {
+	return scenes[which];
+}
+
 int SceneVector::frameCount(int scene) const {
 	return scenes[scene]->getSize();
 }

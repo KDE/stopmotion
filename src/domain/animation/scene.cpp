@@ -46,7 +46,7 @@ unsigned int Scene::getSize() {
 }
 
 
-Frame* Scene::getFrame(unsigned int frameNumber) {
+Frame* Scene::getFrame(int frameNumber) {
 	return frames[frameNumber];
 }
 
@@ -77,8 +77,7 @@ Frame* Scene::removeFrame(unsigned int frame) {
 }
 
 void Scene::moveFrames( unsigned int fromFrame, unsigned int toFrame,
-		unsigned int movePosition )
-{
+		unsigned int movePosition ) {
 	if (movePosition < fromFrame) {
 		for (unsigned int i = fromFrame, j = movePosition; i <= toFrame; ++i, ++j) {
 			Frame *f = frames[i];
@@ -93,26 +92,6 @@ void Scene::moveFrames( unsigned int fromFrame, unsigned int toFrame,
 			frames.insert(frames.begin() + movePosition, f);
 		}
 	}
-}
-
-
-int Scene::addSound( unsigned int frameNumber, const char *sound )
-{
-	Logger::get().logDebug("Adding sound in scene");
-	return frames[frameNumber]->addSound(sound);
-}
-
-
-void Scene::removeSound( unsigned int frameNumber, unsigned int soundNumber )
-{
-	frames[frameNumber]->removeSound(soundNumber);
-}
-
-
-void Scene::setSoundName( unsigned int frameNumber, unsigned int soundNumber,
-		const char * soundName )
-{
-	frames[frameNumber]->setSoundName(soundNumber, soundName);
 }
 
 

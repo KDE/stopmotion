@@ -111,12 +111,17 @@ public:
 	 * @return The sound that was removed. Ownership is returned.
 	 */
 	Sound* removeSound(int index);
+	/**
+	 * Returns the sound.
+	 * @param index Which sound to return.
+	 */
+	Sound* getSound(int index);
 
 	/**
 	 * Returns the number of sounds in this frame.
 	 * @return the number of sounds in this frame.
 	 */
-	unsigned int getNumberOfSounds();
+	int getNumberOfSounds();
 
 	/**
 	 * Sets the name of the sound at index soundNumber in this frame to 
