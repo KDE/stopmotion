@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,29 +16,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "undonewscene.h"
+#ifndef UNDOADDSCENE_H
+#define UNDOADDSCENE_H
 
+#include "command.h"
 
+class SceneVector;
 
-UndoNewScene::UndoNewScene(int sceneNumber)
-		: sceneNumber(sceneNumber)
-{
-}
+class UndoAddScene : public Command {
+	SceneVector& sv;
+	int32_t index;
+	Scene* sc;
+public:
+	/**
+	 * @param scene Ownership is passed.
+	 */
+	UndoAddScene(SceneVector& model, int32_t sceneNumber, Scene* scene);
+	~UndoAddScene();
+	Command* execute();
+};
 
+/**
+ * This factory can only create empty scenes.
+ */
+class UndoAddSceneFactory : public CommandFactory {
+	SceneVector& sv;
+public:
+	UndoAddSceneFactory(SceneVector& model);
+	~UndoAddSceneFactory();
+	Command* create(Parameters& ps);
+};
 
-UndoNewScene::~UndoNewScene()
-{
-	
-}
-
-
-void UndoNewScene::undo(AnimationModel *a)
-{
-	a->removeScene(sceneNumber);
-}
-
-
-void UndoNewScene::redo(AnimationModel *a)
-{
-	a->newScene(sceneNumber);
-}
+#endif

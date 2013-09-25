@@ -30,17 +30,19 @@
 #include "src/domain/undo/undomove.h"
 #include "src/domain/undo/undoaddsound.h"
 #include "src/domain/undo/undoremovesound.h"
+#include "src/domain/undo/undoaddscene.h"
 
 #include <vector>
 #include <iostream>
 
 namespace {
-const char* commandAddFrames = "addf";
-const char* commandRemoveFrames = "delf";
-const char* commandMoveFrames = "movf";
-const char* commandAddSound = "addsnd";
-const char* commandRemoveSound = "delsnd";
-const char* commandRenameSound = "rensnd";
+const char* commandAddFrames = "add-frame";
+const char* commandRemoveFrames = "delete-frame";
+const char* commandMoveFrames = "move-frame";
+const char* commandAddSound = "add-sound";
+const char* commandRemoveSound = "delete-spund";
+const char* commandRenameSound = "rename-sound";
+const char* commandAddScene = "new-scene";
 }
 
 Executor* makeAnimationCommandExecutor(SceneVector& model) {
@@ -57,6 +59,8 @@ Executor* makeAnimationCommandExecutor(SceneVector& model) {
 	ex->addCommand(commandRemoveSound, removeSound, true);
 	std::auto_ptr<CommandFactory> renameSound(new UndoRenameSoundFactory(model));
 	ex->addCommand(commandRenameSound, renameSound, false);
+	std::auto_ptr<CommandFactory> addScene(new UndoAddSceneFactory(model));
+	ex->addCommand(commandAddScene, addScene, true);
 	return ex.release();
 }
 
@@ -355,10 +359,8 @@ void Animation::activateScene(int sceneNumber) {
 }
 
 
-void Animation::newScene( int index )
-{
-	Scene *s = new Scene();
-	scenes.insert(scenes.begin() + index, s);
+void Animation::newScene(int32_t index) {
+	executor->execute(commandAddScene, index);
 	this->notifyNewScene( index );
 	this->setActiveScene( index );
 }

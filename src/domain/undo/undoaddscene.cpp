@@ -17,47 +17,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UNDONEWSCENE_H
-#define UNDONEWSCENE_H
 
-#include "undo.h"
+#include "undoaddscene.h"
+#include "undoremovescene.h"
+#include "src/domain/animation/scene.h"
 
+UndoAddScene::UndoAddScene(SceneVector& model, int32_t sn, Scene* scene)
+		: sv(model), index(sn), sc(scene) {
+}
 
-/**
- * The UndoNewScene class for undoing newScene(...) calls to the domain.
- * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
- */
-class UndoNewScene : public Undo
-{
-public:
+UndoAddScene::~UndoAddScene() {
+	delete sc;
+}
 
-	/**
-	 * Sets up the UndoNewScene command object with the information needed to undo and
-	 * redo the add command.
-	 * @param sceneNumber the index of the new scene.
-	 */
-	UndoNewScene(int sceneNumber);
-	
-	/**
-	 * Cleans up after the undo object.
-	 */
-	virtual ~UndoNewScene();
-	
-	/**
-	 * Abstract function for undoing the command represented by this undo object.
-	 * @param a the model to perform the undo command on.
-	 */
-	void undo(AnimationModel *a);
-	
-	/**
-	 * Abstract function for redoing (performing) the command represented by this 
-	 * undo object.
-	 * @param a the model to perform the redo command on.
-	 */
-	void redo(AnimationModel *a);
-	
-private:
-	int sceneNumber;	
-};
+Command* UndoAddScene::execute() {
+	std::auto_ptr<UndoRemoveScene> inv(new UndoRemoveScene(index));
+	sv.addScene(index, sc);
+	return inv.release();
+}
 
-#endif
+UndoAddSceneFactory::UndoAddSceneFactory(SceneVector& model) : sv(model) {
+}
+
+UndoAddSceneFactory::~UndoAddSceneFactory() {
+}
+
+Command* UndoAddSceneFactory::create(Parameters& ps) {
+	int32_t index = ps.getInteger(0, sv.sceneCount());
+	std::auto_ptr<Scene> sc(new Scene());
+	Command* r = new UndoAddScene(sv, index, sc);
+	sc.release();
+	return r;
+}
