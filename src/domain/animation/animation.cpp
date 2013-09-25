@@ -31,6 +31,7 @@
 #include "src/domain/undo/undoaddsound.h"
 #include "src/domain/undo/undoremovesound.h"
 #include "src/domain/undo/undoaddscene.h"
+#include "src/domain/undo/undoremovescene.h"
 
 #include <vector>
 #include <iostream>
@@ -43,6 +44,7 @@ const char* commandAddSound = "add-sound";
 const char* commandRemoveSound = "delete-spund";
 const char* commandRenameSound = "rename-sound";
 const char* commandAddScene = "new-scene";
+const char* commandRemoveScene = "delete-scene";
 }
 
 Executor* makeAnimationCommandExecutor(SceneVector& model) {
@@ -61,6 +63,8 @@ Executor* makeAnimationCommandExecutor(SceneVector& model) {
 	ex->addCommand(commandRenameSound, renameSound, false);
 	std::auto_ptr<CommandFactory> addScene(new UndoAddSceneFactory(model));
 	ex->addCommand(commandAddScene, addScene, true);
+	std::auto_ptr<CommandFactory> removeScene(new UndoRemoveSceneFactory(model));
+	ex->addCommand(commandRemoveScene, removeScene, false);
 	return ex.release();
 }
 
@@ -366,22 +370,15 @@ void Animation::newScene(int32_t index) {
 }
 
 
-void Animation::removeScene( int sceneNumber )
-{
-	if (sceneNumber >= 0) {
-		if (sceneNumber < (int)scenes.size()-1 ) {
-			activateScene( sceneNumber + 1 );
-			this->activeScene = sceneNumber;
-		}
-		else {
-			activateScene( sceneNumber - 1 );
-		}
-
-		delete scenes[sceneNumber];
-		scenes.erase(scenes.begin() + sceneNumber);
-		this->notifyRemoveScene( sceneNumber);
+void Animation::removeScene(int32_t sceneNumber) {
+	assert(sceneNumber >= 0);
+	executor->execute(commandRemoveScene, sceneNumber);
+	if (sceneNumber == scenes.sceneCount()) {
+		activateScene(sceneNumber - 1);
+	} else {
+		activateScene(sceneNumber);
 	}
-
+	this->notifyRemoveScene(sceneNumber);
 }
 
 

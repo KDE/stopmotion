@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,29 +16,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "undoremovescene.h"
+#include "undoaddscene.h"
 
-
-UndoRemoveScene::UndoRemoveScene(int sceneNumber)
-		: sceneNumber(sceneNumber)
-{
-	
+UndoRemoveScene::UndoRemoveScene(SceneVector& model, int32_t sceneNumber)
+		: sv(model), sc(sceneNumber) {
 }
 
-
-UndoRemoveScene::~UndoRemoveScene()
-{
-	
+UndoRemoveScene::~UndoRemoveScene() {
 }
 
-
-void UndoRemoveScene::undo(AnimationModel *a)
-{
-	a->newScene(sceneNumber);
+Command* UndoRemoveScene::execute() {
+	std::auto_ptr<Command> inv(new UndoAddScene(sv.getScene(sc)));
+	sv.removeScene(sc);
+	return inv.release();
 }
 
+UndoRemoveSceneFactory::UndoRemoveSceneFactory(SceneVector& model)
+		: sv(model) {
+}
 
-void UndoRemoveScene::redo(AnimationModel *a)
-{
-	a->removeScene(sceneNumber);
+UndoRemoveSceneFactory::~UndoRemoveSceneFactory() {
+}
+
+Command* UndoRemoveSceneFactory::create(Parameters& ps) {
+	int32_t sc = ps.getInteger(0, sv.sceneCount());
+	return new UndoRemoveScene(sv, sc);
 }

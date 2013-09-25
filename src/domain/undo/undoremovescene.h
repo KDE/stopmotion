@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,48 +16,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #ifndef UNDOREMOVESCENE_H
 #define UNDOREMOVESCENE_H	
 
-#include "undo.h"
+#include "command.h"
 
+class SceneVector;
 
-/**
- * The UndoRemoveScene class for undoing removeScene(...) calls to the domain.
- * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
- */
-class UndoRemoveScene : public Undo
-{
+class UndoRemoveScene : public Command {
+	SceneVector& sv;
+	int32_t sc;
 public:
+	UndoRemoveScene(SceneVector& model, int32_t sceneNumber);
+	~UndoRemoveScene();
+	Command* execute();
+};
 
-	/**
-	 * Sets up the UndoRemoveScene command object with the information needed to undo and
-	 * redo the add command.
-	 * @param sceneNumber the index the removed scene had.
-	 * command
-	 */
-	UndoRemoveScene(int sceneNumber);
-	
-	/**
-	 * Cleans up after the undo object.
-	 */
-	virtual ~UndoRemoveScene();
-	
-	/**
-	 * Abstract function for undoing the command represented by this undo object.
-	 * @param a the model to perform the undo command on.
-	 */
-	void undo(AnimationModel *a);
-	
-	/**
-	 * Abstract function for redoing (performing) the command represented by this 
-	 *undo object.
-	 * @param a the model to perform the redo command on.
-	 */
-	void redo(AnimationModel *a);
-	
-private:
-	int sceneNumber;	
+class UndoRemoveSceneFactory : public CommandFactory {
+	UndoRemoveSceneFactory(SceneVector& model);
+	~UndoRemoveSceneFactory();
+	Command* create(Parameters& ps);
 };
 
 #endif
