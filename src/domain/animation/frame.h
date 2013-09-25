@@ -57,7 +57,6 @@ public:
 		 * @return The old name or NULL for no name. Ownership is returned.
 		 */
 		const char* setName(const char* name);
-
 		/**
 		 * Sets the (human-readable) name of this sound. May only be used when
 		 * there is no name already set for the sound.
@@ -147,6 +146,13 @@ public:
 	 * @return the absolute path to the picture of this frame.
 	 */
 	const char* getImagePath();
+
+	/**
+	 * Replaces the image path.
+	 * @param [in, out] otherImage The new image to set. On return, this will
+	 * hold the old image.
+	 */
+	void replaceImage(WorkspaceFile& otherImage);
 
 	/**
 	 * Plays the sounds belonging to this frame.

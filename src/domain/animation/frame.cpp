@@ -162,6 +162,9 @@ void Frame::playSounds(AudioDriver *driver) {
 		driver->playInThread();
 }
 
+void Frame::replaceImage(WorkspaceFile& otherImage) {
+	otherImage.swap(imagePath);
+}
 
 void Frame::accept(FileNameVisitor& v) const {
 	v.visitImage(imagePath.path());

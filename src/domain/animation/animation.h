@@ -78,6 +78,15 @@ public:
 			int32_t movePosition);
 
 	/**
+	 * Replaces the image for the specified frame.
+	 * @param scene The scene to which the frame belongs.
+	 * @param frame The frame number of the frame within the scene.
+	 * @param newImagePath The full path to the new image for this frame.
+	 */
+	void setImagePath(int32_t sceneNumber, int32_t frameNumber,
+			const char* newImagePath);
+
+	/**
 	 * Adds the sound from the file "sound" to frame
 	 * at position frameNumber.
 	 * @param frameNumber the number of the frame to add the sound to

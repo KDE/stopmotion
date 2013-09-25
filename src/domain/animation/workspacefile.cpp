@@ -110,7 +110,6 @@ WorkspaceFile::WorkspaceFile(const char* extension, FreshFilename)
 }
 
 WorkspaceFile& WorkspaceFile::operator=(TemporaryWorkspaceFile& t) {
-	unsigned int size = strlen(t.fullPath) + 1;
 	delete[] fullPath;
 	fullPath = t.fullPath;
 	namePart = t.namePart;
@@ -130,6 +129,15 @@ const char* WorkspaceFile::basename() const {
 
 const char* WorkspaceFile::path() const {
 	return fullPath;
+}
+
+void WorkspaceFile::swap(WorkspaceFile& w) {
+	const char* t = w.fullPath;
+	w.fullPath = fullPath;
+	fullPath = t;
+	t = w.namePart;
+	w.namePart = namePart;
+	namePart = w.namePart;
 }
 
 void TemporaryWorkspaceFile::copyToWorkspace(const char* filename) {

@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,29 +18,33 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef UNDOMOVESCENE_H
-#define UNDOMOVESCENE_H	
+
+#ifndef UNDOSETIMAGE_H_
+#define UNDOSETIMAGE_H_
 
 #include "command.h"
+#include "workspacefile.h"
 
 class SceneVector;
 
-class UndoMoveScene : public Command {
+class UndoSetImage : public Command {
 	SceneVector& sv;
-	int32_t from;
-	int32_t to;
+	int32_t sc;
+	int32_t fr;
+	WorkspaceFile image;
 public:
-	UndoMoveScene(SceneVector& model, int sceneNumber, int movePosition);
-	~UndoMoveScene();
+	UndoSetImage(SceneVector& model, int32_t scene, int32_t frame,
+			TemporaryWorkspaceFile& w);
+	~UndoSetImage();
 	Command* execute();
 };
 
-class UndoMoveSceneFactory : public CommandFactory {
+class UndoSetImageFactory : public CommandFactory {
 	SceneVector& sv;
 public:
-	UndoMoveSceneFactory(SceneVector& model);
-	~UndoMoveSceneFactory();
+	UndoSetImageFactory(SceneVector& model);
+	~UndoSetImageFactory();
 	Command* create(Parameters& ps);
 };
 
-#endif
+#endif /* UNDOSETIMAGE_H_ */

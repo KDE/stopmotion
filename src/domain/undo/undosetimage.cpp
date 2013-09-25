@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,29 +18,31 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef UNDOMOVESCENE_H
-#define UNDOMOVESCENE_H	
+#include "undosetimage.h"
 
-#include "command.h"
+UndoSetImage::UndoSetImage(SceneVector& model, int32_t scene, int32_t frame,
+		TemporaryWorkspaceFile& w)
+		: sv(model), sc(scene), fr(frame), image(w) {
+}
 
-class SceneVector;
+UndoSetImage::~UndoSetImage() {
+}
 
-class UndoMoveScene : public Command {
-	SceneVector& sv;
-	int32_t from;
-	int32_t to;
-public:
-	UndoMoveScene(SceneVector& model, int sceneNumber, int movePosition);
-	~UndoMoveScene();
-	Command* execute();
-};
+Command* UndoSetImage::execute() {
+	sv.getScene(sc)->getFrame(fr)->replaceImage(image);
+	return this;
+}
 
-class UndoMoveSceneFactory : public CommandFactory {
-	SceneVector& sv;
-public:
-	UndoMoveSceneFactory(SceneVector& model);
-	~UndoMoveSceneFactory();
-	Command* create(Parameters& ps);
-};
+UndoSetImageFactory::UndoSetImageFactory(SceneVector& model) : sv(model) {
+}
 
-#endif
+UndoSetImageFactory::~UndoSetImageFactory() {
+}
+
+Command* UndoSetImageFactory::create(Parameters& ps) {
+	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
+	int32_t fr = ps.getInteger(0, sv.frameCount(sc) - 1);
+	std::string path;
+	ps.getString(path);
+	return new UndoSetImage(sv, sc, fr, path.c_str());
+}

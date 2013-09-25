@@ -32,6 +32,8 @@
 #include "src/domain/undo/undoremovesound.h"
 #include "src/domain/undo/undoaddscene.h"
 #include "src/domain/undo/undoremovescene.h"
+#include "src/domain/undo/undomovescene.h"
+#include "src/domain/undo/undosetimage.h"
 
 #include <vector>
 #include <iostream>
@@ -40,11 +42,13 @@ namespace {
 const char* commandAddFrames = "add-frame";
 const char* commandRemoveFrames = "delete-frame";
 const char* commandMoveFrames = "move-frame";
+const char* commandSetImage = "set-image";
 const char* commandAddSound = "add-sound";
-const char* commandRemoveSound = "delete-spund";
+const char* commandRemoveSound = "delete-sound";
 const char* commandRenameSound = "rename-sound";
 const char* commandAddScene = "new-scene";
 const char* commandRemoveScene = "delete-scene";
+const char* commandMoveScene = "move-scene";
 }
 
 Executor* makeAnimationCommandExecutor(SceneVector& model) {
@@ -55,6 +59,8 @@ Executor* makeAnimationCommandExecutor(SceneVector& model) {
 	ex->addCommand(commandRemoveFrames, remove, false);
 	std::auto_ptr<CommandFactory> move(new UndoMoveFactory(model));
 	ex->addCommand(commandMoveFrames, move, false);
+	std::auto_ptr<CommandFactory> setImage(new UndoSetImageFactory(model));
+	ex->addCommand(commandSetImage, move, false);
 	std::auto_ptr<CommandFactory> addSound(new UndoAddSoundFactory(model));
 	ex->addCommand(commandAddSound, addSound, true);
 	std::auto_ptr<CommandFactory> removeSound(new UndoRemoveSoundFactory(model));
@@ -65,6 +71,8 @@ Executor* makeAnimationCommandExecutor(SceneVector& model) {
 	ex->addCommand(commandAddScene, addScene, true);
 	std::auto_ptr<CommandFactory> removeScene(new UndoRemoveSceneFactory(model));
 	ex->addCommand(commandRemoveScene, removeScene, false);
+	std::auto_ptr<CommandFactory> moveScene(new UndoMoveSceneFactory(model));
+	ex->addCommand(commandMoveScene, moveScene, false);
 	return ex.release();
 }
 
@@ -340,6 +348,12 @@ void Animation::setActiveScene(int sceneNumber) {
 	}
 }
 
+void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
+		const char* newImagePath) {
+	executor->execute(commandSetImage, sceneNumber, frameNumber, newImagePath);
+	if (activeScene == sceneNumber)
+		notifyAnimationChanged(frameNumber);
+}
 
 void Animation::activateScene(int sceneNumber) {
 	this->activeScene = sceneNumber;
@@ -382,17 +396,11 @@ void Animation::removeScene(int32_t sceneNumber) {
 }
 
 
-void Animation::moveScene( int sceneNumber, int movePosition )
-{
+void Animation::moveScene(int32_t sceneNumber, int32_t movePosition) {
 	if (sceneNumber != movePosition) {
-		this->setActiveScene(-1);
-
-		Scene *tmp;
-		tmp = scenes[sceneNumber];
-		scenes.erase(scenes.begin() + sceneNumber);
-		scenes.insert(scenes.begin() + movePosition, tmp);
-
-		this->notifyMoveScene(sceneNumber, movePosition);
+		executor->execute(commandMoveScene, sceneNumber, movePosition);
+		setActiveScene(-1);
+		notifyMoveScene(sceneNumber, movePosition);
 	}
 }
 

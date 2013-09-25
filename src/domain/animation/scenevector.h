@@ -29,6 +29,9 @@ class Frame::Sound;
 
 class SceneVector {
 	std::vector<Scene*> scenes;
+
+	SceneVector(const SceneVector&);
+	SceneVector& operator=(const SceneVector&);
 public:
 	SceneVector();
 	~SceneVector();

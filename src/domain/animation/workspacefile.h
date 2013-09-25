@@ -70,6 +70,11 @@ public:
 	 */
 	const char* path() const;
 	/**
+	 * Swaps the content of this object with another.
+	 * @param w The object to swap contents with.
+	 */
+	void swap(WorkspaceFile& w);
+	/**
 	 * Clears (creating if necessary) the workspace directory
 	 */
 	static void clear();
