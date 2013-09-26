@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors.              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -28,9 +27,17 @@
 
 using namespace std;
 
+class FrameIterator {
+public:
+	virtual ~FrameIterator();
+	virtual int count() const;
+	virtual bool isAtEnd() const;
+	virtual const Frame* get();
+	virtual void next();
+};
 
 /**
- * The observer interface. All classes who wants to be notified when something 
+ * The observer interface. All classes who wants to be notified when something
  * changes in the animationmodel has to implement from this class.
  *
  * The observers implemented with this class also has to be attatched to the
@@ -46,82 +53,83 @@ class Observer
 {
 public:
 	virtual ~Observer() {}
-	
+
 	/**
-	 * Abstract function for recieving notification about new frames added to the model.
-	 * 
+	 * Abstract function for receiving notification about new frames added to the model.
+	 *
 	 * @param frames the frames which has been added to the model.
 	 * @param index the place the frame has been added
 	 * @param frontend the GUI frontend which is used to displaying progress on timeconsuming operations
 	 */
-	virtual void updateAdd(const vector<char*>& frames, unsigned int index, Frontend *frontend) = 0;
-	
+	virtual void updateAdd(FrameIterator& frames, unsigned int index,
+			Frontend *frontend) = 0;
+
 	/**
-	 * Abstract function for recieving notification about frames removed from the model.
+	 * Abstract function for receiving notification about frames removed from the model.
 	 * @param fromFrame the first frame of those removed
 	 * @param toFrame the last frame of those removed
 	 */
 	virtual void updateRemove(unsigned int fromFrame, unsigned int toFrame) = 0;
-	
+
 	/**
-	 * Abstract function for recieving notification when frames are moved in the model.
+	 * Abstract function for receiving notification when frames are moved in the model.
 	 * @param fromFrame index of the first selected frame
 	 * @param toFrame index of the last selected frame
 	 * @param movePosition index to where the selection should be move to
 	 */
 	virtual void updateMove(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition) = 0;
-	
+
 	/**
-	 * Abstract function for recieving notification when a new frame are selected.
+	 * Abstract function for receiving notification when a new frame are selected.
 	 * @param frameNumber the new active frame.
 	 */
 	virtual void updateNewActiveFrame(int frameNumber) = 0;
-	
+
 	/**
 	 * Abstract function for receiving notification when the model is erased.
 	 */
 	virtual void updateClear() = 0;
-	
+
 	/**
-	 * Abstract function for recieving notification when a frame is to be played.
+	 * Abstract function for receiving notification when a frame is to be played.
 	 * @param frameNumber the frame to be played
 	 */
 	virtual void updatePlayFrame(int frameNumber) = 0;
-	
+
 	/**
-	 * Abstract function for recieving notification when a new scene is created
+	 * Abstract function for receiving notification when a new scene is created
 	 * at location index.
 	 * @param index the location where the new scene is created.
 	 */
 	virtual void updateNewScene(int index) = 0;
-	
+
 	/**
-	 * Abstract function for recieving notification when a scene is removed from
+	 * Abstract function for receiving notification when a scene is removed from
 	 * the model.
 	 * @param sceneNumber the scene which has been removed from the model.
 	 */
 	virtual void updateRemoveScene(int sceneNumber) = 0;
-	
+
 	/**
-	 * Abstract function for recieving notification when a scene in the animation
+	 * Abstract function for receiving notification when a scene in the animation
 	 * has been moved.
 	 * @param sceneNumber the scene which have been moved.
 	 * @param movePosition the position the scene has been moved to.
 	 */
 	virtual void updateMoveScene(int sceneNumber, int movePosition) = 0;
-	
+
 	/**
-	 * Abstract function for recieving notification when a new scene is set as the
+	 * Abstract function for receiving notification when a new scene is set as the
 	 * current "active" scene.
 	 * @param sceneNumber the new active scene.
-	 * @param framePaths a vector containing the paths to the frames.
+	 * @param framePaths an iterator returning the paths to the frames.
 	 * @param frontend the frontend for processing events while adding frames.
 	 */
-	virtual void updateNewActiveScene(int sceneNumber, vector<char*> framePaths,
+	virtual void updateNewActiveScene(int sceneNumber, FrameIterator& framePaths,
 		Frontend *frontend) = 0;
-	
+
 	/**
-	 * Abstract function for recieving notification when the disk representation of the
+	 * Abstract function for receiving notification when the disk representation of the
 	 * animation is changed by other programs.
 	 * @param frameNumber the index of the frame which has been changed. (active scene
 	 * is assumed).

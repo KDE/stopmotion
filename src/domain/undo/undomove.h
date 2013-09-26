@@ -24,7 +24,7 @@
 class SceneVector;
 
 class UndoMove : public Command {
-	SceneVector sv;
+	SceneVector& sv;
 	int32_t fromSc;
 	int32_t fromFr;
 	int32_t frameCount;

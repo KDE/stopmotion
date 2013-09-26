@@ -102,7 +102,7 @@ const vector<Scene*> ProjectSerializer::open(const char *filename)
 
 // check if the user wants to save an opened project to an another file.
 bool ProjectSerializer::save( 	const char *filename, 
-								const vector<Scene*>& sVect, 
+								const vector<Scene*>& sVect,
 								Frontend *frontend	)
 {
 	assert(filename != NULL);
@@ -164,13 +164,13 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 	Frame *frame     = NULL;
 	AudioFormat *sound = NULL;
 	unsigned int index = 0;
-	
+
 	// Removes frames which already are saved. Had to do this to prevent
 	// frames to overwrite each other.
 	unsigned int numScenes = sVect.size();
 	for (unsigned int m = 0; m < numScenes; ++m) {
 		vector<Frame*> frames = sVect[m]->getFrames();
-		
+
 		unsigned int numFrames = frames.size();
 		for (unsigned int l = 0; l < numFrames; ++l) {
 			frame = frames[l];
@@ -179,9 +179,9 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 			}
 		}
 	}
-	
+
 	scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
-	
+
 	//unsigned int numScenes = sVect.size();
 	frontend->showProgress("Saving scenes to disk ...", numScenes);
 	for (unsigned int i = 0; i < numScenes; ++i) {

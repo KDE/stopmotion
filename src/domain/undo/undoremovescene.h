@@ -34,6 +34,7 @@ public:
 };
 
 class UndoRemoveSceneFactory : public CommandFactory {
+public:
 	UndoRemoveSceneFactory(SceneVector& model);
 	~UndoRemoveSceneFactory();
 	Command* create(Parameters& ps);

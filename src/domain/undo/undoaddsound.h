@@ -28,7 +28,7 @@ class Frame;
 class Frame::Sound;
 
 class UndoAddSound : public Command {
-	SceneVector sv;
+	SceneVector& sv;
 	int32_t sc;
 	int32_t fr;
 	int32_t index;

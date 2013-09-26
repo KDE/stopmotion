@@ -26,6 +26,7 @@
 class Scene;
 class Frame;
 class Frame::Sound;
+class FrameIterator;
 
 class SceneVector {
 	std::vector<Scene*> scenes;
@@ -44,6 +45,13 @@ public:
 	 * @return The number of scenes.
 	 */
 	int sceneCount() const;
+	/**
+	 * Constructs an iterator for the frames in the specified scene. The
+	 * iterator is valid as long as that scene is not altered.
+	 * @param scene The scene to examine.
+	 * @return The iterator; ownership is returned.
+	 */
+	FrameIterator* makeFrameIterator(int scene) const;
 	/**
 	 * Adds a scene to the animation.
 	 * @param where Where in the sequence of scenes to insert this one. Must be

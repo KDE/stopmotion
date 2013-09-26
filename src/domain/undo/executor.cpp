@@ -498,9 +498,6 @@ public:
 	}
 };
 
-CommandFactory::~CommandFactory() {
-}
-
 Executor::~Executor() {
 }
 
@@ -740,11 +737,4 @@ public:
 
 Executor* makeExecutor() {
 	return new ConcreteExecutor();
-}
-
-Parameters::~Parameters() {
-}
-
-int32_t Parameters::getHowMany() {
-	return getInteger(1, INT32_MAX);
 }

@@ -81,7 +81,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/preferencesmenu.h \
     src/foundation/preferencestool.h \
     src/application/modelhandler.h \
-    src/domain/undo/undonewscene.h \
+    src/domain/undo/undoaddscene.h \
     src/domain/undo/undoremovescene.h \
     src/domain/undo/undomovescene.h \
     src/presentation/frontends/qtfrontend/toolsmenu.h \
@@ -148,7 +148,7 @@ SOURCES += src/config.cpp \
     src/presentation/frontends/qtfrontend/preferencesmenu.cpp \
     src/foundation/preferencestool.cpp \
     src/application/modelhandler.cpp \
-    src/domain/undo/undonewscene.cpp \
+    src/domain/undo/undoaddscene.cpp \
     src/domain/undo/undoremovescene.cpp \
     src/domain/undo/undomovescene.cpp \
     src/presentation/frontends/qtfrontend/toolsmenu.cpp \

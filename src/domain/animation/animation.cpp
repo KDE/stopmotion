@@ -30,6 +30,7 @@
 #include "src/domain/undo/undomove.h"
 #include "src/domain/undo/undoaddsound.h"
 #include "src/domain/undo/undoremovesound.h"
+#include "src/domain/undo/undorenamesound.h"
 #include "src/domain/undo/undoaddscene.h"
 #include "src/domain/undo/undoremovescene.h"
 #include "src/domain/undo/undomovescene.h"
@@ -37,6 +38,7 @@
 
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 namespace {
 const char* commandAddFrames = "add-frame";
@@ -96,8 +98,8 @@ Animation::~Animation() {
 }
 
 
-const vector<const char*> Animation::addFrames(
-		const vector<const char*>& frameNames, int32_t index) {
+void Animation::addFrames(const vector<const char*>& frameNames,
+		int32_t index) {
 	if (getActiveSceneNumber() < 0) {
 		newScene(0);
 	}
@@ -106,28 +108,29 @@ const vector<const char*> Animation::addFrames(
 	int count = frameNames.size();
 	UndoAddFactory::Parameters params(getActiveSceneNumber(),
 			index, count);
-	vector<const char*> newImagePaths(count);
 	bool showingProgress = 1 < count;
 	if (showingProgress) {
 		frontend->showProgress("Importing frames from disk ...", count);
 	}
 	std::string error;
-	for (vector<const char*>::iterator i = frameNames.begin();
+	int added = 0;
+	for (vector<const char*>::const_iterator i = frameNames.begin();
 			i != frameNames.end(); ++i) {
 		try {
-			const char* newPath = params.addFrame(*i);
-			newImagePaths.push_back(newPath);
+			params.addFrame(*i);
+			++added;
 		} catch (CopyFailedException&) {
-			error += "Cannot read file " + *i + "\n";
+			error += "Cannot read file ";
+			error += *i;
+			error += "\n";
 		}
 		if (frontend->isOperationAborted()) {
-			vector<const char*> dummy(0);
-			return dummy;
+			return;
 		}
 		if (showingProgress)
-			frontend->updateProgress(newImagePaths.size());
+			frontend->updateProgress(added);
 	}
-	if (0 < newImagePaths.size()) {
+	if (0 < added) {
 		executor->execute(commandAddFrames, params);
 		isChangesSaved = false;
 	}
@@ -135,8 +138,7 @@ const vector<const char*> Animation::addFrames(
 		frontend->hideProgress();
 	if (!error.empty())
 		frontend->reportError(error.c_str(), 0);
-	setActiveFrame(index + newImagePaths.size() - 1);
-	return newImagePaths;
+	setActiveFrame(index + added - 1);
 }
 
 
@@ -168,14 +170,14 @@ void Animation::moveFrames(int32_t fromFrame, int32_t toFrame,
 int Animation::addSound(int32_t frameNumber, const char *soundFile) {
 	Logger::get().logDebug("Adding sound in animation");
 	std::auto_ptr<Frame::Sound> sound(new Frame::Sound());
-	stringstream ss;
+	std::stringstream ss;
 	ss << "Sound" << WorkspaceFile::getSoundNumber();
 	unsigned int size = ss.tellp() + 1;
 	char* soundName = new char[size];
 	strncpy(soundName, ss.str().c_str(), size);
-	char* oldName = sound->setName(soundName);
+	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
-	int32_t index = sv.soundCount(activeScene, frameNumber);
+	int32_t index = scenes.soundCount(activeScene, frameNumber);
 	try {
 		executor->execute(commandAddSound, activeScene, frameNumber,
 				index, soundFile, soundName);
@@ -472,4 +474,16 @@ bool Animation::exportToCinerella(const char*) {
 
 void Animation::accept(FileNameVisitor& v) const {
 	scenes.accept(v);
+}
+
+void Animation::undo() {
+	executor->undo();
+}
+
+void Animation::redo() {
+	executor->redo();
+}
+
+void Animation::clearHistory() {
+	executor->clearHistory();
 }

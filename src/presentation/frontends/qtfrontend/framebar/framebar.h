@@ -60,24 +60,24 @@ public:
 	~FrameBar();
 	
 	/**
-	 *Function to recieven notification when a frame is added.
+	 *Function to receiving notification when a frame is added.
 	 */
-	void updateAdd(const vector<char*>& frames, unsigned int index, Frontend *frontend);
+	void updateAdd(FrameIterator& frames, unsigned int index, Frontend *frontend);
 	
 	/**
-	 * Function to recieve notification when one or more frames are deleted.
+	 * Function to receive notification when one or more frames are deleted.
 	 * @param fromFrame the first frame in the selection
 	 * @param toFrame the last frame in the selection
 	 */
 	void updateRemove(unsigned int fromFrame, unsigned int toFrame);
 	
 	/**
-	 *Function to recieve notification when one or more frames are moved.
+	 *Function to receive notification when one or more frames are moved.
 	 */
 	void updateMove(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition);
 	
 	/**
-	 *Function to recieve notification when a new frame is selected.
+	 *Function to receive notification when a new frame is selected.
 	 */
 	void updateNewActiveFrame(int frameNumber);
 	
@@ -301,8 +301,9 @@ private:
 	 * @param frontend the frontend for processing updating the program
 	 * progressbar.
 	 */
-	void addFrames(const vector<char*>& frames, unsigned int index, Frontend *frontend);
-	
+	void addFrames(FrameIterator& frames, unsigned int index,
+			Frontend *frontend);
+
 	/**
 	 * Removes a selection of thumbviews from the framebar.
 	 * @param fromFrame the first thumbview to remove.
@@ -342,7 +343,7 @@ private:
 	 * @param movePosition the position the scene are moved to.
 	 */
 	void moveScene(int sceneNumber, int movePosition);
-	
+
 	/**
 	 * Sets a new scene as the active scene in the framebar and opens it.
 	 * @param sceneNumber the scene to set as the active scene.
@@ -350,8 +351,9 @@ private:
 	 * @param frontend the frontend for getting a progressbar when adding the
 	 * frames to the scene.
 	 */
-	void setActiveScene(int sceneNumber, vector<char*> framePaths, Frontend *frontend);
-	
+	void setActiveScene(int sceneNumber, FrameIterator& framePaths,
+			Frontend *frontend);
+
 	/**
 	 *Moves a thumbview in the thumbviews-vector from fromPosition to toPosition.
 	 *@param fromPosition the place in the vector the thumbview is moved from.

@@ -214,7 +214,7 @@ void recover(DomainFacade *facadePtr)
 	snprintf( tmp, 256, "%s/.stopmotion/tmp", getenv("HOME") );
 	dp = opendir(tmp);
 	if (dp) {
-		vector<char*> frames;
+		vector<const char*> frames;
 		vector<AudioFile> sounds;
 		struct dirent *ep;
 		struct stat st;
@@ -257,7 +257,7 @@ void recover(DomainFacade *facadePtr)
 		if (frames.size() <= 0)
 			return;
 		
-		vector<char*>(frames).swap(frames);
+		vector<const char*>(frames).swap(frames);
 		facadePtr->addFrames(frames);
 
 		unsigned int numElem = frames.size();

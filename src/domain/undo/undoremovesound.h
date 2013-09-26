@@ -44,4 +44,3 @@ public:
 };
 
 #endif /* UNDOREMOVESOUND_H_ */
-s

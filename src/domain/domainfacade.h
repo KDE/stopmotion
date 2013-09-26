@@ -95,7 +95,7 @@ public:
 	 * command object
 	 * @param frameNames a vector containing the frames to be added to the animation.
 	 */
-	void addFrames(const vector<char*>& frameNames);
+	void addFrames(const vector<const char*>& frameNames);
 	
 	/**
 	 * Removes the frame between (inclusive) fromFrame and toFrame from
@@ -218,12 +218,12 @@ public:
 	/**
 	 * Undoes the last undoable operation on the model.
 	 */
-	bool undo();
+	void undo();
 	
 	/**
 	 * Redoes the last undo operation.
 	 */
-	bool redo();
+	void redo();
 	
 	/**
 	 * Clears the undo history.
@@ -311,13 +311,9 @@ protected:
 private:
 	/**The singleton instance of this class.*/
 	static DomainFacade *domainFacade;
-	
+
 	/**The datamodel in the program*/
 	AnimationModel *animationModel;
-	
-	/**Container where one can register and retrieve undo objects for undo and
-	 remove operations*/
-	CommandHistory *undoHistory;
 };
 
 #endif

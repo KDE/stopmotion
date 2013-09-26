@@ -24,6 +24,12 @@
 
 #include <list>
 #include <memory>
+#include <stdint.h>
+
+// help out Eclipse's C++ parsing
+#ifndef INT32_MAX
+#define INT32_MAX 0x7FFFFFFF
+#endif
 
 /**
  * Command list, for example the Undo or Redo stack.
@@ -163,6 +169,16 @@ public:
 
 Command* createNullCommand() {
 	return new CommandNull;
+}
+
+CommandFactory::~CommandFactory() {
+}
+
+Parameters::~Parameters() {
+}
+
+int32_t Parameters::getHowMany() {
+	return getInteger(1, INT32_MAX);
 }
 
 CommandHistory::CommandHistory() : past(0), future(0) {

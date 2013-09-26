@@ -24,7 +24,7 @@
 #include "src/domain/undo/undoadd.h"
 #include "src/domain/undo/undomove.h"
 #include "src/domain/undo/undoremove.h"
-#include "src/domain/undo/undonewscene.h"
+#include "src/domain/undo/undoaddscene.h"
 #include "src/domain/undo/undoremovescene.h"
 #include "src/domain/undo/undomovescene.h"
 
@@ -32,20 +32,15 @@
 DomainFacade* DomainFacade::domainFacade = 0;
 
 
-DomainFacade::DomainFacade()
-{
+DomainFacade::DomainFacade() {
 	animationModel = new Animation();
-	undoHistory = new CommandHistory();
 	domainFacade = NULL;
 }
 
 
-DomainFacade::~DomainFacade()
-{
+DomainFacade::~DomainFacade() {
 	delete animationModel;
 	animationModel = NULL;
-	delete undoHistory;
-	undoHistory = NULL;
 }
 
 
@@ -94,50 +89,25 @@ int DomainFacade::getActiveFrameNumber()
 }
 
 
-void DomainFacade::addFrames(const vector<char*>& frameNames)
-{
+void DomainFacade::addFrames(const vector<const char*>& frameNames) {
 	if ( !(animationModel->getActiveSceneNumber() < 0 && 
 			animationModel->getNumberOfScenes() > 0) ) {
-
 		Logger::get().logDebug("Adding frames in the domainfacade");
-			
-		vector<char*> tmp = animationModel->addFrames(frameNames, 
+		animationModel->addFrames(frameNames,
 				animationModel->getActiveFrameNumber() + 1);
-		
-		unsigned int numElem = tmp.size();	
-		// there are no elements in the vector if the user has aborted the operation
-		if (numElem > 0) {
-			//Creates the undo command object for undoing the addFrames operation.
-			int fromIndex = animationModel->getActiveFrameNumber() - numElem + 1;
-			UndoAdd *u = new UndoAdd(fromIndex, tmp, animationModel->getActiveSceneNumber());
-			undoHistory->addUndo(u);
-		}
 	}
 }
 
 
-void DomainFacade::removeFrames(unsigned int fromFrame, unsigned int toFrame )
-{
+void DomainFacade::removeFrames(unsigned int fromFrame, unsigned int toFrame) {
 	Logger::get().logDebug("Removing frames in the domainfacade");
-	vector<char*> trash = animationModel->removeFrames(fromFrame, toFrame);
-	
-	unsigned int numElem = trash.size();
-	// there are no elements in the vector if the user has aborted the operation
-	if (numElem > 0) {
-		UndoRemove *u = new UndoRemove(trash, fromFrame, 
-				animationModel->getActiveSceneNumber());
-		undoHistory->addUndo(u);
-	}
+	animationModel->removeFrames(fromFrame, toFrame);
 }
 
 
 void DomainFacade::moveFrames(unsigned int fromFrame, unsigned int toFrame, 
-		unsigned int movePosition)
-{
+		unsigned int movePosition) {
 	animationModel->moveFrames(fromFrame, toFrame, movePosition);
-	UndoMove *u = new UndoMove(fromFrame, toFrame, movePosition, 
-			animationModel->getActiveSceneNumber());
-	undoHistory->addUndo(u);
 }
 
 
@@ -181,7 +151,6 @@ bool DomainFacade::saveProject(const char *directory)
 bool DomainFacade::newProject()
 {
 	animationModel->clear();
-	undoHistory->clear();
 	return true;
 }
 
@@ -232,21 +201,18 @@ const char* DomainFacade::getProjectPath()
 	return animationModel->getProjectPath();
 }
 
-bool DomainFacade::undo()
-{
-	return undoHistory->undo(animationModel);
+void DomainFacade::undo() {
+	animationModel->undo();
 }
 
 
-bool DomainFacade::redo()
-{
-	return undoHistory->redo(animationModel);
+void DomainFacade::redo() {
+	animationModel->redo();
 }
 
 
-void DomainFacade::clearHistory()
-{
-	undoHistory->clear();
+void DomainFacade::clearHistory() {
+	animationModel->clearHistory();
 }
 
 
@@ -256,27 +222,18 @@ void DomainFacade::setActiveScene( int sceneNumber )
 }
 
 
-void DomainFacade::newScene( int index )
-{
+void DomainFacade::newScene(int index) {
 	animationModel->newScene(index);
-	UndoNewScene *u = new UndoNewScene(index);
-	undoHistory->addUndo(u);
 }
 
 
-void DomainFacade::removeScene( int sceneNumber )
-{
+void DomainFacade::removeScene(int sceneNumber) {
 	animationModel->removeScene(sceneNumber);
-	UndoRemoveScene *u = new UndoRemoveScene(sceneNumber);
-	undoHistory->addUndo(u);
 }
 
 
-void DomainFacade::moveScene( int sceneNumber, int movePosition )
-{
+void DomainFacade::moveScene(int sceneNumber, int movePosition) {
 	animationModel->moveScene(sceneNumber, movePosition);
-	UndoMoveScene *u = new UndoMoveScene(sceneNumber, movePosition);
-	undoHistory->addUndo(u);
 }
 
 

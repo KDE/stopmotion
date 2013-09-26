@@ -25,6 +25,8 @@
 #include <memory>
 #include <string>
 
+#include "command.h"
+
 /**
  * Thrown if a command factory attempts to read a parameter from the log files
  * that is of the wrong type, is not present or otherwise does not parse.
@@ -46,63 +48,10 @@ class MalformedLineException {
 class ParametersOutOfRangeException {
 };
 
-/**
- * A command factory reads the parameters for its command from here. They
- * either come from a log file (if it is being replayed) or from the
- * application.
- */
-class Parameters {
-public:
-	virtual ~Parameters() = 0;
-	/**
-	 * Returns an integer. Might throw IncorrectParameterException if
-	 * unsuccessful, but this behaviour must not be relied upon.
-	 * @param min The minimum permissible value that could be returned based
-	 * on the current state of the model being altered.
-	 * @param max The maximum permissible value that could be returned based
-	 * on the current state of the model being altered.
-	 * @note @c min and @c max are used by @ref TestUndo in order to create
-	 * commands that are appropriate for testing. They are also used to assert
-	 * that the values passed to @ref Executor::Execute are within range.
-	 */
-	virtual int32_t getInteger(int32_t min, int32_t max) = 0;
-	/**
-	 * Returns an integer from 1 to {@c 1^31-1}. Test code assumes that smaller
-	 * numbers are just as good a test as larger numbers, unlike
-	 * {@ref getInteger}, which assumes the full range must be tested.
-	 */
-	virtual int32_t getHowMany();
-	/**
-	 * Returns the length of string read, which may be greater than maxLength
-	 * although no more than maxLength characters will be output into out.
-	 * Might throw IncorrectParameterException if unsuccessful, but this
-	 * behaviour must not be relied upon.
-	 */
-	virtual void getString(std::string& out) = 0;
-};
-
-class Command;
-class RandomSource;
-
-/**
- * Produces one sort of command.
- */
-class CommandFactory {
-public:
-	virtual ~CommandFactory() = 0;
-	/**
-	 * Creates a command from the Parameters given in ps.
-	 * @param The source of parameters to use, ownership is not passed.
-	 * @return The command created, ownership is returned. @c NULL is returned
-	 * if no such command can be created at the moment (for example a delete
-	 * when the model is empty).
-	 */
-	virtual Command* create(Parameters& ps) = 0;
-};
-
 class CommandReplayerImpl;
 class CommandAndDescriptionFactory;
 class CommandLogger;
+class RandomSource;
 
 /**
  * Thrown if @ref CommandFactory::Execute is called with a name for which no

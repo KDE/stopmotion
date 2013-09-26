@@ -21,6 +21,7 @@
 #include "scenevector.h"
 #include "scene.h"
 #include "frame.h"
+#include "src/presentation/observer.h"
 
 #include <memory>
 
@@ -167,4 +168,31 @@ void SceneVector::accept(FileNameVisitor& v) const {
 			++i) {
 		(*i)->accept(v);
 	}
+}
+
+class SceneVectorFrameIterator : public FrameIterator {
+	std::vector<Frame*>::const_iterator it;
+	std::vector<Frame*>::const_iterator end;
+public:
+	SceneVectorFrameIterator(std::vector<Frame*>& scene)
+			: it(scene.begin()), end(scene.end()) {
+	}
+	~SceneVectorFrameIterator() {
+	}
+	int count() const {
+		return end - it;
+	}
+	bool isAtEnd() const {
+		return it == end;
+	}
+	const Frame* get() {
+		return *it;
+	}
+	void next() {
+		++it;
+	}
+}
+
+FrameIterator* SceneVector::makeFrameIterator(int scene) const {
+	return new SceneVectorFrameIterator(scenes[scene]->getFrames());
 }

@@ -27,6 +27,7 @@
 #include "src/technical/audio/ossdriver.h"
 #include "frame.h"
 #include "scenevector.h"
+#include "src/domain/undo/executor.h"
 
 #include <vector>
 #include <libxml/tree.h>
@@ -51,14 +52,11 @@ public:
 	~Animation();
 
 	/**
-	 * Inserts a new frame into the animationmodel.
+	 * Inserts new frames into the animation model.
 	 * @param frameNames a vector containing the names to be added in the model
 	 * @param index the place to add the frames in the animation.
-	 * @return a vector containing paths to the images which has been
-	 * copied to a temporary directory
 	 */
-	const vector<const char*> addFrames(
-			const vector<const char*>& frameNames, int32_t index);
+	void addFrames(const vector<const char*>& frameNames, int32_t index);
 
 	/**
 	 * Removes the frames between (inclusive) fromFrame and toFrame from
@@ -168,10 +166,13 @@ public:
 	 */
 	int getActiveFrameNumber();
 
-	/**
-	 * Clears the model.
-	 */
+	void clearHistory();
+
 	void clear();
+
+	void undo();
+
+	void redo();
 
 	/**
 	 * Retrieves the project directory
@@ -279,6 +280,7 @@ private:
 	/** All of the scenes in the animation. */
 	SceneVector scenes;
 
+	/** Undo and disaster recovery. */
 	Executor* executor;
 
 	/** Serializer to be used on saving and loading of the project. */
