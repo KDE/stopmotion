@@ -123,8 +123,9 @@ public:
 	 * @param frontend the frontend for getting a progressbar when adding 
 	 * opening the new active scene.
 	 */
-	void updateNewActiveScene(int sceneNumber, vector<char*> framePaths, Frontend *frontend);
-	
+	void updateNewActiveScene(int sceneNumber, FrameIterator& framePaths,
+			Frontend *frontend);
+
 	/**
 	 * Updates the framebar when an external program has altered the disk files.
 	 * @param frameNumber the frame whose disk representation has been changed.

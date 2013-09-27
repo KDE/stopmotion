@@ -29,11 +29,26 @@ using namespace std;
 
 class FrameIterator {
 public:
-	virtual ~FrameIterator();
-	virtual int count() const;
-	virtual bool isAtEnd() const;
-	virtual const Frame* get();
-	virtual void next();
+	virtual ~FrameIterator() = 0;
+	/**
+	 * Returns the number of frames remaining in the iteration.
+	 */
+	virtual int count() const = 0;
+	/**
+	 * Returns true if and only if we have advanced beyond the limits of this
+	 * iteration. Neither {@ref get} nor {@ref next} should be called if
+	 * {@c isAtEnd} has returned true.
+	 */
+	virtual bool isAtEnd() const = 0;
+	/**
+	 * Returns the current frame's name
+	 * @return The name; ownership is not returned.
+	 */
+	virtual const char* getName() = 0;
+	/**
+	 * Advances the iteration on to the next frame.
+	 */
+	virtual void next() = 0;
 };
 
 /**

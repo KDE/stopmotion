@@ -35,6 +35,9 @@
 #include <QImageReader>
 #include <QDebug>
 
+FrameIterator::~FrameIterator() {
+}
+
 static QImage tryReadImage(const char *filename)
 {
     if (!filename) {
@@ -76,6 +79,7 @@ FrameBar::FrameBar(QWidget *parent)
 	activeFrame = -1;
 	activeScene = -1;
 	movingScene = 0;
+	openingScene = false;
 	selecting = false;
 	selectionFrame = -1;
 	scrollDirection = 0;
@@ -131,7 +135,7 @@ void FrameBar::updateAdd(FrameIterator& frames, unsigned int index,
 
 void FrameBar::updateRemove(unsigned int fromFrame, unsigned int toFrame)
 {
-	Logger::get().logDebug("Recieving notification about the removal of a frame in the model");
+	Logger::get().logDebug("Receiving notification about the removal of a frame in the model");
 	removeFrames(fromFrame, toFrame);
 	emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 }
@@ -221,7 +225,7 @@ void FrameBar::addFrames(FrameIterator& frames, unsigned int index,
 		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setScaledContents(true);
 		thumb->setPixmap(QPixmap::fromImage(tryReadImage(
-				frames.get()->getImagePath()).scaled(FRAME_WIDTH, FRAME_HEIGHT)));
+				frames.getName()).scaled(FRAME_WIDTH, FRAME_HEIGHT)));
 		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 		thumb->setParent(mainWidget);
 		thumb->move((FRAME_WIDTH + SPACE) * (index + activeScene + 1 + i), 0);

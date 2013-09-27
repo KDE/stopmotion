@@ -171,8 +171,9 @@ int Animation::addSound(int32_t frameNumber, const char *soundFile) {
 	Logger::get().logDebug("Adding sound in animation");
 	std::auto_ptr<Frame::Sound> sound(new Frame::Sound());
 	std::stringstream ss;
+	std::stringstream::pos_type zeroOffset = ss.tellp();
 	ss << "Sound" << WorkspaceFile::getSoundNumber();
-	unsigned int size = ss.tellp() + 1;
+	int size = (ss.tellp() - zeroOffset) + 1;
 	char* soundName = new char[size];
 	strncpy(soundName, ss.str().c_str(), size);
 	const char* oldName = sound->setName(soundName);
@@ -357,24 +358,42 @@ void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
 		notifyAnimationChanged(frameNumber);
 }
 
+class NullFrameIterator : public FrameIterator {
+public:
+	~NullFrameIterator() {
+	}
+	int count() const {
+		return 0;
+	}
+	bool isAtEnd() const {
+		return true;
+	}
+	const char* getName() {
+		return 0;
+	}
+	void next() {
+	}
+};
+
 void Animation::activateScene(int sceneNumber) {
-	this->activeScene = sceneNumber;
+	activeScene = sceneNumber;
 	if (sceneNumber >= 0) {
 		if (0 < scenes.frameCount(sceneNumber)) {
-			this->notifyNewActiveScene(sceneNumber,
-					scenes[sceneNumber]->getImagePaths(),frontend);
+			std::auto_ptr<FrameIterator> frameIt(
+					scenes.makeFrameIterator(sceneNumber));
+			notifyNewActiveScene(sceneNumber, *frameIt, frontend);
 			setActiveFrame(0);
 		}
 		else {
-			vector<char*> dummy;
-			this->notifyNewActiveScene(sceneNumber, dummy,frontend);
+			NullFrameIterator dummy;
+			notifyNewActiveScene(sceneNumber, dummy, frontend);
 			setActiveFrame(-1);
 		}
 	}
 	else {
 		setActiveFrame(-1);
-		vector<char*> dummy;
-		this->notifyNewActiveScene(sceneNumber, dummy,frontend);
+		NullFrameIterator dummy;
+		notifyNewActiveScene(sceneNumber, dummy,frontend);
 	}
 }
 
