@@ -18,13 +18,8 @@
  ***************************************************************************/
 
 #include "undomove.h"
+#include "scenevector.h"
 
-	SceneVector sv;
-	int fromSc;
-	int fromFr;
-	int frameCount;
-	int toSc;
-	int toFr;
 UndoMove::UndoMove(SceneVector& model, int fromScene, int fromFrame, int count,
 		int toScene, int toFrame)
 		: sv(model), fromSc(fromScene), fromFr(fromFrame), frameCount(count),
@@ -60,5 +55,5 @@ Command* UndoMoveFactory::create(Parameters& ps) {
 	int fc = ps.getInteger(0, framesInScene - ff);
 	int ts = ps.getInteger(0, sv.sceneCount() - 1);
 	int tf = ps.getInteger(0, sv.frameCount(ts));
-	return UndoMove(fs, ff, fc, ts, tf);
+	return new UndoMove(sv, fs, ff, fc, ts, tf);
 }

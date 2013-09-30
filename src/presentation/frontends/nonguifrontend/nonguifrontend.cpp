@@ -143,7 +143,7 @@ void NonGUIFrontend::addFrames(const char *directory)
 
 	DIR *dp = opendir(dir);
 	if (dp) {
-		vector<char*> frames;
+		vector<const char*> frames;
 		struct dirent *ep;
 		struct stat st;
 
@@ -162,7 +162,7 @@ void NonGUIFrontend::addFrames(const char *directory)
 		}
 		closedir(dp);
 		
-		vector<char*>(frames).swap(frames);
+		vector<const char*>(frames).swap(frames);
 		facadePtr->addFrames(frames);
 
 		unsigned int numElem = frames.size();

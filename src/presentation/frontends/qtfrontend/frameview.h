@@ -85,7 +85,7 @@ public:
 	 * Function to recieven notification when a frame is added.
 	 * @param frames paths to the frames
 	 */
-	void updateAdd(const vector<char*>& frames, unsigned int, Frontend*);
+	void updateAdd(FrameIterator& frames, unsigned int, Frontend*);
 	
 	/**
 	 *Function to recieve notification when one or more frames are deleted.
@@ -144,7 +144,7 @@ public:
 	 * @param frontend the frontend for getting a progressbar when adding 
 	 * opening the new active scene.
 	 */
-	void updateNewActiveScene(int sceneNumber, vector<char*> frames,
+	void updateNewActiveScene(int sceneNumber, FrameIterator& frames,
 		Frontend *frontend);
 	
 	/**

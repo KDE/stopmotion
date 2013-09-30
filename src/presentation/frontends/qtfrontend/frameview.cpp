@@ -131,10 +131,9 @@ void FrameView::initCompleted()
 }
 
 
-void FrameView::updateAdd(const vector<char*> &frames, unsigned int, Frontend*) 
-{
-	if (isPlayingVideo) {
-		addToImageBuffer( IMG_Load(frames[0]) );
+void FrameView::updateAdd(FrameIterator& frames, unsigned int, Frontend*) {
+	if (isPlayingVideo && !frames.isAtEnd()) {
+		addToImageBuffer( IMG_Load(frames.getName()) );
 	}
 }
 
@@ -318,7 +317,7 @@ void FrameView::updateClear()
 
 void FrameView::updateNewScene(int) {}
 void FrameView::updateRemoveScene(int) {}
-void FrameView::updateNewActiveScene(int, vector<char*>, Frontend*) {}
+void FrameView::updateNewActiveScene(int, FrameIterator&, Frontend*) {}
 
 
 void FrameView::updateAnimationChanged(int frameNumber)

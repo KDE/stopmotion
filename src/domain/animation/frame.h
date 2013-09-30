@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors.              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,6 +30,35 @@ using namespace std;
 
 class FileNameVisitor;
 
+class Sound {
+	AudioFormat* af;
+	const char* name;
+public:
+	Sound();
+	~Sound();
+	/**
+	 * Opens an audio file. See {@ref AudioFormat::setFilename} for
+	 * exceptions that might be thrown.
+	 * @param filename The filename to open. Ownership is not passed.
+	 * @todo We need a way of mocking this for testing.
+	 */
+	void open(TemporaryWorkspaceFile& filename);
+	/**
+	 * Sets or resets the (human-readable) name of this sound.
+	 * @param name The new name or NULL for no name. Ownership is passed.
+	 * @return The old name or NULL for no name. Ownership is returned.
+	 */
+	const char* setName(const char* name);
+	/**
+	 * Sets the (human-readable) name of this sound. May only be used when
+	 * there is no name already set for the sound.
+	 * @param n The name to set.
+	 */
+	void setName(std::string& n);
+	AudioFormat* getAudio();
+	const char* getName() const;
+};
+
 /**
  * Class representing the frames in the animation
  *
@@ -38,35 +66,6 @@ class FileNameVisitor;
  */
 class Frame {
 public:
-	class Sound {
-		AudioFormat* af;
-		WorkspaceFile name;
-	public:
-		Sound();
-		~Sound();
-		/**
-		 * Opens an audio file. See {@ref AudioFormat::setFilename} for
-		 * exceptions that might be thrown.
-		 * @param filename The filename to open. Ownership is not passed.
-		 * @todo We need a way of mocking this for testing.
-		 */
-		void open(TemporaryWorkspaceFile& filename);
-		/**
-		 * Sets or resets the (human-readable) name of this sound.
-		 * @param name The new name or NULL for no name. Ownership is passed.
-		 * @return The old name or NULL for no name. Ownership is returned.
-		 */
-		const char* setName(const char* name);
-		/**
-		 * Sets the (human-readable) name of this sound. May only be used when
-		 * there is no name already set for the sound.
-		 * @param n The name to set.
-		 */
-		void setName(std::string& n);
-		AudioFormat* getAudio();
-		const char* getName() const;
-	};
-
 	/**
 	 * Creates a frame with the specified file for its picture.
 	 * @param file The picture for this frame.
@@ -123,7 +122,7 @@ public:
 	int getNumberOfSounds();
 
 	/**
-	 * Sets the name of the sound at index soundNumber in this frame to 
+	 * Sets the name of the sound at index soundNumber in this frame to
 	 * soundName
 	 * @param soundNumber the number of the sound to change the name of.
 	 * @param soundName the new name of the sound. Ownership is passed; must
@@ -145,7 +144,13 @@ public:
 	 * Retrieves the absolute path to the picture of this frame.
 	 * @return the absolute path to the picture of this frame.
 	 */
-	const char* getImagePath();
+	const char* getImagePath() const;
+
+	/**
+	 * Retrieves the base name of the picture of this frame.
+	 * @return The picture file's silename and extension without any path.
+	 */
+	const char* getBasename() const;
 
 	/**
 	 * Replaces the image path.

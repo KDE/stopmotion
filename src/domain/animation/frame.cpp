@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors.              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -29,13 +28,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sstream>
-#include <libgen.h>
 #include <memory>
 
-Frame::Sound::Sound() : af(0), name(0) {
+Sound::Sound() : af(0), name(0) {
 }
 
-Frame::Sound::~Sound() {
+Sound::~Sound() {
 	delete af;
 	delete name;
 }
@@ -43,19 +41,19 @@ Frame::Sound::~Sound() {
 /**
  *@todo check audio type (ogg, mp3, wav ...)
  */
-void Frame::Sound::open(TemporaryWorkspaceFile& filename) {
+void Sound::open(TemporaryWorkspaceFile& filename) {
 	std::auto_ptr<AudioFormat> a(new OggVorbis());
 	a->setFilename(filename);
 	af = a.release();
 }
 
-const char* Frame::Sound::setName(const char* n) {
+const char* Sound::setName(const char* n) {
 	const char* r = name;
 	name = n;
 	return r;
 }
 
-void Frame::Sound::setName(std::string& n) {
+void Sound::setName(std::string& n) {
 	assert(!name);
 	int size = n.size();
 	char* a = new char[size];
@@ -63,11 +61,11 @@ void Frame::Sound::setName(std::string& n) {
 	strncpy(a, n.c_str(), size);
 }
 
-AudioFormat* Frame::Sound::getAudio() {
+AudioFormat* Sound::getAudio() {
 	return af;
 }
 
-const char* Frame::Sound::getName() const {
+const char* Sound::getName() const {
 	return name;
 }
 
@@ -87,7 +85,7 @@ Frame::~Frame() {
 }
 
 
-const char* Frame::getImagePath() {
+const char* Frame::getImagePath() const {
 	assert(imagePath.path() != NULL);
 	Logger::get().logDebug("Retrieving picture from frame: ");
 	Logger::get().logDebug(imagePath.path());
@@ -95,29 +93,32 @@ const char* Frame::getImagePath() {
 }
 
 
+const char* Frame::getBasename() const {
+	assert(imagePath.basename() != 0);
+	return imagePath.basename();
+}
+
 int Frame::addSound(TemporaryWorkspaceFile& filename)
 {
 	Logger::get().logDebug("Adding sound in frame");
 	preallocateSounds(1);
 	std::auto_ptr<Sound> sound(new Sound());
 	stringstream ss;
+	stringstream::pos_type zeroOff = ss.tellp();
 	ss << "Sound" << WorkspaceFile::getSoundNumber();
-	unsigned int size = ss.tellp() + 1;
+	int size = (ss.tellp() - zeroOff) + 1;
 	char* soundName = new char[size];
 	strncpy(soundName, ss.str().c_str(), size);
-	char* oldName = sound->setName(soundName);
+	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
-	int ret = sound->open(filename);
-	if (ret != 0) {
-		return ret;
-	}
+	sound->open(filename);
 	WorkspaceFile::nextSoundNumber();
 	sounds.push_back(sound.release());
 
 	return 0;
 }
 
-void Frame::addSound(Frame::Sound* sound, int index) {
+void Frame::addSound(Sound* sound, int index) {
 	sounds.insert(sounds.begin() + index, sound);
 }
 
@@ -125,14 +126,14 @@ void Frame::preallocateSounds(int extra) {
 	sounds.reserve(sounds.size() + extra);
 }
 
-Frame::Sound* Frame::removeSound(int soundNumber) {
-	Frame::Sound* s = sounds[s];
+Sound* Frame::removeSound(int soundNumber) {
+	Sound* s = sounds[soundNumber];
 	sounds.erase(sounds.begin() + soundNumber);
 	return s;
 }
 
 
-Frame::Sound* Frame::getSound(int index) {
+Sound* Frame::getSound(int index) {
 	return sounds[index];
 }
 

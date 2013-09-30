@@ -26,9 +26,9 @@
 	int32_t sc;
 	int32_t fr;
 	int32_t index;
-	Frame::Sound* snd;
+	Sound* snd;
 UndoAddSound::UndoAddSound(SceneVector& model, int32_t scene, int32_t frame,
-		int32_t soundNumber, Frame::Sound* sound)
+		int32_t soundNumber, Sound* sound)
 	: sv(model), sc(scene), fr(frame), index(soundNumber),
 	  snd(sound) {
 }
@@ -62,7 +62,7 @@ Command* UndoAddSoundFactory::create(Parameters& ps) {
 	ps.getString(filename);
 	std::string humanName;
 	ps.getString(humanName);
-	std::auto_ptr<Frame::Sound> sound = new Frame::Sound();
+	std::auto_ptr<Sound> sound = new Sound();
 	sound->setName(humanName);
 	auto_ptr<Command> r(new UndoAddSound(sv, sc, fr, index, sound));
 	TemporaryWorkspaceFile twf(filename);

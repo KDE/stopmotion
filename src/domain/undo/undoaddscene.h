@@ -22,6 +22,7 @@
 #include "command.h"
 
 class SceneVector;
+class Scene;
 
 class UndoAddScene : public Command {
 	SceneVector& sv;

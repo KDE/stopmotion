@@ -21,6 +21,8 @@
 
 #include "command.h"
 
+class SceneVector;
+
 class UndoRemove : public Command {
 	SceneVector& sv;
 	int sc;

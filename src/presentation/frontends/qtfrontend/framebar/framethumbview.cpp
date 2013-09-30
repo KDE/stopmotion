@@ -215,12 +215,12 @@ void FrameThumbView::contentsDropped(QDropEvent * event)
 			for (int i = 0; i < numFrames; ++i) {
 				fileNames.append(urls[i].toLocalFile());
 			}
-			std::vector<char*> fNames;
+			std::vector<const char*> fNames;
 			QStringList::Iterator it = fileNames.begin();
 			while (it != fileNames.end() ) {
 				QString fileName = *it;
 				const char *f = fileName.toStdString().c_str();
-				fNames.push_back( const_cast<char*>(f) );
+				fNames.push_back(f);
 				++it;
 			}
 			DomainFacade::getFacade()->addFrames(fNames);

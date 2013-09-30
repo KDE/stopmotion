@@ -75,7 +75,13 @@ public:
 	 * Abstract function for retrieving the sound path.
 	 * @return the sound path
 	 */
-	virtual char* getSoundPath() = 0;
+	virtual const char* getSoundPath() const = 0;
+
+	/**
+	 * Retrieves the basename of the sound file.
+	 * @return The filename with extension and without any path.
+	 */
+	virtual const char* getBasename() const = 0;
 };
 
 #endif

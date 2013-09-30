@@ -49,7 +49,7 @@ void SceneVector::addScene(int where, Scene* newScene) {
 }
 
 void SceneVector::addScene(int where) {
-	std::auto_ptr s(new Scene());
+	std::auto_ptr<Scene> s(new Scene());
 	addScene(where, s.get());
 	s.release();
 }
@@ -148,7 +148,7 @@ int SceneVector::soundCount(int scene, int frame) {
 }
 
 void SceneVector::addSound(int scene, int frame, int soundNumber,
-		Frame::Sound* sound) {
+		Sound* sound) {
 	scenes[scene]->getFrame(frame)->addSound(sound, soundNumber);
 }
 
@@ -158,7 +158,7 @@ const char* SceneVector::setSoundName(int scene, int frame, int soundNumber,
 			->setSoundName(soundNumber, soundName);
 }
 
-Frame::Sound* SceneVector::removeSound(int scene, int frame, int soundNumber) {
+Sound* SceneVector::removeSound(int scene, int frame, int soundNumber) {
 	return scenes[scene]->getFrame(frame)->removeSound(soundNumber);
 }
 

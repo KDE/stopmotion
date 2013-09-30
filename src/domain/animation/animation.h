@@ -304,7 +304,6 @@ private:
 	/**
 	 * Loads frames into the model. This acts exactly like the {@ref addFrames}
 	 * function except that it does not moves the frames to a temporary directory.
-	 * It also registers the frame to be a valid project frame.
 	 */
 	void loadSavedScenes();
 

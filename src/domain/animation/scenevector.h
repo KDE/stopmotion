@@ -25,8 +25,9 @@
 
 class Scene;
 class Frame;
-class Frame::Sound;
+class Sound;
 class FrameIterator;
+class FileNameVisitor;
 
 class SceneVector {
 	std::vector<Scene*> scenes;
@@ -190,7 +191,7 @@ public:
 	 * @param sound The name sound to add. Ownership is passed.
 	 */
 	void addSound(int scene, int frame, int soundNumber,
-			Frame::Sound* sound);
+			Sound* sound);
 	/**
 	 * changes the name of a sound of a frame.
 	 * @param scene The number of the scene containing the frame to change.
@@ -217,7 +218,7 @@ public:
 	 * is returned.
 	 * @throws Nothing.
 	 */
-	Frame::Sound* removeSound(int scene, int frame, int soundNumber);
+	Sound* removeSound(int scene, int frame, int soundNumber);
 	void accept(FileNameVisitor& v) const;
 };
 

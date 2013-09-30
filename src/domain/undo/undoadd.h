@@ -25,6 +25,7 @@
 
 class Frame;
 class SceneVector;
+class TemporaryWorkspaceFile;
 
 class UndoAdd : public Command {
 public:

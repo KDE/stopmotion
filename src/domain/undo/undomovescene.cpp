@@ -18,6 +18,7 @@
  ***************************************************************************/
 
 #include "undomovescene.h"
+#include "src/domain/animation/scenevector.h"
 
 UndoMoveScene::UndoMoveScene(SceneVector& model, int sceneNumber,
 		int movePosition) : sv(model), from(sceneNumber), to(movePosition) {

@@ -21,6 +21,9 @@
 #include "undoaddscene.h"
 #include "undoremovescene.h"
 #include "src/domain/animation/scene.h"
+#include "src/domain/animation/scenevector.h"
+
+#include <memory>
 
 UndoAddScene::UndoAddScene(SceneVector& model, int32_t sn, Scene* scene)
 		: sv(model), index(sn), sc(scene) {
@@ -31,7 +34,7 @@ UndoAddScene::~UndoAddScene() {
 }
 
 Command* UndoAddScene::execute() {
-	std::auto_ptr<UndoRemoveScene> inv(new UndoRemoveScene(index));
+	std::auto_ptr<UndoRemoveScene> inv(new UndoRemoveScene(sv, index));
 	sv.addScene(index, sc);
 	return inv.release();
 }
@@ -45,7 +48,7 @@ UndoAddSceneFactory::~UndoAddSceneFactory() {
 Command* UndoAddSceneFactory::create(Parameters& ps) {
 	int32_t index = ps.getInteger(0, sv.sceneCount());
 	std::auto_ptr<Scene> sc(new Scene());
-	Command* r = new UndoAddScene(sv, index, sc);
+	Command* r = new UndoAddScene(sv, index, sc.get());
 	sc.release();
 	return r;
 }

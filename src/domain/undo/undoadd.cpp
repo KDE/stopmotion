@@ -17,10 +17,14 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "undoadd.h"
+#include "undoremove.h"
 
 #include "src/domain/animation/scenevector.h"
 #include "src/domain/animation/frame.h"
 #include "src/domain/animation/workspacefile.h"
+
+#include <malloc.h>
+#include <memory>
 
 UndoAdd::UndoAdd(SceneVector& model, int toScene, int toFrame, int count)
 		: sv(model), scene(toScene), frame(toFrame) {
@@ -49,7 +53,7 @@ Command* UndoAdd::execute() {
 }
 
 void UndoAdd::accept(FileNameVisitor& v) const {
-	for (std::vector<Frame*>::iterator i = frames.begin();
+	for (std::vector<Frame*>::const_iterator i = frames.begin();
 			i != frames.end(); ++i) {
 		(*i)->accept(v);
 	}

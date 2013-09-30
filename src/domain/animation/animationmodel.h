@@ -78,7 +78,7 @@ public:
 	 * @param frames a vector containing the frames that are added to the model.
 	 * @param index the position it is added to.
 	 */
-	void notifyAdd(const vector<char*>& frames, unsigned int index);
+	void notifyAdd(FrameIterator& frames, unsigned int index);
 
 	/**
 	 * Notify the observers that a selection of frames are removed from the model.

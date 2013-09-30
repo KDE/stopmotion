@@ -25,17 +25,17 @@
 
 class SceneVector;
 class Frame;
-class Frame::Sound;
+class Sound;
 
 class UndoAddSound : public Command {
 	SceneVector& sv;
 	int32_t sc;
 	int32_t fr;
 	int32_t index;
-	Frame::Sound* snd;
+	Sound* snd;
 public:
 	UndoAddSound(SceneVector& model, int32_t scene, int32_t frame,
-			int32_t soundNumber, Frame::Sound* sound);
+			int32_t soundNumber, Sound* sound);
 	~UndoAddSound();
 	Command* execute();
 	void accept(FileNameVisitor& v) const;

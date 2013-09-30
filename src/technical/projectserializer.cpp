@@ -160,29 +160,13 @@ const char* ProjectSerializer::getProjectFile()
 void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *frontend)
 {
 	xmlNodePtr node = NULL;
-	char *absPath    = NULL;
 	Frame *frame     = NULL;
 	AudioFormat *sound = NULL;
 	unsigned int index = 0;
 
-	// Removes frames which already are saved. Had to do this to prevent
-	// frames to overwrite each other.
-	unsigned int numScenes = sVect.size();
-	for (unsigned int m = 0; m < numScenes; ++m) {
-		vector<Frame*> frames = sVect[m]->getFrames();
-
-		unsigned int numFrames = frames.size();
-		for (unsigned int l = 0; l < numFrames; ++l) {
-			frame = frames[l];
-			if ( frame->isProjectFrame() ) {
-				frame->copyToTemp();
-			}
-		}
-	}
-
 	scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
 
-	//unsigned int numScenes = sVect.size();
+	unsigned int numScenes = sVect.size();
 	frontend->showProgress("Saving scenes to disk ...", numScenes);
 	for (unsigned int i = 0; i < numScenes; ++i) {
 		frontend->updateProgress(i);
@@ -195,23 +179,19 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 		unsigned int numFrames = frames.size();
 		for (unsigned int j = 0; j < numFrames; ++j) {
 			frame = frames[j];
-			frame->moveToProjectDir(imagePath, soundPath, ++index);
-			frame->markAsProjectFile();
-			absPath = frame->getImagePath();
-			char *relPath = basename(absPath);
+			const char *filename = frame->getBasename();
 			node = xmlNewChild(images, NULL, BAD_CAST "img", NULL);
-			xmlNewProp(node, BAD_CAST "src", BAD_CAST relPath);
+			xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
 			
 			// Sounds
 			unsigned int numSounds = frame->getNumberOfSounds();
 			if (numSounds > 0) {
 				sounds = xmlNewChild(node, NULL, BAD_CAST "sounds", NULL);
-				vector<AudioFormat*> audioFiles = frame->getSounds();
 				for (unsigned int k = 0; k < numSounds; ++k) {
-					sound = audioFiles[k];
-					relPath = basename(audioFiles[k]->getSoundPath());
+					sound = frame->getSound(k)->getAudio();
+					filename = sound->getBasename();
 					node = xmlNewChild(sounds, NULL, BAD_CAST "audio", NULL);
-					xmlNewProp(node, BAD_CAST "src", BAD_CAST relPath);
+					xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
 					xmlNewProp(node, BAD_CAST "alt", BAD_CAST frame->getSoundName(i));
 				}
 			}
@@ -235,17 +215,18 @@ void ProjectSerializer::getAttributes(xmlNodePtr node, vector<Scene*>& sVect)
 					// The node is a image node
 					if ( strcmp(nodeName, "img") == 0 ) {
 						snprintf(tmp, 256, "%s%s", imagePath, filename);
-						Frame *f = new Frame(tmp);
+						TemporaryWorkspaceFile twf(tmp);
+						Frame *f = new Frame(twf);
 						Scene *s = sVect.back();
 						s->addSavedFrame(f);
-						f->markAsProjectFile();
 					}
 					// The node is a sound node
 					else {
 						snprintf(tmp, 256, "%s%s", soundPath, filename);
 						Scene *s = sVect.back();
 						Frame *f = s->getFrame(s->getSize() - 1);
-						f->addSound(tmp);
+						TemporaryWorkspaceFile twf(tmp);
+						f->addSound(twf);
 						char *soundName = (char*)xmlGetProp(currNode, BAD_CAST "alt");
 						if (soundName != NULL) {
 							unsigned int soundNum = f->getNumberOfSounds() - 1;

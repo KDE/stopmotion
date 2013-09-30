@@ -16,8 +16,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "undoremove.h"
 #include "undoadd.h"
+#include "scenevector.h"
+
+#include <memory>
 
 UndoRemove::UndoRemove(SceneVector& model,
 		int scene, int fromFrame, int count)

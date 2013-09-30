@@ -21,6 +21,9 @@
 #ifndef COMMAND_H_
 #define COMMAND_H_
 
+#include <stdint.h>
+#include <string>
+
 class CommandList;
 class FileNameVisitor;
 class CommandLogger;

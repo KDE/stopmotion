@@ -35,7 +35,7 @@ UndoRemoveSound::~UndoRemoveSound() {
 
 Command* UndoRemoveSound::execute() {
 	Frame* frame = sv.getScene(sc)->getFrame(fr);
-	Frame::Sound* sound = frame->getSound(index);
+	Sound* sound = frame->getSound(index);
 	std::auto_ptr<Command*> inv(
 			new UndoAddSound(sv, sc, fr, index, sound));
 	frame->removeSound(index);

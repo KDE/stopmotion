@@ -94,7 +94,7 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 	}
 	
 	if ( !names.isEmpty() ) {
-		vector<char*> fNames;
+		vector<const char*> fNames;
 		QStringList::Iterator it = names.begin();
 		while (it != names.end() ) {
 			QByteArray fileName = it->toLocal8Bit();
@@ -104,7 +104,7 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 			++it;
 		}
 		// trim to size :)
-		vector<char*>(fNames).swap(fNames);
+		vector<const char*>(fNames).swap(fNames);
 		DomainFacade::getFacade()->addFrames(fNames);
 		
 		// Cleanup

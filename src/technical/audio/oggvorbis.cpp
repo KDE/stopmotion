@@ -26,30 +26,21 @@
 #include <string.h>
 
 
-OggVorbis::OggVorbis()
-{
+OggVorbis::OggVorbis() {
 	oggFile  = NULL;
-	filename = NULL;
 }
 
 
-OggVorbis::~OggVorbis()
-{
+OggVorbis::~OggVorbis() {
 	if (oggFile != NULL) {
 		ov_clear(oggFile);
 		free(oggFile);
 		oggFile = NULL;
 	}
-	if (filename != NULL) {
-		delete [] filename;
-		filename = NULL;
-	}
-
 }
 
 
-void OggVorbis::setFilename(TemporaryWorkspaceFile& filename)
-{
+void OggVorbis::setFilename(TemporaryWorkspaceFile& filename) {
 	assert(filename.path() != NULL);
 
 	// Opens the file and tests for vorbis-ness
@@ -131,7 +122,11 @@ int OggVorbis::fillBuffer(char *audioBuffer, int numBytes)
 }
 
 
-char* OggVorbis::getSoundPath()
-{
-	return filename;
+const char* OggVorbis::getSoundPath() const {
+	return filename.path();
 }
+
+const char* OggVorbis::getBasename() const {
+	return filename.basename();
+}
+

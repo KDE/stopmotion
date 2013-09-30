@@ -169,7 +169,7 @@ void Animation::moveFrames(int32_t fromFrame, int32_t toFrame,
 
 int Animation::addSound(int32_t frameNumber, const char *soundFile) {
 	Logger::get().logDebug("Adding sound in animation");
-	std::auto_ptr<Frame::Sound> sound(new Frame::Sound());
+	std::auto_ptr<Sound> sound(new Sound());
 	std::stringstream ss;
 	std::stringstream::pos_type zeroOffset = ss.tellp();
 	ss << "Sound" << WorkspaceFile::getSoundNumber();
@@ -304,11 +304,17 @@ void Animation::clear() {
 }
 
 
+//TODO make all this exception-safe
 bool Animation::openProject(const char *filename) {
 	clear();
 	assert(filename != 0);
-	scenes = serializer->open(filename);
-	if (scenes.sceneCount() > 0) {
+	vector<Scene*> newScenes = serializer->open(filename);
+	int count = newScenes.size();
+	scenes.preallocateScenes(count);
+	for (int i = 0; i != count; ++i) {
+		scenes.addScene(i, newScenes[i]);
+	}
+	if (count > 0) {
 		loadSavedScenes();
 		return true;
 	}
@@ -316,9 +322,15 @@ bool Animation::openProject(const char *filename) {
 }
 
 
+//TODO do this in a less stupid way.
 bool Animation::saveProject(const char *filename) {
 	assert(filename != 0);
-	return serializer->save(filename, scenes, frontend);
+	std::vector<Scene*> s;
+	int count = scenes.sceneCount();
+	for (int i = 0; i != count; ++i) {
+		s.push_back(scenes.getScene(i));
+	}
+	return serializer->save(filename, s, frontend);
 }
 
 

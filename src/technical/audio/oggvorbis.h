@@ -73,8 +73,14 @@ public:
 	 * Function for retrieving the sound path.
 	 * @return the sound path
 	 */
-	char* getSoundPath();
-	
+	const char* getSoundPath() const;
+
+	/**
+	 * Retrieves the basename of the sound file.
+	 * @return The filename with extension and without any path.
+	 */
+	const char* getBasename() const;
+
 private:
 	/** The ogg representation of the file registered in this class. */
 	OggVorbis_File *oggFile;

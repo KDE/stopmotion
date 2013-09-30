@@ -19,6 +19,9 @@
 
 #include "undoremovescene.h"
 #include "undoaddscene.h"
+#include "src/domain/animation/scenevector.h"
+
+#include <memory>
 
 UndoRemoveScene::UndoRemoveScene(SceneVector& model, int32_t sceneNumber)
 		: sv(model), sc(sceneNumber) {
@@ -28,7 +31,8 @@ UndoRemoveScene::~UndoRemoveScene() {
 }
 
 Command* UndoRemoveScene::execute() {
-	std::auto_ptr<Command> inv(new UndoAddScene(sv.getScene(sc)));
+	std::auto_ptr<Command> inv(new UndoAddScene(sv,
+			sc, sv.getScene(sc)));
 	sv.removeScene(sc);
 	return inv.release();
 }
