@@ -23,6 +23,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/domain/undo/commandaddscene.h \
     src/domain/undo/commandmovescene.h \
     src/domain/undo/commandremovescene.h \
+    src/domain/animation/workspacefile.h \
     src/application/camerahandler.h \
     src/presentation/frontends/qtfrontend/frameview.h \
     src/presentation/frontends/qtfrontend/flexiblespinbox.h \
@@ -140,6 +141,7 @@ SOURCES += src/config.cpp \
     src/domain/undo/commandaddscene.cpp \
     src/domain/undo/commandmovescene.cpp \
     src/domain/undo/commandremovescene.cpp \
+    src/domain/animation/workspacefile.cpp \
     src/application/camerahandler.cpp \
     src/presentation/frontends/qtfrontend/frameview.cpp \
     src/presentation/frontends/qtfrontend/flexiblespinbox.cpp \
