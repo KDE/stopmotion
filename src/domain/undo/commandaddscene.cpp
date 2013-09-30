@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,33 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UNDOMOVE_H
-#define UNDOMOVE_H
 
-#include "command.h"
+#include "commandaddscene.h"
+#include "commandremovescene.h"
+#include "src/domain/animation/scene.h"
+#include "src/domain/animation/scenevector.h"
 
-class SceneVector;
+#include <memory>
 
-class UndoMove : public Command {
-	SceneVector& sv;
-	int32_t fromSc;
-	int32_t fromFr;
-	int32_t frameCount;
-	int32_t toSc;
-	int32_t toFr;
-public:
-	UndoMove(SceneVector& model, int fromScene, int fromFrame, int count,
-			int toScene, int toFrame);
-	~UndoMove();
-	Command* execute();
-};
+CommandAddScene::CommandAddScene(SceneVector& model, int32_t sn, Scene* scene)
+		: sv(model), index(sn), sc(scene) {
+}
 
-class UndoMoveFactory : public CommandFactory {
-	SceneVector& sv;
-public:
-	UndoMoveFactory(SceneVector& model);
-	~UndoMoveFactory();
-	Command* create(Parameters& ps);
-};
+CommandAddScene::~CommandAddScene() {
+	delete sc;
+}
 
-#endif
+Command* CommandAddScene::execute() {
+	std::auto_ptr<UndoRemoveScene> inv(new UndoRemoveScene(sv, index));
+	sv.addScene(index, sc);
+	return inv.release();
+}
+
+CommandAddSceneFactory::CommandAddSceneFactory(SceneVector& model) : sv(model) {
+}
+
+CommandAddSceneFactory::~CommandAddSceneFactory() {
+}
+
+Command* CommandAddSceneFactory::create(Parameters& ps) {
+	int32_t index = ps.getInteger(0, sv.sceneCount());
+	std::auto_ptr<Scene> sc(new Scene());
+	Command* r = new CommandAddScene(sv, index, sc.get());
+	sc.release();
+	return r;
+}

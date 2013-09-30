@@ -18,35 +18,31 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef UNDOADDSOUND_H_
-#define UNDOADDSOUND_H_
+#ifndef COMMANDREMOVESOUND_H_
+#define COMMANDREMOVESOUND_H_
 
 #include "command.h"
 
 class SceneVector;
-class Frame;
-class Sound;
 
-class UndoAddSound : public Command {
+class CommandRemoveSound : public Command {
 	SceneVector& sv;
 	int32_t sc;
 	int32_t fr;
 	int32_t index;
-	Sound* snd;
 public:
-	UndoAddSound(SceneVector& model, int32_t scene, int32_t frame,
-			int32_t soundNumber, Sound* sound);
-	~UndoAddSound();
+	CommandRemoveSound(SceneVector& model, int32_t scene, int32_t frame,
+			int32_t soundNumber);
+	~CommandRemoveSound();
 	Command* execute();
-	void accept(FileNameVisitor& v) const;
 };
 
-class UndoAddSoundFactory : public CommandFactory {
+class UndoRemoveSoundFactory : public CommandFactory {
 	SceneVector& sv;
 public:
-	UndoAddSoundFactory(SceneVector& model);
-	~UndoAddSoundFactory();
+	UndoRemoveSoundFactory(SceneVector& model);
+	~UndoRemoveSoundFactory();
 	Command* create(Parameters& ps);
 };
 
-#endif /* UNDOADDSOUND_H_ */
+#endif

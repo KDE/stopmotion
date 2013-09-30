@@ -16,36 +16,35 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UNDOADDSCENE_H
-#define UNDOADDSCENE_H
 
-#include "command.h"
+#include "commandremovescene.h"
+#include "commandaddscene.h"
+#include "src/domain/animation/scenevector.h"
 
-class SceneVector;
-class Scene;
+#include <memory>
 
-class UndoAddScene : public Command {
-	SceneVector& sv;
-	int32_t index;
-	Scene* sc;
-public:
-	/**
-	 * @param scene Ownership is passed.
-	 */
-	UndoAddScene(SceneVector& model, int32_t sceneNumber, Scene* scene);
-	~UndoAddScene();
-	Command* execute();
-};
+UndoRemoveScene::UndoRemoveScene(SceneVector& model, int32_t sceneNumber)
+		: sv(model), sc(sceneNumber) {
+}
 
-/**
- * This factory can only create empty scenes.
- */
-class UndoAddSceneFactory : public CommandFactory {
-	SceneVector& sv;
-public:
-	UndoAddSceneFactory(SceneVector& model);
-	~UndoAddSceneFactory();
-	Command* create(Parameters& ps);
-};
+UndoRemoveScene::~UndoRemoveScene() {
+}
 
-#endif
+Command* UndoRemoveScene::execute() {
+	std::auto_ptr<Command> inv(new CommandAddScene(sv,
+			sc, sv.getScene(sc)));
+	sv.removeScene(sc);
+	return inv.release();
+}
+
+UndoRemoveSceneFactory::UndoRemoveSceneFactory(SceneVector& model)
+		: sv(model) {
+}
+
+UndoRemoveSceneFactory::~UndoRemoveSceneFactory() {
+}
+
+Command* UndoRemoveSceneFactory::create(Parameters& ps) {
+	int32_t sc = ps.getInteger(0, sv.sceneCount());
+	return new UndoRemoveScene(sv, sc);
+}

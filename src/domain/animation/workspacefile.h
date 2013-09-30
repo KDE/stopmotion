@@ -50,6 +50,11 @@ public:
 	 * example ".jpg".
 	 */
 	WorkspaceFile(const char* extension, FreshFilename);
+	/**
+	 * Creates a WorkspaceFile referring to the same file as {@c t}.
+	 * @param t The file to set it to.
+	 */
+	WorkspaceFile(TemporaryWorkspaceFile& t);
 	~WorkspaceFile();
 	/**
 	 * Takes ownership of the file owned by @c t, thereby preventing it from

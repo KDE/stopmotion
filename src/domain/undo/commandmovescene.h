@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
- *   see contributors.txt for details                                      *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,44 +17,29 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "undorenamesound.h"
+#ifndef COMMANDMOVESCENE_H
+#define COMMANDMOVESCENE_H
 
-UndoRenameSound::UndoRenameSound(SceneVector& model, int32_t scene,
-		int32_t frame, int32_t soundNumber, const char* newName)
-	: sv(model), sc(scene), fr(frame), index(soundNumber), name(newName) {
-}
+#include "command.h"
 
-UndoRenameSound::~UndoRenameSound() {
-	delete[] name;
-}
+class SceneVector;
 
-void UndoRenameSound::setName(const char* newName) {
-	int length = strlen(newName) + 1;
-	char* nn = new char[length];
-	strncpy(nn, newName, length);
-	delete[] name;
-	name = nn;
-}
+class CommandMoveScene : public Command {
+	SceneVector& sv;
+	int32_t from;
+	int32_t to;
+public:
+	CommandMoveScene(SceneVector& model, int sceneNumber, int movePosition);
+	~CommandMoveScene();
+	Command* execute();
+};
 
-Command* UndoRenameSound::execute() {
-	name = sv.getScene(sc)->getFrame(fr)->setSoundName(index, name);
-	return this;
-}
+class CommandMoveSceneFactory : public CommandFactory {
+	SceneVector& sv;
+public:
+	CommandMoveSceneFactory(SceneVector& model);
+	~CommandMoveSceneFactory();
+	Command* create(Parameters& ps);
+};
 
-UndoRenameSoundFactory::UndoRenameSoundFactory(SceneVector& model) :sv(model) {
-}
-
-UndoRenameSoundFactory::~UndoRenameSoundFactory() {
-}
-
-Command* UndoRenameSoundFactory::create(Parameters& ps) {
-	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
-	int32_t fr = ps.getInteger(0, sv.frameCount(sc) - 1);
-	int32_t index = ps.getInteger(0, sv.getScene(sc)->getFrame(fr)
-			->getNumberOfSounds());
-	std::auto_ptr<UndoRenameSound> r(new UndoRenameSound(sv, sc, fr, index, 0));
-	std::string name;
-	ps.getString(name);
-	r->setName(name.c_str());
-	return r.release();
-}
+#endif

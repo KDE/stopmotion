@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
- *   see contributors.txt for details                                      *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,31 +17,33 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "undosetimage.h"
+#ifndef COMMANDMOVE_H
+#define COMMANDMOVE_H
 
-UndoSetImage::UndoSetImage(SceneVector& model, int32_t scene, int32_t frame,
-		TemporaryWorkspaceFile& w)
-		: sv(model), sc(scene), fr(frame), image(w) {
-}
+#include "command.h"
 
-UndoSetImage::~UndoSetImage() {
-}
+class SceneVector;
 
-Command* UndoSetImage::execute() {
-	sv.getScene(sc)->getFrame(fr)->replaceImage(image);
-	return this;
-}
+class CommandMove : public Command {
+	SceneVector& sv;
+	int32_t fromSc;
+	int32_t fromFr;
+	int32_t frameCount;
+	int32_t toSc;
+	int32_t toFr;
+public:
+	CommandMove(SceneVector& model, int fromScene, int fromFrame, int count,
+			int toScene, int toFrame);
+	~CommandMove();
+	Command* execute();
+};
 
-UndoSetImageFactory::UndoSetImageFactory(SceneVector& model) : sv(model) {
-}
+class CommandMoveFactory : public CommandFactory {
+	SceneVector& sv;
+public:
+	CommandMoveFactory(SceneVector& model);
+	~CommandMoveFactory();
+	Command* create(Parameters& ps);
+};
 
-UndoSetImageFactory::~UndoSetImageFactory() {
-}
-
-Command* UndoSetImageFactory::create(Parameters& ps) {
-	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
-	int32_t fr = ps.getInteger(0, sv.frameCount(sc) - 1);
-	std::string path;
-	ps.getString(path);
-	return new UndoSetImage(sv, sc, fr, path.c_str());
-}
+#endif

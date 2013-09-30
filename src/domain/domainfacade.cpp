@@ -21,13 +21,6 @@
 
 #include "animation/animation.h"
 #include "src/foundation/logger.h"
-#include "src/domain/undo/undoadd.h"
-#include "src/domain/undo/undomove.h"
-#include "src/domain/undo/undoremove.h"
-#include "src/domain/undo/undoaddscene.h"
-#include "src/domain/undo/undoremovescene.h"
-#include "src/domain/undo/undomovescene.h"
-
 
 DomainFacade* DomainFacade::domainFacade = 0;
 

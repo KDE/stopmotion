@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -16,37 +17,41 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UNDOREMOVE_H
-#define UNDOREMOVE_H
+
+#ifndef COMMANDRENAMESOUND_H_
+#define COMMANDRENAMESOUND_H_
 
 #include "command.h"
 
 class SceneVector;
 
-class UndoRemove : public Command {
+class CommandRenameSound : public Command {
 	SceneVector& sv;
-	int sc;
-	int fr;
-	int frameCount;
+	int32_t sc;
+	int32_t fr;
+	int32_t index;
+	const char* name;
 public:
 	/**
-	 * Constructs a command that removes frames from a scene.
-	 * @param model The animation to be changed.
-	 * @param scene The scene from which the frames were removed.
-	 * @param fromFrame The index of the first frame to be removed.
-	 * @param frameCount The number of frames to remove.
+	 * @param newName The new name. Ownership is passed; must have been
+	 * allocated with {@c new char[]}.
 	 */
-	UndoRemove(SceneVector& model,
-			int scene, int fromFrame, int frameCount);
-	~UndoRemove();
+	CommandRenameSound(SceneVector& model, int32_t scene, int32_t frame,
+			int32_t soundNumber, const char* newName);
+	~CommandRenameSound();
+	/**
+	 * Sets the name to be set.
+	 * @param newName Ownership is not passed.
+	 */
+	void setName(const char* newName);
 	Command* execute();
 };
 
-class UndoRemoveFactory : public CommandFactory {
+class CommandRenameSoundFactory : public CommandFactory {
 	SceneVector& sv;
 public:
-	UndoRemoveFactory(SceneVector& model);
-	~UndoRemoveFactory();
+	CommandRenameSoundFactory(SceneVector& model);
+	~CommandRenameSoundFactory();
 	Command* create(Parameters& ps);
 };
 

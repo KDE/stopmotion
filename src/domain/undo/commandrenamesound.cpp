@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,34 +18,49 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "undoremovescene.h"
-#include "undoaddscene.h"
+#include "commandrenamesound.h"
 #include "src/domain/animation/scenevector.h"
+#include "src/domain/animation/scene.h"
 
 #include <memory>
+#include <string.h>
 
-UndoRemoveScene::UndoRemoveScene(SceneVector& model, int32_t sceneNumber)
-		: sv(model), sc(sceneNumber) {
+CommandRenameSound::CommandRenameSound(SceneVector& model, int32_t scene,
+		int32_t frame, int32_t soundNumber, const char* newName)
+	: sv(model), sc(scene), fr(frame), index(soundNumber), name(newName) {
 }
 
-UndoRemoveScene::~UndoRemoveScene() {
+CommandRenameSound::~CommandRenameSound() {
+	delete[] name;
 }
 
-Command* UndoRemoveScene::execute() {
-	std::auto_ptr<Command> inv(new UndoAddScene(sv,
-			sc, sv.getScene(sc)));
-	sv.removeScene(sc);
-	return inv.release();
+void CommandRenameSound::setName(const char* newName) {
+	int length = strlen(newName) + 1;
+	char* nn = new char[length];
+	strncpy(nn, newName, length);
+	delete[] name;
+	name = nn;
 }
 
-UndoRemoveSceneFactory::UndoRemoveSceneFactory(SceneVector& model)
-		: sv(model) {
+Command* CommandRenameSound::execute() {
+	name = sv.getScene(sc)->getFrame(fr)->setSoundName(index, name);
+	return this;
 }
 
-UndoRemoveSceneFactory::~UndoRemoveSceneFactory() {
+CommandRenameSoundFactory::CommandRenameSoundFactory(SceneVector& model) :sv(model) {
 }
 
-Command* UndoRemoveSceneFactory::create(Parameters& ps) {
-	int32_t sc = ps.getInteger(0, sv.sceneCount());
-	return new UndoRemoveScene(sv, sc);
+CommandRenameSoundFactory::~CommandRenameSoundFactory() {
+}
+
+Command* CommandRenameSoundFactory::create(Parameters& ps) {
+	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
+	int32_t fr = ps.getInteger(0, sv.frameCount(sc) - 1);
+	int32_t index = ps.getInteger(0, sv.getScene(sc)->getFrame(fr)
+			->getNumberOfSounds());
+	std::auto_ptr<CommandRenameSound> r(new CommandRenameSound(sv, sc, fr, index, 0));
+	std::string name;
+	ps.getString(name);
+	r->setName(name.c_str());
+	return r.release();
 }

@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
- *   see contributors.txt for details                                      *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,41 +17,43 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef UNDORENAMESOUND_H_
-#define UNDORENAMESOUND_H_
+#include "commandmove.h"
+#include "scenevector.h"
 
-#include "command.h"
+CommandMove::CommandMove(SceneVector& model, int fromScene, int fromFrame, int count,
+		int toScene, int toFrame)
+		: sv(model), fromSc(fromScene), fromFr(fromFrame), frameCount(count),
+		  toSc(toScene), toFr(toFrame) {
+}
 
-class SceneVector;
+CommandMove::~CommandMove() {
+}
 
-class UndoRenameSound : public Command {
-	SceneVector& sv;
-	int32_t sc;
-	int32_t fr;
-	int32_t index;
-	const char* name;
-public:
-	/**
-	 * @param newName The new name. Ownership is passed; must have been
-	 * allocated with {@c new char[]}.
-	 */
-	UndoRenameSound(SceneVector& model, int32_t scene, int32_t frame,
-			int32_t soundNumber, const char* newName);
-	~UndoRenameSound();
-	/**
-	 * Sets the name to be set.
-	 * @param newName Ownership is not passed.
-	 */
-	void setName(const char* newName);
-	Command* execute();
-};
+template<typename T> void swap(T& a, T& b) {
+	T t(a);
+	a = b;
+	b = t;
+}
 
-class UndoRenameSoundFactory : public CommandFactory {
-	SceneVector& sv;
-public:
-	UndoRenameSoundFactory(SceneVector& model);
-	~UndoRenameSoundFactory();
-	Command* create(Parameters& ps);
-};
+Command* CommandMove::execute() {
+	sv.moveFrames(fromSc, fromFr, frameCount, toSc, toFr);
+	swap(fromSc, toSc);
+	swap(fromFr, toFr);
+	return this;
+}
 
-#endif /* UNDORENAMESOUND_H_ */
+CommandMoveFactory::CommandMoveFactory(SceneVector& model) : sv(model) {
+}
+
+CommandMoveFactory::~CommandMoveFactory() {
+}
+
+Command* CommandMoveFactory::create(Parameters& ps) {
+	int fs = ps.getInteger(0, sv.sceneCount() - 1);
+	int framesInScene = sv.frameCount(fs);
+	int ff = ps.getInteger(0, framesInScene - 1);
+	int fc = ps.getInteger(0, framesInScene - ff);
+	int ts = ps.getInteger(0, sv.sceneCount() - 1);
+	int tf = ps.getInteger(0, sv.frameCount(ts));
+	return new CommandMove(sv, fs, ff, fc, ts, tf);
+}

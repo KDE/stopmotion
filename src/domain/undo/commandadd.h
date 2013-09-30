@@ -16,8 +16,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UNDOADD_H
-#define UNDOADD_H
+#ifndef COMMANDADD_H
+#define COMMANDADD_H
 
 #include "command.h"
 
@@ -27,14 +27,14 @@ class Frame;
 class SceneVector;
 class TemporaryWorkspaceFile;
 
-class UndoAdd : public Command {
+class CommandAdd : public Command {
 public:
 	/**
 	 * @param count The number of frames to reserve; {@ref addFrame} can
 	 * subsequently be called this many times without throwing an exception.
 	 */
-	UndoAdd(SceneVector& model, int toScene, int toFrame, int count);
-	~UndoAdd();
+	CommandAdd(SceneVector& model, int toScene, int toFrame, int count);
+	~CommandAdd();
 	/**
 	 * Adds a frame to the add command.
 	 * @param frame Ownership is passed.
@@ -49,11 +49,11 @@ private:
 	int frame;
 };
 
-class UndoAddFactory : public CommandFactory {
+class CommandAddFactory : public CommandFactory {
 	SceneVector& sv;
 public:
-	UndoAddFactory(SceneVector& model);
-	~UndoAddFactory();
+	CommandAddFactory(SceneVector& model);
+	~CommandAddFactory();
 	Command* create(::Parameters& ps);
 	class Parameters : public ::Parameters {
 		int32_t sc;

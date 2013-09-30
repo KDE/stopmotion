@@ -16,8 +16,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "undoadd.h"
-#include "undoremove.h"
+#include "commandadd.h"
+#include "commandremove.h"
 
 #include "src/domain/animation/scenevector.h"
 #include "src/domain/animation/frame.h"
@@ -26,25 +26,25 @@
 #include <malloc.h>
 #include <memory>
 
-UndoAdd::UndoAdd(SceneVector& model, int toScene, int toFrame, int count)
+CommandAdd::CommandAdd(SceneVector& model, int toScene, int toFrame, int count)
 		: sv(model), scene(toScene), frame(toFrame) {
 	frames.reserve(count);
 }
 
-UndoAdd::~UndoAdd() {
+CommandAdd::~CommandAdd() {
 	for (std::vector<Frame*>::iterator i = frames.begin();
 			i != frames.end(); ++i) {
 		delete *i;
 	}
 }
 
-void UndoAdd::addFrame(Frame* frame) {
+void CommandAdd::addFrame(Frame* frame) {
 	frames.push_back(frame);
 }
 
-Command* UndoAdd::execute() {
-	std::auto_ptr<UndoRemove> inverse(
-			new UndoRemove(sv, scene, frame, frames.size()));
+Command* CommandAdd::execute() {
+	std::auto_ptr<CommandRemove> inverse(
+			new CommandRemove(sv, scene, frame, frames.size()));
 	sv.addFrames(scene, frame, frames);
 	// ownership has been passed, so we must forget the frames
 	frames.clear();
@@ -52,28 +52,28 @@ Command* UndoAdd::execute() {
 	return inverse.release();
 }
 
-void UndoAdd::accept(FileNameVisitor& v) const {
+void CommandAdd::accept(FileNameVisitor& v) const {
 	for (std::vector<Frame*>::const_iterator i = frames.begin();
 			i != frames.end(); ++i) {
 		(*i)->accept(v);
 	}
 }
 
-UndoAddFactory::Parameters::Parameters(int scene, int frame, int count)
+CommandAddFactory::Parameters::Parameters(int scene, int frame, int count)
 		: sc(scene), fr(frame), frameCount(count), twfs(0), twfCount(0),
 		  parameterCount(0) {
 	twfs = (TemporaryWorkspaceFile*) malloc(
 			frameCount * sizeof(TemporaryWorkspaceFile));
 }
 
-UndoAddFactory::Parameters::~Parameters() {
+CommandAddFactory::Parameters::~Parameters() {
 	for (int i = 0; i != twfCount; ++i) {
 		twfs[i].~TemporaryWorkspaceFile();
 	}
 	free(twfs);
 }
 
-const char* UndoAddFactory::Parameters::addFrame(const char* filename) {
+const char* CommandAddFactory::Parameters::addFrame(const char* filename) {
 	assert (twfCount != frameCount);
 	TemporaryWorkspaceFile* p = twfs + twfCount;
 	new (p) TemporaryWorkspaceFile(filename);
@@ -81,42 +81,42 @@ const char* UndoAddFactory::Parameters::addFrame(const char* filename) {
 	return p->path();
 }
 
-int32_t UndoAddFactory::Parameters::getInteger(int32_t min, int32_t max) {
+int32_t CommandAddFactory::Parameters::getInteger(int32_t min, int32_t max) {
 	assert(parameterCount < 2);
 	++parameterCount;
 	return parameterCount == 0? sc : fr;
 }
 
-int32_t UndoAddFactory::Parameters::getHowMany() {
+int32_t CommandAddFactory::Parameters::getHowMany() {
 	assert(parameterCount == 2);
 	++parameterCount;
 	return frameCount;
 }
 
-void UndoAddFactory::Parameters::getString(std::string& out) {
+void CommandAddFactory::Parameters::getString(std::string& out) {
 	assert(3 <= parameterCount);
 	int index = parameterCount - 3;
 	++parameterCount;
 	out.assign(twfs[index].basename());
 }
 
-void UndoAddFactory::Parameters::retainFiles() {
+void CommandAddFactory::Parameters::retainFiles() {
 	for (int i = 0; i != twfCount; ++i) {
 		twfs[i].retainFile();
 	}
 }
 
-UndoAddFactory::UndoAddFactory(SceneVector& model) : sv(model) {
+CommandAddFactory::CommandAddFactory(SceneVector& model) : sv(model) {
 }
 
-UndoAddFactory::~UndoAddFactory() {
+CommandAddFactory::~CommandAddFactory() {
 }
 
-Command* UndoAddFactory::create(::Parameters& ps) {
+Command* CommandAddFactory::create(::Parameters& ps) {
 	int scene = ps.getInteger(0, sv.sceneCount() - 1);
 	int frame = ps.getInteger(0, sv.frameCount(scene));
 	int count = ps.getHowMany();
-	UndoAdd* add = new UndoAdd(sv, scene, frame, count);
+	CommandAdd* add = new CommandAdd(sv, scene, frame, count);
 	std::string frameName;
 	for (int i = 0; i != count; ++i) {
 		ps.getString(frameName);

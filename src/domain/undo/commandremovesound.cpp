@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,29 +18,42 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef UNDOMOVESCENE_H
-#define UNDOMOVESCENE_H	
+#include "commandremovesound.h"
+#include "commandaddsound.h"
+#include "src/domain/animation/frame.h"
+#include "src/domain/animation/scene.h"
+#include "src/domain/animation/scenevector.h"
+#include <memory>
 
-#include "command.h"
+CommandRemoveSound::CommandRemoveSound(SceneVector& model, int32_t scene,
+		int32_t frame, int32_t soundNumber)
+	: sv(model), sc(scene), fr(frame), index(soundNumber) {
+}
 
-class SceneVector;
+CommandRemoveSound::~CommandRemoveSound() {
+}
 
-class UndoMoveScene : public Command {
-	SceneVector& sv;
-	int32_t from;
-	int32_t to;
-public:
-	UndoMoveScene(SceneVector& model, int sceneNumber, int movePosition);
-	~UndoMoveScene();
-	Command* execute();
-};
+Command* CommandRemoveSound::execute() {
+	Frame* frame = sv.getScene(sc)->getFrame(fr);
+	Sound* sound = frame->getSound(index);
+	std::auto_ptr<Command> inv(
+			new CommandAddSound(sv, sc, fr, index, sound));
+	frame->removeSound(index);
+	delete this;
+	return inv.release();
+}
 
-class UndoMoveSceneFactory : public CommandFactory {
-	SceneVector& sv;
-public:
-	UndoMoveSceneFactory(SceneVector& model);
-	~UndoMoveSceneFactory();
-	Command* create(Parameters& ps);
-};
+UndoRemoveSoundFactory::UndoRemoveSoundFactory(SceneVector& model)
+	: sv(model) {
+}
 
-#endif
+UndoRemoveSoundFactory::~UndoRemoveSoundFactory() {
+}
+
+Command* UndoRemoveSoundFactory::create(Parameters& ps) {
+	int32_t sc = ps.getInteger(0, sv.sceneCount());
+	int32_t fr = ps.getInteger(0, sv.frameCount(sc));
+	int32_t index = ps.getInteger(0, sv.getScene(sc)->getFrame(fr)->
+			getNumberOfSounds());
+	return new CommandRemoveSound(sv, sc, fr, index);
+}

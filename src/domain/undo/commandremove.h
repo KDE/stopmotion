@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,37 +17,38 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "undoaddscene.h"
-#include "undoremovescene.h"
-#include "src/domain/animation/scene.h"
-#include "src/domain/animation/scenevector.h"
+#ifndef COMMANDREMOVE_H
+#define COMMANDREMOVE_H
 
-#include <memory>
+#include "command.h"
 
-UndoAddScene::UndoAddScene(SceneVector& model, int32_t sn, Scene* scene)
-		: sv(model), index(sn), sc(scene) {
-}
+class SceneVector;
 
-UndoAddScene::~UndoAddScene() {
-	delete sc;
-}
+class CommandRemove : public Command {
+	SceneVector& sv;
+	int sc;
+	int fr;
+	int frameCount;
+public:
+	/**
+	 * Constructs a command that removes frames from a scene.
+	 * @param model The animation to be changed.
+	 * @param scene The scene from which the frames were removed.
+	 * @param fromFrame The index of the first frame to be removed.
+	 * @param frameCount The number of frames to remove.
+	 */
+	CommandRemove(SceneVector& model,
+			int scene, int fromFrame, int frameCount);
+	~CommandRemove();
+	Command* execute();
+};
 
-Command* UndoAddScene::execute() {
-	std::auto_ptr<UndoRemoveScene> inv(new UndoRemoveScene(sv, index));
-	sv.addScene(index, sc);
-	return inv.release();
-}
+class CommandRemoveFactory : public CommandFactory {
+	SceneVector& sv;
+public:
+	CommandRemoveFactory(SceneVector& model);
+	~CommandRemoveFactory();
+	Command* create(Parameters& ps);
+};
 
-UndoAddSceneFactory::UndoAddSceneFactory(SceneVector& model) : sv(model) {
-}
-
-UndoAddSceneFactory::~UndoAddSceneFactory() {
-}
-
-Command* UndoAddSceneFactory::create(Parameters& ps) {
-	int32_t index = ps.getInteger(0, sv.sceneCount());
-	std::auto_ptr<Scene> sc(new Scene());
-	Command* r = new UndoAddScene(sv, index, sc.get());
-	sc.release();
-	return r;
-}
+#endif

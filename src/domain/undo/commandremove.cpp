@@ -17,22 +17,22 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "undoremove.h"
-#include "undoadd.h"
+#include "commandremove.h"
+#include "commandadd.h"
 #include "scenevector.h"
 
 #include <memory>
 
-UndoRemove::UndoRemove(SceneVector& model,
+CommandRemove::CommandRemove(SceneVector& model,
 		int scene, int fromFrame, int count)
 		: sv(model), sc(scene), fr(fromFrame), frameCount(count) {
 }
 
-UndoRemove::~UndoRemove() {
+CommandRemove::~CommandRemove() {
 }
 
-Command* UndoRemove::execute() {
-	std::auto_ptr<UndoAdd> inv(new UndoAdd(sv, sc, fr, frameCount));
+Command* CommandRemove::execute() {
+	std::auto_ptr<CommandAdd> inv(new CommandAdd(sv, sc, fr, frameCount));
 	std::vector<Frame*> removed;
 	sv.removeFrames(sc, fr, frameCount, removed);
 	for (std::vector<Frame*>::iterator i = removed.begin();
@@ -43,16 +43,16 @@ Command* UndoRemove::execute() {
 	return inv.release();
 }
 
-UndoRemoveFactory::UndoRemoveFactory(SceneVector& model)
+CommandRemoveFactory::CommandRemoveFactory(SceneVector& model)
 		: sv(model) {
 }
 
-UndoRemoveFactory::~UndoRemoveFactory() {
+CommandRemoveFactory::~CommandRemoveFactory() {
 }
 
-Command* UndoRemoveFactory::create(Parameters& ps) {
+Command* CommandRemoveFactory::create(Parameters& ps) {
 	int32_t scene = ps.getInteger(0, sv.sceneCount() - 1);
 	int32_t frame = ps.getInteger(0, sv.frameCount(scene) - 1);
 	int32_t count = ps.getHowMany();
-	return new UndoRemove(sv, scene, frame, count);
+	return new CommandRemove(sv, scene, frame, count);
 }

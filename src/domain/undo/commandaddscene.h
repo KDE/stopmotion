@@ -16,34 +16,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#ifndef COMMANDADDSCENE_H
+#define COMMANDADDSCENE_H
 
-#include "undomovescene.h"
-#include "src/domain/animation/scenevector.h"
+#include "command.h"
 
-UndoMoveScene::UndoMoveScene(SceneVector& model, int sceneNumber,
-		int movePosition) : sv(model), from(sceneNumber), to(movePosition) {
-}
+class SceneVector;
+class Scene;
 
-UndoMoveScene::~UndoMoveScene() {
-}
+class CommandAddScene : public Command {
+	SceneVector& sv;
+	int32_t index;
+	Scene* sc;
+public:
+	/**
+	 * @param scene Ownership is passed.
+	 */
+	CommandAddScene(SceneVector& model, int32_t sceneNumber, Scene* scene);
+	~CommandAddScene();
+	Command* execute();
+};
 
-Command* UndoMoveScene::execute() {
-	sv.moveScene(from, to);
-	int32_t t = from;
-	from = to;
-	to = t;
-	return this;
-}
+/**
+ * This factory can only create empty scenes.
+ */
+class CommandAddSceneFactory : public CommandFactory {
+	SceneVector& sv;
+public:
+	CommandAddSceneFactory(SceneVector& model);
+	~CommandAddSceneFactory();
+	Command* create(Parameters& ps);
+};
 
-UndoMoveSceneFactory::UndoMoveSceneFactory(SceneVector& model) : sv(model) {
-}
-
-UndoMoveSceneFactory::~UndoMoveSceneFactory() {
-}
-
-Command* UndoMoveSceneFactory::create(Parameters& ps) {
-	int max = sv.sceneCount() - 1;
-	int32_t from = ps.getInteger(0, max);
-	int32_t to = ps.getInteger(0, max);
-	return new UndoMoveScene(sv, from, to);
-}
+#endif

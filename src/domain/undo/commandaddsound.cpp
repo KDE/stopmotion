@@ -18,29 +18,55 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef UNDOREMOVESOUND_H_
-#define UNDOREMOVESOUND_H_
+#include "commandaddsound.h"
+#include "commandremovesound.h"
+#include "scenevector.h"
+#include "src/domain/animation/frame.h"
+#include "src/domain/filenamevisitor.h"
 
-#include "command.h"
+#include <memory>
 
-class UndoRemoveSound : public Command {
-	SceneVector sv;
-	int32_t sc;
-	int32_t fr;
-	int32_t index;
-public:
-	UndoRemoveSound(SceneVector& model, int32_t scene, int32_t frame,
-			int32_t soundNumber);
-	~UndoRemoveSound();
-	Command* execute();
+CommandAddSound::CommandAddSound(SceneVector& model, int32_t scene, int32_t frame,
+		int32_t soundNumber, Sound* sound)
+	: sv(model), sc(scene), fr(frame), index(soundNumber),
+	  snd(sound) {
+}
+
+CommandAddSound::~CommandAddSound() {
+	delete snd;
+}
+
+Command* CommandAddSound::execute() {
+	std::auto_ptr<CommandRemoveSound>
+			inv(new CommandRemoveSound(sv, sc, fr, index));
+	sv.addSound(sc, fr, index, snd);
+	delete this;
+	return inv.release();
 };
 
-class UndoRemoveSoundFactory : public CommandFactory {
-	SceneVector& sv;
-public:
-	UndoRemoveSoundFactory(SceneVector& model);
-	~UndoRemoveSoundFactory();
-	Command* create(Parameters& ps);
-};
+void CommandAddSound::accept(FileNameVisitor& v) const {
+	v.visitSound(snd->getAudio()->getSoundPath());
+}
 
-#endif /* UNDOREMOVESOUND_H_ */
+CommandAddSoundFactory::CommandAddSoundFactory(SceneVector& model) : sv(model) {
+}
+
+CommandAddSoundFactory::~CommandAddSoundFactory() {
+}
+
+Command* CommandAddSoundFactory::create(Parameters& ps) {
+	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
+	int32_t fr = ps.getInteger(0, sv.frameCount(sc));
+	int32_t index = ps.getInteger(0, sv.soundCount(sc, fr));
+	std::string filename;
+	ps.getString(filename);
+	std::string humanName;
+	ps.getString(humanName);
+	std::auto_ptr<Sound> sound(new Sound());
+	sound->setName(humanName);
+	auto_ptr<Command> r(new CommandAddSound(sv, sc, fr, index, sound.get()));
+	sound.release();
+	TemporaryWorkspaceFile twf(filename.c_str());
+	sound->open(twf);
+	return r.release();
+}

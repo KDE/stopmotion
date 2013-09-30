@@ -109,6 +109,10 @@ WorkspaceFile::WorkspaceFile(const char* extension, FreshFilename)
 	getFreshFilename(fullPath, namePart, extension);
 }
 
+WorkspaceFile::WorkspaceFile(TemporaryWorkspaceFile& t)
+		: fullPath(t.fullPath), namePart(t.namePart) {
+}
+
 WorkspaceFile& WorkspaceFile::operator=(TemporaryWorkspaceFile& t) {
 	delete[] fullPath;
 	fullPath = t.fullPath;

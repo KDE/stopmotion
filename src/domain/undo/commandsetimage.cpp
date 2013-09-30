@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,43 +18,35 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "undomove.h"
+#include "commandsetimage.h"
 #include "scenevector.h"
+#include "workspacefile.h"
+#include "src/domain/animation/scene.h"
 
-UndoMove::UndoMove(SceneVector& model, int fromScene, int fromFrame, int count,
-		int toScene, int toFrame)
-		: sv(model), fromSc(fromScene), fromFr(fromFrame), frameCount(count),
-		  toSc(toScene), toFr(toFrame) {
+CommandSetImage::CommandSetImage(SceneVector& model, int32_t scene,
+		int32_t frame, TemporaryWorkspaceFile& w)
+		: sv(model), sc(scene), fr(frame), image(w) {
 }
 
-UndoMove::~UndoMove() {
+CommandSetImage::~CommandSetImage() {
 }
 
-template<typename T> void swap(T& a, T& b) {
-	T t(a);
-	a = b;
-	b = t;
-}
-
-Command* UndoMove::execute() {
-	sv.moveFrames(fromSc, fromFr, frameCount, toSc, toFr);
-	swap(fromSc, toSc);
-	swap(fromFr, toFr);
+Command* CommandSetImage::execute() {
+	sv.getScene(sc)->getFrame(fr)->replaceImage(image);
 	return this;
 }
 
-UndoMoveFactory::UndoMoveFactory(SceneVector& model) : sv(model) {
+CommandSetImageFactory::CommandSetImageFactory(SceneVector& model) : sv(model) {
 }
 
-UndoMoveFactory::~UndoMoveFactory() {
+CommandSetImageFactory::~CommandSetImageFactory() {
 }
 
-Command* UndoMoveFactory::create(Parameters& ps) {
-	int fs = ps.getInteger(0, sv.sceneCount() - 1);
-	int framesInScene = sv.frameCount(fs);
-	int ff = ps.getInteger(0, framesInScene - 1);
-	int fc = ps.getInteger(0, framesInScene - ff);
-	int ts = ps.getInteger(0, sv.sceneCount() - 1);
-	int tf = ps.getInteger(0, sv.frameCount(ts));
-	return new UndoMove(sv, fs, ff, fc, ts, tf);
+Command* CommandSetImageFactory::create(Parameters& ps) {
+	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
+	int32_t fr = ps.getInteger(0, sv.frameCount(sc) - 1);
+	std::string path;
+	ps.getString(path);
+	TemporaryWorkspaceFile twf(path.c_str());
+	return new CommandSetImage(sv, sc, fr, twf);
 }

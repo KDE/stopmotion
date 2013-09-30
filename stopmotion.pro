@@ -13,9 +13,16 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/mainwindowgui.h \
     src/presentation/frontends/qtfrontend/qtfrontend.h \
     src/application/runanimationhandler.h \
-    src/domain/undo/undoadd.h \
-    src/domain/undo/undomove.h \
-    src/domain/undo/undoremove.h \
+    src/domain/undo/commandadd.h \
+    src/domain/undo/commandmove.h \
+    src/domain/undo/commandremove.h \
+    src/domain/undo/commandsetimage.h \
+    src/domain/undo/commandaddsound.h \
+    src/domain/undo/commandrenamesound.h \
+    src/domain/undo/commandremovesound.h \
+    src/domain/undo/commandaddscene.h \
+    src/domain/undo/commandmovescene.h \
+    src/domain/undo/commandremovescene.h \
     src/application/camerahandler.h \
     src/presentation/frontends/qtfrontend/frameview.h \
     src/presentation/frontends/qtfrontend/flexiblespinbox.h \
@@ -81,9 +88,6 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/preferencesmenu.h \
     src/foundation/preferencestool.h \
     src/application/modelhandler.h \
-    src/domain/undo/undoaddscene.h \
-    src/domain/undo/undoremovescene.h \
-    src/domain/undo/undomovescene.h \
     src/presentation/frontends/qtfrontend/toolsmenu.h \
     src/application/languagehandler.h \
     src/technical/video/videofactory.h \
@@ -126,9 +130,16 @@ SOURCES += src/config.cpp \
     src/presentation/frontends/qtfrontend/mainwindowgui.cpp \
     src/presentation/frontends/qtfrontend/qtfrontend.cpp \
     src/application/runanimationhandler.cpp \
-    src/domain/undo/undoadd.cpp \
-    src/domain/undo/undomove.cpp \
-    src/domain/undo/undoremove.cpp \
+    src/domain/undo/commandadd.cpp \
+    src/domain/undo/commandmove.cpp \
+    src/domain/undo/commandremove.cpp \
+    src/domain/undo/commandsetimage.cpp \
+    src/domain/undo/commandaddsound.cpp \
+    src/domain/undo/commandrenamesound.cpp \
+    src/domain/undo/commandremovesound.cpp \
+    src/domain/undo/commandaddscene.cpp \
+    src/domain/undo/commandmovescene.cpp \
+    src/domain/undo/commandremovescene.cpp \
     src/application/camerahandler.cpp \
     src/presentation/frontends/qtfrontend/frameview.cpp \
     src/presentation/frontends/qtfrontend/flexiblespinbox.cpp \
@@ -148,9 +159,6 @@ SOURCES += src/config.cpp \
     src/presentation/frontends/qtfrontend/preferencesmenu.cpp \
     src/foundation/preferencestool.cpp \
     src/application/modelhandler.cpp \
-    src/domain/undo/undoaddscene.cpp \
-    src/domain/undo/undoremovescene.cpp \
-    src/domain/undo/undomovescene.cpp \
     src/presentation/frontends/qtfrontend/toolsmenu.cpp \
     src/application/languagehandler.cpp \
     src/technical/video/videofactory.cpp \

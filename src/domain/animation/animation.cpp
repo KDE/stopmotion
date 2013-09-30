@@ -25,16 +25,16 @@
 #include "src/domain/undo/command.h"
 #include "src/domain/undo/executor.h"
 
-#include "src/domain/undo/undoadd.h"
-#include "src/domain/undo/undoremove.h"
-#include "src/domain/undo/undomove.h"
-#include "src/domain/undo/undoaddsound.h"
-#include "src/domain/undo/undoremovesound.h"
-#include "src/domain/undo/undorenamesound.h"
-#include "src/domain/undo/undoaddscene.h"
-#include "src/domain/undo/undoremovescene.h"
-#include "src/domain/undo/undomovescene.h"
-#include "src/domain/undo/undosetimage.h"
+#include "src/domain/undo/commandadd.h"
+#include "src/domain/undo/commandremove.h"
+#include "src/domain/undo/commandmove.h"
+#include "src/domain/undo/commandaddsound.h"
+#include "src/domain/undo/commandremovesound.h"
+#include "src/domain/undo/commandrenamesound.h"
+#include "src/domain/undo/commandaddscene.h"
+#include "src/domain/undo/commandremovescene.h"
+#include "src/domain/undo/commandmovescene.h"
+#include "src/domain/undo/commandsetimage.h"
 
 #include <vector>
 #include <iostream>
@@ -55,25 +55,25 @@ const char* commandMoveScene = "move-scene";
 
 Executor* makeAnimationCommandExecutor(SceneVector& model) {
 	std::auto_ptr<Executor> ex(makeExecutor());
-	std::auto_ptr<CommandFactory> add(new UndoAddFactory(model));
+	std::auto_ptr<CommandFactory> add(new CommandAddFactory(model));
 	ex->addCommand(commandAddFrames, add, true);
-	std::auto_ptr<CommandFactory> remove(new UndoRemoveFactory(model));
+	std::auto_ptr<CommandFactory> remove(new CommandRemoveFactory(model));
 	ex->addCommand(commandRemoveFrames, remove, false);
-	std::auto_ptr<CommandFactory> move(new UndoMoveFactory(model));
+	std::auto_ptr<CommandFactory> move(new CommandMoveFactory(model));
 	ex->addCommand(commandMoveFrames, move, false);
-	std::auto_ptr<CommandFactory> setImage(new UndoSetImageFactory(model));
+	std::auto_ptr<CommandFactory> setImage(new CommandSetImageFactory(model));
 	ex->addCommand(commandSetImage, move, false);
-	std::auto_ptr<CommandFactory> addSound(new UndoAddSoundFactory(model));
+	std::auto_ptr<CommandFactory> addSound(new CommandAddSoundFactory(model));
 	ex->addCommand(commandAddSound, addSound, true);
 	std::auto_ptr<CommandFactory> removeSound(new UndoRemoveSoundFactory(model));
 	ex->addCommand(commandRemoveSound, removeSound, true);
-	std::auto_ptr<CommandFactory> renameSound(new UndoRenameSoundFactory(model));
+	std::auto_ptr<CommandFactory> renameSound(new CommandRenameSoundFactory(model));
 	ex->addCommand(commandRenameSound, renameSound, false);
-	std::auto_ptr<CommandFactory> addScene(new UndoAddSceneFactory(model));
+	std::auto_ptr<CommandFactory> addScene(new CommandAddSceneFactory(model));
 	ex->addCommand(commandAddScene, addScene, true);
 	std::auto_ptr<CommandFactory> removeScene(new UndoRemoveSceneFactory(model));
 	ex->addCommand(commandRemoveScene, removeScene, false);
-	std::auto_ptr<CommandFactory> moveScene(new UndoMoveSceneFactory(model));
+	std::auto_ptr<CommandFactory> moveScene(new CommandMoveSceneFactory(model));
 	ex->addCommand(commandMoveScene, moveScene, false);
 	return ex.release();
 }
@@ -106,7 +106,7 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 
 	bool isAddingAborted = false;
 	int count = frameNames.size();
-	UndoAddFactory::Parameters params(getActiveSceneNumber(),
+	CommandAddFactory::Parameters params(getActiveSceneNumber(),
 			index, count);
 	bool showingProgress = 1 < count;
 	if (showingProgress) {

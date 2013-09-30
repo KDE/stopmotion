@@ -1,6 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
- *   see contributors.txt for details                                      *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,33 +17,33 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include "commandmovescene.h"
+#include "src/domain/animation/scenevector.h"
 
-#ifndef UNDOSETIMAGE_H_
-#define UNDOSETIMAGE_H_
+CommandMoveScene::CommandMoveScene(SceneVector& model, int sceneNumber,
+		int movePosition) : sv(model), from(sceneNumber), to(movePosition) {
+}
 
-#include "command.h"
-#include "workspacefile.h"
+CommandMoveScene::~CommandMoveScene() {
+}
 
-class SceneVector;
+Command* CommandMoveScene::execute() {
+	sv.moveScene(from, to);
+	int32_t t = from;
+	from = to;
+	to = t;
+	return this;
+}
 
-class UndoSetImage : public Command {
-	SceneVector& sv;
-	int32_t sc;
-	int32_t fr;
-	WorkspaceFile image;
-public:
-	UndoSetImage(SceneVector& model, int32_t scene, int32_t frame,
-			TemporaryWorkspaceFile& w);
-	~UndoSetImage();
-	Command* execute();
-};
+CommandMoveSceneFactory::CommandMoveSceneFactory(SceneVector& model) : sv(model) {
+}
 
-class UndoSetImageFactory : public CommandFactory {
-	SceneVector& sv;
-public:
-	UndoSetImageFactory(SceneVector& model);
-	~UndoSetImageFactory();
-	Command* create(Parameters& ps);
-};
+CommandMoveSceneFactory::~CommandMoveSceneFactory() {
+}
 
-#endif /* UNDOSETIMAGE_H_ */
+Command* CommandMoveSceneFactory::create(Parameters& ps) {
+	int max = sv.sceneCount() - 1;
+	int32_t from = ps.getInteger(0, max);
+	int32_t to = ps.getInteger(0, max);
+	return new CommandMoveScene(sv, from, to);
+}
