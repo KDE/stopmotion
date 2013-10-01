@@ -541,7 +541,8 @@ public:
 		writer.writeString(out.c_str());
 	}
 	void writeCommand(CommandLogger* logger) {
-		logger->writeCommand(writer.result());
+		if (logger)
+			logger->writeCommand(writer.result());
 		writer.reset();
 	}
 };
