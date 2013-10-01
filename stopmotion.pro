@@ -13,7 +13,6 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/mainwindowgui.h \
     src/presentation/frontends/qtfrontend/qtfrontend.h \
     src/application/runanimationhandler.h \
-    src/domain/undo/commandadd.h \
     src/domain/undo/commandmove.h \
     src/domain/undo/commandremove.h \
     src/domain/undo/commandsetimage.h \
@@ -248,10 +247,14 @@ DISTFILES -= stopmotion.pro \
 DEFINES += NO_DEBUG
 TEMPLATE = app
 
-release:DESTDIR=.
-release:OBJECTS_DIR=build/release
-debug:DESTDIR=build/debug
-debug:OBJECTS_DIR=build/debug
+CONFIG(release,debug|release) {
+	DESTDIR=.
+	OBJECTS_DIR=build/release
+}
+CONFIG(debug,debug|release) {
+	DESTDIR=build/debug
+	OBJECTS_DIR=build/debug
+}
 MOC_DIR = build
 RCC_DIR = build
 UI_DIR = build
