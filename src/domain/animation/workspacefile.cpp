@@ -89,8 +89,9 @@ void WorkspaceFile::clear() {
 	std::stringstream rm;
 	rm << "rm -rf " << path;
 	system(rm.str().c_str());
-	mkdir(path, 0755);
-	//TODO what about failure? Probably can only inform the user and close
+	if (mkdir(path, 0755) < 0) {
+		throw WorkspaceDirectoryCreationException();
+	}
 	fileNum = 0;
 	soundNumber = 0;
 }

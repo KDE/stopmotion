@@ -25,6 +25,12 @@
 
 class TemporaryWorkspaceFile;
 
+class CopyFailedException {
+};
+
+class WorkspaceDirectoryCreationException {
+};
+
 /**
  * Represents the filename of a file in the workspace (~/.stopmotion/tmp/).
  * The file is not held open, nor is it deleted on destruction.
@@ -95,9 +101,6 @@ public:
 	 * Increments the sound counter.
 	 */
 	static void nextSoundNumber();
-};
-
-class CopyFailedException {
 };
 
 /**
