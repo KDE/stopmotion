@@ -62,21 +62,24 @@ std::ostream& operator<<(std::ostream& s, WorkspacePath) {
 void getFreshFilename(char*& path, const char*& namePart,
 		const char* extension) {
 	std::stringstream p;
-	std::stringstream::pos_type zeroOff = p.tellp();
+	std::stringstream::pos_type zeroOff;
+	const char* ss = 0;
 	int indexOfName = 0;
 	do {
 		p.str("");
+		zeroOff = p.tellp();
 		p << workspacePath;
-		indexOfName = p.tellp();
-		p.fill(0);
+		indexOfName = (p.tellp() - zeroOff);
+		p.fill('0');
 		p.width(8);
-		p <<  nextFileNumber();
+		p << nextFileNumber();
 		p << extension;
+		ss = p.str().c_str();
 		// keep going until we find a filename that doesn't already exist.
-	} while (0 != access(p.str().c_str(), F_OK));
+	} while (0 == access(ss, F_OK));
 	int size = (p.tellp() - zeroOff) + 1;
 	path = new char[size];
-	strncpy(path, p.str().c_str(), size);
+	strncpy(path, ss, size);
 	namePart = path + indexOfName;
 }
 
