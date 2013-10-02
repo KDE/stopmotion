@@ -133,6 +133,9 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 	if (0 < added) {
 		executor->execute(commandAddFrames, params);
 		isChangesSaved = false;
+		std::auto_ptr<FrameIterator> fit(
+				scenes.makeFrameIterator(activeScene, index, index + count));
+		notifyAdd(*fit, index);
 	}
 	if (showingProgress)
 		frontend->hideProgress();
@@ -147,6 +150,7 @@ void Animation::removeFrames(int32_t fromFrame, int32_t toFrame) {
 	executor->execute(commandRemoveFrames, activeFrame, fromFrame,
 			toFrame - fromFrame - 1);
 	isChangesSaved = false;
+	notifyRemove(fromFrame, toFrame);
 }
 
 
