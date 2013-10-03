@@ -109,6 +109,7 @@ public:
 	 * @return The sound that was removed. Ownership is returned.
 	 */
 	Sound* removeSound(int index);
+
 	/**
 	 * Returns the sound.
 	 * @param index Which sound to return.
@@ -116,10 +117,16 @@ public:
 	Sound* getSound(int index);
 
 	/**
+	 * Returns the sound.
+	 * @param index Which sound to return.
+	 */
+	const Sound* getSound(int index) const;
+
+	/**
 	 * Returns the number of sounds in this frame.
 	 * @return the number of sounds in this frame.
 	 */
-	int getNumberOfSounds();
+	int getNumberOfSounds() const;
 
 	/**
 	 * Sets the name of the sound at index soundNumber in this frame to
@@ -138,7 +145,7 @@ public:
 	 * @return the sound at index soundNumber in this frame. Ownership is
 	 * not returned.
 	 */
-	const char* getSoundName(unsigned int soundNumber);
+	const char* getSoundName(unsigned int soundNumber) const;
 
 	/**
 	 * Retrieves the absolute path to the picture of this frame.
@@ -162,7 +169,7 @@ public:
 	/**
 	 * Plays the sounds belonging to this frame.
 	 */
-	void playSounds(AudioDriver *driver);
+	void playSounds(AudioDriver *driver) const;
 
 	/**
 	 * Makes v visit all the files referenced (image and sounds)

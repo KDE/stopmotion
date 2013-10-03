@@ -138,7 +138,12 @@ Sound* Frame::getSound(int index) {
 }
 
 
-int Frame::getNumberOfSounds( ) {
+const Sound* Frame::getSound(int index) const {
+	return sounds[index];
+}
+
+
+int Frame::getNumberOfSounds() const {
 	return sounds.size();
 }
 
@@ -149,13 +154,13 @@ const char* Frame::setSoundName(unsigned int soundNumber,
 }
 
 
-const char* Frame::getSoundName(unsigned int soundNumber) {
+const char* Frame::getSoundName(unsigned int soundNumber) const {
 	return sounds[soundNumber]->getName();
 }
 
 
-void Frame::playSounds(AudioDriver *driver) {
-	SoundVector::iterator i = sounds.begin();
+void Frame::playSounds(AudioDriver *driver) const {
+	SoundVector::const_iterator i = sounds.begin();
 	for (; i != sounds.end(); ++i) {
 		driver->addAudioFile((*i)->getAudio());
 	}

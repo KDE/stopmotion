@@ -41,7 +41,7 @@ vector<Frame*>& Scene::getFrames() {
 }
 
 
-unsigned int Scene::getSize() {
+int Scene::getSize() const {
 	return frames.size();
 }
 

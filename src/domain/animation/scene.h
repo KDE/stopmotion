@@ -54,7 +54,7 @@ public:
 	 * Retrieves the size of the scene (the number of frames in it).
 	 * @return the number of frames in the scene.
 	 */
-	unsigned int getSize();
+	int getSize() const;
 
 	/**
 	 * Retrieves the frame at position frameNumber in the scene.
