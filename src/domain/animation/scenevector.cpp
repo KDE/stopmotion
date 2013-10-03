@@ -73,10 +73,6 @@ const Scene* SceneVector::getScene(int which) const {
 	return scenes[which];
 }
 
-Scene* SceneVector::getScene(int which) {
-	return scenes[which];
-}
-
 int SceneVector::frameCount(int scene) const {
 	return scenes[scene]->getSize();
 }
@@ -143,7 +139,7 @@ void SceneVector::moveFrames(int fromScene, int fromFrame, int frameCount,
 	}
 }
 
-int SceneVector::soundCount(int scene, int frame) {
+int SceneVector::soundCount(int scene, int frame) const {
 	return scenes[scene]->getFrame(frame)->getNumberOfSounds();
 }
 
@@ -159,6 +155,11 @@ const char* SceneVector::setSoundName(int scene, int frame, int soundNumber,
 
 Sound* SceneVector::removeSound(int scene, int frame, int soundNumber) {
 	return scenes[scene]->removeSound(frame, soundNumber);
+}
+
+void SceneVector::replaceImage(int sceneNumber, int frameNumber,
+		WorkspaceFile& otherImage) {
+	scenes[sceneNumber]->replaceImage(frameNumber, otherImage);
 }
 
 void SceneVector::accept(FileNameVisitor& v) const {

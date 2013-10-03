@@ -43,7 +43,7 @@ void CommandRenameSound::setName(const char* newName) {
 }
 
 Command* CommandRenameSound::execute() {
-	name = sv.getScene(sc)->setSoundName(fr, index, name);
+	name = sv.setSoundName(sc, fr, index, name);
 	return this;
 }
 

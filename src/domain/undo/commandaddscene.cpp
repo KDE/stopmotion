@@ -25,12 +25,17 @@
 
 #include <memory>
 
-CommandAddScene::CommandAddScene(SceneVector& model, int32_t sn, Scene* scene)
-		: sv(model), index(sn), sc(scene) {
+CommandAddScene::CommandAddScene(SceneVector& model, int32_t sn)
+		: sv(model), index(sn), sc(0) {
 }
 
 CommandAddScene::~CommandAddScene() {
 	delete sc;
+}
+
+void CommandAddScene::setScene(Scene* s) {
+	assert(!sc);
+	sc = s;
 }
 
 Command* CommandAddScene::execute() {
@@ -48,7 +53,7 @@ CommandAddSceneFactory::~CommandAddSceneFactory() {
 Command* CommandAddSceneFactory::create(Parameters& ps) {
 	int32_t index = ps.getInteger(0, sv.sceneCount());
 	std::auto_ptr<Scene> sc(new Scene());
-	Command* r = new CommandAddScene(sv, index, sc.get());
-	sc.release();
+	CommandAddScene* r = new CommandAddScene(sv, index);
+	r->setScene(sc.release());
 	return r;
 }

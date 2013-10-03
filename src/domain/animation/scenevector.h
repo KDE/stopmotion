@@ -28,6 +28,7 @@ class Frame;
 class Sound;
 class FrameIterator;
 class FileNameVisitor;
+class WorkspaceFile;
 
 class SceneVector {
 	std::vector<Scene*> scenes;
@@ -105,12 +106,6 @@ public:
 	 */
 	const Scene* getScene(int which) const;
 	/**
-	 * Returns the scene requested.
-	 * @param which The number of the scene to be returned.
-	 * @return The scene requested.
-	 */
-	Scene* getScene(int which);
-	/**
 	 * Returns the number of frames in scene number @c scene.
 	 * @param scene The number of the scene to query.
 	 * @return The number of frames in scene number @c scene.
@@ -172,6 +167,18 @@ public:
 	void moveFrames(int fromScene, int fromFrame, int frameCount,
 			int toScene, int toFrame);
 	/**
+	 * Replaces the image of the frame at index {@c frameNumber} of scene
+	 * {@c sceneNumber}.
+	 * @param sceneNumber The index of the scene containing the frame to alter.
+	 * @param frameNumber The index of the frame to alter.
+	 * @param [in,out] The image to swap with. On exit, the frame at index
+	 * {@c frameNumber} will have the image formerly held by
+	 * {@c otherImage} and {@c otherImage} will have the image formerly held
+	 * by the frame.
+	 */
+	void replaceImage(int sceneNumber, int frameNumber,
+			WorkspaceFile& otherImage);
+	/**
 	 * Returns the number of sounds attached to a frame.
 	 * @param scene The number of the scene that contains the frame that you
 	 * need to examine.
@@ -179,7 +186,7 @@ public:
 	 * @return The number of sounds attached to frame number @c frame of scene
 	 * @c scene.
 	 */
-	int soundCount(int scene, int frame);
+	int soundCount(int scene, int frame) const;
 	/**
 	 * Adds a sound to a frame of animation.
 	 * @param scene The number of the scene containing the frame to add the

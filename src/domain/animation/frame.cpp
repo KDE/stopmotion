@@ -65,6 +65,10 @@ AudioFormat* Sound::getAudio() {
 	return af;
 }
 
+const AudioFormat* Sound::getAudio() const {
+	return af;
+}
+
 const char* Sound::getName() const {
 	return name;
 }

@@ -102,7 +102,7 @@ const vector<Scene*> ProjectSerializer::open(const char *filename)
 
 // check if the user wants to save an opened project to an another file.
 bool ProjectSerializer::save( 	const char *filename, 
-								const vector<Scene*>& sVect,
+								const vector<const Scene*>& sVect,
 								Frontend *frontend	)
 {
 	assert(filename != NULL);
@@ -157,11 +157,11 @@ const char* ProjectSerializer::getProjectFile()
 }
 
 
-void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *frontend)
+void ProjectSerializer::setAttributes(const vector<const Scene*>& sVect, Frontend *frontend)
 {
 	xmlNodePtr node = NULL;
-	Frame *frame     = NULL;
-	AudioFormat *sound = NULL;
+	const Frame *frame = NULL;
+	const AudioFormat *sound = NULL;
 	unsigned int index = 0;
 
 	scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
@@ -175,10 +175,10 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 		
 		// Images
 		images = xmlNewChild(node, NULL, BAD_CAST "images", NULL);
-		vector<Frame*> frames = sVect[i]->getFrames();
-		unsigned int numFrames = frames.size();
+		const Scene* scene = sVect[i];
+		int numFrames = scene->getSize();
 		for (unsigned int j = 0; j < numFrames; ++j) {
-			frame = frames[j];
+			frame = scene->getFrame(j);
 			const char *filename = frame->getBasename();
 			node = xmlNewChild(images, NULL, BAD_CAST "img", NULL);
 			xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
@@ -196,7 +196,6 @@ void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *fro
 				}
 			}
 		}
-		frames.clear();
 	}
 }
 

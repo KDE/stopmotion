@@ -32,7 +32,7 @@ CommandSetImage::~CommandSetImage() {
 }
 
 Command* CommandSetImage::execute() {
-	sv.getScene(sc)->replaceImage(fr, image);
+	sv.replaceImage(sc, fr, image);
 	return this;
 }
 

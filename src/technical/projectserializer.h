@@ -54,7 +54,8 @@ public:
 	 * @param frontend the frontend to display progress to
 	 * @return true if saving was successfull, false otherwise
 	 */
-	bool save(const char *filename, const vector<Scene*>& scenes, Frontend *frontend);
+	bool save(const char *filename, const vector<const Scene*>& scenes,
+			Frontend *frontend);
 	
 	/**
 	 * Retrieves the project file.
@@ -100,7 +101,7 @@ private:
 	char *prevImgPath;// absolute
 	char *prevXmlFile;// absolute
 	
-	void setAttributes(const vector<Scene*>& scenes, Frontend *frontend);
+	void setAttributes(const vector<const Scene*>& scenes, Frontend *frontend);
 	void getAttributes(xmlNodePtr node, vector<Scene*>& scenes);
 	bool saveDOMToFile(xmlDocPtr doc);
 	void setProjectPaths(const char *unpacked, bool isSave);

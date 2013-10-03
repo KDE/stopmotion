@@ -31,9 +31,8 @@ UndoRemoveScene::~UndoRemoveScene() {
 }
 
 Command* UndoRemoveScene::execute() {
-	std::auto_ptr<Command> inv(new CommandAddScene(sv,
-			sc, sv.getScene(sc)));
-	sv.removeScene(sc);
+	std::auto_ptr<CommandAddScene> inv(new CommandAddScene(sv, sc));
+	inv->setScene(sv.removeScene(sc));
 	return inv.release();
 }
 

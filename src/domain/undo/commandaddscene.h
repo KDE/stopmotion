@@ -32,8 +32,9 @@ public:
 	/**
 	 * @param scene Ownership is passed.
 	 */
-	CommandAddScene(SceneVector& model, int32_t sceneNumber, Scene* scene);
+	CommandAddScene(SceneVector& model, int32_t sceneNumber);
 	~CommandAddScene();
+	void setScene(Scene* s);
 	Command* execute();
 };
 

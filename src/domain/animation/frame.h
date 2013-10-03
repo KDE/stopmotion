@@ -55,7 +55,10 @@ public:
 	 * @param n The name to set.
 	 */
 	void setName(std::string& n);
+	//TODO: remove? shouldn't be allowed to change the audio file without
+	// going through the undo system.
 	AudioFormat* getAudio();
+	const AudioFormat* getAudio() const;
 	const char* getName() const;
 };
 
