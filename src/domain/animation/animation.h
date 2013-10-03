@@ -119,14 +119,14 @@ public:
 	 * @param sceneNumber the number of the scene to retrieve the frame from
 	 * @return the frame with the number frameNumber.
 	 */
-	Frame* getFrame(int frameNumber, int sceneNumber);
+	const Frame* getFrame(int frameNumber, int sceneNumber) const;
 
 	/**
 	 * Retrieves the requested frame from the active scene.
 	 * @param frameNumber the number of the frame to retrieve.
 	 * @return the frame at location frameNumber in the active scene.
 	 */
-	Frame* getFrame(int frameNumber);
+	const Frame* getFrame(int frameNumber) const;
 
 	/**
 	 * Returns the size of the model.

@@ -62,7 +62,7 @@ void SceneThumbView::setOpened( bool isOpened )
 	arrowButton->setOpened(isOpened);
 	
 	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
-		Frame *frame = DomainFacade::getFacade()->getFrame(0, number);
+		const Frame *frame = DomainFacade::getFacade()->getFrame(0, number);
 		if (frame) {
 			centerIcon = QPixmap::fromImage( 
 					QImage(frame->getImagePath()).scaled(width() / 2, height() / 2) );

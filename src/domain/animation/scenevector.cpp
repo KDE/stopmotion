@@ -149,17 +149,16 @@ int SceneVector::soundCount(int scene, int frame) {
 
 void SceneVector::addSound(int scene, int frame, int soundNumber,
 		Sound* sound) {
-	scenes[scene]->getFrame(frame)->addSound(sound, soundNumber);
+	scenes[scene]->addSound(frame, soundNumber, sound);
 }
 
 const char* SceneVector::setSoundName(int scene, int frame, int soundNumber,
 		const char* soundName) {
-	return scenes[scene]->getFrame(frame)
-			->setSoundName(soundNumber, soundName);
+	return scenes[scene]->setSoundName(frame, soundNumber, soundName);
 }
 
 Sound* SceneVector::removeSound(int scene, int frame, int soundNumber) {
-	return scenes[scene]->getFrame(frame)->removeSound(soundNumber);
+	return scenes[scene]->removeSound(frame, soundNumber);
 }
 
 void SceneVector::accept(FileNameVisitor& v) const {

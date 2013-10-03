@@ -154,14 +154,12 @@ bool DomainFacade::isUnsavedChanges()
 }
 
 
-Frame* DomainFacade::getFrame(unsigned int frameNumber, unsigned int sceneNumber)
-{
+const Frame* DomainFacade::getFrame(int frameNumber, int sceneNumber) const {
 	return animationModel->getFrame(frameNumber, sceneNumber);
 }
 
 
-Frame * DomainFacade::getFrame( unsigned int frameNumber )
-{
+const Frame * DomainFacade::getFrame(int frameNumber) const {
 	return animationModel->getFrame(frameNumber);
 }
 

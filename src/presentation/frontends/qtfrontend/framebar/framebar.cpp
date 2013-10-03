@@ -185,7 +185,7 @@ void FrameBar::updatePlayFrame(int) {}
 
 void FrameBar::updateAnimationChanged(int frameNumber)
 {
-	Frame *frame = DomainFacade::getFacade()->getFrame(frameNumber);
+	const Frame *frame = DomainFacade::getFacade()->getFrame(frameNumber);
 	if (frame) {
 		const char *path = frame->getImagePath();
 		thumbViews[frameNumber + activeScene + 1]->
@@ -232,7 +232,7 @@ void FrameBar::addFrames(FrameIterator& frames, unsigned int index,
 		thumb->show();
 
 		//Sets the note icon on the respective frames.
-		Frame *frame = DomainFacade::getFacade()->getFrame(i);
+		const Frame *frame = DomainFacade::getFacade()->getFrame(i);
 		if (frame) {
 			if (frame->getNumberOfSounds() > 0 ) {
 				thumb->setHasSounds(true);
@@ -423,7 +423,7 @@ void FrameBar::frameSoundsChanged()
 	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
 	int activeThumb = activeFrame + DomainFacade::getFacade()->getActiveSceneNumber() + 1;
 
-	Frame *frame = DomainFacade::getFacade()->getFrame(activeFrame);
+	const Frame *frame = DomainFacade::getFacade()->getFrame(activeFrame);
 	if (frame) {
 		if (frame->getNumberOfSounds() > 0 ) {
 			thumbViews[activeThumb]->setHasSounds(true);

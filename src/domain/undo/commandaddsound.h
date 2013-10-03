@@ -35,8 +35,9 @@ class CommandAddSound : public Command {
 	Sound* snd;
 public:
 	CommandAddSound(SceneVector& model, int32_t scene, int32_t frame,
-			int32_t soundNumber, Sound* sound);
+			int32_t soundNumber);
 	~CommandAddSound();
+	void setSound(Sound* sound);
 	Command* execute();
 	void accept(FileNameVisitor& v) const;
 };

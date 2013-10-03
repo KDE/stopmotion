@@ -46,7 +46,7 @@ int Scene::getSize() const {
 }
 
 
-Frame* Scene::getFrame(int frameNumber) {
+const Frame* Scene::getFrame(int frameNumber) const {
 	return frames[frameNumber];
 }
 
@@ -94,6 +94,38 @@ void Scene::moveFrames( unsigned int fromFrame, unsigned int toFrame,
 	}
 }
 
+void Scene::addSound(int frameNumber, int soundNumber, Sound* sound) {
+	frames[frameNumber]->addSound(soundNumber, sound);
+}
+
+Sound* Scene::removeSound(int frameNumber, int index) {
+	return frames[frameNumber]->removeSound(index);
+}
+
+const Sound* Scene::getSound(int frameNumber, int index) const {
+	return frames[frameNumber]->getSound(index);
+}
+
+int Scene::getNumberOfSounds(int frameNumber) const {
+	return frames[frameNumber]->getNumberOfSounds();
+}
+
+const char* Scene::setSoundName(int frameNumber, int soundNumber,
+		const char* soundName) {
+	return frames[frameNumber]->setSoundName(soundNumber, soundName);
+}
+
+const char* Scene::getSoundName(int frameNumber, int soundNumber) const {
+	return frames[frameNumber]->getSoundName(soundNumber);
+}
+
+void Scene::replaceImage(int frameNumber, WorkspaceFile& otherImage) {
+	frames[frameNumber]->replaceImage(otherImage);
+}
+
+int Scene::newSound(int frameNumber, TemporaryWorkspaceFile& filename) {
+	return frames[frameNumber]->newSound(filename);
+}
 
 void Scene::accept(FileNameVisitor& v) const {
 	for (frameVector::const_iterator i = frames.begin();

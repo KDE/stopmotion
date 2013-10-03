@@ -98,8 +98,7 @@ const char* Frame::getBasename() const {
 	return imagePath.basename();
 }
 
-int Frame::addSound(TemporaryWorkspaceFile& filename)
-{
+int Frame::newSound(TemporaryWorkspaceFile& filename) {
 	Logger::get().logDebug("Adding sound in frame");
 	preallocateSounds(1);
 	std::auto_ptr<Sound> sound(new Sound());
@@ -118,7 +117,7 @@ int Frame::addSound(TemporaryWorkspaceFile& filename)
 	return 0;
 }
 
-void Frame::addSound(Sound* sound, int index) {
+void Frame::addSound(int index, Sound* sound) {
 	sounds.insert(sounds.begin() + index, sound);
 }
 
@@ -148,13 +147,12 @@ int Frame::getNumberOfSounds() const {
 }
 
 
-const char* Frame::setSoundName(unsigned int soundNumber,
-		const char* soundName) {
+const char* Frame::setSoundName(int soundNumber, const char* soundName) {
 	return sounds[soundNumber]->setName(soundName);
 }
 
 
-const char* Frame::getSoundName(unsigned int soundNumber) const {
+const char* Frame::getSoundName(int soundNumber) const {
 	return sounds[soundNumber]->getName();
 }
 

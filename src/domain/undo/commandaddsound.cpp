@@ -27,13 +27,18 @@
 #include <memory>
 
 CommandAddSound::CommandAddSound(SceneVector& model, int32_t scene, int32_t frame,
-		int32_t soundNumber, Sound* sound)
+		int32_t soundNumber)
 	: sv(model), sc(scene), fr(frame), index(soundNumber),
-	  snd(sound) {
+	  snd(0) {
 }
 
 CommandAddSound::~CommandAddSound() {
 	delete snd;
+}
+
+void CommandAddSound::setSound(Sound* sound) {
+	assert(!snd);
+	snd = sound;
 }
 
 Command* CommandAddSound::execute() {
@@ -64,8 +69,8 @@ Command* CommandAddSoundFactory::create(Parameters& ps) {
 	ps.getString(humanName);
 	std::auto_ptr<Sound> sound(new Sound());
 	sound->setName(humanName);
-	auto_ptr<Command> r(new CommandAddSound(sv, sc, fr, index, sound.get()));
-	sound.release();
+	std::auto_ptr<CommandAddSound> r(new CommandAddSound(sv, sc, fr, index));
+	r->setSound(sound.release());
 	TemporaryWorkspaceFile twf(filename.c_str());
 	sound->open(twf);
 	return r.release();

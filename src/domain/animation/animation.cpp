@@ -217,7 +217,7 @@ void Animation::setSoundName(int32_t frameNumber, int32_t soundNumber,
 }
 
 
-Frame* Animation::getFrame(int frameNumber, int sceneNumber) {
+const Frame* Animation::getFrame(int frameNumber, int sceneNumber) const {
 	if (frameNumber < scenes.frameCount(sceneNumber)) {
 		Logger::get().logDebug("Retrieving frame from Animation");
 		return scenes.getScene(sceneNumber)->getFrame(frameNumber);
@@ -230,7 +230,7 @@ Frame* Animation::getFrame(int frameNumber, int sceneNumber) {
 }
 
 
-Frame* Animation::getFrame(int frameNumber) {
+const Frame* Animation::getFrame(int frameNumber) const {
 	if (activeScene >= 0) {
 		return getFrame(frameNumber, activeScene);
 	}
@@ -273,7 +273,7 @@ void Animation::setActiveFrame(int frameNumber) {
 
 void Animation::playFrame(int frameNumber) {
 	if (isAudioDriverInitialized) {
-		Frame *f = getFrame(frameNumber);
+		const Frame *f = getFrame(frameNumber);
 		if (f) {
 			f->playSounds(audioDriver);
 		}
@@ -476,7 +476,7 @@ void Animation::animationChanged(const char *alteredFile) {
 	Scene* scene = scenes.getScene(activeScene);
 	int changedFrame = -1;
 	for (int i = 0; i < size; ++i) {
-		Frame *f = scene->getFrame(i);
+		const Frame *f = scene->getFrame(i);
 		if (f) {
 			if (strcmp(f->getImagePath(), alteredFile) == 0) {
 				changedFrame = i;

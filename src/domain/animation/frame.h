@@ -78,23 +78,24 @@ public:
 	~Frame();
 
 	/**
-	 * Adds the sound in the file filename to this frame.
-	 * @param filename the name of the file where the sound is.
+	 * Adds the sound in the file filename to the end of the sounds in this
+	 * frame, giving it an arbitrary name.
+	 * @param filename The file that holds the sound.
 	 * @return zero on success, less than zero on failure;
 	 * -1 = file is not readable
 	 * -2 = not a valid audio file
 	 */
-	int addSound(TemporaryWorkspaceFile& filename);
+	int newSound(TemporaryWorkspaceFile& filename);
 
 	/**
 	 * Adds a sound.
 	 * @param sound Ownership is passed. May not be null.
-	 * @param index Must be between 0 and @code{.cpp} getNumberOfSounds() - 1
+	 * @param index Must be between 0 and @code{.cpp} getNumberOfSounds()
 	 * @endcode
 	 * @note This is guaranteed not to fail for @c n calls after a call to
 	 * @code{.cpp} preallocateSounds(n) @endcode
 	 */
-	void addSound(Sound* sound, int index);
+	void addSound(int index, Sound* sound);
 
 	/**
 	 * Allocates space for @c extra more calls to @ref addSound
@@ -137,7 +138,7 @@ public:
 	 * @return The old name for this sound. Ownership is returned; must be
 	 * freed with delete[].
 	 */
-	const char* setSoundName(unsigned int soundNumber, const char* soundName);
+	const char* setSoundName(int soundNumber, const char* soundName);
 
 	/**
 	 * Retrieves the name of the sound at index soundNumber in this frame.
@@ -145,7 +146,7 @@ public:
 	 * @return the sound at index soundNumber in this frame. Ownership is
 	 * not returned.
 	 */
-	const char* getSoundName(unsigned int soundNumber) const;
+	const char* getSoundName(int soundNumber) const;
 
 	/**
 	 * Retrieves the absolute path to the picture of this frame.

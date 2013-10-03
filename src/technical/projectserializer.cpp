@@ -224,13 +224,13 @@ void ProjectSerializer::getAttributes(xmlNodePtr node, vector<Scene*>& sVect)
 					else {
 						snprintf(tmp, 256, "%s%s", soundPath, filename);
 						Scene *s = sVect.back();
-						Frame *f = s->getFrame(s->getSize() - 1);
+						int frameNum = s->getSize() - 1;
 						TemporaryWorkspaceFile twf(tmp);
-						f->addSound(twf);
+						int soundNum = s->getNumberOfSounds(frameNum);
+						s->newSound(frameNum, twf);
 						char *soundName = (char*)xmlGetProp(currNode, BAD_CAST "alt");
 						if (soundName != NULL) {
-							unsigned int soundNum = f->getNumberOfSounds() - 1;
-							f->setSoundName(soundNum,  soundName);
+							s->setSoundName(frameNum, soundNum,  soundName);
 							xmlFree((xmlChar*)soundName);
 						}
 					}

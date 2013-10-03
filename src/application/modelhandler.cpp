@@ -198,7 +198,8 @@ int ModelHandler::editCurrentFrame()
 		return 1;
 	}
 
-	Frame *frame = DomainFacade::getFacade()->getFrame(activeFrame, activeScene);
+	const Frame *frame = DomainFacade::getFacade()
+			->getFrame(activeFrame, activeScene);
 	if (!frame) {
 		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
 			tr("The active frame is corrupt"),

@@ -271,7 +271,7 @@ void FrameView::paintEvent(QPaintEvent *)
 void FrameView::setActiveFrame(int frameNumber)
 {
 	Logger::get().logDebug("Setting new active frame in FrameView");
-	Frame *frame = facade->getFrame(frameNumber);
+	const Frame *frame = facade->getFrame(frameNumber);
 	if (frame) {
 		const char *fileName = frame->getImagePath();
 
@@ -511,7 +511,7 @@ void FrameView::nextPlayBack()
 	if (facade->getActiveSceneNumber() >= 0) {
 		if ((int)i < (mixCount) && i < (unsigned int)facade->getActiveFrameNumber() + 1) {
 			
-			Frame *frame = 0;
+			const Frame *frame = 0;
 			if (facade->getActiveFrameNumber() <= (mixCount)) {
 				frame = facade->getFrame(i++);
 			}

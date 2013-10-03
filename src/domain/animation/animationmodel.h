@@ -213,7 +213,7 @@ public:
 	 * @param sceneNumber the scene to retrieve the frame from.
 	 * @return the frame to retrieve.
 	 */
-	virtual Frame* getFrame(int frameNumber, int sceneNumber) = 0;
+	virtual const Frame* getFrame(int frameNumber, int sceneNumber) const = 0;
 
 	/**
 	 * Abstract overloaded function for convenience. Assumes the scene to retrieve there
@@ -221,7 +221,7 @@ public:
 	 * @param frameNumber the number of the frame to retrieve.
 	 * @return the frame at location frameNumber in the active scene.
 	 */
-	virtual Frame* getFrame(int frameNumber) = 0;
+	virtual const Frame* getFrame(int frameNumber) const = 0;
 
 	/**
 	 * Abstract function which returns the size of the model.

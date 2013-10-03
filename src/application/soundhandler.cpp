@@ -47,7 +47,7 @@ void SoundHandler::addSound()
 		DomainFacade *facade = DomainFacade::getFacade();
 		int ret = facade->addSound( facade->getActiveFrameNumber(), file.toLocal8Bit().constData() );
 		if (ret == 0) {
-			Frame *frame = facade->getFrame( facade->getActiveFrameNumber() );
+			const Frame *frame = facade->getFrame( facade->getActiveFrameNumber() );
 			if (frame) {
 				soundsList->insertItem(soundsList->count(), 
 						new QListWidgetItem( frame->getSoundName(soundsList->count())) );

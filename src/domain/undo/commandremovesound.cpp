@@ -34,11 +34,10 @@ CommandRemoveSound::~CommandRemoveSound() {
 }
 
 Command* CommandRemoveSound::execute() {
-	Frame* frame = sv.getScene(sc)->getFrame(fr);
-	Sound* sound = frame->getSound(index);
-	std::auto_ptr<Command> inv(
-			new CommandAddSound(sv, sc, fr, index, sound));
-	frame->removeSound(index);
+	std::auto_ptr<CommandAddSound> inv(
+			new CommandAddSound(sv, sc, fr, index));
+	Sound* s = sv.getScene(sc)->removeSound(fr, index);
+	inv->setSound(s);
 	delete this;
 	return inv.release();
 }
