@@ -142,3 +142,6 @@ void FramePreferencesMenu::retranslateStrings()
 	soundsLabel->setToolTip(infoText);
 	soundsList->setWhatsThis(infoText);
 }
+
+FramePreferencesMenu::~FramePreferencesMenu() {
+}

@@ -51,7 +51,9 @@ public:
 	 */
 	FramePreferencesMenu( QWidget * parent = 0, SoundHandler *soundHandler = 0, 
 			const char * name = 0);
-	
+
+	virtual ~FramePreferencesMenu();
+
 	/**
 	 * Retranslates the strings in the frame preferences menu.
 	 */
