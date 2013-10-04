@@ -8,6 +8,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/observer.h \
     src/domain/animation/animation.h \
     src/domain/animation/animationmodel.h \
+    src/domain/animation/animationimpl.h \
     src/domain/animation/frame.h \
     src/presentation/frontends/nonguifrontend/nonguifrontend.h \
     src/presentation/frontends/qtfrontend/mainwindowgui.h \
@@ -124,6 +125,7 @@ SOURCES += src/config.cpp \
     src/foundation/logger.cpp \
     src/domain/animation/animation.cpp \
     src/domain/animation/animationmodel.cpp \
+    src/domain/animation/animationimpl.cpp \
     src/domain/animation/frame.cpp \
     src/domain/animation/scenevector.cpp \
     src/presentation/frontends/nonguifrontend/nonguifrontend.cpp \
