@@ -42,7 +42,7 @@ Sound::~Sound() {
  *@todo check audio type (ogg, mp3, wav ...)
  */
 void Sound::open(TemporaryWorkspaceFile& filename) {
-	std::auto_ptr<AudioFormat> a(new OggVorbis());
+	std::auto_ptr<OggVorbis> a(new OggVorbis());
 	a->setFilename(filename);
 	af = a.release();
 }

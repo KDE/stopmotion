@@ -40,17 +40,6 @@ public:
 	virtual ~AudioFormat() {};
 	
 	/**
-	 * Abstract function for registering the given filename to be an audio 
-	 * format file. This function checks that the file can be opened and that
-	 * it is a valid audio format file.
-	 * @param filename the filename to register
-	 * @throws CouldNotOpenFileException if the file count not be read.
-	 * @throws InvalidAudioFormatException if the file contents could not be
-	 * recognized
-	 */
-	virtual void setFilename(TemporaryWorkspaceFile& filename) = 0;
-	
-	/**
 	 * Abstract function for opening the file registered with setFilename.
 	 * @return 0 on success, -1 on failure
 	 */
