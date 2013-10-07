@@ -59,13 +59,14 @@ void ObserverNotifier::doOp(ObservableOperation& oo) {
 		oo.setUp(*del);
 		for (std::vector<Observer*>::iterator i = observers.begin();
 				i != observers.end(); ++i) {
-			oo.update(**i);
+			try {
+				oo.update(**i);
+			} catch (std::exception& e) {
+				//TODO what if this throws?
+				frontend->reportError(e.what(), 0);
+			}
 		}
-	} catch (std::exception& e) {
-		try {
-			frontend->reportError(e.what(), 0);
-		} catch (...) {
-		}
+	} catch (...) {
 	}
 }
 
@@ -79,6 +80,18 @@ ObserverNotifier::ObserverNotifier(AnimationImpl* delegate, Frontend* fe)
 void ObserverNotifier::addObserver(Observer* newObserver) {
 	observers.push_back(newObserver);
 }
+
+class AnimationClearer : public ObservableOperation {
+public:
+	AnimationClearer() {
+	}
+	void op(AnimationImpl& del) {
+		del.clear();
+	}
+	void update(Observer& ob) {
+		ob.updateClear();
+	}
+};
 
 void ObserverNotifier::clear() {
 	del->clear();
