@@ -1,0 +1,71 @@
+/***************************************************************************
+ *   Copyright (C) 2013 by Linuxstopmotion contributors.              *
+ *   see contributors.txt for details                                      *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
+#ifndef OBSERVERNOTIFIER_H_
+#define OBSERVERNOTIFIER_H_
+
+#include "src/domain/animation/animationimpl.h"
+#include <vector>
+
+class Observer;
+class Frontend;
+class ObservableOperation;
+
+class ObserverNotifier : public AnimationImpl {
+	AnimationImpl* del;
+	Frontend* frontend;
+	std::vector<Observer*> observers;
+	void ObserverNotifier::doOp(ObservableOperation& oo);
+public:
+	~ObserverNotifier();
+	ObserverNotifier(AnimationImpl* delegate, Frontend* frontend);
+	void addObserver(Observer* newObserver);
+	void clear();
+	int sceneCount() const;
+	FrameIterator* makeFrameIterator(int scene) const;
+	FrameIterator* makeFrameIterator(int scene, int start, int end) const;
+	void addScene(int where, Scene* newScene);
+	void addScene(int where);
+	void preallocateScenes(int count);
+	Scene* removeScene(int from);
+	void moveScene(int from, int to);
+	const Scene* getScene(int which) const;
+	int frameCount(int scene) const;
+	void addFrame(int scene, int where, Frame* frame);
+	void addFrames(int scene, int where,
+			const std::vector<Frame*>& frames);
+	void preallocateFrames(int scene, int count);
+	Frame* removeFrame(int scene, int frame);
+	void removeFrames(int scene, int frame, int count,
+			std::vector<Frame*>& out);
+	void moveFrames(int fromScene, int fromFrame, int frameCount,
+			int toScene, int toFrame);
+	void replaceImage(int sceneNumber, int frameNumber,
+			WorkspaceFile& otherImage);
+	int soundCount(int scene, int frame) const;
+	void addSound(int scene, int frame, int soundNumber,
+			Sound* sound);
+	const char* setSoundName(int scene, int frame, int soundNumber,
+			const char* soundName);
+	Sound* removeSound(int scene, int frame, int soundNumber);
+	void accept(FileNameVisitor& v) const;
+};
+
+#endif /* OBSERVERNOTIFIER_H_ */
