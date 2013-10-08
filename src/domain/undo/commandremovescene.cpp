@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,11 +20,11 @@
 
 #include "commandremovescene.h"
 #include "commandaddscene.h"
-#include "src/domain/animation/scenevector.h"
+#include "src/domain/animation/animationimpl.h"
 
 #include <memory>
 
-UndoRemoveScene::UndoRemoveScene(SceneVector& model, int32_t sceneNumber)
+UndoRemoveScene::UndoRemoveScene(AnimationImpl& model, int32_t sceneNumber)
 		: sv(model), sc(sceneNumber) {
 }
 
@@ -36,7 +37,7 @@ Command* UndoRemoveScene::execute() {
 	return inv.release();
 }
 
-UndoRemoveSceneFactory::UndoRemoveSceneFactory(SceneVector& model)
+UndoRemoveSceneFactory::UndoRemoveSceneFactory(AnimationImpl& model)
 		: sv(model) {
 }
 

@@ -22,7 +22,6 @@
 
 #include "src/config.h"
 #include "src/presentation/observer.h"
-#include "src/domain/animation/animationmodel.h"
 #include "src/domain/animation/frame.h"
 #include "thumbview.h"
 #include "framepreferencesmenu.h"

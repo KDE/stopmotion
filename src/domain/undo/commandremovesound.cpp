@@ -22,10 +22,10 @@
 #include "commandaddsound.h"
 #include "src/domain/animation/frame.h"
 #include "src/domain/animation/scene.h"
-#include "src/domain/animation/scenevector.h"
+#include "src/domain/animation/animationimpl.h"
 #include <memory>
 
-CommandRemoveSound::CommandRemoveSound(SceneVector& model, int32_t scene,
+CommandRemoveSound::CommandRemoveSound(AnimationImpl& model, int32_t scene,
 		int32_t frame, int32_t soundNumber)
 	: sv(model), sc(scene), fr(frame), index(soundNumber) {
 }
@@ -42,7 +42,7 @@ Command* CommandRemoveSound::execute() {
 	return inv.release();
 }
 
-UndoRemoveSoundFactory::UndoRemoveSoundFactory(SceneVector& model)
+UndoRemoveSoundFactory::UndoRemoveSoundFactory(AnimationImpl& model)
 	: sv(model) {
 }
 

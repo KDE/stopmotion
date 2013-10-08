@@ -24,24 +24,24 @@
 #include "command.h"
 #include "workspacefile.h"
 
-class SceneVector;
+class AnimationImpl;
 
 class CommandSetImage : public Command {
-	SceneVector& sv;
+	AnimationImpl& sv;
 	int32_t sc;
 	int32_t fr;
 	WorkspaceFile image;
 public:
-	CommandSetImage(SceneVector& model, int32_t scene, int32_t frame,
+	CommandSetImage(AnimationImpl& model, int32_t scene, int32_t frame,
 			TemporaryWorkspaceFile& w);
 	~CommandSetImage();
 	Command* execute();
 };
 
 class CommandSetImageFactory : public CommandFactory {
-	SceneVector& sv;
+	AnimationImpl& sv;
 public:
-	CommandSetImageFactory(SceneVector& model);
+	CommandSetImageFactory(AnimationImpl& model);
 	~CommandSetImageFactory();
 	Command* create(Parameters& ps);
 };

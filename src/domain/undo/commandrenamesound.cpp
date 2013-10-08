@@ -19,13 +19,13 @@
  ***************************************************************************/
 
 #include "commandrenamesound.h"
-#include "src/domain/animation/scenevector.h"
+#include "src/domain/animation/animationimpl.h"
 #include "src/domain/animation/scene.h"
 
 #include <memory>
 #include <string.h>
 
-CommandRenameSound::CommandRenameSound(SceneVector& model, int32_t scene,
+CommandRenameSound::CommandRenameSound(AnimationImpl& model, int32_t scene,
 		int32_t frame, int32_t soundNumber, const char* newName)
 	: sv(model), sc(scene), fr(frame), index(soundNumber), name(newName) {
 }
@@ -47,7 +47,7 @@ Command* CommandRenameSound::execute() {
 	return this;
 }
 
-CommandRenameSoundFactory::CommandRenameSoundFactory(SceneVector& model) :sv(model) {
+CommandRenameSoundFactory::CommandRenameSoundFactory(AnimationImpl& model) :sv(model) {
 }
 
 CommandRenameSoundFactory::~CommandRenameSoundFactory() {

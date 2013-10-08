@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors.              *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,7 +21,7 @@
 #define DOMAINFACADE_H
 
 #include "src/config.h"
-#include "animation/animationmodel.h"
+#include "animation/animation.h"
 #include "src/presentation/frontends/frontend.h"
 #include "src/technical/video/videoencoder.h"
 #include "src/technical/util.h"
@@ -313,7 +314,7 @@ private:
 	static DomainFacade *domainFacade;
 
 	/**The datamodel in the program*/
-	AnimationModel *animationModel;
+	Animation *animationModel;
 };
 
 #endif

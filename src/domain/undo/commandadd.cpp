@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 Stopmotion contributors                            *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,14 +20,14 @@
 #include "commandadd.h"
 #include "commandremove.h"
 
-#include "src/domain/animation/scenevector.h"
+#include "src/domain/animation/animationimpl.h"
 #include "src/domain/animation/frame.h"
 #include "src/domain/animation/workspacefile.h"
 
 #include <malloc.h>
 #include <memory>
 
-CommandAdd::CommandAdd(SceneVector& model, int toScene, int toFrame, int count)
+CommandAdd::CommandAdd(AnimationImpl& model, int toScene, int toFrame, int count)
 		: sv(model), scene(toScene), frame(toFrame) {
 	frames.reserve(count);
 }
@@ -106,7 +107,7 @@ void CommandAddFactory::Parameters::retainFiles() {
 	}
 }
 
-CommandAddFactory::CommandAddFactory(SceneVector& model) : sv(model) {
+CommandAddFactory::CommandAddFactory(AnimationImpl& model) : sv(model) {
 }
 
 CommandAddFactory::~CommandAddFactory() {

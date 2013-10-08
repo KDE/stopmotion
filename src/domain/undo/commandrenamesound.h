@@ -23,10 +23,10 @@
 
 #include "command.h"
 
-class SceneVector;
+class AnimationImpl;
 
 class CommandRenameSound : public Command {
-	SceneVector& sv;
+	AnimationImpl& sv;
 	int32_t sc;
 	int32_t fr;
 	int32_t index;
@@ -36,7 +36,7 @@ public:
 	 * @param newName The new name. Ownership is passed; must have been
 	 * allocated with {@c new char[]}.
 	 */
-	CommandRenameSound(SceneVector& model, int32_t scene, int32_t frame,
+	CommandRenameSound(AnimationImpl& model, int32_t scene, int32_t frame,
 			int32_t soundNumber, const char* newName);
 	~CommandRenameSound();
 	/**
@@ -48,9 +48,9 @@ public:
 };
 
 class CommandRenameSoundFactory : public CommandFactory {
-	SceneVector& sv;
+	AnimationImpl& sv;
 public:
-	CommandRenameSoundFactory(SceneVector& model);
+	CommandRenameSoundFactory(AnimationImpl& model);
 	~CommandRenameSoundFactory();
 	Command* create(Parameters& ps);
 };

@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,7 +25,7 @@
 #include <vector>
 
 class Frame;
-class SceneVector;
+class AnimationImpl;
 class TemporaryWorkspaceFile;
 
 class CommandAdd : public Command {
@@ -33,7 +34,7 @@ public:
 	 * @param count The number of frames to reserve; {@ref addFrame} can
 	 * subsequently be called this many times without throwing an exception.
 	 */
-	CommandAdd(SceneVector& model, int toScene, int toFrame, int count);
+	CommandAdd(AnimationImpl& model, int toScene, int toFrame, int count);
 	~CommandAdd();
 	/**
 	 * Adds a frame to the add command.
@@ -43,16 +44,16 @@ public:
 	Command* execute();
 	void accept(FileNameVisitor& v) const;
 private:
-	SceneVector& sv;
+	AnimationImpl& sv;
 	std::vector<Frame*> frames;
 	int scene;
 	int frame;
 };
 
 class CommandAddFactory : public CommandFactory {
-	SceneVector& sv;
+	AnimationImpl& sv;
 public:
-	CommandAddFactory(SceneVector& model);
+	CommandAddFactory(AnimationImpl& model);
 	~CommandAddFactory();
 	Command* create(::Parameters& ps);
 	class Parameters : public ::Parameters {

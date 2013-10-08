@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,11 +21,11 @@
 #include "commandaddscene.h"
 #include "commandremovescene.h"
 #include "src/domain/animation/scene.h"
-#include "src/domain/animation/scenevector.h"
+#include "src/domain/animation/animationimpl.h"
 
 #include <memory>
 
-CommandAddScene::CommandAddScene(SceneVector& model, int32_t sn)
+CommandAddScene::CommandAddScene(AnimationImpl& model, int32_t sn)
 		: sv(model), index(sn), sc(0) {
 }
 
@@ -44,7 +44,7 @@ Command* CommandAddScene::execute() {
 	return inv.release();
 }
 
-CommandAddSceneFactory::CommandAddSceneFactory(SceneVector& model) : sv(model) {
+CommandAddSceneFactory::CommandAddSceneFactory(AnimationImpl& model) : sv(model) {
 }
 
 CommandAddSceneFactory::~CommandAddSceneFactory() {

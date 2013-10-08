@@ -22,6 +22,11 @@
 #include "src/technical/audio/ossdriver.h"
 #include "src/technical/video/videofactory.h"
 #include "workspacefile.h"
+#include "scenevector.h"
+#include "animationimpl.h"
+#include "src/domain/observernotifier.h"
+#include "src/presentation/observer.h"
+
 #include "src/domain/undo/command.h"
 #include "src/domain/undo/executor.h"
 
@@ -36,6 +41,7 @@
 #include "src/domain/undo/commandmovescene.h"
 #include "src/domain/undo/commandsetimage.h"
 
+#include <string.h>
 #include <vector>
 #include <iostream>
 #include <sstream>
@@ -53,7 +59,7 @@ const char* commandRemoveScene = "delete-scene";
 const char* commandMoveScene = "move-scene";
 }
 
-Executor* makeAnimationCommandExecutor(SceneVector& model) {
+Executor* makeAnimationCommandExecutor(AnimationImpl& model) {
 	std::auto_ptr<Executor> ex(makeExecutor());
 	std::auto_ptr<CommandFactory> add(new CommandAddFactory(model));
 	ex->addCommand(commandAddFrames, add, true);
@@ -80,21 +86,32 @@ Executor* makeAnimationCommandExecutor(SceneVector& model) {
 
 
 Animation::Animation()
-		: serializer(0), executor(0), audioDriver(0),
+		: scenes(0), serializer(0), executor(0), audioDriver(0),
 		  activeFrame(-1), activeScene(-1),
-		  isChangesSaved(true), isAudioDriverInitialized(false) {
-	serializer  = new ProjectSerializer();
-	executor = makeAnimationCommandExecutor(scenes);
-	audioDriver = new OSSDriver("/dev/dsp");
+		  isChangesSaved(true), isAudioDriverInitialized(false),
+		  frontend(0) {
+	std::auto_ptr<SceneVector> scs(new SceneVector);
+	std::auto_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));
+	scs.release();
+	std::auto_ptr<ProjectSerializer> szer(new ProjectSerializer);
+	std::auto_ptr<Executor> ex(makeAnimationCommandExecutor(*on));
+	std::auto_ptr<OSSDriver> ad(new OSSDriver("/dev/dsp"));
+	scenes = on.release();
+	serializer = szer.release();
+	executor = ex.release();
+	audioDriver = ad.release();
 }
 
 
 Animation::~Animation() {
+	delete scenes;
 	serializer->cleanup();
 	delete serializer;
 	serializer = NULL;
 	delete audioDriver;
 	audioDriver = NULL;
+	delete executor;
+	executor = NULL;
 }
 
 
@@ -134,8 +151,7 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 		executor->execute(commandAddFrames, params);
 		isChangesSaved = false;
 		std::auto_ptr<FrameIterator> fit(
-				scenes.makeFrameIterator(activeScene, index, index + count));
-		notifyAdd(*fit, index);
+				scenes->makeFrameIterator(activeScene, index, index + count));
 	}
 	if (showingProgress)
 		frontend->hideProgress();
@@ -150,14 +166,13 @@ void Animation::removeFrames(int32_t fromFrame, int32_t toFrame) {
 	executor->execute(commandRemoveFrames, activeFrame, fromFrame,
 			toFrame - fromFrame - 1);
 	isChangesSaved = false;
-	notifyRemove(fromFrame, toFrame);
 }
 
 
 void Animation::moveFrames(int32_t fromFrame, int32_t toFrame,
 		int32_t movePosition) {
 	assert(fromFrame <= toFrame);
-	int framesSize = scenes.frameCount(activeScene);
+	int framesSize = frameCount(activeScene);
 	assert(toFrame < framesSize);
 	assert(movePosition < framesSize);
 	if (movePosition < fromFrame || toFrame < movePosition) {
@@ -165,8 +180,7 @@ void Animation::moveFrames(int32_t fromFrame, int32_t toFrame,
 				activeScene, fromFrame, toFrame - fromFrame + 1,
 				activeScene, movePosition);
 		isChangesSaved = false;
-		this->notifyMove(fromFrame, toFrame, movePosition);
-		this->setActiveFrame(movePosition);
+		setActiveFrame(movePosition);
 	}
 }
 
@@ -182,7 +196,7 @@ int Animation::addSound(int32_t frameNumber, const char *soundFile) {
 	strncpy(soundName, ss.str().c_str(), size);
 	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
-	int32_t index = scenes.soundCount(activeScene, frameNumber);
+	int32_t index = scenes->soundCount(activeScene, frameNumber);
 	try {
 		executor->execute(commandAddSound, activeScene, frameNumber,
 				index, soundFile, soundName);
@@ -218,9 +232,9 @@ void Animation::setSoundName(int32_t frameNumber, int32_t soundNumber,
 
 
 const Frame* Animation::getFrame(int frameNumber, int sceneNumber) const {
-	if (frameNumber < scenes.frameCount(sceneNumber)) {
+	if (frameNumber < frameCount(sceneNumber)) {
 		Logger::get().logDebug("Retrieving frame from Animation");
-		return scenes.getScene(sceneNumber)->getFrame(frameNumber);
+		return scenes->getScene(sceneNumber)->getFrame(frameNumber);
 	}
 	else {
 		Logger::get().logWarning("Requesting a frame which is not "
@@ -240,33 +254,33 @@ const Frame* Animation::getFrame(int frameNumber) const {
 }
 
 
-unsigned int Animation::getModelSize() {
-	unsigned int modelSize = 0;
-	unsigned int sceneCount = scenes.sceneCount();
-	for (unsigned int i = 0; i < sceneCount; ++i) {
-		modelSize += scenes.frameCount(i);
+int Animation::frameCount() const {
+	int modelSize = 0;
+	int s = sceneCount();
+	for (unsigned int i = 0; i < s; ++i) {
+		modelSize += frameCount(i);
 	}
 	return modelSize;
 }
 
 
-unsigned int Animation::getSceneSize(int sceneNumber) {
-	if (sceneNumber > -1 && sceneNumber < scenes.sceneCount()) {
-		return scenes.frameCount(sceneNumber);
+int Animation::frameCount(int sceneNumber) const {
+	if (sceneNumber > -1 && sceneNumber < sceneCount()) {
+		return scenes->frameCount(sceneNumber);
 	}
 	return 0;
 }
 
 
-unsigned int Animation::getNumberOfScenes() {
-	return scenes.sceneCount();
+int Animation::sceneCount() const {
+	return scenes->sceneCount();
 }
 
 
 void Animation::setActiveFrame(int frameNumber) {
 	if (activeScene >= 0 || frameNumber == -1) {
-		this->activeFrame = frameNumber;
-		this->notifyNewActiveFrame(frameNumber);
+		activeFrame = frameNumber;
+		scenes->notifyNewActiveFrame(frameNumber);
 	}
 }
 
@@ -278,7 +292,7 @@ void Animation::playFrame(int frameNumber) {
 			f->playSounds(audioDriver);
 		}
 	}
-	notifyPlayFrame(frameNumber);
+	scenes->notifyPlayFrame(frameNumber);
 }
 
 
@@ -298,13 +312,12 @@ const char* Animation::getProjectPath() {
 
 void Animation::clear() {
 	serializer->cleanup();
-	scenes.clear();
+	scenes->clear();
 	executor->clearHistory();
 	activeFrame = -1;
 	activeScene = -1;
 	isChangesSaved = true;
 	WorkspaceFile::clear();
-	notifyClear();
 }
 
 
@@ -314,9 +327,9 @@ bool Animation::openProject(const char *filename) {
 	assert(filename != 0);
 	vector<Scene*> newScenes = serializer->open(filename);
 	int count = newScenes.size();
-	scenes.preallocateScenes(count);
+	scenes->preallocateScenes(count);
 	for (int i = 0; i != count; ++i) {
-		scenes.addScene(i, newScenes[i]);
+		scenes->addScene(i, newScenes[i]);
 	}
 	if (count > 0) {
 		loadSavedScenes();
@@ -330,9 +343,9 @@ bool Animation::openProject(const char *filename) {
 bool Animation::saveProject(const char *filename) {
 	assert(filename != 0);
 	std::vector<const Scene*> s;
-	int count = scenes.sceneCount();
+	int count = scenes->sceneCount();
 	for (int i = 0; i != count; ++i) {
-		s.push_back(scenes.getScene(i));
+		s.push_back(scenes->getScene(i));
 	}
 	return serializer->save(filename, s, frontend);
 }
@@ -345,12 +358,14 @@ bool Animation::newProject() {
 }
 
 
+//TODO change this to something that sets all the scenes at once, notifying
+// once also.
 void Animation::loadSavedScenes() {
 	Logger::get().logDebug("Loading scenes in Animation:");
 
-	unsigned int numElem = scenes.sceneCount();
+	unsigned int numElem = scenes->sceneCount();
 	for (unsigned int i = 0; i < numElem; ++i) {
-		notifyNewScene(i);
+//		notifyNewScene(i);
 	}
 	setActiveScene(numElem - 1);
 }
@@ -370,8 +385,6 @@ void Animation::setActiveScene(int sceneNumber) {
 void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
 		const char* newImagePath) {
 	executor->execute(commandSetImage, sceneNumber, frameNumber, newImagePath);
-	if (activeScene == sceneNumber)
-		notifyAnimationChanged(frameNumber);
 }
 
 class NullFrameIterator : public FrameIterator {
@@ -391,32 +404,37 @@ public:
 	}
 };
 
+void Animation::attatch(Observer* o) {
+	scenes->addObserver(o);
+}
+
+void Animation::detatch(Observer* o) {
+	scenes->removeObserver(o);
+}
+
+void Animation::registerFrontend(Frontend* fe) {
+	scenes->registerFrontend(fe);
+	frontend = fe;
+}
+
+Frontend* Animation::getFrontend() {
+	return frontend;
+}
+
 void Animation::activateScene(int sceneNumber) {
 	activeScene = sceneNumber;
-	if (sceneNumber >= 0) {
-		if (0 < scenes.frameCount(sceneNumber)) {
-			std::auto_ptr<FrameIterator> frameIt(
-					scenes.makeFrameIterator(sceneNumber));
-			notifyNewActiveScene(sceneNumber, *frameIt, frontend);
-			setActiveFrame(0);
-		}
-		else {
-			NullFrameIterator dummy;
-			notifyNewActiveScene(sceneNumber, dummy, frontend);
-			setActiveFrame(-1);
-		}
+	if (sceneNumber >= 0 && 0 < scenes->frameCount(sceneNumber)) {
+		scenes->notifyNewActiveScene(sceneNumber);
+		setActiveFrame(0);
 	}
 	else {
 		setActiveFrame(-1);
-		NullFrameIterator dummy;
-		notifyNewActiveScene(sceneNumber, dummy,frontend);
 	}
 }
 
 
 void Animation::newScene(int32_t index) {
 	executor->execute(commandAddScene, index);
-	this->notifyNewScene( index );
 	this->setActiveScene( index );
 }
 
@@ -424,12 +442,11 @@ void Animation::newScene(int32_t index) {
 void Animation::removeScene(int32_t sceneNumber) {
 	assert(sceneNumber >= 0);
 	executor->execute(commandRemoveScene, sceneNumber);
-	if (sceneNumber == scenes.sceneCount()) {
+	if (sceneNumber == scenes->sceneCount()) {
 		activateScene(sceneNumber - 1);
 	} else {
 		activateScene(sceneNumber);
 	}
-	this->notifyRemoveScene(sceneNumber);
 }
 
 
@@ -437,7 +454,6 @@ void Animation::moveScene(int32_t sceneNumber, int32_t movePosition) {
 	if (sceneNumber != movePosition) {
 		executor->execute(commandMoveScene, sceneNumber, movePosition);
 		setActiveScene(-1);
-		notifyMoveScene(sceneNumber, movePosition);
 	}
 }
 
@@ -472,8 +488,8 @@ void Animation::animationChanged(const char *alteredFile) {
 		return;
 	}
 
-	int size = scenes.frameCount(activeScene);
-	const Scene* scene = scenes.getScene(activeScene);
+	int size = scenes->frameCount(activeScene);
+	const Scene* scene = scenes->getScene(activeScene);
 	int changedFrame = -1;
 	for (int i = 0; i < size; ++i) {
 		const Frame *f = scene->getFrame(i);
@@ -483,10 +499,6 @@ void Animation::animationChanged(const char *alteredFile) {
 				break;
 			}
 		}
-	}
-
-	if (changedFrame >= 0) {
-		notifyAnimationChanged(changedFrame);
 	}
 }
 
@@ -508,7 +520,7 @@ bool Animation::exportToCinerella(const char*) {
 }
 
 void Animation::accept(FileNameVisitor& v) const {
-	scenes.accept(v);
+	scenes->accept(v);
 }
 
 void Animation::undo() {

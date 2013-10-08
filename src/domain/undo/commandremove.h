@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,10 +23,10 @@
 
 #include "command.h"
 
-class SceneVector;
+class AnimationImpl;
 
 class CommandRemove : public Command {
-	SceneVector& sv;
+	AnimationImpl& sv;
 	int sc;
 	int fr;
 	int frameCount;
@@ -37,16 +38,16 @@ public:
 	 * @param fromFrame The index of the first frame to be removed.
 	 * @param frameCount The number of frames to remove.
 	 */
-	CommandRemove(SceneVector& model,
+	CommandRemove(AnimationImpl& model,
 			int scene, int fromFrame, int frameCount);
 	~CommandRemove();
 	Command* execute();
 };
 
 class CommandRemoveFactory : public CommandFactory {
-	SceneVector& sv;
+	AnimationImpl& sv;
 public:
-	CommandRemoveFactory(SceneVector& model);
+	CommandRemoveFactory(AnimationImpl& model);
 	~CommandRemoveFactory();
 	Command* create(Parameters& ps);
 };

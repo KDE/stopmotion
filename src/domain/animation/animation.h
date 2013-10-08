@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,12 +21,10 @@
 #define ANIMATION_H
 
 #include "src/config.h"
-#include "animationmodel.h"
 #include "scene.h"
 #include "src/technical/projectserializer.h"
 #include "src/technical/audio/ossdriver.h"
 #include "frame.h"
-#include "scenevector.h"
 #include "src/domain/undo/executor.h"
 
 #include <vector>
@@ -35,11 +33,16 @@
 using namespace std;
 
 class FileNameVisitor;
+class Frontend;
+class Observer;
+class ObserverNotifier;
+class VideoEncoder;
 
 /**
- * Implementation of the animationmodel containing the data about the animation.
+ * Represents the animation. Is responsible for the undo system and a bunch of
+ * other minor stuff it really shouldn't be doing.
  */
-class Animation : public AnimationModel {
+class Animation {
 public:
 	/**
 	 * Initializes the variables of the animation to starting values.
@@ -50,6 +53,33 @@ public:
 	 * Cleans up the animation.
 	 */
 	~Animation();
+
+	/**
+	 * Attatches a new observer to the model. The observer will be notified when
+	 * something is changed in the model.
+	 * @param o the observer to be attatched to the model.
+	 */
+	void attatch(Observer *o);
+
+	/**
+	 * Detaches an observer from the model. The observer will no longer be notified
+	 * when something is changed in the model.
+	 * @param o the observer to be detached from the model.
+	 */
+	void detatch(Observer *o);
+
+	/**
+	 * Registers the GUI frontend which is used to displaying and updating
+	 * progress when running time-consuming operations.
+	 * @param frontend the GUI frontend
+	 */
+	void registerFrontend(Frontend *frontend);
+
+	/**
+	 * Retrieves the registered frontend.
+	 * @return the frontend if it is a valid frontend pointer, NULL otherwise.
+	 */
+	Frontend* getFrontend();
 
 	/**
 	 * Inserts new frames into the animation model.
@@ -129,23 +159,31 @@ public:
 	const Frame* getFrame(int frameNumber) const;
 
 	/**
-	 * Returns the size of the model.
-	 * @return the size of the model.
+	 * Returns the total number of frames in the model.
+	 * @return The total number of frames in all scenes of the model.
 	 */
-	unsigned int getModelSize();
+	int frameCount() const;
 
 	/**
 	 * Retrieves the size of the scene at index sceneNumber.
 	 * @param sceneNumber the index of the scene to retrieve the size of.
 	 * @return the size of the scene.
 	 */
-	unsigned int getSceneSize(int sceneNumber);
+	int frameCount(int sceneNumber) const;
+
+	/**
+	 * Returns the number of sounds in the frame specified.
+	 * @param scene The number of the scene.
+	 * @param frame The number of the frame within the scene.
+	 * @return The number of sounds attached to the specified frame.
+	 */
+	int soundCount(int scene, int frame) const;
 
 	/**
 	 * Retrieves the number of scenes in the animation.
 	 * @return the number of scenes in the animation.
 	 */
-	unsigned int getNumberOfScenes();
+	int sceneCount() const;
 
 	/**
 	 *Function for changing the currently active frame.
@@ -278,7 +316,7 @@ public:
 
 private:
 	/** All of the scenes in the animation. */
-	SceneVector scenes;
+	ObserverNotifier* scenes;
 
 	/** Undo and disaster recovery. */
 	Executor* executor;
@@ -300,6 +338,9 @@ private:
 
 	/** Variable for checking if the audio device is successfully initialized. */
 	bool isAudioDriverInitialized;
+
+	/** For the reporting of errors and warnings */
+	Frontend* frontend;
 
 	/**
 	 * Loads frames into the model. This acts exactly like the {@ref addFrames}

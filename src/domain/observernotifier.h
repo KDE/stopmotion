@@ -32,11 +32,24 @@ class ObserverNotifier : public AnimationImpl {
 	AnimationImpl* del;
 	Frontend* frontend;
 	std::vector<Observer*> observers;
-	void ObserverNotifier::doOp(ObservableOperation& oo);
+	void doOp(ObservableOperation& oo);
 public:
 	~ObserverNotifier();
+	/**
+	 * Constructs a wrapper for another {@ref AnimationImpl} that notifies
+	 * observers of changes and reports errors to the user.
+	 * @param delegate The wrapped {@ref AnimationImpl}. Ownership is passed.
+	 * @param frontend The UI, which is notified of errors and warnings.
+	 * Ownership is not passed. Optional.
+	 */
 	ObserverNotifier(AnimationImpl* delegate, Frontend* frontend);
 	void addObserver(Observer* newObserver);
+	void removeObserver(Observer* o);
+	void registerFrontend(Frontend* fe);
+	void notifyNewActiveScene(int scene);
+	void notifyNewActiveFrame(int frame);
+	void notifyPlayFrame(int frame);
+	// derived from AnimationImpl
 	void clear();
 	int sceneCount() const;
 	FrameIterator* makeFrameIterator(int scene) const;

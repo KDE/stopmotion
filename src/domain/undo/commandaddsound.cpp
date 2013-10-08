@@ -20,13 +20,13 @@
 
 #include "commandaddsound.h"
 #include "commandremovesound.h"
-#include "scenevector.h"
+#include "animationimpl.h"
 #include "src/domain/animation/frame.h"
 #include "src/domain/filenamevisitor.h"
 
 #include <memory>
 
-CommandAddSound::CommandAddSound(SceneVector& model, int32_t scene, int32_t frame,
+CommandAddSound::CommandAddSound(AnimationImpl& model, int32_t scene, int32_t frame,
 		int32_t soundNumber)
 	: sv(model), sc(scene), fr(frame), index(soundNumber),
 	  snd(0) {
@@ -53,7 +53,7 @@ void CommandAddSound::accept(FileNameVisitor& v) const {
 	v.visitSound(snd->getAudio()->getSoundPath());
 }
 
-CommandAddSoundFactory::CommandAddSoundFactory(SceneVector& model) : sv(model) {
+CommandAddSoundFactory::CommandAddSoundFactory(AnimationImpl& model) : sv(model) {
 }
 
 CommandAddSoundFactory::~CommandAddSoundFactory() {

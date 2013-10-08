@@ -4,10 +4,10 @@ HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
     src/domain/domainfacade.h \
     src/domain/filenamevisitor.h \
+    src/domain/observernotifier.h \
     src/foundation/logger.h \
     src/presentation/observer.h \
     src/domain/animation/animation.h \
-    src/domain/animation/animationmodel.h \
     src/domain/animation/animationimpl.h \
     src/domain/animation/frame.h \
     src/presentation/frontends/nonguifrontend/nonguifrontend.h \
@@ -122,9 +122,9 @@ FORMS += src/presentation/frontends/qtfrontend/helpbrowser.ui \
 SOURCES += src/config.cpp \
     src/main.cpp \
     src/domain/domainfacade.cpp \
+    src/domain/observernotifier.cpp \
     src/foundation/logger.cpp \
     src/domain/animation/animation.cpp \
-    src/domain/animation/animationmodel.cpp \
     src/domain/animation/animationimpl.cpp \
     src/domain/animation/frame.cpp \
     src/domain/animation/scenevector.cpp \

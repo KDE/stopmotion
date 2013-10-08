@@ -19,11 +19,11 @@
  ***************************************************************************/
 
 #include "commandsetimage.h"
-#include "scenevector.h"
+#include "animationimpl.h"
 #include "workspacefile.h"
 #include "src/domain/animation/scene.h"
 
-CommandSetImage::CommandSetImage(SceneVector& model, int32_t scene,
+CommandSetImage::CommandSetImage(AnimationImpl& model, int32_t scene,
 		int32_t frame, TemporaryWorkspaceFile& w)
 		: sv(model), sc(scene), fr(frame), image(w) {
 }
@@ -36,7 +36,7 @@ Command* CommandSetImage::execute() {
 	return this;
 }
 
-CommandSetImageFactory::CommandSetImageFactory(SceneVector& model) : sv(model) {
+CommandSetImageFactory::CommandSetImageFactory(AnimationImpl& model) : sv(model) {
 }
 
 CommandSetImageFactory::~CommandSetImageFactory() {

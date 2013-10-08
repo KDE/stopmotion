@@ -84,7 +84,7 @@ int DomainFacade::getActiveFrameNumber()
 
 void DomainFacade::addFrames(const vector<const char*>& frameNames) {
 	if ( !(animationModel->getActiveSceneNumber() < 0 && 
-			animationModel->getNumberOfScenes() > 0) ) {
+			animationModel->sceneCount() > 0) ) {
 		Logger::get().logDebug("Adding frames in the domainfacade");
 		animationModel->addFrames(frameNames,
 				animationModel->getActiveFrameNumber() + 1);
@@ -166,19 +166,19 @@ const Frame * DomainFacade::getFrame(int frameNumber) const {
 
 unsigned int DomainFacade::getModelSize()
 {
-	return animationModel->getModelSize();
+	return animationModel->frameCount();
 }
 
 
 unsigned int DomainFacade::getSceneSize(int sceneNumber)
 {
-	return animationModel->getSceneSize(sceneNumber);
+	return animationModel->frameCount(sceneNumber);
 }
 
 
 unsigned int DomainFacade::getNumberOfScenes( )
 {
-	return animationModel->getNumberOfScenes();
+	return animationModel->sceneCount();
 }
 
 

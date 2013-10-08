@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,7 +24,7 @@
 
 #include <memory>
 
-CommandRemove::CommandRemove(SceneVector& model,
+CommandRemove::CommandRemove(AnimationImpl& model,
 		int scene, int fromFrame, int count)
 		: sv(model), sc(scene), fr(fromFrame), frameCount(count) {
 }
@@ -43,7 +44,7 @@ Command* CommandRemove::execute() {
 	return inv.release();
 }
 
-CommandRemoveFactory::CommandRemoveFactory(SceneVector& model)
+CommandRemoveFactory::CommandRemoveFactory(AnimationImpl& model)
 		: sv(model) {
 }
 

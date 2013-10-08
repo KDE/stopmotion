@@ -22,6 +22,8 @@
 #include "src/presentation/observer.h"
 #include "src/presentation/frontends/frontend.h"
 
+#include <memory>
+
 class ObservableOperation {
 public:
 	virtual ~ObservableOperation() {
@@ -30,12 +32,6 @@ public:
 	 * Performs the operation.
 	 */
 	virtual void op(AnimationImpl&) = 0;
-	/**
-	 * Performs any set-up required to update the observers. This is called
-	 * once. Any exception is caught and reported to the user.
-	 */
-	virtual void setUp(AnimationImpl&) {
-	}
 	/**
 	 * Performs the update on the specified observer.
 	 * @note Exactly one of {@ref update(Observer&)} and
@@ -56,14 +52,17 @@ public:
 void ObserverNotifier::doOp(ObservableOperation& oo) {
 	oo.op(*del);
 	try {
-		oo.setUp(*del);
 		for (std::vector<Observer*>::iterator i = observers.begin();
 				i != observers.end(); ++i) {
 			try {
 				oo.update(**i);
 			} catch (std::exception& e) {
-				//TODO what if this throws?
-				frontend->reportError(e.what(), 0);
+				try {
+					//TODO: some sort of reset of the Observer?
+					if (frontend)
+						frontend->reportError(e.what(), 0);
+				} catch (...) {
+				}
 			}
 		}
 	} catch (...) {
@@ -71,6 +70,7 @@ void ObserverNotifier::doOp(ObservableOperation& oo) {
 }
 
 ObserverNotifier::~ObserverNotifier() {
+	delete del;
 }
 
 ObserverNotifier::ObserverNotifier(AnimationImpl* delegate, Frontend* fe)
@@ -79,6 +79,17 @@ ObserverNotifier::ObserverNotifier(AnimationImpl* delegate, Frontend* fe)
 
 void ObserverNotifier::addObserver(Observer* newObserver) {
 	observers.push_back(newObserver);
+}
+
+void ObserverNotifier::removeObserver(Observer* o) {
+	for (std::vector<Observer*>::iterator i = observers.begin();
+			i != observers.end(); ++i) {
+		if (*i == o) {
+			observers.erase(i);
+			return;
+		}
+	}
+	// not found. Fail silently?
 }
 
 class AnimationClearer : public ObservableOperation {
@@ -191,22 +202,20 @@ int ObserverNotifier::frameCount(int scene) const {
 class FrameAdder : public ObservableOperation {
 	int sc;
 	int n;
-	std::vector<Frame*>& frs;
-	FrameIterator* fi;
+	const std::vector<Frame*>& frs;
+	AnimationImpl* ai;
 public:
-	FrameAdder(int scene, int where, std::vector<Frame*>& frames)
-			: sc(scene), n(where), fi(0), frs(frames) {
+	FrameAdder(int scene, int where, const std::vector<Frame*>& frames)
+			: sc(scene), n(where), frs(frames), ai(0) {
 	}
 	~FrameAdder() {
-		delete fi;
 	}
 	void op(AnimationImpl& del) {
 		del.addFrames(sc, n, frs);
-	}
-	void setUp(AnimationImpl& del) {
-		fi = del.makeFrameIterator(sc, n, n + 1);
+		ai = &del;
 	}
 	void update(Observer& ob, Frontend& fe) {
+		std::auto_ptr<FrameIterator> fi(ai->makeFrameIterator(sc, n, n + 1));
 		ob.updateAdd(*fi, n, &fe);
 	}
 };
@@ -355,6 +364,33 @@ const char* ObserverNotifier::setSoundName(int scene, int frame,
 
 Sound* ObserverNotifier::removeSound(int scene, int frame, int soundNumber) {
 	return del->removeSound(scene, frame, soundNumber);
+}
+
+void ObserverNotifier::registerFrontend(Frontend* fe) {
+	frontend = fe;
+}
+
+void ObserverNotifier::notifyNewActiveScene(int scene) {
+	for (std::vector<Observer*>::iterator i = observers.begin();
+			i != observers.end(); ++i) {
+		std::auto_ptr<FrameIterator> frameIt(
+				del->makeFrameIterator(scene));
+		(*i)->updateNewActiveScene(scene, *frameIt, frontend);
+	}
+}
+
+void ObserverNotifier::notifyNewActiveFrame(int frame) {
+	for (std::vector<Observer*>::iterator i = observers.begin();
+			i != observers.end(); ++i) {
+		(*i)->updateNewActiveFrame(frame);
+	}
+}
+
+void ObserverNotifier::notifyPlayFrame(int frame) {
+	for (std::vector<Observer*>::iterator i = observers.begin();
+			i != observers.end(); ++i) {
+		(*i)->updatePlayFrame(frame);
+	}
 }
 
 void ObserverNotifier::accept(FileNameVisitor& v) const {

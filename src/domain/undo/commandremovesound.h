@@ -23,24 +23,24 @@
 
 #include "command.h"
 
-class SceneVector;
+class AnimationImpl;
 
 class CommandRemoveSound : public Command {
-	SceneVector& sv;
+	AnimationImpl& sv;
 	int32_t sc;
 	int32_t fr;
 	int32_t index;
 public:
-	CommandRemoveSound(SceneVector& model, int32_t scene, int32_t frame,
+	CommandRemoveSound(AnimationImpl& model, int32_t scene, int32_t frame,
 			int32_t soundNumber);
 	~CommandRemoveSound();
 	Command* execute();
 };
 
 class UndoRemoveSoundFactory : public CommandFactory {
-	SceneVector& sv;
+	AnimationImpl& sv;
 public:
-	UndoRemoveSoundFactory(SceneVector& model);
+	UndoRemoveSoundFactory(AnimationImpl& model);
 	~UndoRemoveSoundFactory();
 	Command* create(Parameters& ps);
 };

@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors.                   *
+ *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,26 +23,26 @@
 
 #include "command.h"
 
-class SceneVector;
+class AnimationImpl;
 
 class CommandMove : public Command {
-	SceneVector& sv;
+	AnimationImpl& sv;
 	int32_t fromSc;
 	int32_t fromFr;
 	int32_t frameCount;
 	int32_t toSc;
 	int32_t toFr;
 public:
-	CommandMove(SceneVector& model, int fromScene, int fromFrame, int count,
+	CommandMove(AnimationImpl& model, int fromScene, int fromFrame, int count,
 			int toScene, int toFrame);
 	~CommandMove();
 	Command* execute();
 };
 
 class CommandMoveFactory : public CommandFactory {
-	SceneVector& sv;
+	AnimationImpl& sv;
 public:
-	CommandMoveFactory(SceneVector& model);
+	CommandMoveFactory(AnimationImpl& model);
 	~CommandMoveFactory();
 	Command* create(Parameters& ps);
 };
