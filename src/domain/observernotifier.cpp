@@ -55,7 +55,7 @@ void ObserverNotifier::doOp(ObservableOperation& oo) {
 		for (std::vector<Observer*>::iterator i = observers.begin();
 				i != observers.end(); ++i) {
 			try {
-				oo.update(**i);
+				oo.update(**i, *frontend);
 			} catch (std::exception& e) {
 				try {
 					//TODO: some sort of reset of the Observer?

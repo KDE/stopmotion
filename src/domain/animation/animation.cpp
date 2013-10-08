@@ -147,17 +147,17 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 		if (showingProgress)
 			frontend->updateProgress(added);
 	}
-	if (0 < added) {
+	// Don't execute partial commands; the log is written wrongly in this case,
+	// so we should fail the whole thing.
+	if (error.empty()) {
 		executor->execute(commandAddFrames, params);
 		isChangesSaved = false;
-		std::auto_ptr<FrameIterator> fit(
-				scenes->makeFrameIterator(activeScene, index, index + count));
+		setActiveFrame(index + added - 1);
 	}
 	if (showingProgress)
 		frontend->hideProgress();
 	if (!error.empty())
 		frontend->reportError(error.c_str(), 0);
-	setActiveFrame(index + added - 1);
 }
 
 
