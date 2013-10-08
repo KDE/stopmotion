@@ -127,9 +127,10 @@ public:
 
 	/**
 	 * Updates the framebar when an external program has altered the disk files.
+	 * @param sceneNumber The scene containing the changed frame.
 	 * @param frameNumber the frame whose disk representation has been changed.
 	 */
-	void updateAnimationChanged(int frameNumber);
+	void updateAnimationChanged(int sceneNumber, int frameNumber);
 	
 	/**
 	 * Set whether the user is engaged selecting several frames or not (pressing

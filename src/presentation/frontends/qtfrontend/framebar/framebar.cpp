@@ -183,8 +183,10 @@ void FrameBar::updateClear()
 void FrameBar::updatePlayFrame(int) {}
 
 
-void FrameBar::updateAnimationChanged(int frameNumber)
+void FrameBar::updateAnimationChanged(int sceneNumber, int frameNumber)
 {
+	if (sceneNumber != activeScene)
+		return;
 	const Frame *frame = DomainFacade::getFacade()->getFrame(frameNumber);
 	if (frame) {
 		const char *path = frame->getImagePath();
@@ -350,11 +352,15 @@ void FrameBar::setActiveFrame(int frameNumber)
 		int to = selectionFrame + activeScene + 1;
 		int highend = (from < to) ? to : from;
 		int lowend = (from > to) ? to : from;
+		int max = thumbViews.size() - 1;
 
-		if ( highend < static_cast<int>(thumbViews.size()) ) {
-			for (int i = lowend; i <= highend; ++i) {
-				thumbViews[i]->setSelected(false);
-			}
+		if (max < highend)
+			highend = max;
+		if (lowend < 0)
+			lowend = 0;
+
+		for (int i = lowend; i <= highend; ++i) {
+			thumbViews[i]->setSelected(false);
 		}
 
 		if (thumbNumber >= 0)
@@ -365,7 +371,7 @@ void FrameBar::setActiveFrame(int frameNumber)
 
 	activeFrame = frameNumber;
 	selectionFrame = frameNumber;
-	this->selecting = false;
+	selecting = false;
 }
 
 

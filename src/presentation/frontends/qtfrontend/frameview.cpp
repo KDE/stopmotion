@@ -44,7 +44,8 @@ const int FrameView::alphaLut[5] = { 128, 64, 43, 32, 26 };
 
 
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
- : QWidget(parent), screen(0), videoSurface(0), grabThread(0), grabber(0)
+		: QWidget(parent), screen(0), videoSurface(0), grabThread(0),
+		  grabber(0), activeScene(0)
 {
 	char tmp[256];
 	snprintf(tmp, 256, "%s/.stopmotion/capturedfile.jpg", getenv("HOME"));
@@ -317,12 +318,14 @@ void FrameView::updateClear()
 
 void FrameView::updateNewScene(int) {}
 void FrameView::updateRemoveScene(int) {}
-void FrameView::updateNewActiveScene(int, FrameIterator&, Frontend*) {}
+void FrameView::updateNewActiveScene(int scene, FrameIterator&, Frontend*) {
+	activeScene = scene;
+}
 
 
-void FrameView::updateAnimationChanged(int frameNumber)
-{
-	setActiveFrame(frameNumber);
+void FrameView::updateAnimationChanged(int sceneNumber, int frameNumber) {
+	if (sceneNumber == activeScene)
+		setActiveFrame(frameNumber);
 }
 
 

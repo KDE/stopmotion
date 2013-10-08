@@ -151,7 +151,7 @@ public:
 	 * Updates the frameview when an external program has altered the disk files.
 	 * @param frameNumber the frame whose disk representation has been changed.
 	 */
-	void updateAnimationChanged(int frameNumber);
+	void updateAnimationChanged(int activeScene, int frameNumber);
 	
 	/**
 	 * Turns on the webcamera/video import mode.
@@ -231,6 +231,7 @@ private:
 	int lastMixCount;
 	int lastViewMode;
 	int numImagesInBuffer;
+	int activeScene;
 
 	/**
 	 * Loads the new active frames picture into the frameview.

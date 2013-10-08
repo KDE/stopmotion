@@ -337,8 +337,7 @@ public:
 		del.replaceImage(sc, fr, image);
 	}
 	void update(Observer& ob) {
-		// TODO: set the active scene?
-		ob.updateAnimationChanged(fr);
+		ob.updateAnimationChanged(sc, fr);
 	}
 };
 

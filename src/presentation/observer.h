@@ -149,7 +149,7 @@ public:
 	 * @param frameNumber the index of the frame which has been changed. (active scene
 	 * is assumed).
 	 */
-	virtual void updateAnimationChanged(int frameNumber) = 0;
+	virtual void updateAnimationChanged(int activeScene, int frameNumber) = 0;
 };
 
 #endif
