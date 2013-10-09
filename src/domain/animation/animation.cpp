@@ -147,9 +147,7 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 		if (showingProgress)
 			frontend->updateProgress(added);
 	}
-	// Don't execute partial commands; the log is written wrongly in this case,
-	// so we should fail the whole thing.
-	if (error.empty()) {
+	if (0 < added) {
 		executor->execute(commandAddFrames, params);
 		isChangesSaved = false;
 		setActiveFrame(index + added - 1);
