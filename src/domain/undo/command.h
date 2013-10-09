@@ -128,12 +128,12 @@ public:
 	 * Returns 'true' if and only if Undo will perform an action, i.e. if
 	 * there are any actions in the history to undo.
 	 */
-	bool canUndo();
+	bool canUndo() const;
 	/**
 	 * Returns 'true' if and only if Redo will perform an action, i.e. if
 	 * there are any actions in the history to redo.
 	 */
-	bool canRedo();
+	bool canRedo() const;
 	/**
 	 * Undoes the last action in the history, if any.
 	 */

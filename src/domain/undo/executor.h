@@ -153,6 +153,14 @@ public:
 	 * @return true on success, false if nothing was on the redo stack.
 	 */
 	virtual bool redo() = 0;
+	/**
+	 * Returns true if and only if there is a command waiting to be undone.
+	 */
+	virtual bool canUndo() const = 0;
+	/**
+	 * Returns true if and only if there is a command waiting to be redone.
+	 */
+	virtual bool canRedo() const = 0;
 };
 
 /**

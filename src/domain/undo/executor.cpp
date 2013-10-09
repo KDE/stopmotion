@@ -734,6 +734,12 @@ public:
 		history.redo();
 		return true;
 	}
+	bool canUndo() const {
+		return history.canUndo();
+	}
+	bool canRedo() const {
+		return history.canRedo();
+	}
 };
 
 Executor* makeExecutor() {

@@ -88,8 +88,7 @@ Executor* makeAnimationCommandExecutor(AnimationImpl& model) {
 Animation::Animation()
 		: scenes(0), serializer(0), executor(0), audioDriver(0),
 		  activeFrame(-1), activeScene(-1),
-		  isChangesSaved(true), isAudioDriverInitialized(false),
-		  frontend(0) {
+		  isAudioDriverInitialized(false), frontend(0) {
 	std::auto_ptr<SceneVector> scs(new SceneVector);
 	std::auto_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));
 	scs.release();
@@ -149,7 +148,6 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 	}
 	if (0 < added) {
 		executor->execute(commandAddFrames, params);
-		isChangesSaved = false;
 		setActiveFrame(index + added - 1);
 	}
 	if (showingProgress)
@@ -163,7 +161,6 @@ void Animation::removeFrames(int32_t fromFrame, int32_t toFrame) {
 	assert(fromFrame <= toFrame);
 	executor->execute(commandRemoveFrames, activeFrame, fromFrame,
 			toFrame - fromFrame - 1);
-	isChangesSaved = false;
 }
 
 
@@ -177,7 +174,6 @@ void Animation::moveFrames(int32_t fromFrame, int32_t toFrame,
 		executor->execute(commandMoveFrames,
 				activeScene, fromFrame, toFrame - fromFrame + 1,
 				activeScene, movePosition);
-		isChangesSaved = false;
 		setActiveFrame(movePosition);
 	}
 }
@@ -213,6 +209,7 @@ int Animation::addSound(int32_t frameNumber, const char *soundFile) {
 		return -2;
 	}
 	WorkspaceFile::nextSoundNumber();
+	return 0;
 }
 
 
@@ -314,7 +311,6 @@ void Animation::clear() {
 	executor->clearHistory();
 	activeFrame = -1;
 	activeScene = -1;
-	isChangesSaved = true;
 	WorkspaceFile::clear();
 }
 
@@ -370,7 +366,7 @@ void Animation::loadSavedScenes() {
 
 
 bool Animation::isUnsavedChanges() {
-	return !isChangesSaved;
+	return executor->canUndo();
 }
 
 

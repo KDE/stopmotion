@@ -191,11 +191,11 @@ CommandHistory::~CommandHistory() {
 	delete future;
 }
 
-bool CommandHistory::canUndo() {
+bool CommandHistory::canUndo() const {
 	return !past->empty();
 }
 
-bool CommandHistory::canRedo() {
+bool CommandHistory::canRedo() const {
 	return !future->empty();
 }
 

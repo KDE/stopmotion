@@ -333,9 +333,6 @@ private:
 	/** Index of the active scene. */
 	int32_t activeScene;
 
-	/** Variable for checking if there are unsaved changes in the model */
-	bool isChangesSaved;
-
 	/** Variable for checking if the audio device is successfully initialized. */
 	bool isAudioDriverInitialized;
 
