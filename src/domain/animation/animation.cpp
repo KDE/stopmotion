@@ -129,6 +129,8 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 		frontend->showProgress("Importing frames from disk ...", count);
 	}
 	std::string error;
+	// error.empty() is false if string is "\0"! So we set this explicitly on error.
+	bool isError = false;
 	int added = 0;
 	for (vector<const char*>::const_iterator i = frameNames.begin();
 			i != frameNames.end(); ++i) {
@@ -136,6 +138,7 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 			params.addFrame(*i);
 			++added;
 		} catch (CopyFailedException&) {
+			isError = true;
 			error += "Cannot read file ";
 			error += *i;
 			error += "\n";
@@ -148,11 +151,12 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 	}
 	if (0 < added) {
 		executor->execute(commandAddFrames, params);
+		params.retainFiles();
 		setActiveFrame(index + added - 1);
 	}
 	if (showingProgress)
 		frontend->hideProgress();
-	if (!error.empty())
+	if (isError)
 		frontend->reportError(error.c_str(), 0);
 }
 
