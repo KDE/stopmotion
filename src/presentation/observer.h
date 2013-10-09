@@ -86,7 +86,7 @@ public:
 	 * @param fromFrame the first frame of those removed
 	 * @param toFrame the last frame of those removed
 	 */
-	virtual void updateRemove(unsigned int fromFrame, unsigned int toFrame) = 0;
+	virtual void updateRemove(int scene, int fromFrame, int toFrame) = 0;
 
 	/**
 	 * Abstract function for receiving notification when frames are moved in the model.

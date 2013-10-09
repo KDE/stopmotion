@@ -134,11 +134,13 @@ void FrameBar::updateAdd(FrameIterator& frames, int scene, int index,
 }
 
 
-void FrameBar::updateRemove(unsigned int fromFrame, unsigned int toFrame)
+void FrameBar::updateRemove(int scene, int fromFrame, int toFrame)
 {
-	Logger::get().logDebug("Receiving notification about the removal of a frame in the model");
-	removeFrames(fromFrame, toFrame);
-	emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
+	if (scene == activeScene) {
+		Logger::get().logDebug("Receiving notification about the removal of a frame in the model");
+		removeFrames(fromFrame, toFrame);
+		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
+	}
 }
 
 

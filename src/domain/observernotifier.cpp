@@ -257,8 +257,7 @@ public:
 		del.removeFrame(sc, n);
 	}
 	void update(Observer& ob) {
-		// TODO: set the active scene?
-		ob.updateRemove(n, n);
+		ob.updateRemove(sc, n, n);
 	}
 };
 
@@ -283,8 +282,7 @@ public:
 		del.removeFrames(sc, fr, c, r);
 	}
 	void update(Observer& ob) {
-		// TODO: set the active scene?
-		ob.updateRemove(fr, fr + c - 1);
+		ob.updateRemove(sc, fr, fr + c - 1);
 	}
 };
 

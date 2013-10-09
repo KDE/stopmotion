@@ -69,7 +69,7 @@ public:
 	 * @param fromFrame the first frame in the selection
 	 * @param toFrame the last frame in the selection
 	 */
-	void updateRemove(unsigned int fromFrame, unsigned int toFrame);
+	void updateRemove(int scene, int fromFrame, int toFrame);
 	
 	/**
 	 *Function to receive notification when one or more frames are moved.

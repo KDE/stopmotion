@@ -90,7 +90,7 @@ public:
 	/**
 	 *Function to recieve notification when one or more frames are deleted.
 	 */
-	void updateRemove(unsigned int, unsigned int);
+	void updateRemove(int, int, int);
 	
 	/**
 	 *Function to recieve notification when one or more frames are moved.
