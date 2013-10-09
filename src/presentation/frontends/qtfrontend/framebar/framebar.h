@@ -61,7 +61,8 @@ public:
 	/**
 	 *Function to receiving notification when a frame is added.
 	 */
-	void updateAdd(FrameIterator& frames, unsigned int index, Frontend *frontend);
+	void updateAdd(FrameIterator& frames, int scene, int index,
+			Frontend *frontend);
 	
 	/**
 	 * Function to receive notification when one or more frames are deleted.

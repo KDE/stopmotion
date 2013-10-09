@@ -132,7 +132,7 @@ void FrameView::initCompleted()
 }
 
 
-void FrameView::updateAdd(FrameIterator& frames, unsigned int, Frontend*) {
+void FrameView::updateAdd(FrameIterator& frames, int, int, Frontend*) {
 	if (isPlayingVideo && !frames.isAtEnd()) {
 		addToImageBuffer( IMG_Load(frames.getName()) );
 	}

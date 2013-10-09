@@ -73,10 +73,12 @@ public:
 	 * Abstract function for receiving notification about new frames added to the model.
 	 *
 	 * @param frames the frames which has been added to the model.
-	 * @param index the place the frame has been added
+	 * @param scene The scene to which the frames have been added.
+	 * @param index The frame number within the scene to which the frames have
+	 * been added.
 	 * @param frontend the GUI frontend which is used to displaying progress on timeconsuming operations
 	 */
-	virtual void updateAdd(FrameIterator& frames, unsigned int index,
+	virtual void updateAdd(FrameIterator& frames, int scene, int index,
 			Frontend *frontend) = 0;
 
 	/**

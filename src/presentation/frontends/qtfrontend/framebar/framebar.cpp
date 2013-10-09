@@ -120,16 +120,17 @@ FrameBar::FrameBar(QWidget *parent)
 }
 
 
-FrameBar::~FrameBar()
-{
+FrameBar::~FrameBar() {
 }
 
 
-void FrameBar::updateAdd(FrameIterator& frames, unsigned int index,
+void FrameBar::updateAdd(FrameIterator& frames, int scene, int index,
 		Frontend *frontend) {
-	Logger::get().logDebug("Adding in framebar");
-	addFrames(frames, index, frontend);
-	emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
+	if (scene == activeScene) {
+		Logger::get().logDebug("Adding in framebar");
+		addFrames(frames, index, frontend);
+		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
+	}
 }
 
 

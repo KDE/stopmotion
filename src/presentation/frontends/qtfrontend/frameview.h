@@ -85,7 +85,7 @@ public:
 	 * Function to recieven notification when a frame is added.
 	 * @param frames paths to the frames
 	 */
-	void updateAdd(FrameIterator& frames, unsigned int, Frontend*);
+	void updateAdd(FrameIterator& frames, int, int, Frontend*);
 	
 	/**
 	 *Function to recieve notification when one or more frames are deleted.

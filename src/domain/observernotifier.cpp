@@ -216,7 +216,7 @@ public:
 	}
 	void update(Observer& ob, Frontend& fe) {
 		std::auto_ptr<FrameIterator> fi(ai->makeFrameIterator(sc, n, n + 1));
-		ob.updateAdd(*fi, n, &fe);
+		ob.updateAdd(*fi, sc, n, &fe);
 	}
 };
 
