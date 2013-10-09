@@ -140,7 +140,7 @@ void FrameView::updateAdd(FrameIterator& frames, int, int, Frontend*) {
 
 
 void FrameView::updateRemove(int, int, int) {}
-void FrameView::updateMove(unsigned int, unsigned int, unsigned int) {}
+void FrameView::updateMove(int, int, int, int, int) {}
 
 
 void FrameView::updateNewActiveFrame(int frameNumber)

@@ -74,7 +74,8 @@ public:
 	/**
 	 *Function to receive notification when one or more frames are moved.
 	 */
-	void updateMove(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition);
+	void updateMove(int fromScene, int fromFrame, int count,
+			int toScene, int toFrame);
 	
 	/**
 	 *Function to receive notification when a new frame is selected.

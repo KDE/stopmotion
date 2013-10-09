@@ -90,11 +90,15 @@ public:
 
 	/**
 	 * Abstract function for receiving notification when frames are moved in the model.
-	 * @param fromFrame index of the first selected frame
-	 * @param toFrame index of the last selected frame
-	 * @param movePosition index to where the selection should be move to
+	 * @param fromScene The scene that the frames were moved from.
+	 * @param fromFrame Index of the first selected frame within {@c fromScene}
+	 * @param count The number of frames moved.
+	 * @param toScene The scene to which the frames were moved.
+	 * @param toFrame The position within scene {@c toScene} that the frames
+	 * were moved to.
 	 */
-	virtual void updateMove(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition) = 0;
+	virtual void updateMove(int fromScene, int fromFrame, int count,
+			int toScene, int toFrame) = 0;
 
 	/**
 	 * Abstract function for receiving notification when a new frame are selected.

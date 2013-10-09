@@ -144,9 +144,17 @@ void FrameBar::updateRemove(int scene, int fromFrame, int toFrame)
 }
 
 
-void FrameBar::updateMove(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition)
-{
-	moveFrames(fromFrame, toFrame, movePosition);
+void FrameBar::updateMove(int fromScene, int fromFrame, int count,
+		int toScene, int toFrame) {
+	if (fromScene == activeScene) {
+		if (toScene == activeScene) {
+			moveFrames(fromFrame, fromFrame + count - 1, toFrame);
+		} else {
+			removeFrames(fromFrame, fromFrame + count - 1);
+		}
+	} else if (toScene == activeScene) {
+		//TODO: need to add frames here, but we don't have a frame iterator
+	}
 }
 
 

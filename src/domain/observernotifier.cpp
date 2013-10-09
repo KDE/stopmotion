@@ -311,7 +311,7 @@ public:
 	}
 	void update(Observer& ob) {
 		// TODO: set the active scene?
-		ob.updateMove(fromFr, fromFr + c - 1, toFr);
+		ob.updateMove(fromSc, fromFr, c, toSc, toFr);
 	}
 };
 
