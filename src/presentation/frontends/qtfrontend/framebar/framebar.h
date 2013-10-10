@@ -61,8 +61,7 @@ public:
 	/**
 	 *Function to receiving notification when a frame is added.
 	 */
-	void updateAdd(FrameIterator& frames, int scene, int index,
-			Frontend *frontend);
+	void updateAdd(int scene, int index, int numFrames);
 	
 	/**
 	 * Function to receive notification when one or more frames are deleted.
@@ -124,8 +123,7 @@ public:
 	 * @param frontend the frontend for getting a progressbar when adding 
 	 * opening the new active scene.
 	 */
-	void updateNewActiveScene(int sceneNumber, FrameIterator& framePaths,
-			Frontend *frontend);
+	void updateNewActiveScene(int sceneNumber);
 
 	/**
 	 * Updates the framebar when an external program has altered the disk files.
@@ -299,13 +297,10 @@ private:
 	 
 	/**
 	 * Adds the frames in the framesvector to the framebar.
-	 * @param frames the frames to be added to the framebar.
-	 * @param index the location to add the frames to.calc
-	 * @param frontend the frontend for processing updating the program
-	 * progressbar.
+	 * @param index The location to add the frames to.
+	 * @param numFrames The number of frames to be added.
 	 */
-	void addFrames(FrameIterator& frames, unsigned int index,
-			Frontend *frontend);
+	void addFrames(int index, int numFrames);
 
 	/**
 	 * Removes a selection of thumbviews from the framebar.
@@ -354,8 +349,7 @@ private:
 	 * @param frontend the frontend for getting a progressbar when adding the
 	 * frames to the scene.
 	 */
-	void setActiveScene(int sceneNumber, FrameIterator& framePaths,
-			Frontend *frontend);
+	void setActiveScene(int sceneNumber);
 
 	/**
 	 *Moves a thumbview in the thumbviews-vector from fromPosition to toPosition.

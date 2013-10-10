@@ -59,14 +59,14 @@ public:
 	 * something is changed in the model.
 	 * @param o the observer to be attatched to the model.
 	 */
-	void attatch(Observer *o);
+	void attach(Observer *o);
 
 	/**
 	 * Detaches an observer from the model. The observer will no longer be notified
 	 * when something is changed in the model.
 	 * @param o the observer to be detached from the model.
 	 */
-	void detatch(Observer *o);
+	void detach(Observer *o);
 
 	/**
 	 * Registers the GUI frontend which is used to displaying and updating
@@ -85,6 +85,7 @@ public:
 	 * Inserts new frames into the animation model.
 	 * @param frameNames a vector containing the names to be added in the model
 	 * @param index the place to add the frames in the animation.
+	 * TODO can we kill the returning of vectors of filenames?
 	 */
 	void addFrames(const vector<const char*>& frameNames, int32_t index);
 
@@ -339,10 +340,6 @@ private:
 	/** For the reporting of errors and warnings */
 	Frontend* frontend;
 
-	/**
-	 * Loads frames into the model. This acts exactly like the {@ref addFrames}
-	 * function except that it does not moves the frames to a temporary directory.
-	 */
 	void loadSavedScenes();
 
 	/**

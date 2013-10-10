@@ -22,7 +22,3 @@
 
 AnimationImpl::~AnimationImpl() {
 }
-
-FrameIterator* AnimationImpl::makeFrameIterator(int scene) const {
-	return makeFrameIterator(scene, 0, frameCount(scene));
-}

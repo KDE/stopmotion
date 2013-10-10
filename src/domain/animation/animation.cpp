@@ -385,28 +385,11 @@ void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
 	executor->execute(commandSetImage, sceneNumber, frameNumber, newImagePath);
 }
 
-class NullFrameIterator : public FrameIterator {
-public:
-	~NullFrameIterator() {
-	}
-	int count() const {
-		return 0;
-	}
-	bool isAtEnd() const {
-		return true;
-	}
-	const char* getName() {
-		return 0;
-	}
-	void next() {
-	}
-};
-
-void Animation::attatch(Observer* o) {
+void Animation::attach(Observer* o) {
 	scenes->addObserver(o);
 }
 
-void Animation::detatch(Observer* o) {
+void Animation::detach(Observer* o) {
 	scenes->removeObserver(o);
 }
 

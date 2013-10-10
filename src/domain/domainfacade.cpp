@@ -48,13 +48,13 @@ DomainFacade* DomainFacade::getFacade()
 
 void DomainFacade::attatch(Observer *o)
 {
-	animationModel->attatch(o);
+	animationModel->attach(o);
 }
 
 
 void DomainFacade::detatch(Observer *o)
 {
-	animationModel->detatch(o);
+	animationModel->detach(o);
 }
 
 

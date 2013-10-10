@@ -132,9 +132,11 @@ void FrameView::initCompleted()
 }
 
 
-void FrameView::updateAdd(FrameIterator& frames, int, int, Frontend*) {
-	if (isPlayingVideo && !frames.isAtEnd()) {
-		addToImageBuffer( IMG_Load(frames.getName()) );
+void FrameView::updateAdd(int scene, int index, int numFrames) {
+	if (isPlayingVideo && 0 < numFrames) {
+		DomainFacade* anim = DomainFacade::getFacade();
+		addToImageBuffer( IMG_Load(
+				anim->getFrame(index, scene)->getImagePath()) );
 	}
 }
 
@@ -318,7 +320,7 @@ void FrameView::updateClear()
 
 void FrameView::updateNewScene(int) {}
 void FrameView::updateRemoveScene(int) {}
-void FrameView::updateNewActiveScene(int scene, FrameIterator&, Frontend*) {
+void FrameView::updateNewActiveScene(int scene) {
 	activeScene = scene;
 }
 

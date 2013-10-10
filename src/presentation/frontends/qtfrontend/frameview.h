@@ -82,10 +82,9 @@ public:
 	void initCompleted();
 	
 	/**
-	 * Function to recieven notification when a frame is added.
-	 * @param frames paths to the frames
+	 * Function to receive notification when a frame is added.
 	 */
-	void updateAdd(FrameIterator& frames, int, int, Frontend*);
+	void updateAdd(int, int, int);
 	
 	/**
 	 *Function to recieve notification when one or more frames are deleted.
@@ -141,12 +140,8 @@ public:
 	 * Function which recieves notification when a scene is selected as the
 	 * active scene in the animationmodel.
 	 * @param sceneNumber the new active scene.
-	 * @param frames paths to the pictures in the scene.
-	 * @param frontend the frontend for getting a progressbar when adding 
-	 * opening the new active scene.
 	 */
-	void updateNewActiveScene(int sceneNumber, FrameIterator& frames,
-		Frontend *frontend);
+	void updateNewActiveScene(int sceneNumber);
 	
 	/**
 	 * Updates the frameview when an external program has altered the disk files.

@@ -27,30 +27,6 @@
 
 using namespace std;
 
-class FrameIterator {
-public:
-	virtual ~FrameIterator() = 0;
-	/**
-	 * Returns the number of frames remaining in the iteration.
-	 */
-	virtual int count() const = 0;
-	/**
-	 * Returns true if and only if we have advanced beyond the limits of this
-	 * iteration. Neither {@ref get} nor {@ref next} should be called if
-	 * {@c isAtEnd} has returned true.
-	 */
-	virtual bool isAtEnd() const = 0;
-	/**
-	 * Returns the current frame's name
-	 * @return The name; ownership is not returned.
-	 */
-	virtual const char* getName() = 0;
-	/**
-	 * Advances the iteration on to the next frame.
-	 */
-	virtual void next() = 0;
-};
-
 /**
  * The observer interface. All classes who wants to be notified when something
  * changes in the animationmodel has to implement from this class.
@@ -78,8 +54,7 @@ public:
 	 * been added.
 	 * @param frontend the GUI frontend which is used to displaying progress on timeconsuming operations
 	 */
-	virtual void updateAdd(FrameIterator& frames, int scene, int index,
-			Frontend *frontend) = 0;
+	virtual void updateAdd(int scene, int index, int numFrames) = 0;
 
 	/**
 	 * Abstract function for receiving notification about frames removed from the model.
@@ -146,8 +121,7 @@ public:
 	 * @param framePaths an iterator returning the paths to the frames.
 	 * @param frontend the frontend for processing events while adding frames.
 	 */
-	virtual void updateNewActiveScene(int sceneNumber, FrameIterator& framePaths,
-		Frontend *frontend) = 0;
+	virtual void updateNewActiveScene(int sceneNumber) = 0;
 
 	/**
 	 * Abstract function for receiving notification when the disk representation of the

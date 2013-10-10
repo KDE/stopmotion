@@ -169,39 +169,3 @@ void SceneVector::accept(FileNameVisitor& v) const {
 		(*i)->accept(v);
 	}
 }
-
-class SceneVectorFrameIterator : public FrameIterator {
-	std::vector<Frame*>::const_iterator it;
-	std::vector<Frame*>::const_iterator end;
-public:
-	SceneVectorFrameIterator(std::vector<Frame*>& scene)
-			: it(scene.begin()), end(scene.end()) {
-	}
-	SceneVectorFrameIterator(std::vector<Frame*>& scene, int start, int end)
-			: it(scene.begin() + start), end(scene.begin() + end) {
-	}
-	~SceneVectorFrameIterator() {
-	}
-	int count() const {
-		return end - it;
-	}
-	bool isAtEnd() const {
-		return it == end;
-	}
-	const char* getName() {
-		return (*it)->getImagePath();
-	}
-	void next() {
-		++it;
-	}
-};
-
-FrameIterator* SceneVector::makeFrameIterator(int scene) const {
-	return new SceneVectorFrameIterator(scenes[scene]->getFrames());
-}
-
-FrameIterator* SceneVector::makeFrameIterator(int scene, int start,
-		int end) const {
-	return new SceneVectorFrameIterator(scenes[scene]->getFrames(),
-			start, end);
-}

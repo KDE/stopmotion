@@ -28,7 +28,6 @@
 class Scene;
 class Frame;
 class Sound;
-class FrameIterator;
 class FileNameVisitor;
 class WorkspaceFile;
 
@@ -49,24 +48,6 @@ public:
 	 * @return The number of scenes.
 	 */
 	int sceneCount() const;
-	/**
-	 * Constructs an iterator for the frames in the specified scene. The
-	 * iterator is valid as long as that scene is not altered.
-	 * @param scene The scene to examine.
-	 * @return The iterator; ownership is returned.
-	 */
-	FrameIterator* makeFrameIterator(int scene) const;
-	/**
-	 * Constructs an iterator for the frames in the specified scene. The
-	 * iterator is valid as long as that scene is not altered.
-	 * @param scene The scene to examine.
-	 * @param start The frame number from which to start the iteration.
-	 * @param end The frame number at which to end the iteration (i.e. this
-	 * frame will not be considered part of the iteration). Passing the number
-	 * of frames in the scene is acceptable.
-	 * @return The iterator; ownership is returned.
-	 */
-	FrameIterator* makeFrameIterator(int scene, int start, int end) const;
 	/**
 	 * Adds a scene to the animation.
 	 * @param where Where in the sequence of scenes to insert this one. Must be

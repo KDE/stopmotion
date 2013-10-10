@@ -35,9 +35,6 @@
 #include <QImageReader>
 #include <QDebug>
 
-FrameIterator::~FrameIterator() {
-}
-
 static QImage tryReadImage(const char *filename)
 {
     if (!filename) {
@@ -124,11 +121,10 @@ FrameBar::~FrameBar() {
 }
 
 
-void FrameBar::updateAdd(FrameIterator& frames, int scene, int index,
-		Frontend *frontend) {
+void FrameBar::updateAdd(int scene, int index, int numFrames) {
 	if (scene == activeScene) {
 		Logger::get().logDebug("Adding in framebar");
-		addFrames(frames, index, frontend);
+		addFrames(index, numFrames);
 		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
 }
@@ -208,19 +204,19 @@ void FrameBar::updateAnimationChanged(int sceneNumber, int frameNumber)
 }
 
 
-void FrameBar::addFrames(FrameIterator& frames, unsigned int index,
-		Frontend *frontend) {
+void FrameBar::addFrames(int index, int numFrames) {
+	//TODO as we're no longer allowing cancelling during this operation, we
+	// should implement caching and lazy loading so that this isn't a problem.
 	Logger::get().logDebug("Adding frames in framebar");
-	frontend->setProgressInfo("Adding frames to project ...");
 
-	unsigned int size = thumbViews.size();
-	unsigned int numFrames = frames.count();
-	unsigned int from = index + activeScene + 1;
-	unsigned int to = size - DomainFacade::getFacade()->getNumberOfScenes() + activeScene + 1;
-	unsigned int moveDistance = numFrames - (activeScene + 1);
+	DomainFacade* anim = DomainFacade::getFacade();
+	int size = thumbViews.size();
+	int from = index + activeScene + 1;
+	int to = size - DomainFacade::getFacade()->getNumberOfScenes() + activeScene + 1;
+	int moveDistance = numFrames - (activeScene + 1);
 
 	// Move the frames behind the place we are inserting the new ones.
-	for (unsigned i = from; i < size; ++i) {
+	for (int i = from; i < size; ++i) {
 		thumbViews[i]->move(thumbViews[i]->x() + (FRAME_WIDTH + SPACE) * numFrames, 0 );
 		if (i < to) {
 			thumbViews[i]->setNumber(i + moveDistance);
@@ -228,24 +224,23 @@ void FrameBar::addFrames(FrameIterator& frames, unsigned int index,
 	}
 
 	ThumbView *thumb = 0;
-	bool operationCanceled = false;
-	unsigned int i = 0;
 
 	// Adds the new frames to the framebar
-	for (; !frames.isAtEnd(); frames.next()) {
+	for (int i = 0; i != numFrames; ++i) {
 		thumb = new FrameThumbView(this, 0, index + i);
 		thumb->setMinimumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setScaledContents(true);
 		thumb->setPixmap(QPixmap::fromImage(tryReadImage(
-				frames.getName()).scaled(FRAME_WIDTH, FRAME_HEIGHT)));
+				anim->getFrame(index + i)->getImagePath())
+				.scaled(FRAME_WIDTH, FRAME_HEIGHT)));
 		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 		thumb->setParent(mainWidget);
 		thumb->move((FRAME_WIDTH + SPACE) * (index + activeScene + 1 + i), 0);
 		thumb->show();
 
 		//Sets the note icon on the respective frames.
-		const Frame *frame = DomainFacade::getFacade()->getFrame(i);
+		const Frame *frame = anim->getFrame(i);
 		if (frame) {
 			if (frame->getNumberOfSounds() > 0 ) {
 				thumb->setHasSounds(true);
@@ -253,32 +248,8 @@ void FrameBar::addFrames(FrameIterator& frames, unsigned int index,
 		}
 
 		thumbViews.insert(thumbViews.begin() + index + activeScene + 1 + i, thumb);
-
-		frontend->updateProgress(numFrames + i);
-		if ( (i % 10) == 0 ) {
-			frontend->processEvents();
-		}
-
-		if ( frontend->isOperationAborted() ) {
-			operationCanceled = true;
-			break;
-		}
 	}
-
-	if (operationCanceled) {
-		for (unsigned j = index + 1 + i, k = index; j < i + size + 1; ++j, ++k) {
-			thumbViews[j]->move(thumbViews[j]->x() - numFrames * (FRAME_WIDTH + SPACE), 0 );
-			thumbViews[j]->setNumber(k);
-		}
-
-		for (unsigned j = index; j <= index + i; ++j) {
-			delete thumbViews[index];
-		}
-		thumbViews.erase( thumbViews.begin() + index, thumbViews.begin() + index + i);
-	}
-	else {
-		mainWidget->resize((FRAME_WIDTH + SPACE) * thumbViews.size() - SPACE, FRAME_HEIGHT);
-	}
+	mainWidget->resize((FRAME_WIDTH + SPACE) * thumbViews.size() - SPACE, FRAME_HEIGHT);
 }
 
 
@@ -491,9 +462,8 @@ void FrameBar::newScene(int index)
 }
 
 
-void FrameBar::updateNewActiveScene(int sceneNumber, FrameIterator& framePaths,
-		Frontend *frontend) {
-	this->setActiveScene(sceneNumber, framePaths, frontend);
+void FrameBar::updateNewActiveScene(int sceneNumber) {
+	setActiveScene(sceneNumber);
 }
 
 
@@ -560,10 +530,10 @@ void FrameBar::moveScene(int sceneNumber, int movePosition)
 }
 
 
-void FrameBar::setActiveScene( int sceneNumber, FrameIterator& framePaths,
-		Frontend *frontend) {
+void FrameBar::setActiveScene(int sceneNumber) {
+	DomainFacade* anim = DomainFacade::getFacade();
 	if (activeScene >= 0) {
-		this->removeFrames(0, DomainFacade::getFacade()->getSceneSize(activeScene) - 1);
+		this->removeFrames(0, anim->getSceneSize(activeScene) - 1);
 		thumbViews[activeScene]->setOpened(false);
 	}
 
@@ -571,8 +541,9 @@ void FrameBar::setActiveScene( int sceneNumber, FrameIterator& framePaths,
 
 	if (sceneNumber >= 0) {
 		thumbViews[activeScene]->setOpened(true);
-		if (framePaths.count() > 0) {
-			this->addFrames(framePaths, 0, frontend);
+		int count = anim->getSceneSize(activeScene);
+		if (count > 0) {
+			this->addFrames(0, count);
 			setActiveFrame(0);
 		}
 		else {

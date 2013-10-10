@@ -112,15 +112,6 @@ int ObserverNotifier::sceneCount() const {
 	return del->sceneCount();
 }
 
-FrameIterator* ObserverNotifier::makeFrameIterator(int scene) const {
-	return del->makeFrameIterator(scene);
-}
-
-FrameIterator* ObserverNotifier::makeFrameIterator(int scene, int start,
-		int end) const {
-	return del->makeFrameIterator(scene, start, end);
-}
-
 class SceneAdder : public ObservableOperation {
 	int n;
 	Scene* s;
@@ -203,20 +194,17 @@ class FrameAdder : public ObservableOperation {
 	int sc;
 	int n;
 	const std::vector<Frame*>& frs;
-	AnimationImpl* ai;
 public:
 	FrameAdder(int scene, int where, const std::vector<Frame*>& frames)
-			: sc(scene), n(where), frs(frames), ai(0) {
+			: sc(scene), n(where), frs(frames) {
 	}
 	~FrameAdder() {
 	}
 	void op(AnimationImpl& del) {
 		del.addFrames(sc, n, frs);
-		ai = &del;
 	}
-	void update(Observer& ob, Frontend& fe) {
-		std::auto_ptr<FrameIterator> fi(ai->makeFrameIterator(sc, n, n + 1));
-		ob.updateAdd(*fi, sc, n, &fe);
+	void update(Observer& ob) {
+		ob.updateAdd(sc, n, frs.size());
 	}
 };
 
@@ -310,7 +298,6 @@ public:
 		del.moveFrames(fromSc, fromFr, c, toSc, toFr);
 	}
 	void update(Observer& ob) {
-		// TODO: set the active scene?
 		ob.updateMove(fromSc, fromFr, c, toSc, toFr);
 	}
 };
@@ -370,9 +357,7 @@ void ObserverNotifier::registerFrontend(Frontend* fe) {
 void ObserverNotifier::notifyNewActiveScene(int scene) {
 	for (std::vector<Observer*>::iterator i = observers.begin();
 			i != observers.end(); ++i) {
-		std::auto_ptr<FrameIterator> frameIt(
-				del->makeFrameIterator(scene));
-		(*i)->updateNewActiveScene(scene, *frameIt, frontend);
+		(*i)->updateNewActiveScene(scene);
 	}
 }
 

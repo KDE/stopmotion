@@ -52,8 +52,6 @@ public:
 	// derived from AnimationImpl
 	void clear();
 	int sceneCount() const;
-	FrameIterator* makeFrameIterator(int scene) const;
-	FrameIterator* makeFrameIterator(int scene, int start, int end) const;
 	void addScene(int where, Scene* newScene);
 	void addScene(int where);
 	void preallocateScenes(int count);
