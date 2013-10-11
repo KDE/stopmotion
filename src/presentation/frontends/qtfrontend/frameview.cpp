@@ -21,15 +21,14 @@
 // This widget is created from a widget in an example program for Qt. Available at
 // http://www.libsdl.org/cvs/qtSDL.tar.gz
 
-#include "src/presentation/frontends/qtfrontend/frameview.h"
-#include "src/technical/grabber/commandlinegrabber.h"
 #include "src/foundation/preferencestool.h"
+#include "src/technical/grabber/commandlinegrabber.h"
+#include "src/domain/domainfacade.h"
+#include "src/presentation/frontends/qtfrontend/imagegrabthread.h"
 
-#include <QSize>
+#include <SDL/SDL_image.h>
 #include <QX11Info>
-#include <QResizeEvent>
 #include <QMessageBox>
-#include <QPaintEvent>
 #include <QApplication>
 #if defined(Q_WS_X11)
 #include <X11/Xlib.h>

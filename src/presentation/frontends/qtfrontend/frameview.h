@@ -20,24 +20,21 @@
 #ifndef FRAMEVIEW_H
 #define FRAMEVIEW_H
 
-#include "src/config.h"
-#include "src/technical/grabber/imagegrabber.h"
 #include "src/presentation/observer.h"
-#include "src/domain/animation/frame.h"
-#include "src/presentation/frontends/qtfrontend/imagegrabthread.h"
-#include "src/domain/domainfacade.h"
-
-#include <QTimer>
-#include <QResizeEvent>
-#include <QPaintEvent>
-#include <QWidget>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
 
 #include <deque>
 
+#include <QWidget>
+#include <QTimer>
+
 class ImageGrabThread;
 struct SDL_Surface;
+class QResizeEvent;
+class QPaintEvent;
+class ImageGrabThread;
+class ImageGrabber;
+class DomainFacade;
+class SDL_Surface;
 
 /**
  * Widget for viewing the frames in the animation using SDL. This widget also
@@ -45,7 +42,7 @@ struct SDL_Surface;
  * by grabbing through the harddrive.
  *
  * Note: I'm considering redesigning the entire framework around this class, both
- * to make it more intuiative and to work with dynamic plugins for filters such
+ * to make it more intuitive and to work with dynamic plugins for filters such
  * as onionskinning, diffing, you name it! (plugins are cool) =) However this is
  * not very important and is left for a weekend where i'm bored :p
  *
