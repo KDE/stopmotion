@@ -47,8 +47,8 @@ public:
 	void removeObserver(Observer* o);
 	void registerFrontend(Frontend* fe);
 	void notifyNewActiveScene(int scene);
-	void notifyNewActiveFrame(int frame);
-	void notifyPlayFrame(int frame);
+	void notifyNewActiveFrame(int scene, int frame);
+	void notifyPlayFrame(int scene, int frame);
 	// derived from AnimationImpl
 	void clear();
 	int sceneCount() const;

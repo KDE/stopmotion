@@ -76,10 +76,12 @@ public:
 			int toScene, int toFrame) = 0;
 
 	/**
-	 * Abstract function for receiving notification when a new frame are selected.
-	 * @param frameNumber the new active frame.
+	 * Notification that the active frame has changed. Also changes the
+	 * active scene.
+	 * @param scene The new active scene.
+	 * @param frame The new active frame.
 	 */
-	virtual void updateNewActiveFrame(int frameNumber) = 0;
+	virtual void updateNewActiveFrame(int scene, int frame) = 0;
 
 	/**
 	 * Abstract function for receiving notification when the model is erased.
@@ -87,15 +89,17 @@ public:
 	virtual void updateClear() = 0;
 
 	/**
-	 * Abstract function for receiving notification when a frame is to be played.
-	 * @param frameNumber the frame to be played
+	 * Abstract function for receiving notification when a frame is to be
+	 * played.
+	 * @param scene The scene containing the frame to be played.
+	 * @param frame The frame within the scene to be played
 	 */
-	virtual void updatePlayFrame(int frameNumber) = 0;
+	virtual void updatePlayFrame(int scene, int frame) = 0;
 
 	/**
-	 * Abstract function for receiving notification when a new scene is created
-	 * at location index.
-	 * @param index the location where the new scene is created.
+	 * Abstract function for receiving notification when a new scene is
+	 * created at location index.
+	 * @param index The location at which the new scene is created.
 	 */
 	virtual void updateNewScene(int index) = 0;
 

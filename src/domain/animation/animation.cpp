@@ -1,5 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors.              *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -279,7 +280,7 @@ int Animation::sceneCount() const {
 void Animation::setActiveFrame(int frameNumber) {
 	if (activeScene >= 0 || frameNumber == -1) {
 		activeFrame = frameNumber;
-		scenes->notifyNewActiveFrame(frameNumber);
+		scenes->notifyNewActiveFrame(activeScene, frameNumber);
 	}
 }
 
@@ -291,7 +292,7 @@ void Animation::playFrame(int frameNumber) {
 			f->playSounds(audioDriver);
 		}
 	}
-	scenes->notifyPlayFrame(frameNumber);
+	scenes->notifyPlayFrame(activeScene, frameNumber);
 }
 
 

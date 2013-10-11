@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -145,8 +145,10 @@ void FrameView::updateRemove(int, int, int) {}
 void FrameView::updateMove(int, int, int, int, int) {}
 
 
-void FrameView::updateNewActiveFrame(int frameNumber)
+void FrameView::updateNewActiveFrame(int sceneNumber, int frameNumber)
 {
+	if (sceneNumber != activeScene)
+		updateNewActiveScene(sceneNumber);
 	if (frameNumber > -1) {
 		setActiveFrame(frameNumber);
 	}
@@ -158,8 +160,10 @@ void FrameView::updateNewActiveFrame(int frameNumber)
 }
 
 
-void FrameView::updatePlayFrame(int frameNumber)
+void FrameView::updatePlayFrame(int sceneNumber, int frameNumber)
 {
+	if (sceneNumber != activeScene)
+		updateNewActiveScene(sceneNumber);
 	if (frameNumber > -1) {
 		setActiveFrame(frameNumber);
 	}

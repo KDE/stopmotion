@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,6 +22,7 @@
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/framebar/framethumbview.h"
 #include "src/presentation/frontends/qtfrontend/framebar/scenethumbview.h"
+#include "framepreferencesmenu.h"
 
 #include <QImage>
 #include <QFrame>
@@ -154,8 +155,8 @@ void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 }
 
 
-void FrameBar::updateNewActiveFrame(int frameNumber)
-{
+void FrameBar::updateNewActiveFrame(int sceneNumber, int frameNumber) {
+	updateNewActiveScene(sceneNumber);
 	setActiveFrame(frameNumber);
 
 	if ( preferencesMenu->isVisible() ) {
@@ -187,7 +188,7 @@ void FrameBar::updateClear()
 }
 
 
-void FrameBar::updatePlayFrame(int) {}
+void FrameBar::updatePlayFrame(int, int) {}
 
 
 void FrameBar::updateAnimationChanged(int sceneNumber, int frameNumber)
@@ -528,6 +529,8 @@ void FrameBar::moveScene(int sceneNumber, int movePosition)
 
 
 void FrameBar::setActiveScene(int sceneNumber) {
+	if (sceneNumber == activeScene)
+		return;
 	DomainFacade* anim = DomainFacade::getFacade();
 	if (activeScene >= 0) {
 		this->removeFrames(0, anim->getSceneSize(activeScene) - 1);

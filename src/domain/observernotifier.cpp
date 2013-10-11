@@ -34,19 +34,8 @@ public:
 	virtual void op(AnimationImpl&) = 0;
 	/**
 	 * Performs the update on the specified observer.
-	 * @note Exactly one of {@ref update(Observer&)} and
-	 * {@ref update(Observer&, Frontend&)} must be overridden.
 	 */
-	virtual void update(Observer&) {
-	}
-	/**
-	 * Performs the update on the specified observer.
-	 * @note Exactly one of {@ref update(Observer&)} and
-	 * {@ref update(Observer&, Frontend&)} must be overridden.
-	 */
-	virtual void update(Observer& ob, Frontend& fe) {
-		update(ob);
-	}
+	virtual void update(Observer&) = 0;
 };
 
 void ObserverNotifier::doOp(ObservableOperation& oo) {
@@ -55,7 +44,7 @@ void ObserverNotifier::doOp(ObservableOperation& oo) {
 		for (std::vector<Observer*>::iterator i = observers.begin();
 				i != observers.end(); ++i) {
 			try {
-				oo.update(**i, *frontend);
+				oo.update(**i);
 			} catch (std::exception& e) {
 				try {
 					//TODO: some sort of reset of the Observer?
@@ -361,17 +350,17 @@ void ObserverNotifier::notifyNewActiveScene(int scene) {
 	}
 }
 
-void ObserverNotifier::notifyNewActiveFrame(int frame) {
+void ObserverNotifier::notifyNewActiveFrame(int scene, int frame) {
 	for (std::vector<Observer*>::iterator i = observers.begin();
 			i != observers.end(); ++i) {
-		(*i)->updateNewActiveFrame(frame);
+		(*i)->updateNewActiveFrame(scene, frame);
 	}
 }
 
-void ObserverNotifier::notifyPlayFrame(int frame) {
+void ObserverNotifier::notifyPlayFrame(int scene, int frame) {
 	for (std::vector<Observer*>::iterator i = observers.begin();
 			i != observers.end(); ++i) {
-		(*i)->updatePlayFrame(frame);
+		(*i)->updatePlayFrame(scene, frame);
 	}
 }
 

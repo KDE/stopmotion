@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,11 +20,7 @@
 #ifndef FRAMEBAR_H
 #define FRAMEBAR_H
 
-#include "src/config.h"
 #include "src/presentation/observer.h"
-#include "src/domain/animation/frame.h"
-#include "thumbview.h"
-#include "framepreferencesmenu.h"
 
 #include <QDragEnterEvent>
 #include <QResizeEvent>
@@ -35,12 +31,13 @@
 
 #include <vector>
 
-
+class Frame;
 class ThumbView;
+class FramePreferencesMenu;
 
 /**
  * The framebar widget for viewing the animation model.
- * 
+ *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
 class FrameBar : public QScrollArea, public Observer
@@ -52,75 +49,76 @@ public:
 	 * @param parent the parent widget
 	 */
 	FrameBar(QWidget *parent = 0);
-	
+
 	/**
 	 * Cleans up after the framebar.
 	 */
 	~FrameBar();
-	
+
 	/**
-	 *Function to receiving notification when a frame is added.
+	 * Receives notification when a frame is added.
 	 */
 	void updateAdd(int scene, int index, int numFrames);
-	
+
 	/**
 	 * Function to receive notification when one or more frames are deleted.
 	 * @param fromFrame the first frame in the selection
 	 * @param toFrame the last frame in the selection
 	 */
 	void updateRemove(int scene, int fromFrame, int toFrame);
-	
+
 	/**
 	 *Function to receive notification when one or more frames are moved.
 	 */
 	void updateMove(int fromScene, int fromFrame, int count,
 			int toScene, int toFrame);
-	
+
 	/**
 	 *Function to receive notification when a new frame is selected.
 	 */
-	void updateNewActiveFrame(int frameNumber);
-	
+	void updateNewActiveFrame(int scene, int frame);
+
 	/**
 	 * Function to receive notification when the model is erased.
 	 */
 	void updateClear();
-	
+
 	/**
-	 * Function to recieve notification when a frame is to be played.
-	 * @param frameNumber the frame to be played
+	 * Receives notification when a frame is to be played.
+	 * @param scene The scene containing the frame to be played.
+	 * @param frame Index of the frame within the scene to be played.
 	 */
-	void updatePlayFrame(int frameNumber);
-	
+	void updatePlayFrame(int scene, int frame);
+
 	/**
 	 * Function to recieve notification when a new scene is added to the
 	 * model.
 	 * @param index the index of the new scene.
 	 */
 	void updateNewScene(int index);
-	
+
 	/**
 	 * Function to recieve notification when a scene is removed from
 	 * the model.
 	 * @param sceneNumber the scene which has been removed from the model.
 	 */
 	void updateRemoveScene(int sceneNumber);
-	
+
 	/**
-	 * Function which recieves notification when a scene in the animation
+	 * Function which receives notification when a scene in the animation
 	 * has been moved and moves the icons in the framebar accordingly.
 	 * @param sceneNumber the scene which have been moved.
 	 * @param movePosition the position the scene has been moved to.
 	 */
 	void updateMoveScene(int sceneNumber, int movePosition);
-	
+
 	/**
-	 * Function which recieves notification when a scene is selected as the
+	 * Function which receives notification when a scene is selected as the
 	 * active scene in the animationmodel.
 	 * @param sceneNumber the new scene to be set as the active scene in the
 	 * framebar.
 	 * @param framePaths paths to the pictures in the scene.
-	 * @param frontend the frontend for getting a progressbar when adding 
+	 * @param frontend the frontend for getting a progressbar when adding
 	 * opening the new active scene.
 	 */
 	void updateNewActiveScene(int sceneNumber);
@@ -131,58 +129,58 @@ public:
 	 * @param frameNumber the frame whose disk representation has been changed.
 	 */
 	void updateAnimationChanged(int sceneNumber, int frameNumber);
-	
+
 	/**
 	 * Set whether the user is engaged selecting several frames or not (pressing
 	 * shift).
 	 * @param selecting true if the user is currently selecting multiple pictures
 	 */
 	void setSelecting(bool selecting);
-	
+
 	/**
 	 * Returns true if the user is currently selecting several thumbviews.
 	 * @return true if the user is currently selecting several thumbviews.
 	 */
 	bool isSelecting() const;
-	
+
 	/**
 	 * Sets a selection of frames between (including) this frame and the activeFrame.
 	 * @todo change name to setSelectionFrame
 	 * @param selectionFrame the other border frame of the selection in addition to activeFrame
 	 */
 	void setSelection(int selectionFrame);
-	
+
 	/**
 	 * Returns the current selectionFrame
 	 * @return the current selectionFrame
 	 */
 	int getSelectionFrame() const;
-	
+
 	/**
 	 * Registers the frame preferences menu in the framebar.
 	 * @param preferencesMenu the frame preferences menu.
 	 */
 	void setPreferencesMenu(FramePreferencesMenu *preferencesMenu);
-	
+
 	/**
 	 * Displays the frame preferences for the active frame.
 	 */
 	void showPreferencesMenu();
-	
+
 	/**
 	 * Retrieves the value of the movingScene property specifying which scene
 	 * is currently being moved in the framebar.
 	 * @return the value of the movingScene property.
 	 */
 	int getMovingScene() const;
-	
+
 	/**
 	 * Sets the value of the movingScene property specifying which scene
 	 * is currently being moved in the framebar.
 	 * @param movingScene the new value of the movingScene property.
 	 */
 	void setMovingScene(int movingScene);
-	
+
 	/**
 	 * Sets whether the scene is currently opening so that close requests
 	 * can be ignored while it is processing.
@@ -191,7 +189,7 @@ public:
 	 * if not.
 	 */
 	void setOpeningScene(bool openingScene);
-	
+
 	/**
 	 * Returns true if a scene is currently being opened.
 	 * @return true if a scene is currently being opened.
@@ -208,23 +206,23 @@ protected:
 	 * @param event information about the dragEnterEvent
 	 */
 	void dragEnterEvent(QDragEnterEvent *event);
-	
+
 	/**
 	 * Overloaded event function for when a drop event occurs in the framebar.
 	 * @param event information about the dropEvent
 	 */
 	void dropEvent(QDropEvent *event);
-	
+
 	void dragMoveEvent(QDragMoveEvent *event);
 
 	void resizeEvent(QResizeEvent *event);
 
 public slots:
 	/**
-	 * Recieves notification when the sounds in a frame has been changed.
+	 * Receives notification when the sounds in a frame have been changed.
 	 */
 	void frameSoundsChanged();
-	
+
 signals:
 	//The signals in the framebar is used for signaling small widget,
 	//who are deemed to unsignificant to be observers, of changes in
@@ -236,57 +234,57 @@ signals:
 
 private slots:
 	void scroll();
-	
+
 private:
 	static const int FRAME_HEIGHT = 88;
 	static const int FRAME_WIDTH = 117;
 	static const int SPACE = 2;
-	
+
 	/** Vector of thumbviews to keep track of the pictures in the framebar*/
 	vector<ThumbView*>thumbViews;
-	
+
 	/** The active frame in the framebar*/
 	int activeFrame;
-	
+
 	/** The active scene in the framebar */
 	int activeScene;
-	
+
 	/** The scene which are being moved when draging a scene */
 	int movingScene;
-	
-	/** The other border frame in a selection together with activeFrame. 
+
+	/** The other border frame in a selection together with activeFrame.
 	*   If only one is selected selectionFrame == activeFrame            */
 	int selectionFrame;
 
-	/** Direction to scroll when dragging. 
+	/** Direction to scroll when dragging.
 	 * -1 = scroll negative, 0 = no scroll, 1 = scroll positive */
 	int scrollDirection;
-	
+
 	int lowerScrollAreaX;
 	int upperScrollAreaX;
-	
+
 	int lowerAccelScrollAreaX;
 	int upperAccelScrollAreaX;
-	
+
 	int minScrollAreaX;
 	int maxScrollAreaX;
-	
+
 	int minScrollAreaY;
 	int maxScrollAreaY;
-	
+
 	/** True if the user is currently holding down shift to select multiple frames */
 	bool selecting;
-	
+
 	bool openingScene;
-	
+
 	QTimer *scrollTimer;
 	QScrollBar *scrollBar;
 
 	QWidget *mainWidget;
-	
+
 	/** Pointer to the frame preferencesMenu */
 	FramePreferencesMenu *preferencesMenu;
-	
+
 	/**
 	 *Adds the picture to the frame to the framebar at position index.
 	 *
@@ -294,7 +292,7 @@ private:
 	 *@param index the place to add the frame.
 	 */
 	void addFrame(Frame* frame, unsigned int index);
-	 
+
 	/**
 	 * Adds the frames in the framesvector to the framebar.
 	 * @param index The location to add the frames to.
@@ -308,7 +306,7 @@ private:
 	 * @param toFrame the last thumbview to remove.
 	 */
 	void removeFrames(unsigned int fromFrame, unsigned int toFrame);
-	
+
 	/**
 	 * Move the frames from fromFrame (inclusive) to toFrame to movePosition.
 	 * @param fromFrame the first frame to move.
@@ -316,25 +314,25 @@ private:
 	 * @param movePosition the position to move the frames to.
 	 */
 	void moveFrames(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition);
-	
+
 	/**
 	 *Sets the thumbview frameNumber in the framebar to be the active frame.
 	 *@param frameNumber the number of the new active frame
 	 */
 	void setActiveFrame(int frameNumber);
-	
+
 	/**
 	 * Creates a new scene and adds it to the framebar.
 	 * @param index the location the new scene should be added at.
 	 */
 	void newScene(int index);
-	
+
 	/**
 	 * Removes the scene with index sceneNumber from the framebar.
 	 * @param sceneNumber the scene to be removed from the framebar.
 	 */
 	void removeScene(int sceneNumber);
-	
+
 	/**
 	 * Moves a scene in the framebar.
 	 * @param sceneNumber the scene that are moved.
