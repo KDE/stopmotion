@@ -73,7 +73,7 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 	setAttribute(Qt::WA_NoSystemBackground);
 	setObjectName(name);
 	
-	facade->attatch(this);
+	facade->attach(this);
 	Logger::get().logDebug("FrameView is attatched to the model and the model to FrameView");
 }
 

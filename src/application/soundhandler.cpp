@@ -45,14 +45,14 @@ void SoundHandler::addSound()
 		getOpenFileName(0, tr("Choose sound file"), QString(homeDir), tr("Sounds (*.ogg)") );
 	if ( !file.isNull() ) {
 		DomainFacade *facade = DomainFacade::getFacade();
-		int ret = facade->addSound( facade->getActiveFrameNumber(), file.toLocal8Bit().constData() );
+		int activeFrame = facade->getActiveFrameNumber();
+		int ret = facade->addSound( activeFrame,
+				file.toLocal8Bit().constData() );
 		if (ret == 0) {
-			const Frame *frame = facade->getFrame( facade->getActiveFrameNumber() );
-			if (frame) {
-				soundsList->insertItem(soundsList->count(), 
-						new QListWidgetItem( frame->getSoundName(soundsList->count())) );
-				emit soundsChanged();
-			}
+			soundsList->insertItem(soundsList->count(),
+					new QListWidgetItem( facade->getSoundName(activeFrame,
+							soundsList->count())) );
+			emit soundsChanged();
 		}
 	}
 }

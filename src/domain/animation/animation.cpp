@@ -194,7 +194,7 @@ int Animation::addSound(int32_t frameNumber, const char *soundFile) {
 	strncpy(soundName, ss.str().c_str(), size);
 	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
-	int32_t index = scenes->soundCount(activeScene, frameNumber);
+	int32_t index = soundCount(activeScene, frameNumber);
 	try {
 		executor->execute(commandAddSound, activeScene, frameNumber,
 				index, soundFile, soundName);
@@ -400,6 +400,10 @@ void Animation::registerFrontend(Frontend* fe) {
 
 Frontend* Animation::getFrontend() {
 	return frontend;
+}
+
+int Animation::soundCount(int scene, int frame) const {
+	return scenes->soundCount(scene, frame);
 }
 
 void Animation::activateScene(int sceneNumber) {

@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "externalchangemonitor.h"
 #include "src/domain/domainfacade.h"
+#include "src/foundation/logger.h"
 
 #include <QDebug>
 #include <QTime>

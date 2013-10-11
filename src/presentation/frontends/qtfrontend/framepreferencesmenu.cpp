@@ -84,17 +84,17 @@ FramePreferencesMenu::FramePreferencesMenu( QWidget * parent,
 }
 
 
-void FramePreferencesMenu::open()
-{
+void FramePreferencesMenu::open() {
 	soundsList->clear();
-	unsigned int numSounds = DomainFacade::getFacade()->getFrame( 
-			DomainFacade::getFacade()->getActiveFrameNumber() )->getNumberOfSounds();
-	
-	unsigned int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
-	for (unsigned int i = 0; i < numSounds; ++i) {
-		soundsList->addItem( new QListWidgetItem(DomainFacade::getFacade()->getFrame(activeFrame)->getSoundName(i)));
+	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
+	int activeScene = DomainFacade::getFacade()->getActiveSceneNumber();
+	int numSounds = DomainFacade::getFacade()->getNumberOfSounds(activeScene,
+					activeFrame);
+	for (int i = 0; i < numSounds; ++i) {
+		soundsList->addItem( new QListWidgetItem(DomainFacade::getFacade()
+				->getSoundName(activeFrame, i)));
 	}
-	this->show();
+	show();
 }
 
 

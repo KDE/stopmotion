@@ -113,7 +113,7 @@ FrameBar::FrameBar(QWidget *parent)
 	setAcceptDrops(true);
 
 	Logger::get().logDebug("FrameBar is attatched to the model");
-	DomainFacade::getFacade()->attatch(this);
+	DomainFacade::getFacade()->attach(this);
 }
 
 
@@ -240,11 +240,8 @@ void FrameBar::addFrames(int index, int numFrames) {
 		thumb->show();
 
 		//Sets the note icon on the respective frames.
-		const Frame *frame = anim->getFrame(i);
-		if (frame) {
-			if (frame->getNumberOfSounds() > 0 ) {
-				thumb->setHasSounds(true);
-			}
+		if (anim->getNumberOfSounds(activeScene, i) != 0) {
+			thumb->setHasSounds(true);
 		}
 
 		thumbViews.insert(thumbViews.begin() + index + activeScene + 1 + i, thumb);

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,9 +21,9 @@
 
 #include "animation/animation.h"
 #include "src/foundation/logger.h"
+#include "src/presentation/frontends/frontend.h"
 
 DomainFacade* DomainFacade::domainFacade = 0;
-
 
 DomainFacade::DomainFacade() {
 	animationModel = new Animation();
@@ -46,13 +46,13 @@ DomainFacade* DomainFacade::getFacade()
 }
 
 
-void DomainFacade::attatch(Observer *o)
+void DomainFacade::attach(Observer *o)
 {
 	animationModel->attach(o);
 }
 
 
-void DomainFacade::detatch(Observer *o)
+void DomainFacade::detach(Observer *o)
 {
 	animationModel->detach(o);
 }
@@ -117,8 +117,8 @@ void DomainFacade::removeSound(unsigned int frameNumber, unsigned int soundNumbe
 }
 
 
-void DomainFacade::setSoundName(unsigned int frameNumber, unsigned int soundNumber, char * soundName)
-{
+void DomainFacade::setSoundName(int frameNumber, int soundNumber,
+		const char* soundName) {
 	animationModel->setSoundName(frameNumber, soundNumber, soundName);
 }
 
@@ -164,21 +164,23 @@ const Frame * DomainFacade::getFrame(int frameNumber) const {
 }
 
 
-unsigned int DomainFacade::getModelSize()
-{
+int DomainFacade::getModelSize() const {
 	return animationModel->frameCount();
 }
 
 
-unsigned int DomainFacade::getSceneSize(int sceneNumber)
-{
+int DomainFacade::getSceneSize(int sceneNumber) const {
 	return animationModel->frameCount(sceneNumber);
 }
 
 
-unsigned int DomainFacade::getNumberOfScenes( )
-{
+int DomainFacade::getNumberOfScenes() const {
 	return animationModel->sceneCount();
+}
+
+
+int DomainFacade::getNumberOfSounds(int scene, int frame) const {
+	return animationModel->soundCount(scene, frame);
 }
 
 
@@ -269,3 +271,6 @@ const vector<GrabberDevice> DomainFacade::getGrabberDevices()
 	return Util::getGrabberDevices();
 }
 
+const char* DomainFacade::getSoundName(int frameNumber, int soundNumber) const {
+	return animationModel->getFrame(frameNumber)->getSoundName(soundNumber);
+}

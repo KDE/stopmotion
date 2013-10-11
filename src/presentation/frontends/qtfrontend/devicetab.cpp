@@ -23,6 +23,7 @@
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/flexiblelineedit.h"
 #include "src/foundation/preferencestool.h"
+#include "src/foundation/logger.h"
 
 #include <QHeaderView>
 
