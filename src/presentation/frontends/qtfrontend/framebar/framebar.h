@@ -22,18 +22,19 @@
 
 #include "src/presentation/observer.h"
 
-#include <QDragEnterEvent>
-#include <QResizeEvent>
-#include <QDropEvent>
 #include <QScrollArea>
-#include <QHBoxLayout>
-#include <QWidget>
 
 #include <vector>
 
 class Frame;
 class ThumbView;
 class FramePreferencesMenu;
+
+class QWidget;
+class QDragEnterEvent;
+class QDragMoveEvent;
+class QDropEvent;
+class QResizeEvent;
 
 /**
  * The framebar widget for viewing the animation model.
