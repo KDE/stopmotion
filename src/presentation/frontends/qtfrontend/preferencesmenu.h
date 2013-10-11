@@ -20,14 +20,13 @@
 #ifndef PREFERENCESMENU_H
 #define PREFERENCESMENU_H
 
-#include "importtab.h"
-#include "exporttab.h"
-#include "devicetab.h"
-
 #include <QDialog>
 #include <QTabWidget>
 #include <QPushButton>
 
+class ImportTab;
+class ExportTab;
+class DeviceTab;
 
 /**
  * The import and export preferences menu.

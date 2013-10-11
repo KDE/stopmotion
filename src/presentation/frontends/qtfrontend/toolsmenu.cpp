@@ -36,6 +36,12 @@
 #include "graphics/icons/removescene.xpm"
 #include "graphics/icons/gimp.xpm"
 
+#include "src/application/runanimationhandler.h"
+#include "src/application/modelhandler.h"
+#include "src/application/camerahandler.h"
+
+#include <QShortcut>
+#include <QWidget>
 #include <QToolTip>
 #include <QAction>
 #include <QMessageBox>

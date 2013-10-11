@@ -21,6 +21,7 @@
 
 #include "src/domain/domainfacade.h"
 #include "graphics/icons/close.xpm"
+#include "src/application/soundhandler.h"
 
 #include <QToolTip>
 #include <QLabel>

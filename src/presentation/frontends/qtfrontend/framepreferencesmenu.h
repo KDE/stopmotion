@@ -21,7 +21,6 @@
 #define FRAMEPREFERENCESMENU_H
 
 #include "menuframe.h"
-#include "src/application/soundhandler.h"
 
 #include <QListWidget>
 #include <QPushButton>
@@ -29,6 +28,7 @@
 #include <QLayout>
 #include <QGridLayout>
 
+class SoundHandler;
 
 /**
  * A customized GUI menu class for the fram preferences menu.

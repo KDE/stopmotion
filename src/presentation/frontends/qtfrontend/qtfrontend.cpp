@@ -20,7 +20,14 @@
 #include "qtfrontend.h"
 
 #include "src/application/externalcommand.h"
+#include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
+#include "src/foundation/preferencestool.h"
 
+#include <QProgressDialog>
+#include <QProgressBar>
+#include <QTimer>
+#include <QApplication>
+#include <QLabel>
 #include <QtGui>
 
 #include <cstring>

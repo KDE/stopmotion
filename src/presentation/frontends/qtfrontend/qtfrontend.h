@@ -20,18 +20,17 @@
 #ifndef QTFRONTEND_H
 #define QTFRONTEND_H
 
-#include "src/config.h"
 #include "src/presentation/frontends/frontend.h"
-#include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
-#include "src/foundation/preferencestool.h"
 
-#include <QProgressDialog>
-#include <QProgressBar>
-#include <QTimer>
 #include <QObject>
-#include <QApplication>
-#include <QLabel>
 
+class PreferencesTool;
+class QApplication;
+class MainWindowGUI;
+class QProgressDialog;
+class QProgressBar;
+class QLabel;
+class QTimer;
 
 /**
  * Frontend for using the program through a GUI developed with the QT library.

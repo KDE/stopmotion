@@ -22,13 +22,14 @@
 
 #include "ui_toolsmenu.h"
 
-#include "src/application/runanimationhandler.h"
-#include "src/application/modelhandler.h"
-#include "src/application/camerahandler.h"
+#include <QObject>
 
-#include <QShortcut>
-#include <QWidget>
-
+class QShortcut;
+class QTimer;
+class QWidget;
+class RunAnimationHandler;
+class ModelHandler;
+class CameraHandler;
 
 /**
  * The tools menu on the left side in the application.
