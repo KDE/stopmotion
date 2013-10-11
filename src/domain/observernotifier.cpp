@@ -193,7 +193,8 @@ public:
 		del.addFrames(sc, n, frs);
 	}
 	void update(Observer& ob) {
-		ob.updateAdd(sc, n, frs.size());
+		int count = frs.size();
+		ob.updateAdd(sc, n, count);
 	}
 };
 
@@ -260,6 +261,7 @@ public:
 	}
 	void update(Observer& ob) {
 		ob.updateRemove(sc, fr, fr + c - 1);
+		ob.updateNewActiveFrame(sc, fr + c - 1);
 	}
 };
 

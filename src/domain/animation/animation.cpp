@@ -153,7 +153,7 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 	if (0 < added) {
 		executor->execute(commandAddFrames, params);
 		params.retainFiles();
-		setActiveFrame(index + added - 1);
+		setActiveFrame(index + count - 1);
 	}
 	if (showingProgress)
 		frontend->hideProgress();
@@ -166,6 +166,7 @@ void Animation::removeFrames(int32_t fromFrame, int32_t toFrame) {
 	assert(fromFrame <= toFrame);
 	executor->execute(commandRemoveFrames, activeFrame, fromFrame,
 			toFrame - fromFrame - 1);
+	setActiveFrame(toFrame);
 }
 
 
@@ -176,10 +177,11 @@ void Animation::moveFrames(int32_t fromFrame, int32_t toFrame,
 	assert(toFrame < framesSize);
 	assert(movePosition < framesSize);
 	if (movePosition < fromFrame || toFrame < movePosition) {
+		int count = toFrame - fromFrame + 1;
 		executor->execute(commandMoveFrames,
-				activeScene, fromFrame, toFrame - fromFrame + 1,
+				activeScene, fromFrame, count,
 				activeScene, movePosition);
-		setActiveFrame(movePosition);
+		setActiveFrame(movePosition + count - 1);
 	}
 }
 

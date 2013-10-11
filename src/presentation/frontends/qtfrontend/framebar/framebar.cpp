@@ -234,7 +234,7 @@ void FrameBar::addFrames(int index, int numFrames) {
 		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setScaledContents(true);
 		thumb->setPixmap(QPixmap::fromImage(tryReadImage(
-				anim->getFrame(index + i)->getImagePath())
+				anim->getFrame(index + i, activeScene)->getImagePath())
 				.scaled(FRAME_WIDTH, FRAME_HEIGHT)));
 		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 		thumb->setParent(mainWidget);
@@ -322,18 +322,17 @@ void FrameBar::moveThumbView(unsigned int fromPosition, unsigned int toPosition)
 }
 
 
-void FrameBar::setActiveFrame(int frameNumber)
-{
+void FrameBar::setActiveFrame(int frameNumber) {
 	// If there is a frame to set as active
 	if (frameNumber >= 0) {
 		Logger::get().logDebug("Setting new active frame in FrameBar");
 
+		int max = thumbViews.size() - 1;
 		int thumbNumber = frameNumber + activeScene + 1;
 		int from = activeFrame + activeScene + 1;
 		int to = selectionFrame + activeScene + 1;
 		int highend = (from < to) ? to : from;
 		int lowend = (from > to) ? to : from;
-		int max = thumbViews.size() - 1;
 
 		if (max < highend)
 			highend = max;
@@ -344,7 +343,7 @@ void FrameBar::setActiveFrame(int frameNumber)
 			thumbViews[i]->setSelected(false);
 		}
 
-		if (thumbNumber >= 0)
+		if (0 <= thumbNumber && thumbNumber <= max)
 			thumbViews[thumbNumber]->setSelected(true);
 		ensureVisible(thumbNumber * (FRAME_WIDTH + SPACE) + FRAME_WIDTH/2,
 				FRAME_HEIGHT/2, FRAME_WIDTH/2, FRAME_HEIGHT/2);
@@ -530,12 +529,17 @@ void FrameBar::moveScene(int sceneNumber, int movePosition)
 
 
 void FrameBar::setActiveScene(int sceneNumber) {
+	DomainFacade* anim = DomainFacade::getFacade();
+	int maxScene = anim->getNumberOfScenes() - 1;
+	if (sceneNumber < maxScene) {
+		sceneNumber = maxScene;
+	}
 	if (sceneNumber == activeScene)
 		return;
-	DomainFacade* anim = DomainFacade::getFacade();
 	if (activeScene >= 0) {
 		this->removeFrames(0, anim->getSceneSize(activeScene) - 1);
-		thumbViews[activeScene]->setOpened(false);
+		if (activeScene < thumbViews.size())
+			thumbViews[activeScene]->setOpened(false);
 	}
 
 	this->activeScene = sceneNumber;
