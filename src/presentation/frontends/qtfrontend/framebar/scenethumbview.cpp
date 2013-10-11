@@ -21,6 +21,7 @@
 
 #include "graphics/icons/clapper.xpm"
 #include "src/domain/domainfacade.h"
+#include "src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h"
 
 #include <QPainter>
 #include <QImage>

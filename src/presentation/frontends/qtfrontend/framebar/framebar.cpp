@@ -22,6 +22,7 @@
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/framebar/framethumbview.h"
 #include "src/presentation/frontends/qtfrontend/framebar/scenethumbview.h"
+#include "src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h"
 #include "framepreferencesmenu.h"
 
 #include <QImage>

@@ -21,13 +21,14 @@
 #define SCENETHUMBVIEW_H
 
 #include "src/presentation/frontends/qtfrontend/framebar/thumbview.h"
-#include "src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h"
 
 #include <QMouseEvent>
 #include <QPixmap>
 #include <QPaintEvent>
 #include <QDropEvent>
 
+
+class SceneArrowButton;
 
 /**
  * Custom widget representing a scene in the framebar.
