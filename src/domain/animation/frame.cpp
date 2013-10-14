@@ -19,61 +19,14 @@
  ***************************************************************************/
 #include "frame.h"
 
-#include "src/technical/audio/oggvorbis.h"
-#include "src/technical/util.h"
+#include "src/technical/audio/audiodriver.h"
 #include "src/domain/filenamevisitor.h"
+#include "src/config.h"
+#include "sound.h"
 
 #include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
 #include <sstream>
 #include <memory>
-
-Sound::Sound() : af(0), name(0) {
-}
-
-Sound::~Sound() {
-	delete af;
-	delete name;
-}
-
-/**
- *@todo check audio type (ogg, mp3, wav ...)
- */
-void Sound::open(TemporaryWorkspaceFile& filename) {
-	std::auto_ptr<OggVorbis> a(new OggVorbis());
-	a->setFilename(filename);
-	af = a.release();
-}
-
-const char* Sound::setName(const char* n) {
-	const char* r = name;
-	name = n;
-	return r;
-}
-
-void Sound::setName(std::string& n) {
-	assert(!name);
-	int size = n.size();
-	char* a = new char[size];
-	name = a;
-	strncpy(a, n.c_str(), size);
-}
-
-AudioFormat* Sound::getAudio() {
-	return af;
-}
-
-const AudioFormat* Sound::getAudio() const {
-	return af;
-}
-
-const char* Sound::getName() const {
-	return name;
-}
-
 
 Frame::Frame(TemporaryWorkspaceFile& filename) {
 	assert(filename.path() != NULL);
@@ -107,8 +60,8 @@ int Frame::newSound(TemporaryWorkspaceFile& filename) {
 	Logger::get().logDebug("Adding sound in frame");
 	preallocateSounds(1);
 	std::auto_ptr<Sound> sound(new Sound());
-	stringstream ss;
-	stringstream::pos_type zeroOff = ss.tellp();
+	std::stringstream ss;
+	std::stringstream::pos_type zeroOff = ss.tellp();
 	ss << "Sound" << WorkspaceFile::getSoundNumber();
 	int size = (ss.tellp() - zeroOff) + 1;
 	char* soundName = new char[size];

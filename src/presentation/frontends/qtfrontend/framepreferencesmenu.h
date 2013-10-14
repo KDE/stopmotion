@@ -31,7 +31,7 @@
 class SoundHandler;
 
 /**
- * A customized GUI menu class for the fram preferences menu.
+ * A customized GUI menu class for the frame preferences menu.
  *
  * Inherits from MenuFrame but adds some functionality around loading the
  * present preferences when opened.

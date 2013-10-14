@@ -48,7 +48,7 @@ public:
 	 *Temporary functions to assist in an orderly transfer of functionality from
 	 *Animation, without having to break the project for big time-periods.
 	 */
-	vector<Frame*>& getFrames();
+	std::vector<Frame*>& getFrames();
 
 	/**
 	 * Retrieves the size of the scene (the number of frames in it).
@@ -190,8 +190,8 @@ public:
 	void accept(FileNameVisitor& v) const;
 
 private:
-	typedef vector<Frame*> frameVector;
-	frameVector frames;
+	typedef std::vector<Frame*> FrameVector;
+	FrameVector frames;
 };
 
 #endif

@@ -44,7 +44,7 @@ public:
 	 * @param filename the project file
 	 * @return a vector containing the scenes stored in the project file
 	 */
-	const vector<Scene*> open(const char *filename);
+	const std::vector<Scene*> open(const char *filename);
 	
 	/**
 	 * Saves the files in differents directories and packs the resulting files
@@ -54,7 +54,7 @@ public:
 	 * @param frontend the frontend to display progress to
 	 * @return true if saving was successfull, false otherwise
 	 */
-	bool save(const char *filename, const vector<const Scene*>& scenes,
+	bool save(const char *filename, const std::vector<const Scene*>& scenes,
 			Frontend *frontend);
 	
 	/**
@@ -101,8 +101,9 @@ private:
 	char *prevImgPath;// absolute
 	char *prevXmlFile;// absolute
 	
-	void setAttributes(const vector<const Scene*>& scenes, Frontend *frontend);
-	void getAttributes(xmlNodePtr node, vector<Scene*>& scenes);
+	void setAttributes(const std::vector<const Scene*>& scenes,
+			Frontend *frontend);
+	void getAttributes(xmlNodePtr node, std::vector<Scene*>& scenes);
 	bool saveDOMToFile(xmlDocPtr doc);
 	void setProjectPaths(const char *unpacked, bool isSave);
 	bool setProjectFile(const char *filename);

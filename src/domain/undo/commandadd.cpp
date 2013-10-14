@@ -25,6 +25,7 @@
 #include "src/domain/animation/workspacefile.h"
 
 #include <malloc.h>
+#include <assert.h>
 #include <memory>
 
 CommandAdd::CommandAdd(AnimationImpl& model, int toScene, int toFrame, int count)

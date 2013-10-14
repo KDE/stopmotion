@@ -24,6 +24,7 @@
 #include "src/technical/video/videofactory.h"
 #include "workspacefile.h"
 #include "scenevector.h"
+#include "sound.h"
 #include "animationimpl.h"
 #include "src/domain/observernotifier.h"
 #include "src/presentation/observer.h"

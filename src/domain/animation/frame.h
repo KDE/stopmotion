@@ -20,46 +20,14 @@
 #ifndef FRAME_H
 #define FRAME_H
 
-#include "src/config.h"
-#include "src/technical/audio/audioformat.h"
-#include "src/technical/audio/audiodriver.h"
 #include "workspacefile.h"
 
 #include <vector>
 #include <string>
-using namespace std;
 
 class FileNameVisitor;
-
-class Sound {
-	AudioFormat* af;
-	const char* name;
-public:
-	Sound();
-	~Sound();
-	/**
-	 * Opens an audio file. See {@ref AudioFormat::setFilename} for
-	 * exceptions that might be thrown.
-	 * @param filename The filename to open. Ownership is not passed.
-	 * @todo We need a way of mocking this for testing.
-	 */
-	void open(TemporaryWorkspaceFile& filename);
-	/**
-	 * Sets or resets the (human-readable) name of this sound.
-	 * @param name The new name or NULL for no name. Ownership is passed.
-	 * @return The old name or NULL for no name. Ownership is returned.
-	 */
-	const char* setName(const char* name);
-	/**
-	 * Sets the (human-readable) name of this sound. May only be used when
-	 * there is no name already set for the sound.
-	 * @param n The name to set.
-	 */
-	void setName(std::string& n);
-	AudioFormat* getAudio();
-	const AudioFormat* getAudio() const;
-	const char* getName() const;
-};
+class Sound;
+class AudioDriver;
 
 /**
  * Class representing the frames in the animation
@@ -183,7 +151,7 @@ private:
 
 	WorkspaceFile imagePath;
 
-	typedef vector<Sound*> SoundVector;
+	typedef std::vector<Sound*> SoundVector;
 
 	/** Contains the sounds belonging to this frame. */
 	SoundVector sounds;

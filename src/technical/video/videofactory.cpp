@@ -20,6 +20,8 @@
 #include "videofactory.h"
 #include <cstring>
 
+using namespace std;
+
 VideoFactory::VideoFactory(ProjectSerializer *serializer, Frontend *frontend)
 		: serializer(serializer), frontend(frontend)
 {

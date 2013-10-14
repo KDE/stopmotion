@@ -18,62 +18,54 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "commandaddsound.h"
-#include "commandremovesound.h"
-#include "animationimpl.h"
-#include "src/domain/animation/sound.h"
-#include "src/domain/filenamevisitor.h"
+#include "sound.h"
+
 #include "src/technical/audio/audioformat.h"
+#include "src/technical/audio/oggvorbis.h"
 
 #include <assert.h>
+#include <string.h>
 #include <memory>
 
-CommandAddSound::CommandAddSound(AnimationImpl& model, int32_t scene, int32_t frame,
-		int32_t soundNumber)
-	: sv(model), sc(scene), fr(frame), index(soundNumber),
-	  snd(0) {
+Sound::Sound() : af(0), name(0) {
 }
 
-CommandAddSound::~CommandAddSound() {
-	delete snd;
+Sound::~Sound() {
+	delete af;
+	delete name;
 }
 
-void CommandAddSound::setSound(Sound* sound) {
-	assert(!snd);
-	snd = sound;
+/**
+ *@todo check audio type (ogg, mp3, wav ...)
+ */
+void Sound::open(TemporaryWorkspaceFile& filename) {
+	std::auto_ptr<OggVorbis> a(new OggVorbis());
+	a->setFilename(filename);
+	af = a.release();
 }
 
-Command* CommandAddSound::execute() {
-	std::auto_ptr<CommandRemoveSound>
-			inv(new CommandRemoveSound(sv, sc, fr, index));
-	sv.addSound(sc, fr, index, snd);
-	delete this;
-	return inv.release();
-};
-
-void CommandAddSound::accept(FileNameVisitor& v) const {
-	v.visitSound(snd->getAudio()->getSoundPath());
+const char* Sound::setName(const char* n) {
+	const char* r = name;
+	name = n;
+	return r;
 }
 
-CommandAddSoundFactory::CommandAddSoundFactory(AnimationImpl& model) : sv(model) {
+void Sound::setName(std::string& n) {
+	assert(!name);
+	int size = n.size();
+	char* a = new char[size];
+	name = a;
+	strncpy(a, n.c_str(), size);
 }
 
-CommandAddSoundFactory::~CommandAddSoundFactory() {
+AudioFormat* Sound::getAudio() {
+	return af;
 }
 
-Command* CommandAddSoundFactory::create(Parameters& ps) {
-	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
-	int32_t fr = ps.getInteger(0, sv.frameCount(sc));
-	int32_t index = ps.getInteger(0, sv.soundCount(sc, fr));
-	std::string filename;
-	ps.getString(filename);
-	std::string humanName;
-	ps.getString(humanName);
-	std::auto_ptr<Sound> sound(new Sound());
-	sound->setName(humanName);
-	std::auto_ptr<CommandAddSound> r(new CommandAddSound(sv, sc, fr, index));
-	r->setSound(sound.release());
-	TemporaryWorkspaceFile twf(filename.c_str());
-	sound->open(twf);
-	return r.release();
+const AudioFormat* Sound::getAudio() const {
+	return af;
+}
+
+const char* Sound::getName() const {
+	return name;
 }

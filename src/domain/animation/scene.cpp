@@ -36,7 +36,7 @@ Scene::~Scene() {
 }
 
 
-vector<Frame*>& Scene::getFrames() {
+std::vector<Frame*>& Scene::getFrames() {
 	return frames;
 }
 
@@ -128,7 +128,7 @@ int Scene::newSound(int frameNumber, TemporaryWorkspaceFile& filename) {
 }
 
 void Scene::accept(FileNameVisitor& v) const {
-	for (frameVector::const_iterator i = frames.begin();
+	for (FrameVector::const_iterator i = frames.begin();
 			i != frames.end();
 			++i) {
 		(*i)->accept(v);

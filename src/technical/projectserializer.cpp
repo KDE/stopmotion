@@ -22,6 +22,8 @@
 #include "src/foundation/logger.h"
 #include "packer.h"
 #include "src/domain/animation/frame.h"
+#include "src/domain/animation/sound.h"
+#include "src/technical/audio/audioformat.h"
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -62,8 +64,7 @@ ProjectSerializer::~ProjectSerializer()
 }
 
 
-const vector<Scene*> ProjectSerializer::open(const char *filename)
-{
+const  std::vector<Scene*> ProjectSerializer::open(const char *filename){
 	assert(filename != NULL);
 
 	bool isNewProFile = setProjectFile(filename);
@@ -80,7 +81,7 @@ const vector<Scene*> ProjectSerializer::open(const char *filename)
 		Logger::get().logWarning("Couldn't load XML file");
 	}
 	
-	vector<Scene*> sVect;
+	std::vector<Scene*> sVect;
 	rootNode = xmlDocGetRootElement(doc);
 	getAttributes(rootNode, sVect);
 	
@@ -102,7 +103,7 @@ const vector<Scene*> ProjectSerializer::open(const char *filename)
 
 // check if the user wants to save an opened project to an another file.
 bool ProjectSerializer::save( 	const char *filename, 
-								const vector<const Scene*>& sVect,
+								const std::vector<const Scene*>& sVect,
 								Frontend *frontend	)
 {
 	assert(filename != NULL);
@@ -157,8 +158,8 @@ const char* ProjectSerializer::getProjectFile()
 }
 
 
-void ProjectSerializer::setAttributes(const vector<const Scene*>& sVect, Frontend *frontend)
-{
+void ProjectSerializer::setAttributes(const std::vector<const Scene*>& sVect,
+		Frontend *frontend) {
 	xmlNodePtr node = NULL;
 	const Frame *frame = NULL;
 	const AudioFormat *sound = NULL;
@@ -200,8 +201,8 @@ void ProjectSerializer::setAttributes(const vector<const Scene*>& sVect, Fronten
 }
 
 
-void ProjectSerializer::getAttributes(xmlNodePtr node, vector<Scene*>& sVect)
-{
+void ProjectSerializer::getAttributes(xmlNodePtr node,
+		std::vector<Scene*>& sVect) {
 	xmlNodePtr currNode = NULL;
 	for (currNode = node; currNode; currNode = currNode->next) {
 		if (currNode->type == XML_ELEMENT_NODE) {
