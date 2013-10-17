@@ -11,6 +11,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/domain/animation/animationimpl.h \
     src/domain/animation/frame.h \
     src/domain/animation/sound.h \
+    src/presentation/imagecache.h \
     src/presentation/frontends/nonguifrontend/nonguifrontend.h \
     src/presentation/frontends/qtfrontend/mainwindowgui.h \
     src/presentation/frontends/qtfrontend/qtfrontend.h \
@@ -130,6 +131,7 @@ SOURCES += src/config.cpp \
     src/domain/animation/frame.cpp \
     src/domain/animation/sound.cpp \
     src/domain/animation/scenevector.cpp \
+    src/presentation/imagecache.cpp \
     src/presentation/frontends/nonguifrontend/nonguifrontend.cpp \
     src/presentation/frontends/qtfrontend/mainwindowgui.cpp \
     src/presentation/frontends/qtfrontend/qtfrontend.cpp \
