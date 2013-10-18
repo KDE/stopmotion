@@ -29,8 +29,7 @@
 class Executor;
 class CloneLogger;
 
-class TestCommandFactory : public QObject
-{
+class TestCommandFactory : public QObject {
 	Q_OBJECT
 	Executor* ce;
 	CloneLogger* cl;

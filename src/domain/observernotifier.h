@@ -46,9 +46,6 @@ public:
 	void addObserver(Observer* newObserver);
 	void removeObserver(Observer* o);
 	void registerFrontend(Frontend* fe);
-	void notifyNewActiveScene(int scene);
-	void notifyNewActiveFrame(int scene, int frame);
-	void notifyPlayFrame(int scene, int frame);
 	// derived from AnimationImpl
 	void clear();
 	int sceneCount() const;
@@ -70,6 +67,7 @@ public:
 			int toScene, int toFrame);
 	void replaceImage(int sceneNumber, int frameNumber,
 			WorkspaceFile& otherImage);
+	void replaceImage(int sceneNumber, int frameNumber);
 	int soundCount(int scene, int frame) const;
 	void addSound(int scene, int frame, int soundNumber,
 			Sound* sound);

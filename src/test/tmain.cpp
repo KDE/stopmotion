@@ -21,15 +21,13 @@
 #include <QtTest/QtTest>
 
 #include "texecutor.h"
+#include "tcache.h"
 
-int max(int a, int b) {
-	return a < b? b : a;
-}
-
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     QCoreApplication app(argc, argv);
     TestCommandFactory t1;
     int overall = QTest::qExec(&t1, argc, argv);
+    TestCache t2;
+    overall += QTest::qExec(&t2, argc, argv);
     return overall;
 }

@@ -18,42 +18,38 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef IMAGECACHE_H_
-#define IMAGECACHE_H_
+#include "tcache.h"
 
-class SDL_Surface;
+#include "src/presentation/loadcache.h"
 
-struct SurfaceLoader {
-	typedef SDL_Surface value_t;
-	static value_t* load(const char*);
-	static void free(value_t*);
-};
+#include <QtTest/QtTest>
 
-template<typename T> class LoadCache;
+namespace {
+	const char* TestPath1 = "1";
+	const char* TestPath2 = "2";
+	const char* TestPath3 = "3";
+	const char* TestPath4 = "4";
+}
 
-class ImageCache {
-	LoadCache<SurfaceLoader>* delegate;
-public:
-	/**
-	 * Constructs an image cache.
-	 * @param cacheSize The number of images that the cache should hold.
-	 */
-	ImageCache(int cacheSize);
-	~ImageCache();
-	/**
-	 * Pulls the named image into the cache, if necessary, and returns it.
-	 * @param path The path of the file.
-	 */
-	SDL_Surface* get(const char* path);
-	/**
-	 * Removes the named image from the cache, if it is present.
-	 * @param path The path of the file.
-	 */
-	void drop(const char* path);
-	/**
-	 * Clears the cache.
-	 */
-	void clear();
-};
+const char* TestLoader::lastFreed;
+const char* TestLoader::lastLoaded;
 
-#endif
+TestCache::TestCache() : cache(0) {
+	cache = new LoadCache<TestLoader>(3);
+}
+
+TestCache::~TestCache() {
+	delete cache;
+}
+
+void TestCache::GettingTwiceReturnsSameInstance() {
+	cache->clear();
+	TestLoader::lastLoaded = 0;
+	const char* r = cache->get(TestPath1);
+	QVERIFY2(TestLoader::lastLoaded == TestPath1, "Did not load");
+	QVERIFY2(r == TestPath1, "Did not get the correct value");
+	TestLoader::lastLoaded = 0;
+	r = cache->get(TestPath1);
+	QVERIFY2(TestLoader::lastLoaded == 0, "Spurious load");
+	QVERIFY2(r == TestPath1, "Did not get the correct value");
+}

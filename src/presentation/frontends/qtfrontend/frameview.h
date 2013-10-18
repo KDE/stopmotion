@@ -133,13 +133,6 @@ public:
 	void updateMoveScene(int sceneNumber, int movePosition);
 
 	/**
-	 * Function which recieves notification when a scene is selected as the
-	 * active scene in the animationmodel.
-	 * @param sceneNumber the new active scene.
-	 */
-	void updateNewActiveScene(int sceneNumber);
-
-	/**
 	 * Updates the frameview when an external program has altered the disk files.
 	 * @param frameNumber the frame whose disk representation has been changed.
 	 */
@@ -202,7 +195,7 @@ private:
 
 	SDL_Surface *screen;
 	SDL_Surface *videoSurface;
-	deque<SDL_Surface*>imageBuffer;;
+	deque<SDL_Surface*>imageBuffer;
 
 	QTimer grabTimer;
 	QTimer playbackTimer;
@@ -223,13 +216,13 @@ private:
 	int lastMixCount;
 	int lastViewMode;
 	int numImagesInBuffer;
-	int activeScene;
 
 	/**
 	 * Loads the new active frames picture into the frameview.
-	 * @param frameNumber
+	 * @param sceneNumber The scene that the active frame belongs to.
+	 * @param frameNumber The frame within the scene that is to be active.
 	 */
-	void setActiveFrame(int frameNumber);
+	void setActiveFrame(int sceneNumber, int frameNumber);
 
 	void addToImageBuffer(SDL_Surface *const image);
 

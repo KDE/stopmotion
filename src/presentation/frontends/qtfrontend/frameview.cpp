@@ -44,8 +44,7 @@ const int FrameView::alphaLut[5] = { 128, 64, 43, 32, 26 };
 
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 		: QWidget(parent), screen(0), videoSurface(0), grabThread(0),
-		  grabber(0), activeScene(0)
-{
+		  grabber(0) {
 	char tmp[256];
 	snprintf(tmp, 256, "%s/.stopmotion/capturedfile.jpg", getenv("HOME"));
 	capturedImg = new char[strlen(tmp) + 1];
@@ -135,7 +134,7 @@ void FrameView::updateAdd(int scene, int index, int numFrames) {
 	if (isPlayingVideo && 0 < numFrames) {
 		DomainFacade* anim = DomainFacade::getFacade();
 		addToImageBuffer( IMG_Load(
-				anim->getFrame(index, scene)->getImagePath()) );
+				anim->getFrame2(scene, index)->getImagePath()) );
 	}
 }
 
@@ -146,10 +145,8 @@ void FrameView::updateMove(int, int, int, int, int) {}
 
 void FrameView::updateNewActiveFrame(int sceneNumber, int frameNumber)
 {
-	if (sceneNumber != activeScene)
-		updateNewActiveScene(sceneNumber);
 	if (frameNumber > -1) {
-		setActiveFrame(frameNumber);
+		setActiveFrame(sceneNumber, frameNumber);
 	}
 	else {
 		SDL_FreeSurface(videoSurface);
@@ -161,10 +158,8 @@ void FrameView::updateNewActiveFrame(int sceneNumber, int frameNumber)
 
 void FrameView::updatePlayFrame(int sceneNumber, int frameNumber)
 {
-	if (sceneNumber != activeScene)
-		updateNewActiveScene(sceneNumber);
 	if (frameNumber > -1) {
-		setActiveFrame(frameNumber);
+		setActiveFrame(sceneNumber, frameNumber);
 	}
 	else {
 		SDL_FreeSurface(videoSurface);
@@ -274,10 +269,10 @@ void FrameView::paintEvent(QPaintEvent *)
 }
 
 
-void FrameView::setActiveFrame(int frameNumber)
+void FrameView::setActiveFrame(int sceneNumber, int frameNumber)
 {
 	Logger::get().logDebug("Setting new active frame in FrameView");
-	const Frame *frame = facade->getFrame(frameNumber);
+	const Frame *frame = facade->getFrame2(sceneNumber, frameNumber);
 	if (frame) {
 		const char *fileName = frame->getImagePath();
 
@@ -323,14 +318,10 @@ void FrameView::updateClear()
 
 void FrameView::updateNewScene(int) {}
 void FrameView::updateRemoveScene(int) {}
-void FrameView::updateNewActiveScene(int scene) {
-	activeScene = scene;
-}
 
 
 void FrameView::updateAnimationChanged(int sceneNumber, int frameNumber) {
-	if (sceneNumber == activeScene)
-		setActiveFrame(frameNumber);
+	setActiveFrame(sceneNumber, frameNumber);
 }
 
 

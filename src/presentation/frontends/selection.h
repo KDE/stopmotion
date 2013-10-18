@@ -18,42 +18,38 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef IMAGECACHE_H_
-#define IMAGECACHE_H_
+#ifndef SELECTION_H_
+#define SELECTION_H_
 
-class SDL_Surface;
-
-struct SurfaceLoader {
-	typedef SDL_Surface value_t;
-	static value_t* load(const char*);
-	static void free(value_t*);
-};
-
-template<typename T> class LoadCache;
-
-class ImageCache {
-	LoadCache<SurfaceLoader>* delegate;
+/**
+ * Interface for retrieving selection.
+ */
+class Selection {
 public:
+	virtual ~Selection() {}
+
 	/**
-	 * Constructs an image cache.
-	 * @param cacheSize The number of images that the cache should hold.
+	 * Returns true if the user is currently selecting several thumbviews.
+	 * @return true if the user is currently selecting several thumbviews.
 	 */
-	ImageCache(int cacheSize);
-	~ImageCache();
+	virtual bool isSelecting() const = 0;
+
 	/**
-	 * Pulls the named image into the cache, if necessary, and returns it.
-	 * @param path The path of the file.
+	 * Returns The frame number of the anchor of the selection.
+	 * @return The anchor of the current selection, or returns the same value
+	 * as {@ref getActiveFrame} if there is no selection.
 	 */
-	SDL_Surface* get(const char* path);
+	virtual int getSelectionFrame() const = 0;
+
 	/**
-	 * Removes the named image from the cache, if it is present.
-	 * @param path The path of the file.
+	 * Returns the current active frame.
 	 */
-	void drop(const char* path);
+	virtual int getActiveFrame() const = 0;
+
 	/**
-	 * Clears the cache.
+	 * Returns the current active scene.
 	 */
-	void clear();
+	virtual int getActiveScene() const = 0;
 };
 
 #endif

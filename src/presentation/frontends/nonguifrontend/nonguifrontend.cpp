@@ -139,7 +139,7 @@ int NonGUIFrontend::parseArguments(int argc, char **argv)
 
 void NonGUIFrontend::addFrames(const char *directory)
 {
-	// returns a absoulte path which is allocated with new[]
+	// returns a absolute path which is allocated with new[]
 	const char *dir = getAbsolutePath(directory);
 
 	DIR *dp = opendir(dir);
@@ -164,7 +164,7 @@ void NonGUIFrontend::addFrames(const char *directory)
 		closedir(dp);
 		
 		vector<const char*>(frames).swap(frames);
-		facadePtr->addFrames(frames);
+		facadePtr->addFrames(0, 0, frames);
 
 		unsigned int numElem = frames.size();
 		for (unsigned int i = 0; i < numElem; ++i) {

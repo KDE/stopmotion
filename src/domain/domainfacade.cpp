@@ -70,62 +70,41 @@ Frontend* DomainFacade::getFrontend()
 }
 
 
-void DomainFacade::setActiveFrame(int frameNumber)
-{
-	animationModel->setActiveFrame(frameNumber);
+void DomainFacade::addFrames(int scene, int frame,
+		const vector<const char*>& frameNames) {
+	Logger::get().logDebug("Adding frames in the domainfacade");
+	animationModel->addFrames(scene, frame, frameNames);
 }
 
 
-int DomainFacade::getActiveFrameNumber()
-{
-	return animationModel->getActiveFrameNumber();
-}
-
-
-void DomainFacade::addFrames(const vector<const char*>& frameNames) {
-	if ( !(animationModel->getActiveSceneNumber() < 0 && 
-			animationModel->sceneCount() > 0) ) {
-		Logger::get().logDebug("Adding frames in the domainfacade");
-		animationModel->addFrames(frameNames,
-				animationModel->getActiveFrameNumber() + 1);
-	}
-}
-
-
-void DomainFacade::removeFrames(unsigned int fromFrame, unsigned int toFrame) {
+void DomainFacade::removeFrames(int scene, int frame, int count) {
 	Logger::get().logDebug("Removing frames in the domainfacade");
-	animationModel->removeFrames(fromFrame, toFrame);
+	animationModel->removeFrames(scene, frame, count);
 }
 
 
-void DomainFacade::moveFrames(unsigned int fromFrame, unsigned int toFrame, 
-		unsigned int movePosition) {
-	animationModel->moveFrames(fromFrame, toFrame, movePosition);
+void DomainFacade::moveFrames(int fromScene, int fromFrame,
+		int count, int toScene, int toFrame) {
+	animationModel->moveFrames(fromScene, fromFrame, count, toScene, toFrame);
 }
 
 
-int DomainFacade::addSound(unsigned int frameNumber, const char *filename)
-{
+int DomainFacade::addSound(int scene, int frame, const char *filename) {
 	Logger::get().logDebug("Adding sound in domainfacade");
-	return animationModel->addSound(frameNumber, filename);
+	return animationModel->addSound(scene, frame, filename);
 }
 
 
-void DomainFacade::removeSound(unsigned int frameNumber, unsigned int soundNumber)
-{
-	animationModel->removeSound(frameNumber, soundNumber);
+void DomainFacade::removeSound(int sceneNumber, int frameNumber,
+		int soundNumber) {
+	animationModel->removeSound(sceneNumber, frameNumber, soundNumber);
 }
 
 
-void DomainFacade::setSoundName(int frameNumber, int soundNumber,
-		const char* soundName) {
-	animationModel->setSoundName(frameNumber, soundNumber, soundName);
-}
-
-
-void DomainFacade::playFrame(int frameNumber)
-{
-	animationModel->playFrame(frameNumber);
+void DomainFacade::setSoundName(int sceneNumber, int frameNumber,
+		int soundNumber, const char* soundName) {
+	animationModel->setSoundName(sceneNumber, frameNumber, soundNumber,
+			soundName);
 }
 
 
@@ -154,13 +133,8 @@ bool DomainFacade::isUnsavedChanges()
 }
 
 
-const Frame* DomainFacade::getFrame(int frameNumber, int sceneNumber) const {
-	return animationModel->getFrame(frameNumber, sceneNumber);
-}
-
-
-const Frame * DomainFacade::getFrame(int frameNumber) const {
-	return animationModel->getFrame(frameNumber);
+const Frame* DomainFacade::getFrame2(int sceneNumber, int frameNumber) const {
+	return animationModel->getFrame2(sceneNumber, frameNumber);
 }
 
 
@@ -209,12 +183,6 @@ void DomainFacade::clearHistory() {
 }
 
 
-void DomainFacade::setActiveScene( int sceneNumber )
-{
-	animationModel->setActiveScene(sceneNumber);
-}
-
-
 void DomainFacade::newScene(int index) {
 	animationModel->newScene(index);
 }
@@ -227,12 +195,6 @@ void DomainFacade::removeScene(int sceneNumber) {
 
 void DomainFacade::moveScene(int sceneNumber, int movePosition) {
 	animationModel->moveScene(sceneNumber, movePosition);
-}
-
-
-int DomainFacade::getActiveSceneNumber()
-{
-	return animationModel->getActiveSceneNumber();
 }
 
 
@@ -271,6 +233,8 @@ const vector<GrabberDevice> DomainFacade::getGrabberDevices()
 	return Util::getGrabberDevices();
 }
 
-const char* DomainFacade::getSoundName(int frameNumber, int soundNumber) const {
-	return animationModel->getFrame(frameNumber)->getSoundName(soundNumber);
+const char* DomainFacade::getSoundName(int sceneNumber, int frameNumber,
+		int soundNumber) const {
+	return animationModel->getFrame2(sceneNumber, frameNumber)
+			->getSoundName(soundNumber);
 }

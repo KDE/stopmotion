@@ -162,6 +162,9 @@ void SceneVector::replaceImage(int sceneNumber, int frameNumber,
 	scenes[sceneNumber]->replaceImage(frameNumber, otherImage);
 }
 
+void SceneVector::replaceImage(int, int) {
+}
+
 void SceneVector::accept(FileNameVisitor& v) const {
 	for (std::vector<Scene*>::const_iterator i = scenes.begin();
 			i != scenes.end();

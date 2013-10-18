@@ -258,7 +258,7 @@ void recover(DomainFacade *facadePtr)
 			return;
 		
 		vector<const char*>(frames).swap(frames);
-		facadePtr->addFrames(frames);
+		facadePtr->addFrames(0, 0, frames);
 
 		unsigned int numElem = frames.size();
 		for (unsigned int i = 0; i < numElem; ++i) {
@@ -268,7 +268,7 @@ void recover(DomainFacade *facadePtr)
 		
 		numElem = sounds.size();
 		for (unsigned int j = 0; j < numElem; ++j) {
-			facadePtr->addSound(sounds[j].belongsTo, sounds[j].filename);
+			facadePtr->addSound(0, sounds[j].belongsTo, sounds[j].filename);
 		}
 	}
 }

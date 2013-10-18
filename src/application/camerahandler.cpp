@@ -91,7 +91,6 @@ void CameraHandler::cameraOff()
 	emit cameraStateChanged(false);
 	frameView->off();
 	isCameraOn = false;
-	DomainFacade::getFacade()->setActiveFrame(DomainFacade::getFacade()->getActiveFrameNumber());
 }
 
 
@@ -120,11 +119,8 @@ void CameraHandler::storeFrame()
 	i.load(temp);
 	if ( !i.isNull() ) {
 		modelHandler->addFrame(temp);
-		if (DomainFacade::getFacade()->getActiveFrameNumber() == 0) {
-			emit capturedFrame();
-		}
-	}
-	else {
+		emit capturedFrame();
+	} else {
 		timer->start(60);
 	}
 }

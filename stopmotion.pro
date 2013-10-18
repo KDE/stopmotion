@@ -11,6 +11,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/domain/animation/animationimpl.h \
     src/domain/animation/frame.h \
     src/domain/animation/sound.h \
+    src/presentation/loadcache.h \
     src/presentation/imagecache.h \
     src/presentation/frontends/nonguifrontend/nonguifrontend.h \
     src/presentation/frontends/qtfrontend/mainwindowgui.h \
@@ -87,6 +88,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/technical/audio/oggvorbis.h \
     src/technical/grabber/imagegrabber.h \
     src/technical/grabber/commandlinegrabber.h \
+    src/presentation/frontends/selection.h \
     src/presentation/frontends/qtfrontend/imagegrabthread.h \
     src/presentation/frontends/qtfrontend/preferencesmenu.h \
     src/foundation/preferencestool.h \

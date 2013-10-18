@@ -72,8 +72,7 @@ static QImage tryReadImage(const char *filename)
 }
 
 FrameBar::FrameBar(QWidget *parent)
-	: QScrollArea(parent)
-{
+	: QScrollArea(parent), activeFrameObserver(0) {
 	preferencesMenu = 0;
 	activeFrame = -1;
 	activeScene = -1;
@@ -157,7 +156,7 @@ void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 
 
 void FrameBar::updateNewActiveFrame(int sceneNumber, int frameNumber) {
-	updateNewActiveScene(sceneNumber);
+	setActiveScene(sceneNumber);
 	setActiveFrame(frameNumber);
 
 	if ( preferencesMenu->isVisible() ) {
@@ -196,7 +195,8 @@ void FrameBar::updateAnimationChanged(int sceneNumber, int frameNumber)
 {
 	if (sceneNumber != activeScene)
 		return;
-	const Frame *frame = DomainFacade::getFacade()->getFrame(frameNumber);
+	const Frame *frame = DomainFacade::getFacade()->getFrame2(sceneNumber,
+			frameNumber);
 	if (frame) {
 		const char *path = frame->getImagePath();
 		thumbViews[frameNumber + activeScene + 1]->
@@ -234,7 +234,7 @@ void FrameBar::addFrames(int index, int numFrames) {
 		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setScaledContents(true);
 		thumb->setPixmap(QPixmap::fromImage(tryReadImage(
-				anim->getFrame(index + i, activeScene)->getImagePath())
+				anim->getFrame2(activeScene, index + i)->getImagePath())
 				.scaled(FRAME_WIDTH, FRAME_HEIGHT)));
 		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 		thumb->setParent(mainWidget);
@@ -406,10 +406,11 @@ void FrameBar::showPreferencesMenu()
 
 void FrameBar::frameSoundsChanged()
 {
-	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
-	int activeThumb = activeFrame + DomainFacade::getFacade()->getActiveSceneNumber() + 1;
+	int activeFrame = getActiveFrame();
+	int activeThumb = activeFrame + getActiveScene() + 1;
 
-	const Frame *frame = DomainFacade::getFacade()->getFrame(activeFrame);
+	const Frame *frame = DomainFacade::getFacade()->getFrame2(
+			getActiveScene(), activeFrame);
 	if (frame) {
 		if (frame->getNumberOfSounds() > 0 ) {
 			thumbViews[activeThumb]->setHasSounds(true);
@@ -448,7 +449,7 @@ void FrameBar::newScene(int index)
 	thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	thumb->setParent(mainWidget);
 
-	if (DomainFacade::getFacade()->getActiveSceneNumber() >= 0) {
+	if (getActiveScene() >= 0) {
 		index = (index > 0) ? index + DomainFacade::getFacade()->getSceneSize(index - 1) : index;
 	}
 
@@ -457,11 +458,6 @@ void FrameBar::newScene(int index)
 	thumbViews.insert(thumbViews.begin() + index, thumb);
 
 	emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
-}
-
-
-void FrameBar::updateNewActiveScene(int sceneNumber) {
-	setActiveScene(sceneNumber);
 }
 
 
@@ -555,6 +551,8 @@ void FrameBar::setActiveScene(int sceneNumber) {
 			setActiveFrame(-1);
 		}
 	}
+
+	updateObserver(false);
 
 	ensureVisible((FRAME_WIDTH + SPACE) * thumbViews.size() + FRAME_WIDTH, FRAME_HEIGHT);
 	emit newMaximumValue(DomainFacade::getFacade()->getSceneSize(activeScene));
@@ -687,4 +685,22 @@ int FrameBar::getFrameHeight() const
 int FrameBar::getSpace() const
 {
 	return SPACE;
+}
+
+int FrameBar::getActiveFrame() const {
+	return activeFrame;
+}
+
+int FrameBar::getActiveScene() const {
+	return activeScene;
+}
+
+void FrameBar::setObserver(ActiveFrameObserver* observer) {
+	activeFrameObserver = observer;
+}
+
+void FrameBar::updateObserver(bool changed) {
+	if (activeFrameObserver)
+		activeFrameObserver->updateNewActiveFrame(
+				activeScene, activeFrame, changed);
 }

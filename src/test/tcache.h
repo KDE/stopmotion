@@ -18,42 +18,35 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef IMAGECACHE_H_
-#define IMAGECACHE_H_
+#ifndef TCACHE_H_
+#define TCACHE_H_
 
-class SDL_Surface;
+#include <QObject>
 
-struct SurfaceLoader {
-	typedef SDL_Surface value_t;
-	static value_t* load(const char*);
-	static void free(value_t*);
+struct TestLoader {
+	typedef const char value_t;
+	static value_t* lastFreed;
+	static value_t* lastLoaded;
+	static value_t* load(const char* p) {
+		lastLoaded = p;
+		return p;
+	}
+	static void free(value_t* p) {
+		lastFreed = p;
+	}
 };
 
 template<typename T> class LoadCache;
 
-class ImageCache {
-	LoadCache<SurfaceLoader>* delegate;
+class TestCache : public QObject {
+	Q_OBJECT
+	LoadCache<TestLoader>* cache;
 public:
-	/**
-	 * Constructs an image cache.
-	 * @param cacheSize The number of images that the cache should hold.
-	 */
-	ImageCache(int cacheSize);
-	~ImageCache();
-	/**
-	 * Pulls the named image into the cache, if necessary, and returns it.
-	 * @param path The path of the file.
-	 */
-	SDL_Surface* get(const char* path);
-	/**
-	 * Removes the named image from the cache, if it is present.
-	 * @param path The path of the file.
-	 */
-	void drop(const char* path);
-	/**
-	 * Clears the cache.
-	 */
-	void clear();
+	TestCache();
+	~TestCache();
+private slots:
+	void GettingTwiceReturnsSameInstance();
 };
+
 
 #endif

@@ -80,81 +80,78 @@ public:
 	Frontend* getFrontend();
 
 	/**
-	 * Function to change the currently active frame. (Working frame).
-	 * @param frameNumber the number of the new active frame.
+	 * Adds the frames in the vector to the animation model.
+	 * @param scene The index of the scene to add frames to.
+	 * @param frame Where in the scene to add the frames.
+	 * @param frameNames A vector containing the names of the filenames of the
+	 * images to be added as frames to the animation.
 	 */
-	void setActiveFrame(int frameNumber);
+	void addFrames(int scene, int frame,
+			const vector<const char*>& frameNames);
 
 	/**
-	 * Returns the number of the currently active frame in the model.
-	 * @return
+	 * Removes frames from a scene in the animation.
+	 * @param scene The scene from which to remove the frames.
+	 * @param frame The first frame to remove.
+	 * @param count The number of frames to remove.
 	 */
-	int getActiveFrameNumber();
+	void removeFrames(int scene, int frame, int count);
 
 	/**
-	 * Adds the frames in the vector to the animation model and sets up the undo
-	 * command object
-	 * @param frameNames a vector containing the frames to be added to the animation.
+	 * Moves frames from one position in the animation to another.
+	 * @param fromScene The scene from which to move the frames.
+	 * @param fromFrame The first frame within that scene to move.
+	 * @param count The number of frames to move; all frames moved must be
+	 * within the same scene.
+	 * @param fromScene The scene to move the frames to.
+	 * @param toFrame The position within the scene {@c toScene} to which
+	 * the frames should be moved.
 	 */
-	void addFrames(const vector<const char*>& frameNames);
-
-	/**
-	 * Removes the frame between (inclusive) fromFrame and toFrame from
-	 * the animation model.
-	 * @param fromFrame the first frame to remove.
-	 * @param toFrame the last frame to remove.
-	 */
-	void removeFrames(unsigned int fromFrame, unsigned int toFrame);
-
-	/**
-	 * Moves the frames in the frameNumbers container to toPosition.
-	 * @param fromFrame the first frame in the selection.
-	 * @param toFrame the last frame in the selection.
-	 * @param movePosition the position to move the selected frames
-	 */
-	void moveFrames(unsigned int fromFrame, unsigned int toFrame,
-			unsigned int movePosition);
+	void moveFrames(int fromScene, int fromFrame,
+			int count, int toScene, int toFrame);
 
 	/**
 	 * Adds a sound the given frame number. An error message will be
 	 * sent to the frontend if somethings goes wrong with the adding.
+	 * @param sceneNumber The scene containing the frame to which a sound
+	 * will be added.
 	 * @param frameNumber the number of the frame to add the sound to
 	 * @param filename the path to the file with the sound
 	 * @return zero on success, less than zero on failure
 	 */
-	int addSound(unsigned int frameNumber, const char* filename);
+	int addSound(int sceneNumber, int frameNumber, const char* filename);
 
 	/**
 	 * Removes the sound with index soundNumber from the frame with index
 	 * frameNumber.
+	 * @param sceneNumber The scene containing the frame from which a sound
+	 * is to be removed.
 	 * @param frameNumber the index of the frame to remove a sound from.
 	 * @param soundNumber the index of the sound to remove from the frame.
 	 */
-	void removeSound(unsigned int frameNumber, unsigned int soundNumber);
+	void removeSound(int sceneNumber, int frameNumber, int soundNumber);
 
 	/**
 	 * Sets the name of the sound with index soundNumber in the frame with
 	 * index frameNumber to soundName.
+	 * @param sceneNumber The scene containing the frame containing the sound
+	 * to be renamed.
 	 * @param frameNumber the index of the frame the sound is in.
 	 * @param soundNumber the index to the sound to change the name of.
 	 * @param soundName the new name of the sound.
 	 */
-	void setSoundName(int frameNumber, int soundNumber,
+	void setSoundName(int sceneNumber, int frameNumber, int soundNumber,
 			const char* soundName);
 
 	/**
 	 * Returns the name of a sound attached to a frame in the active scene.
-	 * @param frameNumber The frame within the active scene.
+	 * @param sceneNumber The scene containing the frame to query.
+	 * @param frameNumber The frame within the scene {@c sceneNumber}.
 	 * @param The number of the sound whose name is to be returned.
 	 * @return The sound name. Ownership is not returned.
 	 */
-	const char* getSoundName(int frameNumber, int soundNumber) const;
-
-	/**
-	 * Plays the frame with the number frameNumber
-	 * @param frameNumber the number of the frame to play
-	 */
-	void playFrame(int frameNumber);
+	const char* getSoundName(int sceneNumber, int frameNumber,
+			int soundNumber) const;
 
 	/**
 	 * Opens a project.
@@ -179,19 +176,11 @@ public:
 
 	/**
 	 * Retrieves a given frame.
-	 * @param frameNumber the number of the frame to retrieve.
 	 * @param sceneNumber the number of the scene to retrieve the frame from.
+	 * @param frameNumber the number of the frame to retrieve.
 	 * @return the frame at location frameNumber in the scene at location sceneNumber.
 	 */
-	const Frame* getFrame(int frameNumber, int sceneNumber) const;
-
-	/**
-	 * Overloaded function for convenience. Assumes the scene to retrieve there
-	 * frame from is the active scene.
-	 * @param frameNumber the number of the frame to retrieve.
-	 * @return the frame at location frameNumber in the active scene.
-	 */
-	const Frame* getFrame(int frameNumber) const;
+	const Frame* getFrame2(int sceneNumber, int frameNumber) const;
 
 	/**
 	 * Retrieves the size of the model
@@ -246,18 +235,6 @@ public:
 	 * Clears the undo history.
 	 */
 	void clearHistory();
-
-	/**
-	 * Sets a new active scene (the scene to be worked on now).
-	 * @param sceneNumber the new active scene.
-	 */
-	void setActiveScene(int sceneNumber);
-
-	/**
-	 * Returns the number of the currently active scene.
-	 * @return the number of the active scene.
-	 */
-	int getActiveSceneNumber();
 
 	/**
 	 * Creates a new scene in the animation project.

@@ -21,6 +21,7 @@
 #define FRAMEBAR_H
 
 #include "src/presentation/observer.h"
+#include "src/presentation/frontends/selection.h"
 
 #include <QScrollArea>
 
@@ -41,8 +42,7 @@ class QResizeEvent;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class FrameBar : public QScrollArea, public Observer
-{
+class FrameBar : public QScrollArea, public Observer, public Selection {
 	Q_OBJECT
 public:
 	/**
@@ -55,6 +55,13 @@ public:
 	 * Cleans up after the framebar.
 	 */
 	~FrameBar();
+
+	/**
+	 * Add an observer for the active scene changing. Any previously-set
+	 * observer is unset.
+	 * @param observer New observer to set. Ownership is not passed.
+	 */
+	void setObserver(ActiveFrameObserver* observer);
 
 	/**
 	 * Receives notification when a frame is added.
@@ -152,10 +159,21 @@ public:
 	void setSelection(int selectionFrame);
 
 	/**
-	 * Returns the current selectionFrame
-	 * @return the current selectionFrame
+	 * Returns The frame number of the anchor of the selection.
+	 * @return The anchor of the current selection, or returns the same value
+	 * as {@ref getActiveFrame} if there is no selection.
 	 */
 	int getSelectionFrame() const;
+
+	/**
+	 * Returns the current active frame.
+	 */
+	int getActiveFrame() const;
+
+	/**
+	 * Returns the current active scene.
+	 */
+	int getActiveScene() const;
 
 	/**
 	 * Registers the frame preferences menu in the framebar.
@@ -240,6 +258,9 @@ private:
 	static const int FRAME_HEIGHT = 88;
 	static const int FRAME_WIDTH = 117;
 	static const int SPACE = 2;
+
+	/** Observer that wants to know when the active frame changes */
+	ActiveFrameObserver* activeFrameObserver;
 
 	/** Vector of thumbviews to keep track of the pictures in the framebar*/
 	vector<ThumbView*>thumbViews;
@@ -356,6 +377,13 @@ private:
 	 *@param toPosition the place in the vector the thumbview is moved to.
 	 */
 	void moveThumbView(unsigned int fromPosition, unsigned int toPosition);
+
+	/**
+	 * Sends an {@c updateNewActiveFrame} to the observer, if appropriate.
+	 * @param changed False if and only if the model has not changed any frames
+	 * of the current active scene.
+	 */
+	void updateObserver(bool changed);
 };
 
 #endif

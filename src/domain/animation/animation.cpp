@@ -89,7 +89,6 @@ Executor* makeAnimationCommandExecutor(AnimationImpl& model) {
 
 Animation::Animation()
 		: scenes(0), serializer(0), executor(0), audioDriver(0),
-		  activeFrame(-1), activeScene(-1),
 		  isAudioDriverInitialized(false), frontend(0) {
 	std::auto_ptr<SceneVector> scs(new SceneVector);
 	std::auto_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));
@@ -116,16 +115,14 @@ Animation::~Animation() {
 }
 
 
-void Animation::addFrames(const vector<const char*>& frameNames,
-		int32_t index) {
-	if (getActiveSceneNumber() < 0) {
+void Animation::addFrames(int scene, int frame,
+		const vector<const char*>& frameNames) {
+	if (sceneCount() == 0) {
 		newScene(0);
 	}
 
-	bool isAddingAborted = false;
 	int count = frameNames.size();
-	CommandAddFactory::Parameters params(getActiveSceneNumber(),
-			index, count);
+	CommandAddFactory::Parameters params(scene, frame, count);
 	bool showingProgress = 1 < count;
 	if (showingProgress) {
 		frontend->showProgress("Importing frames from disk ...", count);
@@ -154,7 +151,6 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 	if (0 < added) {
 		executor->execute(commandAddFrames, params);
 		params.retainFiles();
-		setActiveFrame(index + count - 1);
 	}
 	if (showingProgress)
 		frontend->hideProgress();
@@ -163,31 +159,31 @@ void Animation::addFrames(const vector<const char*>& frameNames,
 }
 
 
-void Animation::removeFrames(int32_t fromFrame, int32_t toFrame) {
-	assert(fromFrame <= toFrame);
-	executor->execute(commandRemoveFrames, activeFrame, fromFrame,
-			toFrame - fromFrame - 1);
-	setActiveFrame(toFrame);
+void Animation::removeFrames(int32_t scene, int32_t frame, int32_t count) {
+	assert(0 <= count);
+	assert(frame + count <= frameCount(scene));
+	executor->execute(commandRemoveFrames, scene, frame, count);
 }
 
 
-void Animation::moveFrames(int32_t fromFrame, int32_t toFrame,
-		int32_t movePosition) {
-	assert(fromFrame <= toFrame);
-	int framesSize = frameCount(activeScene);
-	assert(toFrame < framesSize);
-	assert(movePosition < framesSize);
-	if (movePosition < fromFrame || toFrame < movePosition) {
-		int count = toFrame - fromFrame + 1;
-		executor->execute(commandMoveFrames,
-				activeScene, fromFrame, count,
-				activeScene, movePosition);
-		setActiveFrame(movePosition + count - 1);
+void Animation::moveFrames(int32_t fromScene, int32_t fromFrame,
+		int32_t count, int32_t toScene, int32_t toFrame) {
+	assert(0 <= count);
+	assert(fromFrame + count <= frameCount(fromScene));
+	assert(toFrame <= frameCount(toScene));
+	if (toScene == fromScene
+			&& fromFrame <= toFrame && toFrame < fromFrame + count) {
+		// Attempt to move frames into the same position; ineffective.
+		return;
 	}
+	executor->execute(commandMoveFrames,
+			fromScene, fromFrame, count,
+			toScene, toFrame);
 }
 
 
-int Animation::addSound(int32_t frameNumber, const char *soundFile) {
+int Animation::addSound(int32_t scene, int32_t frameNumber,
+		const char *soundFile) {
 	Logger::get().logDebug("Adding sound in animation");
 	std::auto_ptr<Sound> sound(new Sound());
 	std::stringstream ss;
@@ -198,9 +194,9 @@ int Animation::addSound(int32_t frameNumber, const char *soundFile) {
 	strncpy(soundName, ss.str().c_str(), size);
 	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
-	int32_t index = soundCount(activeScene, frameNumber);
+	int32_t index = soundCount(scene, frameNumber);
 	try {
-		executor->execute(commandAddSound, activeScene, frameNumber,
+		executor->execute(commandAddSound, scene, frameNumber,
 				index, soundFile, soundName);
 	} catch (CouldNotOpenFileException&) {
 		frontend->reportError(
@@ -221,20 +217,21 @@ int Animation::addSound(int32_t frameNumber, const char *soundFile) {
 }
 
 
-void Animation::removeSound(int32_t frameNumber,int32_t soundNumber) {
+void Animation::removeSound(int32_t sceneNumber, int32_t frameNumber,
+		int32_t soundNumber) {
 	executor->execute(commandRemoveSound,
-			activeScene, frameNumber, soundNumber);
+			sceneNumber, frameNumber, soundNumber);
 }
 
 
-void Animation::setSoundName(int32_t frameNumber, int32_t soundNumber,
-		const char *soundName) {
-	executor->execute(commandRenameSound, activeScene,
+void Animation::setSoundName(int32_t sceneNumber, int32_t frameNumber,
+		int32_t soundNumber, const char *soundName) {
+	executor->execute(commandRenameSound, sceneNumber,
 			frameNumber, soundNumber, soundName);
 }
 
 
-const Frame* Animation::getFrame(int frameNumber, int sceneNumber) const {
+const Frame* Animation::getFrame2(int sceneNumber, int frameNumber) const {
 	if (frameNumber < frameCount(sceneNumber)) {
 		Logger::get().logDebug("Retrieving frame from Animation");
 		return scenes->getScene(sceneNumber)->getFrame(frameNumber);
@@ -242,16 +239,6 @@ const Frame* Animation::getFrame(int frameNumber, int sceneNumber) const {
 	else {
 		Logger::get().logWarning("Requesting a frame which is not "
 				"in the animation (frame number out of bounds)");
-		return NULL;
-	}
-}
-
-
-const Frame* Animation::getFrame(int frameNumber) const {
-	if (activeScene >= 0) {
-		return getFrame(frameNumber, activeScene);
-	}
-	else {
 		return NULL;
 	}
 }
@@ -280,15 +267,7 @@ int Animation::sceneCount() const {
 }
 
 
-void Animation::setActiveFrame(int frameNumber) {
-	if (activeScene >= 0 || frameNumber == -1) {
-		activeFrame = frameNumber;
-		scenes->notifyNewActiveFrame(activeScene, frameNumber);
-	}
-}
-
-
-void Animation::playFrame(int frameNumber) {
+/*void Animation::playFrame(int frameNumber) {
 	if (isAudioDriverInitialized) {
 		const Frame *f = getFrame(frameNumber);
 		if (f) {
@@ -296,12 +275,7 @@ void Animation::playFrame(int frameNumber) {
 		}
 	}
 	scenes->notifyPlayFrame(activeScene, frameNumber);
-}
-
-
-int Animation::getActiveFrameNumber() {
-	return activeFrame;
-}
+}*/
 
 
 const char* Animation::getProjectFile() {
@@ -317,8 +291,6 @@ void Animation::clear() {
 	serializer->cleanup();
 	scenes->clear();
 	executor->clearHistory();
-	activeFrame = -1;
-	activeScene = -1;
 	WorkspaceFile::clear();
 }
 
@@ -369,7 +341,6 @@ void Animation::loadSavedScenes() {
 	for (unsigned int i = 0; i < numElem; ++i) {
 //		notifyNewScene(i);
 	}
-	setActiveScene(numElem - 1);
 }
 
 
@@ -377,12 +348,6 @@ bool Animation::isUnsavedChanges() {
 	return executor->canUndo();
 }
 
-
-void Animation::setActiveScene(int sceneNumber) {
-	if (sceneNumber != activeScene) {
-		activateScene(sceneNumber);
-	}
-}
 
 void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
 		const char* newImagePath) {
@@ -410,45 +375,22 @@ int Animation::soundCount(int scene, int frame) const {
 	return scenes->soundCount(scene, frame);
 }
 
-void Animation::activateScene(int sceneNumber) {
-	activeScene = sceneNumber;
-	if (sceneNumber >= 0 && 0 < scenes->frameCount(sceneNumber)) {
-		scenes->notifyNewActiveScene(sceneNumber);
-		setActiveFrame(0);
-	}
-	else {
-		setActiveFrame(-1);
-	}
-}
-
 
 void Animation::newScene(int32_t index) {
 	executor->execute(commandAddScene, index);
-	this->setActiveScene( index );
 }
 
 
 void Animation::removeScene(int32_t sceneNumber) {
 	assert(sceneNumber >= 0);
 	executor->execute(commandRemoveScene, sceneNumber);
-	if (sceneNumber == scenes->sceneCount()) {
-		activateScene(sceneNumber - 1);
-	} else {
-		activateScene(sceneNumber);
-	}
 }
 
 
 void Animation::moveScene(int32_t sceneNumber, int32_t movePosition) {
 	if (sceneNumber != movePosition) {
 		executor->execute(commandMoveScene, sceneNumber, movePosition);
-		setActiveScene(-1);
 	}
-}
-
-
-int Animation::getActiveSceneNumber() {
-	return activeScene;
 }
 
 
@@ -472,20 +414,16 @@ void Animation::shutdownAudioDevice() {
 
 
 void Animation::animationChanged(const char *alteredFile) {
+	// linear search through the frames isn't very efficient;
+	// we should add something cleverer if it gets to be a problem.
 	assert(alteredFile != NULL);
-	if (activeScene == -1) {
-		return;
-	}
-
-	int size = scenes->frameCount(activeScene);
-	const Scene* scene = scenes->getScene(activeScene);
-	int changedFrame = -1;
-	for (int i = 0; i < size; ++i) {
-		const Frame *f = scene->getFrame(i);
-		if (f) {
-			if (strcmp(f->getImagePath(), alteredFile) == 0) {
-				changedFrame = i;
-				break;
+	for (int s = 0; s != sceneCount(); ++s) {
+		const Scene* scene = scenes->getScene(s);
+		int frameCount = scene->getSize();
+		for (int f = 0; f != frameCount; ++f) {
+			const Frame *frame = scene->getFrame(f);
+			if (strcmp(frame->getImagePath(), alteredFile) == 0) {
+				scenes->replaceImage(s, f);
 			}
 		}
 	}

@@ -261,7 +261,6 @@ public:
 	}
 	void update(Observer& ob) {
 		ob.updateRemove(sc, fr, fr + c - 1);
-		ob.updateNewActiveFrame(sc, fr + c - 1);
 	}
 };
 
@@ -310,7 +309,8 @@ public:
 	~FrameReplacer() {
 	}
 	void op(AnimationImpl& del) {
-		del.replaceImage(sc, fr, image);
+		if (image.path())
+			del.replaceImage(sc, fr, image);
 	}
 	void update(Observer& ob) {
 		ob.updateAnimationChanged(sc, fr);
@@ -320,6 +320,12 @@ public:
 void ObserverNotifier::replaceImage(int sceneNumber, int frameNumber,
 		WorkspaceFile& otherImage) {
 	FrameReplacer fr(sceneNumber, frameNumber, otherImage);
+	doOp(fr);
+}
+
+void ObserverNotifier::replaceImage(int sceneNumber, int frameNumber) {
+	WorkspaceFile noFile;
+	FrameReplacer fr(sceneNumber, frameNumber, noFile);
 	doOp(fr);
 }
 
@@ -343,27 +349,6 @@ Sound* ObserverNotifier::removeSound(int scene, int frame, int soundNumber) {
 
 void ObserverNotifier::registerFrontend(Frontend* fe) {
 	frontend = fe;
-}
-
-void ObserverNotifier::notifyNewActiveScene(int scene) {
-	for (std::vector<Observer*>::iterator i = observers.begin();
-			i != observers.end(); ++i) {
-		(*i)->updateNewActiveScene(scene);
-	}
-}
-
-void ObserverNotifier::notifyNewActiveFrame(int scene, int frame) {
-	for (std::vector<Observer*>::iterator i = observers.begin();
-			i != observers.end(); ++i) {
-		(*i)->updateNewActiveFrame(scene, frame);
-	}
-}
-
-void ObserverNotifier::notifyPlayFrame(int scene, int frame) {
-	for (std::vector<Observer*>::iterator i = observers.begin();
-			i != observers.end(); ++i) {
-		(*i)->updatePlayFrame(scene, frame);
-	}
 }
 
 void ObserverNotifier::accept(FileNameVisitor& v) const {

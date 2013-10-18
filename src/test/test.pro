@@ -4,8 +4,10 @@ CONFIG += qtestlib debug
 HEADERS += ../domain/undo/filelogger.h \
     ../domain/undo/command.h \
     ../domain/undo/commandlogger.h \
-    ../domain/undo/executor.h
+    ../domain/undo/executor.h \
+    ../presentation/loadcache.h
 HEADERS += texecutor.h \
+	tcache.h \
     oomtestutil.h
 SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/undo/command.cpp \
@@ -15,6 +17,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
 SOURCES += \
     tmain.cpp \
     texecutor.cpp \
+    tcache.cpp \
     testundo.cpp
 FORMS += 
 RESOURCES += 

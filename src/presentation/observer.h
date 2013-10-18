@@ -28,10 +28,10 @@
 using namespace std;
 
 /**
- * The observer interface. All classes who wants to be notified when something
+ * The observer interface. Any object wanting to be notified when something
  * changes in the animationmodel has to implement from this class.
  *
- * The observers implemented with this class also has to be attatched to the
+ * The observers implemented with this class also has to be attached to the
  * animationmodel.
  *
  * The observer is implemented with strong use of the push model. Although this
@@ -40,8 +40,7 @@ using namespace std;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class Observer
-{
+class Observer {
 public:
 	virtual ~Observer() {}
 
@@ -76,25 +75,9 @@ public:
 			int toScene, int toFrame) = 0;
 
 	/**
-	 * Notification that the active frame has changed. Also changes the
-	 * active scene.
-	 * @param scene The new active scene.
-	 * @param frame The new active frame.
-	 */
-	virtual void updateNewActiveFrame(int scene, int frame) = 0;
-
-	/**
 	 * Abstract function for receiving notification when the model is erased.
 	 */
 	virtual void updateClear() = 0;
-
-	/**
-	 * Abstract function for receiving notification when a frame is to be
-	 * played.
-	 * @param scene The scene containing the frame to be played.
-	 * @param frame The frame within the scene to be played
-	 */
-	virtual void updatePlayFrame(int scene, int frame) = 0;
 
 	/**
 	 * Abstract function for receiving notification when a new scene is
@@ -119,21 +102,34 @@ public:
 	virtual void updateMoveScene(int sceneNumber, int movePosition) = 0;
 
 	/**
-	 * Abstract function for receiving notification when a new scene is set as the
-	 * current "active" scene.
-	 * @param sceneNumber the new active scene.
-	 * @param framePaths an iterator returning the paths to the frames.
-	 * @param frontend the frontend for processing events while adding frames.
-	 */
-	virtual void updateNewActiveScene(int sceneNumber) = 0;
-
-	/**
 	 * Abstract function for receiving notification when the disk representation of the
 	 * animation is changed by other programs.
 	 * @param frameNumber the index of the frame which has been changed. (active scene
 	 * is assumed).
 	 */
 	virtual void updateAnimationChanged(int activeScene, int frameNumber) = 0;
+};
+
+/**
+ * Observer informed of changes to the user's focus
+ */
+class ActiveFrameObserver {
+public:
+	virtual ~ActiveFrameObserver() {}
+	/**
+	 * Notification that the active frame has changed. Also changes the
+	 * active scene.
+	 * @param scene The new active scene.
+	 * @param frame The new active frame.
+	 */
+	virtual void updateNewActiveFrame(int scene, int frame) = 0;
+
+	/**
+	 * Notification when a frame is to be played.
+	 * @param scene The scene containing the frame to be played.
+	 * @param frame The frame within the scene to be played
+	 */
+	virtual void updatePlayFrame(int scene, int frame) = 0;
 };
 
 #endif
