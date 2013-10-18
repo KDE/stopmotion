@@ -33,6 +33,7 @@ namespace {
 
 const char* TestLoader::lastFreed;
 const char* TestLoader::lastLoaded;
+int TestLoader::freeCount;
 
 TestCache::TestCache() : cache(0) {
 	cache = new LoadCache<TestLoader>(3);
@@ -42,7 +43,7 @@ TestCache::~TestCache() {
 	delete cache;
 }
 
-void TestCache::GettingTwiceReturnsSameInstance() {
+void TestCache::gettingTwiceReturnsSameInstance() {
 	cache->clear();
 	TestLoader::lastLoaded = 0;
 	const char* r = cache->get(TestPath1);
@@ -50,6 +51,73 @@ void TestCache::GettingTwiceReturnsSameInstance() {
 	QVERIFY2(r == TestPath1, "Did not get the correct value");
 	TestLoader::lastLoaded = 0;
 	r = cache->get(TestPath1);
-	QVERIFY2(TestLoader::lastLoaded == 0, "Spurious load");
+	QVERIFY2(TestLoader::lastLoaded == 0,
+			"Loaded item that should have been cache-resident");
 	QVERIFY2(r == TestPath1, "Did not get the correct value");
+}
+
+void TestCache::leastRecentlyUsedIsFreed() {
+	cache->clear();
+	cache->get(TestPath1);
+	cache->get(TestPath2);
+	cache->get(TestPath3);
+	TestLoader::lastFreed = 0;
+	cache->get(TestPath4);
+	QVERIFY2(TestLoader::lastFreed == TestPath1,
+			"Least Recently Used not freed");
+	TestLoader::lastFreed = 0;
+	cache->get(TestPath2);
+	QVERIFY2(TestLoader::lastFreed == 0,
+			"Freed when requested item should have been cache-resident");
+	TestLoader::lastFreed = 0;
+	cache->get(TestPath1);
+	QVERIFY2(TestLoader::lastFreed == TestPath3,
+			"Least Recently Used not freed");
+}
+
+void TestCache::clearFrees() {
+	cache->clear();
+	cache->get(TestPath1);
+	cache->get(TestPath2);
+	cache->get(TestPath3);
+	TestLoader::freeCount = 0;
+	cache->clear();
+	QCOMPARE(TestLoader::freeCount, 3);
+	cache->get(TestPath2);
+	TestLoader::lastFreed = 0;
+	TestLoader::freeCount = 0;
+	cache->clear();
+	QCOMPARE(TestLoader::freeCount, 1);
+	QVERIFY2(TestLoader::lastFreed == TestPath2,
+			"clear() did not free resident item");
+}
+
+void TestCache::dropFrees() {
+	cache->clear();
+	cache->get(TestPath1);
+	cache->get(TestPath2);
+	cache->get(TestPath3);
+	TestLoader::lastFreed = 0;
+	TestLoader::freeCount = 0;
+	cache->drop(TestPath2);
+	QCOMPARE(TestLoader::freeCount, 1);
+	QVERIFY2(TestLoader::lastFreed == TestPath2,
+			"drop() did not free the correct item");
+	TestLoader::lastFreed = 0;
+	TestLoader::freeCount = 0;
+	cache->drop(TestPath2);
+	QCOMPARE(TestLoader::freeCount, 0);
+}
+
+void TestCache::droppedItemMustBeReloaded() {
+	cache->clear();
+	cache->get(TestPath1);
+	cache->get(TestPath2);
+	cache->get(TestPath3);
+	cache->drop(TestPath2);
+	TestLoader::lastLoaded = 0;
+	const char* r = cache->get(TestPath2);
+	QVERIFY2(TestLoader::lastLoaded == TestPath2,
+			"Did not load previously dropped item");
+	QVERIFY2(r == TestPath2, "Did not get the correct value");
 }

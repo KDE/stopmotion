@@ -27,12 +27,14 @@ struct TestLoader {
 	typedef const char value_t;
 	static value_t* lastFreed;
 	static value_t* lastLoaded;
+	static int freeCount;
 	static value_t* load(const char* p) {
 		lastLoaded = p;
 		return p;
 	}
 	static void free(value_t* p) {
 		lastFreed = p;
+		++freeCount;
 	}
 };
 
@@ -45,7 +47,11 @@ public:
 	TestCache();
 	~TestCache();
 private slots:
-	void GettingTwiceReturnsSameInstance();
+	void gettingTwiceReturnsSameInstance();
+	void leastRecentlyUsedIsFreed();
+	void clearFrees();
+	void dropFrees();
+	void droppedItemMustBeReloaded();
 };
 
 

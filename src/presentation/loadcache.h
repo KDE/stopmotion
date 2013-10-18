@@ -216,7 +216,7 @@ typename LoadCache<T>::Item* LoadCache<T>::Item::findOrFree(
 		pLast = pp;
 		pp = &(*pp)->next;
 	}
-	if (freeHead && pLast) {
+	if (freeHead && !*freeHead && pLast) {
 		move(*freeHead, *pLast);
 	}
 	return 0;
@@ -224,13 +224,11 @@ typename LoadCache<T>::Item* LoadCache<T>::Item::findOrFree(
 
 template<typename T>
 void LoadCache<T>::Item::move(Item*& to, Item*& from) {
-	if (from) {
-		Item* newTo = from;
-		Item* newNext = to;
-		Item* newFrom = newTo->next;
-		from = newFrom;
-		to = newTo;
-		newTo->next = newNext;
+	if (from && from != to) {
+		Item* moving = from;
+		from = moving->next;
+		moving->next = to;
+		to = moving;
 	}
 }
 
