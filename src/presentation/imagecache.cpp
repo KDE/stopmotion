@@ -23,6 +23,12 @@
 
 #include <SDL/SDL_image.h>
 
+struct SurfaceLoader {
+	typedef SDL_Surface value_t;
+	static value_t* load(const char*);
+	static void free(value_t*);
+};
+
 SurfaceLoader::value_t* SurfaceLoader::load(const char* path) {
 	return IMG_Load(path);
 }

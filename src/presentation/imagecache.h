@@ -23,12 +23,7 @@
 
 class SDL_Surface;
 
-struct SurfaceLoader {
-	typedef SDL_Surface value_t;
-	static value_t* load(const char*);
-	static void free(value_t*);
-};
-
+struct SurfaceLoader;
 template<typename T> class LoadCache;
 
 class ImageCache {
