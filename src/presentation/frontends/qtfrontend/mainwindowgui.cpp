@@ -198,7 +198,8 @@ void MainWindowGUI::createHandlers(QApplication *stApp)
 	connect( editMenuHandler, SIGNAL(addFrames(const QStringList &)),
 			modelHandler, SLOT(addFrames(const QStringList &)) );
 
-	soundHandler = new SoundHandler( this, this->statusBar(), this->lastVisitedDir );
+	soundHandler = new SoundHandler( this, this->statusBar(), frameBar,
+			this->lastVisitedDir );
 	connect( soundHandler, SIGNAL( soundsChanged() ), frameBar, SLOT( frameSoundsChanged() ) );
 }
 
