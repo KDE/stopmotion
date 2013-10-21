@@ -380,10 +380,8 @@ private:
 
 	/**
 	 * Sends an {@c updateNewActiveFrame} to the observer, if appropriate.
-	 * @param changed False if and only if the model has not changed any frames
-	 * of the current active scene.
 	 */
-	void updateObserver(bool changed);
+	void updateObserver();
 };
 
 #endif

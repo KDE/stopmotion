@@ -105,7 +105,9 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 		}
 		// trim to size :)
 		vector<const char*>(fNames).swap(fNames);
-		DomainFacade::getFacade()->addFrames(fNames);
+		int scene = frameBar->getActiveScene();
+		int frame = frameBar->getActiveFrame();
+		DomainFacade::getFacade()->addFrames(scene, frame, fNames);
 		
 		// Cleanup
 		for (unsigned i = 0; i < fNames.size(); ++i) {
@@ -136,11 +138,12 @@ void ModelHandler::removeFrames()
 {
 	if (removeFramesButton->isEnabled()) {
 		int selectionFrame = frameBar->getSelectionFrame();
-		int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
+		int activeScene = frameBar->getActiveScene();
+		int activeFrame = frameBar->getActiveFrame();
 		int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 		int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 	
-		DomainFacade::getFacade()->removeFrames(lowend, highend);
+		DomainFacade::getFacade()->removeFrames(activeScene, lowend, highend);
 		statusBar->showMessage( tr("Removed the selected frame"), 2000 );
 	}
 }
@@ -148,7 +151,7 @@ void ModelHandler::removeFrames()
 
 void ModelHandler::newScene()
 {
-	int activeScene = DomainFacade::getFacade()->getActiveSceneNumber();
+	int activeScene = frameBar->getActiveScene();
 	
 	if (activeScene >= 0) {
 		DomainFacade::getFacade()->newScene(activeScene+1);
@@ -168,8 +171,7 @@ void ModelHandler::newScene()
 
 void ModelHandler::removeScene()
 {
-	DomainFacade::getFacade()->removeScene(DomainFacade::getFacade()->
-			getActiveSceneNumber());
+	DomainFacade::getFacade()->removeScene(frameBar->getActiveScene());
 }
 
 
@@ -188,8 +190,8 @@ int ModelHandler::editCurrentFrame()
 	}
 
 	// Determine the active scene and active frame.
-	int activeScene = DomainFacade::getFacade()->getActiveSceneNumber();
-	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
+	int activeScene = frameBar->getActiveScene();
+	int activeFrame = frameBar->getActiveFrame();
 
 	if (activeScene < 0 || activeFrame < 0) {
 		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
@@ -199,7 +201,7 @@ int ModelHandler::editCurrentFrame()
 	}
 
 	const Frame *frame = DomainFacade::getFacade()
-			->getFrame(activeFrame, activeScene);
+			->getFrame2(activeScene, activeFrame);
 	if (!frame) {
 		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
 			tr("The active frame is corrupt"),

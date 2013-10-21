@@ -552,7 +552,7 @@ void FrameBar::setActiveScene(int sceneNumber) {
 		}
 	}
 
-	updateObserver(false);
+	updateObserver();
 
 	ensureVisible((FRAME_WIDTH + SPACE) * thumbViews.size() + FRAME_WIDTH, FRAME_HEIGHT);
 	emit newMaximumValue(DomainFacade::getFacade()->getSceneSize(activeScene));
@@ -699,8 +699,8 @@ void FrameBar::setObserver(ActiveFrameObserver* observer) {
 	activeFrameObserver = observer;
 }
 
-void FrameBar::updateObserver(bool changed) {
+void FrameBar::updateObserver() {
 	if (activeFrameObserver)
 		activeFrameObserver->updateNewActiveFrame(
-				activeScene, activeFrame, changed);
+				activeScene, activeFrame);
 }
