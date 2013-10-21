@@ -21,8 +21,7 @@
 #define FRAMEVIEW_H
 
 #include "src/presentation/observer.h"
-
-#include <deque>
+#include "src/presentation/imagecache.h"
 
 #include <QWidget>
 #include <QTimer>
@@ -34,7 +33,6 @@ class QPaintEvent;
 class ImageGrabThread;
 class ImageGrabber;
 class DomainFacade;
-class SDL_Surface;
 
 /**
  * Widget for viewing the frames in the animation using SDL. This widget also
@@ -195,7 +193,7 @@ private:
 
 	SDL_Surface *screen;
 	SDL_Surface *videoSurface;
-	deque<SDL_Surface*>imageBuffer;
+	ImageCache imageCache;
 
 	QTimer grabTimer;
 	QTimer playbackTimer;
@@ -206,16 +204,15 @@ private:
 	/** The facade cached away in this class for efficiency reasons */
 	DomainFacade *facade;
 
+	/** Is the frame view showing the camera output? */
 	bool isPlayingVideo;
 
 	int widthConst, heightConst;
 	int mode;
 	int playbackSpeed;
+	int activeScene;
 	int activeFrame;
 	int mixCount;
-	int lastMixCount;
-	int lastViewMode;
-	int numImagesInBuffer;
 
 	/**
 	 * Loads the new active frames picture into the frameview.
@@ -223,8 +220,6 @@ private:
 	 * @param frameNumber The frame within the scene that is to be active.
 	 */
 	void setActiveFrame(int sceneNumber, int frameNumber);
-
-	void addToImageBuffer(SDL_Surface *const image);
 
 	/**
 	 * Highly tweaked/optimized homemade function for taking the rgb differences
