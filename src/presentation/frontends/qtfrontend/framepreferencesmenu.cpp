@@ -22,6 +22,7 @@
 #include "src/domain/domainfacade.h"
 #include "graphics/icons/close.xpm"
 #include "src/application/soundhandler.h"
+#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 
 #include <QToolTip>
 #include <QLabel>
@@ -29,9 +30,9 @@
 
 
 FramePreferencesMenu::FramePreferencesMenu( QWidget * parent, 
-		SoundHandler *soundHandler, const char * name )
-	: MenuFrame(parent, name), soundHandler(soundHandler)
-{
+		SoundHandler *soundHandler, const FrameBar* fb, const char * name )
+	: MenuFrame(parent, name), soundHandler(soundHandler),
+	  frameBar(fb) {
 	soundsList = 0;
 	soundsLabel = 0;
 	closeButton = 0;
@@ -87,13 +88,13 @@ FramePreferencesMenu::FramePreferencesMenu( QWidget * parent,
 
 void FramePreferencesMenu::open() {
 	soundsList->clear();
-	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
-	int activeScene = DomainFacade::getFacade()->getActiveSceneNumber();
+	int activeFrame = frameBar->getActiveFrame();
+	int activeScene = frameBar->getActiveScene();
 	int numSounds = DomainFacade::getFacade()->getNumberOfSounds(activeScene,
 					activeFrame);
 	for (int i = 0; i < numSounds; ++i) {
 		soundsList->addItem( new QListWidgetItem(DomainFacade::getFacade()
-				->getSoundName(activeFrame, i)));
+				->getSoundName(activeScene, activeFrame, i)));
 	}
 	show();
 }
