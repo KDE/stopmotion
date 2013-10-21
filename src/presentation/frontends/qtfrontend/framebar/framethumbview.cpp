@@ -55,7 +55,8 @@ void FrameThumbView::mousePressEvent( QMouseEvent * e )
 	if (e->button() == Qt::LeftButton) {
 		if ( !frameBar->isSelecting() ) {
 			int selectionFrame = frameBar->getSelectionFrame();
-			int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
+			int activeScene = frameBar->getActiveScene();
+			int activeFrame = frameBar->getActiveFrame();
 			int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 			int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 			
@@ -63,7 +64,7 @@ void FrameThumbView::mousePressEvent( QMouseEvent * e )
 			// setActiveFrame before the mouse button is released. The reason for this is
 			// to give the user a chance to drag the items. See mouseReleaseEvent(...)
 			if (number > highend || number < lowend) {
-				DomainFacade::getFacade()->setActiveFrame(number);
+				frameBar->updateNewActiveFrame(activeScene, number);
 			}
 			dragPos = e->pos();
 		}
@@ -80,11 +81,12 @@ void FrameThumbView::mouseReleaseEvent( QMouseEvent * e )
 	if (e->button() == Qt::LeftButton) {
 		if ( !frameBar->isSelecting() ) {
 			int selectionFrame = frameBar->getSelectionFrame();
-			int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
+			int activeScene = frameBar->getActiveScene();
+			int activeFrame = frameBar->getActiveFrame();
 			int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 			int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 			if (number <= highend || number >= lowend) {
-				DomainFacade::getFacade()->setActiveFrame(number);
+				frameBar->updateNewActiveFrame(activeScene, number);
 			}
 		}
 	}
@@ -140,11 +142,13 @@ void FrameThumbView::startDrag()
 	QList<QUrl> urls;
 	
 	int selectionFrame = frameBar->getSelectionFrame();
-	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
+	int activeScene = frameBar->getActiveScene();
+	int activeFrame = frameBar->getActiveFrame();
 	int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 	int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 	for (int i = lowend; i <= highend; ++i) {
-		urls.append(QUrl::fromLocalFile(DomainFacade::getFacade()->getFrame(i)->getImagePath()));
+		urls.append(QUrl::fromLocalFile(DomainFacade::getFacade()
+				->getFrame2(activeScene, i)->getImagePath()));
 	}
 	
 	QDrag *drag = new QDrag(this);
@@ -196,17 +200,20 @@ void FrameThumbView::setSelected(bool selected)
  */
 void FrameThumbView::contentsDropped(QDropEvent * event)
 {
+	int activeScene = frameBar->getActiveScene();
 	if ( (event->source() != 0) && (frameBar->getMovingScene() == -1) ) {
 		Logger::get().logDebug("Moving picture");
 		int selectionFrame = frameBar->getSelectionFrame();
-		int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
-		unsigned int highend = (selectionFrame > activeFrame) ? selectionFrame : activeFrame;
-		unsigned int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
-		DomainFacade::getFacade()->moveFrames(lowend, highend, this->number);
-	}
-	else {
+		int activeFrame = frameBar->getActiveFrame();
+		int highend = (selectionFrame > activeFrame)?
+				selectionFrame : activeFrame;
+		int lowend = (selectionFrame < activeFrame )?
+				selectionFrame : activeFrame;
+		DomainFacade::getFacade()->moveFrames(activeScene, lowend,
+				highend - lowend + 1, activeScene, number);
+	} else {
 		Logger::get().logDebug("Adding picture(s)");
-		DomainFacade::getFacade()->setActiveFrame(this->number);
+		frameBar->updateNewActiveFrame(activeScene, number);
 		
 		if ( event->mimeData()->hasUrls() ) {
 			QStringList fileNames;
@@ -223,7 +230,7 @@ void FrameThumbView::contentsDropped(QDropEvent * event)
 				fNames.push_back(f);
 				++it;
 			}
-			DomainFacade::getFacade()->addFrames(fNames);
+			DomainFacade::getFacade()->addFrames(activeScene, number, fNames);
 		}
 	}
 }
