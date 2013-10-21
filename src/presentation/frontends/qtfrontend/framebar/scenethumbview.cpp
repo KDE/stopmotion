@@ -63,7 +63,7 @@ void SceneThumbView::setOpened( bool isOpened )
 	arrowButton->setOpened(isOpened);
 	
 	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
-		const Frame *frame = DomainFacade::getFacade()->getFrame(0, number);
+		const Frame *frame = DomainFacade::getFacade()->getFrame2(number, 0);
 		if (frame) {
 			centerIcon = QPixmap::fromImage( 
 					QImage(frame->getImagePath()).scaled(width() / 2, height() / 2) );
@@ -114,10 +114,10 @@ void SceneThumbView::mousePressEvent(QMouseEvent *e)
 
 void SceneThumbView::mouseReleaseEvent( QMouseEvent * )
 {
-	if ((DomainFacade::getFacade()->getActiveSceneNumber() != this->number) &&
-			(frameBar->isOpeningScene() == false) ) {
+	if ((frameBar->getActiveScene() != number) &&
+			!frameBar->isOpeningScene()) {
 		frameBar->setOpeningScene(true);
-		DomainFacade::getFacade()->setActiveScene(number);
+		frameBar->updateNewActiveFrame(number, 0);
 		frameBar->setOpeningScene(false);
 	}
 }
@@ -153,15 +153,12 @@ void SceneThumbView::startDrag()
 }
 
 
-void SceneThumbView::closeScene()
-{
-	DomainFacade *facade = DomainFacade::getFacade();
-	if ( !frameBar->isOpeningScene() && this->number >= 0) {
-		if (facade->getActiveSceneNumber() == this->number && this->number > 0) {
-			facade->setActiveScene(this->number - 1);
-		}
-		else {
-			DomainFacade::getFacade()->setActiveScene(number);
+void SceneThumbView::closeScene() {
+	if ( !frameBar->isOpeningScene() && number >= 0) {
+		if (frameBar->getActiveScene() == number && number > 0) {
+			frameBar->updateNewActiveFrame(number - 1, 0);
+		} else {
+			frameBar->updateNewActiveFrame(number, 0);
 		}
 	}
 }
