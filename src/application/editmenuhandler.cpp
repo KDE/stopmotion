@@ -47,8 +47,8 @@ void EditMenuHandler::setGotoMenu( QWidget * gotoMenu )
 
 void EditMenuHandler::gotoFrame(int frameNumber)
 {
-	DomainFacade::getFacade()->setActiveFrame(frameNumber);
-	this->closeGotoMenu();
+	frameBar->updateNewActiveFrame(frameBar->getActiveScene(), frameNumber);
+	closeGotoMenu();
 }
 
 
@@ -75,12 +75,14 @@ void EditMenuHandler::copy()
 	QList<QUrl> urls;
 
 	int selectionFrame = frameBar->getSelectionFrame();
-	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
+	int activeScene = frameBar->getActiveScene();
+	int activeFrame = frameBar->getActiveFrame();
 	int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 	int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 
 	for (int i = lowend; i <= highend; ++i) {
-		urls.append(QUrl::fromLocalFile(DomainFacade::getFacade()->getFrame(i)->getImagePath()));
+		urls.append(QUrl::fromLocalFile(DomainFacade::getFacade()
+				->getFrame2(activeScene, i)->getImagePath()));
 	}
 
 	//QDrag *drag = new QDrag((MainWindowGUI*)this->parent());
