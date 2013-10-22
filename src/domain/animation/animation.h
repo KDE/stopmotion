@@ -111,6 +111,15 @@ public:
 			int32_t count, int32_t toScene, int32_t toFrame);
 
 	/**
+	 * Returns the path to the image file for the frame specified.
+	 * @param scene The scene to which the frame belongs.
+	 * @param frame The frame within scene {@c scene} to query.
+	 * @return The image path of frame number {@c frame} of scene {@c scene}.
+	 * Ownership is not returned.
+	 */
+	const char* getImagePath(int scene, int frame) const;
+
+	/**
 	 * Replaces the image for the specified frame.
 	 * @param scene The scene to which the frame belongs.
 	 * @param frame The frame number of the frame within the scene.
@@ -143,6 +152,16 @@ public:
 			int32_t soundNumber);
 
 	/**
+	 * Returns the human-readable name of the sound specified.
+	 * @param scene The scene to which the frame belongs.
+	 * @param frame The frame to which the sound belongs.
+	 * @param soundNumber The index of the sound.
+	 * @return The name of sound indexed {@c soundNumber} of frame {@c frame}
+	 * of scene {@c scene}. Ownership is not returned.
+	 */
+	const char* getSoundName(int scene, int frame, int soundNumber) const;
+
+	/**
 	 * Sets the name of the sound with index soundNumber in the frame with
 	 * index frameNumber to soundName.
 	 * @param sceneNumber The index of the scene containing the frame
@@ -153,14 +172,6 @@ public:
 	 */
 	void setSoundName(int32_t sceneNumber, int32_t frameNumber,
 			int32_t soundNumber, const char* soundName);
-
-	/**
-	 * Returns the frame with the number frameNumber.
-	 * @param sceneNumber the number of the scene to retrieve the frame from
-	 * @param frameNumber the number of the frame to retrieve
-	 * @return the frame with the number frameNumber.
-	 */
-	const Frame* getFrame2(int sceneNumber, int frameNumber) const;
 
 	/**
 	 * Returns the total number of frames in the model.

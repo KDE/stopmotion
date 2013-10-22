@@ -26,7 +26,7 @@
 DomainFacade* DomainFacade::domainFacade = 0;
 
 const char* DomainFacade::getImagePath(int scene, int frame) {
-	return animationModel->getFrame2(scene, frame)->getImagePath();
+	return animationModel->getImagePath(scene, frame);
 }
 
 int DomainFacade::soundCount(int scene, int frame) const {
@@ -45,8 +45,7 @@ DomainFacade::~DomainFacade() {
 }
 
 
-DomainFacade* DomainFacade::getFacade()
-{
+DomainFacade* DomainFacade::getFacade() {
 	if(domainFacade == NULL) {
 		domainFacade = new DomainFacade();
 	}
@@ -54,26 +53,22 @@ DomainFacade* DomainFacade::getFacade()
 }
 
 
-void DomainFacade::attach(Observer *o)
-{
+void DomainFacade::attach(Observer *o) {
 	animationModel->attach(o);
 }
 
 
-void DomainFacade::detach(Observer *o)
-{
+void DomainFacade::detach(Observer *o) {
 	animationModel->detach(o);
 }
 
 
-void DomainFacade::registerFrontend(Frontend *frontend)
-{
+void DomainFacade::registerFrontend(Frontend *frontend) {
 	animationModel->registerFrontend(frontend);
 }
 
 
-Frontend* DomainFacade::getFrontend()
-{
+Frontend* DomainFacade::getFrontend() {
 	return animationModel->getFrontend();
 }
 
@@ -116,27 +111,23 @@ void DomainFacade::setSoundName(int sceneNumber, int frameNumber,
 }
 
 
-bool DomainFacade::openProject(const char *filename)
-{
+bool DomainFacade::openProject(const char *filename) {
 	return animationModel->openProject(filename);
 }
 
 
-bool DomainFacade::saveProject(const char *directory)
-{
+bool DomainFacade::saveProject(const char *directory) {
 	return animationModel->saveProject(directory);
 }
 
 
-bool DomainFacade::newProject()
-{
+bool DomainFacade::newProject() {
 	animationModel->clear();
 	return true;
 }
 
 
-bool DomainFacade::isUnsavedChanges()
-{
+bool DomainFacade::isUnsavedChanges() {
 	return animationModel->isUnsavedChanges();
 }
 
@@ -161,13 +152,11 @@ int DomainFacade::getNumberOfSounds(int scene, int frame) const {
 }
 
 
-const char* DomainFacade::getProjectFile()
-{
+const char* DomainFacade::getProjectFile() {
 	return animationModel->getProjectFile();
 }
 
-const char* DomainFacade::getProjectPath()
-{
+const char* DomainFacade::getProjectPath() {
 	return animationModel->getProjectPath();
 }
 
@@ -201,43 +190,37 @@ void DomainFacade::moveScene(int sceneNumber, int movePosition) {
 }
 
 
-bool DomainFacade::initAudioDevice()
-{
+bool DomainFacade::initAudioDevice() {
 	return animationModel->initAudioDevice();
 }
 
 
-void DomainFacade::shutdownAudioDevice()
-{
+void DomainFacade::shutdownAudioDevice() {
 	return animationModel->shutdownAudioDevice();
 }
 
 
-bool DomainFacade::exportToVideo(VideoEncoder *encoder)
-{
+bool DomainFacade::exportToVideo(VideoEncoder *encoder) {
 	return animationModel->exportToVideo(encoder);
 }
 
 
-bool DomainFacade::exportToCinerella(const char *file)
-{
+bool DomainFacade::exportToCinerella(const char *file) {
 	return animationModel->exportToCinerella(file);
 }
 
 
-void DomainFacade::animationChanged(const char * alteredFile)
-{
+void DomainFacade::animationChanged(const char * alteredFile) {
 	animationModel->animationChanged(alteredFile);
 }
 
 
-const vector<GrabberDevice> DomainFacade::getGrabberDevices()
-{
+const vector<GrabberDevice> DomainFacade::getGrabberDevices() {
 	return Util::getGrabberDevices();
 }
 
 const char* DomainFacade::getSoundName(int sceneNumber, int frameNumber,
 		int soundNumber) const {
-	return animationModel->getFrame2(sceneNumber, frameNumber)
-			->getSoundName(soundNumber);
+	return animationModel->getSoundName(sceneNumber, frameNumber,
+			soundNumber);
 }

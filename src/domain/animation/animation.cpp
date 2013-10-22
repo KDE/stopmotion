@@ -231,19 +231,6 @@ void Animation::setSoundName(int32_t sceneNumber, int32_t frameNumber,
 }
 
 
-const Frame* Animation::getFrame2(int sceneNumber, int frameNumber) const {
-	if (frameNumber < frameCount(sceneNumber)) {
-		Logger::get().logDebug("Retrieving frame from Animation");
-		return scenes->getScene(sceneNumber)->getFrame(frameNumber);
-	}
-	else {
-		Logger::get().logWarning("Requesting a frame which is not "
-				"in the animation (frame number out of bounds)");
-		return NULL;
-	}
-}
-
-
 int Animation::frameCount() const {
 	int modelSize = 0;
 	int s = sceneCount();
@@ -331,6 +318,14 @@ bool Animation::newProject() {
 	return true;
 }
 
+const char* Animation::getImagePath(int scene, int frame) const {
+	return scenes->getScene(scene)->getFrame(frame)->getImagePath();
+}
+
+const char* Animation::getSoundName(int scene, int frame,
+		int soundNumber) const {
+	return scenes->getScene(scene)->getFrame(frame)->getSoundName(soundNumber);
+}
 
 //TODO change this to something that sets all the scenes at once, notifying
 // once also.
