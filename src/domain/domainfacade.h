@@ -111,6 +111,15 @@ public:
 			int count, int toScene, int toFrame);
 
 	/**
+	 * Returns the image file for the frame specified.
+	 * @param scene The scene to which the frame belongs.
+	 * @param frame The frame number to examine.
+	 * @return The path to the image file for this frame. Ownership is not
+	 * returned.
+	 */
+	const char* getImagePath(int scene, int frame);
+
+	/**
 	 * Adds a sound the given frame number. An error message will be
 	 * sent to the frontend if somethings goes wrong with the adding.
 	 * @param sceneNumber The scene containing the frame to which a sound
@@ -154,6 +163,15 @@ public:
 			int soundNumber) const;
 
 	/**
+	 * Returns the number of sounds attached to the frame specified.
+	 * @param scene The scene that the frame belongs to.
+	 * @param frame The frame within that scene.
+	 * @return The number of sounds attached to frame number {@c frame} of
+	 * scene number {@c scene}.
+	 */
+	int soundCount(int scene, int frame) const;
+
+	/**
 	 * Opens a project.
 	 */
 	bool openProject(const char *filename);
@@ -173,14 +191,6 @@ public:
 	 * @return true if there are unsaved changes, false otherwise.
 	 */
 	bool isUnsavedChanges();
-
-	/**
-	 * Retrieves a given frame.
-	 * @param sceneNumber the number of the scene to retrieve the frame from.
-	 * @param frameNumber the number of the frame to retrieve.
-	 * @return the frame at location frameNumber in the scene at location sceneNumber.
-	 */
-	const Frame* getFrame2(int sceneNumber, int frameNumber) const;
 
 	/**
 	 * Retrieves the size of the model

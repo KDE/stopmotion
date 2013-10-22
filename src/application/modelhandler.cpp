@@ -200,20 +200,14 @@ int ModelHandler::editCurrentFrame()
 		return 1;
 	}
 
-	const Frame *frame = DomainFacade::getFacade()
-			->getFrame2(activeScene, activeFrame);
-	if (!frame) {
-		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
-			tr("The active frame is corrupt"),
-			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
-		return 1;
-	}
+	const char *path = DomainFacade::getFacade()
+			->getImagePath(activeScene, activeFrame);
 	
 	QStringList argList;
 	// arg0 are the options, and arg1 is the path of the frame.
 	// Start Gimp without splash screen.
 	argList.append(QLatin1String("--no-splash"));	
-	argList.append(QString::fromLocal8Bit(frame->getImagePath()));
+	argList.append(QString::fromLocal8Bit(path));
 
 	QProcess process;
 	if (!process.startDetached(QLatin1String(gimpCommand), argList)) {

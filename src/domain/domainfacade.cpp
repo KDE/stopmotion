@@ -25,6 +25,14 @@
 
 DomainFacade* DomainFacade::domainFacade = 0;
 
+const char* DomainFacade::getImagePath(int scene, int frame) {
+	return animationModel->getFrame2(scene, frame)->getImagePath();
+}
+
+int DomainFacade::soundCount(int scene, int frame) const {
+	return animationModel->soundCount(scene, frame);
+}
+
 DomainFacade::DomainFacade() {
 	animationModel = new Animation();
 	domainFacade = NULL;
@@ -130,11 +138,6 @@ bool DomainFacade::newProject()
 bool DomainFacade::isUnsavedChanges()
 {
 	return animationModel->isUnsavedChanges();
-}
-
-
-const Frame* DomainFacade::getFrame2(int sceneNumber, int frameNumber) const {
-	return animationModel->getFrame2(sceneNumber, frameNumber);
 }
 
 

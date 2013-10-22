@@ -208,16 +208,18 @@ void FrameView::paintEvent(QPaintEvent *) {
 					{
 						int firstFrame = std::max(activeFrame - mixCount, 0);
 						for (int i = firstFrame; i < activeFrame; ++i) {
-							const Frame* frame = anim->getFrame2(activeScene, i);
-							frameSurface = imageCache.get(frame->getImagePath());
+							const char* path = anim->getImagePath(
+									activeScene, i);
+							frameSurface = imageCache.get(path);
 							if (frameSurface != 0) {
 								SDL_Rect dst2;
 								dst2.x = (screen->w - frameSurface->w) >> 1;
 								dst2.y = (screen->h - frameSurface->h) >> 1;
 								dst2.w = frameSurface->w;
 								dst2.h = frameSurface->h;
-								SDL_SetAlpha(frameSurface, SDL_SRCALPHA, alphaLut[i]);
-								SDL_BlitSurface(frameSurface, 0 , screen, &dst2);
+								SDL_SetAlpha(frameSurface, SDL_SRCALPHA,
+										alphaLut[i]);
+								SDL_BlitSurface(frameSurface, 0, screen, &dst2);
 							}
 						}
 						break;
@@ -228,10 +230,9 @@ void FrameView::paintEvent(QPaintEvent *) {
 						if (activeFrame == 0)
 							SDL_BlitSurface(videoSurface, 0, screen, &dst);
 						else if (activeFrame > 0) {
-							const Frame* frame = anim->getFrame2(activeScene,
+							const char* path = anim->getImagePath(activeScene,
 									activeFrame - 1);
-							SDL_Surface *last = imageCache.get(
-									frame->getImagePath());
+							SDL_Surface *last = imageCache.get(path);
 							SDL_Surface *tmp = differentiateSurfaces(
 									videoSurface, last);
 							SDL_Rect dst;
@@ -257,26 +258,20 @@ void FrameView::setActiveFrame(int sceneNumber, int frameNumber)
 	activeScene = sceneNumber;
 	activeFrame = frameNumber;
 	Logger::get().logDebug("Setting new active frame in FrameView");
-	const Frame *frame = facade->getFrame2(sceneNumber, frameNumber);
-	if (frame) {
-		const char *fileName = frame->getImagePath();
+	const char *fileName = facade->getImagePath(sceneNumber, frameNumber);
 
-		if (videoSurface) {
-			SDL_FreeSurface(videoSurface);
-			videoSurface = 0;
-		}
-		Logger::get().logDebug("Loading image");
+	if (videoSurface) {
+		SDL_FreeSurface(videoSurface);
+		videoSurface = 0;
+	}
+	Logger::get().logDebug("Loading image");
 
-		videoSurface = IMG_Load(fileName);
-		if (videoSurface == 0) {
-			printf("IMG_Load: %s\n", IMG_GetError());
-		}
-		Logger::get().logDebug("Loading image finished");
-		this->update();
+	videoSurface = IMG_Load(fileName);
+	if (videoSurface == 0) {
+		printf("IMG_Load: %s\n", IMG_GetError());
 	}
-	else {
-		Logger::get().logWarning("Active frame number inside frameview is not valid!");
-	}
+	Logger::get().logDebug("Loading image finished");
+	this->update();
 }
 
 
@@ -463,8 +458,7 @@ void FrameView::redraw()
 }
 
 
-void FrameView::nextPlayBack()
-{
+void FrameView::nextPlayBack() {
 	//TODO re-write this vile function
 	static int i = 0;
 
@@ -473,23 +467,17 @@ void FrameView::nextPlayBack()
 
 	if (0 <= activeScene) {
 		if (i < mixCount && i < activeFrame + 1) {
+			const char *path = activeFrame <= mixCount?
+				facade->getImagePath(activeScene, i)
+				: facade->getImagePath(activeScene,
+						activeFrame - mixCount + i);
+			++i;
 
-			const Frame *frame = 0;
-			if (activeFrame <= mixCount) {
-				frame = facade->getFrame2(activeScene, i++);
+			if (videoSurface) {
+				SDL_FreeSurface(videoSurface);
+				videoSurface = 0;
 			}
-			else {
-				frame = facade->getFrame2(activeScene,
-						activeFrame - mixCount + i++);
-			}
-
-			if (frame) {
-				if (videoSurface) {
-					SDL_FreeSurface(videoSurface);
-					videoSurface = 0;
-				}
-				videoSurface = IMG_Load(frame->getImagePath());
-			}
+			videoSurface = IMG_Load(path);
 
 			this->update();
 			//Exit from function/skip redraw(). This is better than having a bool which is

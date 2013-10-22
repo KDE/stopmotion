@@ -148,7 +148,7 @@ void FrameThumbView::startDrag()
 	int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 	for (int i = lowend; i <= highend; ++i) {
 		urls.append(QUrl::fromLocalFile(DomainFacade::getFacade()
-				->getFrame2(activeScene, i)->getImagePath()));
+				->getImagePath(activeScene, i)));
 	}
 	
 	QDrag *drag = new QDrag(this);

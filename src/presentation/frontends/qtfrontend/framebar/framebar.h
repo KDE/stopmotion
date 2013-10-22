@@ -335,7 +335,7 @@ private:
 	 * @param toFrame the last frame to move.
 	 * @param movePosition the position to move the frames to.
 	 */
-	void moveFrames(unsigned int fromFrame, unsigned int toFrame, unsigned int movePosition);
+	void moveFrames(int fromFrame, int toFrame, int movePosition);
 
 	/**
 	 *Sets the thumbview frameNumber in the framebar to be the active frame.
@@ -376,7 +376,7 @@ private:
 	 *@param fromPosition the place in the vector the thumbview is moved from.
 	 *@param toPosition the place in the vector the thumbview is moved to.
 	 */
-	void moveThumbView(unsigned int fromPosition, unsigned int toPosition);
+	void moveThumbView(int fromPosition, int toPosition);
 
 	/**
 	 * Sends an {@c updateNewActiveFrame} to the observer, if appropriate.
