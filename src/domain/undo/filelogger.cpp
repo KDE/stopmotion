@@ -94,3 +94,8 @@ CommandLogger* FileCommandLogger::getLogger() {
 const CommandLogger* FileCommandLogger::getLogger() const {
 	return pImpl;
 }
+
+const char* LoggerWriteFailedException::what() const {
+	return "Failed to write to command logger!\n"
+			"Disaster recovery will be impossible after this point!";
+}

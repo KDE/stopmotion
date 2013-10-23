@@ -22,13 +22,16 @@
 #define WORKSPACEFILE_H_
 
 #include <stdint.h>
+#include <exception>
 
 class TemporaryWorkspaceFile;
 
-class CopyFailedException {
+class CopyFailedException : std::exception {
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
-class WorkspaceDirectoryCreationException {
+class WorkspaceDirectoryCreationException : std::exception {
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
 /**

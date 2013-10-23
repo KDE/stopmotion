@@ -40,21 +40,18 @@ public:
 
 void ObserverNotifier::doOp(ObservableOperation& oo) {
 	oo.op(*del);
-	try {
-		for (std::vector<Observer*>::iterator i = observers.begin();
-				i != observers.end(); ++i) {
+	for (std::vector<Observer*>::iterator i = observers.begin();
+			i != observers.end(); ++i) {
+		try {
+			oo.update(**i);
+		} catch (std::exception& e) {
 			try {
-				oo.update(**i);
-			} catch (std::exception& e) {
-				try {
-					//TODO: some sort of reset of the Observer?
-					if (frontend)
-						frontend->reportError(e.what(), 0);
-				} catch (...) {
-				}
+				//TODO: some sort of reset of the Observer?
+				if (frontend)
+					frontend->reportError(e.what(), 0);
+			} catch (...) {
 			}
 		}
-	} catch (...) {
 	}
 }
 

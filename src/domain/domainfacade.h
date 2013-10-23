@@ -40,8 +40,7 @@ class VideoEncoder;
  *
  *@author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class DomainFacade
-{
+class DomainFacade {
 public:
 	~DomainFacade();
 
@@ -308,7 +307,7 @@ public:
 protected:
 	/**
 	 * The constructor. It is protected so that it will be impossible for other classes,
-	 * which don't inherit from it to instanciate the singleton.
+	 * classes that don't inherit from it to instantiate the singleton.
 	 */
 	DomainFacade();
 

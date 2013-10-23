@@ -29,7 +29,8 @@ class FileCommandLoggerImpl;
 class CommandReplayer;
 class CommandLogger;
 
-class LoggerWriteFailedException {
+class LoggerWriteFailedException : std::exception {
+	const char* what() const;
 };
 
 /**

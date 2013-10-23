@@ -745,3 +745,26 @@ public:
 Executor* makeExecutor() {
 	return new ConcreteExecutor();
 }
+
+const char* IncorrectParameterException::what() const _GLIBCXX_USE_NOEXCEPT {
+	return "Command log corrupt (incorrect parameter type)!";
+}
+
+const char* MalformedLineException::what() const _GLIBCXX_USE_NOEXCEPT {
+	return "Command log corrupt (malformed line)!";
+}
+
+const char* ParametersOutOfRangeException::what() const _GLIBCXX_USE_NOEXCEPT {
+	return "Internal error or command log corrupt:\n"
+			"Command parameters out of range.";
+}
+
+const char* UnknownCommandException::what() const _GLIBCXX_USE_NOEXCEPT {
+	return "Internal error or command log corrupt:\n"
+			"Unknown command.";
+}
+
+const char* CommandNameAlreadyUsedException::what() const
+		_GLIBCXX_USE_NOEXCEPT {
+	return "Internal error: Command registered twice!";
+}

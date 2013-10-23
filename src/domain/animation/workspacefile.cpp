@@ -205,3 +205,12 @@ TemporaryWorkspaceFile::~TemporaryWorkspaceFile() {
 	fullPath = 0;
 	namePart = 0;
 }
+
+const char* CopyFailedException::what() const _GLIBCXX_USE_NOEXCEPT {
+	return "Failed to copy file to workspace directory (~/.stopmotion/tmp).";
+}
+
+const char* WorkspaceDirectoryCreationException::what() const
+		_GLIBCXX_USE_NOEXCEPT {
+	return "Failed to create workspace directory (~/.stopmotion/tmp).";
+}

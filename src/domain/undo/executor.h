@@ -31,21 +31,24 @@
  * Thrown if a command factory attempts to read a parameter from the log files
  * that is of the wrong type, is not present or otherwise does not parse.
  */
-class IncorrectParameterException {
+class IncorrectParameterException : std::exception {
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
 /**
  * Thrown if a line from the log parses correctly but has extra unexpected
  * characters at its end.
  */
-class MalformedLineException {
+class MalformedLineException : std::exception {
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
 /**
  * Thrown if the parameters for a command (from the log or from a caller) are
  * inappropriate for the current state of the model.
  */
-class ParametersOutOfRangeException {
+class ParametersOutOfRangeException : std::exception {
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
 class CommandReplayerImpl;
@@ -60,10 +63,12 @@ class RandomSource;
  * @ref CommandFactory::executeRandomConstructiveCommands is called
  * on a @ref CommandFactory which has had no constructive commands set.
  */
-class UnknownCommandException {
+class UnknownCommandException : std::exception {
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
-class CommandNameAlreadyUsedException {
+class CommandNameAlreadyUsedException : std::exception {
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
 class Executor {
