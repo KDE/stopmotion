@@ -34,6 +34,7 @@ class WorkspaceFile;
 class SceneVector : public AnimationImpl {
 	std::vector<Scene*> scenes;
 
+	Scene* getMutableScene(int);
 	SceneVector(const SceneVector&);
 	SceneVector& operator=(const SceneVector&);
 public:

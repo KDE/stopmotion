@@ -28,6 +28,14 @@
 #include <sstream>
 #include <memory>
 
+
+class SoundOutOfRangeException : std::exception {
+    const char* what() const _GLIBCXX_USE_NOEXCEPT {
+    	return "Sound out of range!";
+    }
+};
+
+
 Frame::Frame(TemporaryWorkspaceFile& filename) {
 	assert(filename.path() != NULL);
 	imagePath = filename;
@@ -35,8 +43,8 @@ Frame::Frame(TemporaryWorkspaceFile& filename) {
 
 
 Frame::~Frame() {
-	unsigned int numElem = sounds.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
+	int numElem = sounds.size();
+	for (int i = 0; i < numElem; ++i) {
 		delete sounds[i];
 		sounds[i] = NULL;
 	}
@@ -76,6 +84,8 @@ int Frame::newSound(TemporaryWorkspaceFile& filename) {
 }
 
 void Frame::addSound(int index, Sound* sound) {
+	if (index < 0 || sounds.size() < index)
+		throw SoundOutOfRangeException();
 	sounds.insert(sounds.begin() + index, sound);
 }
 
@@ -84,19 +94,25 @@ void Frame::preallocateSounds(int extra) {
 }
 
 Sound* Frame::removeSound(int soundNumber) {
+	if (soundNumber < 0 || sounds.size() <= soundNumber)
+		throw SoundOutOfRangeException();
 	Sound* s = sounds[soundNumber];
 	sounds.erase(sounds.begin() + soundNumber);
 	return s;
 }
 
 
-Sound* Frame::getSound(int index) {
-	return sounds[index];
+Sound* Frame::getSound(int soundNumber) {
+	if (soundNumber < 0 || sounds.size() <= soundNumber)
+		throw SoundOutOfRangeException();
+	return sounds[soundNumber];
 }
 
 
-const Sound* Frame::getSound(int index) const {
-	return sounds[index];
+const Sound* Frame::getSound(int soundNumber) const {
+	if (soundNumber < 0 || sounds.size() <= soundNumber)
+		throw SoundOutOfRangeException();
+	return sounds[soundNumber];
 }
 
 
@@ -106,11 +122,15 @@ int Frame::getNumberOfSounds() const {
 
 
 const char* Frame::setSoundName(int soundNumber, const char* soundName) {
+	if (soundNumber < 0 || sounds.size() <= soundNumber)
+		throw SoundOutOfRangeException();
 	return sounds[soundNumber]->setName(soundName);
 }
 
 
 const char* Frame::getSoundName(int soundNumber) const {
+	if (soundNumber < 0 || sounds.size() <= soundNumber)
+		throw SoundOutOfRangeException();
 	return sounds[soundNumber]->getName();
 }
 

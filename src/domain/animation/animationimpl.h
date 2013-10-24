@@ -23,6 +23,7 @@
 #define ANIMATIONIMPL_H_
 
 #include <vector>
+#include <exception>
 
 class WorkspaceFile;
 class Scene;

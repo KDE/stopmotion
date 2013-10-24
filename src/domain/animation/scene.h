@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -31,8 +31,7 @@ class FileNameVisitor;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class Scene
-{
+class Scene {
 public:
 	/**
 	 * Initializes the scene
@@ -43,12 +42,6 @@ public:
 	 * Cleans up the scene and delete the frames.
 	 */
 	 ~Scene();
-
-	/**
-	 *Temporary functions to assist in an orderly transfer of functionality from
-	 *Animation, without having to break the project for big time-periods.
-	 */
-	std::vector<Frame*>& getFrames();
 
 	/**
 	 * Retrieves the size of the scene (the number of frames in it).
@@ -68,7 +61,16 @@ public:
 	 * @param frame The frame to remove.
 	 * @return The removed frame. Ownership is returned.
 	 */
-	Frame* removeFrame(unsigned int frame);
+	Frame* removeFrame(int frame);
+
+	/**
+	 * Removes frames from the animation.
+	 * @param frame The index from which to begin removing.
+	 * @param cound The number of frames to remove.
+	 * @param [out] out The removed frames.
+	 */
+	void removeFrames(int frame, int count,
+			std::vector<Frame*>& out);
 
 	/**
 	 * Moves the frames at the positions from fromFrame to toFrame (inclusive)
@@ -77,8 +79,7 @@ public:
 	 * @param toFrame the lst frame to move.
 	 * @param movePosition the position to move the frames to.
 	 */
-	void moveFrames(unsigned int fromFrame, unsigned int toFrame,
-			unsigned int movePosition);
+	void moveFrames(int fromFrame, int toFrame, int movePosition);
 
 	/**
 	 * Cleans frames from the scene without moving them around. Used when the user
@@ -86,7 +87,7 @@ public:
 	 * @param fromFrame the first frame to remove.
 	 * @param toFrame the last frame to remove.
 	 */
-	void cleanFrames(unsigned int fromFrame, unsigned int toFrame);
+	void cleanFrames(int fromFrame, int toFrame);
 
 	/**
 	 * Adds a frame at @c index. Will not fail if {@ref preallocateFrames}
@@ -96,6 +97,13 @@ public:
 	 * 0 and @code{.cpp} getSize() @endcode inclusive.
 	 */
 	void addFrame(Frame* f, int index);
+
+	/**
+	 * Adds frames to the scene.
+	 * @param where Frame index to add the new frames.
+	 * @param fs The frames to add.
+	 */
+	void addFrames(int where, const std::vector<Frame*>& fs);
 
 	/**
 	 * Reserves space for @c count more frames to be added without the risk of

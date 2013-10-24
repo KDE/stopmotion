@@ -25,6 +25,12 @@
 
 #include <memory>
 
+class SceneOutOfRangeException : std::exception {
+    const char* what() const _GLIBCXX_USE_NOEXCEPT {
+    	return "Scene out of range!";
+    }
+};
+
 SceneVector::SceneVector() {
 }
 
@@ -45,6 +51,8 @@ int SceneVector::sceneCount() const {
 }
 
 void SceneVector::addScene(int where, Scene* newScene) {
+	if (where < 0 || scenes.size() < where)
+		throw SceneOutOfRangeException();
 	scenes.insert(scenes.begin() + where, newScene);
 }
 
@@ -59,62 +67,63 @@ void SceneVector::preallocateScenes(int count) {
 }
 
 Scene* SceneVector::removeScene(int from) {
+	if (from < 0 || scenes.size() <= from)
+		throw SceneOutOfRangeException();
 	Scene* s = scenes[from];
 	scenes.erase(scenes.begin() + from);
 	return s;
 }
 
 void SceneVector::moveScene(int from, int to) {
+	int size = scenes.size();
+	if (from < 0 || size <= from || to < 0 || size <= to)
+		throw SceneOutOfRangeException();
 	Scene* s = removeScene(from);
 	addScene(to, s);
 }
 
 const Scene* SceneVector::getScene(int which) const {
+	if (which < 0 || scenes.size() <= which)
+		throw SceneOutOfRangeException();
+	return scenes[which];
+}
+
+Scene* SceneVector::getMutableScene(int which) {
+	if (which < 0 || scenes.size() <= which)
+		throw SceneOutOfRangeException();
 	return scenes[which];
 }
 
 int SceneVector::frameCount(int scene) const {
-	return scenes[scene]->getSize();
+	return getScene(scene)->getSize();
 }
 
 void SceneVector::addFrame(int scene, int where, Frame* frame) {
-	scenes[scene]->addFrame(frame, where);
+	getMutableScene(scene)->addFrame(frame, where);
 }
 
 void SceneVector::addFrames(int scene, int where,
 		const std::vector<Frame*>& frames) {
-	Scene* sc = scenes[scene];
-	assert(where <= sc->getSize());
-	std::vector<Frame*>& sceneFrames = sc->getFrames();
-	sceneFrames.reserve(sceneFrames.size() + frames.size());
-	sceneFrames.insert(sceneFrames.begin() + where,
-			frames.begin(), frames.end());
+	getMutableScene(scene)->addFrames(where, frames);
 }
 
 void SceneVector::preallocateFrames(int scene, int count) {
-	scenes[scene]->preallocateFrames(count);
+	getMutableScene(scene)->preallocateFrames(count);
 }
 
 Frame* SceneVector::removeFrame(int scene, int frame) {
-	return scenes[scene]->removeFrame(frame);
+	return getMutableScene(scene)->removeFrame(frame);
 }
 
 void SceneVector::removeFrames(int scene, int frame, int count,
 		std::vector<Frame*>& out) {
-	out.reserve(out.size() + count);
-	Scene* sc = scenes[scene];
-	std::vector<Frame*>& sceneFrames = sc->getFrames();
-	assert(frame + count <= sceneFrames.size());
-	std::vector<Frame*>::iterator begin = sceneFrames.begin() + frame;
-	std::vector<Frame*>::iterator end = sceneFrames.begin() + (frame + count);
-	out.insert(out.end(), begin, end);
-	sceneFrames.erase(begin, end);
+	getMutableScene(scene)->removeFrames(frame, count, out);
 }
 
 void SceneVector::moveFrames(int fromScene, int fromFrame, int frameCount,
 		int toScene, int toFrame) {
-	Scene* from = scenes[fromScene];
-	Scene* to = scenes[toScene];
+	Scene* from = getMutableScene(fromScene);
+	Scene* to = getMutableScene(toScene);
 	assert(fromFrame + frameCount < from->getSize());
 	assert(toFrame <= to->getSize());
 	if (toScene != fromScene) {
@@ -140,26 +149,26 @@ void SceneVector::moveFrames(int fromScene, int fromFrame, int frameCount,
 }
 
 int SceneVector::soundCount(int scene, int frame) const {
-	return scenes[scene]->getFrame(frame)->getNumberOfSounds();
+	return getScene(scene)->getFrame(frame)->getNumberOfSounds();
 }
 
 void SceneVector::addSound(int scene, int frame, int soundNumber,
 		Sound* sound) {
-	scenes[scene]->addSound(frame, soundNumber, sound);
+	getMutableScene(scene)->addSound(frame, soundNumber, sound);
 }
 
 const char* SceneVector::setSoundName(int scene, int frame, int soundNumber,
 		const char* soundName) {
-	return scenes[scene]->setSoundName(frame, soundNumber, soundName);
+	return getMutableScene(scene)->setSoundName(frame, soundNumber, soundName);
 }
 
 Sound* SceneVector::removeSound(int scene, int frame, int soundNumber) {
-	return scenes[scene]->removeSound(frame, soundNumber);
+	return getMutableScene(scene)->removeSound(frame, soundNumber);
 }
 
 void SceneVector::replaceImage(int sceneNumber, int frameNumber,
 		WorkspaceFile& otherImage) {
-	scenes[sceneNumber]->replaceImage(frameNumber, otherImage);
+	getMutableScene(sceneNumber)->replaceImage(frameNumber, otherImage);
 }
 
 void SceneVector::replaceImage(int, int) {
