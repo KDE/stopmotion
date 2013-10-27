@@ -456,3 +456,12 @@ void Animation::redo() {
 void Animation::clearHistory() {
 	executor->clearHistory();
 }
+
+void Animation::resynch(std::exception& e) {
+	//TODO: instead of reporting this error, we should attempt to recover.
+	// This will probably mean changing the observers to include a reset
+	// method for putting it into a safe state, then a recover state to
+	// re-initialize the UI.
+	if (frontend)
+		frontend->reportError(e.what(), 1);
+}

@@ -90,11 +90,14 @@ void FramePreferencesMenu::open() {
 	soundsList->clear();
 	int activeFrame = frameBar->getActiveFrame();
 	int activeScene = frameBar->getActiveScene();
-	int numSounds = DomainFacade::getFacade()->getNumberOfSounds(activeScene,
+	DomainFacade* facade = DomainFacade::getFacade();
+	int numSounds = facade->getNumberOfSounds(activeScene,
 					activeFrame);
 	for (int i = 0; i < numSounds; ++i) {
-		soundsList->addItem( new QListWidgetItem(DomainFacade::getFacade()
-				->getSoundName(activeScene, activeFrame, i)));
+		const char* soundName = facade->getSoundName(
+				activeScene, activeFrame, i);
+		if (soundName)
+			soundsList->addItem(new QListWidgetItem(soundName));
 	}
 	show();
 }

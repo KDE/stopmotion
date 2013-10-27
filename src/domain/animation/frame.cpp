@@ -29,9 +29,9 @@
 #include <memory>
 
 
-class SoundOutOfRangeException : std::exception {
+class SoundOutOfRangeException : public std::exception {
     const char* what() const _GLIBCXX_USE_NOEXCEPT {
-    	return "Sound out of range!";
+    	return "Internal error: Sound out of range!";
     }
 };
 

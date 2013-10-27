@@ -264,13 +264,16 @@ void FrameView::setActiveFrame(int sceneNumber, int frameNumber)
 		SDL_FreeSurface(videoSurface);
 		videoSurface = 0;
 	}
-	Logger::get().logDebug("Loading image");
-
-	videoSurface = IMG_Load(fileName);
-	if (videoSurface == 0) {
-		printf("IMG_Load: %s\n", IMG_GetError());
+	if (fileName) {
+		Logger::get().logDebug("Loading image");
+		videoSurface = IMG_Load(fileName);
+		if (videoSurface == 0) {
+			printf("IMG_Load: %s\n", IMG_GetError());
+		}
+		Logger::get().logDebug("Loading image finished");
+	} else {
+		Logger::get().logDebug("Failed to get image path from animation");
 	}
-	Logger::get().logDebug("Loading image finished");
 	this->update();
 }
 
@@ -477,7 +480,8 @@ void FrameView::nextPlayBack() {
 				SDL_FreeSurface(videoSurface);
 				videoSurface = 0;
 			}
-			videoSurface = IMG_Load(path);
+			if (path)
+				videoSurface = IMG_Load(path);
 
 			this->update();
 			//Exit from function/skip redraw(). This is better than having a bool which is

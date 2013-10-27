@@ -31,7 +31,8 @@ class ObservableOperation;
 class ObserverNotifier : public AnimationImpl {
 	AnimationImpl* del;
 	Frontend* frontend;
-	std::vector<Observer*> observers;
+	typedef std::vector<Observer*> observers_t;
+	observers_t observers;
 	void doOp(ObservableOperation& oo);
 public:
 	~ObserverNotifier();

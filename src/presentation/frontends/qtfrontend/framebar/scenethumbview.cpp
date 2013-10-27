@@ -60,15 +60,16 @@ SceneThumbView::~SceneThumbView() {}
 void SceneThumbView::setOpened( bool isOpened ) {
 	this->isOpened = isOpened;
 	arrowButton->setOpened(isOpened);
-
-	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
-		const char *path = DomainFacade::getFacade()->getImagePath(number, 0);
-		QImage half = QImage(path).scaled(width() / 2, height() / 2);
-		centerIcon = QPixmap::fromImage(half);
+	DomainFacade* facade = DomainFacade::getFacade();
+	if (!isOpened && (facade->getSceneSize(number) > 0)) {
+		const char *path = facade->getImagePath(number, 0);
+		if (path) {
+			QImage half = QImage(path).scaled(width() / 2, height() / 2);
+			centerIcon = QPixmap::fromImage(half);
+		}
 	} else {
 		centerIcon = QPixmap(clapper);
 	}
-
 	this->update();
 }
 

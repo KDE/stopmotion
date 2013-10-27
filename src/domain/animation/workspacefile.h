@@ -26,11 +26,11 @@
 
 class TemporaryWorkspaceFile;
 
-class CopyFailedException : std::exception {
+class CopyFailedException : public std::exception {
 	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
-class WorkspaceDirectoryCreationException : std::exception {
+class WorkspaceDirectoryCreationException : public std::exception {
 	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 

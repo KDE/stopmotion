@@ -26,30 +26,26 @@
 #include <QProcess>
 
 
-ModelHandler::ModelHandler ( QObject *parent, QStatusBar *sb, FrameBar *frameBar, 
-		ExternalChangeMonitor *changeMonitor, char *lastVisitedDir, const char *name ) 
-		: QObject(parent), frameBar(frameBar), statusBar(sb), 
-		lastVisitedDir(lastVisitedDir), changeMonitor(changeMonitor)
-{
+ModelHandler::ModelHandler ( QObject *parent, QStatusBar *sb, FrameBar *frameBar,
+		ExternalChangeMonitor *changeMonitor, char *lastVisitedDir, const char *name )
+		: QObject(parent), frameBar(frameBar), statusBar(sb),
+		lastVisitedDir(lastVisitedDir), changeMonitor(changeMonitor) {
 	fileDialog = NULL;
 	removeFramesButton = NULL;
 	setObjectName(name);
 }
 
 
-ModelHandler::~ModelHandler()
-{
+ModelHandler::~ModelHandler() {
 }
 
 
-void ModelHandler::setRemoveFramesButton( QPushButton * removeFramesButton )
-{
+void ModelHandler::setRemoveFramesButton(QPushButton* removeFramesButton) {
 	this->removeFramesButton = removeFramesButton;
 }
 
 
-void ModelHandler::chooseFrame()
-{
+void ModelHandler::chooseFrame() {
 	fileDialog = new QFileDialog((MainWindowGUI*)parent(), tr("Choose frames to add"),
 			QString::fromLocal8Bit(lastVisitedDir));
 	QStringList filters;
@@ -69,22 +65,21 @@ void ModelHandler::chooseFrame()
 	fileDialog->setFilters(filters);
 	fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
 	fileDialog->setFileMode(QFileDialog::ExistingFiles);
-	
+
 	//PicturePreview* p = new PicturePreview(fileDialog);
-	
-	QObject::connect( fileDialog, SIGNAL(filesSelected (const QStringList &)), 
+
+	QObject::connect( fileDialog, SIGNAL(filesSelected (const QStringList &)),
 			this, SLOT(addFrames(const QStringList &)) );
-	
+
 	fileDialog->show();
 }
 
 
 // TODO: implement with std strings
-void ModelHandler::addFrames( const QStringList & fileNames)
-{
+void ModelHandler::addFrames(const QStringList & fileNames) {
 	Logger::get().logDebug("addFrames in modelhandler");
 	QStringList names(fileNames);
-	
+
 	changeMonitor->suspendMonitor();
 	// the fileDialog pointer is NULL when adding of frames is
 	// done by drag 'n drop
@@ -92,7 +87,7 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 		fileDialog->hide();
 		strcpy( lastVisitedDir, fileDialog->directory().path().toLocal8Bit().constData() );
 	}
-	
+
 	if ( !names.isEmpty() ) {
 		vector<const char*> fNames;
 		QStringList::Iterator it = names.begin();
@@ -107,52 +102,58 @@ void ModelHandler::addFrames( const QStringList & fileNames)
 		vector<const char*>(fNames).swap(fNames);
 		int scene = frameBar->getActiveScene();
 		int frame = frameBar->getActiveFrame();
-		DomainFacade::getFacade()->addFrames(scene, frame, fNames);
-		
+		if (scene < 0) {
+			scene = 0;
+		}
+		DomainFacade* facade = DomainFacade::getFacade();
+		int frameCount = facade->getSceneSize(scene);
+		if (frameCount <= frame)
+			frame = frameCount - 1;
+		if (frame < 0)
+			frame = 0;
+		facade->addFrames(scene, frame, fNames);
+
 		// Cleanup
 		for (unsigned i = 0; i < fNames.size(); ++i) {
 			delete [] fNames[i];
 			fNames[i] = NULL;
 		}
-		
+
 		emit modelChanged();
 	}
 	changeMonitor->resumeMonitor();
 }
 
 
-void ModelHandler::addFrame( const QString &fileName )
-{
+void ModelHandler::addFrame( const QString &fileName ) {
 	if (fileDialog != NULL) {
 		fileDialog->hide();
 		strcpy( lastVisitedDir, fileDialog->directory().path().toLocal8Bit().constData() );
 	}
-	
+
 	QStringList fileNames;
 	fileNames.push_back(fileName);
 	this->addFrames(fileNames);
 }
 
 
-void ModelHandler::removeFrames()
-{
+void ModelHandler::removeFrames() {
 	if (removeFramesButton->isEnabled()) {
 		int selectionFrame = frameBar->getSelectionFrame();
 		int activeScene = frameBar->getActiveScene();
 		int activeFrame = frameBar->getActiveFrame();
 		int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 		int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
-	
+
 		DomainFacade::getFacade()->removeFrames(activeScene, lowend, highend);
 		statusBar->showMessage( tr("Removed the selected frame"), 2000 );
 	}
 }
 
 
-void ModelHandler::newScene()
-{
+void ModelHandler::newScene() {
 	int activeScene = frameBar->getActiveScene();
-	
+
 	if (activeScene >= 0) {
 		DomainFacade::getFacade()->newScene(activeScene+1);
 	}
@@ -169,18 +170,15 @@ void ModelHandler::newScene()
 }
 
 
-void ModelHandler::removeScene()
-{
+void ModelHandler::removeScene() {
 	DomainFacade::getFacade()->removeScene(frameBar->getActiveScene());
 }
-
 
 
 /*!
     \fn ModelHandler::editCurrentFrame()
  */
-int ModelHandler::editCurrentFrame()
-{
+int ModelHandler::editCurrentFrame() {
 	const char *gimpCommand = Util::checkCommand("gimp");
 	if (!gimpCommand) {
 		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
@@ -202,11 +200,11 @@ int ModelHandler::editCurrentFrame()
 
 	const char *path = DomainFacade::getFacade()
 			->getImagePath(activeScene, activeFrame);
-	
+
 	QStringList argList;
 	// arg0 are the options, and arg1 is the path of the frame.
 	// Start Gimp without splash screen.
-	argList.append(QLatin1String("--no-splash"));	
+	argList.append(QLatin1String("--no-splash"));
 	argList.append(QString::fromLocal8Bit(path));
 
 	QProcess process;
@@ -216,6 +214,6 @@ int ModelHandler::editCurrentFrame()
 			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
 		return 1;
 	}
-	
+
 	return 0;
 }

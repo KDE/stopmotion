@@ -40,7 +40,9 @@ public:
 
 void ObserverNotifier::doOp(ObservableOperation& oo) {
 	oo.op(*del);
-	for (std::vector<Observer*>::iterator i = observers.begin();
+	// exceptions must not escape from here, or we might lose an object that
+	// is of importance to the undo system.
+	for (observers_t::iterator i = observers.begin();
 			i != observers.end(); ++i) {
 		try {
 			oo.update(**i);

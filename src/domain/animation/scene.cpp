@@ -25,9 +25,9 @@
 #include <unistd.h>
 
 
-class FrameOutOfRangeException : std::exception {
+class FrameOutOfRangeException : public std::exception {
     const char* what() const _GLIBCXX_USE_NOEXCEPT {
-    	return "Frame out of range!";
+    	return "Internal error: Frame out of range!";
     }
 };
 

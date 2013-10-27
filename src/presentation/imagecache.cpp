@@ -46,6 +46,8 @@ ImageCache::~ImageCache() {
 }
 
 SDL_Surface* ImageCache::get(const char* path) {
+	if (!path)
+		return 0;
 	return delegate->get(path);
 }
 

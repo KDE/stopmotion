@@ -193,6 +193,8 @@ void FrameBar::updateAnimationChanged(int sceneNumber, int frameNumber) {
 		return;
 	const char *path = DomainFacade::getFacade()->getImagePath(sceneNumber,
 				frameNumber);
+	if (!path)
+		return;
 	QImage scaled = tryReadImage(path).scaled(FRAME_WIDTH, FRAME_HEIGHT);
 	int thumbNumber = frameNumber + activeScene + 1;
 	thumbViews[thumbNumber]->setPixmap(QPixmap::fromImage(scaled));
@@ -227,9 +229,11 @@ void FrameBar::addFrames(int index, int numFrames) {
 		thumb->setMinimumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setScaledContents(true);
-		thumb->setPixmap(QPixmap::fromImage(tryReadImage(
-				anim->getImagePath(activeScene, index + i))
-				.scaled(FRAME_WIDTH, FRAME_HEIGHT)));
+		const char* imagePath = anim->getImagePath(activeScene, index + i);
+		if (imagePath) {
+			thumb->setPixmap(QPixmap::fromImage(tryReadImage(imagePath)
+					.scaled(FRAME_WIDTH, FRAME_HEIGHT)));
+		}
 		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 		thumb->setParent(mainWidget);
 		thumb->move((FRAME_WIDTH + SPACE) * (index + activeScene + 1 + i), 0);

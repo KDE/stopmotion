@@ -82,6 +82,11 @@ public:
 	Frontend* getFrontend();
 
 	/**
+	 * Attempts to re-synch the UI after an error.
+	 */
+	void resynch(std::exception& e);
+
+	/**
 	 * Inserts new frames into the animation model.
 	 * @param scene The scene to add the frames to.
 	 * @param frame The frame index to add the frames to in the animation.

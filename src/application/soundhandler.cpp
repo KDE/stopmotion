@@ -49,10 +49,13 @@ void SoundHandler::addSound() {
 		int ret = facade->addSound( activeScene, activeFrame,
 				file.toLocal8Bit().constData() );
 		if (ret == 0) {
-			soundsList->insertItem(soundsList->count(),
-					new QListWidgetItem( facade->getSoundName(
-							activeScene, activeFrame,
-							soundsList->count())) );
+			int soundCount = soundsList->count();
+			const char* soundName = facade->getSoundName(activeScene,
+					activeFrame, soundCount);
+			if (soundName) {
+				soundsList->insertItem(soundCount,
+						new QListWidgetItem(soundName));
+			}
 			emit soundsChanged();
 		}
 	}

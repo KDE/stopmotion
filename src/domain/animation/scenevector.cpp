@@ -25,9 +25,9 @@
 
 #include <memory>
 
-class SceneOutOfRangeException : std::exception {
+class SceneOutOfRangeException : public std::exception {
     const char* what() const _GLIBCXX_USE_NOEXCEPT {
-    	return "Scene out of range!";
+    	return "Internal error: Scene out of range!";
     }
 };
 
