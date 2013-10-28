@@ -327,7 +327,7 @@ private:
 	 * @param fromFrame the first thumbview to remove.
 	 * @param toFrame the last thumbview to remove.
 	 */
-	void removeFrames(unsigned int fromFrame, unsigned int toFrame);
+	void removeFrames(int fromFrame, int toFrame);
 
 	/**
 	 * Move the frames from fromFrame (inclusive) to toFrame to movePosition.
