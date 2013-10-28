@@ -122,11 +122,12 @@ FrameBar::~FrameBar() {
 
 
 void FrameBar::updateAdd(int scene, int index, int numFrames) {
-	if (scene == activeScene) {
+	if (scene != activeScene) {
 		Logger::get().logDebug("Adding in framebar");
 		addFrames(index, numFrames);
 		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
+	updateNewActiveFrame(scene, index + numFrames - 1);
 }
 
 
@@ -136,6 +137,7 @@ void FrameBar::updateRemove(int scene, int fromFrame, int toFrame) {
 		removeFrames(fromFrame, toFrame);
 		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
+	updateNewActiveFrame(scene, fromFrame);
 }
 
 
@@ -143,12 +145,17 @@ void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 		int toScene, int toFrame) {
 	if (fromScene == activeScene) {
 		if (toScene == activeScene) {
+			Logger::get().logDebug("Moving in framebar");
 			moveFrames(fromFrame, fromFrame + count - 1, toFrame);
 		} else {
+			Logger::get().logDebug("Moving from framebar");
 			removeFrames(fromFrame, fromFrame + count - 1);
+			emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 		}
 	} else if (toScene == activeScene) {
-		//TODO: need to add frames here, but we don't have a frame iterator
+		Logger::get().logDebug("Moving to framebar");
+		addFrames(toFrame, count);
+		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
 }
 
