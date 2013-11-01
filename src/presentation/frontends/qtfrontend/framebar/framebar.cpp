@@ -37,6 +37,8 @@
 #include <QImageReader>
 #include <QDebug>
 
+#include <algorithm>
+
 static QImage tryReadImage(const char *filename) {
     if (!filename) {
         qWarning() << "Couldn't read image: Invalid file name";
@@ -75,6 +77,7 @@ FrameBar::FrameBar(QWidget *parent)
 	preferencesMenu = 0;
 	activeFrame = -1;
 	activeScene = -1;
+	activeSceneSize = 0;
 	movingScene = 0;
 	openingScene = false;
 	selecting = false;
@@ -180,13 +183,17 @@ void FrameBar::updateNewActiveFrame(int sceneNumber, int frameNumber) {
 	emit newActiveFrame(frameNumber + 1);
 }
 
-
-void FrameBar::updateClear() {
+void FrameBar::clear() {
 	int size = thumbViews.size();
 	for (int i = 0; i < size; ++i) {
 		delete thumbViews[i];
 	}
 	thumbViews.clear();
+	activeSceneSize = 0;
+}
+
+void FrameBar::updateClear() {
+	clear();
 	activeFrame = -1;
 	activeScene = -1;
 }
@@ -198,164 +205,148 @@ void FrameBar::updatePlayFrame(int, int) {}
 void FrameBar::updateAnimationChanged(int sceneNumber, int frameNumber) {
 	if (sceneNumber != activeScene)
 		return;
+	if (activeSceneSize <= frameNumber)
+		resync();
 	const char *path = DomainFacade::getFacade()->getImagePath(sceneNumber,
 				frameNumber);
 	if (!path)
 		return;
 	QImage scaled = tryReadImage(path).scaled(FRAME_WIDTH, FRAME_HEIGHT);
-	int thumbNumber = frameNumber + activeScene + 1;
-	thumbViews[thumbNumber]->setPixmap(QPixmap::fromImage(scaled));
-	thumbViews[thumbNumber]->update();
+	ThumbView* thumb = getFrameThumb(frameNumber);
+	thumb->setPixmap(QPixmap::fromImage(scaled));
+	thumb->update();
 }
 
+void FrameBar::fixSize() {
+	mainWidget->resize((FRAME_WIDTH + SPACE) * thumbViews.size() - SPACE,
+			FRAME_HEIGHT);
+}
+
+void FrameBar::resync() {
+	clear();
+	DomainFacade* facade = DomainFacade::getFacade();
+	int sceneCount = facade->getNumberOfScenes();
+	if (sceneCount <= activeScene) {
+		activeScene = -1;
+		activeSceneSize = 0;
+	}
+	if (0 <= activeScene)
+		activeSceneSize = facade->getSceneSize(activeScene);
+
+	std::vector<ThumbView*>::size_type thumbCount = sceneCount + activeSceneSize;
+	thumbViews.insert(thumbViews.begin(), thumbCount, 0);
+	for (int i = 0; i != sceneCount; ++i) {
+		getSceneThumb(i, true);
+	}
+	for (int i = 0; i != activeSceneSize; ++i) {
+		getFrameThumb(i, true);
+	}
+	fixSize();
+}
+
+void FrameBar::insertFrames(int index, int numFrames) {
+	std::vector<ThumbView*>::iterator pos = thumbViews.begin()
+			+ (index + activeScene + 1);
+	thumbViews.insert(pos,
+			static_cast<std::vector<ThumbView*>::size_type>(numFrames), 0);
+	activeSceneSize += numFrames;
+	// fix all frames after the insertion point
+	for (int i = index; i != activeSceneSize; ++i) {
+		getFrameThumb(i, true);
+	}
+}
 
 void FrameBar::addFrames(int index, int numFrames) {
 	//TODO as we're no longer allowing cancelling during this operation, we
 	// should implement caching and lazy loading so that this isn't a problem.
 	Logger::get().logDebug("Adding frames in framebar");
-
-	DomainFacade* anim = DomainFacade::getFacade();
-	int size = thumbViews.size();
-	int from = index + activeScene + 1;
-	int to = size - DomainFacade::getFacade()->getNumberOfScenes() + activeScene + 1;
-	int moveDistance = numFrames - (activeScene + 1);
-
-	// Move the frames behind the place we are inserting the new ones.
-	for (int i = from; i < size; ++i) {
-		thumbViews[i]->move(thumbViews[i]->x() + (FRAME_WIDTH + SPACE) * numFrames, 0 );
-		if (i < to) {
-			thumbViews[i]->setNumber(i + moveDistance);
-		}
+	if (activeSceneSize < index) {
+		resync();
+		return;
 	}
-
-	ThumbView *thumb = 0;
-
-	// Adds the new frames to the framebar
-	for (int i = 0; i != numFrames; ++i) {
-		thumb = new FrameThumbView(this, 0, index + i);
-		thumb->setMinimumSize(FRAME_WIDTH, FRAME_HEIGHT);
-		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
-		thumb->setScaledContents(true);
-		const char* imagePath = anim->getImagePath(activeScene, index + i);
-		if (imagePath) {
-			thumb->setPixmap(QPixmap::fromImage(tryReadImage(imagePath)
-					.scaled(FRAME_WIDTH, FRAME_HEIGHT)));
-		}
-		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-		thumb->setParent(mainWidget);
-		thumb->move((FRAME_WIDTH + SPACE) * (index + activeScene + 1 + i), 0);
-		thumb->show();
-
-		//Sets the note icon on the respective frames.
-		if (anim->getNumberOfSounds(activeScene, i) != 0) {
-			thumb->setHasSounds(true);
-		}
-
-		thumbViews.insert(thumbViews.begin() + index + activeScene + 1 + i, thumb);
-	}
-	mainWidget->resize((FRAME_WIDTH + SPACE) * thumbViews.size() - SPACE, FRAME_HEIGHT);
+	insertFrames(index, numFrames);
+	if (index <= activeFrame)
+		activeFrame += numFrames;
+	fixSize();
 }
 
+void FrameBar::deleteFrames(int fromFrame, int frameCount) {
+	std::vector<ThumbView*>::iterator start = thumbViews.begin() + fromFrame;
+	std::vector<ThumbView*>::iterator end = start + frameCount;
+	for (std::vector<ThumbView*>::iterator i = start; i != end; ++i) {
+		delete (*i);
+		(*i) = 0;
+	}
+	thumbViews.erase(start, end);
+	activeSceneSize -= frameCount;
+	if (fromFrame <= activeFrame) {
+		if (activeFrame < fromFrame + frameCount) {
+			if (activeSceneSize <= fromFrame)
+				activeFrame = activeSceneSize - 1;
+			else
+				activeFrame = fromFrame;
+		} else {
+			activeFrame -= frameCount;
+		}
+	}
+}
 
 void FrameBar::removeFrames(int fromFrame, int toFrame) {
-	fromFrame += activeScene + 1;
-	toFrame += activeScene + 1;
-
-	int numFrames = thumbViews.size();
-
-	// The frames to be deleted are between other frames
-	if ( toFrame < numFrames - 1) {
-
-		// Move all frames behind the deleted frames forward.
-		int stop = numFrames - DomainFacade::getFacade()->getNumberOfScenes() + activeScene + 1;
-		for (int k = toFrame + 1; k < numFrames; ++k) {
-			thumbViews[k]->move(thumbViews[k]->x() - (toFrame - fromFrame + 1) * (FRAME_WIDTH + SPACE), 0);
-			if (k < stop) {
-				thumbViews[k]->setNumber(k - (toFrame - fromFrame + 2) - activeScene);
-			}
-		}
+	if (activeSceneSize <= toFrame) {
+		resync();
+		return;
 	}
-
-	for (int i = fromFrame; i <= toFrame; ++i) {
-		delete thumbViews[fromFrame];
-		thumbViews.erase( thumbViews.begin() + fromFrame );
+	int frameCount = toFrame - fromFrame + 1;
+	deleteFrames(fromFrame, frameCount);
+	for (int i = fromFrame; i != activeSceneSize; ++i) {
+		getFrameThumb(i, true);
 	}
-
-	mainWidget->resize((FRAME_WIDTH + SPACE) * thumbViews.size(), FRAME_HEIGHT);
+	fixSize();
 }
-
 
 void FrameBar::moveFrames(int fromFrame, int toFrame, int movePosition) {
-	fromFrame += activeScene + 1;
-	toFrame += activeScene + 1;
-	movePosition += activeScene + 1;
-
+	int fromThumb = fromFrame + activeScene + 1;
+	int toThumb = toFrame + activeScene + 2;
+	int dest = movePosition + activeScene + 1;
+	int updateStart = 0;
+	int updateEnd = 0;
 	if (movePosition < fromFrame) {
-		for (int i = movePosition; i < fromFrame; ++i) {
-			thumbViews[i]->move(thumbViews[i]->x() + (FRAME_WIDTH + SPACE) * (toFrame - fromFrame + 1), 0 );
-			thumbViews[i]->setNumber(i + (toFrame - fromFrame) - activeScene);
-		}
-
-		for (int j = fromFrame; j <= toFrame; ++j) {
-			thumbViews[j]->move( thumbViews[j]->x() - (FRAME_WIDTH + SPACE) * (fromFrame-movePosition), 0 );
-			moveThumbView(j, j - (fromFrame - movePosition));
-		}
+		std::rotate(thumbViews.begin() + dest,
+				thumbViews.begin() + fromThumb,
+				thumbViews.begin() + toThumb);
+		updateStart = movePosition;
+		updateEnd = toFrame + 1;
+	} else if (toFrame < movePosition) {
+		std::rotate(thumbViews.begin() + fromThumb,
+				thumbViews.begin() + toThumb,
+				thumbViews.begin() + dest);
+		updateStart = fromFrame;
+		updateEnd = movePosition;
+	} else {
+		return;
 	}
-	else if (movePosition > fromFrame) {
-		for (int i = toFrame + 1; i <= movePosition; ++i) {
-			thumbViews[i]->move(thumbViews[i]->x() - (FRAME_WIDTH + SPACE) * (toFrame - fromFrame + 1), 0 );
-			thumbViews[i]->setNumber(i - (toFrame - fromFrame + 2) - activeScene);
-		}
-
-		for (int j = fromFrame, k = toFrame; j <= toFrame; ++j, --k) {
-			thumbViews[k]->move(thumbViews[k]->x() + (FRAME_WIDTH + SPACE) * (movePosition - toFrame), 0 );
-			moveThumbView(k, k + (movePosition-toFrame));
-		}
+	for (int i = updateStart; i != updateEnd; ++i) {
+		getFrameThumb(i, true);
 	}
 }
 
-
-void FrameBar::moveThumbView(int fromPosition, int toPosition) {
-	ThumbView *f = thumbViews[fromPosition];
-	f->setNumber(toPosition - (activeScene + 1));
-	f->setSelected(false);
-	thumbViews.erase(thumbViews.begin() + fromPosition);
-	thumbViews.insert(thumbViews.begin() + toPosition, f);
+void FrameBar::doScroll() {
+	int thumbNumber = activeFrame < 0? activeScene
+			: activeFrame + activeScene + 1;
+	if (0 <= thumbNumber) {
+		ensureVisible(thumbNumber * (FRAME_WIDTH + SPACE) + FRAME_WIDTH / 2,
+				FRAME_HEIGHT / 2, FRAME_WIDTH / 2, FRAME_HEIGHT / 2);
+	}
 }
-
 
 void FrameBar::setActiveFrame(int frameNumber) {
-	if (frameNumber == activeFrame && !selecting)
-		return;
+	selecting = false;
+	setActiveFrameAndSelection(frameNumber, frameNumber);
 	// If there is a frame to set as active
 	if (frameNumber >= 0) {
 		Logger::get().logDebug("Setting new active frame in FrameBar");
-
-		int max = thumbViews.size() - 1;
-		int thumbNumber = frameNumber + activeScene + 1;
-		int from = activeFrame + activeScene + 1;
-		int to = selectionFrame + activeScene + 1;
-		int highend = (from < to) ? to : from;
-		int lowend = (from > to) ? to : from;
-
-		if (max < highend)
-			highend = max;
-		if (lowend < 0)
-			lowend = 0;
-
-		for (int i = lowend; i <= highend; ++i) {
-			thumbViews[i]->setSelected(false);
-		}
-
-		if (0 <= thumbNumber && thumbNumber <= max)
-			thumbViews[thumbNumber]->setSelected(true);
-		ensureVisible(thumbNumber * (FRAME_WIDTH + SPACE) + FRAME_WIDTH/2,
-				FRAME_HEIGHT/2, FRAME_WIDTH/2, FRAME_HEIGHT/2);
+		doScroll();
 	}
-
-	activeFrame = frameNumber;
-	selectionFrame = frameNumber;
-	selecting = false;
 }
 
 
@@ -368,178 +359,203 @@ bool FrameBar::isSelecting() const {
 	return selecting;
 }
 
+void swap(int& x, int& y) {
+	int t = x;
+	x = y;
+	y = t;
+}
 
-void FrameBar::setSelection(int selectionFrame) {
-	this->selectionFrame = selectionFrame;
-	selectionFrame += activeScene + 1;
-
-	int activeFrame = this->activeFrame + activeScene + 1;
-	if (selectionFrame >= activeFrame) {
-		for (int i = activeFrame; i <= selectionFrame; ++i) {
-			thumbViews[i]->setSelected(true);
-		}
+void FrameBar::setActiveFrameAndSelection(int af, int sf) {
+	if (activeSceneSize <= af || activeSceneSize <= sf) {
+		resync();
+		return;
 	}
-	else if (this->selectionFrame < activeFrame) {
-		for (int i = selectionFrame; i <= activeFrame; ++i) {
-			thumbViews[i]->setSelected(true);
-		}
+	// put old selection in [a..b)
+	int a = activeFrame;
+	int b = selectionFrame + 1;
+	if (selectionFrame < activeFrame) {
+		a = selectionFrame;
+		b = activeFrame + 1;
+	}
+	activeFrame = af;
+	selectionFrame = sf;
+	// put new selection in [c..d)
+	int c = af;
+	int d = sf + 1;
+	if (sf < activeFrame) {
+		c = sf;
+		d = af + 1;
+	}
+	// put leftmost end in a
+	if (b < a)
+		swap(a, b);
+
+	// put rightmost end in d
+	if (d < c)
+		swap(c, d);
+
+	// put a,b,c,d in order
+	if (c < b)
+		swap(b, c);
+
+	for (int i = a; i != b; ++i) {
+		getFrameThumb(i, true);
+	}
+	for (int i = c; i != d; ++i) {
+		getFrameThumb(i, true);
 	}
 }
 
-
-int FrameBar::getSelectionFrame() const {
-	return selectionFrame;
+void FrameBar::setSelection(int sf) {
+	setActiveFrameAndSelection(activeFrame, sf);
 }
 
+int FrameBar::getSelectionThumb() const {
+	return selectionFrame < 0? -1 : selectionFrame + activeScene + 1;
+}
 
 void FrameBar::setPreferencesMenu(FramePreferencesMenu* preferencesMenu) {
 	this->preferencesMenu = preferencesMenu;
 }
 
-
 void FrameBar::showPreferencesMenu() {
 	preferencesMenu->open();
 }
 
-
 void FrameBar::frameSoundsChanged() {
-	int activeFrame = getActiveFrame();
-	int activeThumb = activeFrame + getActiveScene() + 1;
-
-	int soundCount = DomainFacade::getFacade()->soundCount(
-			getActiveScene(), activeFrame);
-	if (0 < soundCount) {
-		thumbViews[activeThumb]->setHasSounds(true);
-	}
-	else {
-		thumbViews[activeThumb]->setHasSounds(false);
-	}
+	if (0 <= activeFrame)
+		getFrameThumb(activeFrame, true);
 }
-
 
 void FrameBar::updateNewScene( int index ) {
-	this->newScene(index);
+	closeActiveScene();
+	newScene(index);
+	updateNewActiveFrame(index, -1);
 }
-
 
 void FrameBar::newScene(int index) {
 	Logger::get().logDebug("Adding new scene thumb to framebar");
 
+	if (index <= activeScene)
+		++activeScene;
 	int thumbIndex = index;
-	if (0 < activeScene && activeScene < index) {
-		thumbIndex += DomainFacade::getFacade()->getSceneSize(activeScene);
+	thumbViews.insert(thumbViews.begin() + thumbIndex, 0);
+	// get new scene and move and renumber all subsequent scenes
+	int sceneCount = sceneThumbCount();
+	for (int i = index; i != sceneCount; ++i) {
+		getSceneThumb(i, true);
 	}
-	int numThumbs = thumbViews.size();
-	for (int i = thumbIndex; i < numThumbs; i++) {
-		thumbViews[i]->move(thumbViews[i]->x() + (FRAME_WIDTH + SPACE), 0);
-		thumbViews[i]->setNumber(thumbViews[i]->getNumber() + 1);
+	if (0 < activeScene) {
+		if (activeScene < index) {
+			thumbIndex += activeSceneSize;
+		} else {
+			// move all the frames along
+			for (int i = 0; i != activeSceneSize; ++i) {
+				getFrameThumb(i, true);
+			}
+		}
 	}
-
-	ThumbView *thumb = new SceneThumbView(this, 0, index, "scene");
-	setOpeningScene(false);
-	thumb->setMinimumSize(FRAME_WIDTH, FRAME_HEIGHT);
-	thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
-	thumb->setScaledContents(true);
-	thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	thumb->setParent(mainWidget);
-
-	thumb->move((FRAME_WIDTH + SPACE) * index, 0);
-	thumb->show();
-	thumbViews.insert(thumbViews.begin() + thumbIndex, thumb);
-
+	fixSize();
 	emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 }
 
-
 void FrameBar::updateRemoveScene(int sceneNumber) {
-	this->removeScene(sceneNumber);
+	removeScene(sceneNumber);
 }
 
-
 void FrameBar::removeScene(int sceneNumber) {
-	int delThumb = sceneNumber;
+	if (sceneNumber < 0)
+		return;
+	if (sceneNumber == activeScene)
+		closeActiveScene();
+	int delThumb = sceneNumber <= activeScene? sceneNumber + 1
+			: sceneNumber + activeSceneSize + 1;
 
-	if (sceneNumber > activeScene && sceneNumber > 0) {
-		delThumb += DomainFacade::getFacade()->getSceneSize(activeScene);
+	if (sceneNumber < activeScene)
+		--activeScene;
+
+	if (thumbViews.size() <= delThumb) {
+		resync();
+		return;
 	}
 
 	delete thumbViews[delThumb];
 	thumbViews.erase(thumbViews.begin() + delThumb);
 
-	int numFrames = thumbViews.size();
-	for (int i = delThumb; i < numFrames; ++i) {
-		thumbViews[i]->move(thumbViews[i]->x() - (FRAME_WIDTH + SPACE), 0 );
-		if (strcmp(thumbViews[i]->objectName().toLatin1().constData(), "scene") == 0) {
-			thumbViews[i]->setNumber(thumbViews[i]->getNumber() - 1);
-		}
-	}
-
-	if (activeScene > sceneNumber) {
-		activeScene -= 1;
+	int sceneCount = sceneThumbCount();
+	for (int i = sceneNumber + 1; i < sceneCount; ++i) {
+		getSceneThumb(i, true);
 	}
 }
-
 
 void FrameBar::updateMoveScene(int sceneNumber, int movePosition) {
-	this->moveScene(sceneNumber, movePosition);
+	moveScene(sceneNumber, movePosition);
 }
-
 
 void FrameBar::moveScene(int sceneNumber, int movePosition) {
-	if (thumbViews.size() <= 0)
-		return;
+	int begin = sceneNumber;
+	int mid = sceneNumber + 1;
+	int end = movePosition;
 	if (movePosition < sceneNumber) {
-		for (int i = movePosition; i < sceneNumber; ++i) {
-			thumbViews[i]->move(thumbViews[i]->x() + (FRAME_WIDTH + SPACE), 0 );
-			thumbViews[i]->setNumber(thumbViews[i]->getNumber() + 1);
+		begin = movePosition;
+		end = sceneNumber + 1;
+		mid = sceneNumber;
+	} else if (end <= mid) {
+		return;
+	}
+	int thumbBegin = activeScene < begin? begin + activeSceneSize : begin;
+	int thumbMid = activeScene < mid? mid + activeSceneSize : mid;
+	int thumbEnd = activeScene < end? end + activeSceneSize : end;
+	if (thumbViews.size() <= thumbEnd) {
+		resync();
+		return;
+	}
+	std::rotate(thumbViews.begin() + thumbBegin,
+			thumbViews.begin() + thumbMid, thumbViews.begin() + thumbEnd);
+	for (int i = begin; i != end; ++i) {
+		getSceneThumb(i, true);
+	}
+	if (begin <= activeScene && activeScene < end) {
+		for (int i = 0; i != activeSceneSize; i++) {
+			getFrameThumb(i, true);
 		}
 	}
-	else {
-		for (int i = sceneNumber + 1; i <= movePosition; ++i) {
-			thumbViews[i]->move(thumbViews[i]->x() - (FRAME_WIDTH + SPACE), 0 );
-			thumbViews[i]->setNumber(thumbViews[i]->getNumber()-1);
-		}
-	}
-
-	ThumbView *const tv = thumbViews[sceneNumber];
-	tv->move(tv->x() - (FRAME_WIDTH + SPACE) * (sceneNumber - movePosition), 0 );
-	tv->setNumber(movePosition);
-
-	thumbViews.erase(thumbViews.begin() + sceneNumber);
-	thumbViews.insert(thumbViews.begin() + movePosition, tv);
 }
 
+void FrameBar::closeActiveScene() {
+	if (activeScene >= 0) {
+		deleteFrames(0, activeSceneSize - 1);
+		activeSceneSize = 0;
+		int s = activeScene;
+		activeScene = -1;
+		getSceneThumb(s, true);
+	}
+}
 
 void FrameBar::setActiveScene(int sceneNumber) {
-	DomainFacade* anim = DomainFacade::getFacade();
-	int maxScene = anim->getNumberOfScenes() - 1;
-	if (sceneNumber < maxScene) {
-		sceneNumber = maxScene;
-	}
 	if (sceneNumber == activeScene)
 		return;
-	if (activeScene >= 0) {
-		removeFrames(0, anim->getSceneSize(activeScene) - 1);
-		if (activeScene < thumbViews.size())
-			thumbViews[activeScene]->setOpened(false);
+	closeActiveScene();
+	DomainFacade* anim = DomainFacade::getFacade();
+	if (anim->getNumberOfScenes() <= sceneNumber) {
+		return;
+	}
+	if (sceneNumber < 0) {
+		activeScene = -1;
+		activeSceneSize = 0;
 	}
 
 	activeScene = sceneNumber;
 	activeFrame = -1;
 	selecting = false;
 
-	if (activeScene >= 0) {
-		thumbViews[activeScene]->setOpened(true);
-		int count = anim->getSceneSize(activeScene);
-		if (count > 0) {
-			addFrames(0, count);
-			setActiveFrame(0);
-		}
-	}
-
+	thumbViews[activeScene]->setOpened(true);
+	int count = anim->getSceneSize(activeScene);
+	insertFrames(0, count);
+	fixSize();
 	updateObserver();
 
-	ensureVisible((FRAME_WIDTH + SPACE) * thumbViews.size() + FRAME_WIDTH, FRAME_HEIGHT);
+	doScroll();
 	emit newMaximumValue(DomainFacade::getFacade()->getSceneSize(activeScene));
 }
 
@@ -635,26 +651,13 @@ void FrameBar::scroll() {
 	}
 }
 
-
-void FrameBar::setOpeningScene(bool openingScene) {
-	this->openingScene = openingScene;
-}
-
-
-bool FrameBar::isOpeningScene() const {
-	return openingScene;
-}
-
-
 int FrameBar::getFrameWidth() const {
 	return FRAME_WIDTH;
 }
 
-
 int FrameBar::getFrameHeight() const {
 	return FRAME_HEIGHT;
 }
-
 
 int FrameBar::getSpace() const {
 	return SPACE;
@@ -670,6 +673,65 @@ int FrameBar::getActiveScene() const {
 
 void FrameBar::setObserver(ActiveFrameObserver* observer) {
 	activeFrameObserver = observer;
+}
+
+ThumbView* FrameBar::getFrameThumb(int index, bool fix) {
+	int thumbIndex = activeScene + 1 + index;
+	ThumbView* thumb = thumbViews[thumbIndex];
+	DomainFacade* facade = DomainFacade::getFacade();
+	if (!thumb) {
+		thumb = new FrameThumbView(this, 0, index);
+		thumb->setMinimumSize(FRAME_WIDTH, FRAME_HEIGHT);
+		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
+		thumb->setScaledContents(true);
+		const char* imagePath = facade->getImagePath(activeScene, index);
+		if (imagePath) {
+			thumb->setPixmap(QPixmap::fromImage(tryReadImage(imagePath)
+					.scaled(FRAME_WIDTH, FRAME_HEIGHT)));
+		}
+		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+		thumb->setParent(mainWidget);
+		thumbViews[thumbIndex] = thumb;
+		fix = true;
+	}
+	if (fix) {
+		thumb->move((FRAME_WIDTH + SPACE) * (index + activeScene + 1), 0);
+		thumb->setNumber(index);
+		if (facade->getNumberOfSounds(activeScene, index) != 0) {
+			thumb->setHasSounds(true);
+		}
+		thumb->setSelected(0 <= activeFrame
+				&& ((activeFrame <= index && index <= selectionFrame)
+					|| (selectionFrame <= index && index <= activeFrame)));
+	}
+	return thumb;
+}
+
+ThumbView* FrameBar::getSceneThumb(int index, bool fix) {
+	int thumbIndex = index <= activeScene? index : index + activeSceneSize;
+	ThumbView* thumb = thumbViews[thumbIndex];
+	if (!thumb) {
+		thumb = new SceneThumbView(this, 0, index, "scene");
+		thumb->setMinimumSize(FRAME_WIDTH, FRAME_HEIGHT);
+		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
+		thumb->setScaledContents(true);
+		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+		thumb->setParent(mainWidget);
+		thumb->show();
+		thumb->move((FRAME_WIDTH + SPACE) * thumbIndex, 0);
+		thumbViews[thumbIndex] = thumb;
+		fix = true;
+	}
+	if (fix) {
+		thumb->move((FRAME_WIDTH + SPACE) * thumbIndex, 0);
+		thumb->setNumber(index);
+		thumb->setOpened(index == activeScene);
+	}
+	return thumb;
+}
+
+int FrameBar::sceneThumbCount() const {
+	return thumbViews.size() - activeSceneSize;
 }
 
 void FrameBar::updateObserver() {

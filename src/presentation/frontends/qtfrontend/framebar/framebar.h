@@ -163,7 +163,7 @@ public:
 	 * @return The anchor of the current selection, or returns the same value
 	 * as {@ref getActiveFrame} if there is no selection.
 	 */
-	int getSelectionFrame() const;
+	int getSelectionThumb() const;
 
 	/**
 	 * Returns the current active frame.
@@ -199,21 +199,6 @@ public:
 	 * @param movingScene the new value of the movingScene property.
 	 */
 	void setMovingScene(int movingScene);
-
-	/**
-	 * Sets whether the scene is currently opening so that close requests
-	 * can be ignored while it is processing.
-	 *
-	 * @param openingScene true if the scene is currently being opened. False
-	 * if not.
-	 */
-	void setOpeningScene(bool openingScene);
-
-	/**
-	 * Returns true if a scene is currently being opened.
-	 * @return true if a scene is currently being opened.
-	 */
-	bool isOpeningScene() const;
 
 	int getFrameWidth() const;
 	int getFrameHeight() const;
@@ -271,6 +256,13 @@ private:
 	/** The active scene in the framebar */
 	int activeScene;
 
+	/**
+	 * The number of thumbnails we are showing for frames in the active scene.
+	 * If this is different to the number of frames in the actual scene, we
+	 * need to resynchronize.
+	 */
+	int activeSceneSize;
+
 	/** The scene which are being moved when draging a scene */
 	int movingScene;
 
@@ -307,6 +299,8 @@ private:
 	/** Pointer to the frame preferencesMenu */
 	FramePreferencesMenu *preferencesMenu;
 
+	/** Returns how many scene thumbnails there are */
+	int sceneThumbCount() const;
 	/**
 	 *Adds the picture to the frame to the framebar at position index.
 	 *
@@ -372,16 +366,32 @@ private:
 	void setActiveScene(int sceneNumber);
 
 	/**
-	 *Moves a thumbview in the thumbviews-vector from fromPosition to toPosition.
-	 *@param fromPosition the place in the vector the thumbview is moved from.
-	 *@param toPosition the place in the vector the thumbview is moved to.
+	 * Gets the thumbnail of the specified frame in the active scene, creating
+	 * it if necessary.
+	 * @param index The index of the frame within the active scene.
+	 * @param fix True to correct the position, number and sound indicator.
 	 */
-	void moveThumbView(int fromPosition, int toPosition);
+	ThumbView* getFrameThumb(int index, bool fix = false);
+
+	/**
+	 * Gets the thumbnail of the specified scene, creating it if necessary.
+	 * @param index The scene number.
+	 * @param fix True to correct the position and number.
+	 */
+	ThumbView* getSceneThumb(int index, bool fix = false);
 
 	/**
 	 * Sends an {@c updateNewActiveFrame} to the observer, if appropriate.
 	 */
 	void updateObserver();
+	void fixSize();
+	void clear();
+	void resync();
+	void deleteFrames(int fromFrame, int frameCount);
+	void closeActiveScene();
+	void insertFrames(int index, int numFrames);
+	void setActiveFrameAndSelection(int af, int sf);
+	void doScroll();
 };
 
 #endif
