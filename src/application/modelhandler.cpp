@@ -101,14 +101,14 @@ void ModelHandler::addFrames(const QStringList & fileNames) {
 		// trim to size :)
 		vector<const char*>(fNames).swap(fNames);
 		int scene = frameBar->getActiveScene();
-		int frame = frameBar->getActiveFrame();
+		int frame = frameBar->getActiveFrame() + 1;
 		if (scene < 0) {
 			scene = 0;
 		}
 		DomainFacade* facade = DomainFacade::getFacade();
 		int frameCount = facade->getSceneSize(scene);
-		if (frameCount <= frame)
-			frame = frameCount - 1;
+		if (frameCount < frame)
+			frame = frameCount;
 		if (frame < 0)
 			frame = 0;
 		facade->addFrames(scene, frame, fNames);
