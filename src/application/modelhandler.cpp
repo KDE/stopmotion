@@ -145,7 +145,8 @@ void ModelHandler::removeFrames() {
 		int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 		int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 
-		DomainFacade::getFacade()->removeFrames(activeScene, lowend, highend);
+		DomainFacade::getFacade()->removeFrames(activeScene, lowend,
+				highend - lowend + 1);
 		statusBar->showMessage( tr("Removed the selected frame"), 2000 );
 	}
 }

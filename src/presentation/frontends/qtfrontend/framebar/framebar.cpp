@@ -125,12 +125,13 @@ FrameBar::~FrameBar() {
 
 
 void FrameBar::updateAdd(int scene, int index, int numFrames) {
-	if (scene != activeScene) {
+	if (scene == activeScene) {
 		Logger::get().logDebug("Adding in framebar");
 		addFrames(index, numFrames);
 		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
 	updateNewActiveFrame(scene, index + numFrames - 1);
+	doScroll();
 }
 
 
@@ -254,6 +255,10 @@ void FrameBar::insertFrames(int index, int numFrames) {
 	for (int i = index; i != activeSceneSize; ++i) {
 		getFrameThumb(i, true);
 	}
+	int sceneCount = sceneThumbCount();
+	for (int i = activeScene + 1; i != sceneCount; ++i) {
+		getSceneThumb(i, true);
+	}
 }
 
 void FrameBar::addFrames(int index, int numFrames) {
@@ -341,10 +346,10 @@ void FrameBar::doScroll() {
 
 void FrameBar::setActiveFrame(int frameNumber) {
 	selecting = false;
+	Logger::get().logDebug("Setting new active frame in FrameBar");
 	setActiveFrameAndSelection(frameNumber, frameNumber);
 	// If there is a frame to set as active
 	if (frameNumber >= 0) {
-		Logger::get().logDebug("Setting new active frame in FrameBar");
 		doScroll();
 	}
 }
@@ -382,27 +387,31 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 	// put new selection in [c..d)
 	int c = af;
 	int d = sf + 1;
-	if (sf < activeFrame) {
+	if (sf < af) {
 		c = sf;
 		d = af + 1;
 	}
 	// put leftmost end in a
-	if (b < a)
-		swap(a, b);
+	if (c < a)
+		swap(a, c);
 
 	// put rightmost end in d
-	if (d < c)
-		swap(c, d);
+	if (d < b)
+		swap(b, d);
 
 	// put a,b,c,d in order
 	if (c < b)
 		swap(b, c);
 
-	for (int i = a; i != b; ++i) {
-		getFrameThumb(i, true);
+	if (0 <= a) {
+		for (int i = a; i != b; ++i) {
+			getFrameThumb(i, true);
+		}
 	}
-	for (int i = c; i != d; ++i) {
-		getFrameThumb(i, true);
+	if (0 <= c) {
+		for (int i = c; i != d; ++i) {
+			getFrameThumb(i, true);
+		}
 	}
 }
 
@@ -427,7 +436,7 @@ void FrameBar::frameSoundsChanged() {
 		getFrameThumb(activeFrame, true);
 }
 
-void FrameBar::updateNewScene( int index ) {
+void FrameBar::updateNewScene(int index) {
 	closeActiveScene();
 	newScene(index);
 	updateNewActiveFrame(index, -1);
@@ -436,23 +445,19 @@ void FrameBar::updateNewScene( int index ) {
 void FrameBar::newScene(int index) {
 	Logger::get().logDebug("Adding new scene thumb to framebar");
 
+	int thumbIndex = index <= activeScene? index : index + activeSceneSize;
+	thumbViews.insert(thumbViews.begin() + thumbIndex, 0);
 	if (index <= activeScene)
 		++activeScene;
-	int thumbIndex = index;
-	thumbViews.insert(thumbViews.begin() + thumbIndex, 0);
 	// get new scene and move and renumber all subsequent scenes
 	int sceneCount = sceneThumbCount();
 	for (int i = index; i != sceneCount; ++i) {
 		getSceneThumb(i, true);
 	}
-	if (0 < activeScene) {
-		if (activeScene < index) {
-			thumbIndex += activeSceneSize;
-		} else {
-			// move all the frames along
-			for (int i = 0; i != activeSceneSize; ++i) {
-				getFrameThumb(i, true);
-			}
+	if (index <= activeScene) {
+		// move all the frames along as well
+		for (int i = 0; i != activeSceneSize; ++i) {
+			getFrameThumb(i, true);
 		}
 	}
 	fixSize();
@@ -524,7 +529,7 @@ void FrameBar::moveScene(int sceneNumber, int movePosition) {
 
 void FrameBar::closeActiveScene() {
 	if (activeScene >= 0) {
-		deleteFrames(0, activeSceneSize - 1);
+		deleteFrames(0, activeSceneSize);
 		activeSceneSize = 0;
 		int s = activeScene;
 		activeScene = -1;
@@ -547,6 +552,7 @@ void FrameBar::setActiveScene(int sceneNumber) {
 
 	activeScene = sceneNumber;
 	activeFrame = -1;
+	selectionFrame = -1;
 	selecting = false;
 
 	thumbViews[activeScene]->setOpened(true);
@@ -691,15 +697,14 @@ ThumbView* FrameBar::getFrameThumb(int index, bool fix) {
 		}
 		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 		thumb->setParent(mainWidget);
+		thumb->show();
 		thumbViews[thumbIndex] = thumb;
 		fix = true;
 	}
 	if (fix) {
 		thumb->move((FRAME_WIDTH + SPACE) * (index + activeScene + 1), 0);
 		thumb->setNumber(index);
-		if (facade->getNumberOfSounds(activeScene, index) != 0) {
-			thumb->setHasSounds(true);
-		}
+		thumb->setHasSounds(facade->getNumberOfSounds(activeScene, index));
 		thumb->setSelected(0 <= activeFrame
 				&& ((activeFrame <= index && index <= selectionFrame)
 					|| (selectionFrame <= index && index <= activeFrame)));
