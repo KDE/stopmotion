@@ -227,15 +227,14 @@ void FrameBar::resync() {
 	clear();
 	DomainFacade* facade = DomainFacade::getFacade();
 	int sceneCount = facade->getNumberOfScenes();
-	if (sceneCount <= activeScene) {
-		activeScene = -1;
-		activeSceneSize = 0;
-	}
-	if (0 <= activeScene)
-		activeSceneSize = facade->getSceneSize(activeScene);
+	int scene = sceneCount <= activeScene? -1 : activeScene;
+	activeScene = -1;
+	int sceneSize = 0 <= scene? facade->getSceneSize(scene) : 0;
 
-	std::vector<ThumbView*>::size_type thumbCount = sceneCount + activeSceneSize;
+	std::vector<ThumbView*>::size_type thumbCount = sceneCount + sceneSize;
 	thumbViews.insert(thumbViews.begin(), thumbCount, 0);
+	activeScene = scene;
+	activeSceneSize = sceneSize;
 	for (int i = 0; i != sceneCount; ++i) {
 		getSceneThumb(i, true);
 	}

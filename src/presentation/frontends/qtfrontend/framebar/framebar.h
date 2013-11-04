@@ -384,13 +384,35 @@ private:
 	 * Sends an {@c updateNewActiveFrame} to the observer, if appropriate.
 	 */
 	void updateObserver();
+	/** Sets the size of the frame bar to accomodate all the thumbnails. */
 	void fixSize();
+	/** Deletes all the thumbnails. */
 	void clear();
+	/**
+	 * Resynchronizes the thumbnails with the domain facade, and puts the
+	 * active frame, active scene and selection frame within bounds.
+	 */
 	void resync();
+	/**
+	 * Deletes the specified frames from the active scene.
+	 */
 	void deleteFrames(int fromFrame, int frameCount);
+	/**
+	 * Sets {@c activeScene} to -1, deleting all the frame thumbnails in the
+	 * previously-set active scene and closing the scene thumbnail.
+	 */
 	void closeActiveScene();
+	/**
+	 * Inserts frames into the active scene.
+	 */
 	void insertFrames(int index, int numFrames);
+	/**
+	 * Sets the current selection.
+	 */
 	void setActiveFrameAndSelection(int af, int sf);
+	/**
+	 * Scrolls the framebar to include the currently active frame.
+	 */
 	void doScroll();
 };
 
