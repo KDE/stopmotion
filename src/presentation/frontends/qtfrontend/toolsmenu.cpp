@@ -47,6 +47,7 @@
 #include <QMessageBox>
 #include <QPixmap>
 #include <QLabel>
+#include <QTimer>
 
 
 ToolsMenu::ToolsMenu( RunAnimationHandler *runAnimationHandler, ModelHandler *modelHandler,

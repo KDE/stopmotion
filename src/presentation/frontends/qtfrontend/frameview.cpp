@@ -56,11 +56,11 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 	isPlayingVideo = false;
 	widthConst  = 4;
 	heightConst = 3;
-	mode = 0;
+	mode = imageModeMix;
 	this->playbackSpeed = PreferencesTool::get()->getPreference("fps",
 			playbackSpeed);
-	activeScene = 0;
-	activeFrame = 0;
+	activeScene = -1;
+	activeFrame = -1;
 	mixCount = 2;
 
 	connect(&grabTimer, SIGNAL(timeout()), this, SLOT(redraw()));
@@ -191,50 +191,46 @@ void FrameView::paintEvent(QPaintEvent *) {
 			dst.h = videoSurface->h;
 			SDL_BlitSurface(videoSurface, 0, screen, &dst);
 
-			if (isPlayingVideo) {
+			if (isPlayingVideo && 0 <= activeScene) {
 				switch (mode) {
+				case 0:
 					// Image mixing
-					case 0:
-					{
-						int firstFrame = std::max(activeFrame - mixCount, 0);
-						for (int i = firstFrame; i < activeFrame; ++i) {
-							const char* path = anim->getImagePath(
-									activeScene, i);
-							frameSurface = imageCache.get(path);
-							if (frameSurface != 0) {
-								SDL_Rect dst2;
-								dst2.x = (screen->w - frameSurface->w) >> 1;
-								dst2.y = (screen->h - frameSurface->h) >> 1;
-								dst2.w = frameSurface->w;
-								dst2.h = frameSurface->h;
-								SDL_SetAlpha(frameSurface, SDL_SRCALPHA,
-										alphaLut[i]);
-								SDL_BlitSurface(frameSurface, 0, screen, &dst2);
-							}
+					for (int i = std::max(0, activeFrame - mixCount + 1);
+							i <= activeFrame; ++i) {
+						const char* path = anim->getImagePath(
+								activeScene, i);
+						frameSurface = imageCache.get(path);
+						if (frameSurface != 0) {
+							SDL_Rect dst2;
+							dst2.x = (screen->w - frameSurface->w) >> 1;
+							dst2.y = (screen->h - frameSurface->h) >> 1;
+							dst2.w = frameSurface->w;
+							dst2.h = frameSurface->h;
+							SDL_SetAlpha(frameSurface, SDL_SRCALPHA,
+									alphaLut[i]);
+							SDL_BlitSurface(frameSurface, 0, screen, &dst2);
 						}
-						break;
 					}
+					break;
+				case 1:
 					// Image differentiating
-					case 1:
-					{
-						if (activeFrame == 0)
-							SDL_BlitSurface(videoSurface, 0, screen, &dst);
-						else if (activeFrame > 0) {
-							const char* path = anim->getImagePath(activeScene,
-									activeFrame - 1);
-							SDL_Surface *last = imageCache.get(path);
-							SDL_Surface *tmp = differentiateSurfaces(
-									videoSurface, last);
-							SDL_Rect dst;
-							dst.x = (screen->w - tmp->w) >> 1;
-							dst.y = (screen->h - tmp->h) >> 1;
-							dst.w = tmp->w;
-							dst.h = tmp->h;
-							SDL_BlitSurface(tmp, 0, screen, &dst);
-							SDL_FreeSurface(tmp);
-						}
-						break;
+					if (activeFrame == 0)
+						SDL_BlitSurface(videoSurface, 0, screen, &dst);
+					else if (0 <= activeFrame) {
+						const char* path = anim->getImagePath(activeScene,
+								activeFrame);
+						SDL_Surface *last = imageCache.get(path);
+						SDL_Surface *tmp = differentiateSurfaces(
+								videoSurface, last);
+						SDL_Rect dst;
+						dst.x = (screen->w - tmp->w) >> 1;
+						dst.y = (screen->h - tmp->h) >> 1;
+						dst.w = tmp->w;
+						dst.h = tmp->h;
+						SDL_BlitSurface(tmp, 0, screen, &dst);
+						SDL_FreeSurface(tmp);
 					}
+					break;
 				}
 			}
 		}
@@ -243,12 +239,12 @@ void FrameView::paintEvent(QPaintEvent *) {
 }
 
 
-void FrameView::setActiveFrame(int sceneNumber, int frameNumber)
-{
+void FrameView::setActiveFrame(int sceneNumber, int frameNumber) {
 	activeScene = sceneNumber;
 	activeFrame = frameNumber;
 	Logger::get().logDebug("Setting new active frame in FrameView");
-	const char *fileName = facade->getImagePath(sceneNumber, frameNumber);
+	const char *fileName = 0 <= sceneNumber && 0 <=frameNumber?
+			facade->getImagePath(sceneNumber, frameNumber) : 0;
 
 	if (videoSurface) {
 		SDL_FreeSurface(videoSurface);
@@ -467,26 +463,22 @@ void FrameView::nextPlayBack() {
 }
 
 
-bool FrameView::setViewMode(int mode)
-{
-	// Going into playback mode.
-	if (mode == 2 && this->mode != 2) {
+bool FrameView::setViewMode(ImageMode mode) {
+	if (mode == this->mode)
+		return true;
+	if (mode == imageModePlayback) {
 		if ( grabber->isGrabberProcess() ) {
 			grabTimer.stop();
 			playbackTimer.start(1000/playbackSpeed);
-		}
-		else {
+		} else {
 			return false;
 		}
-	}
-	// Going out of playback mode.
-	else if (mode != 2 && this->mode == 2) {
+	} else if (mode != imageModePlayback) {
 		if ( grabber->isGrabberProcess() ) {
 			playbackTimer.stop();
 			grabTimer.start(150);
 		}
 	}
-
 	this->mode = mode;
 	return true;
 }

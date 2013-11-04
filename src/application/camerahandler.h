@@ -21,14 +21,15 @@
 #define CAMERAHANDLER_H
 
 #include "src/config.h"
-#include "src/presentation/frontends/qtfrontend/frameview.h"
-#include "src/application/modelhandler.h"
 
 #include <QObject>
-#include <QPushButton>
-#include <QStatusBar>
-#include <QTimer>
 
+class FrameView;
+class ModelHandler;
+
+class QPushButton;
+class QStatusBar;
+class QTimer;
 
 /**
  *

@@ -50,6 +50,11 @@ class FrameView : public QWidget, public ActiveFrameObserver
 {
 	Q_OBJECT
 public:
+	enum ImageMode {
+		imageModeMix,
+		imageModeDiff,
+		imageModePlayback
+	};
 	/**
 	* Creates and initializes the frameview.
 	* @param parent the parent widget.
@@ -104,7 +109,7 @@ public:
 	 *             2: Playback\n
 	 * @return true if the mode was succesfully changed
 	 */
-	bool setViewMode(int mode);
+	bool setViewMode(ImageMode mode);
 
 	void setMixCount(int mixCount);
 
@@ -158,7 +163,7 @@ private:
 	bool isPlayingVideo;
 
 	int widthConst, heightConst;
-	int mode;
+	ImageMode mode;
 	int playbackSpeed;
 	int activeScene;
 	int activeFrame;

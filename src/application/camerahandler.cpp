@@ -23,7 +23,12 @@
 #include "src/foundation/preferencestool.h"
 #include "graphics/icons/cameraoff.xpm"
 #include "graphics/icons/cameraon.xpm"
+#include "src/application/modelhandler.h"
+#include "src/presentation/frontends/qtfrontend/frameview.h"
 
+#include <QPushButton>
+#include <QStatusBar>
+#include <QTimer>
 #include <QImage>
 #include <QInputDialog>
 #include <QWhatsThis>
@@ -69,7 +74,7 @@ void CameraHandler::setCameraButton( QPushButton *cameraButton )
 
 bool CameraHandler::setViewMode(int mode)
 {
-	return frameView->setViewMode(mode);
+	return frameView->setViewMode((FrameView::ImageMode) mode);
 }
 
 
