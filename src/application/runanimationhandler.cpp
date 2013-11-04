@@ -94,7 +94,7 @@ void RunAnimationHandler::runAnimation() {
 		sceneNr = selection->getActiveScene();
 		startFrame = selection->getActiveFrame();
 		if (selection->isSelecting()) {
-			int sel = selection->getSelectionThumb();
+			int sel = selection->getSelectionAnchor();
 			if (startFrame < sel) {
 				endFrame = sel;
 			} else {

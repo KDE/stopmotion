@@ -75,6 +75,7 @@ public:
 	const char* setSoundName(int scene, int frame, int soundNumber,
 			const char* soundName);
 	Sound* removeSound(int scene, int frame, int soundNumber);
+	void resync();
 	void accept(FileNameVisitor& v) const;
 };
 

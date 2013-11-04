@@ -163,7 +163,7 @@ public:
 	 * @return The anchor of the current selection, or returns the same value
 	 * as {@ref getActiveFrame} if there is no selection.
 	 */
-	int getSelectionThumb() const;
+	int getSelectionAnchor() const;
 
 	/**
 	 * Returns the current active frame.

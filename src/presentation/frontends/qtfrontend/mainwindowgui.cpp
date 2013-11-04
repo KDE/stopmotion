@@ -463,6 +463,7 @@ void MainWindowGUI::makeViews(QHBoxLayout *layout)
 	connect(cameraHandler, SIGNAL(capturedFrame()), this, SLOT(activateMenuOptions()));
 
 	cameraHandler->setFrameView(frameView);
+	frameBar->setObserver(frameView);
 }
 
 

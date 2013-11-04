@@ -84,7 +84,7 @@ public:
 	/**
 	 * Attempts to re-synch the UI after an error.
 	 */
-	void resynch(std::exception& e);
+	void resync(std::exception& e);
 
 	/**
 	 * Inserts new frames into the animation model.

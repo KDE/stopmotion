@@ -350,6 +350,22 @@ void ObserverNotifier::registerFrontend(Frontend* fe) {
 	frontend = fe;
 }
 
+class AnimationResynchronizer : public ObservableOperation {
+public:
+	AnimationResynchronizer() {
+	}
+	void op(AnimationImpl&) {
+	}
+	void update(Observer& ob) {
+		ob.resync();
+	}
+};
+
+void ObserverNotifier::resync() {
+	AnimationResynchronizer resyncher;
+	doOp(resyncher);
+}
+
 void ObserverNotifier::accept(FileNameVisitor& v) const {
 	del->accept(v);
 }

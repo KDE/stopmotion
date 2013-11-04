@@ -457,11 +457,8 @@ void Animation::clearHistory() {
 	executor->clearHistory();
 }
 
-void Animation::resynch(std::exception& e) {
-	//TODO: instead of reporting this error, we should attempt to recover.
-	// This will probably mean changing the observers to include a reset
-	// method for putting it into a safe state, then a recover state to
-	// re-initialize the UI.
+void Animation::resync(std::exception& e) {
 	if (frontend)
 		frontend->reportError(e.what(), 1);
+	scenes->resync();
 }

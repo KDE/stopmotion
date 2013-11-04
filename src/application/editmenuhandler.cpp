@@ -74,7 +74,7 @@ void EditMenuHandler::copy()
 {
 	QList<QUrl> urls;
 
-	int selectionFrame = frameBar->getSelectionThumb();
+	int selectionFrame = frameBar->getSelectionAnchor();
 	int activeScene = frameBar->getActiveScene();
 	int activeFrame = frameBar->getActiveFrame();
 	int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;

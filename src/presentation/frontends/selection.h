@@ -39,7 +39,7 @@ public:
 	 * @return The anchor of the current selection, or returns the same value
 	 * as {@ref getActiveFrame} if there is no selection.
 	 */
-	virtual int getSelectionThumb() const = 0;
+	virtual int getSelectionAnchor() const = 0;
 
 	/**
 	 * Returns the current active frame.

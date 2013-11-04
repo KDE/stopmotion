@@ -139,7 +139,7 @@ void ModelHandler::addFrame( const QString &fileName ) {
 
 void ModelHandler::removeFrames() {
 	if (removeFramesButton->isEnabled()) {
-		int selectionFrame = frameBar->getSelectionThumb();
+		int selectionFrame = frameBar->getSelectionAnchor();
 		int activeScene = frameBar->getActiveScene();
 		int activeFrame = frameBar->getActiveFrame();
 		int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;

@@ -54,7 +54,7 @@ void FrameThumbView::mousePressEvent( QMouseEvent * e )
 {
 	if (e->button() == Qt::LeftButton) {
 		if ( !frameBar->isSelecting() ) {
-			int selectionFrame = frameBar->getSelectionThumb();
+			int selectionFrame = frameBar->getSelectionAnchor();
 			int activeScene = frameBar->getActiveScene();
 			int activeFrame = frameBar->getActiveFrame();
 			int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
@@ -80,7 +80,7 @@ void FrameThumbView::mouseReleaseEvent( QMouseEvent * e )
 	Logger::get().logDebug("Releasing mouse button inside thumbview");
 	if (e->button() == Qt::LeftButton) {
 		if ( !frameBar->isSelecting() ) {
-			int selectionFrame = frameBar->getSelectionThumb();
+			int selectionFrame = frameBar->getSelectionAnchor();
 			int activeScene = frameBar->getActiveScene();
 			int activeFrame = frameBar->getActiveFrame();
 			int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
@@ -141,7 +141,7 @@ void FrameThumbView::startDrag()
 	
 	QList<QUrl> urls;
 	
-	int selectionFrame = frameBar->getSelectionThumb();
+	int selectionFrame = frameBar->getSelectionAnchor();
 	int activeScene = frameBar->getActiveScene();
 	int activeFrame = frameBar->getActiveFrame();
 	int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
@@ -205,7 +205,7 @@ void FrameThumbView::contentsDropped(QDropEvent * event)
 	int activeScene = frameBar->getActiveScene();
 	if ( (event->source() != 0) && (frameBar->getMovingScene() == -1) ) {
 		Logger::get().logDebug("Moving picture");
-		int selectionFrame = frameBar->getSelectionThumb();
+		int selectionFrame = frameBar->getSelectionAnchor();
 		int activeFrame = frameBar->getActiveFrame();
 		int highend = (selectionFrame > activeFrame)?
 				selectionFrame : activeFrame;

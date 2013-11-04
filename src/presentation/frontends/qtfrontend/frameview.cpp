@@ -71,7 +71,6 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 	setAttribute(Qt::WA_NoSystemBackground);
 	setObjectName(name);
 
-	facade->attach(this);
 	Logger::get().logDebug("FrameView is attatched to the model and the model to FrameView");
 }
 
@@ -122,15 +121,6 @@ void FrameView::initCompleted()
 {
 	emit cameraReady();
 }
-
-
-void FrameView::updateAdd(int scene, int index, int numFrames) {
-}
-
-
-void FrameView::updateRemove(int, int, int) {}
-void FrameView::updateMove(int, int, int, int, int) {}
-
 
 void FrameView::updateNewActiveFrame(int sceneNumber, int frameNumber)
 {
@@ -276,26 +266,6 @@ void FrameView::setActiveFrame(int sceneNumber, int frameNumber)
 	}
 	this->update();
 }
-
-
-void FrameView::updateClear()
-{
-	SDL_FreeSurface(videoSurface);
-	videoSurface = 0;
-	this->update();
-}
-
-
-void FrameView::updateNewScene(int) {}
-void FrameView::updateRemoveScene(int) {}
-
-
-void FrameView::updateAnimationChanged(int sceneNumber, int frameNumber) {
-	setActiveFrame(sceneNumber, frameNumber);
-}
-
-
-void FrameView::updateMoveScene(int, int) {}
 
 
 // TODO: Refactor this terrible ugly method. This one is really bad!!

@@ -46,7 +46,7 @@ class DomainFacade;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class FrameView : public QWidget, public Observer
+class FrameView : public QWidget, public ActiveFrameObserver
 {
 	Q_OBJECT
 public:
@@ -77,64 +77,14 @@ public:
 	void initCompleted();
 
 	/**
-	 * Receives notification when a frame is added.
-	 */
-	void updateAdd(int, int, int);
-
-	/**
-	 * Receives notification when one or more frames are deleted.
-	 */
-	void updateRemove(int, int, int);
-
-	/**
-	 * Receives notification when one or more frames are moved.
-	 *
-	 */
-	void updateMove(int fromScene, int fromFrame, int count,
-			int toScene, int toFrame);
-
-	/**
 	 * Receives notification when a new frame is selected.
 	 */
 	void updateNewActiveFrame(int scene, int frame);
 
 	/**
-	 * Receives notification when the model is erased.
-	 */
-	void updateClear();
-
-	/**
 	 * Receives notification when a frame is to be played.
 	 */
 	void updatePlayFrame(int scene, int frame);
-
-	/**
-	 * Receives notification when a new scene is added to the
-	 * model.
-	 * @param index the index of the new scene.
-	 */
-	void updateNewScene(int index);
-
-	/**
-	 * Function to recueve notification when a scene is removed from
-	 * the model.
-	 * @param sceneNumber the scene which has been removed from the model.
-	 */
-	void updateRemoveScene(int sceneNumber);
-
-	/**
-	 * Function which recieve notification when a scene in the animation
-	 * has been moved.
-	 * @param sceneNumber the scene which have been moved.
-	 * @param movePosition the position the scene has been moved to.
-	 */
-	void updateMoveScene(int sceneNumber, int movePosition);
-
-	/**
-	 * Updates the frameview when an external program has altered the disk files.
-	 * @param frameNumber the frame whose disk representation has been changed.
-	 */
-	void updateAnimationChanged(int activeScene, int frameNumber);
 
 	/**
 	 * Turns on the webcamera/video import mode.

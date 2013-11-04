@@ -29,7 +29,7 @@ const char* DomainFacade::getImagePath(int scene, int frame) {
 	try {
 		return animationModel->getImagePath(scene, frame);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 		return 0;
 	}
 }
@@ -38,7 +38,7 @@ int DomainFacade::soundCount(int scene, int frame) const {
 	try {
 		return animationModel->soundCount(scene, frame);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 		return 0;
 	}
 }
@@ -89,7 +89,7 @@ void DomainFacade::addFrames(int scene, int frame,
 		Logger::get().logDebug("Adding frames in the domainfacade");
 		animationModel->addFrames(scene, frame, frameNames);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 	}
 }
 
@@ -99,7 +99,7 @@ void DomainFacade::removeFrames(int scene, int frame, int count) {
 		Logger::get().logDebug("Removing frames in the domainfacade");
 		animationModel->removeFrames(scene, frame, count);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 	}
 }
 
@@ -110,7 +110,7 @@ void DomainFacade::moveFrames(int fromScene, int fromFrame,
 		animationModel->moveFrames(fromScene, fromFrame, count,
 				toScene, toFrame);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 	}
 }
 
@@ -120,7 +120,7 @@ int DomainFacade::addSound(int scene, int frame, const char *filename) {
 		Logger::get().logDebug("Adding sound in domainfacade");
 		return animationModel->addSound(scene, frame, filename);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 		return -3;
 	}
 }
@@ -131,7 +131,7 @@ void DomainFacade::removeSound(int sceneNumber, int frameNumber,
 	try {
 		animationModel->removeSound(sceneNumber, frameNumber, soundNumber);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 	}
 }
 
@@ -142,7 +142,7 @@ void DomainFacade::setSoundName(int sceneNumber, int frameNumber,
 		animationModel->setSoundName(sceneNumber, frameNumber, soundNumber,
 				soundName);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 	}
 }
 
@@ -177,7 +177,7 @@ int DomainFacade::getSceneSize(int sceneNumber) const {
 	try {
 		return animationModel->frameCount(sceneNumber);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 		return 0;
 	}
 }
@@ -192,7 +192,7 @@ int DomainFacade::getNumberOfSounds(int scene, int frame) const {
 	try {
 		return animationModel->soundCount(scene, frame);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 		return 0;
 	}
 }
@@ -225,7 +225,7 @@ void DomainFacade::newScene(int index) {
 	try {
 		animationModel->newScene(index);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 	}
 }
 
@@ -234,7 +234,7 @@ void DomainFacade::removeScene(int sceneNumber) {
 	try {
 		animationModel->removeScene(sceneNumber);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 	}
 }
 
@@ -243,7 +243,7 @@ void DomainFacade::moveScene(int sceneNumber, int movePosition) {
 	try {
 		animationModel->moveScene(sceneNumber, movePosition);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 	}
 }
 
@@ -283,7 +283,7 @@ const char* DomainFacade::getSoundName(int sceneNumber, int frameNumber,
 		return animationModel->getSoundName(sceneNumber, frameNumber,
 				soundNumber);
 	} catch(std::exception& e) {
-		animationModel->resynch(e);
+		animationModel->resync(e);
 		return 0;
 	}
 }

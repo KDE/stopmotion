@@ -241,6 +241,8 @@ void FrameBar::resync() {
 	for (int i = 0; i != activeSceneSize; ++i) {
 		getFrameThumb(i, true);
 	}
+	if (activeFrameObserver)
+		activeFrameObserver->updateNewActiveFrame(activeScene, activeFrame);
 	fixSize();
 }
 
@@ -271,6 +273,8 @@ void FrameBar::addFrames(int index, int numFrames) {
 	insertFrames(index, numFrames);
 	if (index <= activeFrame)
 		activeFrame += numFrames;
+	if (index <= selectionFrame)
+		selectionFrame += numFrames;
 	fixSize();
 }
 
@@ -284,14 +288,16 @@ void FrameBar::deleteFrames(int fromFrame, int frameCount) {
 	thumbViews.erase(start, end);
 	activeSceneSize -= frameCount;
 	if (fromFrame <= activeFrame) {
-		if (activeFrame < fromFrame + frameCount) {
-			if (activeSceneSize <= fromFrame)
-				activeFrame = activeSceneSize - 1;
-			else
-				activeFrame = fromFrame;
-		} else {
+		if (fromFrame + frameCount <= activeFrame)
 			activeFrame -= frameCount;
-		}
+		else
+			activeFrame = fromFrame - 1;
+	}
+	if (fromFrame <= selectionFrame) {
+		if (fromFrame + frameCount <= selectionFrame)
+			selectionFrame -= frameCount;
+		else
+			selectionFrame = fromFrame - 1;
 	}
 }
 
@@ -412,14 +418,16 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 			getFrameThumb(i, true);
 		}
 	}
+	if (activeFrameObserver)
+		activeFrameObserver->updateNewActiveFrame(activeScene, activeFrame);
 }
 
 void FrameBar::setSelection(int sf) {
 	setActiveFrameAndSelection(activeFrame, sf);
 }
 
-int FrameBar::getSelectionThumb() const {
-	return selectionFrame < 0? -1 : selectionFrame + activeScene + 1;
+int FrameBar::getSelectionAnchor() const {
+	return selectionFrame;
 }
 
 void FrameBar::setPreferencesMenu(FramePreferencesMenu* preferencesMenu) {

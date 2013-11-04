@@ -108,6 +108,12 @@ public:
 	 * is assumed).
 	 */
 	virtual void updateAnimationChanged(int activeScene, int frameNumber) = 0;
+
+	/**
+	 * Resynchronizes the observer with the state of the animation. This is
+	 * called whenever the animation is called with out-of-range arguments.
+	 */
+	virtual void resync() = 0;
 };
 
 /**
