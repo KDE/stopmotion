@@ -71,7 +71,7 @@ public:
 	 * on the current state of the model being altered.
 	 * @param max The maximum permissible value that could be returned based
 	 * on the current state of the model being altered.
-	 * @note @c min and @c max are used by @ref TestUndo in order to create
+	 * @note @a min and @a max are used by @ref TestUndo in order to create
 	 * commands that are appropriate for testing. They are also used to assert
 	 * that the values passed to @ref Executor::Execute are within range.
 	 */
@@ -109,8 +109,8 @@ public:
 
 /**
  * Creates a command that does nothing. This can be used whenever a command's
- * @c execute function discovers that it does nothing, and it wants to return
- * an inverse that also does nothing.
+ * {@ref Command::execute} function discovers that it does nothing, and it
+ * wants to return an inverse that also does nothing.
  * @return New command that does nothing. Ownership is passed.
  */
 Command* createNullCommand();
@@ -148,8 +148,8 @@ public:
 	 * after a thrown exception will be on the Redo stack. Ownership of
 	 * the command is passed.
 	 * @param c The command to be executed.
-	 * @param logger @c commandComplete will be called on @c logger if the
-	 * execution is successful.
+	 * @param logger {@ref CommandLogger::commandComplete} will be called on
+	 * @a logger if the execution is successful.
 	 */
 	void execute(Command& c, CommandLogger* logger);
 	/**

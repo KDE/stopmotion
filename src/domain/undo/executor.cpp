@@ -116,9 +116,9 @@ public:
 	 * Gets the next character from the input buffer, as long as it isn't an
 	 * end-of-line character.
 	 * @param out Stores the character output, only if @c isNotEol is returned.
-	 * @return @c isNotEol on success; in this case @c out will be set.
+	 * @return @c isNotEol on success; in this case @a out will be set.
 	 * @c isEol if we are at the end of the buffer or the next character is a
-	 * line-termination character, in which case @c out will not be set.
+	 * line-termination character, in which case @a out will not be set.
 	 */
 	IsEol getCharFromLine(char& out) {
 		if (p == end)
@@ -215,9 +215,9 @@ public:
 	 * Consumes a decimal digit, if one is next in the buffer. Does not consume
 	 * non-digit characters.
 	 * @param digit The digit output, if @c parseSuceeded is returned.
-	 * @return @c parseSucceeded on success; in this case @c digit will be set.
+	 * @return @c parseSucceeded on success; in this case @a digit will be set.
 	 * @c parseFailed if the next character is not a digit. In this case
-	 * @c digit will not be set and no characters will have been consumed.
+	 * @a digit will not be set and no characters will have been consumed.
 	 */
 	ParseSucceeded getDigit(int32_t& digit) {
 		if (p == end)
@@ -229,7 +229,7 @@ public:
 		return parseSucceeded;
 	}
 	/**
-	 * As for @c GetDigit but '8' and '9' are not considered digits and are
+	 * As for @a GetDigit but '8' and '9' are not considered digits and are
 	 * not consumed.
 	 */
 	ParseSucceeded getOctalDigit(int32_t& digit) {
@@ -244,11 +244,11 @@ public:
 	/**
 	 * Consume a number, possibly negative (although '+' is not consumed and
 	 * causes a parse failure).
-	 * @param @c out The parsed number; only if @c parseSucceeded is returned.
+	 * @param @a out The parsed number; only if @c parseSucceeded is returned.
 	 * @return @c parseSucceeded if the next characters were possibly a '-',
 	 * a string of numbers then an argument delimiter. All except the
-	 * delimiter are consumed. @c out is set to the parsed number. In other
-	 * cases, no characters are consumed, @c out is not set and @c parseFailed
+	 * delimiter are consumed. @a out is set to the parsed number. In other
+	 * cases, no characters are consumed, @a out is not set and @c parseFailed
 	 * is returned.
 	 */
 	ParseSucceeded getInteger(int32_t& out) {
@@ -284,8 +284,8 @@ public:
 	 * be used for ASCII codes in octal-- these must not be followed by another
 	 * digit (if present, this should be quoted in octal as well).
 	 * @param out Returns the parsed and decoded string.
-	 * @return @c parseSuccessful on success. @c out is filled.
-	 * @c parseFailed on failure. Nothing is consumed. Some of @c out may
+	 * @return @c parseSuccessful on success. @a out is filled.
+	 * @c parseFailed on failure. Nothing is consumed. Some of @a out may
 	 * have been set.
 	 */
 	ParseSucceeded getString(std::string& out) {
@@ -334,7 +334,7 @@ public:
 	/**
 	 * Reads an identifier.
 	 * @param out Returns the parsed and decoded string.
-	 * @return @c parseSuccessful on success. @c out is filled.
+	 * @return @c parseSuccessful on success. @a out is filled.
 	 * @c parseFailed on failure. No non-whitespace characters will have
 	 * been consumed.
 	 */
@@ -556,7 +556,7 @@ public:
 	 * @param a The va_list, which must have had va_start called on it.
 	 * va_end should not be called after use.
 	 * @param name The name of the command being constructed (i.e.
-	 * the @c name parameter of @c Execute)
+	 * the @a name parameter of {@ref CommandExecutor::execute})
 	 * @param commandLogger The logger that will receive a string
 	 * representation of the command and its parameters. Ownership is
 	 * not passed.

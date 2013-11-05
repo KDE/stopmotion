@@ -103,7 +103,7 @@ public:
 	 * @param count The number of frames to move; all frames moved must be
 	 * within the same scene.
 	 * @param fromScene The scene to move the frames to.
-	 * @param toFrame The position within the scene {@c toScene} to which
+	 * @param toFrame The position within the scene {@a toScene} to which
 	 * the frames should be moved.
 	 */
 	void moveFrames(int fromScene, int fromFrame,
@@ -154,7 +154,7 @@ public:
 	/**
 	 * Returns the name of a sound attached to a frame in the active scene.
 	 * @param sceneNumber The scene containing the frame to query.
-	 * @param frameNumber The frame within the scene {@c sceneNumber}.
+	 * @param frameNumber The frame within the scene {@a sceneNumber}.
 	 * @param The number of the sound whose name is to be returned.
 	 * @return The sound name. Ownership is not returned.
 	 */
@@ -165,8 +165,8 @@ public:
 	 * Returns the number of sounds attached to the frame specified.
 	 * @param scene The scene that the frame belongs to.
 	 * @param frame The frame within that scene.
-	 * @return The number of sounds attached to frame number {@c frame} of
-	 * scene number {@c scene}.
+	 * @return The number of sounds attached to frame number {@a frame} of
+	 * scene number {@a scene}.
 	 */
 	int soundCount(int scene, int frame) const;
 

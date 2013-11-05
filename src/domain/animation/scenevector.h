@@ -52,7 +52,7 @@ public:
 	/**
 	 * Adds a scene to the animation.
 	 * @param where Where in the sequence of scenes to insert this one. Must be
-	 * between 0 and @c SceneCount() inclusive.
+	 * between 0 and {@c SceneCount()} inclusive.
 	 * @param newScene The scene to be inserted; ownership is passed.
 	 */
 	void addScene(int where, Scene* newScene);
@@ -78,9 +78,9 @@ public:
 	/**
 	 * Moves a scene.
 	 * @param from The scene number to move. Must be between 0 and
-	 * @c SceneCount() inclusive.
+	 * {@c SceneCount()} inclusive.
 	 * @param from The number the scene is to become. Must be between 0 and
-	 * @c SceneCount() inclusive.
+	 * {@c SceneCount()} inclusive.
 	 */
 	void moveScene(int from, int to);
 	/**
@@ -90,15 +90,15 @@ public:
 	 */
 	const Scene* getScene(int which) const;
 	/**
-	 * Returns the number of frames in scene number @c scene.
+	 * Returns the number of frames in scene number @a scene.
 	 * @param scene The number of the scene to query.
-	 * @return The number of frames in scene number @c scene.
+	 * @return The number of frames in scene number @a scene.
 	 */
 	int frameCount(int scene) const;
 	/**
 	 * Adds a frame to the animation.
 	 * @param scene The number of the scene to add the frames to.
-	 * @param where The number of the frame within scene number @c scene to
+	 * @param where The number of the frame within scene number @a scene to
 	 * add the frame.
 	 * @param frame The frame to add. Ownership is passed.
 	 */
@@ -112,14 +112,14 @@ public:
 	 */
 	void addFrames(int scene, int where, const std::vector<Frame*>& frames);
 	/**
-	 * Preallocates enough memory for @ref AddFrames to add @c count frames
+	 * Preallocates enough memory for @ref AddFrames to add @a count frames
 	 * to scene number @scene.
 	 */
 	void preallocateFrames(int scene, int count);
 	/**
 	 * Removes a frame from the animation.
 	 * @param scene The scene to remove the frame from.
-	 * @param frame The number of the first frame within scene @c scene
+	 * @param frame The number of the first frame within scene @a scene
 	 * to remove.
 	 * @return The removed frame; ownership is returned.
 	 * @throws Will not throw.
@@ -132,7 +132,7 @@ public:
 	 * @param count The number of frames to remove.
 	 * @param [out] out The removed frames will be added to the end of this
 	 * vector. Ownership is returned.
-	 * @note Upon failure, {@c out} and the animation will both be untouched.
+	 * @note Upon failure, {@a out} and the animation will both be untouched.
 	 * @pre The scene must have at least @code{.cpp} frame + count @endcode
 	 * frames.
 	 */
@@ -140,24 +140,24 @@ public:
 	/**
 	 * Moves frames.
 	 * @param fromScene The number of the scene from which to move frames.
-	 * @param fromFrame The number of the frame within scene @c fromScene from
+	 * @param fromFrame The number of the frame within scene @a fromScene from
 	 * which frames should be moved.
 	 * @param frameCount The number of frames to move. All the frames must be
 	 * from the same scene.
 	 * @param toScene The number of the scene to which to move the frames.
-	 * @param toFrame The number of the frame within scene @c toScene to which
+	 * @param toFrame The number of the frame within scene @a toScene to which
 	 * the frames should be moved.
 	 */
 	void moveFrames(int fromScene, int fromFrame, int frameCount,
 			int toScene, int toFrame);
 	/**
-	 * Replaces the image of the frame at index {@c frameNumber} of scene
-	 * {@c sceneNumber}.
+	 * Replaces the image of the frame at index {@a frameNumber} of scene
+	 * {@a sceneNumber}.
 	 * @param sceneNumber The index of the scene containing the frame to alter.
 	 * @param frameNumber The index of the frame to alter.
 	 * @param [in,out] The image to swap with. On exit, the frame at index
-	 * {@c frameNumber} will have the image formerly held by
-	 * {@c otherImage} and {@c otherImage} will have the image formerly held
+	 * {@a frameNumber} will have the image formerly held by
+	 * {@a otherImage} and {@a otherImage} will have the image formerly held
 	 * by the frame.
 	 */
 	void replaceImage(int sceneNumber, int frameNumber,
@@ -170,16 +170,16 @@ public:
 	 * Returns the number of sounds attached to a frame.
 	 * @param scene The number of the scene that contains the frame that you
 	 * need to examine.
-	 * @param frame The number of the frame from @c scene to examine.
-	 * @return The number of sounds attached to frame number @c frame of scene
-	 * @c scene.
+	 * @param frame The number of the frame from @a scene to examine.
+	 * @return The number of sounds attached to frame number @a frame of scene
+	 * @a scene.
 	 */
 	int soundCount(int scene, int frame) const;
 	/**
 	 * Adds a sound to a frame of animation.
 	 * @param scene The number of the scene containing the frame to add the
 	 * sound to.
-	 * @param frame The number of the frame within scene number @c scene to
+	 * @param frame The number of the frame within scene number @a scene to
 	 * add the sound to.
 	 * @param soundNumber The position of the sound to add. Must be between
 	 * 0 and @code{.cpp} SoundCount(scene, frame) @endcode inclusive.
@@ -190,10 +190,10 @@ public:
 	/**
 	 * changes the name of a sound of a frame.
 	 * @param scene The number of the scene containing the frame to change.
-	 * @param frame The number of the frame within scene number @scene
+	 * @param frame The number of the frame within scene number @a scene
 	 * containing the sound to be named.
-	 * @param soundNumber Which sound within frame number @frame of scene
-	 * number @scene to be replaced.
+	 * @param soundNumber Which sound within frame number @a frame of scene
+	 * number @a scene to be replaced.
 	 * @param soundName The new name of the sound to be added. Ownership
 	 * is passed; must have been created with {@c new char[]}.
 	 * @return The old name of the sound. Ownership is returned; must be
@@ -205,10 +205,10 @@ public:
 	/**
 	 * Removes a sound of a frame.
 	 * @param scene The number of the scene containing the frame to change.
-	 * @param frame The number of the frame within scene number @scene
+	 * @param frame The number of the frame within scene number @a scene
 	 * containing the sound to be changed.
-	 * @param soundNumber Which sound within frame number @frame of scene
-	 * number @scene to be removed.
+	 * @param soundNumber Which sound within frame number @a frame of scene
+	 * number @a scene to be removed.
 	 * @return The file name of the sound that is being removed. Ownership
 	 * is returned.
 	 * @throws Nothing.

@@ -60,14 +60,14 @@ public:
 	 */
 	WorkspaceFile(const char* extension, FreshFilename);
 	/**
-	 * Creates a WorkspaceFile referring to the same file as {@c t}.
+	 * Creates a WorkspaceFile referring to the same file as {@a t}.
 	 * @param t The file to set it to.
 	 */
 	WorkspaceFile(TemporaryWorkspaceFile& t);
 	~WorkspaceFile();
 	/**
-	 * Takes ownership of the file owned by @c t, thereby preventing it from
-	 * being deleted when @c t is destroyed. @c t is emptied by this operation
+	 * Takes ownership of the file owned by @a t, thereby preventing it from
+	 * being deleted when @a t is destroyed. @a t is emptied by this operation
 	 * and so cannot be used again. This operation will not fail.
 	 */
 	WorkspaceFile& operator=(TemporaryWorkspaceFile& t);
@@ -130,7 +130,7 @@ public:
 		alreadyAWorkspaceFile
 	};
 	/**
-	 * Copy file with path @c filename into the workspace directory
+	 * Copy file with path @a filename into the workspace directory
 	 * ({@c ~/.stopmotion/tmp}) unless it is already in this directory.
 	 * A freshly-copied file will be deleted on destruction unless a
 	 * @ref WorkspaceFile is constructed from it beforehand.
@@ -140,7 +140,7 @@ public:
 	 */
 	TemporaryWorkspaceFile(const char* filename);
 	/**
-	 * Copy file with path @c filename into the workspace directory,
+	 * Copy file with path @a filename into the workspace directory,
 	 * even if it is already in this directory. The file will be deleted on
 	 * destruction unless it has been assigned to a @ref WorkspaceFile
 	 * beforehand.

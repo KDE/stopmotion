@@ -66,7 +66,7 @@ public:
 	 * Gets a random nonnegative integer. For each possible return value n,
 	 * given that the return value is at least n, the probability that it is
 	 * greater than n is @code{.cpp} p/100 @endcode. In other words, pick a
-	 * high value of {@c p} to get mostly large results, a low value to get
+	 * high value of {@a p} to get mostly large results, a low value to get
 	 * mostly small results.
 	 * @param 100 times the probability of incrementing the result at each
 	 * stage. Must be between 1 and 99.

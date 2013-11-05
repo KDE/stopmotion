@@ -54,7 +54,7 @@ std::ostream& operator<<(std::ostream& s, WorkspacePath) {
  * file.
  * @param [out] path Will get a @code{.cpp} new char[] @endcode containing
  * the full path to the new file.
- * @param [out] namePart Will get a pointer into @c path that points to the
+ * @param [out] namePart Will get a pointer into @a path that points to the
  * basename part of the path.
  * @param [in] extension Characters that must come at the end of the filename,
  * for example ".jpg".

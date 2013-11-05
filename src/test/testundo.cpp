@@ -40,7 +40,7 @@ public:
 	}
 	/**
 	 * Create a logger that writes to a std::string and also passes writes
-	 * along to @c wrapped.
+	 * along to @a wrapped.
 	 * @param wrapped Ownership is not passed.
 	 * @param output The string to be logged to. Ownership is not passed.
 	 */

@@ -109,7 +109,7 @@ public:
 	 * @param count The number of frames to move; all frames moved must be
 	 * within the same scene.
 	 * @param fromScene The scene to move the frames to.
-	 * @param toFrame The position within the scene {@c toScene} to which
+	 * @param toFrame The position within the scene {@a toScene} to which
 	 * the frames should be moved.
 	 */
 	void moveFrames(int32_t fromScene, int32_t fromFrame,
@@ -118,8 +118,8 @@ public:
 	/**
 	 * Returns the path to the image file for the frame specified.
 	 * @param scene The scene to which the frame belongs.
-	 * @param frame The frame within scene {@c scene} to query.
-	 * @return The image path of frame number {@c frame} of scene {@c scene}.
+	 * @param frame The frame within scene {@a scene} to query.
+	 * @return The image path of frame number {@a frame} of scene {@a scene}.
 	 * Ownership is not returned.
 	 */
 	const char* getImagePath(int scene, int frame) const;
@@ -161,8 +161,8 @@ public:
 	 * @param scene The scene to which the frame belongs.
 	 * @param frame The frame to which the sound belongs.
 	 * @param soundNumber The index of the sound.
-	 * @return The name of sound indexed {@c soundNumber} of frame {@c frame}
-	 * of scene {@c scene}. Ownership is not returned.
+	 * @return The name of sound indexed {@a soundNumber} of frame {@a frame}
+	 * of scene {@a scene}. Ownership is not returned.
 	 */
 	const char* getSoundName(int scene, int frame, int soundNumber) const;
 

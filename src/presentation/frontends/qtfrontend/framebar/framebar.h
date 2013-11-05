@@ -381,7 +381,8 @@ private:
 	ThumbView* getSceneThumb(int index, bool fix = false);
 
 	/**
-	 * Sends an {@c updateNewActiveFrame} to the observer, if appropriate.
+	 * Sends an {@ref ActiveFrameObserver::updateNewActiveFrame} to the
+	 * observer, if appropriate.
 	 */
 	void updateObserver();
 	/** Sets the size of the frame bar to accomodate all the thumbnails. */
@@ -398,7 +399,7 @@ private:
 	 */
 	void deleteFrames(int fromFrame, int frameCount);
 	/**
-	 * Sets {@c activeScene} to -1, deleting all the frame thumbnails in the
+	 * Sets {@ref activeScene} to -1, deleting all the frame thumbnails in the
 	 * previously-set active scene and closing the scene thumbnail.
 	 */
 	void closeActiveScene();

@@ -90,7 +90,7 @@ public:
 	void cleanFrames(int fromFrame, int toFrame);
 
 	/**
-	 * Adds a frame at @c index. Will not fail if {@ref preallocateFrames}
+	 * Adds a frame at @a index. Will not fail if {@ref preallocateFrames}
 	 * has been called with the appropriate number beforehand.
 	 * @param f The frame to add.
 	 * @param index The index at which to add the frame. Must be between
@@ -106,18 +106,18 @@ public:
 	void addFrames(int where, const std::vector<Frame*>& fs);
 
 	/**
-	 * Reserves space for @c count more frames to be added without the risk of
+	 * Reserves space for @a count more frames to be added without the risk of
 	 * an exception being thrown.
 	 * @param count The number of frames that need to be added.
 	 */
 	void preallocateFrames(int count);
 
 	/**
-	 * Replaces the image of the frame at index {@c frameNumber}.
+	 * Replaces the image of the frame at index {@a frameNumber}.
 	 * @param frameNumber The index of the frame to alter.
 	 * @param [in,out] The image to swap with. On exit, the frame at index
-	 * {@c frameNumber} will have the image formerly held by
-	 * {@c otherImage} and {@c otherImage} will have the image formerly held
+	 * {@a frameNumber} will have the image formerly held by
+	 * {@a otherImage} and {@a otherImage} will have the image formerly held
 	 * by the frame.
 	 */
 	void replaceImage(int frameNumber, WorkspaceFile& otherImage);
@@ -130,7 +130,7 @@ public:
 
 	/**
 	 * Adds the sound in the file filename to the end of the sounds in the
-	 * frame with index {@c frameNumber}, giving it an arbitrary name.
+	 * frame with index {@a frameNumber}, giving it an arbitrary name.
 	 * @param filename The file that holds the sound.
 	 * @return zero on success, less than zero on failure;
 	 * -1 = file is not readable
@@ -165,7 +165,7 @@ public:
 	/**
 	 * Returns the number of sounds in the specified frame.
 	 * @param frameNumber Index of the frame.
-	 * @return the number of sounds in frame {@c frameNumber}.
+	 * @return the number of sounds in frame {@a frameNumber}.
 	 */
 	int getNumberOfSounds(int frameNumber) const;
 

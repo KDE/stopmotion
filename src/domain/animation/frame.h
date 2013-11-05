@@ -68,7 +68,7 @@ public:
 	void addSound(int index, Sound* sound);
 
 	/**
-	 * Allocates space for @c extra more calls to @ref addSound
+	 * Allocates space for @a extra more calls to @ref addSound
 	 * @param extra Number of slots to reserve.
 	 */
 	void preallocateSounds(int extra);
