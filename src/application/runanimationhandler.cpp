@@ -70,8 +70,16 @@ void RunAnimationHandler::toggleRunning() {
 
 void RunAnimationHandler::resumeAnimation() {
 	DomainFacade *f = DomainFacade::getFacade();
-	if (0 <= sceneNr && sceneNr < f->getNumberOfScenes()
-			&& f->getSceneSize(sceneNr) > 0) {
+	int sceneSize = f->getSceneSize(sceneNr);
+	if (0 <= sceneNr && sceneNr < f->getNumberOfScenes() && sceneSize > 0) {
+		if (sceneSize < endFrame)
+			endFrame = sceneSize;
+		if (endFrame <= startFrame) {
+			startFrame = endFrame;
+			return;
+		}
+		if (endFrame <= frameNr)
+			frameNr = startFrame;
 		f->initAudioDevice();
 		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(runAnimation()) );
 		QObject::connect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
@@ -125,7 +133,7 @@ void RunAnimationHandler::stopAnimation() {
 
 		DomainFacade *f = DomainFacade::getFacade();
 		if (observer)
-			observer->updateNewActiveFrame(sceneNr, frameNr);
+			observer->updateNewActiveFrame(sceneNr, startFrame);
 		f->shutdownAudioDevice();
 
 		statusBar->clearMessage();

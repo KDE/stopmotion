@@ -138,6 +138,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	makeToolsMenu(workAreaLayout);
 	makeViews(workAreaLayout);
 	workArea->setLayout(workAreaLayout);
+	runAnimationHandler->setObserver(frameView);
 
 	makeGotoMenu(centerWidgetLayout);
 	centerWidget->setLayout(centerWidgetLayout);
