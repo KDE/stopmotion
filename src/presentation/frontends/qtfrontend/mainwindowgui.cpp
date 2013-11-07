@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,6 +19,20 @@
  ***************************************************************************/
 #include "mainwindowgui.h"
 
+#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
+#include "src/presentation/frontends/qtfrontend/frameview.h"
+#include "src/presentation/frontends/qtfrontend/flexiblespinbox.h"
+#include "src/application/camerahandler.h"
+#include "src/application/editmenuhandler.h"
+#include "src/application/runanimationhandler.h"
+#include "src/application/modelhandler.h"
+#include "src/application/languagehandler.h"
+#include "src/application/soundhandler.h"
+#include "src/application/externalchangemonitor.h"
+#include "src/presentation/frontends/qtfrontend/menuframe.h"
+#include "src/presentation/frontends/qtfrontend/framepreferencesmenu.h"
+#include "src/presentation/frontends/qtfrontend/preferencesmenu.h"
+#include "src/presentation/frontends/qtfrontend/toolsmenu.h"
 #include "src/domain/domainfacade.h"
 #include "src/foundation/preferencestool.h"
 #include "src/technical/video/videoencoder.h"
@@ -138,7 +152,14 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	makeToolsMenu(workAreaLayout);
 	makeViews(workAreaLayout);
 	workArea->setLayout(workAreaLayout);
-	runAnimationHandler->setObserver(frameView);
+	connect(runAnimationHandler, SIGNAL(playFrame(int,int)),
+			frameView, SLOT(updatePlayFrame(int,int)));
+	connect(runAnimationHandler, SIGNAL(navigateTo(int,int)),
+			frameView, SLOT(updateNotifyNewFrame(int,int)));
+	connect(runAnimationHandler, SIGNAL(navigateTo(int,int)),
+			frameBar, SLOT(updateNewActiveFrame(int,int)));
+	connect(frameBar, SIGNAL(newActiveFrame(int,int)),
+			runAnimationHandler, SLOT(stopAnimation()));
 
 	makeGotoMenu(centerWidgetLayout);
 	centerWidget->setLayout(centerWidgetLayout);
@@ -417,7 +438,7 @@ void MainWindowGUI::makeGotoMenu(QVBoxLayout *layout)
 	gotoSpinner->setMaximumWidth(60);
 	gotoSpinner->setRange(1, 1);
 
-	connect(frameBar, SIGNAL(newActiveFrame(int)), gotoSpinner, SLOT(setValue(int)));
+	connect(frameBar, SIGNAL(newActiveFrame(int,int)), gotoSpinner, SLOT(setValue(int)));
 	connect(frameBar, SIGNAL(modelSizeChanged(int)), gotoSpinner, SLOT(setMaximumValue(int)));
 	connect(frameBar, SIGNAL(newMaximumValue(int)), gotoSpinner, SLOT(setMaximumValue(int)));
 	connect(gotoSpinner, SIGNAL(spinBoxTriggered(int)), editMenuHandler, SLOT(gotoFrame(int)));
@@ -464,7 +485,8 @@ void MainWindowGUI::makeViews(QHBoxLayout *layout)
 	connect(cameraHandler, SIGNAL(capturedFrame()), this, SLOT(activateMenuOptions()));
 
 	cameraHandler->setFrameView(frameView);
-	frameBar->setObserver(frameView);
+	connect(frameBar, SIGNAL(newActiveFrame(int,int)),
+			frameView, SLOT(updateNewActiveFrame(int,int)));
 }
 
 

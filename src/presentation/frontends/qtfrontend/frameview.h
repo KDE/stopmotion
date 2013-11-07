@@ -20,7 +20,6 @@
 #ifndef FRAMEVIEW_H
 #define FRAMEVIEW_H
 
-#include "src/presentation/observer.h"
 #include "src/presentation/imagecache.h"
 
 #include <QWidget>
@@ -38,16 +37,8 @@ class DomainFacade;
  * Widget for viewing the frames in the animation using SDL. This widget also
  * serves as videoview widget for displaying video from an external source
  * by grabbing through the harddrive.
- *
- * Note: I'm considering redesigning the entire framework around this class, both
- * to make it more intuitive and to work with dynamic plugins for filters such
- * as onionskinning, diffing, you name it! (plugins are cool) =) However this is
- * not very important and is left for a weekend where i'm bored :p
- *
- * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class FrameView : public QWidget, public ActiveFrameObserver
-{
+class FrameView : public QWidget {
 	Q_OBJECT
 public:
 	enum ImageMode {
@@ -80,16 +71,6 @@ public:
 	void setNormalRatio();
 
 	void initCompleted();
-
-	/**
-	 * Receives notification when a new frame is selected.
-	 */
-	void updateNewActiveFrame(int scene, int frame);
-
-	/**
-	 * Receives notification when a frame is to be played.
-	 */
-	void updatePlayFrame(int scene, int frame);
 
 	/**
 	 * Turns on the webcamera/video import mode.
@@ -138,6 +119,16 @@ public slots:
 	 * Function for performing playbacks. Will call redraw with regular intervals.
 	 */
 	void nextPlayBack();
+
+	/**
+	 * Receives notification when a new frame is selected.
+	 */
+	void updateNewActiveFrame(int scene, int frame);
+
+	/**
+	 * Receives notification when a frame is to be played.
+	 */
+	void updatePlayFrame(int scene, int frame);
 
 protected:
 	void resizeEvent(QResizeEvent *);

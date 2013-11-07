@@ -57,13 +57,6 @@ public:
 	~FrameBar();
 
 	/**
-	 * Add an observer for the active scene changing. Any previously-set
-	 * observer is unset.
-	 * @param observer New observer to set. Ownership is not passed.
-	 */
-	void setObserver(ActiveFrameObserver* observer);
-
-	/**
 	 * Receives notification when a frame is added.
 	 */
 	void updateAdd(int scene, int index, int numFrames);
@@ -80,11 +73,6 @@ public:
 	 */
 	void updateMove(int fromScene, int fromFrame, int count,
 			int toScene, int toFrame);
-
-	/**
-	 *Function to receive notification when a new frame is selected.
-	 */
-	void updateNewActiveFrame(int scene, int frame);
 
 	/**
 	 * Function to receive notification when the model is erased.
@@ -226,13 +214,14 @@ public slots:
 	 * Receives notification when the sounds in a frame have been changed.
 	 */
 	void frameSoundsChanged();
+	void updateNewActiveFrame(int scene, int frame);
 
 signals:
 	//The signals in the framebar is used for signaling small widget,
 	//who are deemed to unsignificant to be observers, of changes in
 	//the framebar/model. A bit hacky and should be in it's own widget.
 	void newActiveFrame( const QString & );
-	void newActiveFrame( int value );
+	void newActiveFrame(int scene, int frame);
 	void modelSizeChanged( int modelSize );
 	void newMaximumValue(int value);
 
@@ -243,9 +232,6 @@ private:
 	static const int FRAME_HEIGHT = 88;
 	static const int FRAME_WIDTH = 117;
 	static const int SPACE = 2;
-
-	/** Observer that wants to know when the active frame changes */
-	ActiveFrameObserver* activeFrameObserver;
 
 	/** Vector of thumbviews to keep track of the pictures in the framebar*/
 	vector<ThumbView*>thumbViews;
@@ -380,11 +366,6 @@ private:
 	 */
 	ThumbView* getSceneThumb(int index, bool fix = false);
 
-	/**
-	 * Sends an {@ref ActiveFrameObserver::updateNewActiveFrame} to the
-	 * observer, if appropriate.
-	 */
-	void updateObserver();
 	/** Sets the size of the frame bar to accomodate all the thumbnails. */
 	void fixSize();
 	/** Deletes all the thumbnails. */

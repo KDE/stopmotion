@@ -22,8 +22,8 @@
 #define FLEXIBLESPINBOX_H
 
 #include <QSpinBox>
-#include <QKeyEvent>
 
+class QKeyEvent;
 
 /**
  * An extended spin box class.
@@ -54,7 +54,12 @@ public slots:
 	 * @param maxValue maximum value (index of the last frame in framebar)
 	 */
 	void setMaximumValue(int maxValue);
-	
+
+	/**
+	 * Sets the value to one more than @a index.
+	 */
+	void setIndexSecond(int, int index);
+
 signals:
 	/**
 	 * Emits this signal when pressing enter.

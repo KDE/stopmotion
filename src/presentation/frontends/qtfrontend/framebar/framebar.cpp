@@ -73,7 +73,7 @@ static QImage tryReadImage(const char *filename) {
 }
 
 FrameBar::FrameBar(QWidget *parent)
-		: QScrollArea(parent), activeFrameObserver(0) {
+		: QScrollArea(parent) {
 	preferencesMenu = 0;
 	activeFrame = -1;
 	activeScene = -1;
@@ -180,8 +180,7 @@ void FrameBar::updateNewActiveFrame(int sceneNumber, int frameNumber) {
 	// For writing the frame number in the frame number display
 	emit newActiveFrame( QString(tr("Frame number: ")) + QString("%1").arg(frameNumber + 1) );
 
-	// For setting the value in the spinbox in the gotomenu
-	emit newActiveFrame(frameNumber + 1);
+	emit newActiveFrame(sceneNumber, frameNumber);
 }
 
 void FrameBar::clear() {
@@ -198,9 +197,6 @@ void FrameBar::updateClear() {
 	activeFrame = -1;
 	activeScene = -1;
 }
-
-
-void FrameBar::updatePlayFrame(int, int) {}
 
 
 void FrameBar::updateAnimationChanged(int sceneNumber, int frameNumber) {
@@ -241,8 +237,7 @@ void FrameBar::resync() {
 	for (int i = 0; i != activeSceneSize; ++i) {
 		getFrameThumb(i, true);
 	}
-	if (activeFrameObserver)
-		activeFrameObserver->updateNewActiveFrame(activeScene, activeFrame);
+	emit newActiveFrame(activeScene, activeFrame);
 	fixSize();
 }
 
@@ -418,8 +413,7 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 			getFrameThumb(i, true);
 		}
 	}
-	if (activeFrameObserver)
-		activeFrameObserver->updateNewActiveFrame(activeScene, activeFrame);
+	emit newActiveFrame(activeScene, activeFrame);
 }
 
 void FrameBar::setSelection(int sf) {
@@ -566,7 +560,7 @@ void FrameBar::setActiveScene(int sceneNumber) {
 	int count = anim->getSceneSize(activeScene);
 	insertFrames(0, count);
 	fixSize();
-	updateObserver();
+	emit newActiveFrame(activeScene, activeFrame);
 
 	doScroll();
 	emit newMaximumValue(DomainFacade::getFacade()->getSceneSize(activeScene));
@@ -684,10 +678,6 @@ int FrameBar::getActiveScene() const {
 	return activeScene;
 }
 
-void FrameBar::setObserver(ActiveFrameObserver* observer) {
-	activeFrameObserver = observer;
-}
-
 ThumbView* FrameBar::getFrameThumb(int index, bool fix) {
 	int thumbIndex = activeScene + 1 + index;
 	ThumbView* thumb = thumbViews[thumbIndex];
@@ -744,10 +734,4 @@ ThumbView* FrameBar::getSceneThumb(int index, bool fix) {
 
 int FrameBar::sceneThumbCount() const {
 	return thumbViews.size() - activeSceneSize;
-}
-
-void FrameBar::updateObserver() {
-	if (activeFrameObserver)
-		activeFrameObserver->updateNewActiveFrame(
-				activeScene, activeFrame);
 }

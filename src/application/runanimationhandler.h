@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,15 +21,13 @@
 #define RUNANIMATIONHANDLER_H
 
 #include "src/config.h"
-#include "src/presentation/frontends/selection.h"
 
-#include <qobject.h>
+#include <QObject>
 
 class Selection;
 class QPushButton;
 class QTimer;
 class QStatusBar;
-class ActiveFrameObserver;
 
 /**
  * Handles the running of the animation as a sequence of pictures. This is implemented
@@ -38,8 +36,7 @@ class ActiveFrameObserver;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class RunAnimationHandler : public QObject
-{
+class RunAnimationHandler : public QObject {
 	Q_OBJECT
 public:
 	/**
@@ -79,12 +76,18 @@ public:
 	 */
 	void setPauseButton(QPushButton *pauseButton);
 
+signals:
+
 	/**
-	 * Sets the observer for changes in the active frame.
-	 * @param ob The new observer to set. Any old observer will be removed.
-	 * Ownership is not passed.
+	 * The animation has reached this frame.
 	 */
-	void setObserver(ActiveFrameObserver* ob);
+	void playFrame(int scene, int frame);
+	/**
+	 * The user has navigated to a different frame.
+	 */
+	void navigateTo(int scene, int frame);
+	void paused();
+	void stopped();
 
 public slots:
 
@@ -156,7 +159,6 @@ private:
 	bool isLooping;
 	int startFrame;
 	int endFrame;
-	ActiveFrameObserver* observer;
 
 private slots:
 	/**

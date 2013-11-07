@@ -33,6 +33,7 @@
 #include <cstring>
 #include <unistd.h>
 #include <sstream>
+#include <stdio.h>
 
 QtFrontend::QtFrontend(int &argc, char **argv)
 {
@@ -172,15 +173,15 @@ void QtFrontend::initializePreferences()
 	Logger::get().logDebug("Loading preferencestool");
 	
 	PreferencesTool *prefs = PreferencesTool::get();
-	string preferencesFile = getenv("HOME");
+	std::string preferencesFile = getenv("HOME");
 	preferencesFile += "/.stopmotion/preferences.xml";
-	string oldPrefsFile = preferencesFile + ".OLD";
+	std::string oldPrefsFile = preferencesFile + ".OLD";
 
 	// Has to check this before calling setPreferencesFile(...) because
 	// the function creates the file if it doesn't exist.
 	int prefsFileExists = access(preferencesFile.c_str(), R_OK);
 	if (prefsFileExists != -1) {
-		ostringstream copyCmd;
+		std::ostringstream copyCmd;
 		copyCmd << "/bin/cp " << preferencesFile << " " << oldPrefsFile;
 		system(copyCmd.str().c_str());
 	}
@@ -321,19 +322,25 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 	// Replace all occurences of '/dev/xxx' with $VIDEODEVICE (version < 0.7)
 	int numImports = prefs->getPreference("numberofimports", 1);
 	for (int i = 0; i < numImports; ++i) {
-		string start( prefs->getPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(), "") );
+		std::string start( prefs->getPreference(QString("importstartdeamon%1")
+				.arg(i).toLatin1().constData(), "") );
 		int index = start.find("(DEFAULTPATH)");
 		if (index != -1) {
-			start.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
+			start.replace(index, strlen("(DEFAULTPATH)"),
+					std::string("$IMAGEFILE"));
 		}
 		QString s(start.c_str());
-		s.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
-		prefs->setPreference( QString("importstartdeamon%1").arg(i).toLatin1().constData(), s.toLatin1().constData());
+		s.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"),
+				QString("$VIDEODEVICE") );
+		prefs->setPreference( QString("importstartdeamon%1")
+				.arg(i).toLatin1().constData(), s.toLatin1().constData());
 
-		string prepoll( prefs->getPreference(QString("importprepoll%1").arg(i).toLatin1().constData(), "") );
+		std::string prepoll( prefs->getPreference(QString("importprepoll%1")
+				.arg(i).toLatin1().constData(), "") );
 		index = prepoll.find("(DEFAULTPATH)");
 		if (index != -1) {
-			prepoll.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
+			prepoll.replace(index, strlen("(DEFAULTPATH)"),
+					std::string("$IMAGEFILE"));
 		}
 		QString ss(prepoll.c_str());
 		ss.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );

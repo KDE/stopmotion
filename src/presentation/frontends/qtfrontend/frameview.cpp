@@ -25,6 +25,7 @@
 #include "src/technical/grabber/commandlinegrabber.h"
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/imagegrabthread.h"
+#include "src/presentation/frontends/qtfrontend/qtfrontend.h"
 
 #include <SDL/SDL_image.h>
 #include <QX11Info>

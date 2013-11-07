@@ -21,19 +21,19 @@
 
 #include "src/foundation/preferencestool.h"
 #include "src/domain/domainfacade.h"
-#include "src/presentation/observer.h"
+#include "src/presentation/frontends/selection.h"
 
 #include <qpushbutton.h>
 #include <qtimer.h>
 #include <qstatusbar.h>
 
-RunAnimationHandler::RunAnimationHandler ( QObject *parent, QStatusBar *sb,
+RunAnimationHandler::RunAnimationHandler(QObject *parent, QStatusBar *sb,
 		Selection *sel, const char *name )
 		: QObject(parent), statusBar(sb), selection(sel),
 		  playButton(0), pauseButton(0), removeFramesButton(0),
 		  loopButton(0), timer(0), sceneNr(0), frameNr(0),
 		  fps(0), isLooping(false),
-		  startFrame(0), endFrame(0), observer(0) {
+		  startFrame(0), endFrame(0) {
 	fps = PreferencesTool::get()->getPreference("fps", 10);
 	timer = new QTimer(this);
 	QObject::connect( timer, SIGNAL(timeout()), this, SLOT(playNextFrame()) );
@@ -41,20 +41,18 @@ RunAnimationHandler::RunAnimationHandler ( QObject *parent, QStatusBar *sb,
 }
 
 
-void RunAnimationHandler::setPlayButton( QPushButton * playButton )
-{
+void RunAnimationHandler::setPlayButton( QPushButton * playButton ) {
 	this->playButton = playButton;
 }
 
 
-void RunAnimationHandler::setRemoveFramesButton( QPushButton * removeFramesButton )
-{
+void RunAnimationHandler::setRemoveFramesButton(
+		QPushButton * removeFramesButton) {
 	this->removeFramesButton = removeFramesButton;
 }
 
 
-void RunAnimationHandler::setLoopButton( QPushButton * loopButton )
-{
+void RunAnimationHandler::setLoopButton(QPushButton * loopButton) {
 	this->loopButton = loopButton;
 }
 
@@ -62,8 +60,7 @@ void RunAnimationHandler::setLoopButton( QPushButton * loopButton )
 void RunAnimationHandler::toggleRunning() {
 	if(timer->isActive()) {
 		stopAnimation();
-	}
-	else {
+	} else {
 		resumeAnimation();
 	}
 }
@@ -76,7 +73,7 @@ void RunAnimationHandler::resumeAnimation() {
 			endFrame = sceneSize;
 		if (endFrame <= startFrame) {
 			startFrame = endFrame;
-			return;
+			stopAnimation();
 		}
 		if (endFrame <= frameNr)
 			frameNr = startFrame;
@@ -101,17 +98,15 @@ void RunAnimationHandler::runAnimation() {
 	if (selection) {
 		sceneNr = selection->getActiveScene();
 		startFrame = selection->getActiveFrame();
-		if (selection->isSelecting()) {
-			int sel = selection->getSelectionAnchor();
-			if (startFrame < sel) {
-				endFrame = sel;
-			} else {
-				endFrame = startFrame;
-				startFrame = sel;
-			}
+		int sel = selection->getSelectionAnchor();
+		if (startFrame < sel) {
+			endFrame = sel;
+		} else {
+			endFrame = startFrame;
+			startFrame = sel;
 		}
 	}
-	if (endFrame == 0) {
+	if (endFrame == startFrame) {
 		endFrame = DomainFacade::getFacade()->getSceneSize(sceneNr);
 	}
 	frameNr = startFrame;
@@ -132,8 +127,7 @@ void RunAnimationHandler::stopAnimation() {
 		removeFramesButton->setEnabled(true);
 
 		DomainFacade *f = DomainFacade::getFacade();
-		if (observer)
-			observer->updateNewActiveFrame(sceneNr, startFrame);
+		emit stopped();
 		f->shutdownAudioDevice();
 
 		statusBar->clearMessage();
@@ -142,27 +136,20 @@ void RunAnimationHandler::stopAnimation() {
 }
 
 
-void RunAnimationHandler::setPauseButton(QPushButton * pauseButton)
-{
+void RunAnimationHandler::setPauseButton(QPushButton * pauseButton) {
 	this->pauseButton = pauseButton;
 }
 
 
-void RunAnimationHandler::pauseAnimation()
-{
+void RunAnimationHandler::pauseAnimation() {
 	if ( timer->isActive() ) {
 		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
 		QObject::connect(playButton, SIGNAL(clicked()), this, SLOT(runAnimation()));
 
-		if ( playButton->isChecked() ) {
-			playButton->toggle();
-		}
-
 		playButton->setChecked(false);
 		removeFramesButton->setEnabled(true);
 
-		if (observer)
-			observer->updateNewActiveFrame(sceneNr, frameNr);
+		emit paused();
 		DomainFacade *f = DomainFacade::getFacade();
 		f->shutdownAudioDevice();
 
@@ -176,8 +163,7 @@ void RunAnimationHandler::pauseAnimation()
 void RunAnimationHandler::selectPreviousFrame() {
 	if (0 < frameNr) {
 		--frameNr;
-		if (observer)
-			observer->updateNewActiveFrame(sceneNr, frameNr);
+		emit navigateTo(sceneNr, frameNr);
 	}
 }
 
@@ -186,8 +172,7 @@ void RunAnimationHandler::selectNextFrame() {
 	int sceneSize = DomainFacade::getFacade()->getSceneSize(frameNr);
 	if (0 <= frameNr && frameNr + 1 < sceneSize) {
 		++frameNr;
-		if (observer)
-			observer->updateNewActiveFrame(sceneNr, frameNr);
+		emit navigateTo(sceneNr, frameNr);
 	}
 }
 
@@ -196,8 +181,7 @@ void RunAnimationHandler::selectPreviousScene() {
 	if (0 <= frameNr && 0 < sceneNr) {
 		--sceneNr;
 		frameNr = 0;
-		if (observer)
-			observer->updateNewActiveFrame(sceneNr, frameNr);
+		emit navigateTo(sceneNr, frameNr);
 	}
 }
 
@@ -207,14 +191,12 @@ void RunAnimationHandler::selectNextScene() {
 	if (0 <= sceneNr && sceneNr + 1 < sceneCount) {
 		++sceneNr;
 		frameNr = 0;
-		if (observer)
-			observer->updateNewActiveFrame(sceneNr, frameNr);
+		emit navigateTo(sceneNr, frameNr);
 	}
 }
 
 
-void RunAnimationHandler::setSpeed(int fps)
-{
+void RunAnimationHandler::setSpeed(int fps) {
 	this->fps = fps;
 	if ( timer->isActive() ) {
 		timer->setInterval(1000/this->fps);
@@ -225,8 +207,7 @@ void RunAnimationHandler::setSpeed(int fps)
 }
 
 
-void RunAnimationHandler::toggleLooping()
-{
+void RunAnimationHandler::toggleLooping() {
 	isLooping = !isLooping;
 }
 
@@ -234,19 +215,17 @@ void RunAnimationHandler::toggleLooping()
 void RunAnimationHandler::playNextFrame() {
 	DomainFacade *facade = DomainFacade::getFacade();
 	if (sceneNr >= 0) {
-		if (observer)
-			observer->updatePlayFrame(sceneNr, frameNr);
+		emit playFrame(sceneNr, frameNr);
 		++frameNr;
-		if (frameNr < facade->getSceneSize(sceneNr))
+		int sceneSize = facade->getSceneSize(sceneNr);
+		if (sceneSize < endFrame)
+			endFrame = sceneSize;
+		if (frameNr < endFrame)
 			return;
 		if (isLooping) {
-			frameNr = 0;
+			frameNr = startFrame;
 			return;
 		}
 	}
 	stopAnimation();
-}
-
-void RunAnimationHandler::setObserver(ActiveFrameObserver* ob) {
-	observer = ob;
 }

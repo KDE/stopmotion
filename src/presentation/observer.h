@@ -116,26 +116,4 @@ public:
 	virtual void resync() = 0;
 };
 
-/**
- * Observer informed of changes to the user's focus
- */
-class ActiveFrameObserver {
-public:
-	virtual ~ActiveFrameObserver() {}
-	/**
-	 * Notification that the active frame has changed. Also changes the
-	 * active scene.
-	 * @param scene The new active scene.
-	 * @param frame The new active frame.
-	 */
-	virtual void updateNewActiveFrame(int scene, int frame) = 0;
-
-	/**
-	 * Notification when a frame is to be played.
-	 * @param scene The scene containing the frame to be played.
-	 * @param frame The frame within the scene to be played
-	 */
-	virtual void updatePlayFrame(int scene, int frame) = 0;
-};
-
 #endif

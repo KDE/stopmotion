@@ -20,14 +20,12 @@
 #ifndef EDITMENUHANDLER_H
 #define EDITMENUHANDLER_H
 
-#include "src/config.h"
-#include "src/presentation/frontends/qtfrontend/menuframe.h"
-#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
-#include "modelhandler.h"
-
 #include <QObject>
-#include <QStatusBar>
 
+class MenuFrame;
+class FrameBar;
+class ModelHandler;
+class QStatusBar;
 
 /**
  * This class handles request related to the editmenu (undo, redo, copy, cut, etc)

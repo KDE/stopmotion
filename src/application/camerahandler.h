@@ -20,8 +20,6 @@
 #ifndef CAMERAHANDLER_H
 #define CAMERAHANDLER_H
 
-#include "src/config.h"
-
 #include <QObject>
 
 class FrameView;

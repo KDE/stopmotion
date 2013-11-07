@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,23 +21,23 @@
 #define QTGUI_H
 
 #include "src/config.h"
-#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
-#include "src/presentation/frontends/qtfrontend/frameview.h"
-#include "src/presentation/frontends/qtfrontend/flexiblespinbox.h"
-#include "src/application/camerahandler.h"
-#include "src/application/editmenuhandler.h"
-#include "src/application/runanimationhandler.h"
-#include "src/application/modelhandler.h"
-#include "src/application/languagehandler.h"
-#include "src/application/soundhandler.h"
-#include "src/application/externalchangemonitor.h"
-#include "src/presentation/frontends/qtfrontend/menuframe.h"
-#include "src/presentation/frontends/qtfrontend/framepreferencesmenu.h"
-#include "src/presentation/frontends/qtfrontend/preferencesmenu.h"
-#include "src/presentation/frontends/qtfrontend/toolsmenu.h"
 
 #include <QtGui>
 
+class FrameBar;
+class FrameView;
+class FlexibleSpinBox;
+class CameraHandler;
+class EditMenuHandler;
+class RunAnimationHandler;
+class ModelHandler;
+class SoundHandler;
+class ExternalChangeMonitor;
+class MenuFrame;
+class FramePreferencesMenu;
+class PreferencesMenu;
+class ToolsMenu;
+class LanguageHandler;
 
 /**
  *The main window class for the stopmotion application. 
@@ -45,8 +45,7 @@
  *
  *@author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
 */
-class MainWindowGUI : public QMainWindow
-{
+class MainWindowGUI : public QMainWindow {
 	Q_OBJECT
 public:
 	enum {SAVE, SAVE_AS, UNDO, REDO, CUT, COPY, PASTE, GOTO};

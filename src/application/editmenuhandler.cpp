@@ -21,6 +21,9 @@
 
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
+#include "src/presentation/frontends/qtfrontend/menuframe.h"
+#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
+#include "modelhandler.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -28,6 +31,7 @@
 #include <QStringList>
 #include <QList>
 #include <QUrl>
+#include <QStatusBar>
 
 
 EditMenuHandler::EditMenuHandler ( QObject *parent, QStatusBar *sb, 
