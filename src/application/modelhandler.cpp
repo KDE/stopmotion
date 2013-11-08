@@ -172,7 +172,9 @@ void ModelHandler::newScene() {
 
 
 void ModelHandler::removeScene() {
-	DomainFacade::getFacade()->removeScene(frameBar->getActiveScene());
+	int activeScene = frameBar->getActiveScene();
+	if (0 <= activeScene)
+		DomainFacade::getFacade()->removeScene(activeScene);
 }
 
 

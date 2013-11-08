@@ -274,7 +274,8 @@ void FrameBar::addFrames(int index, int numFrames) {
 }
 
 void FrameBar::deleteFrames(int fromFrame, int frameCount) {
-	std::vector<ThumbView*>::iterator start = thumbViews.begin() + fromFrame;
+	std::vector<ThumbView*>::iterator start
+			= thumbViews.begin() + fromFrame + activeScene + 1;
 	std::vector<ThumbView*>::iterator end = start + frameCount;
 	for (std::vector<ThumbView*>::iterator i = start; i != end; ++i) {
 		delete (*i);
@@ -450,18 +451,16 @@ void FrameBar::newScene(int index) {
 
 	int thumbIndex = index <= activeScene? index : index + activeSceneSize;
 	thumbViews.insert(thumbViews.begin() + thumbIndex, 0);
-	if (index <= activeScene)
+	if (index <= activeScene) {
 		++activeScene;
+		for (int i = 0; i != activeSceneSize; ++i) {
+			getFrameThumb(i, true);
+		}
+	}
 	// get new scene and move and renumber all subsequent scenes
 	int sceneCount = sceneThumbCount();
 	for (int i = index; i != sceneCount; ++i) {
 		getSceneThumb(i, true);
-	}
-	if (index <= activeScene) {
-		// move all the frames along as well
-		for (int i = 0; i != activeSceneSize; ++i) {
-			getFrameThumb(i, true);
-		}
 	}
 	fixSize();
 	emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
@@ -536,7 +535,10 @@ void FrameBar::closeActiveScene() {
 		activeSceneSize = 0;
 		int s = activeScene;
 		activeScene = -1;
-		getSceneThumb(s, true);
+		int sceneCount = sceneThumbCount();
+		for (; s < sceneCount; ++s) {
+			getSceneThumb(s, true);
+		}
 	}
 }
 
@@ -748,6 +750,7 @@ void FrameBar::selectPreviousFrame() {
 		int f = activeFrame - 1;
 		setActiveFrameAndSelection(f, f);
 	}
+	doScroll();
 }
 
 void FrameBar::selectNextFrame() {
@@ -760,6 +763,7 @@ void FrameBar::selectNextFrame() {
 	} else {
 		setActiveFrameAndSelection(f, f);
 	}
+	doScroll();
 }
 
 void FrameBar::selectPreviousScene() {
@@ -771,6 +775,7 @@ void FrameBar::selectPreviousScene() {
 	} else if (0 <= activeFrame) {
 		setActiveFrameAndSelection(-1, -1);
 	}
+	doScroll();
 }
 
 void FrameBar::selectNextScene() {
@@ -781,4 +786,5 @@ void FrameBar::selectNextScene() {
 		int f = activeSceneSize - 1;
 		setActiveFrameAndSelection(f, f);
 	}
+	doScroll();
 }
