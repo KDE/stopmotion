@@ -375,6 +375,8 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 		resync();
 		return;
 	}
+	if (af == activeFrame && sf == selectionFrame)
+		return;
 	// put old selection in [a..b)
 	int a = activeFrame;
 	int b = selectionFrame + 1;
@@ -734,4 +736,50 @@ ThumbView* FrameBar::getSceneThumb(int index, bool fix) {
 
 int FrameBar::sceneThumbCount() const {
 	return thumbViews.size() - activeSceneSize;
+}
+
+void FrameBar::selectPreviousFrame() {
+	if (activeFrame == -1) {
+		if (0 < activeScene) {
+			setActiveScene(activeScene - 1);
+			int f = activeSceneSize - 1;
+			setActiveFrameAndSelection(f, f);
+		}
+	} else {
+		int f = activeFrame - 1;
+		setActiveFrameAndSelection(f, f);
+	}
+}
+
+void FrameBar::selectNextFrame() {
+	int f = activeFrame + 1;
+	if (activeSceneSize <= f) {
+		int s = activeScene + 1;
+		if (s < sceneThumbCount()) {
+			setActiveScene(s);
+		}
+	} else {
+		setActiveFrameAndSelection(f, f);
+	}
+}
+
+void FrameBar::selectPreviousScene() {
+	int s = activeScene - 1;
+	if (0 <= s) {
+		setActiveScene(s);
+		int f = activeSceneSize - 1;
+		setActiveFrameAndSelection(f, f);
+	} else if (0 <= activeFrame) {
+		setActiveFrameAndSelection(-1, -1);
+	}
+}
+
+void FrameBar::selectNextScene() {
+	int s = activeScene + 1;
+	if (s < sceneThumbCount()) {
+		setActiveScene(s);
+	} else {
+		int f = activeSceneSize - 1;
+		setActiveFrameAndSelection(f, f);
+	}
 }

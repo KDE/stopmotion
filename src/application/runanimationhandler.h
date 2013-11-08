@@ -82,10 +82,6 @@ signals:
 	 * The animation has reached this frame.
 	 */
 	void playFrame(int scene, int frame);
-	/**
-	 * The user has navigated to a different frame.
-	 */
-	void navigateTo(int scene, int frame);
 	void paused();
 	void stopped();
 
@@ -112,26 +108,6 @@ public slots:
 	 * Freezes the running of the animation.
 	 */
 	void pauseAnimation();
-
-	/**
-	 * Selects the previous frame.
-	 */
-	void selectPreviousFrame();
-
-	/**
-	 * Selects the next frame.
-	 */
-	void selectNextFrame();
-
-	/**
-	 * Selects the previous scene.
-	 */
-	void selectPreviousScene();
-
-	/**
-	 * Selects the next scene.
-	 */
-	void selectNextScene();
 
 	/**
 	 * Sets the speed of the animation in frames per seccond

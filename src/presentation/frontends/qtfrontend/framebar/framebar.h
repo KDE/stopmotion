@@ -215,6 +215,11 @@ public slots:
 	 */
 	void frameSoundsChanged();
 	void updateNewActiveFrame(int scene, int frame);
+	void selectPreviousFrame();
+	void selectNextFrame();
+	void selectPreviousScene();
+	void selectNextScene();
+
 
 signals:
 	//The signals in the framebar is used for signaling small widget,
@@ -287,13 +292,6 @@ private:
 
 	/** Returns how many scene thumbnails there are */
 	int sceneThumbCount() const;
-	/**
-	 *Adds the picture to the frame to the framebar at position index.
-	 *
-	 *@param frame the path of the frame to be added to the framebar.
-	 *@param index the place to add the frame.
-	 */
-	void addFrame(Frame* frame, unsigned int index);
 
 	/**
 	 * Adds the frames in the framesvector to the framebar.

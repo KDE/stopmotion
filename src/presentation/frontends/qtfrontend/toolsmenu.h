@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -30,22 +30,23 @@ class QWidget;
 class RunAnimationHandler;
 class ModelHandler;
 class CameraHandler;
+class FrameBar;
 
 /**
  * The tools menu on the left side in the application.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class ToolsMenu : public QWidget
-{
+class ToolsMenu : public QWidget {
 	Q_OBJECT
 public:
 	/**
 	 * Sets up the toolsmenu.
 	 * @param parent the parent of the widget.
 	 */
-	ToolsMenu( RunAnimationHandler *runAnimationHandler, ModelHandler *modelHandler,
-			CameraHandler *cameraHandler, QWidget *parent = 0 );
+	ToolsMenu( RunAnimationHandler *runAnimationHandler,
+			ModelHandler *modelHandler, CameraHandler *cameraHandler,
+			FrameBar *frameBar, QWidget *parent = 0 );
 	
 	/**
 	 * Retranslates the strings.
@@ -67,7 +68,7 @@ public slots:
 	 * menu options can be adjusted (activated/deactivated, etc).
 	 * @param modelSize the new size of the model.
 	 */
-	void modelSizeChanged(int modelSize);
+	void fixNavigationButtons(int modelSize);
 	
 private:
 	Ui::Form ui;
@@ -75,6 +76,7 @@ private:
 	RunAnimationHandler *runAnimationHandler;
 	ModelHandler *modelHandler;
 	CameraHandler *cameraHandler;
+	FrameBar *frameBar;
 	
 	QShortcut *loopAccel;
 	QShortcut *playAccel;

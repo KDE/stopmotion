@@ -21,17 +21,18 @@
 #define EXPORTTAB_H
 
 #include <QWidget>
-#include <QPushButton>
-#include <QGroupBox>
-#include <QTableWidget>
-#include <QLineEdit>
-#include <QLabel>
-#include <QGridLayout>
-#include <QTextEdit>
-#include <QToolBox>
-#include <QRadioButton>
 
 #include <vector>
+
+class QPushButton;
+class QGroupBox;
+class QTableWidget;
+class QLineEdit;
+class QLabel;
+class QGridLayout;
+class QTextEdit;
+class QToolBox;
+class QRadioButton;
 
 
 /**

@@ -22,11 +22,11 @@
 
 #include "framebar.h"
 
-#include <QDropEvent>
 #include <QLabel>
 
-
 class FrameBar;
+
+class QDropEvent;
 
 /**
  * This abstract class represents the thumbviews in the framebar. It has 

@@ -234,7 +234,7 @@ void Animation::setSoundName(int32_t sceneNumber, int32_t frameNumber,
 int Animation::frameCount() const {
 	int modelSize = 0;
 	int s = sceneCount();
-	for (unsigned int i = 0; i < s; ++i) {
+	for (int i = 0; i < s; ++i) {
 		modelSize += frameCount(i);
 	}
 	return modelSize;

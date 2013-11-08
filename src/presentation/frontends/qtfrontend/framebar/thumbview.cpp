@@ -22,7 +22,6 @@
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 
-#include <QLabel>
 #include <QDropEvent>
 
 

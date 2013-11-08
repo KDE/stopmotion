@@ -100,14 +100,16 @@ void RunAnimationHandler::runAnimation() {
 		startFrame = selection->getActiveFrame();
 		int sel = selection->getSelectionAnchor();
 		if (startFrame < sel) {
-			endFrame = sel;
+			endFrame = sel + 1;
 		} else {
-			endFrame = startFrame;
+			endFrame = startFrame + 1;
 			startFrame = sel;
 		}
 	}
-	if (endFrame == startFrame) {
-		endFrame = DomainFacade::getFacade()->getSceneSize(sceneNr);
+	if (endFrame - startFrame <= 1) {
+		endFrame = DomainFacade::getFacade()->getSceneSize(sceneNr) ;
+		if (endFrame - startFrame <= 1)
+			startFrame = 0;
 	}
 	frameNr = startFrame;
 	resumeAnimation();
@@ -157,42 +159,6 @@ void RunAnimationHandler::pauseAnimation() {
 		timer->stop();
 	}
 
-}
-
-
-void RunAnimationHandler::selectPreviousFrame() {
-	if (0 < frameNr) {
-		--frameNr;
-		emit navigateTo(sceneNr, frameNr);
-	}
-}
-
-
-void RunAnimationHandler::selectNextFrame() {
-	int sceneSize = DomainFacade::getFacade()->getSceneSize(frameNr);
-	if (0 <= frameNr && frameNr + 1 < sceneSize) {
-		++frameNr;
-		emit navigateTo(sceneNr, frameNr);
-	}
-}
-
-
-void RunAnimationHandler::selectPreviousScene() {
-	if (0 <= frameNr && 0 < sceneNr) {
-		--sceneNr;
-		frameNr = 0;
-		emit navigateTo(sceneNr, frameNr);
-	}
-}
-
-
-void RunAnimationHandler::selectNextScene() {
-	int sceneCount = DomainFacade::getFacade()->getNumberOfScenes();
-	if (0 <= sceneNr && sceneNr + 1 < sceneCount) {
-		++sceneNr;
-		frameNr = 0;
-		emit navigateTo(sceneNr, frameNr);
-	}
 }
 
 

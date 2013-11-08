@@ -172,7 +172,8 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	createMenus();
 
 	//This slot will activate/deactivate menu options based on the changes in the model.
-	connect( frameBar, SIGNAL( modelSizeChanged(int) ),this, SLOT( modelSizeChanged(int) ) );
+	connect( frameBar, SIGNAL(modelSizeChanged(int)),
+			this, SLOT(fixNavigationButtons(int)));
 
 	//Mainwindow preferences.
 	setWindowIcon( QPixmap(windowicon) );
@@ -235,20 +236,20 @@ void MainWindowGUI::setupDirectoryMonitoring()
 void MainWindowGUI::createAccelerators()
 {
 	QShortcut *nextFrameAccel = new QShortcut(QKeySequence(Qt::Key_L), this);
-	connect(nextFrameAccel, SIGNAL(activated()), runAnimationHandler, SLOT(selectNextFrame()));
+	connect(nextFrameAccel, SIGNAL(activated()), frameBar, SLOT(selectNextFrame()));
 	QShortcut *nextFrameAccel2 = new QShortcut(QKeySequence(Qt::Key_Right), this);
-	connect(nextFrameAccel2, SIGNAL(activated()), runAnimationHandler, SLOT(selectNextFrame()));
+	connect(nextFrameAccel2, SIGNAL(activated()), frameBar, SLOT(selectNextFrame()));
 
 	QShortcut *previousFrameAccel = new QShortcut(QKeySequence(Qt::Key_J), this);
-	connect(previousFrameAccel, SIGNAL(activated()), runAnimationHandler, SLOT(selectPreviousFrame()));
+	connect(previousFrameAccel, SIGNAL(activated()), frameBar, SLOT(selectPreviousFrame()));
 	QShortcut *previousFrameAccel2 = new QShortcut(QKeySequence(Qt::Key_Left), this );
-	connect(previousFrameAccel2, SIGNAL(activated()), runAnimationHandler, SLOT(selectPreviousFrame()));
+	connect(previousFrameAccel2, SIGNAL(activated()), frameBar, SLOT(selectPreviousFrame()));
 
 	QShortcut *nextSceneAccel = new QShortcut(QKeySequence(Qt::Key_O), this);
-	connect(nextSceneAccel, SIGNAL(activated()), runAnimationHandler, SLOT(selectNextScene()));
+	connect(nextSceneAccel, SIGNAL(activated()), frameBar, SLOT(selectNextScene()));
 
 	QShortcut *prevSceneAccel = new QShortcut(QKeySequence(Qt::Key_I), this);
-	connect(prevSceneAccel, SIGNAL(activated()), runAnimationHandler, SLOT(selectPreviousScene()));
+	connect(prevSceneAccel, SIGNAL(activated()), frameBar, SLOT(selectPreviousScene()));
 
 	QShortcut *toggleCameraAccel = new QShortcut(QKeySequence(Qt::Key_C), this);
 	connect(toggleCameraAccel, SIGNAL(activated()), cameraHandler, SLOT(toggleCamera()));
@@ -405,11 +406,14 @@ void MainWindowGUI::createMenus()
 
 void MainWindowGUI::makeToolsMenu(QHBoxLayout *layout)
 {
-	toolsMenu = new ToolsMenu(runAnimationHandler, modelHandler, cameraHandler);
+	toolsMenu = new ToolsMenu(runAnimationHandler, modelHandler, cameraHandler,
+			frameBar);
 	layout->addWidget(toolsMenu);
 
-	connect(frameBar, SIGNAL(modelSizeChanged(int)),toolsMenu, SLOT( modelSizeChanged(int)));
-	connect(cameraHandler, SIGNAL(cameraStateChanged(bool)), toolsMenu, SLOT(cameraOn(bool)));
+	connect(frameBar, SIGNAL(modelSizeChanged(int)),
+			toolsMenu, SLOT(fixNavigationButtons(int)));
+	connect(cameraHandler, SIGNAL(cameraStateChanged(bool)),
+			toolsMenu, SLOT(cameraOn(bool)));
 }
 
 
@@ -439,7 +443,8 @@ void MainWindowGUI::makeGotoMenu(QVBoxLayout *layout)
 	gotoSpinner->setRange(1, 1);
 
 	connect(frameBar, SIGNAL(newActiveFrame(int,int)), gotoSpinner, SLOT(setValue(int)));
-	connect(frameBar, SIGNAL(modelSizeChanged(int)), gotoSpinner, SLOT(setMaximumValue(int)));
+	connect(frameBar, SIGNAL(modelSizeChanged(int)),
+			gotoSpinner, SLOT(setMaximumValue(int)));
 	connect(frameBar, SIGNAL(newMaximumValue(int)), gotoSpinner, SLOT(setMaximumValue(int)));
 	connect(gotoSpinner, SIGNAL(spinBoxTriggered(int)), editMenuHandler, SLOT(gotoFrame(int)));
 	connect(gotoSpinner, SIGNAL(spinBoxCanceled()),editMenuHandler, SLOT(closeGotoMenu()));
@@ -793,7 +798,7 @@ void MainWindowGUI::newProject()
 
 	  DomainFacade::getFacade()->clearHistory();
 	  modelSizeChanged(0);
-	  toolsMenu->modelSizeChanged(0);
+	  toolsMenu->fixNavigationButtons(0);
 	}
 }
 
@@ -823,7 +828,7 @@ void MainWindowGUI::openProject( const char * projectFile )
 	if (size > 0) {
 		activateMenuOptions();
 		modelSizeChanged(size);
-		toolsMenu->modelSizeChanged(size);
+		toolsMenu->fixNavigationButtons(size);
 	}
 }
 

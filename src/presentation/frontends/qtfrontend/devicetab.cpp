@@ -26,6 +26,13 @@
 #include "src/foundation/logger.h"
 
 #include <QHeaderView>
+#include <QTableWidget>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QTextEdit>
 
 
 DeviceTab::DeviceTab(QWidget *parent) 

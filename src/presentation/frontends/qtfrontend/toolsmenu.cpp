@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -39,6 +39,8 @@
 #include "src/application/runanimationhandler.h"
 #include "src/application/modelhandler.h"
 #include "src/application/camerahandler.h"
+#include "src/domain/domainfacade.h"
+#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 
 #include <QShortcut>
 #include <QWidget>
@@ -50,22 +52,22 @@
 #include <QTimer>
 
 
-ToolsMenu::ToolsMenu( RunAnimationHandler *runAnimationHandler, ModelHandler *modelHandler,
-		CameraHandler *cameraHandler, QWidget *parent ) 
-	: QWidget(parent), runAnimationHandler(runAnimationHandler), modelHandler(modelHandler), 
-		cameraHandler(cameraHandler)
-{
+ToolsMenu::ToolsMenu(RunAnimationHandler *runAnimationHandler,
+		ModelHandler *modelHandler, CameraHandler *cameraHandler,
+		FrameBar *frameBar, QWidget *parent)
+	: QWidget(parent), runAnimationHandler(runAnimationHandler), modelHandler(modelHandler),
+		cameraHandler(cameraHandler), frameBar(frameBar) {
 	ui.setupUi(this);
-	
+
 	loopAccel = 0;
 	playAccel = 0;
 	mixAccel = 0;
 	diffAccel = 0;
 	playbackAccel = 0;
-	
+
 	captureTimer = new QTimer(this);
 	connect( captureTimer, SIGNAL( timeout() ), cameraHandler, SLOT(captureFrame()));
-	
+
 	setupUi();
 	createAccelerators();
 }
@@ -76,43 +78,43 @@ void ToolsMenu::setupUi()
 	ui.addFramesButton->setIcon( QPixmap(addframeicon) );
 	ui.addFramesButton->setFocusPolicy( Qt::NoFocus );
 	connect(ui.addFramesButton, SIGNAL(clicked()), modelHandler, SLOT(chooseFrame()));
-	
+
 	ui.removeFramesButton->setIcon( QPixmap(removeframeicon) );
 	ui.removeFramesButton->setFocusPolicy( Qt::NoFocus );
 	connect(ui.removeFramesButton, SIGNAL(clicked()), modelHandler, SLOT(removeFrames()));
-	
+
 	runAnimationHandler->setRemoveFramesButton(ui.removeFramesButton);
 	modelHandler->setRemoveFramesButton(ui.removeFramesButton);
-	
+
 	ui.addSceneButton->setIcon( QPixmap(newscene) );
 	ui.addSceneButton->setFocusPolicy( Qt::NoFocus );
 	connect(ui.addSceneButton, SIGNAL(clicked()), modelHandler, SLOT(newScene()));
-	
+
 	ui.removeSceneButton->setIcon( QPixmap(removescene) );
 	ui.removeSceneButton->setFocusPolicy( Qt::NoFocus );
 	connect(ui.removeSceneButton, SIGNAL(clicked()), modelHandler, SLOT(removeScene()));
-	
+
 	ui.cameraButton->setIcon( QPixmap(cameraon) );
-	ui.cameraButton->setFocusPolicy( Qt::NoFocus );	
+	ui.cameraButton->setFocusPolicy( Qt::NoFocus );
 	cameraHandler->setCameraButton(ui.cameraButton);
 	connect( ui.cameraButton, SIGNAL(clicked()), cameraHandler, SLOT(toggleCamera()) );
-	
+
 
 
 	ui.captureGroup->hide();
 	connect( cameraHandler, SIGNAL(cameraStateChanged(bool)), this, SLOT(activateCaptureGroup(bool)) );
-	
+
 	ui.captureButton->setIcon(  QPixmap(captureicon) );
 	ui.captureButton->setFocusPolicy( Qt::NoFocus );
 	connect(ui.captureButton, SIGNAL(clicked()), cameraHandler, SLOT(captureFrame()));
-	
+
 	ui.viewChooseCombo->setFocusPolicy( Qt::NoFocus );
 	connect(ui.viewChooseCombo, SIGNAL(activated (int)),this, SLOT(changeViewingMode(int)));
-	
+
 	ui.unitChooseCombo->setFocusPolicy( Qt::NoFocus );
 	ui.unitChooseCombo->setEnabled(false);
 	connect(ui.unitChooseCombo, SIGNAL(activated (int)),this, SLOT(changeUnitMode(int)));
-	
+
 	ui.mixSlider->setMinimum(0);
 	ui.mixSlider->setMaximum(5);
 	ui.mixSlider->setPageStep(1);
@@ -121,7 +123,7 @@ void ToolsMenu::setupUi()
 	ui.mixSlider->setFocusPolicy( Qt::NoFocus );
 	connect( ui.mixSlider, SIGNAL(valueChanged(int)), cameraHandler, SLOT(setMixCount(int)) );
 	connect( ui.mixSlider, SIGNAL(valueChanged(int)), this, SLOT(updateSliderValue(int)) );
-	
+
 	ui.speedChooser->setMinimum(1);
 	ui.speedChooser->setMaximum(30);
 	ui.speedChooser->setValue(1);
@@ -129,47 +131,51 @@ void ToolsMenu::setupUi()
 	ui.speedChooser->setValue(PreferencesTool::get()->getPreference("fps", 10));
 	connect( ui.speedChooser, SIGNAL(valueChanged(int)), runAnimationHandler, SLOT(setSpeed(int)));
 	connect( ui.speedChooser, SIGNAL( valueChanged(int) ), cameraHandler, SLOT(setPlaybackSpeed(int)) );
-	
+
 	ui.playButton->setIcon( QPixmap(playicon));
 	ui.playButton->setFocusPolicy( Qt::NoFocus );
-	
+
 	runAnimationHandler->setPlayButton(ui.playButton);
 	connect(ui.playButton, SIGNAL(clicked()), runAnimationHandler, SLOT(runAnimation()));
 	ui.playButton->setEnabled(false);
-	
+
 	ui.nextFrameButton->setIcon( QPixmap(fastforwardicon) );
 	ui.nextFrameButton->setFocusPolicy( Qt::NoFocus );
 	ui.nextFrameButton->setAutoRepeat(true);
-	connect( ui.nextFrameButton, SIGNAL(clicked()), runAnimationHandler, SLOT(selectNextFrame()) );
+	connect( ui.nextFrameButton, SIGNAL(clicked()),
+			frameBar, SLOT(selectNextFrame()) );
 	ui.nextFrameButton->setEnabled(false);
-		
+
 	ui.previousFrameButton->setIcon( QIcon(QPixmap(rewindicon)) );
 	ui.previousFrameButton->setFocusPolicy( Qt::NoFocus );
 	ui.previousFrameButton->setAutoRepeat(true);
-	connect( ui.previousFrameButton, SIGNAL(clicked()), runAnimationHandler, SLOT(selectPreviousFrame()) );
+	connect( ui.previousFrameButton, SIGNAL(clicked()),
+			frameBar, SLOT(selectPreviousFrame()) );
 	ui.previousFrameButton->setEnabled(false);
-	
+
 	ui.toEndButton->setIcon( QIcon(QPixmap(steptoendicon)) );
 	ui.toEndButton->setFocusPolicy( Qt::NoFocus );
-	connect( ui.toEndButton, SIGNAL(clicked()), runAnimationHandler, SLOT(selectNextScene()) );
+	connect( ui.toEndButton, SIGNAL(clicked()),
+			frameBar, SLOT(selectNextScene()) );
 	ui.toEndButton->setEnabled(false);
-	
+
 	ui.toBeginningButton->setIcon( QIcon(QPixmap(steptobeginningicon)) );
 	ui.toBeginningButton->setFocusPolicy( Qt::NoFocus );
-	connect( ui.toBeginningButton, SIGNAL(clicked()), runAnimationHandler, SLOT(selectPreviousScene()) );
+	connect( ui.toBeginningButton, SIGNAL(clicked()),
+			frameBar, SLOT(selectPreviousScene()) );
 	ui.toBeginningButton->setEnabled(false);
-	
+
 	ui.stopButton->setIcon( QIcon(QPixmap(stopicon)) );
 	ui.stopButton->setFocusPolicy( Qt::NoFocus );
 	connect( ui.stopButton, SIGNAL(clicked()), runAnimationHandler, SLOT(stopAnimation()));
 	ui.stopButton->setEnabled(false);
-	
+
 	ui.pauseButton->setIcon( QIcon(QPixmap(pauseicon)) );
 	ui.pauseButton->setFocusPolicy( Qt::NoFocus );
 	ui.pauseButton->setEnabled(false);
 	runAnimationHandler->setPauseButton(ui.pauseButton);
 	connect(ui.pauseButton, SIGNAL(clicked()), runAnimationHandler, SLOT(pauseAnimation()));
-	
+
 	ui.loopButton->setIcon( QIcon(QPixmap(loopicon)) );
 	ui.loopButton->setFocusPolicy( Qt::NoFocus );
 	runAnimationHandler->setLoopButton(ui.loopButton);
@@ -186,16 +192,16 @@ void ToolsMenu::createAccelerators()
 {
 	loopAccel = new QShortcut(QKeySequence(Qt::ControlModifier + Qt::Key_L), this);
 	connect(loopAccel, SIGNAL(activated()), ui.loopButton, SLOT(toggle()));
-	
-	playAccel = new QShortcut(QKeySequence(Qt::Key_K), this); 
+
+	playAccel = new QShortcut(QKeySequence(Qt::Key_K), this);
 	connect(playAccel, SIGNAL(activated()), runAnimationHandler, SLOT(toggleRunning()));
-	
+
 	mixAccel = new QShortcut(QKeySequence(Qt::Key_1), this);
 	connect(mixAccel, SIGNAL(activated()), this, SLOT(setMixingMode()));
-	
+
 	diffAccel = new QShortcut(QKeySequence(Qt::Key_2), this);
 	connect(diffAccel, SIGNAL(activated()), this, SLOT(setDiffingMode()));
-	
+
 	playbackAccel = new QShortcut(QKeySequence(Qt::Key_3), this);
 	connect(playbackAccel, SIGNAL(activated()), this, SLOT(setPlaybackMode()));
 }
@@ -203,7 +209,7 @@ void ToolsMenu::createAccelerators()
 
 void ToolsMenu::activateCaptureGroup(bool activate)
 {
-	if (activate) {		
+	if (activate) {
 		ui.captureGroup->show();
 	}
 	else {
@@ -216,62 +222,62 @@ void ToolsMenu::retranslateStrings()
 {
 	ui.speedChooserCaption->setText( tr("FPS chooser") );
 	ui.mixSliderCaption->setText( tr("Number of images:") );
-	
+
 	ui.viewChooseCombo->clear();
 	ui.viewChooseCombo->addItem( tr("Mix") );
 	ui.viewChooseCombo->addItem( tr("Diff") );
 	ui.viewChooseCombo->addItem( tr("Playback") );
 	ui.viewChooseCombo->addItem( tr("Auto") );
-	
+
 	ui.unitChooseCombo->clear();
 	ui.unitChooseCombo->addItem("Off");
 	ui.unitChooseCombo->addItem( tr("Per second") );
 	ui.unitChooseCombo->addItem( tr("Per minute") );
 	ui.unitChooseCombo->addItem( tr("Per hour") );
 	ui.unitChooseCombo->setCurrentIndex(0);
-	
+
 	//Tooltip and whatsthis text
-	QString infoText = 
+	QString infoText =
 			tr("<h4>Add Frames (CTRL+F)</h4> "
 			"<p>Click on this button to <em>add</em> frames to the "
 			"animation.</p>");
 	ui.addFramesButton->setToolTip(infoText);
 	ui.addFramesButton->setWhatsThis(infoText);
-	
-	infoText = 
+
+	infoText =
 			tr("<h4>Remove Selection (Delete)</h4> "
 			"<p>Click this button to <em>remove</em> the selected frames "
 			"from the animation.</p>");
 	ui.removeFramesButton->setToolTip(infoText);
 	ui.removeFramesButton->setWhatsThis(infoText);
-	
-	infoText = 
+
+	infoText =
 			tr("<h4>New Scene (CTRL+E)</h4> "
 			"<p>Click this button to <em>create</em> a new <em>scene</em> "
 			"to the animation.</p>");
 	ui.addSceneButton->setToolTip(infoText);
 	ui.addSceneButton->setWhatsThis(infoText);
-	
-	infoText = 
+
+	infoText =
 			tr("<h4>Remove Scene (SHIFT+Delete)</h4> "
 			"<p>Click this button to <em>remove</em> the selected scene "
 			"from the animation.</p>");
 	ui.removeSceneButton->setToolTip(infoText);
 	ui.removeSceneButton->setWhatsThis(infoText);
-	
-	infoText = 
+
+	infoText =
 			tr("<h4>Toggle camera on/off (C)</h4> "
 			"<p>Click this button to toggle the camera on and off</p> ");
 	ui.cameraButton->setToolTip(infoText);
 	ui.cameraButton->setWhatsThis(infoText );
-	
-	infoText = 
+
+	infoText =
 			tr("<h4>Launch Gimp</h4> "
-			"<p>Click this button to open the active frame in Gimp</p> " 
+			"<p>Click this button to open the active frame in Gimp</p> "
 			"<p>Note that you can also drag images from the frame bar and drop them on Gimp</p>");
 	ui.launchGimp->setToolTip(infoText);
 	ui.launchGimp->setWhatsThis(infoText );
-	
+
 	infoText =
 			tr("<h4>Capture Frame (Space)</h4> "
 			"<p>Click on this button to <em>capture</em> a frame from the "
@@ -279,8 +285,8 @@ void ToolsMenu::retranslateStrings()
 			"done by pressing the <b>Space key</b></p>");
 	ui.captureButton->setWhatsThis(infoText);
 	ui.captureButton->setToolTip(infoText);
-	
-	infoText = 
+
+	infoText =
 			tr("<h4>Number of images</h4> "
 			"<p>By changing the value in this slidebar you can specify how many images "
 			"backwards in the animation which should be mixed on top of the camera or "
@@ -290,8 +296,8 @@ void ToolsMenu::retranslateStrings()
 			"stop motion animation!</p>");
 	ui.mixSliderCaption->setWhatsThis(infoText );
 	ui.mixSlider->setWhatsThis(infoText);
-	
-	infoText = 
+
+	infoText =
 			tr("<h4>FPS chooser</h4> "
 			"<p>By changing the value in this "
 			"chooser you set which speed the "
@@ -301,25 +307,25 @@ void ToolsMenu::retranslateStrings()
 			"<b>Run Animation</b> button.</p>");
     ui.speedChooserCaption->setWhatsThis(infoText );
     ui.speedChooser->setWhatsThis(infoText);
-	
+
 	infoText = tr("<h4>Play animation (K, P)</h4>");
 	ui.playButton->setToolTip(infoText);
-	
+
 	infoText = tr("<h4>Stop animation (K, P)</h4>");
 	ui.stopButton->setToolTip(infoText);
-	
+
 	infoText = tr("<h4>Previous frame (J, Left)</h4>");
 	ui.previousFrameButton->setToolTip(infoText);
-	
+
 	infoText = tr("<h4>Next frame (L, Right)</h4>");
 	ui.nextFrameButton->setToolTip(infoText);
-	
+
 	infoText = tr("<h4>Previous scene (I)</h4>");
 	ui.toBeginningButton->setToolTip(infoText);
-	
+
 	infoText = tr("<h4>Next scene (O)</h4>");
 	ui.toEndButton->setToolTip(infoText);
-	
+
 	infoText =
 			tr("<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether "
 			"you want the animation to play to the end, or to loop indefinetly.</p>");
@@ -417,7 +423,7 @@ void ToolsMenu::changeViewingMode(int index)
 				"as a deamon. Go to the preferences menu (CTRL+P) to switch \n"
 				"to running the image grabbing as a deamon."),
 				QMessageBox::Ok,
-				QMessageBox::NoButton, 
+				QMessageBox::NoButton,
 				QMessageBox::NoButton);
 		ui.viewChooseCombo->setCurrentIndex(0);
 		cameraHandler->setViewMode(0);
@@ -434,7 +440,7 @@ void ToolsMenu::changeUnitMode(int index)
 		}
 		return;
 	}
-	
+
 	int factor = 0;
 	switch (index) {
 		case 1:
@@ -465,7 +471,7 @@ void ToolsMenu::changeUnitMode(int index)
 }
 
 
-void ToolsMenu::modelSizeChanged(int modelSize)
+void ToolsMenu::fixNavigationButtons(int modelSize)
 {
 	//Not <=1 because it is signed with a meaning for -1.
 	if (modelSize == 0 || modelSize == 1) {
@@ -513,4 +519,5 @@ void ToolsMenu::cameraOn(bool isOn)
 			captureTimer->stop();
 		}
 	}
+	fixNavigationButtons(DomainFacade::getFacade()->getModelSize());
 }

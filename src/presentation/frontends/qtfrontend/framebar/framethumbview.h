@@ -22,10 +22,9 @@
 
 #include "src/presentation/frontends/qtfrontend/framebar/thumbview.h"
 
-#include <QMouseEvent>
-#include <QDropEvent>
-#include <QPaintEvent>
-
+class QMouseEvent;
+class QDropEvent;
+class QPaintEvent;
 
 /**
  * Widget representing a frame in the animation.

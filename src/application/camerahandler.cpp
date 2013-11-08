@@ -85,6 +85,8 @@ void CameraHandler::cameraOn()
 	isCameraOn = frameView->on();
 	if (!isCameraOn) {
 		cameraOff();
+	} else {
+		emit cameraStateChanged(false);
 	}
 	DomainFacade::getFacade()->getFrontend()->hideProgress();
 }
@@ -93,9 +95,9 @@ void CameraHandler::cameraOn()
 void CameraHandler::cameraOff()
 {
 	cameraButton->setIcon( QPixmap(cameraon) );
-	emit cameraStateChanged(false);
 	frameView->off();
 	isCameraOn = false;
+	emit cameraStateChanged(false);
 }
 
 
