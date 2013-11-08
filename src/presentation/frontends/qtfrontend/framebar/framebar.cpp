@@ -131,6 +131,7 @@ void FrameBar::updateAdd(int scene, int index, int numFrames) {
 		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
 	updateNewActiveFrame(scene, index + numFrames - 1);
+	setSelection(index);
 	doScroll();
 }
 
@@ -141,7 +142,7 @@ void FrameBar::updateRemove(int scene, int fromFrame, int toFrame) {
 		removeFrames(fromFrame, toFrame);
 		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
-	updateNewActiveFrame(scene, fromFrame);
+	updateNewActiveFrame(scene, fromFrame - 1);
 }
 
 
@@ -242,6 +243,10 @@ void FrameBar::resync() {
 }
 
 void FrameBar::insertFrames(int index, int numFrames) {
+	if (index <= activeFrame)
+		activeFrame += numFrames;
+	if (index <= selectionFrame)
+		selectionFrame += numFrames;
 	std::vector<ThumbView*>::iterator pos = thumbViews.begin()
 			+ (index + activeScene + 1);
 	thumbViews.insert(pos,
@@ -266,10 +271,6 @@ void FrameBar::addFrames(int index, int numFrames) {
 		return;
 	}
 	insertFrames(index, numFrames);
-	if (index <= activeFrame)
-		activeFrame += numFrames;
-	if (index <= selectionFrame)
-		selectionFrame += numFrames;
 	fixSize();
 }
 
@@ -283,17 +284,38 @@ void FrameBar::deleteFrames(int fromFrame, int frameCount) {
 	}
 	thumbViews.erase(start, end);
 	activeSceneSize -= frameCount;
-	if (fromFrame <= activeFrame) {
-		if (fromFrame + frameCount <= activeFrame)
-			activeFrame -= frameCount;
-		else
-			activeFrame = fromFrame - 1;
+	// fix the selection (we want the thumbnails that are currently
+	// highlighted to be in the selection)
+	if (activeFrame < 0)
+		return;
+	int startSelection = selectionFrame;
+	int endSelection = activeFrame + 1;
+	if (endSelection < startSelection) {
+		startSelection = activeFrame;
+		endSelection = selectionFrame + 1;
 	}
-	if (fromFrame <= selectionFrame) {
-		if (fromFrame + frameCount <= selectionFrame)
-			selectionFrame -= frameCount;
+	if (endSelection <= fromFrame)
+		return;
+	if (endSelection < fromFrame + frameCount)
+		endSelection = fromFrame;
+	else
+		endSelection -= frameCount;
+	if (fromFrame < startSelection) {
+		if (startSelection < fromFrame + frameCount)
+			startSelection = fromFrame;
 		else
-			selectionFrame = fromFrame - 1;
+			startSelection -= frameCount;
+	}
+	if (endSelection <= startSelection) {
+		// no selection remains
+		activeFrame = -1;
+		selectionFrame = -1;
+	} else if (activeFrame < selectionFrame) {
+		activeFrame = startSelection;
+		selectionFrame = endSelection - 1;
+	} else {
+		selectionFrame = startSelection;
+		activeFrame = endSelection - 1;
 	}
 }
 
