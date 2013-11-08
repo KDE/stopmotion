@@ -86,7 +86,7 @@ void CameraHandler::cameraOn()
 	if (!isCameraOn) {
 		cameraOff();
 	} else {
-		emit cameraStateChanged(false);
+		emit cameraStateChanged(true);
 	}
 	DomainFacade::getFacade()->getFrontend()->hideProgress();
 }

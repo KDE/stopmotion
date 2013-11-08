@@ -722,7 +722,6 @@ ThumbView* FrameBar::getSceneThumb(int index, bool fix) {
 		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 		thumb->setParent(mainWidget);
 		thumb->show();
-		thumb->move((FRAME_WIDTH + SPACE) * thumbIndex, 0);
 		thumbViews[thumbIndex] = thumb;
 		fix = true;
 	}
