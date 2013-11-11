@@ -48,10 +48,13 @@ void ObserverNotifier::doOp(ObservableOperation& oo) {
 			oo.update(**i);
 		} catch (std::exception& e) {
 			try {
-				//TODO: some sort of reset of the Observer?
 				if (frontend)
 					frontend->reportError(e.what(), 0);
 			} catch (...) {
+			}
+			for (observers_t::iterator i = observers.begin();
+					i != observers.end(); ++i) {
+				(*i)->resync();
 			}
 		}
 	}

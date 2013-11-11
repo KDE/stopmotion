@@ -419,7 +419,7 @@ void MainWindowGUI::makeToolsMenu(QHBoxLayout *layout)
 
 void MainWindowGUI::makePreferencesMenu(QVBoxLayout *layout)
 {
-	framePreferencesMenu = new FramePreferencesMenu(0, soundHandler);
+	framePreferencesMenu = new FramePreferencesMenu(0, soundHandler, frameBar);
 	layout->addWidget(framePreferencesMenu);
 	frameBar->setPreferencesMenu(framePreferencesMenu);
 	framePreferencesMenu->hide();

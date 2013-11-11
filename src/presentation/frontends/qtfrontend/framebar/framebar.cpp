@@ -224,7 +224,8 @@ void FrameBar::resync() {
 	clear();
 	DomainFacade* facade = DomainFacade::getFacade();
 	int sceneCount = facade->getNumberOfScenes();
-	int scene = sceneCount <= activeScene? -1 : activeScene;
+	int scene = 0 <= activeScene && activeScene < sceneCount?
+			activeScene : -1;
 	activeScene = -1;
 	int sceneSize = 0 <= scene? facade->getSceneSize(scene) : 0;
 
@@ -232,6 +233,8 @@ void FrameBar::resync() {
 	thumbViews.insert(thumbViews.begin(), thumbCount, 0);
 	activeScene = scene;
 	activeSceneSize = sceneSize;
+	if (scene != activeScene || scene < 0 || sceneSize <= activeFrame)
+		activeFrame = -1;
 	for (int i = 0; i != sceneCount; ++i) {
 		getSceneThumb(i, true);
 	}

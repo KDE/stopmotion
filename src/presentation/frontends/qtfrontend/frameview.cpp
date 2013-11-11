@@ -125,10 +125,8 @@ void FrameView::initCompleted()
 
 void FrameView::updateNewActiveFrame(int sceneNumber, int frameNumber)
 {
-	if (frameNumber > -1) {
-		setActiveFrame(sceneNumber, frameNumber);
-	}
-	else {
+	setActiveFrame(sceneNumber, frameNumber);
+	if (frameNumber < 0) {
 		SDL_FreeSurface(videoSurface);
 		videoSurface = 0;
 		this->update();
