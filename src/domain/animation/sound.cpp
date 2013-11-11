@@ -52,7 +52,7 @@ const char* Sound::setName(const char* n) {
 
 void Sound::setName(std::string& n) {
 	assert(!name);
-	int size = n.size();
+	int size = n.size() + 1;
 	char* a = new char[size];
 	name = a;
 	strncpy(a, n.c_str(), size);

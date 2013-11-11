@@ -47,6 +47,7 @@ Command* CommandAddSound::execute() {
 	std::auto_ptr<CommandRemoveSound>
 			inv(new CommandRemoveSound(sv, sc, fr, index));
 	sv.addSound(sc, fr, index, snd);
+	snd = 0;
 	delete this;
 	return inv.release();
 };
@@ -72,8 +73,9 @@ Command* CommandAddSoundFactory::create(Parameters& ps) {
 	std::auto_ptr<Sound> sound(new Sound());
 	sound->setName(humanName);
 	std::auto_ptr<CommandAddSound> r(new CommandAddSound(sv, sc, fr, index));
+	Sound* soundCopy = sound.get();
 	r->setSound(sound.release());
 	TemporaryWorkspaceFile twf(filename.c_str());
-	sound->open(twf);
+	soundCopy->open(twf);
 	return r.release();
 }
