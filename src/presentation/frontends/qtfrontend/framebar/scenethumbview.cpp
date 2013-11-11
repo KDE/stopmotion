@@ -107,7 +107,7 @@ void SceneThumbView::mousePressEvent(QMouseEvent *e) {
 
 
 void SceneThumbView::mouseReleaseEvent( QMouseEvent * ) {
-	frameBar->updateNewActiveFrame(number, 0);
+	frameBar->updateNewActiveScene(number);
 }
 
 
@@ -142,9 +142,9 @@ void SceneThumbView::startDrag() {
 void SceneThumbView::closeScene() {
 	if ( number >= 0) {
 		if (frameBar->getActiveScene() == number && number > 0) {
-			frameBar->updateNewActiveFrame(number - 1, 0);
+			frameBar->updateNewActiveScene(number - 1);
 		} else {
-			frameBar->updateNewActiveFrame(number, 0);
+			frameBar->updateNewActiveScene(number);
 		}
 	}
 }

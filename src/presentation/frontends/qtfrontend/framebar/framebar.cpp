@@ -164,24 +164,30 @@ void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 	}
 }
 
-
-void FrameBar::updateNewActiveFrame(int sceneNumber, int frameNumber) {
-	setActiveScene(sceneNumber);
-	setActiveFrame(frameNumber);
-
+void FrameBar::doActiveFrameNotifications() {
 	if ( preferencesMenu->isVisible() ) {
-		if (frameNumber >= 0) {
+		if (activeFrame >= 0) {
 			showPreferencesMenu();
 		}
 		else {
 			preferencesMenu->close();
 		}
 	}
-
 	// For writing the frame number in the frame number display
-	emit newActiveFrame( QString(tr("Frame number: ")) + QString("%1").arg(frameNumber + 1) );
+	emit newActiveFrame( QString(tr("Frame number: ")) + QString("%1").arg(activeFrame + 1) );
+	emit newActiveFrame(activeScene, activeFrame);
+}
 
-	emit newActiveFrame(sceneNumber, frameNumber);
+void FrameBar::updateNewActiveScene(int sceneNumber) {
+	setActiveScene(sceneNumber);
+	setActiveFrame(activeSceneSize - 1);
+	doActiveFrameNotifications();
+}
+
+void FrameBar::updateNewActiveFrame(int sceneNumber, int frameNumber) {
+	setActiveScene(sceneNumber);
+	setActiveFrame(frameNumber);
+	doActiveFrameNotifications();
 }
 
 void FrameBar::clear() {

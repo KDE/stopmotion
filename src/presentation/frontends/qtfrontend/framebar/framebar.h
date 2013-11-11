@@ -80,13 +80,6 @@ public:
 	void updateClear();
 
 	/**
-	 * Receives notification when a frame is to be played.
-	 * @param scene The scene containing the frame to be played.
-	 * @param frame Index of the frame within the scene to be played.
-	 */
-	void updatePlayFrame(int scene, int frame);
-
-	/**
 	 * Function to recieve notification when a new scene is added to the
 	 * model.
 	 * @param index the index of the new scene.
@@ -394,6 +387,7 @@ private:
 	 * Scrolls the framebar to include the currently active frame.
 	 */
 	void doScroll();
+	void doActiveFrameNotifications();
 };
 
 #endif
