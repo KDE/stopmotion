@@ -406,11 +406,7 @@ void FrameView::off()
 	}
 
 	this->isPlayingVideo = false;
-
-	if (videoSurface != 0) {
-		SDL_FreeSurface(videoSurface);
-		videoSurface = 0;
-	}
+	setActiveFrame(activeScene, activeFrame);
 	this->update();
 }
 
