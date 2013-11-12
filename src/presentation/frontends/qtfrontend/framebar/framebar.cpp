@@ -165,18 +165,14 @@ void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 }
 
 void FrameBar::updateSoundChanged(int sceneNumber, int frameNumber) {
-	if (sceneNumber != activeScene)
-		return;
-	if (frameNumber < 0)
-		return;
 	if (activeSceneSize <= frameNumber) {
 		resync();
 	} else {
 		getFrameThumb(frameNumber, true);
 	}
-	if (activeFrame == frameNumber) {
-		fixPreferencesMenu();
-	}
+	setActiveScene(sceneNumber);
+	setActiveFrameAndSelection(frameNumber, frameNumber);
+	showPreferencesMenu();
 }
 
 void FrameBar::fixPreferencesMenu() {
