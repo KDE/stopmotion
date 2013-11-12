@@ -46,7 +46,7 @@ void SoundHandler::addSound() {
 		DomainFacade *facade = DomainFacade::getFacade();
 		int activeScene = frameBar->getActiveScene();
 		int activeFrame = frameBar->getActiveFrame();
-		int ret = facade->addSound( activeScene, activeFrame,
+		facade->addSound( activeScene, activeFrame,
 				file.toLocal8Bit().constData() );
 	}
 }

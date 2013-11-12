@@ -84,17 +84,17 @@ int Frame::newSound(TemporaryWorkspaceFile& filename) {
 }
 
 void Frame::addSound(int index, Sound* sound) {
-	if (index < 0 || sounds.size() < index)
+	if (index < 0 || soundCount() < index)
 		throw SoundOutOfRangeException();
 	sounds.insert(sounds.begin() + index, sound);
 }
 
 void Frame::preallocateSounds(int extra) {
-	sounds.reserve(sounds.size() + extra);
+	sounds.reserve(soundCount() + extra);
 }
 
 Sound* Frame::removeSound(int soundNumber) {
-	if (soundNumber < 0 || sounds.size() <= soundNumber)
+	if (soundNumber < 0 || soundCount() <= soundNumber)
 		throw SoundOutOfRangeException();
 	Sound* s = sounds[soundNumber];
 	sounds.erase(sounds.begin() + soundNumber);
@@ -103,33 +103,33 @@ Sound* Frame::removeSound(int soundNumber) {
 
 
 Sound* Frame::getSound(int soundNumber) {
-	if (soundNumber < 0 || sounds.size() <= soundNumber)
+	if (soundNumber < 0 || soundCount() <= soundNumber)
 		throw SoundOutOfRangeException();
 	return sounds[soundNumber];
 }
 
 
 const Sound* Frame::getSound(int soundNumber) const {
-	if (soundNumber < 0 || sounds.size() <= soundNumber)
+	if (soundNumber < 0 || soundCount() <= soundNumber)
 		throw SoundOutOfRangeException();
 	return sounds[soundNumber];
 }
 
 
-int Frame::getNumberOfSounds() const {
+int Frame::soundCount() const {
 	return sounds.size();
 }
 
 
 const char* Frame::setSoundName(int soundNumber, const char* soundName) {
-	if (soundNumber < 0 || sounds.size() <= soundNumber)
+	if (soundNumber < 0 || soundCount() <= soundNumber)
 		throw SoundOutOfRangeException();
 	return sounds[soundNumber]->setName(soundName);
 }
 
 
 const char* Frame::getSoundName(int soundNumber) const {
-	if (soundNumber < 0 || sounds.size() <= soundNumber)
+	if (soundNumber < 0 || soundCount() <= soundNumber)
 		throw SoundOutOfRangeException();
 	return sounds[soundNumber]->getName();
 }

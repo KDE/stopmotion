@@ -83,7 +83,7 @@ const char* CommandAddFactory::Parameters::addFrame(const char* filename) {
 	return p->path();
 }
 
-int32_t CommandAddFactory::Parameters::getInteger(int32_t min, int32_t max) {
+int32_t CommandAddFactory::Parameters::getInteger(int32_t, int32_t) {
 	assert(parameterCount < 2);
 	++parameterCount;
 	return parameterCount == 1? sc : fr;

@@ -97,7 +97,7 @@ public:
 	 * Returns the number of sounds in this frame.
 	 * @return the number of sounds in this frame.
 	 */
-	int getNumberOfSounds() const;
+	int soundCount() const;
 
 	/**
 	 * Sets the name of the sound at index soundNumber in this frame to

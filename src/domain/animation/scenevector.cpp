@@ -51,7 +51,7 @@ int SceneVector::sceneCount() const {
 }
 
 void SceneVector::addScene(int where, Scene* newScene) {
-	if (where < 0 || scenes.size() < where)
+	if (where < 0 || sceneCount() < where)
 		throw SceneOutOfRangeException();
 	scenes.insert(scenes.begin() + where, newScene);
 }
@@ -63,11 +63,11 @@ void SceneVector::addScene(int where) {
 }
 
 void SceneVector::preallocateScenes(int count) {
-	scenes.reserve(scenes.size() + count);
+	scenes.reserve(sceneCount() + count);
 }
 
 Scene* SceneVector::removeScene(int from) {
-	if (from < 0 || scenes.size() <= from)
+	if (from < 0 || sceneCount() <= from)
 		throw SceneOutOfRangeException();
 	Scene* s = scenes[from];
 	scenes.erase(scenes.begin() + from);
@@ -75,7 +75,7 @@ Scene* SceneVector::removeScene(int from) {
 }
 
 void SceneVector::moveScene(int from, int to) {
-	int size = scenes.size();
+	int size = sceneCount();
 	if (from < 0 || size <= from || to < 0 || size <= to)
 		throw SceneOutOfRangeException();
 	Scene* s = removeScene(from);
@@ -83,13 +83,13 @@ void SceneVector::moveScene(int from, int to) {
 }
 
 const Scene* SceneVector::getScene(int which) const {
-	if (which < 0 || scenes.size() <= which)
+	if (which < 0 || sceneCount() <= which)
 		throw SceneOutOfRangeException();
 	return scenes[which];
 }
 
 Scene* SceneVector::getMutableScene(int which) {
-	if (which < 0 || scenes.size() <= which)
+	if (which < 0 || sceneCount() <= which)
 		throw SceneOutOfRangeException();
 	return scenes[which];
 }
@@ -149,7 +149,7 @@ void SceneVector::moveFrames(int fromScene, int fromFrame, int frameCount,
 }
 
 int SceneVector::soundCount(int scene, int frame) const {
-	return getScene(scene)->getFrame(frame)->getNumberOfSounds();
+	return getScene(scene)->getFrame(frame)->soundCount();
 }
 
 void SceneVector::addSound(int scene, int frame, int soundNumber,

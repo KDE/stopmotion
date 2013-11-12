@@ -53,6 +53,6 @@ Command* UndoRemoveSoundFactory::create(Parameters& ps) {
 	int32_t sc = ps.getInteger(0, sv.sceneCount());
 	int32_t fr = ps.getInteger(0, sv.frameCount(sc));
 	int32_t index = ps.getInteger(0, sv.getScene(sc)->getFrame(fr)->
-			getNumberOfSounds());
+			soundCount());
 	return new CommandRemoveSound(sv, sc, fr, index);
 }

@@ -230,6 +230,8 @@ void FrameView::paintEvent(QPaintEvent *) {
 						SDL_FreeSurface(tmp);
 					}
 					break;
+				default:
+					break;
 				}
 			}
 		}

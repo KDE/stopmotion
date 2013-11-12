@@ -57,7 +57,7 @@ Command* CommandRenameSoundFactory::create(Parameters& ps) {
 	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
 	int32_t fr = ps.getInteger(0, sv.frameCount(sc) - 1);
 	int32_t index = ps.getInteger(0, sv.getScene(sc)->getFrame(fr)
-			->getNumberOfSounds());
+			->soundCount());
 	std::auto_ptr<CommandRenameSound> r(new CommandRenameSound(sv, sc, fr, index, 0));
 	std::string name;
 	ps.getString(name);

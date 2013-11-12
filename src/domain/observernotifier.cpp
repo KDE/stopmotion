@@ -344,7 +344,7 @@ public:
 	}
 	~SoundChanger() {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl&) {
 	}
 	void update(Observer& ob) {
 		ob.updateSoundChanged(sc, fr);

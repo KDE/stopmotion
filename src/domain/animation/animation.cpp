@@ -88,7 +88,7 @@ Executor* makeAnimationCommandExecutor(AnimationImpl& model) {
 
 
 Animation::Animation()
-		: scenes(0), serializer(0), executor(0), audioDriver(0),
+		: scenes(0), executor(0), serializer(0), audioDriver(0),
 		  isAudioDriverInitialized(false), frontend(0) {
 	std::auto_ptr<SceneVector> scs(new SceneVector);
 	std::auto_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));

@@ -516,8 +516,8 @@ void FrameBar::removeScene(int sceneNumber) {
 		return;
 	if (sceneNumber == activeScene)
 		closeActiveScene();
-	int delThumb = sceneNumber <= activeScene? sceneNumber + 1
-			: sceneNumber + activeSceneSize + 1;
+	std::vector<ThumbView*>::size_type delThumb = sceneNumber <= activeScene?
+			sceneNumber + 1 : sceneNumber + activeSceneSize + 1;
 
 	if (sceneNumber < activeScene)
 		--activeScene;
@@ -554,7 +554,7 @@ void FrameBar::moveScene(int sceneNumber, int movePosition) {
 	int thumbBegin = activeScene < begin? begin + activeSceneSize : begin;
 	int thumbMid = activeScene < mid? mid + activeSceneSize : mid;
 	int thumbEnd = activeScene < end? end + activeSceneSize : end;
-	if (thumbViews.size() <= thumbEnd) {
+	if (static_cast<int>(thumbViews.size()) <= thumbEnd) {
 		resync();
 		return;
 	}

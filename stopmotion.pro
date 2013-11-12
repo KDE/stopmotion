@@ -1,5 +1,5 @@
-CONFIG += debug \
-    warn_off
+#CONFIG += debug
+CONFIG += warn_off
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
     src/domain/domainfacade.h \

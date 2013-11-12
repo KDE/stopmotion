@@ -163,7 +163,6 @@ void ProjectSerializer::setAttributes(const std::vector<const Scene*>& sVect,
 	xmlNodePtr node = NULL;
 	const Frame *frame = NULL;
 	const AudioFormat *sound = NULL;
-	unsigned int index = 0;
 
 	scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
 
@@ -178,14 +177,14 @@ void ProjectSerializer::setAttributes(const std::vector<const Scene*>& sVect,
 		images = xmlNewChild(node, NULL, BAD_CAST "images", NULL);
 		const Scene* scene = sVect[i];
 		int numFrames = scene->getSize();
-		for (unsigned int j = 0; j < numFrames; ++j) {
+		for (int j = 0; j < numFrames; ++j) {
 			frame = scene->getFrame(j);
 			const char *filename = frame->getBasename();
 			node = xmlNewChild(images, NULL, BAD_CAST "img", NULL);
 			xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
 			
 			// Sounds
-			unsigned int numSounds = frame->getNumberOfSounds();
+			unsigned int numSounds = frame->soundCount();
 			if (numSounds > 0) {
 				sounds = xmlNewChild(node, NULL, BAD_CAST "sounds", NULL);
 				for (unsigned int k = 0; k < numSounds; ++k) {

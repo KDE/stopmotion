@@ -50,27 +50,27 @@ int Scene::getSize() const {
 
 
 const Frame* Scene::getFrame(int frameNumber) const {
-	if (frameNumber < 0 || frames.size() <= frameNumber)
+	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	return frames[frameNumber];
 }
 
 
 void Scene::cleanFrames(int fromFrame, int toFrame) {
-	if (fromFrame < 0 || toFrame < fromFrame || frames.size() <= toFrame)
+	if (fromFrame < 0 || toFrame < fromFrame || getSize() <= toFrame)
 		throw FrameOutOfRangeException();
 	frames.erase(frames.begin() + fromFrame, frames.begin() + toFrame);
 }
 
 
 void Scene::addFrame(Frame* f, int index) {
-	if (index < 0 || frames.size() < index)
+	if (index < 0 || getSize() < index)
 		throw FrameOutOfRangeException();
 	frames.insert(frames.begin() + index, f);
 }
 
 void Scene::addFrames(int where, const std::vector<Frame*>& fs) {
-	std::vector<Frame*>::size_type sceneSize = frames.size();
+	int sceneSize = getSize();
 	if (where < 0 || sceneSize < where)
 		throw FrameOutOfRangeException();
 	std::vector<Frame*>::size_type newFramesCount = fs.size();
@@ -90,7 +90,7 @@ void Scene::addSavedFrame(Frame *f) {
 }
 
 Frame* Scene::removeFrame(int frame) {
-	if (frame < 0 || frames.size() <= frame)
+	if (frame < 0 || getSize() <= frame)
 		throw FrameOutOfRangeException();
 	Frame* f = frames[frame];
 	frames.erase(frames.begin() + frame);
@@ -98,7 +98,7 @@ Frame* Scene::removeFrame(int frame) {
 }
 
 void Scene::removeFrames(int frame, int count, std::vector<Frame*>& out) {
-	if (count < 0 || frame < 0 || frames.size() < frame + count)
+	if (count < 0 || frame < 0 || getSize() < frame + count)
 		throw FrameOutOfRangeException();
 	out.reserve(out.size() + count);
 	std::vector<Frame*>::iterator begin = frames.begin() + frame;
@@ -108,7 +108,7 @@ void Scene::removeFrames(int frame, int count, std::vector<Frame*>& out) {
 }
 
 void Scene::moveFrames(int fromFrame, int toFrame, int movePosition ) {
-	std::vector<Frame*>::size_type size = frames.size();
+	int size = getSize();
 	if (fromFrame < 0 || toFrame < fromFrame || size <= toFrame
 			|| movePosition < 0 || size <= movePosition)
 		throw FrameOutOfRangeException();
@@ -118,8 +118,7 @@ void Scene::moveFrames(int fromFrame, int toFrame, int movePosition ) {
 			frames.erase(frames.begin() + i);
 			frames.insert(frames.begin() + j, f);
 		}
-	}
-	else {
+	} else {
 		for (int i = fromFrame; i <= toFrame; ++i) {
 			Frame *f = frames[fromFrame];
 			frames.erase(frames.begin() + fromFrame);
@@ -129,50 +128,50 @@ void Scene::moveFrames(int fromFrame, int toFrame, int movePosition ) {
 }
 
 void Scene::addSound(int frameNumber, int soundNumber, Sound* sound) {
-	if (frameNumber < 0 || frames.size() <= frameNumber)
+	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	frames[frameNumber]->addSound(soundNumber, sound);
 }
 
 Sound* Scene::removeSound(int frameNumber, int index) {
-	if (frameNumber < 0 || frames.size() <= frameNumber)
+	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	return frames[frameNumber]->removeSound(index);
 }
 
 const Sound* Scene::getSound(int frameNumber, int index) const {
-	if (frameNumber < 0 || frames.size() <= frameNumber)
+	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	return frames[frameNumber]->getSound(index);
 }
 
 int Scene::getNumberOfSounds(int frameNumber) const {
-	if (frameNumber < 0 || frames.size() <= frameNumber)
+	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
-	return frames[frameNumber]->getNumberOfSounds();
+	return frames[frameNumber]->soundCount();
 }
 
 const char* Scene::setSoundName(int frameNumber, int soundNumber,
 		const char* soundName) {
-	if (frameNumber < 0 || frames.size() <= frameNumber)
+	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	return frames[frameNumber]->setSoundName(soundNumber, soundName);
 }
 
 const char* Scene::getSoundName(int frameNumber, int soundNumber) const {
-	if (frameNumber < 0 || frames.size() <= frameNumber)
+	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	return frames[frameNumber]->getSoundName(soundNumber);
 }
 
 void Scene::replaceImage(int frameNumber, WorkspaceFile& otherImage) {
-	if (frameNumber < 0 || frames.size() <= frameNumber)
+	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	frames[frameNumber]->replaceImage(otherImage);
 }
 
 int Scene::newSound(int frameNumber, TemporaryWorkspaceFile& filename) {
-	if (frameNumber < 0 || frames.size() <= frameNumber)
+	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	return frames[frameNumber]->newSound(filename);
 }
