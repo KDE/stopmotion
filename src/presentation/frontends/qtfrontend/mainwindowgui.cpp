@@ -223,7 +223,6 @@ void MainWindowGUI::createHandlers(QApplication *stApp)
 
 	soundHandler = new SoundHandler( this, this->statusBar(), frameBar,
 			this->lastVisitedDir );
-	connect( soundHandler, SIGNAL( soundsChanged() ), frameBar, SLOT( frameSoundsChanged() ) );
 }
 
 

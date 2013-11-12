@@ -120,6 +120,14 @@ public:
 	void updateAnimationChanged(int sceneNumber, int frameNumber);
 
 	/**
+	 * Upadates the framebar when the sounds attached to the specified frame
+	 * change.
+	 * @param sceneNumber The scene to which the changed frame belongs.
+	 * @param frameNumber The frame number within the scene
+	 */
+	void updateSoundChanged(int sceneNumber, int frameNumber);
+
+	/**
 	 * Set whether the user is engaged selecting several frames or not (pressing
 	 * shift).
 	 * @param selecting true if the user is currently selecting multiple pictures
@@ -203,10 +211,6 @@ protected:
 	void resizeEvent(QResizeEvent *event);
 
 public slots:
-	/**
-	 * Receives notification when the sounds in a frame have been changed.
-	 */
-	void frameSoundsChanged();
 	void updateNewActiveFrame(int scene, int frame);
 	void selectPreviousFrame();
 	void selectNextFrame();
@@ -388,6 +392,7 @@ private:
 	 */
 	void doScroll();
 	void doActiveFrameNotifications();
+	void fixPreferencesMenu();
 };
 
 #endif

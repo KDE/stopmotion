@@ -335,18 +335,88 @@ int ObserverNotifier::soundCount(int scene, int frame) const {
 	return del->soundCount(scene, frame);
 }
 
+class SoundChanger : public ObservableOperation {
+	int sc;
+	int fr;
+public:
+	SoundChanger(int scene, int frame)
+			: sc(scene), fr(frame) {
+	}
+	~SoundChanger() {
+	}
+	void op(AnimationImpl& del) {
+	}
+	void update(Observer& ob) {
+		ob.updateSoundChanged(sc, fr);
+	}
+	int scene() const {
+		return sc;
+	}
+	int frame() const {
+		return fr;
+	}
+};
+
+class SoundAdder : public SoundChanger {
+	int sn;
+	Sound* s;
+public:
+	SoundAdder(int scene, int frame, int soundNumber, Sound* sound)
+			: SoundChanger(scene, frame), sn(soundNumber), s(sound) {
+	}
+	void op(AnimationImpl& del) {
+		del.addSound(scene(), frame(), sn, s);
+	}
+};
+
 void ObserverNotifier::addSound(int scene, int frame, int soundNumber,
 		Sound* sound) {
-	del->addSound(scene, frame, soundNumber, sound);
+	SoundAdder adder(scene, frame, soundNumber, sound);
+	doOp(adder);
 }
+
+class SoundNamer : public SoundChanger {
+	int sn;
+	const char* nm;
+	const char* r;
+public:
+	SoundNamer(int scene, int frame, int soundNumber, const char* name)
+			: SoundChanger(scene, frame), sn(soundNumber), nm(name), r(0) {
+	}
+	void op(AnimationImpl& del) {
+		r = del.setSoundName(scene(), frame(), sn, nm);
+	}
+	const char* returnValue() const {
+		return r;
+	}
+};
 
 const char* ObserverNotifier::setSoundName(int scene, int frame,
 		int soundNumber, const char* soundName) {
-	return del->setSoundName(scene, frame, soundNumber, soundName);
+	SoundNamer sn(scene, frame, soundNumber, soundName);
+	doOp(sn);
+	return sn.returnValue();
 }
 
+class SoundRemover : public SoundChanger {
+	int sn;
+	Sound* r;
+public:
+	SoundRemover(int scene, int frame, int soundNumber)
+			: SoundChanger(scene, frame), sn(soundNumber), r(0) {
+	}
+	void op(AnimationImpl& del) {
+		r = del.removeSound(scene(), frame(), sn);
+	}
+	Sound* returnValue() const {
+		return r;
+	}
+};
+
 Sound* ObserverNotifier::removeSound(int scene, int frame, int soundNumber) {
-	return del->removeSound(scene, frame, soundNumber);
+	SoundRemover sr(scene, frame, soundNumber);
+	doOp(sr);
+	return sr.returnValue();
 }
 
 void ObserverNotifier::registerFrontend(Frontend* fe) {

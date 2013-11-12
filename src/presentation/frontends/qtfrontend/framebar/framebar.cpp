@@ -164,7 +164,22 @@ void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 	}
 }
 
-void FrameBar::doActiveFrameNotifications() {
+void FrameBar::updateSoundChanged(int sceneNumber, int frameNumber) {
+	if (sceneNumber != activeScene)
+		return;
+	if (frameNumber < 0)
+		return;
+	if (activeSceneSize <= frameNumber) {
+		resync();
+	} else {
+		getFrameThumb(frameNumber, true);
+	}
+	if (activeFrame == frameNumber) {
+		fixPreferencesMenu();
+	}
+}
+
+void FrameBar::fixPreferencesMenu() {
 	if ( preferencesMenu->isVisible() ) {
 		if (activeFrame >= 0) {
 			showPreferencesMenu();
@@ -173,6 +188,10 @@ void FrameBar::doActiveFrameNotifications() {
 			preferencesMenu->close();
 		}
 	}
+}
+
+void FrameBar::doActiveFrameNotifications() {
+	fixPreferencesMenu();
 	// For writing the frame number in the frame number display
 	emit newActiveFrame( QString(tr("Frame number: ")) + QString("%1").arg(activeFrame + 1) );
 	emit newActiveFrame(activeScene, activeFrame);
@@ -464,11 +483,6 @@ void FrameBar::setPreferencesMenu(FramePreferencesMenu* preferencesMenu) {
 
 void FrameBar::showPreferencesMenu() {
 	preferencesMenu->open();
-}
-
-void FrameBar::frameSoundsChanged() {
-	if (0 <= activeFrame)
-		getFrameThumb(activeFrame, true);
 }
 
 void FrameBar::updateNewScene(int index) {

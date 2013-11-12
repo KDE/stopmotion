@@ -78,9 +78,6 @@ private:
 	const char* homeDir;
 	//Q3ListBox *soundsList;
 	QListWidget *soundsList;
-	
-signals:
-	void soundsChanged();
 };
 
 #endif

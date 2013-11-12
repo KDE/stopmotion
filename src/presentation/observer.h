@@ -96,7 +96,7 @@ public:
 	/**
 	 * Abstract function for receiving notification when a scene in the animation
 	 * has been moved.
-	 * @param sceneNumber the scene which have been moved.
+	 * @param sceneNumber the scene that has been moved.
 	 * @param movePosition the position the scene has been moved to.
 	 */
 	virtual void updateMoveScene(int sceneNumber, int movePosition) = 0;
@@ -104,10 +104,19 @@ public:
 	/**
 	 * Abstract function for receiving notification when the disk representation of the
 	 * animation is changed by other programs.
-	 * @param frameNumber the index of the frame which has been changed. (active scene
-	 * is assumed).
+	 * @param sceneNumber The scene to which the changed frame belongs.
+	 * @param frameNumber The index of the frame that has been changed.
 	 */
 	virtual void updateAnimationChanged(int activeScene, int frameNumber) = 0;
+
+	/**
+	 * Abstract function for receiving notifications when the number, order or
+	 * names of the sounds attached to a frame change.
+	 * @param sceneNumber The scene to which the frame belongs.
+	 * @param frameNumber The frame within scene number @a sceneNumber to which
+	 * the changed sounds belong.
+	 */
+	virtual void updateSoundChanged(int sceneNumber, int frameNumber) = 0;
 
 	/**
 	 * Resynchronizes the observer with the state of the animation. This is

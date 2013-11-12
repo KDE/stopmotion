@@ -48,16 +48,6 @@ void SoundHandler::addSound() {
 		int activeFrame = frameBar->getActiveFrame();
 		int ret = facade->addSound( activeScene, activeFrame,
 				file.toLocal8Bit().constData() );
-		if (ret == 0) {
-			int soundCount = soundsList->count();
-			const char* soundName = facade->getSoundName(activeScene,
-					activeFrame, soundCount);
-			if (soundName) {
-				soundsList->insertItem(soundCount,
-						new QListWidgetItem(soundName));
-			}
-			emit soundsChanged();
-		}
 	}
 }
 
@@ -70,7 +60,6 @@ void SoundHandler::removeSound() {
 		DomainFacade::getFacade()->removeSound(scene, frame, index);
 		QListWidgetItem *qlwi = soundsList->takeItem(index);
 		delete qlwi;
-		emit soundsChanged();
 	}
 }
 
@@ -88,7 +77,6 @@ void SoundHandler::setSoundName()
 			int frame = frameBar->getActiveFrame();
 			DomainFacade::getFacade()->setSoundName(scene, frame,
 					index, text.toLocal8Bit().data() );
-			soundsList->item(index)->setText(text);
 		}
 	}
 }
