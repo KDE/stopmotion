@@ -58,8 +58,6 @@ void SoundHandler::removeSound() {
 		int scene = frameBar->getActiveScene();
 		int frame = frameBar->getActiveFrame();
 		DomainFacade::getFacade()->removeSound(scene, frame, index);
-		QListWidgetItem *qlwi = soundsList->takeItem(index);
-		delete qlwi;
 	}
 }
 
