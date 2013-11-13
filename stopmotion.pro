@@ -213,7 +213,7 @@ INCLUDEPATH += . \
 
 LIBS += $$system(sdl-config --libs) \
         $$system(xml2-config --libs) \
-        -lSDL_image -ltar -lvorbisfile -linotifytools
+        -lSDL_image -ltar -lvorbisfile -linotifytools -lX11
 
 DISTFILES += src/config.cpp.in \
              graphics/stopmotion.png \
@@ -234,7 +234,8 @@ DISTFILES += src/config.cpp.in \
 DISTFILES -= stopmotion.pro \
              src/config.cpp
 			 
-CONFIG += release warn_off
+CONFIG += release warn_off link_pkgconfig
+PKGCONFIG += sdl SDL_image vorbisfile
 DEFINES += NO_DEBUG
 TEMPLATE = app
 
