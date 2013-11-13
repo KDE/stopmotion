@@ -252,12 +252,12 @@ DISTFILES += src/config.cpp.in \
     $$system(ls -x translations/*.qm)
 DISTFILES -= stopmotion.pro \
     src/config.cpp
-DEFINES += NO_DEBUG
 TEMPLATE = app
 
 CONFIG(release,debug|release) {
 	DESTDIR=.
 	OBJECTS_DIR=build/release
+	DEFINES+= NO_DEBUG
 }
 CONFIG(debug,debug|release) {
 	DESTDIR=build/debug
