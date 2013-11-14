@@ -101,6 +101,10 @@ void EditMenuHandler::copy()
 	QApplication::clipboard()->setMimeData(mimeData);
 }
 
+void EditMenuHandler::cut() {
+	copy();
+	emit removeFrames();
+}
 
 void EditMenuHandler::paste()
 {

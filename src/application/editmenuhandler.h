@@ -75,7 +75,12 @@ public slots:
 	 * Redoes the last undo the user have done.
 	 */
 	void redo();
-	
+
+	/**
+	 * Copies and deletes the section.
+	 */
+	void cut();
+
 	/**
 	 * Copies a selection to the global clipboard.
 	 */
@@ -97,6 +102,10 @@ signals:
 	 * @param l the list containing pointers to the frames
 	 */
 	void addFrames(const QStringList &l);
+	/**
+	 * Removes the frames in the selection.
+	 */
+	void removeFrames();
 };
 
 #endif

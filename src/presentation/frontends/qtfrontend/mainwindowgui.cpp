@@ -173,7 +173,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 
 	//This slot will activate/deactivate menu options based on the changes in the model.
 	connect( frameBar, SIGNAL(modelSizeChanged(int)),
-			this, SLOT(fixNavigationButtons(int)));
+			this, SLOT(modelSizeChanged(int)));
 
 	//Mainwindow preferences.
 	setWindowIcon( QPixmap(windowicon) );
@@ -220,6 +220,8 @@ void MainWindowGUI::createHandlers(QApplication *stApp)
 	editMenuHandler = new EditMenuHandler( this, this->statusBar(), frameBar );
 	connect( editMenuHandler, SIGNAL(addFrames(const QStringList &)),
 			modelHandler, SLOT(addFrames(const QStringList &)) );
+	connect(editMenuHandler, SIGNAL(removeFrames()),
+			modelHandler, SLOT(removeFrames()));
 
 	soundHandler = new SoundHandler( this, this->statusBar(), frameBar,
 			this->lastVisitedDir );
@@ -334,6 +336,7 @@ void MainWindowGUI::createActions()
 	cutAct = new QAction(this);
 	cutAct->setIcon(QIcon(cuticon));
 	cutAct->setShortcut(ControlModifier+Key_X);
+	connect(cutAct, SIGNAL(triggered()), editMenuHandler, SLOT(cut()));
 
 	copyAct = new QAction(this);
 	copyAct->setIcon(QIcon(copyicon));
