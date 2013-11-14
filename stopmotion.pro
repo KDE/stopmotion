@@ -1,4 +1,5 @@
 #CONFIG += debug
+CONFIG += release
 CONFIG += warn_off
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
@@ -251,7 +252,10 @@ DISTFILES += src/config.cpp.in \
     $$system(ls -x manual/screenshots/*.png) \
     $$system(ls -x translations/*.qm)
 DISTFILES -= stopmotion.pro \
-    src/config.cpp
+             src/config.cpp
+
+CONFIG += link_pkgconfig
+PKGCONFIG += sdl SDL_image vorbisfile
 TEMPLATE = app
 
 CONFIG(release,debug|release) {
@@ -267,40 +271,30 @@ MOC_DIR = build
 RCC_DIR = build
 UI_DIR = build
 
-target.path = /usr/bin
-translations.path = /usr/share/stopmotion/translations
-translations.files = translations/*.qm
-htmldoc.path = /usr/share/doc/stopmotion/html
-htmldoc.files = manual/*.html
-htmldoc.extra = $(INSTALL_DIR) \
-    manual/graphic \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html;
-htmldoc.extra += $(INSTALL_DIR) \
-    manual/icons \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html;
-htmldoc.extra += $(INSTALL_DIR) \
-    manual/screenshots \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html;
+isEmpty(PREFIX) {
+ PREFIX = /usr/local
+ }
+target.path = $${PREFIX}/bin
 
-# Dummy target to fix permissions.
-dummy.path = /usr/bin
-dummy.extra += chmod \
-    644 \
-    $(INSTALL_ROOT)/usr/share/stopmotion/translations/*.qm \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/*.html \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/graphic/* \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/icons/* \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/screenshots/*;
-dummy.extra += chmod \
-    755 \
-    $(INSTALL_ROOT)/usr/share/stopmotion/translations \
-    $(INSTALL_ROOT)/usr/bin/$(QMAKE_TARGET) \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/graphic \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/icons \
-    $(INSTALL_ROOT)/usr/share/doc/stopmotion/html/screenshots;
-INSTALLS += target \
-    translations \
-    htmldoc \
-    dummy
-QMAKE_STRIP = :
+translations.path = $${PREFIX}/share/stopmotion/translations
+translations.files = translations/*.qm
+
+htmldoc.path = $${PREFIX}/share/doc/stopmotion/html
+htmldoc.files = manual/*.html
+htmldoc.extra = $(INSTALL_DIR) manual/graphic $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
+htmldoc.extra += $(INSTALL_DIR) manual/icons $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
+htmldoc.extra += $(INSTALL_DIR) manual/screenshots $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
+
+# Dummy target to fix permissions. 
+dummy.path = $${PREFIX}/bin
+dummy.extra += chmod 644 $(INSTALL_ROOT)/$${PREFIX}/share/stopmotion/translations/*.qm $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/*.html \
+	$(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/graphic/* $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/icons/* \
+    $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/screenshots/*;
+dummy.extra += chmod 755 $(INSTALL_ROOT)/$${PREFIX}/share/stopmotion/translations $(INSTALL_ROOT)/$${PREFIX}/bin/$(QMAKE_TARGET) \
+	$(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/graphic \
+    $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/icons \
+	$(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/screenshots;
+
+INSTALLS += target translations htmldoc dummy
+
+QMAKE_STRIP=:

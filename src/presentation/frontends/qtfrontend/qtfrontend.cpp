@@ -231,11 +231,10 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	// Default import option 1
 	prefs->setPreference("importname0", tr("vgrabbj").toLatin1().constData());
 	prefs->setPreference("importdescription0", 
-			tr("VGA daemon. Pretty fast.").toLatin1
-().constData());
-	prefs->setPreference("importstartdeamon1", 
+			tr("VGA daemon. Pretty fast.").toLatin1().constData());
+	prefs->setPreference("importstartdeamon0", 
 			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
-	prefs->setPreference("importstopdeamon1", 
+	prefs->setPreference("importstopdeamon0", 
 			"kill -9 $(pidof vgrabbj)");
 	
 	// Default import option 2
