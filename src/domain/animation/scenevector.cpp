@@ -124,7 +124,7 @@ void SceneVector::moveFrames(int fromScene, int fromFrame, int frameCount,
 		int toScene, int toFrame) {
 	Scene* from = getMutableScene(fromScene);
 	Scene* to = getMutableScene(toScene);
-	assert(fromFrame + frameCount < from->getSize());
+	assert(fromFrame + frameCount <= from->getSize());
 	assert(toFrame <= to->getSize());
 	if (toScene != fromScene) {
 		preallocateFrames(toScene, frameCount);

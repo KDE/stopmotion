@@ -272,8 +272,8 @@ RCC_DIR = build
 UI_DIR = build
 
 isEmpty(PREFIX) {
- PREFIX = /usr/local
- }
+	PREFIX = /usr/local
+}
 target.path = $${PREFIX}/bin
 
 translations.path = $${PREFIX}/share/stopmotion/translations
