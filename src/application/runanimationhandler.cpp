@@ -107,9 +107,9 @@ void RunAnimationHandler::runAnimation() {
 		}
 	}
 	if (endFrame - startFrame <= 1) {
+		// only one or zero frames selected. Play the entire frame.
+		startFrame = 0;
 		endFrame = DomainFacade::getFacade()->getSceneSize(sceneNr) ;
-		if (endFrame - startFrame <= 1)
-			startFrame = 0;
 	}
 	frameNr = startFrame;
 	resumeAnimation();
@@ -129,11 +129,11 @@ void RunAnimationHandler::stopAnimation() {
 		removeFramesButton->setEnabled(true);
 
 		DomainFacade *f = DomainFacade::getFacade();
-		emit stopped();
 		f->shutdownAudioDevice();
 
 		statusBar->clearMessage();
 		timer->stop();
+		emit stopped();
 	}
 }
 

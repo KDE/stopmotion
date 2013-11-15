@@ -216,7 +216,7 @@ public slots:
 	void selectNextFrame();
 	void selectPreviousScene();
 	void selectNextScene();
-
+	void updateStopped();
 
 signals:
 	//The signals in the framebar is used for signaling small widget,

@@ -158,6 +158,8 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 			frameView, SLOT(updateNotifyNewFrame(int,int)));
 	connect(runAnimationHandler, SIGNAL(navigateTo(int,int)),
 			frameBar, SLOT(updateNewActiveFrame(int,int)));
+	connect(runAnimationHandler, SIGNAL(stopped()),
+			frameBar, SLOT(updateStopped()));
 	connect(frameBar, SIGNAL(newActiveFrame(int,int)),
 			runAnimationHandler, SLOT(stopAnimation()));
 

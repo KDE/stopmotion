@@ -76,8 +76,7 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 }
 
 
-FrameView::~FrameView()
-{
+FrameView::~FrameView() {
 	// Turn off camera if it's on
 	if (isPlayingVideo) {
 		off();
@@ -99,8 +98,7 @@ FrameView::~FrameView()
 }
 
 
-void FrameView::setWidescreenRatio()
-{
+void FrameView::setWidescreenRatio() {
 	widthConst  = 16;
 	heightConst = 9;
 	float minWidth = 300 * (16 / 9);
@@ -109,8 +107,7 @@ void FrameView::setWidescreenRatio()
 }
 
 
-void FrameView::setNormalRatio()
-{
+void FrameView::setNormalRatio() {
 	widthConst  = 4;
 	heightConst = 3;
 	this->setMinimumSize(400, 300);
@@ -118,24 +115,16 @@ void FrameView::setNormalRatio()
 }
 
 
-void FrameView::initCompleted()
-{
+void FrameView::initCompleted() {
 	emit cameraReady();
 }
 
-void FrameView::updateNewActiveFrame(int sceneNumber, int frameNumber)
-{
+void FrameView::updateNewActiveFrame(int sceneNumber, int frameNumber) {
 	setActiveFrame(sceneNumber, frameNumber);
-	if (frameNumber < 0) {
-		SDL_FreeSurface(videoSurface);
-		videoSurface = 0;
-		this->update();
-	}
 }
 
 
-void FrameView::updatePlayFrame(int sceneNumber, int frameNumber)
-{
+void FrameView::updatePlayFrame(int sceneNumber, int frameNumber) {
 	if (frameNumber > -1) {
 		setActiveFrame(sceneNumber, frameNumber);
 	}
@@ -147,8 +136,7 @@ void FrameView::updatePlayFrame(int sceneNumber, int frameNumber)
 }
 
 
-void FrameView::resizeEvent(QResizeEvent*)
-{
+void FrameView::resizeEvent(QResizeEvent*) {
 	QApplication::syncX();
 
 	// Set the new video mode with the new window size
@@ -266,8 +254,7 @@ void FrameView::setActiveFrame(int sceneNumber, int frameNumber) {
 
 
 // TODO: Refactor this terrible ugly method. This one is really bad!!
-bool FrameView::on()
-{
+bool FrameView::on() {
 	PreferencesTool *prefs = PreferencesTool::get();
 	int activeCmd = prefs->getPreference("activedevice", 0);
 
@@ -388,8 +375,7 @@ bool FrameView::on()
 }
 
 
-void FrameView::off()
-{
+void FrameView::off() {
 	if ( grabber != 0 ) {
 		if ( grabber->isGrabberProcess() ) {
 			grabber->tearDown();
@@ -413,8 +399,7 @@ void FrameView::off()
 }
 
 
-void FrameView::redraw()
-{
+void FrameView::redraw() {
 	if (videoSurface) {
 		SDL_FreeSurface(videoSurface);
 		videoSurface = 0;
@@ -480,18 +465,15 @@ bool FrameView::setViewMode(ImageMode mode) {
 	return true;
 }
 
-void FrameView::setMixCount(int mixCount)
-{
+void FrameView::setMixCount(int mixCount) {
 	this->mixCount = mixCount;
 }
 
-int FrameView::getViewMode() const
-{
+int FrameView::getViewMode() const {
 	return mode;
 }
 
-void FrameView::setPlaybackSpeed(int playbackSpeed)
-{
+void FrameView::setPlaybackSpeed(int playbackSpeed) {
 	this->playbackSpeed = playbackSpeed;
 	if ( playbackTimer.isActive() ) {
 		playbackTimer.setInterval(1000 / playbackSpeed);
@@ -500,8 +482,7 @@ void FrameView::setPlaybackSpeed(int playbackSpeed)
 
 
 // The only thing left which is a little expensive is the MapRGB function.
-SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2)
-{
+SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2) {
 	int width = s2->w;
 	int height = s2->h;
 
@@ -548,8 +529,7 @@ SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2)
 }
 
 
-void FrameView::freeProperty(const char *prop, const char *tag)
-{
+void FrameView::freeProperty(const char *prop, const char *tag) {
 	if (strcmp(prop, tag) != 0) {
 		xmlFree((xmlChar *)prop);
 	}

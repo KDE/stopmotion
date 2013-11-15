@@ -829,3 +829,7 @@ void FrameBar::selectNextScene() {
 	}
 	doScroll();
 }
+
+void FrameBar::updateStopped() {
+	emit newActiveFrame(activeScene, activeFrame);
+}
