@@ -32,7 +32,10 @@ class Executor;
  * @note
  * If your model has some sort of hierarchical structure, don't just add all
  * the leaf parts to the hash as this will fail to hash the structure. Instead,
- * hash each sub-part, then add all these hashes to the final hash.
+ * hash each part and combine these parts into the whole's hash. For each
+ * part's hash, hash each sub-part and combine the hashes together into the
+ * part's hash. Using hashes recursively in this way will allow the structure
+ * as well as its contents to be hashed.
  */
 class Hash {
 	uint64_t h;
