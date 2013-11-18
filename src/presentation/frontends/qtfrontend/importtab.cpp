@@ -52,7 +52,7 @@ ImportTab::ImportTab( QWidget *parent ) : QWidget(parent)
 void ImportTab::makeGUI()
 {
 	this->setFocusPolicy(Qt::ClickFocus);
-	
+
 	informationText = new QTextEdit;
 	informationText->setReadOnly(true);
 	informationText->setHtml(
@@ -62,10 +62,10 @@ void ImportTab::makeGUI()
 		"the video device and the image file, respectively.") + "</p>");
 	informationText->setMinimumWidth(440);
 	informationText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	
+
 	QStringList lst;
 	lst << tr("Name") << tr("Description");
-	
+
 	deviceSelectionTable = new QTableWidget;
 	deviceSelectionTable->setColumnCount(2);
 	deviceSelectionTable->setRowCount(0);
@@ -74,47 +74,53 @@ void ImportTab::makeGUI()
 	deviceSelectionTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 	deviceSelectionTable->setHorizontalHeaderLabels(lst);
 	deviceSelectionTable->verticalHeader()->setVisible(false);
-	
+
 	connect(deviceSelectionTable, SIGNAL(cellClicked(int, int)), 
 			this, SLOT(activeCellChanged(int, int)));
 	connect(deviceSelectionTable, SIGNAL(cellChanged(int, int)), 
 			this, SLOT(contentsChanged(int, int)));
-	
+
 	addButton = new QPushButton(tr("&Add"));
 	addButton->setFocusPolicy( Qt::NoFocus );
 	QObject::connect(addButton, SIGNAL(clicked()), this, SLOT(addImportProgram()));
-	
+
 	removeButton = new QPushButton(tr("&Remove"));
 	QObject::connect( removeButton, SIGNAL(clicked()), this, SLOT(removeImportProgram()));
-	
+
 	changeButton = new QPushButton(tr("&Edit"));
 	QObject::connect( changeButton, SIGNAL(clicked()), this, SLOT(changeSettings()));
-	
+
 	grabberPreferences = new QGroupBox;
 	grabberPreferences->setTitle(tr("Import device settings"));
 	grabberPreferences->hide();
-	
+
 	closeChangeBoxButton = new QPushButton;
-	closeChangeBoxButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
+	closeChangeBoxButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 	closeChangeBoxButton->setIcon(QPixmap(closeicon));
 	closeChangeBoxButton->setFlat(true);
 	QObject::connect( closeChangeBoxButton, SIGNAL(clicked()),this, SLOT(closeChangeBox()));
-	
+
 	prePollLabel = new QLabel( tr("Pre-poll command") );
 	prePollEdit = new FlexibleLineEdit;
+	prePollLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	prePollEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	QObject::connect( prePollEdit, SIGNAL(textChanged(const QString &)), 
 			this, SLOT(updatePrePollString(const QString &)));
-	
+
 	startDeamonLabel = new QLabel( tr("Start deamon") );
 	startDeamonEdit = new FlexibleLineEdit;
+	startDeamonLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	startDeamonEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	QObject::connect( startDeamonEdit, SIGNAL(textChanged(const QString &)), 
 			this, SLOT(updateStartDeamonString(const QString &)));
-	
+
 	stopDeamonLabel = new QLabel( tr("Stop deamon") );
 	stopDeamonEdit = new FlexibleLineEdit;
+	stopDeamonLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	stopDeamonEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	QObject::connect( stopDeamonEdit, SIGNAL(textChanged(const QString &)), 
 			this, SLOT(updatestopDeamonString(const QString &)) );
-	
+
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(informationText);
 	QVBoxLayout *buttonLayout = new QVBoxLayout;
@@ -131,19 +137,15 @@ void ImportTab::makeGUI()
 	mainLayout->addWidget(grabberPreferences);
 	setLayout(mainLayout);
 
-	QVBoxLayout *grabberPrefsLayout = new QVBoxLayout;
-	QHBoxLayout *hbLayout = new QHBoxLayout;
-	hbLayout->setMargin(0);
-	hbLayout->setSpacing(0);
-	hbLayout->addStretch(1);
-	hbLayout->addWidget(closeChangeBoxButton);
-	grabberPrefsLayout->addLayout(hbLayout);
-	grabberPrefsLayout->addWidget(prePollLabel);
-	grabberPrefsLayout->addWidget(prePollEdit);
-	grabberPrefsLayout->addWidget(startDeamonLabel);
-	grabberPrefsLayout->addWidget(startDeamonEdit);
-	grabberPrefsLayout->addWidget(stopDeamonLabel);
-	grabberPrefsLayout->addWidget(stopDeamonEdit);
+	QGridLayout *grabberPrefsLayout = new QGridLayout;
+	grabberPrefsLayout->addWidget(closeChangeBoxButton, 0, 2, Qt::AlignLeading);
+	grabberPrefsLayout->addWidget(prePollLabel, 0, 0, Qt::AlignTrailing);
+	grabberPrefsLayout->addWidget(prePollEdit, 0, 1, 0);
+	grabberPrefsLayout->addWidget(startDeamonLabel, 1, 0, Qt::AlignLeading);
+	grabberPrefsLayout->addWidget(startDeamonEdit, 1, 1, 1, 2, 0);
+	grabberPrefsLayout->addWidget(stopDeamonLabel, 2, 0, Qt::AlignLeading);
+	grabberPrefsLayout->addWidget(stopDeamonEdit, 2, 1, 1, 2, 0);
+	grabberPrefsLayout->setColumnStretch(1, 1);
 	grabberPreferences->setLayout(grabberPrefsLayout);
 }
 

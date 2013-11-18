@@ -136,7 +136,7 @@ void ExportTab::makeGUI()
 	stopEncoder = new FlexibleLineEdit;
 	connect( stopEncoder, SIGNAL(textChanged(const QString &)),
 			this, SLOT(updateStopString(const QString &)) );
-	
+
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(infoText);
 	QVBoxLayout *buttonLayout = new QVBoxLayout;
@@ -153,29 +153,23 @@ void ExportTab::makeGUI()
 	mainLayout->addWidget(encoderPrefs);
 	setLayout(mainLayout);
 
-	QVBoxLayout *encoderPrefsLayout = new QVBoxLayout;
-	QHBoxLayout *hbLayout = new QHBoxLayout;
-	hbLayout->setMargin(0);
-	hbLayout->setSpacing(0);
-	hbLayout->addStretch(1);
-	hbLayout->addWidget(closeButton);
-	
-	encoderPrefsLayout->addLayout(hbLayout);
-	encoderPrefsLayout->addWidget(askForOutput);
-	hbLayout = new QHBoxLayout;
+	QGridLayout *encoderPrefsLayout = new QGridLayout;
+	encoderPrefsLayout->addWidget(closeButton, 0, 2, 0);
+	encoderPrefsLayout->addWidget(askForOutput, 0, 0, 1, 2, 0);
+	QHBoxLayout* hbLayout = new QHBoxLayout;
 	hbLayout->addWidget(yesButton);
 	hbLayout->addWidget(noButton);
 	hbLayout->addStretch(1);
-	encoderPrefsLayout->addLayout(hbLayout);
-	encoderPrefsLayout->addWidget(defaultOutputLabel);
+	encoderPrefsLayout->addLayout(hbLayout, 1, 1, 0);
+	encoderPrefsLayout->addWidget(defaultOutputLabel, 2, 0, 0);
 	hbLayout = new QHBoxLayout;
 	hbLayout->addWidget(defaultOutput);
 	hbLayout->addWidget(browseButton);
-	encoderPrefsLayout->addLayout(hbLayout);
-	encoderPrefsLayout->addWidget(startEncoderLabel);
-	encoderPrefsLayout->addWidget(startEncoder);
-	encoderPrefsLayout->addWidget(stopEncoderLabel);
-	encoderPrefsLayout->addWidget(stopEncoder);
+	encoderPrefsLayout->addLayout(hbLayout, 2, 1, 1, 2, 0);
+	encoderPrefsLayout->addWidget(startEncoderLabel, 3, 0, 0);
+	encoderPrefsLayout->addWidget(startEncoder, 3, 1, 1, 2, 0);
+	encoderPrefsLayout->addWidget(stopEncoderLabel, 4, 0, 0);
+	encoderPrefsLayout->addWidget(stopEncoder, 4, 1, 1, 2, 0);
 	encoderPrefs->setLayout(encoderPrefsLayout);
 }
 
