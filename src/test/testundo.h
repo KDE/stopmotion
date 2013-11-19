@@ -41,11 +41,11 @@ class Hash {
 	uint64_t h;
 public:
 	Hash();
-	void Add(uint64_t n);
-	void AddS(int64_t n);
-	void Add(const char* string);
-	void Add(Hash h);
-	bool Equals(const Hash& other) const;
+	void add(uint64_t n);
+	void addS(int64_t n);
+	void add(const char* string);
+	void add(Hash h);
+	bool equals(const Hash& other) const;
 };
 
 bool operator==(const Hash& a, const Hash& b);
@@ -62,16 +62,16 @@ public:
 	 * Resets the model owned by an Executor to an empty state.
 	 * @param [in,out] e The executor whose model must be reset.
 	 */
-	virtual void ResetModel(Executor& e) = 0;
+	virtual void resetModel(Executor& e) = 0;
 	/**
 	 * Returns a hash of the model. The hash of a model should be different
 	 * to the hash of similar models, so that hashes comparing equal very
 	 * probably means that the models are the same.
 	 * @param [in] The exector that owns the model to be hashed.
 	 */
-	virtual Hash HashModel(const Executor& e) = 0;
+	virtual Hash hashModel(const Executor& e) = 0;
 };
 
-void TestUndo(Executor& e, ModelTestHelper& helper);
+void testUndo(Executor& e, ModelTestHelper& helper);
 
 #endif /* TESTUNDO_H_ */

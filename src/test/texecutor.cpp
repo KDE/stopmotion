@@ -308,12 +308,12 @@ public:
 	}
 	~StringModelTestHelper() {
 	}
-	void ResetModel(Executor&) {
+	void resetModel(Executor&) {
 		s->clear();
 	}
-	Hash HashModel(const Executor&) {
+	Hash hashModel(const Executor&) {
 		Hash h;
-		h.Add(s->c_str());
+		h.add(s->c_str());
 		return h;
 	}
 };
@@ -343,7 +343,7 @@ public:
 		ex->addCommand("del", df);
 		lineBuffer[lineBufferSize - 1] = '\0';
 	}
-	void Init(const char* initialString) {
+	void init(const char* initialString) {
 		finalString = initialString;
 		originalString = finalString;
 		logFile = tmpfile();
@@ -351,21 +351,21 @@ public:
 		logger->setLogFile(logFile);
 		ex->clearHistory();
 	}
-	void TestUndo() {
-		::TestUndo(*ex, helper);
+	void testUndo() {
+		::testUndo(*ex, helper);
 	}
 };
 
 void TestCommandFactory::testUndo() {
 	AddDelTestBed test;
-	test.TestUndo();
+	test.testUndo();
 }
 
 void TestCommandFactory::replayIsRobust() {
-	LoadOomTestUtil();
-	SetMallocsUntilFailure(0);
+	loadOomTestUtil();
+	setMallocsUntilFailure(0);
 	QVERIFY2(0 == malloc(1), "SetMallocsUntilFailure(0) not working");
-	SetMallocsUntilFailure(1);
+	setMallocsUntilFailure(1);
 	void* shouldSucceed = malloc(1);
 	QVERIFY2(shouldSucceed,
 			"SetMallocsUntilFailure not allowing mallocs at all");

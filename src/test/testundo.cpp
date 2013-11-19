@@ -75,38 +75,38 @@ Hash::Hash() {
 	h = 5381;
 }
 
-void Hash::Add(uint64_t n) {
+void Hash::add(uint64_t n) {
 	h = h * 33 + n;
 }
 
-void Hash::AddS(int64_t n) {
-	Add(static_cast<uint64_t>(n));
+void Hash::addS(int64_t n) {
+	add(static_cast<uint64_t>(n));
 }
 
-void Hash::Add(const char* string) {
+void Hash::add(const char* string) {
 	while (*string) {
-		Add(static_cast<uint64_t>(*string));
+		add(static_cast<uint64_t>(*string));
 		++string;
 	}
 }
 
-void Hash::Add(Hash h) {
-	Add(h.h);
+void Hash::add(Hash h) {
+	add(h.h);
 }
 
-bool Hash::Equals(const Hash& other) const {
+bool Hash::equals(const Hash& other) const {
 	return h == other.h;
 }
 
 bool operator==(const Hash& a, const Hash& b) {
-	return a.Equals(b);
+	return a.equals(b);
 }
 
 bool operator!=(const Hash& a, const Hash& b) {
-	return !a.Equals(b);
+	return !a.equals(b);
 }
 
-bool ExecuteLineFromFile(Executor& e, FILE* logFile) {
+bool executeLineFromFile(Executor& e, FILE* logFile) {
 	enum { lineBufferSize = 1024 };
 	static char lineBuffer[lineBufferSize];
 	if (!fgets(lineBuffer, lineBufferSize, logFile))
@@ -115,19 +115,19 @@ bool ExecuteLineFromFile(Executor& e, FILE* logFile) {
 	return true;
 }
 
-void TestUndo(Executor& e, ModelTestHelper& helper) {
-	bool oomLoaded = LoadOomTestUtil();
+void testUndo(Executor& e, ModelTestHelper& helper) {
+	bool oomLoaded = loadOomTestUtil();
 	QVERIFY2(oomLoaded, "Oom Test Util not loaded!");
 	std::string logString;
 	StringLoggerWrapper stringLogger(&logString);
 	for (int i = 0; i != 100; ++i) {
-		CancelAnyMallocFailure();
+		cancelAnyMallocFailure();
 		Hash initialState;
 		Hash finalState;
 		std::string constructLog;
 		std::string doLog;
-		unsigned long doMallocCount;
-		unsigned long totalMallocCount;
+		long doMallocCount;
+		long totalMallocCount;
 		const RandomSource initial;
 		RandomSource generalRng;
 		{
@@ -141,20 +141,20 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			logString.clear();
 			stringLogger.SetDelegate(0);
 			e.setCommandLogger(&stringLogger);
-			helper.ResetModel(e);
-			unsigned long startDoMallocCount = MallocsSoFar();
+			helper.resetModel(e);
+			long startDoMallocCount = mallocsSoFar();
 			e.executeRandomConstructiveCommands(rng);
-			doMallocCount = MallocsSoFar() - startDoMallocCount;
+			doMallocCount = mallocsSoFar() - startDoMallocCount;
 			constructLog = logString;
 			if (constructLog.empty()) {
 				constructLog = "<no commands>\n";
 			}
 			logString.clear();
 			e.clearHistory();
-			initialState = helper.HashModel(e);
+			initialState = helper.hashModel(e);
 			stringLogger.SetDelegate(fileLogger.getLogger());
 			e.executeRandomCommands(rng);
-			finalState = helper.HashModel(e);
+			finalState = helper.hashModel(e);
 			doLog = logString;
 			if (doLog.empty()) {
 				doLog = "<no commands>\n";
@@ -165,17 +165,17 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			RandomSource rng2(initial);
 			e.setCommandLogger(0);
 			freopen(0, "r", logFile);
-			helper.ResetModel(e);
+			helper.resetModel(e);
 			e.executeRandomConstructiveCommands(rng2);
 			e.clearHistory();
 			bool failed = false;
 			try {
-				while (ExecuteLineFromFile(e, logFile)) {
+				while (executeLineFromFile(e, logFile)) {
 				}
 			} catch (ParametersOutOfRangeException&) {
 				failed = true;
 			}
-			if (failed || helper.HashModel(e) != finalState) {
+			if (failed || helper.hashModel(e) != finalState) {
 				std::stringstream ss;
 				ss << "Failed to replay to final state on test "
 						<< i << "\n[construction commands:\n"
@@ -184,11 +184,11 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 				QFAIL(ss.str().c_str());
 			}
 			// test Undo and Redo on the same data
-			unsigned long startUndoMallocCount = MallocsSoFar();
+			long startUndoMallocCount = mallocsSoFar();
 			while (e.undo()) {
 			}
-			unsigned long undoMallocCount = MallocsSoFar() - startUndoMallocCount;
-			if (helper.HashModel(e) != initialState) {
+			long undoMallocCount = mallocsSoFar() - startUndoMallocCount;
+			if (helper.hashModel(e) != initialState) {
 				std::stringstream ss;
 				ss << "Failed to undo to initial state on test "
 						<< i << "\n[construction commands:\n"
@@ -198,7 +198,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			}
 			while (e.redo()) {
 			}
-			if (helper.HashModel(e) != finalState) {
+			if (helper.hashModel(e) != finalState) {
 				std::stringstream ss;
 				ss << "Failed to redo to final state on test "
 						<< i << "\n[construction commands:\n"
@@ -214,10 +214,10 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			// Test undoing after an Out-Of-Memory failure
 			int32_t failAt = generalRng.getUniform(totalMallocCount);
 			e.setCommandLogger(0);
-			helper.ResetModel(e);
+			helper.resetModel(e);
 			e.executeRandomConstructiveCommands(rng);
 			e.clearHistory();
-			SetMallocsUntilFailure(failAt);
+			setMallocsUntilFailure(failAt);
 			bool failed = false;
 			try {
 				e.executeRandomCommands(rng);
@@ -226,10 +226,10 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			} catch (std::bad_alloc&) {
 				failed = true;
 			}
-			CancelAnyMallocFailure();
+			cancelAnyMallocFailure();
 			while (e.undo()) {
 			}
-			if (helper.HashModel(e) != initialState) {
+			if (helper.hashModel(e) != initialState) {
 				std::stringstream ss;
 				ss << "Failed to undo to initial state ";
 				if (failed) {
@@ -250,11 +250,11 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			// Test redoing after an Out-Of-Memory failure
 			int32_t failAt2 = generalRng.getUniform(totalMallocCount);
 			e.setCommandLogger(0);
-			helper.ResetModel(e);
+			helper.resetModel(e);
 			e.executeRandomConstructiveCommands(rng);
 			e.clearHistory();
 			e.executeRandomCommands(rng);
-			SetMallocsUntilFailure(failAt2);
+			setMallocsUntilFailure(failAt2);
 			bool failed = false;
 			try {
 				while (e.undo()) {
@@ -264,10 +264,10 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			} catch (std::bad_alloc&) {
 				failed = true;
 			}
-			CancelAnyMallocFailure();
+			cancelAnyMallocFailure();
 			while (e.redo()) {
 			}
-			if (helper.HashModel(e) != finalState) {
+			if (helper.hashModel(e) != finalState) {
 				std::stringstream ss;
 				ss << "Failed to redo to final state ";
 				if (failed) {
@@ -286,9 +286,9 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 		if (oomLoaded && 0 < doMallocCount) {
 			// test that commands that fail do not get replayed from the log
 			RandomSource rng(initial);
-			CancelAnyMallocFailure();
+			cancelAnyMallocFailure();
 			e.setCommandLogger(0);
-			helper.ResetModel(e);
+			helper.resetModel(e);
 			e.executeRandomConstructiveCommands(rng);
 			e.clearHistory();
 			FileCommandLogger fileLogger;
@@ -299,29 +299,29 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 			e.setCommandLogger(&stringLogger);
 			logString.clear();
 			int32_t failAt = generalRng.getUniform(doMallocCount);
-			SetMallocsUntilFailure(failAt);
+			setMallocsUntilFailure(failAt);
 			try {
 				e.executeRandomCommands(rng);
 			} catch (std::bad_alloc&) {
-				CancelAnyMallocFailure();
+				cancelAnyMallocFailure();
 				std::string beforeFailureLog(logString);
 				logString.clear();
 				e.executeRandomCommands(rng);
 				std::string afterFailureLog(logString);
-				Hash afterFailureState(helper.HashModel(e));
+				Hash afterFailureState(helper.hashModel(e));
 				RandomSource rng2(initial);
 				e.setCommandLogger(0);
-				helper.ResetModel(e);
+				helper.resetModel(e);
 				e.executeRandomConstructiveCommands(rng2);
 				freopen(0, "r", logFile);
 				bool failed = false;
 				try {
-					while (ExecuteLineFromFile(e, logFile)) {
+					while (executeLineFromFile(e, logFile)) {
 					}
 				} catch (ParametersOutOfRangeException&) {
 					failed = true;
 				}
-				if (failed || helper.HashModel(e) != afterFailureState) {
+				if (failed || helper.hashModel(e) != afterFailureState) {
 					std::stringstream ss;
 					ss << "Failed to replay only successful commands from the log\n"
 							<< "after failure at " << failAt << "\non test"
@@ -332,7 +332,7 @@ void TestUndo(Executor& e, ModelTestHelper& helper) {
 					QFAIL(ss.str().c_str());
 				}
 			}
-			CancelAnyMallocFailure();
+			cancelAnyMallocFailure();
 			stringLogger.SetDelegate(0);
 		}
 	}

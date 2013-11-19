@@ -36,8 +36,8 @@ typedef void* malloc_t (size_t);
 //}
 
 // Which future malloc should return 0 instead of attempting to allocate memory
-long MallocsUntilFailure;
-unsigned long MallocCount;
+long mallocsUntilFailure;
+long mallocCount;
 
 // Pointer to the original libc malloc function, set up by Init().
 // If in a C++ file, it would be better to leave out the = 0; uninitialized
@@ -45,30 +45,30 @@ unsigned long MallocCount;
 // constructors happen, whereas (I believe) this assignment to zero might
 // happen after some constructors have run. It makes no difference in C,
 // though.
-malloc_t* RealMalloc;
+malloc_t* realMalloc;
 
 // Initialization function sets up the pointer to the original malloc function.
-void Init() {
-	RealMalloc = (malloc_t*)dlsym(RTLD_NEXT, "malloc");
-	assert(RealMalloc);
+void init() {
+	realMalloc = (malloc_t*)dlsym(RTLD_NEXT, "malloc");
+	assert(realMalloc);
 }
 
 // Our malloc does its own processing, then calls the libc malloc, if
 // applicable.
 void* malloc(size_t bytes) {
-	__sync_add_and_fetch(&MallocCount, 1);
-	if (0 < MallocsUntilFailure &&
-			0 == __sync_sub_and_fetch(&MallocsUntilFailure, 1))
+	__sync_add_and_fetch(&mallocCount, 1);
+	if (0 < mallocsUntilFailure &&
+			0 == __sync_sub_and_fetch(&mallocsUntilFailure, 1))
 		return 0;
-	if (!RealMalloc)
-		Init();
-	return RealMalloc(bytes);
+	if (!realMalloc)
+		init();
+	return realMalloc(bytes);
 }
 
-void RealSetMallocsUntilFailure(int successes) {
-	MallocsUntilFailure = successes + 1;
+void realSetMallocsUntilFailure(int successes) {
+	mallocsUntilFailure = successes + 1;
 }
 
-unsigned long RealMallocsSoFar() {
-	return MallocCount;
+long realMallocsSoFar() {
+	return mallocCount;
 }

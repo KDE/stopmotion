@@ -24,14 +24,14 @@
 // placed into a C++ file.
 #include "oomtestutil.h"
 
-typedef void SetMallocsUntilFailure_t(int);
-typedef unsigned long MallocsSoFar_t(void);
-typedef void Init_t(void);
+typedef void setMallocsUntilFailure_t(int);
+typedef unsigned long mallocsSoFar_t(void);
+typedef void init_t(void);
 
-static SetMallocsUntilFailure_t* smuf;
-static MallocsSoFar_t* msf;
+static setMallocsUntilFailure_t* smuf;
+static mallocsSoFar_t* msf;
 
-int LoadOomTestUtil() {
+int loadOomTestUtil() {
 	// Using dlopen might cause a malloc, which would not work when we have not
 	// yet wired up the real malloc by calling Init, so we have to use
 	// RTLD_DEFAULT.
@@ -42,27 +42,27 @@ int LoadOomTestUtil() {
 	// standard C dl libraries do not have this functionality.
 	if (smuf && msf)
 		return 1;  // already initialized
-	Init_t* init = (Init_t*)dlsym(RTLD_DEFAULT, "Init");
-	smuf = (SetMallocsUntilFailure_t*)dlsym(RTLD_DEFAULT,
-			"RealSetMallocsUntilFailure");
-	msf = (MallocsSoFar_t*)dlsym(RTLD_DEFAULT, "RealMallocsSoFar");
+	init_t* init = (init_t*)dlsym(RTLD_DEFAULT, "init");
+	smuf = (setMallocsUntilFailure_t*)dlsym(RTLD_DEFAULT,
+			"realSetMallocsUntilFailure");
+	msf = (mallocsSoFar_t*)dlsym(RTLD_DEFAULT, "realMallocsSoFar");
 	if (!init || !smuf)
 		return 0;
 	init();
 	return 1;
 }
 
-void SetMallocsUntilFailure(int successes) {
+void setMallocsUntilFailure(int successes) {
 	if (smuf)
 		smuf(successes);
 }
 
-void CancelAnyMallocFailure() {
+void cancelAnyMallocFailure() {
 	if (smuf)
 		smuf(-1);
 }
 
-unsigned long MallocsSoFar() {
+long mallocsSoFar() {
 	if (msf)
 		return msf();
 	return 0;

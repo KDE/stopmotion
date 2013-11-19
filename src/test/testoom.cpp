@@ -10,7 +10,7 @@
 // It is supposed to remove the front item of 'from' and put
 // it onto the front of 'to'.
 template <typename T>
-void MoveBetweenLists(std::list<T>& to, std::list<T>& from) {
+void moveBetweenLists(std::list<T>& to, std::list<T>& from) {
 	if (!from.empty()) {
 		// Is there a problem here?
 		T temp = from.front();
@@ -21,15 +21,15 @@ void MoveBetweenLists(std::list<T>& to, std::list<T>& from) {
 
 int main(int argc, char** argv) {
 	// Test that the user remembered LD_PRELOAD=./oomtestutil.so
-	assert(LoadOomTestUtil());
+	assert(loadOomTestUtil());
 
 	// Test that oomtestutil itself works
-	SetMallocsUntilFailure(0);
+	setMallocsUntilFailure(0);
 	assert(malloc(1) == 0);
 	void* shouldBeAllocated1 = malloc(1);
 	assert(shouldBeAllocated1);
 	free(shouldBeAllocated1);
-	SetMallocsUntilFailure(1);
+	setMallocsUntilFailure(1);
 	void* shouldBeAllocated2 = malloc(1);
 	assert(shouldBeAllocated2);
 	free(shouldBeAllocated2);
@@ -53,9 +53,9 @@ int main(int argc, char** argv) {
 		threw = false;
 		try {
 			printf("Trying %d mallocs until failure\n", successfulMallocs);
-			SetMallocsUntilFailure(successfulMallocs);
+			setMallocsUntilFailure(successfulMallocs);
 			++successfulMallocs;
-			MoveBetweenLists(a1, a2);
+			moveBetweenLists(a1, a2);
 		} catch (...) {
 			threw = true;
 			// make sure the failing function didn't do anything

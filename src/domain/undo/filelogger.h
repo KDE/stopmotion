@@ -30,7 +30,7 @@ class CommandReplayer;
 class CommandLogger;
 
 class LoggerWriteFailedException : public std::exception {
-	const char* what() const;
+	const char* what() const throw();
 };
 
 /**
