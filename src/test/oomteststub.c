@@ -25,7 +25,7 @@
 #include "oomtestutil.h"
 
 typedef void setMallocsUntilFailure_t(int);
-typedef unsigned long mallocsSoFar_t(void);
+typedef long mallocsSoFar_t(void);
 typedef void init_t(void);
 
 static setMallocsUntilFailure_t* smuf;
