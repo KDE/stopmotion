@@ -15,9 +15,8 @@ clean:
 # load it at all.
 # -D_GNU_SOURCE allows us to use the GNU extensions. For some reason
 # _GNU_SOURCE is defined automatically for C++ source but not for C.
-# -fpic doesn't seem to be required.
 $(SLIB): oomtestutil.c
-	gcc -D_GNU_SOURCE -g -shared -o $@ $< -ldl
+	gcc -D_GNU_SOURCE -g -fPIC -shared -o $@ $< -ldl
 
 # We shall produce an object file that must be linked into any executable that
 # wants to use our OOM testing utility. The executable must also be linked with
