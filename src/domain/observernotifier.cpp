@@ -439,6 +439,10 @@ void ObserverNotifier::resync() {
 	doOp(resyncher);
 }
 
+int ObserverNotifier::soundCount() const {
+	return del->soundCount();
+}
+
 void ObserverNotifier::accept(FileNameVisitor& v) const {
 	del->accept(v);
 }

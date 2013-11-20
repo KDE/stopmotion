@@ -182,6 +182,11 @@ public:
 	 */
 	virtual int soundCount(int scene, int frame) const = 0;
 	/**
+	 * Returns the number of sounds in the animation.
+	 * @return Sum of the number of sounds attached to each frame.
+	 */
+	virtual int soundCount() const = 0;
+	/**
 	 * Adds a sound to a frame of animation.
 	 * @param scene The number of the scene containing the frame to add the
 	 * sound to.

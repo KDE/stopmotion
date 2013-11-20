@@ -391,7 +391,7 @@ void Animation::moveScene(int32_t sceneNumber, int32_t movePosition) {
 
 bool Animation::initAudioDevice() {
 	isAudioDriverInitialized = audioDriver->initialize();
-	if (!isAudioDriverInitialized) {
+	if (!isAudioDriverInitialized && 0 < scenes->soundCount()) {
 		frontend->reportError(
 					"Cannot play sound. Check that you have the right\n"
 					"permissions and other programs do not block\n"

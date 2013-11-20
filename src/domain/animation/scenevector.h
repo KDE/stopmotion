@@ -33,6 +33,7 @@ class WorkspaceFile;
 
 class SceneVector : public AnimationImpl {
 	std::vector<Scene*> scenes;
+	int totalSoundCount;
 
 	Scene* getMutableScene(int);
 	SceneVector(const SceneVector&);
@@ -175,6 +176,10 @@ public:
 	 * @a scene.
 	 */
 	int soundCount(int scene, int frame) const;
+	/**
+	 * Returns the total number of sounds in the animation.
+	 */
+	int soundCount() const;
 	/**
 	 * Adds a sound to a frame of animation.
 	 * @param scene The number of the scene containing the frame to add the
