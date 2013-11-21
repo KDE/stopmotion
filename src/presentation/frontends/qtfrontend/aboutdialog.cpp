@@ -38,18 +38,19 @@ AboutDialog::AboutDialog(QWidget *parent)
 	layout->addWidget(label);
 	layout->addWidget( new QLabel(
 				"<p>" + tr("This is the Stopmotion application for creating stop motion animations.") + "</p>"
-				"<p> &copy; 2005-2008, Bjørn Erik Nilsen and Fredrik Berg Kjølstad </p>"));
+				"<p> &copy; 2005-2008, Bjï¿½rn Erik Nilsen and Fredrik Berg Kjï¿½lstad </p>"));
 	widget->setLayout(layout);
 	
 	tabWidget->addTab(widget, tr("&About") );
 	
 	tabWidget->addTab( new QLabel(
 				"<p><b>" + tr("Main developers") + "</b><br>"
-				"Bjørn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>" 
-				"Fredrik Berg Kjølstad &lt;fredrikbk@hotmail.com&gt;<br>"
+				"Bjï¿½rn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>" 
+				"Fredrik Berg Kjï¿½lstad &lt;fredrikbk@hotmail.com&gt;<br>"
 				"<p><b>" + tr("Contributors") + "</b><br>"
 				"Eric Stolten &lt;stoltene2@gmail.com&gt;<br>"
 				"Josh Green &lt;josh@resonance.org&gt;<br>"
+				"Tim Band<br>"
                                 "</p>"),
 				tr("A&uthors"));
 	
@@ -60,10 +61,10 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"Gorazd Bizjak and Matej Lavreni &lt;info@zapstudio.net&gt; (" + tr("Slovenian") + ")<br>"
 				"Guillaume B &lt;littletux@zarb.org&gt; (" + tr("French") + ")<br>"
 				"Martin Herweg &lt;m.herweg@gmx.de&gt; (" + tr("German") + ")<br>"
-				"José Jorge &lt;jjorge@free.fr&gt; (" + tr("Portuguese") + ")<br>"
-				"Manuel Quiñones &lt;manuel.por.aca@gmail.com&gt; (" + tr("Spanish") + ")<br>"
+				"Josï¿½ Jorge &lt;jjorge@free.fr&gt; (" + tr("Portuguese") + ")<br>"
+				"Manuel Quiï¿½ones &lt;manuel.por.aca@gmail.com&gt; (" + tr("Spanish") + ")<br>"
 				"David Hjelm &lt;dav.hjelm@spray.se&gt; (" + tr("Swedish") + ")<br>"
-				"Koray Löker &lt;loker@pardus.org.tr&gt; (" + tr("Turkish") + ")<br>"
+				"Koray Lï¿½ker &lt;loker@pardus.org.tr&gt; (" + tr("Turkish") + ")<br>"
 				"Diego Giordano &lt;fusion_machine@tin.it&gt; (" + tr("Italian") + ")<br>"
 				"Matteo Comisso &lt;teomatteo8.9@hotmail.it&gt; (" + tr("Italian") + ")<br>"
 				"</p>"
@@ -71,13 +72,13 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"Gorazd Bizjak &lt;gorazd@zapstudio.net&gt;<br>"
 				"<p><b>" + tr("Coordinating") + "</b><br>"
 				"Herman Robak &lt;herman@skolelinux.no&gt;<br>"
-				"Øyvind Kolås &lt;pippin@gimp.org&gt;</p>"
+				"ï¿½yvind Kolï¿½s &lt;pippin@gimp.org&gt;</p>"
 				"<p><b>" + tr("Testing") + "</b><br>"
 				"Tore Sinding Bekkedal &lt;toresbe@ifi.uio.no&gt;<br>"
 				"Finn Arne Johansen &lt;faj@bzz.no&gt;<br>"
 				"Halvor Borgen &lt;halvor.borgen@hig.no&gt;<br>"
-				"Bjørn Are Hansen &lt;post@bahansen.net&gt;<br>"
-				"John Steinar Bildøy &lt;johnsbil@haldenfriskole.no&gt;<br>"
+				"Bjï¿½rn Are Hansen &lt;post@bahansen.net&gt;<br>"
+				"John Steinar Bildï¿½y &lt;johnsbil@haldenfriskole.no&gt;<br>"
 				"Ole-Anders Andreassen &lt;ole-anders.andreassen@sunndal.kommune.no&gt;<br>"
 				"</p>"
 				);
