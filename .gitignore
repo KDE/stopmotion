@@ -1,0 +1,10 @@
+*~
+*.o
+moc_*.cpp
+ui_*.h
+Makefile
+.project
+.cproject
+stopmotion
+*.pro.user
+.settings/
