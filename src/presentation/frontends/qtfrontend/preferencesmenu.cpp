@@ -35,7 +35,7 @@ PreferencesMenu::PreferencesMenu(QWidget *parent)
 	exportVideoTab = 0;
 	videoDeviceTab = 0;
 	tabWidget = new QTabWidget;
-	
+
 	applyButton = new QPushButton(tr("Apply"), this);
 	applyButton->setDefault(true);
 	connect(applyButton, SIGNAL(clicked()), this, SLOT(apply()));
@@ -52,13 +52,13 @@ PreferencesMenu::PreferencesMenu(QWidget *parent)
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(tabWidget);
 	mainLayout->addLayout(buttonLayout);
-	
+
 	setLayout(mainLayout);
 	setWindowTitle(tr("Preferences Menu"));
-	setMaximumWidth(600);
-	setMinimumWidth(600);
+	setMaximumWidth(800);
+	setMinimumWidth(620);
 	setModal(false);
-	
+
 	makeVideoDeviceTab();
 	makeVideoImportTab();
 	makeVideoExportTab();
@@ -69,7 +69,7 @@ void PreferencesMenu::makeVideoImportTab()
 {
 	importVideoTab = new ImportTab;
 	importVideoTab->initializeImportValues();	
-	importVideoTab->setMinimumHeight(500);
+	importVideoTab->setMinimumHeight(400);
 	tabWidget->addTab(importVideoTab, tr("Video &Import"));
 }
 
@@ -78,7 +78,7 @@ void PreferencesMenu::makeVideoExportTab()
 {
 	exportVideoTab = new ExportTab;
 	exportVideoTab->initialize();
-	exportVideoTab->setMinimumHeight(300);
+	exportVideoTab->setMinimumHeight(460);
 	tabWidget->addTab(exportVideoTab, tr("Video &Export"));
 }
 
