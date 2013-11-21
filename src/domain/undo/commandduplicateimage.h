@@ -18,33 +18,29 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef COMMANDSETIMAGE_H_
-#define COMMANDSETIMAGE_H_
+#ifndef COMMANDDUPLICATEIMAGE_H_
+#define COMMANDDUPLICATEIMAGE_H_
 
 #include "command.h"
-#include "workspacefile.h"
 
 class AnimationImpl;
 
-class CommandSetImage : public Command {
-	friend class CommandDuplicateImage;
+class CommandDuplicateImage : public Command {
 	AnimationImpl& sv;
 	int32_t sc;
 	int32_t fr;
-	WorkspaceFile image;
 public:
-	CommandSetImage(AnimationImpl& model, int32_t scene, int32_t frame,
-			TemporaryWorkspaceFile& w);
-	~CommandSetImage();
+	CommandDuplicateImage(AnimationImpl& model, int32_t scene, int32_t frame);
+	~CommandDuplicateImage();
 	Command* execute();
 };
 
-class CommandSetImageFactory : public CommandFactory {
+class CommandDuplicateImageFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	CommandSetImageFactory(AnimationImpl& model);
-	~CommandSetImageFactory();
+	CommandDuplicateImageFactory(AnimationImpl& model);
+	~CommandDuplicateImageFactory();
 	Command* create(Parameters& ps);
 };
 
-#endif
+#endif /* COMMANDDUPLICATEIMAGE_H_ */

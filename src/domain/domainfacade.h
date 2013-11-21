@@ -110,6 +110,15 @@ public:
 			int count, int toScene, int toFrame);
 
 	/**
+	 * Duplicates the image file of the specified frame, setting the image to
+	 * the duplicate. This is used when the image is to be edited so that the
+	 * edit can be undone and so that shared images are unshared.
+	 * @param scene The index of the scene to which the frame belongs.
+	 * @param frame The index of the frame within the scene.
+	 */
+	void duplicateImage(int scene, int frame);
+
+	/**
 	 * Returns the image file for the frame specified.
 	 * @param scene The scene to which the frame belongs.
 	 * @param frame The frame number to examine.

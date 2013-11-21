@@ -42,6 +42,7 @@
 #include "src/domain/undo/commandremovescene.h"
 #include "src/domain/undo/commandmovescene.h"
 #include "src/domain/undo/commandsetimage.h"
+#include "src/domain/undo/commandduplicateimage.h"
 
 #include <string.h>
 #include <vector>
@@ -53,6 +54,7 @@ const char* commandAddFrames = "add-frame";
 const char* commandRemoveFrames = "delete-frame";
 const char* commandMoveFrames = "move-frame";
 const char* commandSetImage = "set-image";
+const char* commandDuplicateImage = "duplicate-image";
 const char* commandAddSound = "add-sound";
 const char* commandRemoveSound = "delete-sound";
 const char* commandRenameSound = "rename-sound";
@@ -70,7 +72,9 @@ Executor* makeAnimationCommandExecutor(AnimationImpl& model) {
 	std::auto_ptr<CommandFactory> move(new CommandMoveFactory(model));
 	ex->addCommand(commandMoveFrames, move, false);
 	std::auto_ptr<CommandFactory> setImage(new CommandSetImageFactory(model));
-	ex->addCommand(commandSetImage, move, false);
+	ex->addCommand(commandSetImage, setImage, false);
+	std::auto_ptr<CommandFactory> duplicateImage(new CommandDuplicateImageFactory(model));
+	ex->addCommand(commandDuplicateImage, duplicateImage, false);
 	std::auto_ptr<CommandFactory> addSound(new CommandAddSoundFactory(model));
 	ex->addCommand(commandAddSound, addSound, true);
 	std::auto_ptr<CommandFactory> removeSound(new UndoRemoveSoundFactory(model));
@@ -338,15 +342,17 @@ void Animation::loadSavedScenes() {
 	}
 }
 
-
 bool Animation::isUnsavedChanges() {
 	return executor->canUndo();
 }
 
-
 void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
 		const char* newImagePath) {
 	executor->execute(commandSetImage, sceneNumber, frameNumber, newImagePath);
+}
+
+void Animation::duplicateImage(int32_t sceneNumber, int32_t frameNumber) {
+	executor->execute(commandDuplicateImage, sceneNumber, frameNumber);
 }
 
 void Animation::attach(Observer* o) {

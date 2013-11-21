@@ -287,3 +287,7 @@ const char* DomainFacade::getSoundName(int sceneNumber, int frameNumber,
 		return 0;
 	}
 }
+
+void DomainFacade::duplicateImage(int scene, int frame) {
+	animationModel->duplicateImage(scene, frame);
+}

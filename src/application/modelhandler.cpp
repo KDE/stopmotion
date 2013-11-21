@@ -200,9 +200,9 @@ int ModelHandler::editCurrentFrame() {
 			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
 		return 1;
 	}
-
-	const char *path = DomainFacade::getFacade()
-			->getImagePath(activeScene, activeFrame);
+	DomainFacade* facade = DomainFacade::getFacade();
+	facade->duplicateImage(activeScene, activeFrame);
+	const char *path = facade->getImagePath(activeScene, activeFrame);
 
 	QStringList argList;
 	// arg0 are the options, and arg1 is the path of the frame.

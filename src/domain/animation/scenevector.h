@@ -152,6 +152,10 @@ public:
 	void moveFrames(int fromScene, int fromFrame, int frameCount,
 			int toScene, int toFrame);
 	/**
+	 * Returns the file path of the image of the specified frame.
+	 */
+	const char* getImagePath(int scene, int frame) const;
+	/**
 	 * Replaces the image of the frame at index {@a frameNumber} of scene
 	 * {@a sceneNumber}.
 	 * @param sceneNumber The index of the scene containing the frame to alter.

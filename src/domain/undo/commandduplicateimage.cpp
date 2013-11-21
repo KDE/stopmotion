@@ -18,33 +18,40 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef COMMANDSETIMAGE_H_
-#define COMMANDSETIMAGE_H_
+#include "commandduplicateimage.h"
+#include "commandsetimage.h"
+#include "src/domain/animation/workspacefile.h"
+#include "src/domain/animation/animationimpl.h"
+#include "src/domain/animation/scene.h"
+#include "src/domain/animation/frame.h"
 
-#include "command.h"
-#include "workspacefile.h"
+#include <memory>
 
-class AnimationImpl;
+CommandDuplicateImage::CommandDuplicateImage(AnimationImpl& model,
+		int32_t scene, int32_t frame) : sv(model), sc(scene), fr(frame) {
+}
 
-class CommandSetImage : public Command {
-	friend class CommandDuplicateImage;
-	AnimationImpl& sv;
-	int32_t sc;
-	int32_t fr;
-	WorkspaceFile image;
-public:
-	CommandSetImage(AnimationImpl& model, int32_t scene, int32_t frame,
-			TemporaryWorkspaceFile& w);
-	~CommandSetImage();
-	Command* execute();
-};
+CommandDuplicateImage::~CommandDuplicateImage() {
+}
 
-class CommandSetImageFactory : public CommandFactory {
-	AnimationImpl& sv;
-public:
-	CommandSetImageFactory(AnimationImpl& model);
-	~CommandSetImageFactory();
-	Command* create(Parameters& ps);
-};
+Command* CommandDuplicateImage::execute() {
+	const char* currentPath = sv.getScene(sc)->getFrame(fr)->getImagePath();
+	TemporaryWorkspaceFile twf(currentPath, TemporaryWorkspaceFile::forceCopy);
+	std::auto_ptr<CommandSetImage> inv(new CommandSetImage(sv, sc, fr, twf));
+	sv.replaceImage(sc, fr, inv->image);
+	twf.retainFile();
+	return inv.release();
+}
 
-#endif
+CommandDuplicateImageFactory::CommandDuplicateImageFactory(
+		AnimationImpl& model) : sv(model) {
+}
+
+CommandDuplicateImageFactory::~CommandDuplicateImageFactory() {
+}
+
+Command* CommandDuplicateImageFactory::create(Parameters& ps) {
+	int32_t scene = ps.getInteger(0, sv.sceneCount());
+	int32_t frame = ps.getInteger(0, sv.frameCount(scene));
+	return new CommandDuplicateImage(sv, scene, frame);
+}

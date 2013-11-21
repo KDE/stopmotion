@@ -201,3 +201,7 @@ void SceneVector::accept(FileNameVisitor& v) const {
 		(*i)->accept(v);
 	}
 }
+
+const char* SceneVector::getImagePath(int scene, int frame) const {
+	return getScene(scene)->getFrame(frame)->getImagePath();
+}

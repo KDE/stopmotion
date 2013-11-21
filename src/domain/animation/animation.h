@@ -134,6 +134,14 @@ public:
 			const char* newImagePath);
 
 	/**
+	 * Duplicates the image file for the specified frame, setting the frames
+	 * image to the duplicate.
+	 * @param sceneNumber The scene to which the frame belongs.
+	 * @param frameNumber The frame within the scene.
+	 */
+	void duplicateImage(int32_t sceneNumber, int32_t frameNumber);
+
+	/**
 	 * Adds the sound from the file "sound" to frame
 	 * at position frameNumber.
 	 * @param scene The scene containing the frame to add the sound to.
