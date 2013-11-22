@@ -45,11 +45,12 @@ AboutDialog::AboutDialog(QWidget *parent)
 	
 	tabWidget->addTab( new QLabel(
 				"<p><b>" + tr("Main developers") + "</b><br>"
-				"Bjørn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>" 
+				"Bjørn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>"
 				"Fredrik Berg Kjølstad &lt;fredrikbk@hotmail.com&gt;<br>"
 				"<p><b>" + tr("Contributors") + "</b><br>"
 				"Eric Stolten &lt;stoltene2@gmail.com&gt;<br>"
 				"Josh Green &lt;josh@resonance.org&gt;<br>"
+				"Jehan Pagès<br>"
                                 "</p>"),
 				tr("A&uthors"));
 	
