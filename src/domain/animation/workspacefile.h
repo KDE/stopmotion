@@ -70,7 +70,7 @@ public:
 	 * being deleted when @a t is destroyed. @a t is emptied by this operation
 	 * and so cannot be used again. This operation will not fail.
 	 */
-	WorkspaceFile& operator=(TemporaryWorkspaceFile& t);
+	void take(TemporaryWorkspaceFile& t);
 	/**
 	 * Gets the file's basename.
 	 * @return The file's name (i.e. with no directory part but including any

@@ -38,7 +38,7 @@ class SoundOutOfRangeException : public std::exception {
 
 Frame::Frame(TemporaryWorkspaceFile& filename) {
 	assert(filename.path() != NULL);
-	imagePath = filename;
+	imagePath.take(filename);
 }
 
 

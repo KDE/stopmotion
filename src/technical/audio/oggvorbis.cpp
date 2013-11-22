@@ -69,7 +69,7 @@ void OggVorbis::setFilename(TemporaryWorkspaceFile& filename) {
 		ov_clear(oggFile);
 		free(oggFile);
 		oggFile = NULL;
-		this->filename = filename;
+		this->filename.take(filename);
 	}
 	else {
 		Logger::get().logDebug("Cannot open file for reading");

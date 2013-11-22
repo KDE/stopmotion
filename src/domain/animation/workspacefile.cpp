@@ -69,7 +69,7 @@ void getFreshFilename(char*& path, const char*& namePart,
 		p.str("");
 		zeroOff = p.tellp();
 		p << workspacePath;
-		indexOfName = (p.tellp() - zeroOff);
+		indexOfName = p.tellp() - zeroOff;
 		p.fill('0');
 		p.width(8);
 		p << nextFileNumber();
@@ -118,16 +118,22 @@ WorkspaceFile::WorkspaceFile(const char* extension, FreshFilename)
 
 WorkspaceFile::WorkspaceFile(TemporaryWorkspaceFile& t)
 		: fullPath(t.fullPath), namePart(t.namePart) {
+	if (fullPath) {
+		int nameStart = namePart - fullPath;
+		size_t length = 1 + nameStart + strlen(namePart);
+		fullPath = new char[length];
+		strncpy(fullPath, t.fullPath, length);
+		namePart = fullPath + nameStart;
+	}
 }
 
-WorkspaceFile& WorkspaceFile::operator=(TemporaryWorkspaceFile& t) {
+void WorkspaceFile::take(TemporaryWorkspaceFile& t) {
 	delete[] fullPath;
 	fullPath = t.fullPath;
 	namePart = t.namePart;
 	t.fullPath = 0;
 	t.namePart = 0;
 	t.toBeDeleted = false;
-	return *this;
 }
 
 WorkspaceFile::~WorkspaceFile() {
@@ -194,7 +200,7 @@ TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* basename,
 	fullPath = new char[size];
 	const char* cp = p.str().c_str();
 	strncpy(fullPath, cp, size);
-	namePart = cp + indexOfName;
+	namePart = fullPath + indexOfName;
 }
 
 TemporaryWorkspaceFile::~TemporaryWorkspaceFile() {

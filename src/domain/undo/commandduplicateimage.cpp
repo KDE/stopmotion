@@ -40,6 +40,7 @@ Command* CommandDuplicateImage::execute() {
 	std::auto_ptr<CommandSetImage> inv(new CommandSetImage(sv, sc, fr, twf));
 	sv.replaceImage(sc, fr, inv->image);
 	twf.retainFile();
+	delete this;
 	return inv.release();
 }
 
