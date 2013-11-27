@@ -108,7 +108,7 @@ bool OSSDriver::initialize()
 	// This means that the call imidiately returns with a return value
 	audioFD = open(audioDevice, O_WRONLY | O_NONBLOCK, 0);
 	if (audioFD == -1 || audioFD == EBUSY) {
-		fprintf(stderr, "Cannot open device: %s\n", strerror(errno));
+		fprintf(stderr, "Cannot open device %s: %s\n", audioDevice, strerror(errno));
 		return false;
 	}
 	

@@ -46,8 +46,8 @@ const int FrameView::alphaLut[5] = { 128, 64, 43, 32, 26 };
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
  : QWidget(parent), screen(0), videoSurface(0), grabThread(0), grabber(0)
 {
-	char tmp[256];
-	snprintf(tmp, 256, "%s/.stopmotion/capturedfile.jpg", getenv("HOME"));
+	char tmp[PATH_MAX];
+	snprintf(tmp, sizeof(tmp), "%s/.stopmotion/capturedfile.jpg", getenv("HOME"));
 	capturedImg = new char[strlen(tmp) + 1];
 	strcpy(capturedImg, tmp);
 	
@@ -338,10 +338,10 @@ bool FrameView::on()
 	
 	const char* prepoll = 
 		prefs->getPreference(QString("importprepoll%1").arg(activeCmd).toLatin1().constData(), "");
-	const char* startDeamon = 
-		prefs->getPreference(QString("importstartdeamon%1").arg(activeCmd).toLatin1().constData(), "");
-	const char* stopDeamon = 
-		prefs->getPreference(QString("importstopdeamon%1").arg(activeCmd).toLatin1().constData(), "");
+	const char* startDaemon = 
+		prefs->getPreference(QString("importstartdaemon%1").arg(activeCmd).toLatin1().constData(), "");
+	const char* stopDaemon = 
+		prefs->getPreference(QString("importstopdaemon%1").arg(activeCmd).toLatin1().constData(), "");
 	
 	int activeDev = prefs->getPreference("activeVideoDevice", -1);
 	if (activeDev > -1) {
@@ -350,9 +350,9 @@ bool FrameView::on()
 		QString pre = QString(prepoll).replace("$VIDEODEVICE", device);
 		freeProperty(prepoll);
 		prepoll = strdup(pre.toLatin1().constData());
-		QString sd = QString(startDeamon).replace("$VIDEODEVICE", device);
-		freeProperty(startDeamon);
-		startDeamon = strdup(sd.toLatin1().constData());
+		QString sd = QString(startDaemon).replace("$VIDEODEVICE", device);
+		freeProperty(startDaemon);
+		startDaemon = strdup(sd.toLatin1().constData());
 		freeProperty(device);
 	}
 	else {
@@ -364,7 +364,7 @@ bool FrameView::on()
 		return false;
 	}
 
-	bool isProcess = (strcmp(startDeamon, "") == 0) ? false : true;
+	bool isProcess = (strcmp(startDaemon, "") == 0) ? false : true;
 	bool isCameraReady = true;
 	this->grabber = new CommandLineGrabber(capturedImg, isProcess);
 	if ( !grabber->setPrePollCommand(prepoll) ) {
@@ -380,7 +380,7 @@ bool FrameView::on()
 	free(const_cast<char *>(prepoll));
 	prepoll = 0;
 
-	if ( !grabber->setStartCommand(startDeamon) ) {
+	if ( !grabber->setStartCommand(startDaemon) ) {
 		DomainFacade::getFacade()->getFrontend()->hideProgress();
 		QMessageBox::warning(this, tr("Warning"), tr(
 					"You do not have the given grabber installed on your system"),
@@ -391,11 +391,11 @@ bool FrameView::on()
 		//return false;
 	}
 	
-	free(const_cast<char *>(startDeamon));
-	startDeamon = 0;
+	free(const_cast<char *>(startDaemon));
+	startDaemon = 0;
 
-	grabber->setStopCommand(stopDeamon);
-	freeProperty(stopDeamon);
+	grabber->setStopCommand(stopDaemon);
+	freeProperty(stopDaemon);
 
 	if (isCameraReady) {
 		this->initCompleted();

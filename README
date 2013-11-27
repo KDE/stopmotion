@@ -6,14 +6,10 @@ See http://linuxstopmotion.org for more info.
 
 INSTALLATION
 ------------
-1) qmake stopmotion.pro
-2) make
-3) make install
-
-The configure script will generate 'stopmotion.pro' and 'config.cpp' from 
-'stopmotion.pro.in' and 'config.cpp.in', respectively. You can override the 
-settings in these files, but ideally you should give all your settings through 
-options to the configure script. See './configure --help' for more info.
+0) lrelease stopmotion.pro   # to generate compiled translation files
+1) qmake stopmotion.pro      # to generate Makefile
+2) make                      # to build the software
+3) make install              # to install things
  
 You need the following libraries installed to compile:
     - Qt4

@@ -21,7 +21,7 @@ HEADERS += src/config.h \
            src/presentation/frontends/qtfrontend/flexiblelineedit.h \
            src/presentation/frontends/frontend.h \
 		   graphics/stopmotion.xpm \
-		   graphics/stopmotion_logo.xpm \ 
+		   graphics/stopmotion_logo.xpm \
            graphics/icons/addframeicon.xpm \
            graphics/icons/cameraoff.xpm \
            graphics/icons/cameraon.xpm \
@@ -178,11 +178,13 @@ TRANSLATIONS += translations/stopmotion_no_nb.ts \
                 translations/stopmotion_no_se.ts \
                 translations/stopmotion_de.ts \
                 translations/stopmotion_se.ts \
+                translations/stopmotion_sv.ts \
                 translations/stopmotion_fr.ts \
                 translations/stopmotion_br.ts \
                 translations/stopmotion_dk.ts \
                 translations/stopmotion_fi.ts \
                 translations/stopmotion_gr.ts \
+                translations/stopmotion_he.ts \
                 translations/stopmotion_ru.ts \
                 translations/stopmotion_es.ts \
                 translations/stopmotion_kl.ts \
