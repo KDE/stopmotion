@@ -221,7 +221,7 @@ void recover(DomainFacade *facadePtr)
 
 		while ( (ep = readdir(dp)) ) {
 			char *fileName = new char[PATH_MAX];
-			snprintf(fileName, sizeof(fileName), "%s/%s", tmp, ep->d_name);
+			snprintf(fileName, PATH_MAX, "%s/%s", tmp, ep->d_name);
 			stat(fileName, &st);
 			// Is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0) {

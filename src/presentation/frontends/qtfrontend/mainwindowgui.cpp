@@ -103,7 +103,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	lastVisitedDir      = 0;
 	
 	lastVisitedDir = new char[PATH_MAX];
-	strcpy( lastVisitedDir, getenv("PWD") );
+	strncpy( lastVisitedDir, getenv("PWD"), PATH_MAX );
 	
 	centerWidget = new QWidget;
 	centerWidget->setObjectName("CenterWidget");
