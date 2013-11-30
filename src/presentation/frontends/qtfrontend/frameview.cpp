@@ -425,6 +425,7 @@ bool FrameView::on()
 		// Otherwise a thread is needed
 		else {
 			grabThread = new ImageGrabThread(this, grabber);
+			connect(grabThread, SIGNAL(grabbed()), this, SLOT(redraw()));
 			grabThread->start();
 			grabThread->wait(500);
 			

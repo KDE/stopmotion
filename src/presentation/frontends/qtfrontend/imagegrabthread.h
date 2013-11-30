@@ -36,6 +36,7 @@ class FrameView;
  */
 class ImageGrabThread : public QThread
 {
+	Q_OBJECT
 public:
 	/**
 	 * Constructs and initializes the object.
@@ -56,7 +57,10 @@ public:
 	 * @return true if last grabbing was success, false otherwise
 	 */
 	bool wasGrabbingSuccess();
-	
+
+signals:
+	void grabbed();
+
 private:
 	FrameView *frameView;
 	ImageGrabber *grabber;
