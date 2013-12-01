@@ -177,7 +177,6 @@ TRANSLATIONS += translations/stopmotion_no_nb.ts \
                 translations/stopmotion_no_nn.ts \
                 translations/stopmotion_no_se.ts \
                 translations/stopmotion_de.ts \
-                translations/stopmotion_se.ts \
                 translations/stopmotion_sv.ts \
                 translations/stopmotion_fr.ts \
                 translations/stopmotion_br.ts \
@@ -192,7 +191,8 @@ TRANSLATIONS += translations/stopmotion_no_nb.ts \
 		translations/stopmotion_sl.ts \
 		translations/stopmotion_pt.ts \
 		translations/stopmotion_it.ts \
-		translations/stopmotion_tr.ts
+		translations/stopmotion_tr.ts \
+		translations/stopmotion_zh_TW.ts
 
 DEPENDPATH += src \
               src/domain \
@@ -236,14 +236,15 @@ DISTFILES += src/config.cpp.in \
 DISTFILES -= stopmotion.pro \
              src/config.cpp
 			 
-CONFIG += release warn_off link_pkgconfig
-PKGCONFIG += sdl SDL_image vorbisfile
-DEFINES += NO_DEBUG
-TEMPLATE = app
-
 isEmpty(PREFIX) {
  PREFIX = /usr/local
- }
+}
+
+CONFIG += release warn_off link_pkgconfig
+PKGCONFIG += sdl SDL_image vorbisfile
+DEFINES += NO_DEBUG PREFIX_PATH=\"\\\"$${PREFIX}\\\"\"
+TEMPLATE = app
+
 target.path = $${PREFIX}/bin
 
 translations.path = $${PREFIX}/share/stopmotion/translations
