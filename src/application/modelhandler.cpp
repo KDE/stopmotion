@@ -210,7 +210,7 @@ int ModelHandler::editCurrentFrame()
 	// arg0 are the options, and arg1 is the path of the frame.
 	// Start Gimp without splash screen.
 	argList.append(QLatin1String("--no-splash"));	
-	argList.append(QLatin1String(frame->getImagePath()));
+	argList.append(QString::fromLocal8Bit(frame->getImagePath()));
 
 	QProcess process;
 	if (!process.startDetached(QLatin1String(gimpCommand), argList)) {

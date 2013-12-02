@@ -21,7 +21,8 @@
 #define EXTERNALCHANGEMONITOR_H
 
 #include <QObject>
-#include <QStringList>
+#include <string>
+#include <set>
 
 class QSocketNotifier;
 
@@ -54,7 +55,7 @@ public:
 	 * Register the directory for monitoring.
 	 * @param directory the directory to listen for changes in.
 	 */
-	void addDirectory(const QString &directory);
+	void addDirectory(const std::string &directory);
 
 	/**
 	 * Creates a inotify connection and listens for changes in the project directories.
@@ -77,7 +78,7 @@ private:
 	/** For polling the file connection through the qt event loop */
 	QSocketNotifier *socketNotifier;
 	bool isMonitoring;
-        QStringList directories;
+        std::set<std::string> directories;
 
 private slots:
 	/**

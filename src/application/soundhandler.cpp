@@ -45,7 +45,7 @@ void SoundHandler::addSound()
 		getOpenFileName(0, tr("Choose sound file"), QString(homeDir), tr("Sounds (*.ogg)") );
 	if ( !file.isNull() ) {
 		DomainFacade *facade = DomainFacade::getFacade();
-		int ret = facade->addSound( facade->getActiveFrameNumber(), file.toLatin1().constData() );
+		int ret = facade->addSound( facade->getActiveFrameNumber(), file.toLocal8Bit().constData() );
 		if (ret == 0) {
 			Frame *frame = facade->getFrame( facade->getActiveFrameNumber() );
 			if (frame) {
@@ -79,7 +79,7 @@ void SoundHandler::setSoundName()
 				QLineEdit::Normal,QString::null, &ok);
 		if ( ok && !text.isEmpty() ) {
 			DomainFacade::getFacade()->setSoundName(DomainFacade::getFacade()->getActiveFrameNumber(), 
-					index, text.toLatin1().data() );
+					index, text.toLocal8Bit().data() );
 			soundsList->item(index)->setText(text);
 		}
 	}
