@@ -1156,7 +1156,7 @@ void MainWindowGUI::updateMostRecentMenu()
 	if (strcmp(first, "") != 0) {
 		if (access(first, R_OK) == 0) {
 			mostRecentAct->setVisible(true);
-			mostRecentAct->setText(QString(first));
+			mostRecentAct->setText(QString::fromLocal8Bit(first));
 		}
 		xmlFree((xmlChar*)first);
 	}
@@ -1168,7 +1168,7 @@ void MainWindowGUI::updateMostRecentMenu()
 	if (strcmp(second, "") != 0) { 
 		if (access(second, R_OK) == 0) {
 			secondMostRecentAct->setVisible(true);
-			secondMostRecentAct->setText(QString(second));
+			secondMostRecentAct->setText(QString::fromLocal8Bit(second));
 		}
 		xmlFree((xmlChar*)second);
 	}
@@ -1180,7 +1180,7 @@ void MainWindowGUI::updateMostRecentMenu()
 	if (strcmp(third, "") != 0) {
 		if (access(third, R_OK) == 0) {
 			thirdMostRecentAct->setVisible(true);
-			thirdMostRecentAct->setText(QString(third));
+			thirdMostRecentAct->setText(QString::fromLocal8Bit(third));
 		}
 		xmlFree((xmlChar*)third);
 	}
