@@ -837,16 +837,15 @@ void MainWindowGUI::openThirdMostRecent()
 
 void MainWindowGUI::saveProjectAs()
 {
-	QString file = QFileDialog::
-		getSaveFileName(this,
-				tr("Save As"),
-				QString::fromLocal8Bit(lastVisitedDir),
-				"Stopmotion (*.sto)");
+	QString file = QFileDialog::getSaveFileName(this,
+			tr("Save As"),
+			QString::fromLocal8Bit(lastVisitedDir),
+			"Stopmotion (*.sto)");
 
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
-                string path = DomainFacade::getFacade()->getProjectPath();
-                path += "images/";
+		string path = DomainFacade::getFacade()->getProjectPath();
+		path += "images/";
 		changeMonitor->addDirectory(path);
 		//fileMenu->setItemEnabled(SAVE, true);
 		saveAct->setEnabled(true);
