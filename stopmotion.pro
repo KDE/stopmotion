@@ -200,23 +200,24 @@ SOURCES += src/config.cpp \
     src/domain/undo/executor.cpp \
     src/domain/undo/random.cpp
 TRANSLATIONS += translations/stopmotion_no_nb.ts \
-    translations/stopmotion_no_nn.ts \
-    translations/stopmotion_no_se.ts \
-    translations/stopmotion_de.ts \
-    translations/stopmotion_se.ts \
-    translations/stopmotion_fr.ts \
-    translations/stopmotion_br.ts \
-    translations/stopmotion_dk.ts \
-    translations/stopmotion_fi.ts \
-    translations/stopmotion_gr.ts \
-    translations/stopmotion_ru.ts \
-    translations/stopmotion_es.ts \
-    translations/stopmotion_kl.ts \
-    translations/stopmotion_cz.ts \
-    translations/stopmotion_sl.ts \
-    translations/stopmotion_pt.ts \
-    translations/stopmotion_it.ts \
-    translations/stopmotion_tr.ts
+                translations/stopmotion_no_nn.ts \
+                translations/stopmotion_no_se.ts \
+                translations/stopmotion_de.ts \
+                translations/stopmotion_se.ts \
+                translations/stopmotion_fr.ts \
+                translations/stopmotion_br.ts \
+                translations/stopmotion_dk.ts \
+                translations/stopmotion_fi.ts \
+                translations/stopmotion_gr.ts \
+                translations/stopmotion_ru.ts \
+                translations/stopmotion_es.ts \
+                translations/stopmotion_kl.ts \
+		translations/stopmotion_cz.ts \
+		translations/stopmotion_sl.ts \
+		translations/stopmotion_pt.ts \
+		translations/stopmotion_it.ts \
+		translations/stopmotion_tr.ts \
+		translations/stopmotion_zh_TW.ts
 DEPENDPATH += src \
     src/domain \
     src/foundation \
@@ -257,7 +258,13 @@ DISTFILES -= stopmotion.pro \
              src/config.cpp
 
 CONFIG += link_pkgconfig
+
+isEmpty(PREFIX) {
+ PREFIX = /usr/local
+}
+
 PKGCONFIG += sdl SDL_image vorbisfile
+DEFINES += NO_DEBUG PREFIX_PATH=\"\\\"$${PREFIX}\\\"\"
 TEMPLATE = app
 
 CONFIG(release,debug|release) {
@@ -273,9 +280,6 @@ MOC_DIR = build
 RCC_DIR = build
 UI_DIR = build
 
-isEmpty(PREFIX) {
-	PREFIX = /usr/local
-}
 target.path = $${PREFIX}/bin
 
 translations.path = $${PREFIX}/share/stopmotion/translations
