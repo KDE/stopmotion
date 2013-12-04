@@ -95,7 +95,8 @@ int32_t CommandAddFactory::Parameters::getHowMany() {
 	return frameCount;
 }
 
-void CommandAddFactory::Parameters::getString(std::string& out) {
+void CommandAddFactory::Parameters::getString(std::string& out,
+		const char*) {
 	assert(3 <= parameterCount);
 	int index = parameterCount - 3;
 	++parameterCount;
@@ -121,7 +122,7 @@ Command* CommandAddFactory::create(::Parameters& ps) {
 	CommandAdd* add = new CommandAdd(sv, scene, frame, count);
 	std::string frameName;
 	for (int i = 0; i != count; ++i) {
-		ps.getString(frameName);
+		ps.getString(frameName, "?*.jpg");
 		TemporaryWorkspaceFile twf(frameName.c_str(),
 				TemporaryWorkspaceFile::alreadyAWorkspaceFile);
 		add->addFrame(new Frame(twf));

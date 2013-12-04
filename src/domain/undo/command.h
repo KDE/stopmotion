@@ -83,12 +83,17 @@ public:
 	 */
 	virtual int32_t getHowMany();
 	/**
-	 * Returns the length of string read, which may be greater than maxLength
-	 * although no more than maxLength characters will be output into out.
-	 * Might throw IncorrectParameterException if unsuccessful, but this
-	 * behaviour must not be relied upon.
+	 * Returns a string. If the parameters come from test code, the string will
+	 * match the pattern provided. The pattern is ignored in normal code and
+	 * may be null.
+	 * @param out The returned string.
+	 * @param pattern The pattern to which the output should conform; with a
+	 * random alphanumeric character replacing each {@c ?} and a random
+	 * (possibly zero-length) string of such characters replacing each {@c *}.
+	 * Ignored in non-test code. If null, a string of at length at least one is
+	 * produced.
 	 */
-	virtual void getString(std::string& out) = 0;
+	virtual void getString(std::string& out, const char* pattern) = 0;
 };
 
 /**

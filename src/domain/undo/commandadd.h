@@ -74,7 +74,7 @@ public:
 		const char* addFrame(const char* filename);
 		int32_t getInteger(int32_t min, int32_t max);
 		int32_t getHowMany();
-		void getString(std::string& out);
+		void getString(std::string& out, const char* pattern);
 		/**
 		 * If this function is not called before destruction, copied files
 		 * held by this function are deleted.

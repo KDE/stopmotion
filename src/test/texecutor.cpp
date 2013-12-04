@@ -84,7 +84,7 @@ public:
 	Command* create(Parameters& ps) {
 		EtCommand* e = new EtCommand(name, output);
 		e->i1 = ps.getInteger(-RAND_MAX/2, RAND_MAX/2);
-		ps.getString(e->s1);
+		ps.getString(e->s1, 0);
 		e->i2 = ps.getInteger(-RAND_MAX/2, RAND_MAX/2);
 		return e;
 	}

@@ -60,7 +60,7 @@ Command* CommandRenameSoundFactory::create(Parameters& ps) {
 			->soundCount());
 	std::auto_ptr<CommandRenameSound> r(new CommandRenameSound(sv, sc, fr, index, 0));
 	std::string name;
-	ps.getString(name);
+	ps.getString(name, "sound ?*");
 	r->setName(name.c_str());
 	return r.release();
 }

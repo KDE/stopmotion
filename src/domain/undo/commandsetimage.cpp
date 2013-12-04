@@ -46,7 +46,7 @@ Command* CommandSetImageFactory::create(Parameters& ps) {
 	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
 	int32_t fr = ps.getInteger(0, sv.frameCount(sc) - 1);
 	std::string path;
-	ps.getString(path);
+	ps.getString(path, "?*.jpg");
 	TemporaryWorkspaceFile twf(path.c_str());
 	return new CommandSetImage(sv, sc, fr, twf);
 }

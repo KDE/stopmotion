@@ -75,19 +75,24 @@ public:
 	int32_t getLogInt(int32_t p);
 	/**
 	 * Gets a random string from the characters in the null-terminated
-	 * string provided.
-	 * @param [out] out The resulting random string.
+	 * string provided, appending it to {@a out}.
+	 * @param [in,out] out The random string is appended to this string.
 	 * @param [in] characters A null-terminated string of characters from
 	 * which to chose (uniformly).
 	 * @param [in] allowNulls true to allow nulls also in the string, false to
 	 * disallow.
 	 */
-	void getString(std::string& out, const char* characters,
+	void appendString(std::string& out, const char* characters,
 			bool allowNulls = false);
 	/**
-	 * Gets a random string of alphanumeric characters.
+	 * Returns a random alphanumeric character.
 	 */
-	void getAlphanumeric(std::string& out);
+	char getCharacter();
+	/**
+	 * Gets a random string of alphanumeric characters.
+	 * @param [in,out] out The random string is appended to this string.
+	 */
+	void appendAlphanumeric(std::string& out);
 };
 
 #endif /* RANDOM_H_ */

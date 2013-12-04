@@ -67,9 +67,9 @@ Command* CommandAddSoundFactory::create(Parameters& ps) {
 	int32_t fr = ps.getInteger(0, sv.frameCount(sc));
 	int32_t index = ps.getInteger(0, sv.soundCount(sc, fr));
 	std::string filename;
-	ps.getString(filename);
+	ps.getString(filename, "?*.jpg");
 	std::string humanName;
-	ps.getString(humanName);
+	ps.getString(humanName, "sound ?*");
 	std::auto_ptr<Sound> sound(new Sound());
 	sound->setName(humanName);
 	std::auto_ptr<CommandAddSound> r(new CommandAddSound(sv, sc, fr, index));

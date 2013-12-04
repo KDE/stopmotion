@@ -24,6 +24,11 @@
 #include <string.h>
 #include <assert.h>
 
+namespace {
+const char alphanumericCharacters[] =
+		"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+}
+
 // This is not thread safe, but could easily be made so
 class RandomImpl {
 	~RandomImpl() {
@@ -109,10 +114,9 @@ int32_t RandomSource::getLogInt(int32_t p) {
 	return r;
 }
 
-void RandomSource::getString(std::string& out,
+void RandomSource::appendString(std::string& out,
 		const char* characters, bool allowNulls) {
 	int n = strlen(characters) + allowNulls? 1 : 0;
-	out.clear();
 	while (true) {
 		int r = getUniform(n);
 		if (n == r)
@@ -121,8 +125,11 @@ void RandomSource::getString(std::string& out,
 	}
 }
 
-void RandomSource::getAlphanumeric(std::string& out) {
-	getString(out,
-			"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-			false);
+void RandomSource::appendAlphanumeric(std::string& out) {
+	appendString(out, alphanumericCharacters, false);
+}
+
+char RandomSource::getCharacter() {
+	int u = getUniform(sizeof(alphanumericCharacters) - 1);
+	return alphanumericCharacters[u];
 }

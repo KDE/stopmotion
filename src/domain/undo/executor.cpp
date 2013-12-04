@@ -364,7 +364,7 @@ public:
 			throw IncorrectParameterException();
 		return r;
 	}
-	void getString(std::string& out) {
+	void getString(std::string& out, const char*) {
 		if (StringReader::parseFailed == reader.getString(out))
 			throw IncorrectParameterException();
 	}
@@ -537,8 +537,8 @@ public:
 		writer.writeInteger(r);
 		return r;
 	}
-	void getString(std::string& out) {
-		delegate.getString(out);
+	void getString(std::string& out, const char* pattern) {
+		delegate.getString(out, pattern);
 		writer.writeString(out.c_str());
 	}
 	void writeCommand(CommandLogger* logger) {
@@ -570,7 +570,7 @@ public:
 	int32_t getInteger(int32_t, int32_t) {
 		return va_arg(args, int32_t);
 	}
-	void getString(std::string& out) {
+	void getString(std::string& out, const char*) {
 		const char* s = va_arg(args, const char*);
 		out.assign(s);
 	}
@@ -588,8 +588,20 @@ public:
 	int32_t getHowMany() {
 		return 1 + rs.getLogInt(60);
 	}
-	void getString(std::string& out) {
-		rs.getAlphanumeric(out);
+	void getString(std::string& out, const char* pattern) {
+		if (!pattern)
+			pattern = "?*";
+		out.clear();
+		for (; pattern; ++pattern) {
+			char c = *pattern;
+			if (c == '?') {
+				out.append(1, rs.getCharacter());
+			} else if (c == '*') {
+				rs.appendAlphanumeric(out);
+			} else {
+				out.append(1, c);
+			}
+		}
 	}
 };
 
