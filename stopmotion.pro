@@ -266,14 +266,15 @@ isEmpty(PREFIX) {
 PKGCONFIG += sdl SDL_image vorbisfile
 DEFINES += NO_DEBUG PREFIX_PATH=\"\\\"$${PREFIX}\\\"\"
 TEMPLATE = app
+DESTDIR=.
 
 CONFIG(release,debug|release) {
-	DESTDIR=.
+	TARGET=stopmotion
 	OBJECTS_DIR=build/release
 	DEFINES+= NO_DEBUG
 }
 CONFIG(debug,debug|release) {
-	DESTDIR=build/debug
+	TARGET=stopmotion-d
 	OBJECTS_DIR=build/debug
 }
 MOC_DIR = build
