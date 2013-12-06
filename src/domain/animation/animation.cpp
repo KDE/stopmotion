@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "animation.h"
 
 #include "src/foundation/logger.h"
@@ -29,67 +30,15 @@
 #include "src/domain/observernotifier.h"
 #include "src/presentation/observer.h"
 
+#include "src/domain/undo/commandadd.h"
 #include "src/domain/undo/command.h"
 #include "src/domain/undo/executor.h"
-
-#include "src/domain/undo/commandadd.h"
-#include "src/domain/undo/commandremove.h"
-#include "src/domain/undo/commandmove.h"
-#include "src/domain/undo/commandaddsound.h"
-#include "src/domain/undo/commandremovesound.h"
-#include "src/domain/undo/commandrenamesound.h"
-#include "src/domain/undo/commandaddscene.h"
-#include "src/domain/undo/commandremovescene.h"
-#include "src/domain/undo/commandmovescene.h"
-#include "src/domain/undo/commandsetimage.h"
-#include "src/domain/undo/commandduplicateimage.h"
+#include "src/domain/undo/addallcommands.h"
 
 #include <string.h>
 #include <vector>
 #include <iostream>
 #include <sstream>
-
-namespace {
-const char* commandAddFrames = "add-frame";
-const char* commandRemoveFrames = "delete-frame";
-const char* commandMoveFrames = "move-frame";
-const char* commandSetImage = "set-image";
-const char* commandDuplicateImage = "duplicate-image";
-const char* commandAddSound = "add-sound";
-const char* commandRemoveSound = "delete-sound";
-const char* commandRenameSound = "rename-sound";
-const char* commandAddScene = "new-scene";
-const char* commandRemoveScene = "delete-scene";
-const char* commandMoveScene = "move-scene";
-}
-
-Executor* makeAnimationCommandExecutor(AnimationImpl& model) {
-	std::auto_ptr<Executor> ex(makeExecutor());
-	std::auto_ptr<CommandFactory> add(new CommandAddFactory(model));
-	ex->addCommand(commandAddFrames, add, true);
-	std::auto_ptr<CommandFactory> remove(new CommandRemoveFactory(model));
-	ex->addCommand(commandRemoveFrames, remove, false);
-	std::auto_ptr<CommandFactory> move(new CommandMoveFactory(model));
-	ex->addCommand(commandMoveFrames, move, false);
-	std::auto_ptr<CommandFactory> setImage(new CommandSetImageFactory(model));
-	ex->addCommand(commandSetImage, setImage, false);
-	std::auto_ptr<CommandFactory> duplicateImage(new CommandDuplicateImageFactory(model));
-	ex->addCommand(commandDuplicateImage, duplicateImage, false);
-	std::auto_ptr<CommandFactory> addSound(new CommandAddSoundFactory(model));
-	ex->addCommand(commandAddSound, addSound, true);
-	std::auto_ptr<CommandFactory> removeSound(new UndoRemoveSoundFactory(model));
-	ex->addCommand(commandRemoveSound, removeSound, true);
-	std::auto_ptr<CommandFactory> renameSound(new CommandRenameSoundFactory(model));
-	ex->addCommand(commandRenameSound, renameSound, false);
-	std::auto_ptr<CommandFactory> addScene(new CommandAddSceneFactory(model));
-	ex->addCommand(commandAddScene, addScene, true);
-	std::auto_ptr<CommandFactory> removeScene(new UndoRemoveSceneFactory(model));
-	ex->addCommand(commandRemoveScene, removeScene, false);
-	std::auto_ptr<CommandFactory> moveScene(new CommandMoveSceneFactory(model));
-	ex->addCommand(commandMoveScene, moveScene, false);
-	return ex.release();
-}
-
 
 Animation::Animation()
 		: scenes(0), executor(0), serializer(0), audioDriver(0),
@@ -153,7 +102,7 @@ void Animation::addFrames(int scene, int frame,
 			frontend->updateProgress(added);
 	}
 	if (0 < added) {
-		executor->execute(commandAddFrames, params);
+		executor->execute(Commands::addFrames, params);
 		params.retainFiles();
 	}
 	if (showingProgress)
@@ -166,7 +115,7 @@ void Animation::addFrames(int scene, int frame,
 void Animation::removeFrames(int32_t scene, int32_t frame, int32_t count) {
 	assert(0 <= count);
 	assert(frame + count <= frameCount(scene));
-	executor->execute(commandRemoveFrames, scene, frame, count);
+	executor->execute(Commands::removeFrames, scene, frame, count);
 }
 
 
@@ -180,7 +129,7 @@ void Animation::moveFrames(int32_t fromScene, int32_t fromFrame,
 		// Attempt to move frames into the same position; ineffective.
 		return;
 	}
-	executor->execute(commandMoveFrames,
+	executor->execute(Commands::moveFrames,
 			fromScene, fromFrame, count,
 			toScene, toFrame);
 }
@@ -200,7 +149,7 @@ int Animation::addSound(int32_t scene, int32_t frameNumber,
 	assert(oldName == NULL);
 	int32_t index = soundCount(scene, frameNumber);
 	try {
-		executor->execute(commandAddSound, scene, frameNumber,
+		executor->execute(Commands::addSound, scene, frameNumber,
 				index, soundFile, soundName);
 	} catch (CouldNotOpenFileException&) {
 		frontend->reportError(
@@ -223,14 +172,14 @@ int Animation::addSound(int32_t scene, int32_t frameNumber,
 
 void Animation::removeSound(int32_t sceneNumber, int32_t frameNumber,
 		int32_t soundNumber) {
-	executor->execute(commandRemoveSound,
+	executor->execute(Commands::removeSound,
 			sceneNumber, frameNumber, soundNumber);
 }
 
 
 void Animation::setSoundName(int32_t sceneNumber, int32_t frameNumber,
 		int32_t soundNumber, const char *soundName) {
-	executor->execute(commandRenameSound, sceneNumber,
+	executor->execute(Commands::renameSound, sceneNumber,
 			frameNumber, soundNumber, soundName);
 }
 
@@ -348,11 +297,11 @@ bool Animation::isUnsavedChanges() {
 
 void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
 		const char* newImagePath) {
-	executor->execute(commandSetImage, sceneNumber, frameNumber, newImagePath);
+	executor->execute(Commands::setImage, sceneNumber, frameNumber, newImagePath);
 }
 
 void Animation::duplicateImage(int32_t sceneNumber, int32_t frameNumber) {
-	executor->execute(commandDuplicateImage, sceneNumber, frameNumber);
+	executor->execute(Commands::duplicateImage, sceneNumber, frameNumber);
 }
 
 void Animation::attach(Observer* o) {
@@ -378,19 +327,19 @@ int Animation::soundCount(int scene, int frame) const {
 
 
 void Animation::newScene(int32_t index) {
-	executor->execute(commandAddScene, index);
+	executor->execute(Commands::addScene, index);
 }
 
 
 void Animation::removeScene(int32_t sceneNumber) {
 	assert(sceneNumber >= 0);
-	executor->execute(commandRemoveScene, sceneNumber);
+	executor->execute(Commands::removeScene, sceneNumber);
 }
 
 
 void Animation::moveScene(int32_t sceneNumber, int32_t movePosition) {
 	if (sceneNumber != movePosition) {
-		executor->execute(commandMoveScene, sceneNumber, movePosition);
+		executor->execute(Commands::moveScene, sceneNumber, movePosition);
 	}
 }
 

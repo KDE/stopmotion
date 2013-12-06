@@ -19,8 +19,8 @@
  ***************************************************************************/
 
 #include "commandsetimage.h"
-#include "animationimpl.h"
-#include "workspacefile.h"
+#include "src/domain/animation/animationimpl.h"
+#include "src/domain/animation/workspacefile.h"
 #include "src/domain/animation/scene.h"
 
 CommandSetImage::CommandSetImage(AnimationImpl& model, int32_t scene,

@@ -22,7 +22,7 @@
 #define COMMANDSETIMAGE_H_
 
 #include "command.h"
-#include "workspacefile.h"
+#include "src/domain/animation/workspacefile.h"
 
 class AnimationImpl;
 

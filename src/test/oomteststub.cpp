@@ -28,6 +28,7 @@ typedef long mallocsSoFar_t(void);
 typedef void init_t(void);
 typedef void setMockFileSystem_t(MockableFileSystem*);
 
+init_t* init;
 setMallocsUntilFailure_t* smuf;
 mallocsSoFar_t* msf;
 setMockFileSystem_t* smfs;
@@ -42,13 +43,15 @@ int loadOomTestUtil() {
 	// search with the library after the one we are calling from.
 	// RTLD_NEXT and RTLD_DEFAULT are only available with the GNU dl library;
 	// standard C dl libraries do not have this functionality.
-	if (smuf && msf && smfs)
-		return 1;  // already initialized
-	init_t* init = (init_t*)dlsym(RTLD_DEFAULT, "init");
-	smuf = (setMallocsUntilFailure_t*)dlsym(RTLD_DEFAULT,
-			"realSetMallocsUntilFailure");
-	msf = (mallocsSoFar_t*)dlsym(RTLD_DEFAULT, "realMallocsSoFar");
-	smfs = (setMockFileSystem_t*)dlsym(RTLD_DEFAULT, "realSetMockFileSystem");
+	if (!init)
+		init = (init_t*)dlsym(RTLD_DEFAULT, "init");
+	if (!smuf)
+		smuf = (setMallocsUntilFailure_t*)dlsym(RTLD_DEFAULT,
+				"realSetMallocsUntilFailure");
+	if (!msf)
+		msf = (mallocsSoFar_t*)dlsym(RTLD_DEFAULT, "realMallocsSoFar");
+	if (!smfs)
+		smfs = (setMockFileSystem_t*)dlsym(RTLD_DEFAULT, "realSetMockFileSystem");
 	if (!init || !smuf || !msf || !smfs)
 		return 0;
 	init();

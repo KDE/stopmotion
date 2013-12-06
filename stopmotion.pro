@@ -122,6 +122,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/devicetab.h \
     src/domain/undo/command.h \
     src/domain/undo/commandlogger.h \
+    src/domain/undo/addallcommands.h \
     src/domain/undo/executor.h
 FORMS += src/presentation/frontends/qtfrontend/helpbrowser.ui \
     src/presentation/frontends/qtfrontend/toolsmenu.ui
@@ -198,6 +199,7 @@ SOURCES += src/config.cpp \
     src/domain/undo/command.cpp \
     src/domain/undo/commandlogger.cpp \
     src/domain/undo/executor.cpp \
+    src/domain/undo/addallcommands.cpp \
     src/domain/undo/random.cpp
 TRANSLATIONS += translations/stopmotion_no_nb.ts \
                 translations/stopmotion_no_nn.ts \

@@ -23,7 +23,7 @@
 #include "audioformat.h"
 
 #include <vorbis/vorbisfile.h>
-#include "workspacefile.h"
+#include "src/domain/animation/workspacefile.h"
 
 /**
  * Class for decoding of oggvorbis data to raw PCM data.

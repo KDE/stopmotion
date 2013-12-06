@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 #include "commandmove.h"
-#include "animationimpl.h"
+#include "src/domain/animation/animationimpl.h"
 
 CommandMove::CommandMove(AnimationImpl& model, int fromScene, int fromFrame, int count,
 		int toScene, int toFrame)

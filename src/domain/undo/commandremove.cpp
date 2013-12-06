@@ -20,7 +20,7 @@
 
 #include "commandremove.h"
 #include "commandadd.h"
-#include "scenevector.h"
+#include "src/domain/animation/scenevector.h"
 
 #include <memory>
 

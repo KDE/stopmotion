@@ -20,7 +20,7 @@
 
 #include "commandaddsound.h"
 #include "commandremovesound.h"
-#include "animationimpl.h"
+#include "src/domain/animation/animationimpl.h"
 #include "src/domain/animation/sound.h"
 #include "src/domain/filenamevisitor.h"
 #include "src/technical/audio/audioformat.h"

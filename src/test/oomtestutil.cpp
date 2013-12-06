@@ -103,12 +103,15 @@ public:
 
 // Initialization function sets up the pointer to the original malloc function.
 void init() {
-	realMalloc = (malloc_t*)dlsym(RTLD_NEXT, "malloc");
-	assert(realMalloc);
-	if (!realFs)
+	if (!realMalloc) {
+		realMalloc = (malloc_t*)dlsym(RTLD_NEXT, "malloc");
+		assert(realMalloc);
+	}
+	if (!realFs) {
 		realFs = new RealFileSystem();
+		assert(realFs);
+	}
 	requiredFs = realFs;
-	assert(requiredFs);
 }
 
 // Our malloc does its own processing, then calls the libc malloc, if
