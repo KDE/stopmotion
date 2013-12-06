@@ -21,11 +21,27 @@
 #ifndef OOMTESTUTIL_H_
 #define OOMTESTUTIL_H_
 
-// Need to make sure that these function names are not mangled in case we
-// include this file from a C++ source file.
-#ifdef __cplusplus
+// sadly, can't simply forward-declare FILE
+#include <stdio.h>
+
+/**
+ * Interface class for mock file systems, and the facade for the real file
+ * system.
+ */
+class MockableFileSystem {
+public:
+	virtual void setDelegate(MockableFileSystem* mfs) = 0;
+	virtual FILE* fopen(const char* filename, const char* mode) = 0;
+	virtual int fclose(FILE*) = 0;
+	virtual int fflush(FILE*) = 0;
+	virtual size_t fread (void *out, size_t blockSize,
+			     size_t blockCount, FILE *fh) = 0;
+	virtual size_t fwrite (const void *in, size_t blockSize,
+			      size_t blockCount, FILE *fh) = 0;
+	virtual int access (const char *name, int type) = 0;
+};
+
 extern "C" {
-#endif
 
 /**
  * Installs the SetMallocsUntilFailure function.
@@ -53,8 +69,14 @@ void cancelAnyMallocFailure();
  */
 long mallocsSoFar();
 
-#ifdef __cplusplus
+/**
+ * Sets the mock file system object.
+ * @param mfs The object to use as the mock file system. {@c setDelegate} will
+ * be called on {@a mfs} with an object representing the real versions of these
+ * functions which can be used as a delegate.
+ */
+void setMockFileSystem(MockableFileSystem* mfs);
+
 }
-#endif
 
 #endif
