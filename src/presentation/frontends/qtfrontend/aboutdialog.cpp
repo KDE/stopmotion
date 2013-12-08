@@ -68,6 +68,8 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"Diego Giordano &lt;fusion_machine@tin.it&gt; (" + tr("Italian") + ")<br>"
 				"Matteo Comisso &lt;teomatteo8.9@hotmail.it&gt; (" + tr("Italian") + ")<br>"
 				"Wei-Lun Chao &lt;bluebat@member.fsf.org&gt; (" + tr("Traditional Chinese") +")<br>"
+				"Maysara Abdulhaq and Ahmad Gharbeia of Arab Digital Expression Foundation (" + tr("Arabic") + ")<br>"
+				"Denis Fokin (" + tr("Russian") + ")<br>"
 				"</p>"
 				"<p><b>" + tr("Logo") + "</b><br>"
 				"Gorazd Bizjak &lt;gorazd@zapstudio.net&gt;<br>"
