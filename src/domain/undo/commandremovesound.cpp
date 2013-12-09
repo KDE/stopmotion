@@ -50,9 +50,17 @@ UndoRemoveSoundFactory::~UndoRemoveSoundFactory() {
 }
 
 Command* UndoRemoveSoundFactory::create(Parameters& ps) {
-	int32_t sc = ps.getInteger(0, sv.sceneCount());
-	int32_t fr = ps.getInteger(0, sv.frameCount(sc));
-	int32_t index = ps.getInteger(0, sv.getScene(sc)->getFrame(fr)->
-			soundCount());
+	int sceneCount = sv.sceneCount();
+	if (sceneCount == 0)
+		return 0;
+	int32_t sc = ps.getInteger(0, sceneCount - 1);
+	int frameCount = sv.frameCount(sc);
+	if (frameCount == 0)
+		return 0;
+	int32_t fr = ps.getInteger(0, frameCount - 1);
+	int soundCount = sv.getScene(sc)->getFrame(fr)->soundCount();
+	if (soundCount == 0)
+		return 0;
+	int32_t index = ps.getInteger(0, soundCount - 1);
 	return new CommandRemoveSound(sv, sc, fr, index);
 }

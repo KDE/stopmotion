@@ -52,8 +52,14 @@ CommandRemoveFactory::~CommandRemoveFactory() {
 }
 
 Command* CommandRemoveFactory::create(Parameters& ps) {
-	int32_t scene = ps.getInteger(0, sv.sceneCount() - 1);
-	int32_t frame = ps.getInteger(0, sv.frameCount(scene) - 1);
+	int sceneCount = sv.sceneCount();
+	if (sceneCount == 0)
+		return 0;
+	int32_t scene = ps.getInteger(0, sceneCount - 1);
+	int frameCount = sv.frameCount(scene);
+	if (frameCount == 0)
+		return 0;
+	int32_t frame = ps.getInteger(0, frameCount - 1);
 	int32_t count = ps.getHowMany();
 	return new CommandRemove(sv, scene, frame, count);
 }

@@ -52,7 +52,13 @@ CommandDuplicateImageFactory::~CommandDuplicateImageFactory() {
 }
 
 Command* CommandDuplicateImageFactory::create(Parameters& ps) {
-	int32_t scene = ps.getInteger(0, sv.sceneCount());
-	int32_t frame = ps.getInteger(0, sv.frameCount(scene));
+	int sceneCount = sv.sceneCount();
+	if (sceneCount == 0)
+		return 0;
+	int32_t scene = ps.getInteger(0, sceneCount - 1);
+	int frameCount = sv.frameCount(scene);
+	if (frameCount == 0)
+		return 0;
+	int32_t frame = ps.getInteger(0, frameCount - 1);
 	return new CommandDuplicateImage(sv, scene, frame);
 }

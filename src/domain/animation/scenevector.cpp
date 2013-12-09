@@ -26,6 +26,9 @@
 #include <memory>
 
 class SceneOutOfRangeException : public std::exception {
+public:
+	SceneOutOfRangeException() {
+	}
     const char* what() const _GLIBCXX_USE_NOEXCEPT {
     	return "Internal error: Scene out of range!";
     }
@@ -67,7 +70,8 @@ void SceneVector::preallocateScenes(int count) {
 }
 
 Scene* SceneVector::removeScene(int from) {
-	if (from < 0 || sceneCount() <= from)
+	int sc = sceneCount();
+	if (from < 0 || sc <= from)
 		throw SceneOutOfRangeException();
 	Scene* s = scenes[from];
 	scenes.erase(scenes.begin() + from);

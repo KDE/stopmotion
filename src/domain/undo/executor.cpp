@@ -592,7 +592,7 @@ public:
 		if (!pattern)
 			pattern = "?*";
 		out.clear();
-		for (; pattern; ++pattern) {
+		for (; *pattern; ++pattern) {
 			char c = *pattern;
 			if (c == '?') {
 				out.append(1, rs.getCharacter());

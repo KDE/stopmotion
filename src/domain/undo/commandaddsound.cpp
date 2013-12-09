@@ -63,8 +63,14 @@ CommandAddSoundFactory::~CommandAddSoundFactory() {
 }
 
 Command* CommandAddSoundFactory::create(Parameters& ps) {
-	int32_t sc = ps.getInteger(0, sv.sceneCount() - 1);
-	int32_t fr = ps.getInteger(0, sv.frameCount(sc));
+	int sceneCount = sv.sceneCount();
+	if (sceneCount == 0)
+		return 0;
+	int32_t sc = ps.getInteger(0, sceneCount - 1);
+	int frameCount = sv.frameCount(sc);
+	if (frameCount == 0)
+		return 0;
+	int32_t fr = ps.getInteger(0, frameCount - 1);
 	int32_t index = ps.getInteger(0, sv.soundCount(sc, fr));
 	std::string filename;
 	ps.getString(filename, "?*.jpg");

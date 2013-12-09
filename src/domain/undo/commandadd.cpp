@@ -116,7 +116,10 @@ CommandAddFactory::~CommandAddFactory() {
 }
 
 Command* CommandAddFactory::create(::Parameters& ps) {
-	int scene = ps.getInteger(0, sv.sceneCount() - 1);
+	int sceneCount = sv.sceneCount();
+	if (sceneCount == 0)
+		return 0;
+	int scene = ps.getInteger(0, sceneCount - 1);
 	int frame = ps.getInteger(0, sv.frameCount(scene));
 	int count = ps.getHowMany();
 	CommandAdd* add = new CommandAdd(sv, scene, frame, count);

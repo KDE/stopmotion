@@ -50,11 +50,14 @@ CommandMoveFactory::~CommandMoveFactory() {
 }
 
 Command* CommandMoveFactory::create(Parameters& ps) {
-	int fs = ps.getInteger(0, sv.sceneCount() - 1);
+	int sceneCount = sv.sceneCount();
+	if (sceneCount == 0)
+		return 0;
+	int fs = ps.getInteger(0, sceneCount - 1);
 	int framesInScene = sv.frameCount(fs);
-	int ff = ps.getInteger(0, framesInScene - 1);
+	int ff = ps.getInteger(0, framesInScene);
 	int fc = ps.getInteger(0, framesInScene - ff);
-	int ts = ps.getInteger(0, sv.sceneCount() - 1);
+	int ts = ps.getInteger(0, sceneCount - 1);
 	int tf = ps.getInteger(0, sv.frameCount(ts));
 	return new CommandMove(sv, fs, ff, fc, ts, tf);
 }

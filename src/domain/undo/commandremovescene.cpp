@@ -45,6 +45,9 @@ UndoRemoveSceneFactory::~UndoRemoveSceneFactory() {
 }
 
 Command* UndoRemoveSceneFactory::create(Parameters& ps) {
-	int32_t sc = ps.getInteger(0, sv.sceneCount());
+	int sceneCount = sv.sceneCount();
+	if (sceneCount == 0)
+		return 0;
+	int32_t sc = ps.getInteger(0, sceneCount - 1);
 	return new UndoRemoveScene(sv, sc);
 }
