@@ -256,6 +256,12 @@ htmldoc.extra = $(INSTALL_DIR) manual/graphic $(INSTALL_ROOT)/$${PREFIX}/share/d
 htmldoc.extra += $(INSTALL_DIR) manual/icons $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
 htmldoc.extra += $(INSTALL_DIR) manual/screenshots $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
 
+icon.path = $${PREFIX}/share/icons
+icon.files = graphics/stopmotion.svg
+
+desktop.path = $${PREFIX}/share/applications
+desktop.files = stopmotion.desktop
+
 # Dummy target to fix permissions. 
 dummy.path = $${PREFIX}/bin
 dummy.extra += chmod 644 $(INSTALL_ROOT)/$${PREFIX}/share/stopmotion/translations/*.qm $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/*.html \
@@ -266,6 +272,6 @@ dummy.extra += chmod 755 $(INSTALL_ROOT)/$${PREFIX}/share/stopmotion/translation
     $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/icons \
 	$(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/screenshots;
 
-INSTALLS += target translations htmldoc dummy
+INSTALLS += target translations htmldoc icon desktop dummy
 
 QMAKE_STRIP=:
