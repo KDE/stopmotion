@@ -88,6 +88,9 @@ void Hash::add(const char* string) {
 		add(static_cast<uint64_t>(*string));
 		++string;
 	}
+	// Add the null on the end so that strings can be added one after another
+	// without the risk of, for example "abc" "def" aliasing "abcd" "ef".
+	add(0ull);
 }
 
 void Hash::add(Hash h) {
