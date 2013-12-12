@@ -27,6 +27,8 @@
 class TemporaryWorkspaceFile;
 
 class CopyFailedException : public std::exception {
+public:
+	CopyFailedException();
 	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 

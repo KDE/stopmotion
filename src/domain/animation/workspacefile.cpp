@@ -212,6 +212,9 @@ TemporaryWorkspaceFile::~TemporaryWorkspaceFile() {
 	namePart = 0;
 }
 
+CopyFailedException::CopyFailedException() {
+}
+
 const char* CopyFailedException::what() const _GLIBCXX_USE_NOEXCEPT {
 	return "Failed to copy file to workspace directory (~/.stopmotion/tmp).";
 }

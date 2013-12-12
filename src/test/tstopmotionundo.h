@@ -25,11 +25,13 @@
 
 class Executor;
 class SceneVector;
+class RealOggEmptyJpg;
 
 class TestStopmotionUndo : public QObject {
 	Q_OBJECT
 	SceneVector* sv;
 	Executor* ex;
+	RealOggEmptyJpg* mfs;
 public:
 	TestStopmotionUndo();
 	~TestStopmotionUndo();

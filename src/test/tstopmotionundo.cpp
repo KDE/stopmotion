@@ -20,8 +20,6 @@
 
 #include "tstopmotionundo.h"
 
-#include <QtTest/QtTest>
-
 #include "testundo.h"
 #include "oomtestutil.h"
 #include "src/domain/undo/addallcommands.h"
@@ -32,10 +30,102 @@
 #include "src/domain/animation/sound.h"
 #include "src/technical/audio/audioformat.h"
 
-TestStopmotionUndo::TestStopmotionUndo() : sv(0) {
+#include <QtTest/QtTest>
+
+#include <stdlib.h>
+
+class RealOggEmptyJpg : public MockableFileSystem {
+	MockableFileSystem* delegate;
+	FILE* fake;
+	int fakeReads;
+public:
+	RealOggEmptyJpg() : delegate(0), fake(reinterpret_cast<FILE*>(1)),
+			fakeReads(0) {
+	}
+	~RealOggEmptyJpg() {
+	}
+	bool hasExtension(const char* filename, const char* extension) {
+		const char* dot = strrchr(filename, '.');
+		return dot && strcmp(dot, extension) == 0;
+	}
+	bool isSound(const char* filename) {
+		return hasExtension(filename, ".ogg");
+	}
+	bool isImage(const char* filename) {
+		return hasExtension(filename, ".jpg");
+	}
+	void setDelegate(MockableFileSystem* mfs) {
+		delegate = mfs;
+	}
+	FILE* openFake(const char* filename, const char* mode) {
+		if (isImage(filename)) {
+			fakeReads = 0;
+			return fake;
+		} else if (isSound(filename)) {
+			if (strstr(mode, "w") == 0)
+				return delegate->fopen("resources/click.ogg", mode);
+			return 0;
+		}
+		return 0;
+	}
+	FILE* fopen(const char* filename, const char* mode) {
+		FILE* r = openFake(filename, mode);
+		if (r)
+			return r;
+		return delegate->fopen(filename, mode);
+	}
+	FILE* freopen(const char* filename, const char* mode, FILE* fh) {
+		if (fh == fake) {
+			if (filename)
+				return fopen(filename, mode);
+			fakeReads = 0;
+			return fake;
+		}
+		return delegate->freopen(filename, mode, fh);
+	}
+	int fclose(FILE* fh) {
+		if (fh == fake)
+			return 0;
+		return delegate->fclose(fh);
+	}
+	int fflush(FILE* fh) {
+		if (fh == fake)
+			return 0;
+		return delegate->fflush(fh);
+	}
+	size_t fread (void *out, size_t blockSize,
+			     size_t blockCount, FILE *fh) {
+		if (fh == fake) {
+			if (0 < fakeReads)
+				return 0;
+			++fakeReads;
+			return blockCount;
+		}
+		return delegate->fread(out, blockSize, blockCount, fh);
+	}
+	size_t fwrite (const void *in, size_t blockSize,
+			      size_t blockCount, FILE *fh) {
+		if (fh == fake)
+			return blockCount;
+		return delegate->fwrite(in, blockSize, blockCount, fh);
+	}
+	int access (const char *name, int /*type*/) {
+		// always assume files within the workspace do not exist
+		// (as access is only called to find empty slots to use in the
+		// workspace) but files requested outside of the workspace exist
+		return strstr(name, ".stopmotion/tmp")? -1 : 0;
+	}
+	int ferror(FILE*) {
+		return 0;
+	}
+};
+
+TestStopmotionUndo::TestStopmotionUndo() : sv(0), ex(0), mfs(0) {
 	sv = new SceneVector();
 	ex = makeAnimationCommandExecutor(*sv);
+	mfs = new RealOggEmptyJpg();
 	loadOomTestUtil();
+	setMockFileSystem(mfs);
 }
 
 TestStopmotionUndo::~TestStopmotionUndo() {

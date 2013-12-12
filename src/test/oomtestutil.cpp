@@ -34,6 +34,14 @@ void init();
 void realSetMallocsUntilFailure(int);
 long realMallocsSoFar();
 void realSetMockFileSystem(MockableFileSystem* mfs);
+FILE* fopen(const char* filename, const char* mode);
+FILE* freopen(const char* filename, const char* mode, FILE* fh);
+int fclose(FILE* fh);
+int fflush(FILE* fh);
+size_t fread(void *out, size_t s, size_t n, FILE *fh);
+size_t fwrite(const void *in, size_t s, size_t n, FILE *fh);
+int access(const char *name, int type);
+int ferror(FILE* fh);
 }
 
 // Which future malloc should return 0 instead of attempting to allocate memory
@@ -52,22 +60,28 @@ MockableFileSystem* requiredFs;
 
 class RealFileSystem : public MockableFileSystem {
 	typedef FILE* fopen_t(const char*, const char*);
+	typedef FILE* freopen_t(const char*, const char*, FILE*);
 	typedef int fclose_t(FILE*);
 	typedef int fflush_t(FILE*);
 	typedef size_t fread_t(void *, size_t, size_t, FILE*);
 	typedef size_t fwrite_t(const void*, size_t, size_t, FILE*);
 	typedef int access_t(const char*, int);
+	typedef int ferror_t(FILE*);
 	fopen_t* rfopen;
+	freopen_t* rfreopen;
 	fclose_t* rfclose;
 	fflush_t* rfflush;
 	fread_t* rfread;
 	fwrite_t* rfwrite;
 	access_t* raccess;
+	ferror_t* rferror;
 public:
-	RealFileSystem() : rfopen(0), rfclose(0), rfflush(0), rfread(0),
-			rfwrite(0), raccess(0) {
+	RealFileSystem() : rfopen(0), rfreopen(0), rfclose(0), rfflush(0),
+			rfread(0), rfwrite(0), raccess(0), rferror(0) {
 		rfopen = (fopen_t*)dlsym(RTLD_NEXT, "fopen");
 		assert(rfopen);
+		rfreopen = (freopen_t*)dlsym(RTLD_NEXT, "freopen");
+		assert(rfreopen);
 		rfclose = (fclose_t*)dlsym(RTLD_NEXT, "fclose");
 		assert(rfclose);
 		rfflush = (fflush_t*)dlsym(RTLD_NEXT, "fflush");
@@ -78,11 +92,16 @@ public:
 		assert(rfwrite);
 		raccess = (access_t*)dlsym(RTLD_NEXT, "access");
 		assert(raccess);
+		rferror = (ferror_t*)dlsym(RTLD_NEXT, "ferror");
+		assert(rferror);
 	}
 	void setDelegate(MockableFileSystem*) {
 	}
 	FILE* fopen(const char* filename, const char* mode) {
 		return rfopen(filename, mode);
+	}
+	FILE* freopen(const char* filename, const char* mode, FILE* fh) {
+		return rfreopen(filename, mode, fh);
 	}
 	int fclose(FILE* fh) {
 		return rfclose(fh);
@@ -99,6 +118,9 @@ public:
 	int access(const char *name, int type) {
 		return raccess(name, type);
 	}
+	int ferror(FILE* fh) {
+		return rferror(fh);
+	}
 };
 
 // Initialization function sets up the pointer to the original malloc function.
@@ -110,8 +132,8 @@ void init() {
 	if (!realFs) {
 		realFs = new RealFileSystem();
 		assert(realFs);
+		requiredFs = realFs;
 	}
-	requiredFs = realFs;
 }
 
 // Our malloc does its own processing, then calls the libc malloc, if
@@ -147,6 +169,10 @@ FILE* fopen(const char* filename, const char* mode) {
 	return requiredFs->fopen(filename, mode);
 }
 
+FILE* freopen(const char* filename, const char* mode, FILE* fh) {
+	return requiredFs->freopen(filename, mode, fh);
+}
+
 int fclose(FILE* fh) {
 	return requiredFs->fclose(fh);
 }
@@ -165,4 +191,8 @@ size_t fwrite(const void *in, size_t s, size_t n, FILE *fh) {
 
 int access(const char *name, int type) {
 	return requiredFs->access(name, type);
+}
+
+int ferror(FILE* fh) {
+	return requiredFs->ferror(fh);
 }

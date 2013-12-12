@@ -32,6 +32,7 @@ class MockableFileSystem {
 public:
 	virtual void setDelegate(MockableFileSystem* mfs) = 0;
 	virtual FILE* fopen(const char* filename, const char* mode) = 0;
+	virtual FILE* freopen(const char* filename, const char* mode, FILE* fh) = 0;
 	virtual int fclose(FILE*) = 0;
 	virtual int fflush(FILE*) = 0;
 	virtual size_t fread (void *out, size_t blockSize,
@@ -39,6 +40,7 @@ public:
 	virtual size_t fwrite (const void *in, size_t blockSize,
 			      size_t blockCount, FILE *fh) = 0;
 	virtual int access (const char *name, int type) = 0;
+	virtual int ferror(FILE*) = 0;
 };
 
 extern "C" {

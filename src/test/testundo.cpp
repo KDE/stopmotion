@@ -167,7 +167,7 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 			// the log file produces the same output
 			RandomSource rng2(initial);
 			e.setCommandLogger(0);
-			freopen(0, "r", logFile);
+			logFile = freopen(0, "r", logFile);
 			helper.resetModel(e);
 			e.executeRandomConstructiveCommands(rng2);
 			e.clearHistory();
@@ -316,7 +316,7 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 				e.setCommandLogger(0);
 				helper.resetModel(e);
 				e.executeRandomConstructiveCommands(rng2);
-				freopen(0, "r", logFile);
+				logFile = freopen(0, "r", logFile);
 				bool failed = false;
 				try {
 					while (executeLineFromFile(e, logFile)) {
