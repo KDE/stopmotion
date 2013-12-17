@@ -577,7 +577,7 @@ public:
 };
 
 class RandomParameters : public Parameters {
-	RandomSource rs;
+	RandomSource& rs;
 public:
 	RandomParameters(RandomSource& rng)
 			: rs(rng) {
