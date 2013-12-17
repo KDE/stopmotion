@@ -33,6 +33,7 @@
 #include <QtTest/QtTest>
 
 #include <stdlib.h>
+#include <error.h>
 
 class RealOggEmptyJpg : public MockableFileSystem {
 	MockableFileSystem* delegate;
@@ -64,7 +65,7 @@ public:
 		} else if (isSound(filename)) {
 			if (strstr(mode, "w") == 0)
 				return delegate->fopen("resources/click.ogg", mode);
-			return 0;
+			return fake;
 		}
 		return 0;
 	}
@@ -116,6 +117,9 @@ public:
 		return strstr(name, ".stopmotion/tmp")? -1 : 0;
 	}
 	int ferror(FILE*) {
+		return 0;
+	}
+	int unlink(const char *) {
 		return 0;
 	}
 };

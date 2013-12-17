@@ -42,6 +42,7 @@ size_t fread(void *out, size_t s, size_t n, FILE *fh);
 size_t fwrite(const void *in, size_t s, size_t n, FILE *fh);
 int access(const char *name, int type);
 int ferror(FILE* fh);
+int unlink(const char *name);
 }
 
 // Which future malloc should return 0 instead of attempting to allocate memory
@@ -67,6 +68,7 @@ class RealFileSystem : public MockableFileSystem {
 	typedef size_t fwrite_t(const void*, size_t, size_t, FILE*);
 	typedef int access_t(const char*, int);
 	typedef int ferror_t(FILE*);
+	typedef int unlink_t(const char *);
 	fopen_t* rfopen;
 	freopen_t* rfreopen;
 	fclose_t* rfclose;
@@ -75,6 +77,7 @@ class RealFileSystem : public MockableFileSystem {
 	fwrite_t* rfwrite;
 	access_t* raccess;
 	ferror_t* rferror;
+	unlink_t* runlink;
 public:
 	RealFileSystem() : rfopen(0), rfreopen(0), rfclose(0), rfflush(0),
 			rfread(0), rfwrite(0), raccess(0), rferror(0) {
@@ -94,6 +97,8 @@ public:
 		assert(raccess);
 		rferror = (ferror_t*)dlsym(RTLD_NEXT, "ferror");
 		assert(rferror);
+		runlink = (unlink_t*)dlsym(RTLD_NEXT, "unlink");
+		assert(runlink);
 	}
 	void setDelegate(MockableFileSystem*) {
 	}
@@ -120,6 +125,9 @@ public:
 	}
 	int ferror(FILE* fh) {
 		return rferror(fh);
+	}
+	int unlink(const char *name) {
+		return runlink(name);
 	}
 };
 
@@ -195,4 +203,8 @@ int access(const char *name, int type) {
 
 int ferror(FILE* fh) {
 	return requiredFs->ferror(fh);
+}
+
+int unlink(const char *name) {
+	return requiredFs->unlink(name);
 }

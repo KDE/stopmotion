@@ -41,6 +41,7 @@ public:
 			      size_t blockCount, FILE *fh) = 0;
 	virtual int access (const char *name, int type) = 0;
 	virtual int ferror(FILE*) = 0;
+	virtual int unlink(const char *name) = 0;
 };
 
 extern "C" {
