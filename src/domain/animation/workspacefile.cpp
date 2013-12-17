@@ -62,22 +62,24 @@ std::ostream& operator<<(std::ostream& s, WorkspacePath) {
 void getFreshFilename(char*& path, const char*& namePart,
 		const char* extension) {
 	std::stringstream p;
-	std::stringstream::pos_type zeroOff;
 	const char* ss = 0;
 	int indexOfName = 0;
+	int size = 0;
 	do {
 		p.str("");
-		zeroOff = p.tellp();
 		p << workspacePath;
-		indexOfName = p.tellp() - zeroOff;
+		indexOfName = p.str().length();
 		p.fill('0');
 		p.width(8);
 		p << nextFileNumber();
-		p << extension;
-		ss = p.str().c_str();
+		if (extension)
+			p << extension;
+
+		std::string out = p.str();
+		ss = out.c_str();
+		size = out.length() + 1;
 		// keep going until we find a filename that doesn't already exist.
 	} while (0 == access(ss, F_OK));
-	int size = (p.tellp() - zeroOff) + 1;
 	path = new char[size];
 	strncpy(path, ss, size);
 	namePart = path + indexOfName;
@@ -191,14 +193,14 @@ TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* basename,
 		AlreadyAWorkspaceFile)
 		: fullPath(0), namePart(0), toBeDeleted(false) {
 	std::stringstream p;
-	std::stringstream::pos_type zeroOff = p.tellp();
 	p.str("");
 	p << workspacePath;
-	int indexOfName = p.tellp();
+	int indexOfName = p.str().length();
 	p << basename;
-	int size = (p.tellp() - zeroOff) + 1;
+	std::string out = p.str();
+	const char* cp = out.c_str();
+	int size = out.length() + 1;;
 	fullPath = new char[size];
-	const char* cp = p.str().c_str();
 	strncpy(fullPath, cp, size);
 	namePart = fullPath + indexOfName;
 }
