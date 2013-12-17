@@ -210,6 +210,9 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 				QFAIL(ss.str().c_str());
 			}
 			totalMallocCount = doMallocCount + undoMallocCount;
+			// allow the logger to write out any remaining buffer upon its
+			// destruction
+			freopen(0, "w", logFile);
 		}
 
 		if (oomLoaded && 0 < totalMallocCount) {
@@ -337,6 +340,9 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 			}
 			cancelAnyMallocFailure();
 			stringLogger.SetDelegate(0);
+			// allow the logger to write out any remaining buffer upon its
+			// destruction
+			freopen(0, "w", logFile);
 		}
 	}
 }
