@@ -116,7 +116,7 @@ int32_t RandomSource::getLogInt(int32_t p) {
 
 void RandomSource::appendString(std::string& out,
 		const char* characters, bool allowNulls) {
-	int n = strlen(characters) + allowNulls? 1 : 0;
+	int n = strlen(characters) + (allowNulls? 1 : 0);
 	while (true) {
 		int r = getUniform(n);
 		if (n == r)
