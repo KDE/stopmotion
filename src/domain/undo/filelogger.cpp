@@ -23,6 +23,7 @@
 #include "executor.h"
 
 #include <stdio.h>
+#include <string.h>
 #include <string>
 
 class FileCommandLoggerImpl :
@@ -46,8 +47,8 @@ public:
 		appendNewline();
 		while (!buffer.empty()) {
 			ssize_t s = fwrite(buffer.c_str(), 1, buffer.length(), fh);
-			if (s < 0) {
-				throw LoggerWriteFailedException();
+			if (s <= 0) {
+				throw LoggerWriteFailedException(ferror(fh));
 			}
 			buffer.erase(0, s);
 		}
@@ -95,7 +96,13 @@ const CommandLogger* FileCommandLogger::getLogger() const {
 	return pImpl;
 }
 
+LoggerWriteFailedException::LoggerWriteFailedException(int error) {
+	snprintf(msg, sizeof(msg),
+			"Failed to write to command logger (%s)!\n"
+			"Disaster recovery will be impossible after this point!",
+			strerror(error));
+}
+
 const char* LoggerWriteFailedException::what() const throw() {
-	return "Failed to write to command logger!\n"
-			"Disaster recovery will be impossible after this point!";
+	return msg;
 }
