@@ -145,7 +145,7 @@ const Sound* Scene::getSound(int frameNumber, int index) const {
 	return frames[frameNumber]->getSound(index);
 }
 
-int Scene::getNumberOfSounds(int frameNumber) const {
+int Scene::soundCount(int frameNumber) const {
 	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	return frames[frameNumber]->soundCount();
@@ -174,6 +174,16 @@ int Scene::newSound(int frameNumber, TemporaryWorkspaceFile& filename) {
 	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	return frames[frameNumber]->newSound(filename);
+}
+
+int Scene::soundCount() const {
+	int s = 0;
+	for (FrameVector::const_iterator i = frames.begin();
+			i != frames.end();
+			++i) {
+		s += (*i)->soundCount();
+	}
+	return s;
 }
 
 void Scene::accept(FileNameVisitor& v) const {

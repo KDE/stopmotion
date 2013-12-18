@@ -167,7 +167,13 @@ public:
 	 * @param frameNumber Index of the frame.
 	 * @return the number of sounds in frame {@a frameNumber}.
 	 */
-	int getNumberOfSounds(int frameNumber) const;
+	int soundCount(int frameNumber) const;
+
+	/**
+	 * Returns the total number of sounds in all the frames in this scene.
+	 * @return the number of sounds.
+	 */
+	int soundCount() const;
 
 	/**
 	 * Sets the name of the sound at index soundNumber in the specified frame

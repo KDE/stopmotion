@@ -47,6 +47,7 @@ void SceneVector::clear() {
 		delete *i;
 	}
 	scenes.clear();
+	totalSoundCount = 0;
 }
 
 int SceneVector::sceneCount() const {
@@ -57,6 +58,7 @@ void SceneVector::addScene(int where, Scene* newScene) {
 	if (where < 0 || sceneCount() < where)
 		throw SceneOutOfRangeException();
 	scenes.insert(scenes.begin() + where, newScene);
+	totalSoundCount += newScene->soundCount();
 }
 
 void SceneVector::addScene(int where) {
@@ -75,6 +77,7 @@ Scene* SceneVector::removeScene(int from) {
 		throw SceneOutOfRangeException();
 	Scene* s = scenes[from];
 	scenes.erase(scenes.begin() + from);
+	totalSoundCount -= s->soundCount();
 	return s;
 }
 
