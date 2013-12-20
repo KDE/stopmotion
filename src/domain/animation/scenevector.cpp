@@ -23,8 +23,6 @@
 #include "frame.h"
 #include "src/presentation/observer.h"
 
-#include <memory>
-
 class SceneOutOfRangeException : public std::exception {
 public:
 	SceneOutOfRangeException() {
@@ -62,9 +60,8 @@ void SceneVector::addScene(int where, Scene* newScene) {
 }
 
 void SceneVector::addScene(int where) {
-	std::auto_ptr<Scene> s(new Scene());
-	addScene(where, s.get());
-	s.release();
+	preallocateScenes(1);
+	scenes.insert(scenes.begin() + where, new Scene());
 }
 
 void SceneVector::preallocateScenes(int count) {
