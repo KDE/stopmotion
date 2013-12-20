@@ -72,6 +72,17 @@ public:
 	virtual Hash hashModel(const Executor& e) = 0;
 };
 
+/**
+ * Tests that the commands in the executor {@a e} obey the following rules:
+ * - Two identical commands executed on identical models must produce
+ *    identical models.
+ * - The execution of a string of commands followed by their inverses (in
+ *    reverse order) must leave the model in an identical state.
+ * - Under test conditions, only an out-of-memory exception may escape a
+ *    command's execution.
+ * - If an exception escapes a command's execution, it must not have affected
+ *    the model at all.
+ */
 void testUndo(Executor& e, ModelTestHelper& helper);
 
 #endif /* TESTUNDO_H_ */
