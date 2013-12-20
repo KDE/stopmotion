@@ -431,13 +431,7 @@ public:
 		while (*s) {
 			unsigned char c = *reinterpret_cast<const unsigned char*>(s);
 			++s;
-			bool normalChar = false;
-			if (32 < c && c < 128) {
-				normalChar = allowDigits || c < '0' || '9' < c;
-			}
-			if (normalChar)
-				writeChar(c);
-			else if (strchr("\r\n\\\"", c)) {
+			if (strchr("\r\n\\\"", c)) {
 				writeChar('\\');
 				if (c == '\r')
 					writeChar('r');
@@ -445,6 +439,12 @@ public:
 					writeChar('n');
 				else
 					writeChar(c);
+				allowDigits = true;
+			} else if ((32 <= c && c < '0') || ('9' < c && c < 128)) {
+				writeChar(c);
+				allowDigits = true;
+			} else if (allowDigits && '0' <= c && c <= '9') {
+				writeChar(c);
 			} else {
 				writeChar('\\');
 				bool started = false;
@@ -452,7 +452,7 @@ public:
 				int32_t ci = c;
 				while (1 < power) {
 					int32_t digit = ci / power;
-					ci %= power;
+					digit %= power;
 					power /= 8;
 					if (digit != 0)
 						started = true;
@@ -654,7 +654,8 @@ public:
 		reader.setBuffer(line);
 		std::string id;
 		if (StringReader::parseSucceeded == reader.getIdentifier(id)) {
-			CommandFactory* f = Factory(id.c_str());
+			const char* commandName = id.c_str();
+			CommandFactory* f = Factory(commandName);
 			StringReaderParameters sps(reader);
 			Command* c = f->create(sps);
 			// It is an error if a command executed from a log is invalid.
@@ -684,18 +685,25 @@ public:
 				i != factories.end(); ++i) {
 			factoryNames.push_back(i->first);
 		}
-		while (true) {
-			int r = rng.getUniform(n);
+		int commandCount = 0;
+		const int minCount = 1;
+		const int maxCount = 40;
+		bool dontEnd = false;
+		while (commandCount < maxCount) {
+			int r = rng.getUniform(dontEnd || commandCount < minCount?
+					n - 1: n);
 			if (r == n)
 				return;
 			std::string& name(factoryNames[r]);
 			RandomParameters rpsd(rng);
-			WriterParametersWrapper rps(rpsd, name.c_str());
+			const char* commandName = name.c_str();
+			WriterParametersWrapper rps(rpsd, commandName);
 			Command* c = factories[name]->create(rps);
 			if (c) {
 				if (logger)
 					rps.writeCommand(logger);
 				history.execute(*c, logger);
+				++commandCount;
 			}
 		}
 	}
