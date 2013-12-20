@@ -137,11 +137,12 @@ void Animation::moveFrames(int32_t fromScene, int32_t fromFrame,
 
 int Animation::addSound(int32_t scene, int32_t frameNumber,
 		const char *soundFile) {
+	TemporaryWorkspaceFile soundFileWs(soundFile);
 	Logger::get().logDebug("Adding sound in animation");
 	std::auto_ptr<Sound> sound(new Sound());
 	std::stringstream ss;
 	std::stringstream::pos_type zeroOffset = ss.tellp();
-	ss << "Sound" << WorkspaceFile::getSoundNumber();
+	ss << "Sound " << WorkspaceFile::getSoundNumber();
 	int size = (ss.tellp() - zeroOffset) + 1;
 	char* soundName = new char[size];
 	strncpy(soundName, ss.str().c_str(), size);
@@ -150,7 +151,7 @@ int Animation::addSound(int32_t scene, int32_t frameNumber,
 	int32_t index = soundCount(scene, frameNumber);
 	try {
 		executor->execute(Commands::addSound, scene, frameNumber,
-				index, soundFile, soundName);
+				index, soundFileWs.basename(), soundName);
 	} catch (CouldNotOpenFileException&) {
 		frontend->reportError(
 				"Cannot open the selected audio file for reading.\n"
@@ -165,6 +166,7 @@ int Animation::addSound(int32_t scene, int32_t frameNumber,
 				"this sound if you choose to play.", 0);
 		return -2;
 	}
+	soundFileWs.retainFile();
 	WorkspaceFile::nextSoundNumber();
 	return 0;
 }

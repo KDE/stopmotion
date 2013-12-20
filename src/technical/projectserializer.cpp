@@ -225,7 +225,7 @@ void ProjectSerializer::getAttributes(xmlNodePtr node,
 						Scene *s = sVect.back();
 						int frameNum = s->getSize() - 1;
 						TemporaryWorkspaceFile twf(tmp);
-						int soundNum = s->getNumberOfSounds(frameNum);
+						int soundNum = s->soundCount(frameNum);
 						s->newSound(frameNum, twf);
 						char *soundName = (char*)xmlGetProp(currNode, BAD_CAST "alt");
 						if (soundName != NULL) {

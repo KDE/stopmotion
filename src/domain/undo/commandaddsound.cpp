@@ -81,7 +81,8 @@ Command* CommandAddSoundFactory::create(Parameters& ps) {
 	std::auto_ptr<CommandAddSound> r(new CommandAddSound(sv, sc, fr, index));
 	Sound* soundCopy = sound.get();
 	r->setSound(sound.release());
-	TemporaryWorkspaceFile twf(filename.c_str());
+	TemporaryWorkspaceFile twf(filename.c_str(),
+			TemporaryWorkspaceFile::alreadyAWorkspaceFile);
 	soundCopy->open(twf);
 	return r.release();
 }

@@ -25,16 +25,17 @@
 #include "tstopmotionundo.h"
 
 int main(int argc, char *argv[]) {
-    QCoreApplication app(argc, argv);
-    TestCommandFactory t1;
-    int overall = QTest::qExec(&t1, argc, argv);
-    TestCache t2;
-    overall += QTest::qExec(&t2, argc, argv);
-    TestStopmotionUndo t3;
-    overall += QTest::qExec(&t3, argc, argv);
-    if (overall == 0)
-    	printf("Success!\n");
-    else
-    	printf("Failed: %d\n", overall);
-    return overall;
+	QCoreApplication app(argc, argv);
+	int overall = 0;
+	TestCommandFactory t1;
+	overall = QTest::qExec(&t1, argc, argv);
+	TestCache t2;
+	overall += QTest::qExec(&t2, argc, argv);
+	TestStopmotionUndo t3;
+	overall += QTest::qExec(&t3, argc, argv);
+	if (overall == 0)
+		printf("Success!\n");
+	else
+		printf("Failed: %d\n", overall);
+	return overall;
 }
