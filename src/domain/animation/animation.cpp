@@ -303,7 +303,10 @@ void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
 }
 
 void Animation::duplicateImage(int32_t sceneNumber, int32_t frameNumber) {
-	executor->execute(Commands::duplicateImage, sceneNumber, frameNumber);
+	const char* currentPath = getImagePath(sceneNumber, frameNumber);
+	TemporaryWorkspaceFile twf(currentPath, TemporaryWorkspaceFile::forceCopy);
+	executor->execute(Commands::setImage, sceneNumber, frameNumber, twf.path());
+	twf.retainFile();
 }
 
 void Animation::attach(Observer* o) {

@@ -32,7 +32,6 @@
 #include "commandremovescene.h"
 #include "commandmovescene.h"
 #include "commandsetimage.h"
-#include "commandduplicateimage.h"
 
 class AnimationImpl;
 
@@ -40,7 +39,6 @@ const char* Commands::addFrames = "add-frame";
 const char* Commands::removeFrames = "delete-frame";
 const char* Commands::moveFrames = "move-frame";
 const char* Commands::setImage = "set-image";
-const char* Commands::duplicateImage = "duplicate-image";
 const char* Commands::addSound = "add-sound";
 const char* Commands::removeSound = "delete-sound";
 const char* Commands::renameSound = "rename-sound";
@@ -58,8 +56,6 @@ Executor* makeAnimationCommandExecutor(AnimationImpl& model) {
 	ex->addCommand(Commands::moveFrames, move, false);
 	std::auto_ptr<CommandFactory> setImage(new CommandSetImageFactory(model));
 	ex->addCommand(Commands::setImage, setImage, false);
-	std::auto_ptr<CommandFactory> duplicateImage(new CommandDuplicateImageFactory(model));
-	ex->addCommand(Commands::duplicateImage, duplicateImage, false);
 	std::auto_ptr<CommandFactory> addSound(new CommandAddSoundFactory(model));
 	ex->addCommand(Commands::addSound, addSound, true);
 	std::auto_ptr<CommandFactory> removeSound(new UndoRemoveSoundFactory(model));

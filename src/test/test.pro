@@ -11,7 +11,6 @@ HEADERS += ../domain/undo/filelogger.h \
     ../domain/undo/commandmove.h \
     ../domain/undo/commandremove.h \
     ../domain/undo/commandsetimage.h \
-    ../domain/undo/commandduplicateimage.h \
     ../domain/undo/commandaddsound.h \
     ../domain/undo/commandrenamesound.h \
     ../domain/undo/commandremovesound.h \
@@ -47,7 +46,6 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/undo/commandmove.cpp \
     ../domain/undo/commandremove.cpp \
     ../domain/undo/commandsetimage.cpp \
-    ../domain/undo/commandduplicateimage.cpp \
     ../domain/undo/commandaddsound.cpp \
     ../domain/undo/commandrenamesound.cpp \
     ../domain/undo/commandremovesound.cpp \

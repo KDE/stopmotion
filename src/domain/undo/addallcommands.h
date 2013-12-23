@@ -26,7 +26,6 @@ extern const char* addFrames;
 extern const char* removeFrames;
 extern const char* moveFrames;
 extern const char* setImage;
-extern const char* duplicateImage;
 extern const char* addSound;
 extern const char* removeSound;
 extern const char* renameSound;
