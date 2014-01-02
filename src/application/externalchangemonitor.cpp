@@ -26,8 +26,9 @@
 
 #include <inotifytools/inotifytools.h>
 #include <inotifytools/inotify.h>
-
 #include <unistd.h>
+
+typedef std::set<std::string>::iterator dirIterator;
 
 /**
  * @todo uniform most of the getenv("home") calls so that it is done once
@@ -36,8 +37,8 @@
 ExternalChangeMonitor::ExternalChangeMonitor(QObject *parent)
     : QObject(parent), socketNotifier(0), isMonitoring(false)
 {
-    QString tmpDirectory = QString::fromLocal8Bit(getenv("HOME"));
-    tmpDirectory += QLatin1String("/.stopmotion/tmp");
+    string tmpDirectory = getenv("HOME");
+    tmpDirectory += "/.stopmotion/tmp";
     addDirectory(tmpDirectory);
 }
 
@@ -46,15 +47,15 @@ ExternalChangeMonitor::~ExternalChangeMonitor()
     stopMonitoring();
 }
 
-void ExternalChangeMonitor::addDirectory(const QString &directory)
+void ExternalChangeMonitor::addDirectory(const string &directory)
 {
-    if (directory.isEmpty() || directories.contains(directory))
+    if (directory.empty() || directories.find(directory) != directories.end())
         return;
 
     Logger::get().logDebug("Registering directory for changelistening:");
-    Logger::get().logDebug(directory.toLocal8Bit());
+    Logger::get().logDebug(directory.c_str());
 
-    directories.append(directory);
+    directories.insert(directory);
 
     if (isMonitoring) {
         stopMonitoring();
@@ -76,8 +77,8 @@ void ExternalChangeMonitor::startMonitoring()
         return;
     }
 
-    foreach (QString directory, directories) {
-        if (!inotifytools_watch_recursively(directory.toLocal8Bit(), IN_CLOSE_WRITE | IN_DELETE_SELF)) {
+    for (dirIterator d = directories.begin(); d != directories.end(); ++d) {
+        if (!inotifytools_watch_recursively(d->c_str(), IN_CLOSE_WRITE | IN_DELETE_SELF)) {
             Logger::get().logWarning("Failed to start monitoring:");
             Logger::get().logWarning(strerror(inotifytools_error()));
             inotifytools_cleanup();
@@ -111,12 +112,12 @@ void ExternalChangeMonitor::readInotifyEvents(int socket)
         return;
 
     do {
-        QString filename = QString::fromLocal8Bit(inotifytools_filename_from_wd(event->wd));
+        string filename = inotifytools_filename_from_wd(event->wd);
         if (event->mask & IN_DELETE_SELF) {
-            directories.removeAll(filename);
+            directories.erase(directories.find(filename));
         } else if (event->len > 0) { // IN_CLOSE_WRITE
-            filename += QString::fromLocal8Bit(event->name);
-            DomainFacade::getFacade()->animationChanged(filename.toLocal8Bit().constData());
+            filename += event->name;
+            DomainFacade::getFacade()->animationChanged(filename.c_str());
         }
     } while (time.msec() < 250 && (event = inotifytools_next_event(1)));
 }

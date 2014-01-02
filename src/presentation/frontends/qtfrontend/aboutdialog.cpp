@@ -45,11 +45,16 @@ AboutDialog::AboutDialog(QWidget *parent)
 	
 	tabWidget->addTab( new QLabel(
 				"<p><b>" + tr("Main developers") + "</b><br>"
-				"Bjørn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>" 
+				"Bjørn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>"
 				"Fredrik Berg Kjølstad &lt;fredrikbk@hotmail.com&gt;<br>"
 				"<p><b>" + tr("Contributors") + "</b><br>"
 				"Eric Stolten &lt;stoltene2@gmail.com&gt;<br>"
 				"Josh Green &lt;josh@resonance.org&gt;<br>"
+				"Jehan Pagès<br>"
+				"Tim Band<br>"
+				"Ying-Chun Liu (PaulLiu) &lt;paulliu@debian.org&gt;<br>"
+				"Barak A. Pearlmutter &lt;barak+git@cs.nuim.ie&gt;<br>"
+				"Cyril Brulebois &lt;kibi@debian.org&gt;<br>"
                                 "</p>"),
 				tr("A&uthors"));
 	
@@ -66,6 +71,10 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"Koray Löker &lt;loker@pardus.org.tr&gt; (" + tr("Turkish") + ")<br>"
 				"Diego Giordano &lt;fusion_machine@tin.it&gt; (" + tr("Italian") + ")<br>"
 				"Matteo Comisso &lt;teomatteo8.9@hotmail.it&gt; (" + tr("Italian") + ")<br>"
+				"Wei-Lun Chao &lt;bluebat@member.fsf.org&gt; (" + tr("Traditional Chinese") +")<br>"
+				"Maysara Abdulhaq and Ahmad Gharbeia of Arab Digital Expression Foundation (" + tr("Arabic") + ")<br>"
+				"Denis Fokin (" + tr("Russian") + ")<br>"
+				"Yaron (sh-yaron) (" + tr("Hebrew") + ")<br>"
 				"</p>"
 				"<p><b>" + tr("Logo") + "</b><br>"
 				"Gorazd Bizjak &lt;gorazd@zapstudio.net&gt;<br>"

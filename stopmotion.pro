@@ -21,7 +21,7 @@ HEADERS += src/config.h \
            src/presentation/frontends/qtfrontend/flexiblelineedit.h \
            src/presentation/frontends/frontend.h \
 		   graphics/stopmotion.xpm \
-		   graphics/stopmotion_logo.xpm \ 
+		   graphics/stopmotion_logo.xpm \
            graphics/icons/addframeicon.xpm \
            graphics/icons/cameraoff.xpm \
            graphics/icons/cameraon.xpm \
@@ -177,12 +177,13 @@ TRANSLATIONS += translations/stopmotion_no_nb.ts \
                 translations/stopmotion_no_nn.ts \
                 translations/stopmotion_no_se.ts \
                 translations/stopmotion_de.ts \
-                translations/stopmotion_se.ts \
+                translations/stopmotion_sv.ts \
                 translations/stopmotion_fr.ts \
                 translations/stopmotion_br.ts \
                 translations/stopmotion_dk.ts \
                 translations/stopmotion_fi.ts \
                 translations/stopmotion_gr.ts \
+                translations/stopmotion_he.ts \
                 translations/stopmotion_ru.ts \
                 translations/stopmotion_es.ts \
                 translations/stopmotion_kl.ts \
@@ -190,7 +191,8 @@ TRANSLATIONS += translations/stopmotion_no_nb.ts \
 		translations/stopmotion_sl.ts \
 		translations/stopmotion_pt.ts \
 		translations/stopmotion_it.ts \
-		translations/stopmotion_tr.ts
+		translations/stopmotion_tr.ts \
+		translations/stopmotion_zh_TW.ts
 
 DEPENDPATH += src \
               src/domain \
@@ -213,7 +215,7 @@ INCLUDEPATH += . \
 
 LIBS += $$system(sdl-config --libs) \
         $$system(xml2-config --libs) \
-        -lSDL_image -ltar -lvorbisfile -linotifytools
+        -lSDL_image -ltar -lvorbisfile -linotifytools -lX11
 
 DISTFILES += src/config.cpp.in \
              graphics/stopmotion.png \
@@ -234,29 +236,42 @@ DISTFILES += src/config.cpp.in \
 DISTFILES -= stopmotion.pro \
              src/config.cpp
 			 
-CONFIG += @MODE@
-DEFINES += @DEFINES@
+isEmpty(PREFIX) {
+ PREFIX = /usr/local
+}
+
+CONFIG += release warn_off link_pkgconfig
+PKGCONFIG += sdl SDL_image vorbisfile
+DEFINES += NO_DEBUG PREFIX_PATH=\"\\\"$${PREFIX}\\\"\"
 TEMPLATE = app
 
-target.path = @prefix@/bin
+target.path = $${PREFIX}/bin
 
-translations.path = @TRANSLATIONS_DIR@
+translations.path = $${PREFIX}/share/stopmotion/translations
 translations.files = translations/*.qm
 
-htmldoc.path = @HTML_DIR@
+htmldoc.path = $${PREFIX}/share/doc/stopmotion/html
 htmldoc.files = manual/*.html
-htmldoc.extra = $(INSTALL_DIR) manual/graphic $(INSTALL_ROOT)@HTML_DIR@;
-htmldoc.extra += $(INSTALL_DIR) manual/icons $(INSTALL_ROOT)@HTML_DIR@;
-htmldoc.extra += $(INSTALL_DIR) manual/screenshots $(INSTALL_ROOT)@HTML_DIR@;
+htmldoc.extra = $(INSTALL_DIR) manual/graphic $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
+htmldoc.extra += $(INSTALL_DIR) manual/icons $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
+htmldoc.extra += $(INSTALL_DIR) manual/screenshots $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
+
+icon.path = $${PREFIX}/share/icons
+icon.files = graphics/stopmotion.svg
+
+desktop.path = $${PREFIX}/share/applications
+desktop.files = stopmotion.desktop
 
 # Dummy target to fix permissions. 
-dummy.path = @prefix@/bin
-dummy.extra += chmod 644 $(INSTALL_ROOT)@TRANSLATIONS_DIR@/*.qm $(INSTALL_ROOT)@HTML_DIR@/*.html \
-	$(INSTALL_ROOT)@HTML_DIR@/graphic/* $(INSTALL_ROOT)@HTML_DIR@/icons/* $(INSTALL_ROOT)@HTML_DIR@/screenshots/*;
-dummy.extra += chmod 755 $(INSTALL_ROOT)@TRANSLATIONS_DIR@ $(INSTALL_ROOT)@prefix@/bin/$(QMAKE_TARGET) \ 
-	$(INSTALL_ROOT)@HTML_DIR@ $(INSTALL_ROOT)@HTML_DIR@/graphic $(INSTALL_ROOT)@HTML_DIR@/icons \ 
-	$(INSTALL_ROOT)@HTML_DIR@/screenshots;
+dummy.path = $${PREFIX}/bin
+dummy.extra += chmod 644 $(INSTALL_ROOT)/$${PREFIX}/share/stopmotion/translations/*.qm $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/*.html \
+	$(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/graphic/* $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/icons/* \
+    $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/screenshots/*;
+dummy.extra += chmod 755 $(INSTALL_ROOT)/$${PREFIX}/share/stopmotion/translations $(INSTALL_ROOT)/$${PREFIX}/bin/$(QMAKE_TARGET) \
+	$(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/graphic \
+    $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/icons \
+	$(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/screenshots;
 
-INSTALLS += target translations htmldoc dummy
+INSTALLS += target translations htmldoc icon desktop dummy
 
 QMAKE_STRIP=:

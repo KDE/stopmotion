@@ -149,7 +149,7 @@ void NonGUIFrontend::addFrames(const char *directory)
 
 		while ( (ep = readdir(dp)) ) {
 			char *fileName = new char[PATH_MAX];
-			snprintf(fileName, sizeof(fileName), "%s%s", dir, ep->d_name);
+			snprintf(fileName, PATH_MAX, "%s%s", dir, ep->d_name);
 			stat(fileName, &st);
 			// is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0 && strstr(fileName, "snd") == NULL ) {
@@ -208,10 +208,10 @@ const char* NonGUIFrontend::getAbsolutePath(const char *path)
 	// isn't an absolute path
 	if (path[0] != '/') {
 		// make it absolute
-		snprintf(tmp, sizeof(tmp), "%s/%s", getenv("PWD"), path);
+		snprintf(tmp, PATH_MAX, "%s/%s", getenv("PWD"), path);
 	}
 	else {
-		strcpy(tmp, path);
+		strncpy(tmp, path, PATH_MAX);
 	}
 	
 	struct stat st;
@@ -222,7 +222,7 @@ const char* NonGUIFrontend::getAbsolutePath(const char *path)
 		// and doesn't ends with a '/'
 		if ( tmp[len - 1] != '/' ) {
 			// append a '/'
-			snprintf(tmp, sizeof(tmp), "%s/", tmp);
+			snprintf(tmp, PATH_MAX, "%s/", tmp);
 		}
 	}
 	

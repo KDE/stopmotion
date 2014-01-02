@@ -20,8 +20,6 @@
 #ifndef TOOLSMENU_H
 #define TOOLSMENU_H
 
-#include "ui_toolsmenu.h"
-
 #include "src/application/runanimationhandler.h"
 #include "src/application/modelhandler.h"
 #include "src/application/camerahandler.h"
@@ -29,6 +27,7 @@
 #include <QShortcut>
 #include <QWidget>
 
+class Ui_Form;
 
 /**
  * The tools menu on the left side in the application.
@@ -69,7 +68,7 @@ public slots:
 	void modelSizeChanged(int modelSize);
 	
 private:
-	Ui::Form ui;
+	Ui_Form* ui;
 	
 	RunAnimationHandler *runAnimationHandler;
 	ModelHandler *modelHandler;

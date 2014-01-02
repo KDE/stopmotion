@@ -103,7 +103,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	lastVisitedDir      = 0;
 	
 	lastVisitedDir = new char[PATH_MAX];
-	strcpy( lastVisitedDir, getenv("PWD") );
+	strncpy( lastVisitedDir, getenv("PWD"), PATH_MAX );
 	
 	centerWidget = new QWidget;
 	centerWidget->setObjectName("CenterWidget");
@@ -776,9 +776,12 @@ void MainWindowGUI::newProject()
 void MainWindowGUI::openProject()
 {
 	QString file = QFileDialog::
-		getOpenFileName(this, tr("Choose project file"), lastVisitedDir, "Stopmotion (*.sto)");
+		getOpenFileName(this,
+				tr("Choose project file"),
+				QString::fromLocal8Bit(lastVisitedDir),
+				"Stopmotion (*.sto)");
 	if ( !file.isNull() ) {
-		openProject( file.toLatin1().constData() );
+		openProject( file.toLocal8Bit().constData() );
 	}
 }
 
@@ -834,13 +837,15 @@ void MainWindowGUI::openThirdMostRecent()
 
 void MainWindowGUI::saveProjectAs()
 {
-	QString file = QFileDialog::
-		getSaveFileName(this, tr("Save As"), lastVisitedDir, "Stopmotion (*.sto)");
+	QString file = QFileDialog::getSaveFileName(this,
+			tr("Save As"),
+			QString::fromLocal8Bit(lastVisitedDir),
+			"Stopmotion (*.sto)");
 
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
-                QString path = QString::fromLocal8Bit(DomainFacade::getFacade()->getProjectPath());
-                path += QLatin1String("images/");
+		string path = DomainFacade::getFacade()->getProjectPath();
+		path += "images/";
 		changeMonitor->addDirectory(path);
 		//fileMenu->setItemEnabled(SAVE, true);
 		saveAct->setEnabled(true);
@@ -926,12 +931,14 @@ void MainWindowGUI::exportToVideo()
 		const char *output = prefs->getPreference(tmp, "");	
 		if (strcmp(output, "") == 0) {
 			QString file = QFileDialog::
-				getSaveFileName(this, tr("Export to video file"), lastVisitedDir);
+				getSaveFileName(this,
+						tr("Export to video file"),
+						QString::fromLocal8Bit(lastVisitedDir));
 			if ( file.isEmpty() ) {
 				isCanceled = true;	
 			}
 			else {
-				enc.setOutputFile( file.toLatin1().constData() );
+				enc.setOutputFile( file.toLocal8Bit().constData() );
 			}
 		}
 		else {
@@ -961,10 +968,13 @@ void MainWindowGUI::exportToVideo()
 void MainWindowGUI::exportToCinerella()
 {
 	QString file = QFileDialog::
-		getSaveFileName(this, tr("Export to file"), lastVisitedDir, "Cinerella (*.XXX)");
+		getSaveFileName(this,
+				tr("Export to file"),
+				QString::fromLocal8Bit(lastVisitedDir),
+				"Cinerella (*.XXX)");
 	
 	if ( !file.isNull() ) {
-		DomainFacade::getFacade()->exportToCinerella( file.toLatin1().constData() );
+		DomainFacade::getFacade()->exportToCinerella( file.toLocal8Bit().constData() );
 	}
 }
 
@@ -1145,7 +1155,7 @@ void MainWindowGUI::updateMostRecentMenu()
 	if (strcmp(first, "") != 0) {
 		if (access(first, R_OK) == 0) {
 			mostRecentAct->setVisible(true);
-			mostRecentAct->setText(QString(first));
+			mostRecentAct->setText(QString::fromLocal8Bit(first));
 		}
 		xmlFree((xmlChar*)first);
 	}
@@ -1157,7 +1167,7 @@ void MainWindowGUI::updateMostRecentMenu()
 	if (strcmp(second, "") != 0) { 
 		if (access(second, R_OK) == 0) {
 			secondMostRecentAct->setVisible(true);
-			secondMostRecentAct->setText(QString(second));
+			secondMostRecentAct->setText(QString::fromLocal8Bit(second));
 		}
 		xmlFree((xmlChar*)second);
 	}
@@ -1169,7 +1179,7 @@ void MainWindowGUI::updateMostRecentMenu()
 	if (strcmp(third, "") != 0) {
 		if (access(third, R_OK) == 0) {
 			thirdMostRecentAct->setVisible(true);
-			thirdMostRecentAct->setText(QString(third));
+			thirdMostRecentAct->setText(QString::fromLocal8Bit(third));
 		}
 		xmlFree((xmlChar*)third);
 	}

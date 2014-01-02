@@ -1,106 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="1.1">
+<!DOCTYPE TS><TS version="1.1" language="sv_SE">
+<defaultcodec></defaultcodec>
 <context>
     <name>AboutDialog</name>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="40"/>
         <source>This is the Stopmotion application for creating stop motion animations.</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta är programmet Stopmotion som du kan använda för att skapa stopmotion-animeringar.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="44"/>
         <source>&amp;About</source>
-        <translation type="unfinished">&amp;Om</translation>
+        <translation>&amp;Om</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="47"/>
         <source>Main developers</source>
-        <translation type="unfinished"></translation>
+        <translation>Huvudutvecklare</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="52"/>
         <source>A&amp;uthors</source>
-        <translation type="unfinished">&amp;Utvecklare</translation>
+        <translation>Upphovsm&amp;än</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="56"/>
         <source>Translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Översättning</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="57"/>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Tjeckiska</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="58"/>
         <source>Slovenian</source>
-        <translation type="unfinished"></translation>
+        <translation>Slovenska</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="59"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Franska</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="65"/>
         <source>Logo</source>
-        <translation type="unfinished"></translation>
+        <translation>Logotyp</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="67"/>
         <source>Coordinating</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinering</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="70"/>
         <source>Testing</source>
-        <translation type="unfinished"></translation>
+        <translation>Testning</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="81"/>
         <source>&amp;Thanks To</source>
-        <translation type="unfinished">&amp;Tack till</translation>
+        <translation>&amp;Tack till</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="86"/>
         <source>&amp;Licence Agreement</source>
-        <translation type="unfinished">&amp;Licensbestämmelser</translation>
+        <translation>&amp;Licensvillkor</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="88"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="101"/>
         <source>About</source>
-        <translation type="unfinished">Om</translation>
+        <translation>Om</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="60"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyska</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="61"/>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugisiska</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="62"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Spanska</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="63"/>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>Svenska</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="50"/>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Bidragsgivare</translation>
     </message>
 </context>
 <context>
@@ -108,63 +109,62 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="346"/>
         <source>Below you can set which device Stopmotion should use for grabbing images and displaying video.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedan kan du ställa in vilken enhet som Stopmotion ska använda för att fånga bilder och visa video.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="349"/>
         <source>You can select from the auto-detected devices below or add devices yourself. It is not recommended to use devices which is not auto-detected, but feel free to do it if you are an advanced user.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du kan välja från de automatiskt detekterade enheterna nedan eller lägga till enheter själv. Det rekommenderas inte att använda enheter som inte är automatiskt detekterade men gör det gärna om du är en erfaren användare.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="351"/>
         <source>The selected device is recognized as &lt;b&gt;$VIDEODEVICE&lt;/b&gt; under Video Import.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den valda enheten är känd som &lt;b&gt;$VIDEODEVICE&lt;/b&gt; under Video-import.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="354"/>
         <source>Name</source>
-        <translation type="unfinished">Namn</translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="354"/>
         <source>Description</source>
-        <translation type="unfinished">Beskrivning</translation>
+        <translation>Beskrivning</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="357"/>
         <source>&amp;Add</source>
-        <translation type="unfinished">&amp;Lägg till</translation>
+        <translation>&amp;Lägg till</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="358"/>
         <source>&amp;Remove</source>
-        <translation type="unfinished">&amp;Ta bort</translation>
+        <translation>&amp;Ta bort</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="359"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished">&amp;Ändra</translation>
+        <translation>&amp;Redigera</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="362"/>
         <source>Video device settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar för videoenhet</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="363"/>
         <source>Video Device ($VIDEODEVICE): </source>
-        <translation type="unfinished"></translation>
+        <translation>Videoenhet ($VIDEODEVICE): </translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="149"/>
         <source>device</source>
-        <translation type="unfinished"></translation>
+        <translation>enhet</translation>
     </message>
 </context>
 <context>
     <name>ExportTab</name>
     <message>
-        <location filename="" line="7471221"/>
         <source>Active</source>
         <translation type="obsolete">Aktivera</translation>
     </message>
@@ -191,12 +191,12 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="415"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Ändra</translation>
+        <translation>&amp;Redigera</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="97"/>
         <source>Encoder settings</source>
-        <translation>Kodar inställningar</translation>
+        <translation>Kodarinställningar</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="418"/>
@@ -216,7 +216,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="422"/>
         <source>Set default output file:</source>
-        <translation>Välj standard filnamn:</translation>
+        <translation>Välj standardfilnamn:</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="423"/>
@@ -239,24 +239,23 @@
         <translation>Välj filnamn</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&lt;p&gt;Below you can set which program/process stopmotion should use for encoding the currently active project to a video file.&lt;/p&gt;&lt;p&gt;You can use $IMAGEPATH to represent the image path (absolute path to the directory where the images can be found). You should always use &lt;b&gt;$VIDEOFILE&lt;/b&gt; to represent the output file (the videofile generated by the encoder) in the &lt;b&gt;command line&lt;/b&gt;. This is independent of how you decides to select it (select it for each export or have a default file).&lt;br&gt;&lt;/p&gt;&lt;p&gt; Example with mencoder (converting jpg to mpeg1): &lt;br&gt;mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg -ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE &lt;br&gt;</source>
         <translation type="obsolete">&lt;p&gt;Nedan kan du ställa in vilket program stopmotion bör använda för att koda det aktuella projektet till en videofil.&lt;/p&gt;&lt;p&gt;Du kan använda $IMAGEPATH för att bestämma bildsökvägen (den absoluta sökvägen till mappen där bilderna kan hittas). Du bör alltid använda &lt;b&gt;$VIDEOFILE&lt;/b&gt; för att bestämma destinationsfilen (videofilen som genererats av kodaren) i &lt;b&gt;kommand prompten&lt;/b&gt;. Detta är oberoende av hur du bestämmer dig för att välja det (välja det för  varje export eller att ha en standardfil).&lt;br&gt;&lt;/p&gt;&lt;p&gt; Exempel med mencoder (konvertera jpg till mpeg1): &lt;br&gt;mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg -ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE &lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="402"/>
         <source>Below you can set which program/process Stopmotion should use for encoding the currently active project to a video file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedan kan du ställa in vilket program/process som Stopmotion ska använda för att koda det aktiva projektet till en videofil.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="404"/>
         <source>You should always use &lt;b&gt;$IMAGEPATH&lt;/b&gt; and &lt;b&gt;$VIDEOFILE&lt;/b&gt; to represent the image path and the video file, respectively.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du bör alltid använda &lt;b&gt;$IMAGEPATH&lt;/b&gt; och &lt;b&gt;$VIDEOFILE&lt;/b&gt; för att representera bildsökvägen och videofilen, respektive.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="405"/>
         <source>Example with mencoder (jpeg images to mpeg4 video):</source>
-        <translation type="unfinished"></translation>
+        <translation>Exempel med mencoder (jpeg-bilder till mpeg4-video):</translation>
     </message>
 </context>
 <context>
@@ -264,43 +263,42 @@
     <message>
         <location filename="../src/application/externalcommand.cpp" line="44"/>
         <source>Input to program:</source>
-        <translation type="unfinished"></translation>
+        <translation>Indata för program:</translation>
     </message>
     <message>
         <location filename="../src/application/externalcommand.cpp" line="54"/>
         <source>Submit</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka</translation>
     </message>
     <message>
         <location filename="../src/application/externalcommand.cpp" line="60"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng</translation>
     </message>
     <message>
         <location filename="../src/application/externalcommand.cpp" line="73"/>
         <source>Output from external command</source>
-        <translation type="unfinished"></translation>
+        <translation>Utdata från externt kommando</translation>
     </message>
     <message>
         <location filename="../src/application/externalcommand.cpp" line="116"/>
         <source>Result</source>
-        <translation type="unfinished"></translation>
+        <translation>Resultat</translation>
     </message>
     <message>
         <location filename="../src/application/externalcommand.cpp" line="113"/>
         <source>Failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades!</translation>
     </message>
     <message>
         <location filename="../src/application/externalcommand.cpp" line="116"/>
         <source>Successfull!</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyckades!</translation>
     </message>
 </context>
 <context>
     <name>FileDialog</name>
     <message>
-        <location filename="" line="7471221"/>
         <source>Go to home directory</source>
         <translation type="obsolete">Gå till hem mappen</translation>
     </message>
@@ -310,7 +308,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.ui" line="33"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formulär</translation>
     </message>
 </context>
 <context>
@@ -318,7 +316,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framebar/framebar.cpp" line="125"/>
         <source>Frame number: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bildrutenummer:</translation>
     </message>
 </context>
 <context>
@@ -341,7 +339,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="112"/>
         <source>Sounds:</source>
-        <translation>LJud:</translation>
+        <translation>Ljud:</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="118"/>
@@ -376,108 +374,93 @@
         <source>Grabbing failed. This may happen if you try
 to grab from an invalid device. Please check
 your grabber settings in the preferences menu.</source>
-        <translation>Hämtning misslyckades. Detta kan hända om
+        <translation>Fångst misslyckades. Detta kan hända om
 du försöker hämta från en ogiltig enhet.
-Var god kontrollera hämatinställningarna i
+Kontrollera dina fångstinställningar i
 inställningsmenyn.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="446"/>
         <source>You have to define an image grabber to use.
 This can be set in the preferences menu.</source>
-        <translation>Du måste välja en bildhämtare att använda.
-Detta kan ställas in i inställnings menyn.</translation>
+        <translation>Du måste definiera en bildfångare att använda.
+Detta kan ställas in i inställningsmenyn.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="360"/>
         <source>No video device selected in the preferences menu.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen videoenhet har valts i inställningsmenyn.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="372"/>
         <source>Pre poll command does not exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Pre poll-kommandot finns inte</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="386"/>
         <source>You do not have the given grabber installed on your system</source>
-        <translation type="unfinished"></translation>
+        <translation>Du har inte den angivna fångaren installerad på ditt system</translation>
     </message>
 </context>
 <context>
     <name>HelpWindow</name>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;New Window</source>
         <translation type="obsolete">&amp;Nytt  Fönster</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Open File</source>
         <translation type="obsolete">&amp;Öppna Fil</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Print</source>
         <translation type="obsolete">&amp;Skriv ut</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Close</source>
         <translation type="obsolete">&amp;Stäng</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Backward</source>
         <translation type="obsolete">&amp;Bakåt</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Forward</source>
         <translation type="obsolete">&amp;Framåt</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Home</source>
         <translation type="obsolete">&amp;Hem</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>Add Bookmark</source>
         <translation type="obsolete">Lägg till bokmärke</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;File</source>
         <translation type="obsolete">&amp;Fil</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Go</source>
         <translation type="obsolete">&amp;Gå</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>History</source>
         <translation type="obsolete">Historia</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>Bookmarks</source>
         <translation type="obsolete">Bokmärken</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>Backward</source>
         <translation type="obsolete">Bakåt</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>Forward</source>
         <translation type="obsolete">Framåt</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>Home</source>
         <translation type="obsolete">Hem</translation>
     </message>
@@ -485,12 +468,10 @@ Detta kan ställas in i inställnings menyn.</translation>
 <context>
     <name>ImportTab</name>
     <message>
-        <location filename="" line="7471221"/>
         <source>&lt;p&gt;Below you can set which program/process stopmotion should use for grabbing images from the webcam, and displaying video.&lt;br&gt; &lt;br&gt; &lt;/p&gt;</source>
         <translation type="obsolete">&lt;p&gt;Nedan kan du välja vilket program/process stopmotion ska använda för att hämta bilder från webkameran och visa videon.&lt;br&gt;&lt;br&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>Active</source>
         <translation type="obsolete">Aktiv</translation>
     </message>
@@ -517,37 +498,37 @@ Detta kan ställas in i inställnings menyn.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="342"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Ändra</translation>
+        <translation>&amp;Redigera</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="344"/>
         <source>Import device settings</source>
-        <translation>Importera enhets inställningar</translation>
+        <translation>Importera enhetsinställningar</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="345"/>
         <source>Pre-poll command</source>
-        <translation></translation>
+        <translation>Pre poll-kommando</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
-        <source>Start daemon</source>
-        <translation>Starta daemon</translation>
+        <source>Start deamon</source>
+        <translation>Starta bakgrundsprocess</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
-        <source>Stop daemon</source>
-        <translation>Stoppa daemon</translation>
+        <source>Stop deamon</source>
+        <translation>Stoppa bakgrundsprocess</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="332"/>
         <source>Below you can set which program/process Stopmotion should use for grabbing images from the selected device.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedan kan du ställa in vilket program/process som Stopmotion ska använda för att fånga bilder från vald enhet.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="334"/>
         <source>You should always use &lt;b&gt;$VIDEODEVICE&lt;/b&gt; and &lt;b&gt;$IMAGEFILE&lt;/b&gt; to represent the video device and the image file, respectively.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du bör alltid använda &lt;b&gt;$VIDEODEVICE&lt;/b&gt; och &lt;b&gt;$IMAGEFILE&lt;/b&gt; för att representera videoenheten och bildfilen, respektive.</translation>
     </message>
 </context>
 <context>
@@ -561,12 +542,12 @@ Detta kan ställas in i inställnings menyn.</translation>
     <message>
         <location filename="../src/application/languagehandler.cpp" line="60"/>
         <source>English</source>
-        <translation>English</translation>
+        <translation>Engelska</translation>
     </message>
     <message>
         <location filename="../src/application/languagehandler.cpp" line="62"/>
         <source>&amp;Translation</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Översättning</translation>
     </message>
 </context>
 <context>
@@ -574,22 +555,22 @@ Detta kan ställas in i inställnings menyn.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/helpbrowser.ui" line="16"/>
         <source>Stopmotion Help Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjälpvisare för Stopmotion</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/helpbrowser.ui" line="40"/>
         <source>Backward</source>
-        <translation type="unfinished">Bakåt</translation>
+        <translation>Bakåt</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/helpbrowser.ui" line="50"/>
         <source>Forward</source>
-        <translation type="unfinished">Framåt</translation>
+        <translation>Framåt</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/helpbrowser.ui" line="86"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng</translation>
     </message>
 </context>
 <context>
@@ -612,7 +593,7 @@ Detta kan ställas in i inställnings menyn.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="561"/>
         <source>&lt;h4&gt;Open&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Opens&lt;/em&gt; a Stopmotion project file.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Öppna&lt;/h4&gt;&lt;p&gt;&lt;em&gt;Öppnar&lt;/em&gt; en Stopmotion projektfil.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Öppna&lt;/h4&gt;&lt;p&gt;&lt;em&gt;Öppnar&lt;/em&gt; en projektfil för Stopmotion.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="475"/>
@@ -622,7 +603,7 @@ Detta kan ställas in i inställnings menyn.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="476"/>
         <source>Save &amp;As</source>
-        <translation>Spara &amp;Som</translation>
+        <translation>Spara so&amp;m</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="479"/>
@@ -647,7 +628,7 @@ Detta kan ställas in i inställnings menyn.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="613"/>
         <source>&lt;h4&gt;Undo&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Undoes&lt;/em&gt; your last operation. You can press undo several time to undo earlier operations.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Ångra&lt;/h4&gt;&lt;p&gt;&lt;em&gt;Ångrar&lt;/em&gt; din senaste handling. Du kan trycka på ångraknappen flera gånger för att ångra tidigare hanlingar.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Ångra&lt;/h4&gt;&lt;p&gt;&lt;em&gt;Ångrar&lt;/em&gt; din senaste handling. Du kan trycka på ångraknappen flera gånger för att ångra tidigare handlingar.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="481"/>
@@ -702,10 +683,9 @@ Detta kan ställas in i inställnings menyn.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="533"/>
         <source>&amp;Edit</source>
-        <translation>&amp;Ändra</translation>
+        <translation>&amp;Redigera</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Languages</source>
         <translation type="obsolete">&amp;Språk</translation>
     </message>
@@ -765,7 +745,6 @@ Detta kan ställas in i inställnings menyn.</translation>
         <translation>Gå till bildruta:</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>Frame number: 0</source>
         <translation type="obsolete">Bildruta nummer: 0</translation>
     </message>
@@ -800,27 +779,22 @@ Detta kan ställas in i inställnings menyn.</translation>
         <translation>&amp;Nej</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>Save File</source>
         <translation type="obsolete">Spara Fil</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&lt;p&gt;This is the stopmotion application for creating stopmotion animations.&lt;/p&gt;&lt;p&gt;(c) 2005, Fredrik Berg Kj&#xf8;lstad and Bj&#xf8;rn Erik Nilsen&lt;/p&gt;</source>
         <translation type="obsolete">&lt;p&gt;Det här är animationsprogrammet för att skapa animationer.&lt;/p&gt;&lt;p&gt;(c) 2005, Fredrik Berg Kjølstad and Bjørn Erik Nilsen&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>A&amp;uthors</source>
         <translation type="obsolete">&amp;Utvecklare</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Thanks To</source>
         <translation type="obsolete">&amp;Tack till</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Licence Agreement</source>
         <translation type="obsolete">&amp;Licensbestämmelser</translation>
     </message>
@@ -841,7 +815,7 @@ Detta kan ställas in i inställnings menyn.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Spara&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Sparar&lt;/em&gt;animationen som Stopmotionprojektfil. &lt;BR&gt;Om det här projektet har sparats förut kommer det automatiskt sparas till den tidigare valda filen.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -872,7 +846,7 @@ Detta kan ställas in i inställnings menyn.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="1113"/>
         <source>Open &amp;Recent</source>
-        <translation>Öppna &amp;Tidigare</translation>
+        <translation>Öppna &amp;tidigare</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="556"/>
@@ -994,34 +968,31 @@ kontrollera inställningarna i inställngsmenyn?</translation>
         <translation>Hjälp</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&lt;p&gt;&lt;b&gt;Main developers&lt;/b&gt;&lt;br&gt;Fredrik Berg Kj&#xf8;lstad &amp;lt;fredrikbk@hotmail.com&amp;gt;&lt;br&gt;Bj&#xf8;rn Erik Nilsen &amp;lt;bjoern.nilsen@bjoernen.com&amp;gt;&lt;/p&gt;</source>
         <translation type="obsolete">&lt;p&gt;&lt;b&gt;Utvecklare&lt;/b&gt;&lt;br&gt;Fredrik Berg Kjølstad &amp;lt;fredrikbk@hotmail.com&amp;gt;&lt;br&gt;Bjørn Erik Nilsen &amp;lt;bjoern.nilsen@bjoernen.com&amp;gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>Stopmotion User Manual</source>
         <translation type="obsolete">Stopmotion Användar Manual</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&lt;p&gt;&lt;b&gt;Coordinating&lt;/b&gt;&lt;br&gt;Herman Robak &amp;lt;herman@skolelinux.no&amp;gt;&lt;br&gt;&#xd8;yvind Kol&#xe5;s &amp;lt;pippin@gimp.org&amp;gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Testing&lt;/b&gt;&lt;br&gt;Tore Sinding Bekkedal &amp;lt;toresbe@ifi.uio.no&amp;gt;&lt;br&gt;Finn Arne Johansen &amp;lt;faj@bzz.no&amp;gt;&lt;br&gt;Halvor Borgen &amp;lt;halvor.borgen@hig.no&amp;gt;&lt;br&gt;Bj&#xf8;rn Are Hansen &amp;lt;post@bahansen.net&amp;gt;&lt;br&gt;John Steinar Bild&#xf8;y &amp;lt;johnsbil@haldenfriskole.no&amp;gt;&lt;br&gt;Ole-Anders Andreassen &amp;lt;ole-anders.andreassen@sunndal.kommune.no&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Translation&lt;/b&gt;&lt;br&gt;George Helebrant &amp;lt;helb@skatekralovice.com&amp;gt; (Czech)&lt;br&gt;&lt;/p&gt;</source>
         <translation type="obsolete">&lt;p&gt;&lt;b&gt;Koordninering&lt;/b&gt;&lt;br&gt;Herman Robak &amp;lt;herman@skolelinux.no&amp;gt;&lt;br&gt;Øyvind Kolås &amp;lt;pippin@gimp.org&amp;gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Testing&lt;/b&gt;&lt;br&gt;Tore Sinding Bekkedal &amp;lt;toresbe@ifi.uio.no&amp;gt;&lt;br&gt;Finn Arne Johansen &amp;lt;faj@bzz.no&amp;gt;&lt;br&gt;Halvor Borgen &amp;lt;halvor.borgen@hig.no&amp;gt;&lt;br&gt;Bjørn Are Hansen &amp;lt;post@bahansen.net&amp;gt;&lt;br&gt;John Steinar Bildøy &amp;lt;johnsbil@haldenfriskole.no&amp;gt;&lt;br&gt;Ole-Anders Andreassen &amp;lt;ole-anders.andreassen@sunndal.kommune.no&amp;gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;Translation&lt;/b&gt;&lt;br&gt;George Helebrant &amp;lt;helb@skatekralovice.com&amp;gt; (Czech)&lt;br&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="493"/>
         <source>Frame number: </source>
-        <translation type="unfinished"></translation>
+        <translation>Bildrutenummer:</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="778"/>
         <source>Choose project file</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj projektfil</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="837"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Spara som</translation>
     </message>
 </context>
 <context>
@@ -1039,27 +1010,27 @@ kontrollera inställningarna i inställngsmenyn?</translation>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="216"/>
         <source>Warning</source>
-        <translation type="unfinished">Varning</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="184"/>
         <source>You do not have Gimp installed on your system</source>
-        <translation type="unfinished"></translation>
+        <translation>Du har inte Gimp installerat på ditt system</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="195"/>
         <source>There is no active frame to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Det finns ingen aktiv bildruta att öppna</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="203"/>
         <source>The active frame is corrupt</source>
-        <translation type="unfinished"></translation>
+        <translation>Den aktiva bildrutan är skadad</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="217"/>
         <source>Failed to start Gimp!</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades med att starta Gimp!</translation>
     </message>
 </context>
 <context>
@@ -1067,32 +1038,32 @@ kontrollera inställningarna i inställngsmenyn?</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/preferencesmenu.cpp" line="116"/>
         <source>Video &amp;Import</source>
-        <translation>Video &amp;Import</translation>
+        <translation>Video&amp;import</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/preferencesmenu.cpp" line="117"/>
         <source>Video &amp;Export</source>
-        <translation>Video &amp;Export</translation>
+        <translation>Video&amp;export</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/preferencesmenu.cpp" line="111"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Verkställ</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/preferencesmenu.cpp" line="112"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Stäng</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/preferencesmenu.cpp" line="113"/>
         <source>Preferences Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningsmeny</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/preferencesmenu.cpp" line="115"/>
         <source>Video &amp;Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Videoen&amp;het</translation>
     </message>
 </context>
 <context>
@@ -1105,7 +1076,7 @@ kontrollera inställningarna i inställngsmenyn?</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="156"/>
         <source>Fatal</source>
-        <translation>Fatal</translation>
+        <translation>Ödesdigert</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="70"/>
@@ -1113,24 +1084,23 @@ kontrollera inställningarna i inställngsmenyn?</translation>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>Progress</source>
         <translation type="obsolete">Process</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="222"/>
         <source>vgrabbj VGA singleshot</source>
-        <translation>vgrabbj VGA singelbild</translation>
+        <translation>vgrabbj VGA-enkelbild</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
-        <source>vgrabbj VGA daemon</source>
-        <translation>vgrabbj VGA daemon</translation>
+        <source>vgrabbj VGA deamon</source>
+        <translation>vgrabbj VGA-damon</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
-        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
-        <translation>Startar vgrabbj som daemon. Ganska snabb.</translation>
+        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+        <translation>Startar vgrabbj som bakgrundsprocess. Ganska snabb.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="339"/>
@@ -1138,12 +1108,10 @@ kontrollera inställningarna i inställngsmenyn?</translation>
         <translation>Fråga</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;Yes</source>
         <translation type="obsolete">&amp;Ja</translation>
     </message>
     <message>
-        <location filename="" line="7471221"/>
         <source>&amp;No</source>
         <translation type="obsolete">&amp;Nej</translation>
     </message>
@@ -1155,7 +1123,7 @@ kontrollera inställningarna i inställngsmenyn?</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="274"/>
         <source>Exports from jpeg images to mpeg1 video</source>
-        <translation>Exporterar från jpeg bilder till mpeg1 video</translation>
+        <translation>Exporterar från jpeg-bilder till mpeg1-video</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="190"/>
@@ -1163,43 +1131,43 @@ kontrollera inställningarna i inställngsmenyn?</translation>
 values exists. Do you want to use this one? (Your old preferences
  will be saved in ~/.stopmotion/preferences.xml.OLD)</source>
         <translation>En nyare version av inställningsfilen med ett par fler
-grundvärden finns. Vill du använda den? (Dina gamla inställningar
+standardvärden finns. Vill du använda den? (Dina gamla inställningar
 kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="283"/>
         <source>Exports from jpeg images to mpeg2 video</source>
-        <translation>Exporterar från jpeg bilder till mpeg2 video</translation>
+        <translation>Exporterar från jpeg-bilder till mpeg2-video</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="301"/>
         <source>Exports from jpeg images to mpeg4 video</source>
-        <translation>Exporterar från jpeg bilder till mpeg4 video</translation>
+        <translation>Exporterar från jpeg-bilder till mpeg4-video</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="257"/>
         <source>dvgrab</source>
-        <translation type="unfinished"></translation>
+        <translation>dvgrab</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="241"/>
         <source>Grabbing from DV-cam. (EXPERIMENTAL)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fågnar från DV-kamera. (EXPERIMENTIELL)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="249"/>
         <source>videodog singleshot</source>
-        <translation type="unfinished"></translation>
+        <translation>videodog-enkelbild</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="251"/>
         <source>Videodog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Videodog.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="259"/>
         <source>Grabbing from DV-cam.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fångar från DV-kamera.</translation>
     </message>
 </context>
 <context>
@@ -1230,7 +1198,7 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="45"/>
         <source>Choose sound file</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj ljudfil</translation>
     </message>
 </context>
 <context>
@@ -1238,12 +1206,12 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="210"/>
         <source>FPS chooser</source>
-        <translation>FPS väljare</translation>
+        <translation>Välj bilder/s</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="294"/>
         <source>&lt;h4&gt;FPS chooser&lt;/h4&gt; &lt;p&gt;By changing the value in this chooser you set which speed the animation in the &lt;b&gt;FrameView&lt;/b&gt; should run at.&lt;/p&gt; &lt;p&gt;To start an animation press the &lt;b&gt;Run Animation&lt;/b&gt; button.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;FPS väljare&lt;/h4&gt; &lt;p&gt;Genom att ändra värdet här väljer du vilken fart animationen i &lt;b&gt;bildrutevyn&lt;/b&gt; kommer att spelas.&lt;/p&gt; &lt;p&gt;För att starta animationen klicka &lt;b&gt;Kör Animationen&lt;/b&gt; knappen.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Välj bilder/s&lt;/h4&gt; &lt;p&gt;Genom att ändra värdet här väljer du vilken fart animationen i &lt;b&gt;bildrutevyn&lt;/b&gt; kommer att spelas upp i.&lt;/p&gt; &lt;p&gt;För att starta animationen klicka på knappen &lt;b&gt;Spela animation&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="211"/>
@@ -1278,12 +1246,12 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="244"/>
         <source>&lt;h4&gt;New Scene (CTRL+E)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;create&lt;/em&gt; a new &lt;em&gt;scene&lt;/em&gt; to the animation.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Ny Scen (CTRL+E)&lt;/h4&gt; &lt;p&gt;Klicka på den här knappen för att &lt;em&gt;skapa&lt;/em&gt; en ny &lt;em&gt;scen&lt;/em&gt; i animationen.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Ny scen (CTRL+E)&lt;/h4&gt; &lt;p&gt;Klicka på den här knappen för att &lt;em&gt;skapa&lt;/em&gt; en ny &lt;em&gt;scen&lt;/em&gt; i animationen.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="251"/>
         <source>&lt;h4&gt;Remove Scene (SHIFT+Delete)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;remove&lt;/em&gt; the selected scene from the animation.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Ta bort Scen (SHIFT+Delete)&lt;/h4&gt; &lt;p&gt;Klicka på den här knappen för att &lt;em&gt;ta bort&lt;/em&gt; den valda scenen från animationen.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Ta bort scen (SHIFT+Delete)&lt;/h4&gt; &lt;p&gt;Klicka på den här knappen för att &lt;em&gt;ta bort&lt;/em&gt; den valda scenen från animationen.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="257"/>
@@ -1293,7 +1261,7 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="272"/>
         <source>&lt;h4&gt;Capture Frame (Space)&lt;/h4&gt; &lt;p&gt;Click on this button to &lt;em&gt;capture&lt;/em&gt; a frame from the camera an put it in the animation&lt;/p&gt; &lt;p&gt; This can also be done by pressing the &lt;b&gt;Space key&lt;/b&gt;&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Fånga Bildruta (Mellanslag)&lt;/h4&gt; &lt;p&gt;Klicka på den här knappen för att &lt;em&gt;fånga&lt;/em&gt; en bildruta från kameran och lägga till den till animationen&lt;/p&gt; &lt;p&gt; Du kan även trycka på &lt;b&gt;mellanslag&lt;/b&gt;&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Fånga bildruta (blanksteg)&lt;/h4&gt; &lt;p&gt;Klicka på den här knappen för att &lt;em&gt;fånga&lt;/em&gt; en bildruta från kameran och lägga till den till animationen&lt;/p&gt; &lt;p&gt; Du kan även trycka på &lt;b&gt;blanksteg&lt;/b&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="283"/>
@@ -1313,7 +1281,7 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="304"/>
         <source>&lt;h4&gt;Previous frame (J, Left)&lt;/h4&gt;</source>
-        <translation>&lt;h4&gt;Förra bildrutan (J, Vänsterpil)&lt;/h4&gt;</translation>
+        <translation>&lt;h4&gt;Föregående bildruta (J, Vänsterpil)&lt;/h4&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="307"/>
@@ -1323,7 +1291,7 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="310"/>
         <source>&lt;h4&gt;Previous scene (I)&lt;/h4&gt;</source>
-        <translation>&lt;h4&gt;Tidigare scen (I)&lt;/h4&gt;</translation>
+        <translation>&lt;h4&gt;Föregående scen (I)&lt;/h4&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="313"/>
@@ -1338,16 +1306,16 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="408"/>
         <source>Notice</source>
-        <translation>Notera</translation>
+        <translation>Observera</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
         <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a daemon.</source>
+as a deamon. Go to the preferences menu (CTRL+P) to switch 
+to running the image grabbing as a deamon.</source>
         <translation>Uppspelning fungerar för tillfället bara när hämtaren körs
-som daemon. Gå till inställningsmenyn (CTRL+P) för att byta
-till att köra bildhämtningen som daemon.</translation>
+som bakgrundsprocess. Gå till inställningsmenyn (CTRL+P) för att
+byta till att köra bildhämtningen som bakgrundsprocess.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="217"/>
@@ -1372,7 +1340,7 @@ till att köra bildhämtningen som daemon.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="264"/>
         <source>&lt;h4&gt;Launch Gimp&lt;/h4&gt; &lt;p&gt;Click this button to open the active frame in Gimp&lt;/p&gt; &lt;p&gt;Note that you can also drag images from the frame bar and drop them on Gimp&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h4&gt;Starta Gimp&lt;/h4&gt; &lt;p&gt;Klicka på denna knapp för att öppna den aktiva bildrutan i Gimp&lt;/p&gt; &lt;p&gt;Observera att du även kan dra bilder från bildruteraden och släppa dem på Gimp&lt;/p&gt;</translation>
     </message>
 </context>
 </TS>

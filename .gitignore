@@ -1,10 +1,12 @@
+<<<<<<< HEAD
+*~
 *.o
-/config.log
-/config.status
-/moc_*.cpp
-/src/config.cpp
-/stopmotion
-/stopmotion.pro
-/ui_helpbrowser.h
-/ui_toolsmenu.h
+moc_*.cpp
+ui_*.h
 Makefile
+.project
+.cproject
+/stopmotion
+*.pro.user
+.settings/
+/translations/stopmotion_*.qm
