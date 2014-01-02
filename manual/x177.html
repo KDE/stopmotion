@@ -154,9 +154,9 @@ CLASS="accel"
 			button.
 		</P
 ><P
->&#13;			There are three things which can be specified here. The prepoll, start deamon
-			and stop deamon fields. If the program for importing the images grabs one image
-			and then exits you can leave the start and stop deamon fields blank. The contents 
+>&#13;			There are three things which can be specified here. The prepoll, start daemon
+			and stop daemon fields. If the program for importing the images grabs one image
+			and then exits you can leave the start and stop daemon fields blank. The contents 
 			of the prepoll field is a command which is run before importing a picture. If the 
 			import program is running in the foreground this will typically be the command line 
 			for grabbing the picture. Note that you have to write (DEFAULTPATH) in the command 
@@ -165,11 +165,11 @@ CLASS="accel"
 			and file name.
 		</P
 ><P
->&#13;			If the program you use for importing the pictures is running as a background/deamon
-			process you have to specify command lines for starting and stoping the deamon.
+>&#13;			If the program you use for importing the pictures is running as a background/daemon
+			process you have to specify command lines for starting and stoping the daemon.
 			Again you should use the $importpath tag instead of the path to the file (se above).
 			Prepoll could still be used but is not required. One potential use for the prepoll
-			command when the grab program is running as a deamon process is to specify a command
+			command when the grab program is running as a daemon process is to specify a command
 			line which performes a operation such as scaling or rotating the picture. This
 			command will be called on the pictures every time before importing them meaning
 			the live video will be displayed with the effect.

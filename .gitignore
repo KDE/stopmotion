@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 *~
 *.o
 moc_*.cpp
@@ -5,6 +6,7 @@ ui_*.h
 Makefile
 .project
 .cproject
-stopmotion
+/stopmotion
 *.pro.user
 .settings/
+/translations/stopmotion_*.qm

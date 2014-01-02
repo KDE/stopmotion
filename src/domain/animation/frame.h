@@ -24,6 +24,7 @@
 #include "src/technical/audio/audioformat.h"
 #include "src/technical/audio/audiodriver.h"
 
+#include <limits.h>
 #include <vector>
 #include <string>
 using namespace std;
@@ -143,10 +144,10 @@ public:
  
 private:
 	/** Absolute path to a temporary directory (~/.stopmotion/tmp). */
-	static char tempPath[256];
+	static char tempPath[PATH_MAX];
 	
 	/** Absolute path to a trash directory (~/.stopmotion/trash). */
-	static char trashPath[256];
+	static char trashPath[PATH_MAX];
 	
 	/** Absolute path to the image file. The image can either be in a project 
 	 * directory, the tmp directory or the trash directory. */

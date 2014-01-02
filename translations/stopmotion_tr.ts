@@ -424,12 +424,12 @@ Seçenekler menüsünden yapabilirsiniz.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
-        <source>Start deamon</source>
+        <source>Start daemon</source>
         <translation>Servisi başlat</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
-        <source>Stop deamon</source>
+        <source>Stop daemon</source>
         <translation>Servisi durdur</translation>
     </message>
     <message>
@@ -699,7 +699,7 @@ Seçenekler menüsünden yapabilirsiniz.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Kaydet&lt;/h4&gt; &lt;p&gt;Animasyonu Stopmotion dosyası olarak kaydeder. Daha önce kaydedilmişse, önceki dosyanın üzerine yazar.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -961,12 +961,12 @@ kontrol etmek ister misiniz?</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
-        <source>vgrabbj VGA deamon</source>
+        <source>vgrabbj VGA daemon</source>
         <translation>vgrabbj VGA servis</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation>vgrabbj servis olarak başlat. Hız kazandırır.</translation>
     </message>
     <message>
@@ -1170,8 +1170,8 @@ yeni bir kopyası bulundu. Bunu kullanmak ister misiniz?
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
         <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch 
+to running the image grabbing as a daemon.</source>
         <translation>Şu anda, oynatma özeliği sadece yakalayıcıyı servis olarak
 çalıştırdığınızda kullanabilirsiniz. Seçenekler menüsüne (CTRL-P)
 gidip görüntü yakalamayı servis olarak açabilirsiniz.</translation>

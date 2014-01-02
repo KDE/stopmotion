@@ -102,8 +102,8 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	changeMonitor       = 0; 
 	lastVisitedDir      = 0;
 	
-	lastVisitedDir = new char[256];
-	strcpy( lastVisitedDir, getenv("PWD") );
+	lastVisitedDir = new char[PATH_MAX];
+	strncpy( lastVisitedDir, getenv("PWD"), PATH_MAX );
 	
 	centerWidget = new QWidget;
 	centerWidget->setObjectName("CenterWidget");
@@ -568,7 +568,7 @@ void MainWindowGUI::retranslateHelpText()
 			tr("<h4>Save</h4> "
 			"<p><em>Saves</em> the current animation as a Stopmotion "
 			"project file. <BR>If this project has been saved before it will "
-			"automaticly be saved to the previously selected file.</p>");
+			"automatically be saved to the previously selected file.</p>");
 	saveAct->setWhatsThis(infoText);
 	infoText = 
 			saveAct->toolTip().prepend(tr("Save project"));
@@ -910,7 +910,7 @@ void MainWindowGUI::exportToVideo()
 	}
 	else {
 		bool isCanceled = false;
-		char tmp[256];
+		char tmp[PATH_MAX];
 		VideoEncoder enc;
 		
 		sprintf(tmp, "startEncoder%d", active);
