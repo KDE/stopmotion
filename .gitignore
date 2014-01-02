@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-*~
 *.o
 moc_*.cpp
 ui_*.h
-Makefile
-.project
-.cproject
+/Makefile
 /stopmotion
-*.pro.user
-.settings/
 /translations/stopmotion_*.qm
