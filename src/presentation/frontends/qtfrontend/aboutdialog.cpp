@@ -53,7 +53,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"Jehan Pagès<br>"
 				"Tim Band<br>"
 				"Ying-Chun Liu (PaulLiu) &lt;paulliu@debian.org&gt;<br>"
-				"Barak A. Pearlmutter &lt;barak+git@cs.nuim.ie&gt;<br>"
+				"Barak A. Pearlmutter &lt;bap@debian.org&gt;<br>"
 				"Cyril Brulebois &lt;kibi@debian.org&gt;<br>"
                                 "</p>"),
 				tr("A&uthors"));
