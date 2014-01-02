@@ -40,10 +40,10 @@ public:
 	/**
 	 * Initializes the member variables.
 	 * @param filePath path to the output file grabbed from a device
-	 * @param prePoll the pre-poll command to be runned before grabbing
+	 * @param prePoll the pre-poll command to be run before grabbing
 	 * @param startProcess command line for starting the process
 	 * @param stopProcess command line for stopping the process
-	 * @param isProcess true if the process is running in deamon mode, false otherwise
+	 * @param isProcess true if the process is running in daemon mode, false otherwise
 	 */
 	/*CommandLineGrabber(char* filePath, const char* prePoll, const char* startProcess, 
 			const char* stopProcess, bool isProcess = false);*/
@@ -55,7 +55,7 @@ public:
 	bool setStopCommand(const char *command);
 	
 	/**
-	 * Starts the grabber if it is marked to be runned in deamon mode.
+	 * Starts the grabber if it is marked to be run in daemon mode.
 	 * @return true on success, false otherwise
 	 */
 	bool init();
@@ -67,7 +67,7 @@ public:
 	bool grab();
 	
 	/**
-	 * Shut downs the grabber process either if it is runned in deamon
+	 * Shut downs the grabber process either if it is run in daemon
 	 * mode or "single grab" mode.
 	 * @return true on success, false otherwise
 	 */

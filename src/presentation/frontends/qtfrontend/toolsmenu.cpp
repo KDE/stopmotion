@@ -396,8 +396,8 @@ void ToolsMenu::changeViewingMode(int index) {
 	} else {
 		QMessageBox::warning(this, tr("Notice"), tr(
 				"Playback only currently works when running the grabber \n"
-				"as a deamon. Go to the preferences menu (CTRL+P) to switch \n"
-				"to running the image grabbing as a deamon."),
+				"as a daemon. Go to the preferences menu (CTRL+P) to switch \n"
+				"to running the image grabbing as a daemon."),
 				QMessageBox::Ok,
 				QMessageBox::NoButton,
 				QMessageBox::NoButton);

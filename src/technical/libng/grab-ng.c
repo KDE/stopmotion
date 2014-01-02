@@ -37,7 +37,7 @@ int  ng_jpeg_quality   = 75;
 int  ng_ratio_x        = 4;
 int  ng_ratio_y        = 3;
 
-char ng_v4l_conf[256]  = "v4l-conf";
+const char *ng_v4l_conf  = "v4l-conf";
 
 /* --------------------------------------------------------------------- */
 

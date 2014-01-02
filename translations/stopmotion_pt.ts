@@ -434,12 +434,12 @@ utilizar. Isto pode ser feito nas preferências.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="346"/>
-        <source>Start deamon</source>
+        <source>Start daemon</source>
         <translation>Iniciar o demónio</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="347"/>
-        <source>Stop deamon</source>
+        <source>Stop daemon</source>
         <translation>Parar o demónio</translation>
     </message>
 </context>
@@ -634,7 +634,7 @@ utilizar. Isto pode ser feito nas preferências.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="571"/>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Gravar&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Grava&lt;/em&gt; a animação actual como um ficheiro projecto Stopmotion. &lt;BR&gt;Se este projecto já foi gravado antes vai ser automáticamento gravado no ficheiro já seleccionado.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -976,12 +976,12 @@ será guardado em ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="230"/>
-        <source>vgrabbj VGA deamon</source>
+        <source>vgrabbj VGA daemon</source>
         <translation>vgrabbj VGA em demónio</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="232"/>
-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation>Lança vgrabbj como um demónio. Bastante rápido.</translation>
     </message>
     <message>
@@ -1191,8 +1191,8 @@ será guardado em ~/.stopmotion/preferences.xml.OLD)</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="411"/>
         <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch 
+to running the image grabbing as a daemon.</source>
         <translation>A leitura funciona por enquanto sómente quando o gravador
 funciona como demónio. Vá ao menu preferências (CTRL+P)
 para configurar a gravação de imagens como demónio.</translation>
