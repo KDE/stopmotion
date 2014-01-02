@@ -1,8 +1,9 @@
-stopmotion (0.6.2+git.2-1) UNRELEASED; urgency=low
+stopmotion (0.7.0-1) unstable; urgency=low
 
-  * Upstream mods including switch to qmake
+  * New upstream version
+  * Adapt to upstream switch to qmake
 
- -- Barak A. Pearlmutter <bap@debian.org>  Wed, 24 Oct 2012 14:26:06 +0100
+ -- Barak A. Pearlmutter <bap@debian.org>  Thu, 02 Jan 2014 17:28:31 +0100
 
 stopmotion (0.6.2+git.1.10d2ea43-2) unstable; urgency=low
 
