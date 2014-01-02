@@ -33,16 +33,16 @@
 
 unsigned int Frame::tmpNum   = 0;
 unsigned int Frame::trashNum = 0;
-char Frame::tempPath[256]   = {0};
-char Frame::trashPath[256]  = {0};
+char Frame::tempPath[PATH_MAX]   = {0};
+char Frame::trashPath[PATH_MAX]  = {0};
 
 
 Frame::Frame(const char *filename)
 {
 	assert(filename != NULL);
 	
-	snprintf(tempPath, 256, "%s/.stopmotion/tmp/", getenv("HOME"));
-	snprintf(trashPath, 256, "%s/.stopmotion/trash/", getenv("HOME"));
+	snprintf(tempPath, sizeof(tempPath), "%s/.stopmotion/tmp/", getenv("HOME"));
+	snprintf(trashPath, sizeof(trashPath), "%s/.stopmotion/trash/", getenv("HOME"));
 	
 	int len = strlen(filename) + 1;
 	imagePath = new char[len];
@@ -97,8 +97,8 @@ int Frame::addSound(const char *filename)
 	if ( access(filename, F_OK) == 0 ) {
 		// Create a new path
 		char *imgId = getImageId();
-		char newSoundPath[256] = {0};
-		snprintf(newSoundPath, 256, "%s%s_snd_%d%s", 
+		char newSoundPath[PATH_MAX] = {0};
+		snprintf(newSoundPath, sizeof(newSoundPath), "%s%s_snd_%d%s",
 			tempPath, imgId, ++soundNum, strrchr(filename,'.'));
 		delete [] imgId;
 		
@@ -178,7 +178,7 @@ void Frame::moveToImageDir(const char *directory, unsigned int imgNum)
 {
 	assert(directory != 0);
 	
-	char newPath[256]  = {0};
+	char newPath[PATH_MAX]  = {0};
 	char filename[12] = {0};
 	char tmp[7] = {0};
 	
@@ -226,8 +226,8 @@ void Frame::moveToSoundDir(const char *directory)
 		char *soundPath = f->getSoundPath();
 		
 		// Create a new sound path
-		char newSoundPath[256] = {0};	
-		snprintf(newSoundPath, 256, "%s%s_snd_%d%s", 
+		char newSoundPath[PATH_MAX] = {0};
+		snprintf(newSoundPath, sizeof(newSoundPath), "%s%s_snd_%d%s",
 			directory, imgId, ++soundNum, strrchr(soundPath,'.'));
 		
 		if (access(soundPath, F_OK) == 0) {
@@ -246,13 +246,13 @@ void Frame::moveToSoundDir(const char *directory)
 
 void Frame::copyToTemp()
 {
-	char newImagePath[256] = {0};
+	char newImagePath[PATH_MAX] = {0};
 	
 	// gets a pointer to the extension
 	char *dotPtr = strrchr(imagePath,'.');
 	
 	// creates a new image path
-	snprintf(newImagePath, 256, "%stmp_%d%s", tempPath, tmpNum, dotPtr);
+	snprintf(newImagePath, sizeof(newImagePath), "%stmp_%d%s", tempPath, tmpNum, dotPtr);
 
 	// the image isn't in the trash directory
 	if (strstr(imagePath, "/.stopmotion/trash/") == NULL) {
@@ -282,10 +282,10 @@ void Frame::copyToTemp()
 
 void Frame::moveToTrash()
 {
-	char newImagePath[256] = {0};
+	char newImagePath[PATH_MAX] = {0};
 	
 	char *dotPtr = strrchr(imagePath,'.');
-	snprintf(newImagePath, 256, "%strash_%d%s", trashPath, trashNum, dotPtr);
+	snprintf(newImagePath, sizeof(newImagePath), "%strash_%d%s", trashPath, trashNum, dotPtr);
 
 	rename(imagePath, newImagePath);
 	
@@ -331,12 +331,12 @@ void Frame::playSounds(AudioDriver *driver)
 
 char* Frame::getImageId()
 {
-	char tmp[256] = {0};
+	char tmp[PATH_MAX] = {0};
 	strcpy(tmp, imagePath);
 	char *bname = basename(tmp);
 	char *dotPtr = strrchr(imagePath, '.');
 	
-	char imgID[256] = {0};
+	char imgID[PATH_MAX] = {0};
 	strncpy(imgID, bname, strlen(bname) - strlen(dotPtr) );
 	strcat(imgID, "\0");
 	

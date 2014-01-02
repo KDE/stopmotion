@@ -134,14 +134,14 @@ void Scene::cleanFrames(unsigned int fromFrame, unsigned int toFrame)
 char* Scene::addFrame(char* frameName, unsigned int &index)
 {
 	char *newPath;
-	
+
 	Frame *f = new Frame(frameName);
 	f->copyToTemp();
-	newPath = new char[256];
-	strcpy( newPath, f->getImagePath() );
+	newPath = new char[PATH_MAX];
+	strncpy( newPath, f->getImagePath(), PATH_MAX );
 	frames.insert(frames.begin() + index, f);
 	++index;
-	
+
 	return newPath;
 }
 
@@ -161,8 +161,8 @@ const vector< char * > Scene::removeFrames( unsigned int fromFrame, const unsign
 		for (unsigned int i = fromFrame; i <= toFrame; ++i) {
 			Frame *f = frames[fromFrame];
 			f->moveToTrash();
-			newPath = new char[256];
-			strcpy(newPath, f->getImagePath());
+			newPath = new char[PATH_MAX];
+			strncpy(newPath, f->getImagePath(), PATH_MAX);
 			newImagePaths.push_back(newPath);
 			newPath = NULL;
 			delete frames[fromFrame];

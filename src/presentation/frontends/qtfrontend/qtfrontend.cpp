@@ -25,7 +25,7 @@
 
 #include <cstring>
 #include <unistd.h>
-
+#include <sstream>
 
 QtFrontend::QtFrontend(int &argc, char **argv)
 {
@@ -165,20 +165,21 @@ void QtFrontend::initializePreferences()
 	Logger::get().logDebug("Loading preferencestool");
 	
 	PreferencesTool *prefs = PreferencesTool::get();
-	QString preferencesFile = getenv("HOME");
+	string preferencesFile = getenv("HOME");
 	preferencesFile += "/.stopmotion/preferences.xml";
-	QString oldPrefsFile = preferencesFile + ".OLD";
-	
+	string oldPrefsFile = preferencesFile + ".OLD";
+
 	// Has to check this before calling setPreferencesFile(...) because
 	// the function creates the file if it doesn't exist.
-	int prefsFileExists = access(preferencesFile.toLatin1().constData(), R_OK);
+	int prefsFileExists = access(preferencesFile.c_str(), R_OK);
 	if (prefsFileExists != -1) {
-		QString tmp = "/bin/cp " + preferencesFile + " " + oldPrefsFile;
-		system(tmp.toLatin1().constData());
+		ostringstream copyCmd;
+		copyCmd << "/bin/cp " << preferencesFile << " " << oldPrefsFile;
+		system(copyCmd.str().c_str());
 	}
 
 	// If file doesn't exist or has wrong version number
-	if ( !prefs->setPreferencesFile(preferencesFile.toLatin1().constData(), "0.8") ) {
+	if ( !prefs->setPreferencesFile(preferencesFile.c_str(), "0.8") ) {
 		// File doesn't exist
 		if (prefsFileExists == -1) {
 			setDefaultPreferences(prefs);
@@ -189,15 +190,15 @@ void QtFrontend::initializePreferences()
 					"A newer version of the preferences file with few more default\n"
 					"values exists. Do you want to use this one? (Your old preferences\n "
 					"will be saved in ~/.stopmotion/preferences.xml.OLD)"));
-			int useNewPrefsFile = askQuestion(question.toLatin1().constData());
+			int useNewPrefsFile = askQuestion(question.toUtf8());
 			// Use new preferences
 			if (useNewPrefsFile == 0) { // 0 = yes
 				setDefaultPreferences(prefs);
 			}
 			// Use old preferences
 			else {
-				rename(oldPrefsFile.toLatin1().constData(), preferencesFile.toLatin1().constData());
-				prefs->setPreferencesFile(preferencesFile.toLatin1().constData(), prefs->getOldVersion());
+				rename(oldPrefsFile.c_str(), preferencesFile.c_str());
+				prefs->setPreferencesFile(preferencesFile.c_str(), prefs->getOldVersion());
 				
 				// Update version
 				prefs->setVersion("0.8");
@@ -222,19 +223,20 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	// Default import option 1
 	prefs->setPreference("importname0", tr("vgrabbj").toLatin1().constData());
 	prefs->setPreference("importdescription0", 
-			tr("VGA daemon. Pretty fast.").toLatin1().constData());
-	prefs->setPreference("importstartdeamon0", 
-			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
-	prefs->setPreference("importstopdeamon0", 
-			"kill -9 $(pidof vgrabbj)");
-	
+			tr("The simplest setting. Fairly slow").toLatin1().constData());
+	prefs->setPreference("importprepoll0",
+			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga");
+	prefs->setPreference("importstartdaemon0", "");
+	prefs->setPreference("importstopdaemon0", "");
+
 	// Default import option 2
-	prefs->setPreference("importname1", tr("vgrabbj rotated").toLatin1().constData());
+	prefs->setPreference("importname1", tr("vgrabbj VGA daemon").toLatin1().constData());
 	prefs->setPreference("importdescription1", 
-			tr("It rotates the image 180 degrees").toLatin1().constData());
-	prefs->setPreference("importstartdeamon1", 
-			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250 -R -U");
-	prefs->setPreference("importstopdeamon1", 
+			tr("Starts vgrabbj as a daemon. Pretty fast.").toLatin1().constData());
+	prefs->setPreference("importprepoll1", "");
+	prefs->setPreference("importstartdaemon1", 
+			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
+	prefs->setPreference("importstopdaemon1", 
 			"kill -9 $(pidof vgrabbj)");
 	
 	// Default import option 3
@@ -243,7 +245,8 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			tr("Grabbing from V4L2 devices").toLatin1().constData());
 	prefs->setPreference("importprepoll2", 
 			"uvccapture -d$VIDEODEVICE -x640 -y480 -o$IMAGEFILE");
-	prefs->setPreference("importstopdeamon2", "");
+	prefs->setPreference("importstartdaemon2", "");
+	prefs->setPreference("importstopdaemon2", "");
 	
 	// Default import option 4
 	prefs->setPreference("importname3", tr("videodog singleshot").toLatin1().constData());
@@ -251,16 +254,18 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			tr("Videodog.").toLatin1().constData());
 	prefs->setPreference("importprepoll3",
 			"videodog -x 640 -y 480 -w 3 -d $VIDEODEVICE -j -f $IMAGEFILE");
-	prefs->setPreference("importstopdeamon3", "");
+	prefs->setPreference("importstartdaemon3", "");
+	prefs->setPreference("importstopdaemon3", "");
 	
 	// Default import option 5
 	prefs->setPreference("importname4", tr("dvgrab").toLatin1().constData());
 	prefs->setPreference("importdescription4", 
 			tr("Grabbing from DV-cam.").toLatin1().constData());
-	prefs->setPreference("importstartdeamon4", 
+	prefs->setPreference("importprepoll4", "");
+	prefs->setPreference("importstartdaemon4", 
 			"dvgrab --format jpeg --jpeg-overwrite --jpeg-temp dvtemp.jpeg "
 			"--every 25 $IMAGEFILE &");
-	prefs->setPreference("importstopdeamon4", 
+	prefs->setPreference("importstopdaemon4", 
 			"kill -9 $(pidof dvgrab)");
 	// -----------------------------------------------------------------------
 
@@ -312,14 +317,14 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 	// Replace all occurences of '/dev/xxx' with $VIDEODEVICE (version < 0.7)
 	int numImports = prefs->getPreference("numberofimports", 1);
 	for (int i = 0; i < numImports; ++i) {
-		string start( prefs->getPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(), "") );
+		string start( prefs->getPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(), "") );
 		int index = start.find("(DEFAULTPATH)");
 		if (index != -1) {
 			start.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
 		}
 		QString s(start.c_str());
 		s.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
-		prefs->setPreference( QString("importstartdeamon%1").arg(i).toLatin1().constData(), s.toLatin1().constData());
+		prefs->setPreference( QString("importstartdaemon%1").arg(i).toLatin1().constData(), s.toLatin1().constData());
 
 		string prepoll( prefs->getPreference(QString("importprepoll%1").arg(i).toLatin1().constData(), "") );
 		index = prepoll.find("(DEFAULTPATH)");
@@ -337,7 +342,7 @@ int QtFrontend::askQuestion(const char *question)
 {
 	int ret = QMessageBox::question(0,
 			tr("Question"),
-			QString(question),
+			QString::fromUtf8(question),
 			QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
 	if (ret == QMessageBox::Yes) {
 		return 0;
@@ -350,6 +355,6 @@ int QtFrontend::runExternalCommand(const char *command)
 {	
 	ExternalCommand *ec = new ExternalCommand;
 	ec->show();
-	ec->run( QString(command) );
+	ec->run( QString::fromLocal8Bit(command) );
 	return 0;
 }

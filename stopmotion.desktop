@@ -1,9 +1,8 @@
 [Desktop Entry]
 Name=Stopmotion
 Icon=stopmotion
-Encoding=UTF-8
 Comment=Program to create stop-motion animations
-Exec=/usr/bin/stopmotion
+Exec=stopmotion
 Terminal=false
 Type=Application
 Categories=Application;Graphics;AudioVideo;Video;AudioVideoEditing;KDE;Qt

@@ -36,12 +36,12 @@ ImportTab::ImportTab( QWidget *parent ) : QWidget(parent)
 	changeButton         = 0;
 	closeChangeBoxButton = 0;
 	prePollEdit          = 0;
-	startDeamonEdit      = 0;
-	stopDeamonEdit       = 0;
+	startDaemonEdit      = 0;
+	stopDaemonEdit       = 0;
 	grabberPreferences   = 0;
 	prePollLabel         = 0;
-	startDeamonLabel     = 0;
-	stopDeamonLabel      = 0;
+	startDaemonLabel     = 0;
+	stopDaemonLabel      = 0;
 	checkTableItem       = 0;
 	informationText      = 0;
 	
@@ -52,7 +52,7 @@ ImportTab::ImportTab( QWidget *parent ) : QWidget(parent)
 void ImportTab::makeGUI()
 {
 	this->setFocusPolicy(Qt::ClickFocus);
-	
+
 	informationText = new QTextEdit;
 	informationText->setReadOnly(true);
 	informationText->setHtml(
@@ -62,10 +62,10 @@ void ImportTab::makeGUI()
 		"the video device and the image file, respectively.") + "</p>");
 	informationText->setMinimumWidth(440);
 	informationText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	
+
 	QStringList lst;
 	lst << tr("Name") << tr("Description");
-	
+
 	deviceSelectionTable = new QTableWidget;
 	deviceSelectionTable->setColumnCount(2);
 	deviceSelectionTable->setRowCount(0);
@@ -74,46 +74,52 @@ void ImportTab::makeGUI()
 	deviceSelectionTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
 	deviceSelectionTable->setHorizontalHeaderLabels(lst);
 	deviceSelectionTable->verticalHeader()->setVisible(false);
-	
+
 	connect(deviceSelectionTable, SIGNAL(cellClicked(int, int)), 
 			this, SLOT(activeCellChanged(int, int)));
 	connect(deviceSelectionTable, SIGNAL(cellChanged(int, int)), 
 			this, SLOT(contentsChanged(int, int)));
-	
+
 	addButton = new QPushButton(tr("&Add"));
 	addButton->setFocusPolicy( Qt::NoFocus );
 	QObject::connect(addButton, SIGNAL(clicked()), this, SLOT(addImportProgram()));
-	
+
 	removeButton = new QPushButton(tr("&Remove"));
 	QObject::connect( removeButton, SIGNAL(clicked()), this, SLOT(removeImportProgram()));
-	
+
 	changeButton = new QPushButton(tr("&Edit"));
 	QObject::connect( changeButton, SIGNAL(clicked()), this, SLOT(changeSettings()));
-	
+
 	grabberPreferences = new QGroupBox;
 	grabberPreferences->setTitle(tr("Import device settings"));
 	grabberPreferences->hide();
-	
+
 	closeChangeBoxButton = new QPushButton;
-	closeChangeBoxButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
+	closeChangeBoxButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 	closeChangeBoxButton->setIcon(QPixmap(closeicon));
 	closeChangeBoxButton->setFlat(true);
 	QObject::connect( closeChangeBoxButton, SIGNAL(clicked()),this, SLOT(closeChangeBox()));
-	
+
 	prePollLabel = new QLabel( tr("Pre-poll command") );
 	prePollEdit = new FlexibleLineEdit;
+	prePollLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	prePollEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	QObject::connect( prePollEdit, SIGNAL(textChanged(const QString &)), 
 			this, SLOT(updatePrePollString(const QString &)));
 	
-	startDeamonLabel = new QLabel( tr("Start deamon") );
-	startDeamonEdit = new FlexibleLineEdit;
-	QObject::connect( startDeamonEdit, SIGNAL(textChanged(const QString &)), 
-			this, SLOT(updateStartDeamonString(const QString &)));
+	startDaemonLabel = new QLabel( tr("Start daemon") );
+	startDaemonEdit = new FlexibleLineEdit;
+	startDaemonLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	startDaemonEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	QObject::connect( startDaemonEdit, SIGNAL(textChanged(const QString &)), 
+			this, SLOT(updateStartDaemonString(const QString &)));
 	
-	stopDeamonLabel = new QLabel( tr("Stop deamon") );
-	stopDeamonEdit = new FlexibleLineEdit;
-	QObject::connect( stopDeamonEdit, SIGNAL(textChanged(const QString &)), 
-			this, SLOT(updatestopDeamonString(const QString &)) );
+	stopDaemonLabel = new QLabel( tr("Stop daemon") );
+	stopDaemonEdit = new FlexibleLineEdit;
+	stopDaemonLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	stopDaemonEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	QObject::connect( stopDaemonEdit, SIGNAL(textChanged(const QString &)), 
+			this, SLOT(updatestopDaemonString(const QString &)) );
 	
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(informationText);
@@ -131,19 +137,15 @@ void ImportTab::makeGUI()
 	mainLayout->addWidget(grabberPreferences);
 	setLayout(mainLayout);
 
-	QVBoxLayout *grabberPrefsLayout = new QVBoxLayout;
-	QHBoxLayout *hbLayout = new QHBoxLayout;
-	hbLayout->setMargin(0);
-	hbLayout->setSpacing(0);
-	hbLayout->addStretch(1);
-	hbLayout->addWidget(closeChangeBoxButton);
-	grabberPrefsLayout->addLayout(hbLayout);
-	grabberPrefsLayout->addWidget(prePollLabel);
-	grabberPrefsLayout->addWidget(prePollEdit);
-	grabberPrefsLayout->addWidget(startDeamonLabel);
-	grabberPrefsLayout->addWidget(startDeamonEdit);
-	grabberPrefsLayout->addWidget(stopDeamonLabel);
-	grabberPrefsLayout->addWidget(stopDeamonEdit);
+	QGridLayout *grabberPrefsLayout = new QGridLayout;
+	grabberPrefsLayout->addWidget(closeChangeBoxButton, 0, 2, Qt::AlignLeading);
+	grabberPrefsLayout->addWidget(prePollLabel, 0, 0, Qt::AlignTrailing);
+	grabberPrefsLayout->addWidget(prePollEdit, 0, 1, 0);
+	grabberPrefsLayout->addWidget(startDaemonLabel, 1, 0, Qt::AlignLeading);
+	grabberPrefsLayout->addWidget(startDaemonEdit, 1, 1, 1, 2, 0);
+	grabberPrefsLayout->addWidget(stopDaemonLabel, 2, 0, Qt::AlignLeading);
+	grabberPrefsLayout->addWidget(stopDaemonEdit, 2, 1, 1, 2, 0);
+	grabberPrefsLayout->setColumnStretch(1, 1);
 	grabberPreferences->setLayout(grabberPrefsLayout);
 }
 
@@ -171,12 +173,12 @@ void ImportTab::initializeImportValues()
 		prePollStrings.push_back(QString(prop));
 		freeProperty(prop);
 		
-		prop = pref->getPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(), "");
-		startDeamonStrings.push_back(QString(prop));
+		prop = pref->getPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(), "");
+		startDaemonStrings.push_back(QString(prop));
 		freeProperty(prop);
 		
-		prop = pref->getPreference(QString("importstopdeamon%1").arg(i).toLatin1().constData(), "");
-		stopDeamonStrings.push_back(QString(prop));
+		prop = pref->getPreference(QString("importstopdaemon%1").arg(i).toLatin1().constData(), "");
+		stopDaemonStrings.push_back(QString(prop));
 		freeProperty(prop);
 	}
 	
@@ -198,8 +200,8 @@ void ImportTab::apply()
 			prefs->removePreference(QString("importname%1").arg(i).toLatin1().constData());
 			prefs->removePreference(QString("importdescription%1").arg(i).toLatin1().constData());
 			prefs->removePreference(QString("importprepoll%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("importstartdeamon%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("importstopdeamon%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("importstartdaemon%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("importstopdaemon%1").arg(i).toLatin1().constData());
 		}
 	}
 	
@@ -214,10 +216,10 @@ void ImportTab::apply()
 					deviceSelectionTable->item(i, 1)->text().toLatin1().constData(), true);
 			prefs->setPreference(QString("importprepoll%1").arg(i).toLatin1().constData(),
 					prePollStrings[i].toLatin1().constData(), true);
-			prefs->setPreference(QString("importstartdeamon%1").arg(i).toLatin1().constData(),
-					startDeamonStrings[i].toLatin1().constData(), true);
-			prefs->setPreference(QString("importstopdeamon%1").arg(i).toLatin1().constData(),
-					stopDeamonStrings[i].toLatin1().constData(), true);
+			prefs->setPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(),
+					startDaemonStrings[i].toLatin1().constData(), true);
+			prefs->setPreference(QString("importstopdaemon%1").arg(i).toLatin1().constData(),
+					stopDaemonStrings[i].toLatin1().constData(), true);
 		}
 	}
 	else {
@@ -243,8 +245,8 @@ void ImportTab::addImportProgram()
 	deviceSelectionTable->setCurrentCell(newRow, 0);
 
 	prePollStrings.push_back("");
-	startDeamonStrings.push_back("");
-	stopDeamonStrings.push_back("");
+	startDaemonStrings.push_back("");
+	stopDaemonStrings.push_back("");
 }
 
 
@@ -253,8 +255,8 @@ void ImportTab::removeImportProgram()
 	int selectedRow = deviceSelectionTable->currentRow();
 	if (selectedRow >= 0) {
 		prePollStrings.erase(prePollStrings.begin() + selectedRow);
-		startDeamonStrings.erase(startDeamonStrings.begin() + selectedRow);
-		stopDeamonStrings.erase(stopDeamonStrings.begin() + selectedRow);
+		startDaemonStrings.erase(startDaemonStrings.begin() + selectedRow);
+		stopDaemonStrings.erase(stopDaemonStrings.begin() + selectedRow);
 		deviceSelectionTable->removeRow(selectedRow);
 		contentsChanged(0, 0);
 	}
@@ -285,8 +287,8 @@ void ImportTab::changeSettings()
 	int selected = deviceSelectionTable->currentRow();
 	if (selected >= 0) {
 		prePollEdit->setText(prePollStrings[selected]);
-		startDeamonEdit->setText(startDeamonStrings[selected]);
-		stopDeamonEdit->setText(stopDeamonStrings[selected]);
+		startDaemonEdit->setText(startDaemonStrings[selected]);
+		stopDaemonEdit->setText(stopDaemonStrings[selected]);
 		grabberPreferences->show();
 	}
 }
@@ -298,15 +300,15 @@ void ImportTab::updatePrePollString(const QString &txt)
 }
 
 
-void ImportTab::updateStartDeamonString(const QString &txt)
+void ImportTab::updateStartDaemonString(const QString &txt)
 {
-	startDeamonStrings[deviceSelectionTable->currentRow()] = txt;
+	startDaemonStrings[deviceSelectionTable->currentRow()] = txt;
 }
 
 
-void ImportTab::updatestopDeamonString(const QString &txt)
+void ImportTab::updatestopDaemonString(const QString &txt)
 {
-	stopDeamonStrings[deviceSelectionTable->currentRow()] = txt;
+	stopDaemonStrings[deviceSelectionTable->currentRow()] = txt;
 }
 
 	
@@ -343,6 +345,6 @@ void ImportTab::retranslateStrings()
 	
 	grabberPreferences->setTitle( tr("Import device settings") );
 	prePollLabel->setText( tr("Pre-poll command") );
-	startDeamonLabel->setText( tr("Start deamon") );
-	stopDeamonLabel->setText( tr("Stop deamon") );
+	startDaemonLabel->setText( tr("Start daemon") );
+	stopDaemonLabel->setText( tr("Stop daemon") );
 }

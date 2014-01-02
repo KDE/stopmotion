@@ -51,6 +51,10 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"Eric Stolten &lt;stoltene2@gmail.com&gt;<br>"
 				"Josh Green &lt;josh@resonance.org&gt;<br>"
 				"Jehan Pagès<br>"
+				"Tim Band<br>"
+				"Ying-Chun Liu (PaulLiu) &lt;paulliu@debian.org&gt;<br>"
+				"Barak A. Pearlmutter &lt;barak+git@cs.nuim.ie&gt;<br>"
+				"Cyril Brulebois &lt;kibi@debian.org&gt;<br>"
                                 "</p>"),
 				tr("A&uthors"));
 	
@@ -70,6 +74,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"Wei-Lun Chao &lt;bluebat@member.fsf.org&gt; (" + tr("Traditional Chinese") +")<br>"
 				"Maysara Abdulhaq and Ahmad Gharbeia of Arab Digital Expression Foundation (" + tr("Arabic") + ")<br>"
 				"Denis Fokin (" + tr("Russian") + ")<br>"
+				"Yaron (sh-yaron) (" + tr("Hebrew") + ")<br>"
 				"</p>"
 				"<p><b>" + tr("Logo") + "</b><br>"
 				"Gorazd Bizjak &lt;gorazd@zapstudio.net&gt;<br>"

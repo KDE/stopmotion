@@ -156,14 +156,14 @@ int Animation::addSound(unsigned int frameNumber, const char *sound)
 		frontend->reportError(
 				"Cannot open the selected audio file for reading.\n"
 				"Check that you have the right permissions set.\n"
-				"The animation will be runned without sound if you\n"
+				"The animation will be run without sound if you\n"
 				"choose to play.", 0);
 		--numSounds;
 	}
 	else if (ret == -2) {
 		frontend->reportError(
 				"The selected audio file is not valid within the\n" 
-				"given audio format. The animation will be runned\n"
+				"given audio format. The animation will be run\n"
 				"without sound if you choose to play.", 0);
 		--numSounds;
 	}
