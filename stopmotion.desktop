@@ -6,4 +6,5 @@ Exec=stopmotion
 Terminal=false
 Type=Application
 Categories=AudioVideo;Video;AudioVideoEditing;KDE;Qt;
+Keywords=Animation;Stop Motion Animation;Stop Frame Animation;
 MimeType=application/x-stopmotion;
