@@ -5,5 +5,5 @@ Comment=Program to create stop-motion animations
 Exec=stopmotion
 Terminal=false
 Type=Application
-Categories=Application;Graphics;AudioVideo;Video;AudioVideoEditing;KDE;Qt
-MimeType=application/x-stopmotion
+Categories=Application;Graphics;AudioVideo;Video;AudioVideoEditing;KDE;Qt;
+MimeType=application/x-stopmotion;
