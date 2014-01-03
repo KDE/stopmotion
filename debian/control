@@ -1,5 +1,5 @@
 Source: stopmotion
-Section: x11
+Section: video
 Priority: optional
 Maintainer: Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>
 Uploaders: Barak A. Pearlmutter <bap@debian.org>,
