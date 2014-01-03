@@ -23,12 +23,9 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: vgrabbj, dvgrab, ffmpeg
 Suggests: gimp
-Description: program for creating stop motion animations
- You can create stop-motion animations with images grabbed
- from your favourite video device. You just sets stopmotion to
- use a grabber program which works with your device. It is also 
- possible to do the same with video export; just plug in an
- encoder capable of doing video export from couple of images.
- .
- Stopmotion has a set of tools which helps you creating the 
- movements smooth and precise.
+Description: create stop-motion animations
+ Create stop-motion animations with images grabbed from a video
+ device, or from image files, or from still images extracted from
+ video.  Stopmotion has a set of tools which helps you keep the
+ movements smooth and precise, such as ghosting the last image on a
+ live view of the next image to be acquired.
