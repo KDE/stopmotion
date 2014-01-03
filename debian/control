@@ -1,9 +1,9 @@
 Source: stopmotion
 Section: video
 Priority: optional
-Maintainer: Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>
-Uploaders: Barak A. Pearlmutter <bap@debian.org>,
-           Mahyuddin Susanto <udienz@ubuntu.com>
+Maintainer: Barak A. Pearlmutter <bap@debian.org>
+Uploaders: Mahyuddin Susanto <udienz@ubuntu.com>,
+	   Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>
 Build-Depends: debhelper (>= 9),
 	pkg-config,
 	libinotifytools-dev,
