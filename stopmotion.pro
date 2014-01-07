@@ -264,7 +264,7 @@ isEmpty(PREFIX) {
 }
 
 PKGCONFIG += sdl SDL_image vorbisfile
-DEFINES += NO_DEBUG PREFIX_PATH=\"\\\"$${PREFIX}\\\"\"
+DEFINES += PREFIX_PATH=\"\\\"$${PREFIX}\\\"\"
 TEMPLATE = app
 DESTDIR=.
 
