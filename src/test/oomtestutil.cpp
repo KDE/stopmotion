@@ -64,6 +64,9 @@ MockableFileSystem* realFs;
 // system if not.
 MockableFileSystem* requiredFs;
 
+MockableFileSystem::~MockableFileSystem() {
+}
+
 class RealFileSystem : public MockableFileSystem {
 	typedef FILE* fopen_t(const char*, const char*);
 	typedef FILE* freopen_t(const char*, const char*, FILE*);
@@ -121,6 +124,8 @@ public:
 		assert(rov_open);
 		rov_read = (ov_read_t*)dlsym(RTLD_NEXT, "ov_read");
 		assert(rov_read);
+	}
+	~RealFileSystem() {
 	}
 	void setDelegate(MockableFileSystem*) {
 	}

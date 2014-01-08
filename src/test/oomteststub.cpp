@@ -34,6 +34,9 @@ mallocsSoFar_t* msf;
 setMockFileSystem_t* smfs;
 }
 
+MockableFileSystem::~MockableFileSystem() {
+}
+
 int loadOomTestUtil() {
 	// Using dlopen might cause a malloc, which would not work when we have not
 	// yet wired up the real malloc by calling Init, so we have to use

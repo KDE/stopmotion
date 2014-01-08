@@ -32,6 +32,7 @@ struct OggVorbis_File;
  */
 class MockableFileSystem {
 public:
+	virtual ~MockableFileSystem();
 	virtual void setDelegate(MockableFileSystem* mfs) = 0;
 	virtual FILE* fopen(const char* filename, const char* mode) = 0;
 	virtual FILE* freopen(const char* filename, const char* mode, FILE* fh) = 0;
