@@ -122,6 +122,18 @@ public:
 	int unlink(const char *) {
 		return 0;
 	}
+	int ov_test(FILE *, OggVorbis_File *, const char *, long) {
+		return 0;
+	}
+	int ov_clear(OggVorbis_File *) {
+		return 0;
+	}
+	int ov_open(FILE *,OggVorbis_File *,const char *, long) {
+		return 0;
+	}
+	long ov_read(OggVorbis_File *,char *,int, int, int, int, int *) {
+		return 0;
+	}
 };
 
 TestStopmotionUndo::TestStopmotionUndo() : sv(0), ex(0), mfs(0) {
