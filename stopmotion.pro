@@ -192,7 +192,8 @@ TRANSLATIONS += translations/stopmotion_no_nb.ts \
 		translations/stopmotion_pt.ts \
 		translations/stopmotion_it.ts \
 		translations/stopmotion_tr.ts \
-		translations/stopmotion_zh_TW.ts
+		translations/stopmotion_zh_TW.ts \
+		translations/stopmotion_ar.ts
 
 DEPENDPATH += src \
               src/domain \
