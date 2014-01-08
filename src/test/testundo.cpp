@@ -119,11 +119,23 @@ bool executeLineFromFile(Executor& e, FILE* logFile) {
 }
 
 void testUndo(Executor& e, ModelTestHelper& helper) {
+	const int testCount = 200;
+	const int firstPhaseEnds = testCount / 2;
+	const int secondPhaseEnds = (testCount * 3) / 4;
 	bool oomLoaded = loadOomTestUtil();
 	QVERIFY2(oomLoaded, "Oom Test Util not loaded!");
 	std::string logString;
 	StringLoggerWrapper stringLogger(&logString);
-	for (int i = 0; i != 100; ++i) {
+	for (int i = 0; i != testCount; ++i) {
+		int minCommands = 1;
+		int maxCommands = 40;
+		if (i < secondPhaseEnds) {
+			if (i < firstPhaseEnds) {
+				maxCommands = 1;
+			} else {
+				minCommands = maxCommands = 2;
+			}
+		}
 		cancelAnyMallocFailure();
 		Hash initialState;
 		Hash finalState;
@@ -156,7 +168,7 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 			e.clearHistory();
 			initialState = helper.hashModel(e);
 			stringLogger.SetDelegate(fileLogger.getLogger());
-			e.executeRandomCommands(rng);
+			e.executeRandomCommands(rng, minCommands, maxCommands);
 			finalState = helper.hashModel(e);
 			doLog = logString;
 			if (doLog.empty()) {
@@ -226,7 +238,7 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 			setMallocsUntilFailure(failAt);
 			bool failed = false;
 			try {
-				e.executeRandomCommands(rng);
+				e.executeRandomCommands(rng, minCommands, maxCommands);
 				while (e.undo()) {
 				}
 			} catch (std::bad_alloc&) {
@@ -259,7 +271,7 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 			helper.resetModel(e);
 			e.executeRandomConstructiveCommands(rng);
 			e.clearHistory();
-			e.executeRandomCommands(rng);
+			e.executeRandomCommands(rng, minCommands, maxCommands);
 			setMallocsUntilFailure(failAt2);
 			bool failed = false;
 			try {
@@ -307,12 +319,12 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 			int32_t failAt = generalRng.getUniform(doMallocCount);
 			setMallocsUntilFailure(failAt);
 			try {
-				e.executeRandomCommands(rng);
+				e.executeRandomCommands(rng, minCommands, maxCommands);
 			} catch (std::bad_alloc&) {
 				cancelAnyMallocFailure();
 				std::string beforeFailureLog(logString);
 				logString.clear();
-				e.executeRandomCommands(rng);
+				e.executeRandomCommands(rng, minCommands, maxCommands);
 				std::string afterFailureLog(logString);
 				Hash afterFailureState(helper.hashModel(e));
 				RandomSource rng2(initial);

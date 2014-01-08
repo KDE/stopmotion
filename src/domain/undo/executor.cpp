@@ -676,7 +676,7 @@ public:
 			return false;
 		throw MalformedLineException();
 	}
-	void executeRandomCommands(RandomSource& rng) {
+	void executeRandomCommands(RandomSource& rng, int minCount, int maxCount) {
 		int n = factories.size();
 		if (n == 0)
 			throw UnknownCommandException();
@@ -686,8 +686,6 @@ public:
 			factoryNames.push_back(i->first);
 		}
 		int commandCount = 0;
-		const int minCount = 1;
-		const int maxCount = 40;
 		bool dontEnd = false;
 		while (commandCount < maxCount) {
 			int r = rng.getUniform(dontEnd || commandCount < minCount?

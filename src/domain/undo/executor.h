@@ -107,12 +107,17 @@ public:
 	virtual bool executeFromLog(const char* line) = 0;
 	/**
 	 * Executes a random set of commands. Used for testing.
+	 * @param rng The random number generator.
+	 * @param min The minimum number of commands that should be generated.
+	 * @param max The maximum number of commands that should be generated.
 	 */
-	virtual void executeRandomCommands(RandomSource& rng) = 0;
+	virtual void executeRandomCommands(RandomSource& rng,
+			int min, int max) = 0;
 	/**
 	 * Executes a random set of commands. Used for testing for constructing
 	 * fresh models from empty models. Only commands that were added with the
 	 * @a constructive parameter of @ref addCommand set to @c true are used.
+	 * @param rng The random number generator.
 	 */
 	virtual void executeRandomConstructiveCommands(RandomSource& rng) = 0;
 	/**
