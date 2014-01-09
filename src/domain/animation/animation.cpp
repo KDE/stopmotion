@@ -299,7 +299,9 @@ bool Animation::isUnsavedChanges() {
 
 void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
 		const char* newImagePath) {
-	executor->execute(Commands::setImage, sceneNumber, frameNumber, newImagePath);
+	TemporaryWorkspaceFile twf(newImagePath);
+	executor->execute(Commands::setImage, sceneNumber, frameNumber, twf.path());
+	twf.retainFile();
 }
 
 void Animation::duplicateImage(int32_t sceneNumber, int32_t frameNumber) {
