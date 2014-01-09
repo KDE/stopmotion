@@ -164,6 +164,7 @@ SOURCES += src/config.cpp \
     src/technical/packer.c \
     src/technical/audio/ossdriver.cpp \
     src/technical/audio/oggvorbis.cpp \
+    src/technical/audio/audioformat.cpp \
     src/technical/grabber/imagegrabber.cpp \
     src/technical/grabber/commandlinegrabber.cpp \
     src/presentation/frontends/qtfrontend/imagegrabthread.cpp \

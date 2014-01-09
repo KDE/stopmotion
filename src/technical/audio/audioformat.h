@@ -20,12 +20,20 @@
 #ifndef AUDIOFORMAT_H
 #define AUDIOFORMAT_H
 
+#include <exception>
+
 class TemporaryWorkspaceFile;
 
-class CouldNotOpenFileException {
+class CouldNotOpenFileException : public std::exception {
+public:
+	CouldNotOpenFileException();
+    const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
-class InvalidAudioFormatException {
+class InvalidAudioFormatException : public std::exception {
+public:
+	InvalidAudioFormatException();
+    const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
 /**
@@ -37,20 +45,20 @@ class InvalidAudioFormatException {
 class AudioFormat
 {
 public:
-	virtual ~AudioFormat() {};
-	
+	virtual ~AudioFormat();
+
 	/**
 	 * Abstract function for opening the file registered with setFilename.
 	 * @return 0 on success, -1 on failure
 	 */
 	virtual int open() = 0;
-	
+
 	/**
 	 * Abstract function for closing the file registered with setFilename.
 	 * @return 0 on success, -1 on failure
 	 */
 	virtual int close() = 0;
-	
+
 	/**
 	 * Abstract function for filling the buffer with raw PCM data. It
 	 * fills the buffer with up to 'numBytes' bytes.
@@ -59,7 +67,7 @@ public:
 	 * @return number of bytes written to buffer
 	 */
 	virtual int fillBuffer(char *audioBuffer, int numBytes) = 0;
-	
+
 	/**
 	 * Abstract function for retrieving the sound path.
 	 * @return the sound path

@@ -59,6 +59,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/animation/scenevector.cpp \
     ../domain/animation/workspacefile.cpp \
     ../technical/audio/oggvorbis.cpp \
+    ../technical/audio/audioformat.cpp \
     ../technical/util.cpp \
     ../technical/libng/grab-ng.c \
     ../technical/libng/struct-v4l.c \

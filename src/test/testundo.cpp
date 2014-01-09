@@ -196,6 +196,8 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 						<< i << "\n[construction commands:\n"
 						<< constructLog
 						<< "do commands:\n"	<< doLog << "]";
+				if (failed)
+					ss << "\nParameters out of range exception.";
 				QFAIL(ss.str().c_str());
 			}
 			// test Undo and Redo on the same data

@@ -53,8 +53,6 @@ Frame::~Frame() {
 
 const char* Frame::getImagePath() const {
 	assert(imagePath.path() != NULL);
-	Logger::get().logDebug("Retrieving picture from frame: ");
-	Logger::get().logDebug(imagePath.path());
 	return imagePath.path();
 }
 
