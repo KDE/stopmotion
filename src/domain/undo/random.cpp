@@ -130,6 +130,6 @@ void RandomSource::appendAlphanumeric(std::string& out) {
 }
 
 char RandomSource::getCharacter() {
-	int u = getUniform(sizeof(alphanumericCharacters) - 1);
+	int u = getUniform(sizeof(alphanumericCharacters) - 2);
 	return alphanumericCharacters[u];
 }
