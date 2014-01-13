@@ -334,14 +334,15 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 				helper.resetModel(e);
 				e.executeRandomConstructiveCommands(rng2);
 				logFile = freopen(0, "r", logFile);
-				bool failed = false;
+				std::string exceptionMessage;
 				try {
 					while (executeLineFromFile(e, logFile)) {
 					}
-				} catch (ParametersOutOfRangeException&) {
-					failed = true;
+				} catch (std::exception& e) {
+					exceptionMessage.assign(e.what());
 				}
-				if (failed || helper.hashModel(e) != afterFailureState) {
+				if (!exceptionMessage.empty()
+						|| helper.hashModel(e) != afterFailureState) {
 					std::stringstream ss;
 					ss << "Failed to replay only successful commands from the log\n"
 							<< "after failure at " << failAt << "\non test"
@@ -349,6 +350,8 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 							<< constructLog
 							<< "do commands:\n"	<< beforeFailureLog
 							<< "after failure:\n" << afterFailureLog << "]";
+					if (!exceptionMessage.empty())
+						ss << "\nWith exception: " << exceptionMessage;
 					QFAIL(ss.str().c_str());
 				}
 			}
