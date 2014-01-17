@@ -330,7 +330,8 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 				std::string afterFailureLog(logString);
 				Hash afterFailureState(helper.hashModel(e));
 				RandomSource rng2(initial);
-				e.setCommandLogger(0);
+				stringLogger.SetDelegate(0);
+				logString.clear();
 				helper.resetModel(e);
 				e.executeRandomConstructiveCommands(rng2);
 				logFile = freopen(0, "r", logFile);
@@ -343,15 +344,17 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 				}
 				if (!exceptionMessage.empty()
 						|| helper.hashModel(e) != afterFailureState) {
+					std::string actual(logString);
 					std::stringstream ss;
 					ss << "Failed to replay only successful commands from the log\n"
-							<< "after failure at " << failAt << "\non test"
+							<< "after failure at " << failAt << "\non test "
 							<< i << "\n[construction commands:\n"
 							<< constructLog
 							<< "do commands:\n"	<< beforeFailureLog
 							<< "after failure:\n" << afterFailureLog << "]";
 					if (!exceptionMessage.empty())
 						ss << "\nWith exception: " << exceptionMessage;
+					ss << "\nActual commands:\n" << actual;
 					QFAIL(ss.str().c_str());
 				}
 			}

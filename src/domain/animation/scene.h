@@ -24,7 +24,15 @@
 #include "frame.h"
 #include "src/presentation/frontends/frontend.h"
 
+#include <exception>
+
 class FileNameVisitor;
+
+class FrameOutOfRangeException : public std::exception {
+public:
+	FrameOutOfRangeException();
+    const char* what() const _GLIBCXX_USE_NOEXCEPT;
+};
 
 /**
  * Class representing the scenes in the animation

@@ -28,9 +28,12 @@
 
 class FileCommandLoggerImpl :
 		public CommandLogger {
+	enum Ending {
+		noEnding, newline, bangNewline
+	};
 	FILE* fh;
 	std::string buffer;
-	bool newlineRequired;
+	Ending endingRequired;
 public:
 	void close() {
 		if (fh) {
@@ -40,8 +43,16 @@ public:
 		fh = 0;
 	}
 	void appendNewline() {
-		if (newlineRequired)
+		switch (endingRequired) {
+		case noEnding:
+			break;
+		case newline:
 			buffer.push_back('\n');
+			break;
+		case bangNewline:
+			buffer.append("!\n");
+			break;
+		}
 	}
 	void writeBuffer() {
 		appendNewline();
@@ -53,7 +64,7 @@ public:
 			buffer.erase(0, s);
 		}
 	}
-	FileCommandLoggerImpl() : fh(0), newlineRequired(false) {
+	FileCommandLoggerImpl() : fh(0), endingRequired(noEnding) {
 	}
 	~FileCommandLoggerImpl() {
 		close();
@@ -65,12 +76,14 @@ public:
 	void writeCommand(const char* c) {
 		writeBuffer();
 		buffer.append(c);
-		newlineRequired = true;
+		endingRequired = newline;
 	}
 	void commandComplete() {
-		if (newlineRequired)
+		if (endingRequired != noEnding) {
+			endingRequired = bangNewline;
 			buffer.append("!\n");
-		newlineRequired = false;
+			endingRequired = noEnding;
+		}
 		writeBuffer();
 		fflush(fh);
 	}

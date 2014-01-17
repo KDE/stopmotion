@@ -38,8 +38,19 @@ template<typename T> void swap(T& a, T& b) {
 
 Command* CommandMove::execute() {
 	sv.moveFrames(fromSc, fromFr, frameCount, toSc, toFr);
-	swap(fromSc, toSc);
-	swap(fromFr, toFr);
+	if (fromSc != toSc) {
+		swap(fromSc, toSc);
+		swap(fromFr, toFr);
+	} else if (fromFr + frameCount < toFr) {
+		int t = toFr;
+		toFr = fromFr;
+		fromFr = toFr - frameCount;
+	} else if (toFr < fromFr) {
+		int t = toFr;
+		toFr = fromFr + frameCount;
+		fromFr = t;
+	}
+	// else it is a command that does nothing; which is it's own inverse!
 	return this;
 }
 

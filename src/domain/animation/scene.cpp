@@ -25,14 +25,12 @@
 #include <unistd.h>
 
 
-class FrameOutOfRangeException : public std::exception {
-public:
-	FrameOutOfRangeException() {
-	}
-    const char* what() const _GLIBCXX_USE_NOEXCEPT {
-    	return "Internal error: Frame out of range!";
-    }
-};
+FrameOutOfRangeException::FrameOutOfRangeException() {
+}
+
+const char* FrameOutOfRangeException::what() const _GLIBCXX_USE_NOEXCEPT {
+	return "Internal error: Frame out of range!";
+}
 
 
 Scene::Scene() {
