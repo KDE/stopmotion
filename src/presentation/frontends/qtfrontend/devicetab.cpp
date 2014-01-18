@@ -171,16 +171,16 @@ void DeviceTab::initialize()
 		int idx = 0;
 
 		for (int i = 0; i < numUserDevices; ++i) {
-			prop = pref->getPreference(QString("deviceDescription%1").arg(i).toLatin1().constData(),"");
+			prop = pref->getPreference(QString("deviceDescription%1").arg(i).toUtf8().constData(),"");
 			QString desc(prop);
 			freeProperty(prop);
 
 			if ( !desc.startsWith("*Autodetected*") ) {
-				prop = pref->getPreference(QString("deviceName%1").arg(i).toLatin1().constData(),"");
+				prop = pref->getPreference(QString("deviceName%1").arg(i).toUtf8().constData(),"");
 				QString name(prop);
 				freeProperty(prop);
 
-				prop = pref->getPreference(QString("device%1").arg(i).toLatin1().constData(),"");
+				prop = pref->getPreference(QString("device%1").arg(i).toUtf8().constData(),"");
 				QString device(prop);
 				freeProperty(prop);
 
@@ -220,9 +220,9 @@ void DeviceTab::apply()
 	int numDevices = prefs->getPreference("numDevices", -1);
  	if (numDevices > 0) {
 		for (int i = 0; i < numDevices; ++i) {
-			prefs->removePreference(QString("deviceName%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("deviceDescription%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("device%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QString("deviceName%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QString("deviceDescription%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QString("device%1").arg(i).toUtf8().constData());
 		}
 	}
 
@@ -232,12 +232,12 @@ void DeviceTab::apply()
 		prefs->setPreference("numDevices", numDevices, true);
 		prefs->setPreference("activeVideoDevice", deviceTable->currentRow(), true);
 		for (int i = 0; i < numDevices; ++i) {
-			prefs->setPreference(QString("deviceName%1").arg(i).toLatin1().constData(), 
-					deviceTable->item(i, 0)->text().toLatin1().constData(), true);
-			prefs->setPreference(QString("deviceDescription%1").arg(i).toLatin1().constData(),
-					deviceTable->item(i, 1)->text().toLatin1().constData(), true);
-			prefs->setPreference(QString("device%1").arg(i).toLatin1().constData(),
-					deviceStrings[i].toLatin1().constData(), true);
+			prefs->setPreference(QString("deviceName%1").arg(i).toUtf8().constData(),
+					deviceTable->item(i, 0)->text().toUtf8().constData(), true);
+			prefs->setPreference(QString("deviceDescription%1").arg(i).toUtf8().constData(),
+					deviceTable->item(i, 1)->text().toUtf8().constData(), true);
+			prefs->setPreference(QString("device%1").arg(i).toUtf8().constData(),
+					deviceStrings[i].toUtf8().constData(), true);
 		}
 	}
 	else {
