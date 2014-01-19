@@ -301,11 +301,11 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("stopEncoder2", "");
 
 	// Default export option 4
-	prefs->setPreference("encoderName3", "ffmpeg");
+	prefs->setPreference("encoderName3", "avconv");
 	prefs->setPreference("encoderDescription3",
 			tr("Exports from jpeg images to mpeg4 video").toUtf8().constData());
 	prefs->setPreference("startEncoder3",
-			"ffmpeg -r 12 -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
+			"avconv -r 12 -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder3", "");
 	//-------------------------------------------------------------------------
 }
