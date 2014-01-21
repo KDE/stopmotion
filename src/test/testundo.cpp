@@ -20,7 +20,7 @@
 
 #include "testundo.h"
 
-#include "src/test/oomtestutil.h"
+#include "oomtestutil.h"
 
 #include "src/domain/undo/executor.h"
 #include "src/domain/undo/commandlogger.h"
@@ -71,44 +71,6 @@ public:
 ModelTestHelper::~ModelTestHelper() {
 }
 
-Hash::Hash() {
-	h = 5381;
-}
-
-void Hash::add(uint64_t n) {
-	h = h * 33 + n;
-}
-
-void Hash::addS(int64_t n) {
-	add(static_cast<uint64_t>(n));
-}
-
-void Hash::add(const char* string) {
-	while (*string) {
-		add(static_cast<uint64_t>(*string));
-		++string;
-	}
-	// Add the null on the end so that strings can be added one after another
-	// without the risk of, for example "abc" "def" aliasing "abcd" "ef".
-	add(0ull);
-}
-
-void Hash::add(Hash h) {
-	add(h.h);
-}
-
-bool Hash::equals(const Hash& other) const {
-	return h == other.h;
-}
-
-bool operator==(const Hash& a, const Hash& b) {
-	return a.equals(b);
-}
-
-bool operator!=(const Hash& a, const Hash& b) {
-	return !a.equals(b);
-}
-
 bool executeLineFromFile(Executor& e, FILE* logFile) {
 	enum { lineBufferSize = 1024 };
 	static char lineBuffer[lineBufferSize];
@@ -119,7 +81,8 @@ bool executeLineFromFile(Executor& e, FILE* logFile) {
 }
 
 void testUndo(Executor& e, ModelTestHelper& helper) {
-	const int testCount = 200;
+	const int commandCount = e.commandCount();
+	const int testCount = 4 * commandCount * commandCount;
 	const int firstPhaseEnds = testCount / 2;
 	const int secondPhaseEnds = (testCount * 3) / 4;
 	bool oomLoaded = loadOomTestUtil();

@@ -738,6 +738,9 @@ public:
 			constructiveCommands.push_back(n);
 		factory.release();
 	}
+	int commandCount() const {
+		return factories.size();
+	}
 	void clearHistory() {
 		history.clear();
 	}

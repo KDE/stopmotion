@@ -21,35 +21,9 @@
 #ifndef TESTUNDO_H_
 #define TESTUNDO_H_
 
-#include <stdint.h>
+#include "hash.h"
 
 class Executor;
-
-/**
- * Very simple hashing function by Professor Daniel J Bernstein.
- * @par
- * Use this to calculate hashes for @ref ModelTestHelper::HashModel.
- * @note
- * If your model has some sort of hierarchical structure, don't just add all
- * the leaf parts to the hash as this will fail to hash the structure. Instead,
- * hash each part and combine these parts into the whole's hash. For each
- * part's hash, hash each sub-part and combine the hashes together into the
- * part's hash. Using hashes recursively in this way will allow the structure
- * as well as its contents to be hashed.
- */
-class Hash {
-	uint64_t h;
-public:
-	Hash();
-	void add(uint64_t n);
-	void addS(int64_t n);
-	void add(const char* string);
-	void add(Hash h);
-	bool equals(const Hash& other) const;
-};
-
-bool operator==(const Hash& a, const Hash& b);
-bool operator!=(const Hash& a, const Hash& b);
 
 /**
  * Provides a way for test code to check the state of the model that is being

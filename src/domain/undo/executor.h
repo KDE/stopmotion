@@ -171,6 +171,12 @@ public:
 	 * Returns true if and only if there is a command waiting to be redone.
 	 */
 	virtual bool canRedo() const = 0;
+	/**
+	 * The number of commands registered.
+	 * @par
+	 * Useful for determining how many randomized tests to run.
+	 */
+	virtual int commandCount() const = 0;
 };
 
 /**
