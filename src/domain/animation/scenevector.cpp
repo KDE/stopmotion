@@ -161,8 +161,9 @@ void SceneVector::moveFrames(int fromScene, int fromFrame, int frameCount,
 	} else if (fromFrame + frameCount < toFrame) {
 		// this will do for now, even though it is stupid
 		for (int i = 0; i != frameCount; ++i) {
+			// perform a rotation
 			Frame* f = from->removeFrame(fromFrame);
-			to->addFrame(f, toFrame + frameCount - 1);
+			to->addFrame(f, toFrame - 1);
 		}
 	}
 }

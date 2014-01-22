@@ -44,7 +44,7 @@ Command* CommandMove::execute() {
 	} else if (fromFr + frameCount < toFr) {
 		int t = toFr;
 		toFr = fromFr;
-		fromFr = toFr - frameCount;
+		fromFr = t - frameCount;
 	} else if (toFr < fromFr) {
 		int t = toFr;
 		toFr = fromFr + frameCount;
