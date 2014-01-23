@@ -22,6 +22,8 @@
 #define HASH_H_
 
 #include <stdint.h>
+#include <stdio.h>
+#include <string>
 
 class Executor;
 
@@ -44,8 +46,20 @@ public:
 	void add(uint64_t n);
 	void addS(int64_t n);
 	void add(const char* string);
-	void add(Hash h);
+	void add(Hash h)
+	/**
+	 * Add the contents of a file to the hash.
+	 * @param fh The file handle to the file (which must be open for reading).
+	 * The seek position will be reset afterwards if there is no error reading.
+	 */;
+	void add(FILE* fh);
 	bool equals(const Hash& other) const;
+	/**
+	 * Appends the 16-character hex representation of the value of this hash to
+	 * the string.
+	 * @param out The string to be appended.
+	 */
+	void appendTo(std::string& out);
 };
 
 bool operator==(const Hash& a, const Hash& b);

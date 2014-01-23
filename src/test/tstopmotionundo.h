@@ -23,12 +23,14 @@
 
 #include <QObject>
 
+class Animation;
 class Executor;
 class SceneVector;
 class RealOggEmptyJpg;
 
 class TestStopmotionUndo : public QObject {
 	Q_OBJECT
+	Animation* anim;
 	SceneVector* sv;
 	Executor* ex;
 	RealOggEmptyJpg* mfs;
@@ -36,7 +38,15 @@ public:
 	TestStopmotionUndo();
 	~TestStopmotionUndo();
 private slots:
-	void stopmotionCommandsAreOk();
+	void addFrames();
+	void removeFrames();
+	void moveFrames();
+	void setImagePath();
+	void duplicateImage();
+	void addSound();
+	void removeSound();
+	void setSoundName();
+	void stopmotionCommandsInvertCorrectly();
 };
 
 #endif /* TSTOPMOTIONUNDO_H_ */

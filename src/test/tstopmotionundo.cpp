@@ -24,6 +24,7 @@
 #include "oomtestutil.h"
 #include "src/domain/undo/addallcommands.h"
 #include "src/domain/undo/executor.h"
+#include "src/domain/animation/animation.h"
 #include "src/domain/animation/scenevector.h"
 #include "src/domain/animation/scene.h"
 #include "src/domain/animation/frame.h"
@@ -136,7 +137,8 @@ public:
 	}
 };
 
-TestStopmotionUndo::TestStopmotionUndo() : sv(0), ex(0), mfs(0) {
+TestStopmotionUndo::TestStopmotionUndo() : anim(0), sv(0), ex(0), mfs(0) {
+	anim = new Animation();
 	sv = new SceneVector();
 	ex = makeAnimationCommandExecutor(*sv);
 	mfs = new RealOggEmptyJpg();
@@ -182,7 +184,31 @@ public:
 	}
 };
 
-void TestStopmotionUndo::stopmotionCommandsAreOk() {
+void TestStopmotionUndo::stopmotionCommandsInvertCorrectly() {
 	SceneVectorTestHelper helper(*sv);
 	testUndo(*ex, helper);
+}
+
+void TestStopmotionUndo::addFrames() {
+}
+
+void TestStopmotionUndo::removeFrames() {
+}
+
+void TestStopmotionUndo::moveFrames() {
+}
+
+void TestStopmotionUndo::setImagePath() {
+}
+
+void TestStopmotionUndo::duplicateImage() {
+}
+
+void TestStopmotionUndo::addSound() {
+}
+
+void TestStopmotionUndo::removeSound() {
+}
+
+void TestStopmotionUndo::setSoundName() {
 }

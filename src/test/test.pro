@@ -21,6 +21,7 @@ HEADERS += ../domain/undo/filelogger.h \
     ../domain/animation/scene.h \
     ../domain/animation/frame.h \
     ../domain/animation/sound.h \
+    ../domain/animation/animation.h \
     ../domain/animation/animationimpl.h \
     ../domain/animation/scenevector.h \
     ../domain/animation/workspacefile.h \
@@ -31,6 +32,12 @@ HEADERS += ../domain/undo/filelogger.h \
     ../technical/libng/struct-v4l2.h \
     ../technical/libng/devices.h \
     ../technical/libng/struct-dump.h \
+    ../technical/video/videofactory.h \
+    ../technical/video/videoencoder.h \
+    ../technical/audio/ossdriver.h \
+    ../technical/projectserializer.h \
+    ../technical/packer.h \
+    ../domain/observernotifier.h \
     ../foundation/logger.h
 HEADERS += texecutor.h \
 	tcache.h \
@@ -57,6 +64,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/animation/scene.cpp \
     ../domain/animation/frame.cpp \
     ../domain/animation/sound.cpp \
+    ../domain/animation/animation.cpp \
     ../domain/animation/animationimpl.cpp \
     ../domain/animation/scenevector.cpp \
     ../domain/animation/workspacefile.cpp \
@@ -70,6 +78,12 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../technical/libng/plugins/drv1-v4l.c \
     ../technical/libng/devices.c \
     ../technical/libng/struct-dump.c \
+    ../technical/video/videofactory.cpp \
+    ../technical/video/videoencoder.cpp \
+    ../technical/audio/ossdriver.cpp \
+    ../technical/projectserializer.cpp \
+    ../technical/packer.c \
+    ../domain/observernotifier.cpp \
     ../foundation/logger.cpp
 SOURCES += \
     tmain.cpp \
@@ -80,7 +94,8 @@ SOURCES += \
     tstopmotionundo.cpp
 FORMS += 
 RESOURCES += 
-INCLUDEPATH += ../..
+INCLUDEPATH += ../.. \
+    $$system(xml2-config --cflags | sed -e 's/-I//g')
 oomtestutil.target = oomteststub.o
 oomtestutil.commands = make -f oomtestutil.mak
 oomtestutil.depends = oomteststub.cpp oomtestutil.cpp oomtestutil.h
