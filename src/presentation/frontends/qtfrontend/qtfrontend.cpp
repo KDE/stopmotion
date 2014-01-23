@@ -33,15 +33,15 @@ QtFrontend::QtFrontend(int &argc, char **argv)
 #if QT_VERSION == 0x040400
         stApp->setAttribute(Qt::AA_NativeWindows);
 #endif
-	
-	// Need to call this here to get the locale for the language 
+
+	// Need to call this here to get the locale for the language
 	// which is used by the translator created in mainWindowGUI
 	initializePreferences();
-	
+
 	mw = new MainWindowGUI(stApp);
 	mw->setWindowTitle("Stopmotion");
 	mw->showMaximized();
-	
+
 	progressDialog = 0;
 	progressBar = 0;
 	infoText = 0;
@@ -87,7 +87,7 @@ void QtFrontend::showProgress(const char* operation, unsigned int numOperations)
 
 void QtFrontend::hideProgress()
 {
-	if (progressDialog) { 
+	if (progressDialog) {
 		progressDialog->hide();
 		delete progressDialog;
 		progressDialog = NULL;
@@ -148,7 +148,7 @@ void QtFrontend::updateProgressBar()
 void QtFrontend::reportError(const char *message, int id)
 {
 	id = id != 0 && id != 1 ? 0 : id;
-	
+
 	if (id == 0) {
 		QMessageBox::warning(mw, tr("Warning"), message, QMessageBox::Ok,
 				QMessageBox::NoButton, QMessageBox::NoButton);
@@ -156,14 +156,14 @@ void QtFrontend::reportError(const char *message, int id)
 	else {
 		QMessageBox::critical(mw, tr("Fatal"), message, QMessageBox::Ok,
 				QMessageBox::NoButton, QMessageBox::NoButton);
-	} 
+	}
 }
 
 
 void QtFrontend::initializePreferences()
 {
 	Logger::get().logDebug("Loading preferencestool");
-	
+
 	PreferencesTool *prefs = PreferencesTool::get();
 	string preferencesFile = getenv("HOME");
 	preferencesFile += "/.stopmotion/preferences.xml";
@@ -186,7 +186,7 @@ void QtFrontend::initializePreferences()
 		}
 		// Has wrong version number
 		else {
-			QString question(tr(	
+			QString question(tr(
 					"A newer version of the preferences file with few more default\n"
 					"values exists. Do you want to use this one? (Your old preferences\n "
 					"will be saved in ~/.stopmotion/preferences.xml.OLD)"));
@@ -199,17 +199,17 @@ void QtFrontend::initializePreferences()
 			else {
 				rename(oldPrefsFile.c_str(), preferencesFile.c_str());
 				prefs->setPreferencesFile(preferencesFile.c_str(), prefs->getOldVersion());
-				
+
 				// Update version
 				prefs->setVersion("0.8");
-				
+
 				// Do necessary updates on the old prefs file:
 				updateOldPreferences(prefs);
 			}
 		}
-	}	
+	}
 }
-	
+
 
 void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 {
@@ -221,51 +221,51 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("activedevice", 1);
 
 	// Default import option 1
-	prefs->setPreference("importname0", tr("vgrabbj").toLatin1().constData());
-	prefs->setPreference("importdescription0", 
-			tr("The simplest setting. Fairly slow").toLatin1().constData());
+	prefs->setPreference("importname0", tr("vgrabbj").toUtf8().constData());
+	prefs->setPreference("importdescription0",
+			tr("The simplest setting. Fairly slow").toUtf8().constData());
 	prefs->setPreference("importprepoll0",
 			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga");
 	prefs->setPreference("importstartdaemon0", "");
 	prefs->setPreference("importstopdaemon0", "");
 
 	// Default import option 2
-	prefs->setPreference("importname1", tr("vgrabbj VGA daemon").toLatin1().constData());
-	prefs->setPreference("importdescription1", 
-			tr("Starts vgrabbj as a daemon. Pretty fast.").toLatin1().constData());
+	prefs->setPreference("importname1", tr("vgrabbj VGA daemon").toUtf8().constData());
+	prefs->setPreference("importdescription1",
+			tr("Starts vgrabbj as a daemon. Pretty fast.").toUtf8().constData());
 	prefs->setPreference("importprepoll1", "");
-	prefs->setPreference("importstartdaemon1", 
+	prefs->setPreference("importstartdaemon1",
 			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
-	prefs->setPreference("importstopdaemon1", 
+	prefs->setPreference("importstopdaemon1",
 			"kill -9 $(pidof vgrabbj)");
-	
+
 	// Default import option 3
-	prefs->setPreference("importname2", tr("uvccapture").toLatin1().constData());
-	prefs->setPreference("importdescription2", 
-			tr("Grabbing from V4L2 devices").toLatin1().constData());
-	prefs->setPreference("importprepoll2", 
+	prefs->setPreference("importname2", tr("uvccapture").toUtf8().constData());
+	prefs->setPreference("importdescription2",
+			tr("Grabbing from V4L2 devices").toUtf8().constData());
+	prefs->setPreference("importprepoll2",
 			"uvccapture -d$VIDEODEVICE -x640 -y480 -o$IMAGEFILE");
 	prefs->setPreference("importstartdaemon2", "");
 	prefs->setPreference("importstopdaemon2", "");
-	
+
 	// Default import option 4
-	prefs->setPreference("importname3", tr("videodog singleshot").toLatin1().constData());
-	prefs->setPreference("importdescription3", 
-			tr("Videodog.").toLatin1().constData());
+	prefs->setPreference("importname3", tr("videodog singleshot").toUtf8().constData());
+	prefs->setPreference("importdescription3",
+			tr("Videodog.").toUtf8().constData());
 	prefs->setPreference("importprepoll3",
 			"videodog -x 640 -y 480 -w 3 -d $VIDEODEVICE -j -f $IMAGEFILE");
 	prefs->setPreference("importstartdaemon3", "");
 	prefs->setPreference("importstopdaemon3", "");
-	
+
 	// Default import option 5
-	prefs->setPreference("importname4", tr("dvgrab").toLatin1().constData());
-	prefs->setPreference("importdescription4", 
-			tr("Grabbing from DV-cam.").toLatin1().constData());
+	prefs->setPreference("importname4", tr("dvgrab").toUtf8().constData());
+	prefs->setPreference("importdescription4",
+			tr("Grabbing from DV-cam.").toUtf8().constData());
 	prefs->setPreference("importprepoll4", "");
-	prefs->setPreference("importstartdaemon4", 
+	prefs->setPreference("importstartdaemon4",
 			"dvgrab --format jpeg --jpeg-overwrite --jpeg-temp dvtemp.jpeg "
 			"--every 25 $IMAGEFILE &");
-	prefs->setPreference("importstopdaemon4", 
+	prefs->setPreference("importstopdaemon4",
 			"kill -9 $(pidof dvgrab)");
 	// -----------------------------------------------------------------------
 
@@ -275,8 +275,8 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 
 	// Default export option 1
 	prefs->setPreference("encoderName0", "mencoder");
-	prefs->setPreference("encoderDescription0", 
-			tr("Exports from jpeg images to mpeg1 video").toLatin1().constData());
+	prefs->setPreference("encoderDescription0",
+			tr("Exports from jpeg images to mpeg1 video").toUtf8().constData());
 	prefs->setPreference("startEncoder0",
 			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=12:type=jpg "
 			"-ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o \"$VIDEOFILE\"");
@@ -284,8 +284,8 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 
 	// Default export option 2
 	prefs->setPreference("encoderName1", "mencoder");
-	prefs->setPreference("encoderDescription1", 
-			tr("Exports from jpeg images to mpeg2 video").toLatin1().constData());
+	prefs->setPreference("encoderDescription1",
+			tr("Exports from jpeg images to mpeg2 video").toUtf8().constData());
 	prefs->setPreference("startEncoder1",
 			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=12:type=jpg "
 			"-ovc lavc -lavcopts vcodec=mpeg2video -oac copy -o \"$VIDEOFILE\"");
@@ -293,19 +293,19 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 
 	// Default export option 3
 	prefs->setPreference("encoderName2", "mencoder");
-	prefs->setPreference("encoderDescription2", 
-			tr("Exports from jpeg images to mpeg4 video").toLatin1().constData());
+	prefs->setPreference("encoderDescription2",
+			tr("Exports from jpeg images to mpeg4 video").toUtf8().constData());
 	prefs->setPreference("startEncoder2",
 			"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1:$opt -mf type=jpg:fps=12 "
 			"-o \"$VIDEOFILE\" \"mf://$IMAGEPATH/*.jpg\"");
 	prefs->setPreference("stopEncoder2", "");
-	
+
 	// Default export option 4
-	prefs->setPreference("encoderName3", "ffmpeg");
-	prefs->setPreference("encoderDescription3", 
-			tr("Exports from jpeg images to mpeg4 video").toLatin1().constData());
+	prefs->setPreference("encoderName3", "avconv");
+	prefs->setPreference("encoderDescription3",
+			tr("Exports from jpeg images to mpeg4 video").toUtf8().constData());
 	prefs->setPreference("startEncoder3",
-			"ffmpeg -r 12 -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
+			"avconv -r 12 -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder3", "");
 	//-------------------------------------------------------------------------
 }
@@ -317,23 +317,23 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 	// Replace all occurences of '/dev/xxx' with $VIDEODEVICE (version < 0.7)
 	int numImports = prefs->getPreference("numberofimports", 1);
 	for (int i = 0; i < numImports; ++i) {
-		string start( prefs->getPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(), "") );
+		string start( prefs->getPreference(QString("importstartdaemon%1").arg(i).toUtf8().constData(), "") );
 		int index = start.find("(DEFAULTPATH)");
 		if (index != -1) {
 			start.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
 		}
 		QString s(start.c_str());
 		s.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
-		prefs->setPreference( QString("importstartdaemon%1").arg(i).toLatin1().constData(), s.toLatin1().constData());
+		prefs->setPreference( QString("importstartdaemon%1").arg(i).toUtf8().constData(), s.toUtf8().constData());
 
-		string prepoll( prefs->getPreference(QString("importprepoll%1").arg(i).toLatin1().constData(), "") );
+		string prepoll( prefs->getPreference(QString("importprepoll%1").arg(i).toUtf8().constData(), "") );
 		index = prepoll.find("(DEFAULTPATH)");
 		if (index != -1) {
 			prepoll.replace(index, strlen("(DEFAULTPATH)"), string("$IMAGEFILE"));
 		}
 		QString ss(prepoll.c_str());
 		ss.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
-		prefs->setPreference( QString("importprepoll%1").arg(i).toLatin1().constData(), ss.toLatin1().constData());
+		prefs->setPreference( QString("importprepoll%1").arg(i).toUtf8().constData(), ss.toUtf8().constData());
 	}
 }
 
@@ -349,10 +349,10 @@ int QtFrontend::askQuestion(const char *question)
 	}
 	return 1;
 }
-	
+
 
 int QtFrontend::runExternalCommand(const char *command)
-{	
+{
 	ExternalCommand *ec = new ExternalCommand;
 	ec->show();
 	ec->run( QString::fromLocal8Bit(command) );
