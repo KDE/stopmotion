@@ -27,6 +27,7 @@ class Animation;
 class Executor;
 class SceneVector;
 class RealOggEmptyJpg;
+class TestHome;
 
 class TestStopmotionUndo : public QObject {
 	Q_OBJECT
@@ -34,6 +35,7 @@ class TestStopmotionUndo : public QObject {
 	SceneVector* sv;
 	Executor* ex;
 	RealOggEmptyJpg* mfs;
+	TestHome* testEnvFs;
 public:
 	TestStopmotionUndo();
 	~TestStopmotionUndo();

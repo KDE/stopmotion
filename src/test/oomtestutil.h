@@ -54,6 +54,7 @@ public:
 			long ibytes) = 0;
 	virtual long ov_read(OggVorbis_File *vf,char *buffer,int length,
 	                    int bigendianp,int word,int sgned,int *bitstream) = 0;
+	virtual char* getenv(const char *name) = 0;
 };
 
 extern "C" {

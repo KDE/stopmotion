@@ -48,6 +48,7 @@ int ov_clear(OggVorbis_File *vf);
 int ov_open(FILE *f,OggVorbis_File *vf,const char *initial, long ibytes);
 long ov_read(OggVorbis_File *vf,char *buffer,int length,
 		int bigendianp,int word,int sgned,int *bitstream);
+char *getenv(const char *name);
 }
 
 // Which future malloc should return 0 instead of attempting to allocate memory
@@ -81,6 +82,7 @@ class RealFileSystem : public MockableFileSystem {
 	typedef int ov_clear_t(OggVorbis_File *);
 	typedef int ov_open_t(FILE *, OggVorbis_File *, const char *, long);
 	typedef long ov_read_t(OggVorbis_File *, char *, int, int, int, int ,int *);
+	typedef char *getenv_t(const char *name);
 	fopen_t* rfopen;
 	freopen_t* rfreopen;
 	fclose_t* rfclose;
@@ -94,10 +96,11 @@ class RealFileSystem : public MockableFileSystem {
 	ov_clear_t* rov_clear;
 	ov_open_t* rov_open;
 	ov_read_t* rov_read;
+	getenv_t* rgetenv;
 public:
 	RealFileSystem() : rfopen(0), rfreopen(0), rfclose(0), rfflush(0),
 			rfread(0), rfwrite(0), raccess(0), rferror(0), rov_test(0),
-			rov_clear(0), rov_open(0), rov_read(0) {
+			rov_clear(0), rov_open(0), rov_read(0), rgetenv(0) {
 		rfopen = (fopen_t*)dlsym(RTLD_NEXT, "fopen");
 		assert(rfopen);
 		rfreopen = (freopen_t*)dlsym(RTLD_NEXT, "freopen");
@@ -124,6 +127,8 @@ public:
 		assert(rov_open);
 		rov_read = (ov_read_t*)dlsym(RTLD_NEXT, "ov_read");
 		assert(rov_read);
+		rgetenv = (getenv_t*)dlsym(RTLD_NEXT, "getenv");
+		assert(rgetenv);
 	}
 	~RealFileSystem() {
 	}
@@ -171,6 +176,9 @@ public:
 			int bigendianp,int word,int sgned,int *bitstream) {
 		return rov_read(vf, buffer, length, bigendianp, word, sgned,
 				bitstream);
+	}
+	char *getenv(const char *name) {
+		return rgetenv(name);
 	}
 };
 
@@ -268,4 +276,10 @@ long ov_read(OggVorbis_File *vf,char *buffer,int length,
 		int bigendianp,int word,int sgned,int *bitstream) {
 	return requiredFs->ov_read(vf, buffer, length, bigendianp, word, sgned,
 			bitstream);
+}
+
+char *getenv(const char *name) {
+	if (!requiredFs)
+		init();
+	return requiredFs->getenv(name);
 }

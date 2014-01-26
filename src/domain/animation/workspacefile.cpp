@@ -94,7 +94,9 @@ void WorkspaceFile::clear() {
 	std::stringstream rm;
 	rm << "rm -rf " << path;
 	system(rm.str().c_str());
-	if (mkdir(path, 0755) < 0) {
+	std::stringstream mkdir;
+	mkdir << "mkdir -p " << path;
+	if (system(mkdir.str().c_str()) != 0) {
 		throw WorkspaceDirectoryCreationException();
 	}
 	fileNum = 0;

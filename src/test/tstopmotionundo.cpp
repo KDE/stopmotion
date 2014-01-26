@@ -135,6 +135,81 @@ public:
 	long ov_read(OggVorbis_File *,char *,int, int, int, int, int *) {
 		return 0;
 	}
+	char *getenv(const char *name) {
+		return delegate->getenv(name);
+	}
+};
+
+class TestHome : public MockableFileSystem {
+	MockableFileSystem* delegate;
+	char* fakeHome;
+public:
+	TestHome() : delegate(0), fakeHome(0) {
+	}
+	~TestHome() {
+	}
+	void setDelegate(MockableFileSystem* mfs) {
+		delegate = mfs;
+		char* home = delegate->getenv("HOME");
+		if (home) {
+			static const char appendix[] = "/.stopmotion/test";
+			unsigned int len = strlen(home);
+			fakeHome = (char*) malloc(len + sizeof(appendix));
+			if (fakeHome) {
+				strncpy(fakeHome, home, len);
+				strncpy(fakeHome + len, appendix, sizeof(appendix));
+			}
+		}
+	}
+	FILE* fopen(const char* filename, const char* mode) {
+		return delegate->fopen(filename, mode);
+	}
+	FILE* freopen(const char* filename, const char* mode, FILE* fh) {
+		return delegate->freopen(filename, mode, fh);
+	}
+	int fclose(FILE* fh) {
+		return delegate->fclose(fh);
+	}
+	int fflush(FILE* fh) {
+		return delegate->fflush(fh);
+	}
+	size_t fread (void *out, size_t blockSize,
+			     size_t blockCount, FILE *fh) {
+		return delegate->fread(out, blockSize, blockCount, fh);
+	}
+	size_t fwrite (const void *in, size_t blockSize,
+			      size_t blockCount, FILE *fh) {
+		return delegate->fwrite(in, blockSize, blockCount, fh);
+	}
+	int access (const char *name, int type) {
+		return delegate->access(name, type);
+	}
+	int ferror(FILE* fh) {
+		return delegate->ferror(fh);
+	}
+	int unlink(const char *name) {
+		return delegate->unlink(name);
+	}
+	int ov_test(FILE *f, OggVorbis_File *vf, const char *initial, long ibytes) {
+		return delegate->ov_test(f, vf, initial, ibytes);
+	}
+	int ov_clear(OggVorbis_File *vf) {
+		return delegate->ov_clear(vf);
+	}
+	int ov_open(FILE *f, OggVorbis_File *vf, const char *initial, long ibytes) {
+		return delegate->ov_open(f, vf, initial, ibytes);
+	}
+	long ov_read(OggVorbis_File *vf,char *buffer, int length, int bigendianp,
+			int word, int sgned, int *bitstream) {
+		return delegate->ov_read(vf, buffer, length, bigendianp, word, sgned,
+				bitstream);
+	}
+	char *getenv(const char *name) {
+		if (0 == strcmp(name, "HOME")) {
+			return fakeHome;
+		}
+		return delegate->getenv(name);
+	}
 };
 
 TestStopmotionUndo::TestStopmotionUndo() : anim(0), sv(0), ex(0), mfs(0) {
@@ -142,11 +217,12 @@ TestStopmotionUndo::TestStopmotionUndo() : anim(0), sv(0), ex(0), mfs(0) {
 	sv = new SceneVector();
 	ex = makeAnimationCommandExecutor(*sv);
 	mfs = new RealOggEmptyJpg();
+	testEnvFs = new TestHome();
 	loadOomTestUtil();
-	setMockFileSystem(mfs);
 }
 
 TestStopmotionUndo::~TestStopmotionUndo() {
+	setMockFileSystem(0);
 }
 
 class SceneVectorTestHelper : public ModelTestHelper {
@@ -186,7 +262,9 @@ public:
 
 void TestStopmotionUndo::stopmotionCommandsInvertCorrectly() {
 	SceneVectorTestHelper helper(*sv);
+	setMockFileSystem(mfs);
 	testUndo(*ex, helper);
+	setMockFileSystem(0);
 }
 
 void TestStopmotionUndo::addFrames() {
