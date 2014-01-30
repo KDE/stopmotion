@@ -22,6 +22,7 @@
 
 #include "testundo.h"
 #include "oomtestutil.h"
+#include "hash.h"
 #include "src/domain/undo/addallcommands.h"
 #include "src/domain/undo/executor.h"
 #include "src/domain/animation/animation.h"
@@ -30,11 +31,14 @@
 #include "src/domain/animation/frame.h"
 #include "src/domain/animation/sound.h"
 #include "src/technical/audio/audioformat.h"
+#include "src/presentation/frontends/frontend.h"
 
 #include <QtTest/QtTest>
 
 #include <stdlib.h>
 #include <error.h>
+#include <vector>
+
 
 class RealOggEmptyJpg : public MockableFileSystem {
 	MockableFileSystem* delegate;
@@ -212,17 +216,66 @@ public:
 	}
 };
 
-TestStopmotionUndo::TestStopmotionUndo() : anim(0), sv(0), ex(0), mfs(0) {
-	anim = new Animation();
+void getHashes(std::vector<Hash>& out, const char* filenameTemplate) {
+	std::string filenameStr(filenameTemplate);
+	char* filename = &filenameStr[0];
+	char* digitPtr = strchr(filename, '?');
+	for (int i = 0; i != 10; ++i) {
+		*digitPtr = '0' + i;
+		if (0 != access(filename, F_OK))
+			return;
+		out.resize(i + 1);
+		Hash h;
+		FILE* f = fopen(filename, "r");
+		h.add(f);
+		fclose(f);
+		out[i] = h;
+	}
+}
+
+class MockFrontend : public Frontend {
+public:
+	~MockFrontend() {
+	}
+	int run(int, char **) {
+		return 0;
+	}
+	void showProgress(const char *, unsigned int) {
+	}
+	void hideProgress() {
+	}
+	void updateProgress(int) {
+	}
+	void setProgressInfo(const char *) {
+	}
+	bool isOperationAborted() {
+		return false;
+	}
+	void processEvents() {
+	}
+	void reportError(const char *, int) {
+	}
+	int askQuestion(const char *) {
+		return true;
+	}
+	int runExternalCommand(const char *) {
+		return 0;
+	}
+};
+
+TestStopmotionUndo::TestStopmotionUndo() : anim(0), mockFrontend(0),
+		sv(0), ex(0), mfs(0), animTester(0) {
 	sv = new SceneVector();
 	ex = makeAnimationCommandExecutor(*sv);
 	mfs = new RealOggEmptyJpg();
 	testEnvFs = new TestHome();
+	mockFrontend = new MockFrontend();
 	loadOomTestUtil();
 }
 
 TestStopmotionUndo::~TestStopmotionUndo() {
 	setMockFileSystem(0);
+	delete mockFrontend;
 }
 
 class SceneVectorTestHelper : public ModelTestHelper {
@@ -267,7 +320,116 @@ void TestStopmotionUndo::stopmotionCommandsInvertCorrectly() {
 	setMockFileSystem(0);
 }
 
+class AnimTester {
+	const Animation* anim;
+	std::vector<Hash> imageHashes;
+	std::vector<Hash> soundHashes;
+	int scene;
+	int frame;
+	int sound;
+	int soundCount;
+	void frameEnd() {
+		QVERIFY(sound == anim->soundCount(scene, frame));
+		sound = 0;
+		++frame;
+	}
+	void sceneEnd() {
+		frameEnd();
+		QVERIFY(frame == anim->frameCount(scene));
+		frame = 0;
+		++scene;
+	}
+	void testFrame(int n) {
+		const char* path = anim->getImagePath(scene, frame);
+		FILE* fh = fopen(path, "r");
+		Hash h;
+		h.add(fh);
+		fclose(fh);
+		QCOMPARE(imageHashes[n], h);
+	}
+	void testSound(int n) {
+		const char* path = anim->getSoundPath(scene, frame, sound - 1);
+		FILE* fh = fopen(path, "r");
+		Hash h;
+		h.add(fh);
+		fclose(fh);
+		QCOMPARE(soundHashes[n], h);
+	}
+public:
+	AnimTester(const Animation* a) : anim(a), scene(0),
+			frame(0), sound(0), soundCount(0) {
+		getHashes(imageHashes, "resources/frame?.jpg");
+		getHashes(soundHashes, "resources/sound?.ogg");
+	}
+	~AnimTester() {
+	}
+	void test(const char* expected) {
+		scene = 0;
+		frame = 0;
+		sound = 0;
+		for (; *expected; ++expected) {
+			switch (*expected) {
+			case ';':
+				sceneEnd();
+				break;
+			case ',':
+				frameEnd();
+				break;
+			case '/':
+				++sound;
+				break;
+			default:
+				int n = *expected - '0';
+				QVERIFY(0 <= n && n <= 9);
+				if (sound == 0) {
+					testFrame(n);
+				} else {
+					testSound(n);
+					++soundCount;
+				}
+				break;
+			}
+		}
+		sceneEnd();
+		QCOMPARE(soundCount, anim->soundCount());
+	}
+};
+
+void TestStopmotionUndo::setUpAnim() {
+	setMockFileSystem(testEnvFs);
+	WorkspaceFile::clear();
+	delete anim;
+	anim = 0;
+	delete animTester;
+	animTester = 0;
+	anim = new Animation();
+	anim->registerFrontend(mockFrontend);
+	animTester = new AnimTester(anim);
+	anim->newScene(0);
+	anim->newScene(1);
+	anim->newScene(2);
+	std::vector<const char*> frames0;
+	frames0.insert(frames0.end(), "resources/frame0.jpg");
+	frames0.insert(frames0.end(), "resources/frame1.jpg");
+	anim->addFrames(0, 0, frames0);
+	std::vector<const char*> frames1;
+	frames1.insert(frames1.end(), "resources/frame2.jpg");
+	anim->addFrames(1, 0, frames1);
+	std::vector<const char*> frames2;
+	frames2.insert(frames2.end(), "resources/frame3.jpg");
+	frames2.insert(frames2.end(), "resources/frame4.jpg");
+	anim->addFrames(2, 0, frames2);
+	anim->addSound(2, 0, "resources/sound0.ogg");
+	anim->addSound(2, 1, "resources/sound1.ogg");
+}
+
 void TestStopmotionUndo::addFrames() {
+	setUpAnim();
+	std::vector<const char*> newFrames(2);
+	newFrames[0] = "resources/frame5.jpg";
+	newFrames[1] = "resources/frame6.jpg";
+	anim->addFrames(0, 1, newFrames);
+	animTester->test("0,5,6,1;2;3/0,4/1");
 }
 
 void TestStopmotionUndo::removeFrames() {

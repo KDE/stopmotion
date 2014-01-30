@@ -145,7 +145,8 @@ int Animation::addSound(int32_t scene, int32_t frameNumber,
 	ss << "Sound " << WorkspaceFile::getSoundNumber();
 	int size = (ss.tellp() - zeroOffset) + 1;
 	char* soundName = new char[size];
-	strncpy(soundName, ss.str().c_str(), size);
+	std::string sc = ss.str();
+	strncpy(soundName, sc.c_str(), size);
 	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
 	int32_t index = soundCount(scene, frameNumber);
@@ -423,4 +424,13 @@ void Animation::resync(std::exception& e) {
 	if (frontend)
 		frontend->reportError(e.what(), 1);
 	scenes->resync();
+}
+
+const char* Animation::getSoundPath(int scene, int frame, int sound) const {
+	return scenes->getScene(scene)->getSound(frame, sound)->getAudio()
+			->getSoundPath();
+}
+
+int Animation::soundCount() const {
+	return scenes->soundCount();
 }

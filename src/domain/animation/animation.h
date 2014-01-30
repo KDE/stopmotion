@@ -175,8 +175,8 @@ public:
 	const char* getSoundName(int scene, int frame, int soundNumber) const;
 
 	/**
-	 * Sets the name of the sound with index soundNumber in the frame with
-	 * index frameNumber to soundName.
+	 * Sets the name of the sound with index {@a soundNumber} in the frame with
+	 * index {@a frameNumber} to {@a soundName}.
 	 * @param sceneNumber The index of the scene containing the frame
 	 * whose sound will be renamed.
 	 * @param frameNumber the index of the frame the sound is in.
@@ -185,6 +185,17 @@ public:
 	 */
 	void setSoundName(int32_t sceneNumber, int32_t frameNumber,
 			int32_t soundNumber, const char* soundName);
+
+	/**
+	 * Returns the filename of the sound number {@a sound} within frame number
+	 * {@a frame} within scene number {@a scene}.
+	 * @param scene The index of the scene containing the frame.
+	 * @param frame The index of the frame within scene {@a scene}
+	 * @param sound The index of the sound within frame {@frame}.
+	 * @return The path of the file containing the sound. Ownership is not
+	 * returned.
+	 */
+	const char* getSoundPath(int scene, int frame, int sound) const;
 
 	/**
 	 * Returns the total number of frames in the model.
@@ -206,6 +217,13 @@ public:
 	 * @return The number of sounds attached to the specified frame.
 	 */
 	int soundCount(int scene, int frame) const;
+
+	/**
+	 * Returns the total number of sounds in the project.
+	 * @return The total number of sounds in all frames in all scenes.
+	 * Duplicates are counted the number of times they appear.
+	 */
+	int soundCount() const;
 
 	/**
 	 * Retrieves the number of scenes in the animation.

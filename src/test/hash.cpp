@@ -87,3 +87,11 @@ bool operator==(const Hash& a, const Hash& b) {
 bool operator!=(const Hash& a, const Hash& b) {
 	return !a.equals(b);
 }
+
+Hash::Hash(const Hash& other) : h(other.h) {
+}
+
+Hash& Hash::operator=(const Hash& other) {
+	h = other.h;
+	return *this;
+}

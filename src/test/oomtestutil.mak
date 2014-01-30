@@ -1,8 +1,6 @@
-EXE=testoom
 SLIB=oomtestutil.so
 STUB=oomteststub.o
-MAIN=testoom.o
-ALL_PRODUCTS=$(EXE) $(SLIB) $(STUB) $(MAIN)
+ALL_PRODUCTS=$(SLIB) $(STUB)
 
 all: $(ALL_PRODUCTS)
 
@@ -22,9 +20,3 @@ $(SLIB): oomtestutil.cpp
 # here does not help.
 $(STUB): oomteststub.cpp oomtestutil.h
 	g++ -D_GNU_SOURCE -g -c -o $@ $<
-
-# Library switches like -ldl should be at the end of the options list or their
-# symbols won't be seen by object files specified after them.
-$(EXE): $(MAIN) $(STUB)
-	g++ -o $@ $^ -ldl
-

@@ -43,6 +43,8 @@ class Hash {
 	uint64_t h;
 public:
 	Hash();
+	Hash(const Hash&);
+	Hash& operator=(const Hash&);
 	void add(uint64_t n);
 	void addS(int64_t n);
 	void add(const char* string);

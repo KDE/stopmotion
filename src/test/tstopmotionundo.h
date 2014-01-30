@@ -28,14 +28,20 @@ class Executor;
 class SceneVector;
 class RealOggEmptyJpg;
 class TestHome;
+class AnimTester;
+class MockFrontend;
 
 class TestStopmotionUndo : public QObject {
 	Q_OBJECT
 	Animation* anim;
+	MockFrontend* mockFrontend;
 	SceneVector* sv;
 	Executor* ex;
 	RealOggEmptyJpg* mfs;
 	TestHome* testEnvFs;
+	AnimTester* animTester;
+	void setUpAnim();
+	void checkAnim(const char*);
 public:
 	TestStopmotionUndo();
 	~TestStopmotionUndo();

@@ -30,6 +30,9 @@
 
 
 class SoundOutOfRangeException : public std::exception {
+public:
+	SoundOutOfRangeException() {
+	}
     const char* what() const _GLIBCXX_USE_NOEXCEPT {
     	return "Internal error: Sound out of range!";
     }
@@ -71,7 +74,8 @@ int Frame::newSound(TemporaryWorkspaceFile& filename) {
 	ss << "Sound" << WorkspaceFile::getSoundNumber();
 	int size = (ss.tellp() - zeroOff) + 1;
 	char* soundName = new char[size];
-	strncpy(soundName, ss.str().c_str(), size);
+	std::string cs = ss.str();
+	strncpy(soundName, cs.c_str(), size);
 	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
 	sound->open(filename);

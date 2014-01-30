@@ -28,6 +28,7 @@
 #include <sys/stat.h>
 #include <sstream>
 #include <memory.h>
+#include <dirent.h>
 
 namespace {
 
@@ -61,8 +62,8 @@ std::ostream& operator<<(std::ostream& s, WorkspacePath) {
  */
 void getFreshFilename(char*& path, const char*& namePart,
 		const char* extension) {
+	std::string pathOut;
 	std::stringstream p;
-	const char* ss = 0;
 	int indexOfName = 0;
 	int size = 0;
 	do {
@@ -74,31 +75,68 @@ void getFreshFilename(char*& path, const char*& namePart,
 		p << nextFileNumber();
 		if (extension)
 			p << extension;
-
-		std::string out = p.str();
-		ss = out.c_str();
-		size = out.length() + 1;
+		pathOut = p.str();
+		size = pathOut.length() + 1;
 		// keep going until we find a filename that doesn't already exist.
-	} while (0 == access(ss, F_OK));
+	} while (0 == access(pathOut.c_str(), F_OK));
 	path = new char[size];
-	strncpy(path, ss, size);
+	strncpy(path, pathOut.c_str(), size);
 	namePart = path + indexOfName;
+}
+
+void ensurePathExists(const char* path) {
+	if (0 == access(path, F_OK))
+		return;
+	std::string copy(path);
+	copy.c_str();  // ensure terminating '\0'
+	char* parent = &copy[0];
+	char* end = strrchr(parent, '/');
+	if (end && end[1] == '\0') {
+		// there is a trailing '/', so let's remove it and try again.
+		*end = '\0';
+		end = strrchr(parent, '/');
+	}
+	if (end) {
+		*end = '\0';
+		ensurePathExists(parent);
+		if (mkdir(path, 0755) < 0)
+			throw WorkspaceDirectoryCreationException();
+	} else {
+		throw WorkspaceDirectoryCreationException();
+	}
+}
+
+void deleteAllFilesIn(const char* path) {
+	DIR* dir = opendir(path);
+	if (!dir)
+		throw WorkspaceDirectoryCreationException();
+	struct dirent* ent = 0;
+	std::string file;
+	while (0 != (ent = readdir(dir))) {
+		switch (ent->d_type) {
+		case DT_DIR:
+			// ignore directories for now
+			break;
+		default:
+			// delete all other types of directory entry
+			file = path;
+			file.append(1, '/');
+			file.append(ent->d_name);
+			unlink(file.c_str());
+			break;
+		}
+	}
+	closedir(dir);
 }
 
 }
 
 void WorkspaceFile::clear() {
-	std::stringstream ps;
-	ps << workspacePath;
-	const char* path = ps.str().c_str();
-	std::stringstream rm;
-	rm << "rm -rf " << path;
-	system(rm.str().c_str());
-	std::stringstream mkdir;
-	mkdir << "mkdir -p " << path;
-	if (system(mkdir.str().c_str()) != 0) {
-		throw WorkspaceDirectoryCreationException();
-	}
+	std::stringstream pathStr;
+	pathStr << workspacePath;
+	std::string path = pathStr.str();
+	ensurePathExists(path.c_str());
+	deleteAllFilesIn(path.c_str());
 	fileNum = 0;
 	soundNumber = 0;
 }

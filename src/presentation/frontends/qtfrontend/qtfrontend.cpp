@@ -183,7 +183,8 @@ void QtFrontend::initializePreferences()
 	if (prefsFileExists != -1) {
 		std::ostringstream copyCmd;
 		copyCmd << "/bin/cp " << preferencesFile << " " << oldPrefsFile;
-		system(copyCmd.str().c_str());
+		std::string ccs = copyCmd.str();
+		system(ccs.c_str());
 	}
 
 	// If file doesn't exist or has wrong version number
