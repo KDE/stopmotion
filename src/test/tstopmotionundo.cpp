@@ -328,18 +328,23 @@ class AnimTester {
 	int frame;
 	int sound;
 	int soundCount;
+	bool seenFrame;
 	void frameEnd() {
-		QVERIFY(sound == anim->soundCount(scene, frame));
+		QCOMPARE(sound, anim->soundCount(scene, frame));
 		sound = 0;
 		++frame;
 	}
 	void sceneEnd() {
-		frameEnd();
-		QVERIFY(frame == anim->frameCount(scene));
+		if (seenFrame) {
+			frameEnd();
+			seenFrame = false;
+		}
+		QCOMPARE(frame, anim->frameCount(scene));
 		frame = 0;
 		++scene;
 	}
 	void testFrame(int n) {
+		seenFrame = true;
 		const char* path = anim->getImagePath(scene, frame);
 		FILE* fh = fopen(path, "r");
 		Hash h;
@@ -368,6 +373,7 @@ public:
 		frame = 0;
 		sound = 0;
 		soundCount = 0;
+		seenFrame = false;
 		for (; *expected; ++expected) {
 			switch (*expected) {
 			case ';':
@@ -442,6 +448,9 @@ void TestStopmotionUndo::removeFrames() {
 }
 
 void TestStopmotionUndo::moveFrames() {
+	setUpAnim();
+	anim->moveFrames(2, 0, 2, 0, 1);
+	animTester->test("0,3/0,4/1,1;2;");
 }
 
 void TestStopmotionUndo::setImagePath() {
