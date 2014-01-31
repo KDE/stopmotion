@@ -367,6 +367,7 @@ public:
 		scene = 0;
 		frame = 0;
 		sound = 0;
+		soundCount = 0;
 		for (; *expected; ++expected) {
 			switch (*expected) {
 			case ';':
@@ -433,6 +434,11 @@ void TestStopmotionUndo::addFrames() {
 }
 
 void TestStopmotionUndo::removeFrames() {
+	setUpAnim();
+	anim->removeFrames(0, 0, 1);
+	animTester->test("1;2;3/0,4/1");
+	anim->removeFrames(2, 1, 1);
+	animTester->test("1;2;3/0");
 }
 
 void TestStopmotionUndo::moveFrames() {
