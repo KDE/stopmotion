@@ -497,10 +497,21 @@ void TestStopmotionUndo::setSoundName() {
 }
 
 void TestStopmotionUndo::newScene() {
+	setUpAnim();
+	anim->newScene(1);
+	animTester->test("0,1;;2;3/0,4/1");
 }
 
 void TestStopmotionUndo::removeScene() {
+	setUpAnim();
+	anim->removeScene(1);
+	animTester->test("0,1;3/0,4/1");
+	anim->removeScene(1);
+	animTester->test("0,1");
 }
 
 void TestStopmotionUndo::moveScene() {
+	setUpAnim();
+	anim->moveScene(2, 0);
+	animTester->test("3/0,4/1;0,1;2");
 }
