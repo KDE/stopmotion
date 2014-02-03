@@ -41,11 +41,13 @@ class TestStopmotionUndo : public QObject {
 	TestHome* testEnvFs;
 	AnimTester* animTester;
 	void setUpAnim();
-	void checkAnim(const char*);
 public:
 	TestStopmotionUndo();
 	~TestStopmotionUndo();
 private slots:
+	void newScene();
+	void removeScene();
+	void moveScene();
 	void addFrames();
 	void removeFrames();
 	void moveFrames();

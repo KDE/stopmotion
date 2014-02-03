@@ -475,10 +475,32 @@ void TestStopmotionUndo::duplicateImage() {
 }
 
 void TestStopmotionUndo::addSound() {
+	setUpAnim();
+	anim->addSound(2, 0, "resources/sound2.ogg");
+	animTester->test("0,1;2;3/0/2,4/1");
 }
 
 void TestStopmotionUndo::removeSound() {
+	setUpAnim();
+	anim->addSound(2, 0, "resources/sound2.ogg");
+	anim->removeSound(2, 0, 0);
+	animTester->test("0,1;2;3/2,4/1");
+	anim->removeSound(2, 0, 0);
+	animTester->test("0,1;2;3,4/1");
 }
 
 void TestStopmotionUndo::setSoundName() {
+	setUpAnim();
+	anim->setSoundName(2, 0, 0, "tommy");
+	animTester->test("0,1;2;3/0,4/1");
+	QCOMPARE(anim->getSoundName(2, 0, 0), "tommy");
+}
+
+void TestStopmotionUndo::newScene() {
+}
+
+void TestStopmotionUndo::removeScene() {
+}
+
+void TestStopmotionUndo::moveScene() {
 }
