@@ -22,6 +22,7 @@
 
 #include "workspacefile.h"
 
+#include <limits.h>
 #include <vector>
 #include <string>
 

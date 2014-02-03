@@ -116,8 +116,8 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	changeMonitor       = 0;
 	lastVisitedDir      = 0;
 
-	lastVisitedDir = new char[256];
-	strcpy( lastVisitedDir, getenv("PWD") );
+	lastVisitedDir = new char[PATH_MAX];
+	strncpy( lastVisitedDir, getenv("PWD"), PATH_MAX );
 
 	centerWidget = new QWidget;
 	centerWidget->setObjectName("CenterWidget");
@@ -602,7 +602,7 @@ void MainWindowGUI::retranslateHelpText()
 			tr("<h4>Save</h4> "
 			"<p><em>Saves</em> the current animation as a Stopmotion "
 			"project file. <BR>If this project has been saved before it will "
-			"automaticly be saved to the previously selected file.</p>");
+			"automatically be saved to the previously selected file.</p>");
 	saveAct->setWhatsThis(infoText);
 	infoText =
 			saveAct->toolTip().prepend(tr("Save project"));
@@ -871,16 +871,15 @@ void MainWindowGUI::openThirdMostRecent()
 
 void MainWindowGUI::saveProjectAs()
 {
-	QString file = QFileDialog::
-		getSaveFileName(this,
-				tr("Save As"),
-				QString::fromLocal8Bit(lastVisitedDir),
-				"Stopmotion (*.sto)");
+	QString file = QFileDialog::getSaveFileName(this,
+			tr("Save As"),
+			QString::fromLocal8Bit(lastVisitedDir),
+			"Stopmotion (*.sto)");
 
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
-                string path = DomainFacade::getFacade()->getProjectPath();
-                path += "images/";
+		std::string path = DomainFacade::getFacade()->getProjectPath();
+		path += "images/";
 		changeMonitor->addDirectory(path);
 		//fileMenu->setItemEnabled(SAVE, true);
 		saveAct->setEnabled(true);
@@ -945,7 +944,7 @@ void MainWindowGUI::exportToVideo()
 	}
 	else {
 		bool isCanceled = false;
-		char tmp[256];
+		char tmp[PATH_MAX];
 		VideoEncoder enc;
 
 		sprintf(tmp, "startEncoder%d", active);

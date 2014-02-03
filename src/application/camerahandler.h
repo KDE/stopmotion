@@ -82,7 +82,7 @@ private:
 	QStatusBar *statusBar;
 	QPushButton *cameraButton;
 	QTimer *timer;
-	char temp[256];
+	char temp[PATH_MAX];
 	bool isCameraOn;
 	ModelHandler *modelHandler;
 	

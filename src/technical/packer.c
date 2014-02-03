@@ -42,7 +42,7 @@ int create(char *tarFile, char *rootDir, libtar_list_t *l)
 	}
 	
 	char *pathname = NULL;
-	char buf[256] = {0};
+	char buf[PATH_MAX] = {0};
 	libtar_listptr_t lp;
 	libtar_listptr_reset(&lp);
 	
@@ -121,7 +121,7 @@ int pack(char *directory, char *toProjectFile)
 	assert(directory != NULL);
 	assert(toProjectFile != NULL);
 
-	char tmp[256] = {0};
+	char tmp[PATH_MAX] = {0};
 	
 	int len = strlen(directory);
 	if (directory[len - 1] == '/') {
@@ -162,7 +162,7 @@ char* unpack(char *projectFile, char *rootDir)
 	// The routine for detecting the path of the unpacked data
 	// is not general. It is only guaranted to work with stopmotion.
 	
-	char tmp[256] = {0};
+	char tmp[PATH_MAX] = {0};
 	DIR *dp = opendir(rootDir);
 	struct dirent *ep;
 	struct stat st;

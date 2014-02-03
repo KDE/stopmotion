@@ -1,5 +1,0 @@
-#include "src/config.h"
-
-const char *const stopmotion::htmlDirectory = "@HTML_DIR@";
-const char *const stopmotion::translationsDirectory = "@TRANSLATIONS_DIR@";
-

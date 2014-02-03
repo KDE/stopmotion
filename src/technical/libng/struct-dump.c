@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <string.h>
 #include <inttypes.h>
 #include <ctype.h>
@@ -33,7 +34,7 @@ struct struct_desc desc_timeval[] = {{
 int print_struct(FILE *fp, struct struct_desc *desc, void *data,
 		 char *prefix, int tab)
 {
-	char name[256];
+	char name[PATH_MAX];
 	unsigned char *ptr = data;
 	uint64_t u64;
 	int64_t  s64;

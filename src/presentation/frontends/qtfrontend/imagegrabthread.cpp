@@ -37,7 +37,7 @@ void ImageGrabThread::run()
 		if (!wasGrabSuccess) {
 			break;
 		}
-		frameView->redraw();
+		emit grabbed();
 	}
 }
 
