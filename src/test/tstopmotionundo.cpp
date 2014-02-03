@@ -347,6 +347,11 @@ class AnimTester {
 		seenFrame = true;
 		const char* path = anim->getImagePath(scene, frame);
 		FILE* fh = fopen(path, "r");
+		if (!fh) {
+			char msg[500];
+			snprintf(msg, sizeof(msg), "Failed to open file %s", path);
+			QFAIL(msg);
+		}
 		Hash h;
 		h.add(fh);
 		fclose(fh);
@@ -362,7 +367,7 @@ class AnimTester {
 	}
 public:
 	AnimTester(const Animation* a) : anim(a), scene(0),
-			frame(0), sound(0), soundCount(0) {
+			frame(0), sound(0), soundCount(0), seenFrame(false) {
 		getHashes(imageHashes, "resources/frame?.jpg");
 		getHashes(soundHashes, "resources/sound?.ogg");
 	}
@@ -454,9 +459,19 @@ void TestStopmotionUndo::moveFrames() {
 }
 
 void TestStopmotionUndo::setImagePath() {
+	setUpAnim();
+	std::string oldPath = anim->getImagePath(2, 1);
+	anim->setImagePath(2, 1, "resources/frame5.jpg");
+	QVERIFY(oldPath != anim->getImagePath(2, 1));
+	animTester->test("0,1;2;3/0,5/1");
 }
 
 void TestStopmotionUndo::duplicateImage() {
+	setUpAnim();
+	std::string oldPath = anim->getImagePath(2, 1);
+	anim->duplicateImage(2, 1);
+	QVERIFY(oldPath != anim->getImagePath(2, 1));
+	animTester->test("0,1;2;3/0,4/1");
 }
 
 void TestStopmotionUndo::addSound() {

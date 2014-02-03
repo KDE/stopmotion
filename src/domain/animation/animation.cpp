@@ -301,14 +301,14 @@ bool Animation::isUnsavedChanges() {
 void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
 		const char* newImagePath) {
 	TemporaryWorkspaceFile twf(newImagePath);
-	executor->execute(Commands::setImage, sceneNumber, frameNumber, twf.path());
+	executor->execute(Commands::setImage, sceneNumber, frameNumber, twf.basename());
 	twf.retainFile();
 }
 
 void Animation::duplicateImage(int32_t sceneNumber, int32_t frameNumber) {
 	const char* currentPath = getImagePath(sceneNumber, frameNumber);
 	TemporaryWorkspaceFile twf(currentPath, TemporaryWorkspaceFile::forceCopy);
-	executor->execute(Commands::setImage, sceneNumber, frameNumber, twf.path());
+	executor->execute(Commands::setImage, sceneNumber, frameNumber, twf.basename());
 	twf.retainFile();
 }
 
