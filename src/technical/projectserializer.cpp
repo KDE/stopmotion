@@ -213,20 +213,18 @@ void ProjectSerializer::getAttributes(xmlNodePtr node,
 					char tmp[PATH_MAX] = {0};
 					// The node is a image node
 					if ( strcmp(nodeName, "img") == 0 ) {
-						snprintf(tmp, sizeof(tmp), "%s%s", imagePath, filename);
-						TemporaryWorkspaceFile twf(tmp);
-						Frame *f = new Frame(twf);
+						WorkspaceFile wf(filename);
+						Frame *f = new Frame(wf);
 						Scene *s = sVect.back();
 						s->addSavedFrame(f);
 					}
 					// The node is a sound node
 					else {
-						snprintf(tmp, sizeof(tmp), "%s%s", soundPath, filename);
 						Scene *s = sVect.back();
 						int frameNum = s->getSize() - 1;
-						TemporaryWorkspaceFile twf(tmp);
+						WorkspaceFile wf(filename);
 						int soundNum = s->soundCount(frameNum);
-						s->newSound(frameNum, twf);
+						s->newSound(frameNum, wf);
 						char *soundName = (char*)xmlGetProp(currNode, BAD_CAST "alt");
 						if (soundName != NULL) {
 							s->setSoundName(frameNum, soundNum,  soundName);

@@ -40,11 +40,11 @@ OggVorbis::~OggVorbis() {
 }
 
 
-void OggVorbis::setFilename(TemporaryWorkspaceFile& filename) {
-	assert(filename.path() != NULL);
+void OggVorbis::setFilename(WorkspaceFile& file) {
+	assert(file.path() != NULL);
 
 	// Opens the file and tests for vorbis-ness
-	FILE *f = fopen(filename.path(), "r");
+	FILE *f = fopen(file.path(), "r");
 	if (f) {
 		if (oggFile != NULL) {
 			free(oggFile);
@@ -69,7 +69,7 @@ void OggVorbis::setFilename(TemporaryWorkspaceFile& filename) {
 		ov_clear(oggFile);
 		free(oggFile);
 		oggFile = NULL;
-		this->filename.take(filename);
+		this->filename.swap(file);
 	}
 	else {
 		Logger::get().logDebug("Cannot open file for reading");

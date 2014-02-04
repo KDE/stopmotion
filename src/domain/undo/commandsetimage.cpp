@@ -24,7 +24,7 @@
 #include "src/domain/animation/scene.h"
 
 CommandSetImage::CommandSetImage(AnimationImpl& model, int32_t scene,
-		int32_t frame, TemporaryWorkspaceFile& w)
+		int32_t frame, WorkspaceFile& w)
 		: sv(model), sc(scene), fr(frame), image(w) {
 }
 
@@ -53,7 +53,6 @@ Command* CommandSetImageFactory::create(Parameters& ps) {
 	int32_t fr = ps.getInteger(0, frameCount - 1);
 	std::string path;
 	ps.getString(path, "?*.jpg");
-	TemporaryWorkspaceFile twf(path.c_str(),
-			TemporaryWorkspaceFile::alreadyAWorkspaceFile);
+	WorkspaceFile twf(path.c_str());
 	return new CommandSetImage(sv, sc, fr, twf);
 }

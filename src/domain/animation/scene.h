@@ -139,12 +139,12 @@ public:
 	/**
 	 * Adds the sound in the file filename to the end of the sounds in the
 	 * frame with index {@a frameNumber}, giving it an arbitrary name.
-	 * @param filename The file that holds the sound.
+	 * @param file The file that holds the sound.
 	 * @return zero on success, less than zero on failure;
 	 * -1 = file is not readable
 	 * -2 = not a valid audio file
 	 */
-	int newSound(int frameNumber, TemporaryWorkspaceFile& filename);
+	int newSound(int frameNumber, WorkspaceFile& file);
 
 	/**
 	 * Adds a sound to the frame specified.

@@ -126,9 +126,8 @@ Command* CommandAddFactory::create(::Parameters& ps) {
 	std::string frameName;
 	for (int i = 0; i != count; ++i) {
 		ps.getString(frameName, "?*.jpg");
-		TemporaryWorkspaceFile twf(frameName.c_str(),
-				TemporaryWorkspaceFile::alreadyAWorkspaceFile);
-		add->addFrame(new Frame(twf));
+		WorkspaceFile wf(frameName.c_str());
+		add->addFrame(new Frame(wf));
 	}
 	return add;
 }

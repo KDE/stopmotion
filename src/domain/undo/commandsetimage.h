@@ -34,7 +34,7 @@ class CommandSetImage : public Command {
 	WorkspaceFile image;
 public:
 	CommandSetImage(AnimationImpl& model, int32_t scene, int32_t frame,
-			TemporaryWorkspaceFile& w);
+			WorkspaceFile& w);
 	~CommandSetImage();
 	Command* execute();
 };

@@ -22,8 +22,6 @@
 
 #include <exception>
 
-class TemporaryWorkspaceFile;
-
 class CouldNotOpenFileException : public std::exception {
 public:
 	CouldNotOpenFileException();

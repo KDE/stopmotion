@@ -38,9 +38,9 @@ Sound::~Sound() {
 /**
  *@todo check audio type (ogg, mp3, wav ...)
  */
-void Sound::open(TemporaryWorkspaceFile& filename) {
+void Sound::open(WorkspaceFile& file) {
 	std::auto_ptr<OggVorbis> a(new OggVorbis());
-	a->setFilename(filename);
+	a->setFilename(file);
 	af = a.release();
 }
 

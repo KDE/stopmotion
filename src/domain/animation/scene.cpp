@@ -172,10 +172,10 @@ void Scene::replaceImage(int frameNumber, WorkspaceFile& otherImage) {
 	frames[frameNumber]->replaceImage(otherImage);
 }
 
-int Scene::newSound(int frameNumber, TemporaryWorkspaceFile& filename) {
+int Scene::newSound(int frameNumber, WorkspaceFile& file) {
 	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
-	return frames[frameNumber]->newSound(filename);
+	return frames[frameNumber]->newSound(file);
 }
 
 int Scene::soundCount() const {

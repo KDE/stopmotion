@@ -39,9 +39,9 @@ public:
 };
 
 
-Frame::Frame(TemporaryWorkspaceFile& filename) {
-	assert(filename.path() != NULL);
-	imagePath.take(filename);
+Frame::Frame(WorkspaceFile& file) {
+	assert(file.path() != NULL);
+	imagePath.swap(file);
 }
 
 
@@ -65,7 +65,7 @@ const char* Frame::getBasename() const {
 	return imagePath.basename();
 }
 
-int Frame::newSound(TemporaryWorkspaceFile& filename) {
+int Frame::newSound(WorkspaceFile& file) {
 	Logger::get().logDebug("Adding sound in frame");
 	preallocateSounds(1);
 	std::auto_ptr<Sound> sound(new Sound());
@@ -78,7 +78,7 @@ int Frame::newSound(TemporaryWorkspaceFile& filename) {
 	strncpy(soundName, cs.c_str(), size);
 	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
-	sound->open(filename);
+	sound->open(file);
 	WorkspaceFile::nextSoundNumber();
 	sounds.push_back(sound.release());
 

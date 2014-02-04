@@ -39,16 +39,16 @@ class WorkspaceDirectoryCreationException : public std::exception {
 /**
  * Represents the filename of a file in the workspace (~/.stopmotion/tmp/).
  * The file is not held open, nor is it deleted on destruction.
+ * @par
+ * To be used by commands in the undo system and objects manipulated by such
+ * commands.
  */
 class WorkspaceFile {
 	char* fullPath;
 	const char* namePart;
-	WorkspaceFile(const WorkspaceFile&);
-	WorkspaceFile& operator=(const WorkspaceFile);
 public:
-	enum FreshFilename {
-		freshFilename
-	};
+	WorkspaceFile(const WorkspaceFile&);
+	WorkspaceFile& operator=(const WorkspaceFile&);
 	/**
 	 * Creates a WorkspaceFile referring to no file. Both @ref basename and
 	 * @ref path will return null until a @ref TemporaryWorkspaceFile is
@@ -56,23 +56,13 @@ public:
 	 */
 	WorkspaceFile();
 	/**
-	 * Creates a fresh filename without a file corresponding to it.
-	 * @param extension Characters that must terminate the name, for
-	 * example ".jpg".
+	 * Creates a WorkspaceFile referring to a file already in the workspace
+	 * (having been created by {@c TemporaryWorkspaceFile}).
+	 * @param name The basename of the file (i.e. the return value of
+	 * {@ref TemporaryWorkspaceFile::basename}.
 	 */
-	WorkspaceFile(const char* extension, FreshFilename);
-	/**
-	 * Creates a WorkspaceFile referring to the same file as {@a t}.
-	 * @param t The file to set it to.
-	 */
-	WorkspaceFile(TemporaryWorkspaceFile& t);
+	WorkspaceFile(const char* name);
 	~WorkspaceFile();
-	/**
-	 * Takes ownership of the file owned by @a t, thereby preventing it from
-	 * being deleted when @a t is destroyed. @a t is emptied by this operation
-	 * and so cannot be used again. This operation will not fail.
-	 */
-	void take(TemporaryWorkspaceFile& t);
 	/**
 	 * Gets the file's basename.
 	 * @return The file's name (i.e. with no directory part but including any
@@ -112,6 +102,8 @@ public:
  * Represents the filename of a newly-created file in the workspace
  * (~/.stopmotion/tmp/). This file will be deleted upon destruction unless it
  * has been assigned to a @ref WorkspaceFile beforehand.
+ * @par
+ * To be used by the facade in front of the undo system.
  */
 class TemporaryWorkspaceFile {
 	char* fullPath;
@@ -127,9 +119,6 @@ class TemporaryWorkspaceFile {
 public:
 	enum ForceCopy {
 		forceCopy
-	};
-	enum AlreadyAWorkspaceFile {
-		alreadyAWorkspaceFile
 	};
 	/**
 	 * Copy file with path @a filename into the workspace directory
@@ -151,14 +140,6 @@ public:
 	 * @throws CopyFailedException if the copy failed.
 	 */
 	TemporaryWorkspaceFile(const char* filename, ForceCopy);
-	/**
-	 * Refers to a file already in the workspace. The file counter will be
-	 * advanced if necessary to avoid new files from clashing with this one.
-	 * This file will not be deleted on destruction.
-	 * @param basename the file name (including extension) relative to the
-	 * workspace directory. Ownership is not passed.
-	 */
-	TemporaryWorkspaceFile(const char* basename, AlreadyAWorkspaceFile);
 	~TemporaryWorkspaceFile();
 	/**
 	 * Prevents the file from being deleted on destruction.

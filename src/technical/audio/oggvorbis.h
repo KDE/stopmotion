@@ -44,9 +44,9 @@ public:
 	 * Function for registering the given filename to  be an ogg file. This
 	 * function checks that the file can be opened and that it is a valid
 	 * ogg file.
-	 * @param filename the filename to register
+	 * @param file the filename to register
 	 */
-	void setFilename(TemporaryWorkspaceFile& filename);
+	void setFilename(WorkspaceFile& file);
 	
 	/**
 	 * Function for opening the file registered with setFilename.

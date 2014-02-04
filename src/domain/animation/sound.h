@@ -26,7 +26,7 @@
 #include <string>
 
 class AudioFormat;
-class TemporaryWorkspaceFile;
+class WorkspaceFile;
 
 class Sound {
 	AudioFormat* af;
@@ -37,10 +37,10 @@ public:
 	/**
 	 * Opens an audio file. See {@ref AudioFormat::setFilename} for
 	 * exceptions that might be thrown.
-	 * @param filename The filename to open. Ownership is not passed.
+	 * @param file The filename to open. Ownership is not passed.
 	 * @todo We need a way of mocking this for testing.
 	 */
-	void open(TemporaryWorkspaceFile& filename);
+	void open(WorkspaceFile& file);
 	/**
 	 * Sets or resets the (human-readable) name of this sound.
 	 * @param name The new name or NULL for no name. Ownership is passed.

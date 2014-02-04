@@ -39,9 +39,10 @@ class Frame {
 public:
 	/**
 	 * Creates a frame with the specified file for its picture.
-	 * @param file The picture for this frame.
+	 * @param file The picture for this frame. The WorkspaceFile object is
+	 * emptied by this call.
 	 */
-	Frame(TemporaryWorkspaceFile& file);
+	Frame(WorkspaceFile& file);
 
 	/**
 	 * Cleans up after the frame
@@ -51,12 +52,12 @@ public:
 	/**
 	 * Adds the sound in the file filename to the end of the sounds in this
 	 * frame, giving it an arbitrary name.
-	 * @param filename The file that holds the sound.
+	 * @param file The file that holds the sound.
 	 * @return zero on success, less than zero on failure;
 	 * -1 = file is not readable
 	 * -2 = not a valid audio file
 	 */
-	int newSound(TemporaryWorkspaceFile& filename);
+	int newSound(WorkspaceFile& file);
 
 	/**
 	 * Adds a sound.

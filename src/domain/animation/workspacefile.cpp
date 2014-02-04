@@ -153,29 +153,37 @@ WorkspaceFile::WorkspaceFile()
 		: fullPath(0), namePart(0) {
 }
 
-WorkspaceFile::WorkspaceFile(const char* extension, FreshFilename)
-		: fullPath(0), namePart(0) {
-	getFreshFilename(fullPath, namePart, extension);
-}
-
-WorkspaceFile::WorkspaceFile(TemporaryWorkspaceFile& t)
-		: fullPath(t.fullPath), namePart(t.namePart) {
-	if (fullPath) {
-		int nameStart = namePart - fullPath;
-		size_t length = 1 + nameStart + strlen(namePart);
-		fullPath = new char[length];
-		strncpy(fullPath, t.fullPath, length);
+WorkspaceFile& WorkspaceFile::operator=(const WorkspaceFile& other) {
+	if (other.fullPath) {
+		int nameStart = other.namePart - other.fullPath;
+		size_t length = 1 + nameStart + strlen(other.namePart);
+		char* buffer = new char[length];
+		delete[] fullPath;
+		fullPath = buffer;
+		strncpy(fullPath, other.fullPath, length);
 		namePart = fullPath + nameStart;
 	}
+	return *this;
 }
 
-void WorkspaceFile::take(TemporaryWorkspaceFile& t) {
-	delete[] fullPath;
-	fullPath = t.fullPath;
-	namePart = t.namePart;
-	t.fullPath = 0;
-	t.namePart = 0;
-	t.toBeDeleted = false;
+WorkspaceFile::WorkspaceFile(const WorkspaceFile& t)
+		: fullPath(0), namePart(0) {
+	*this = t;
+}
+
+WorkspaceFile::WorkspaceFile(const char* name)
+		: fullPath(0), namePart(0) {
+	std::stringstream p;
+	p.str("");
+	p << workspacePath;
+	int indexOfName = p.str().length();
+	p << name;
+	std::string out = p.str();
+	const char* cp = out.c_str();
+	int size = out.length() + 1;
+	fullPath = new char[size];
+	strncpy(fullPath, cp, size);
+	namePart = fullPath + indexOfName;
 }
 
 WorkspaceFile::~WorkspaceFile() {
@@ -227,22 +235,6 @@ TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename,
 		ForceCopy)
 		: fullPath(0), namePart(0), toBeDeleted(false) {
 	copyToWorkspace(filename);
-}
-
-TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* basename,
-		AlreadyAWorkspaceFile)
-		: fullPath(0), namePart(0), toBeDeleted(false) {
-	std::stringstream p;
-	p.str("");
-	p << workspacePath;
-	int indexOfName = p.str().length();
-	p << basename;
-	std::string out = p.str();
-	const char* cp = out.c_str();
-	int size = out.length() + 1;;
-	fullPath = new char[size];
-	strncpy(fullPath, cp, size);
-	namePart = fullPath + indexOfName;
 }
 
 TemporaryWorkspaceFile::~TemporaryWorkspaceFile() {
