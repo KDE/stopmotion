@@ -20,10 +20,9 @@
 #ifndef VIDEOFACTORY_H
 #define VIDEOFACTORY_H
 
-#include "videoencoder.h"
-#include "src/technical/projectserializer.h"
-#include "src/presentation/frontends/frontend.h"
-
+class ProjectSerializer;
+class Frontend;
+class VideoEncoder;
 
 /**
  * Class for exporting a stopmotion project ccntaining images and sounds to

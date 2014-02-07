@@ -18,7 +18,12 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "videofactory.h"
+#include "videoencoder.h"
+#include "src/technical/projectserializer.h"
+#include "src/presentation/frontends/frontend.h"
+
 #include <cstring>
+#include <string>
 
 using namespace std;
 

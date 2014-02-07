@@ -152,8 +152,8 @@ bool DomainFacade::openProject(const char *filename) {
 }
 
 
-bool DomainFacade::saveProject(const char *directory) {
-	return animationModel->saveProject(directory);
+void DomainFacade::saveProject(const char *directory) {
+	animationModel->saveProject(directory);
 }
 
 

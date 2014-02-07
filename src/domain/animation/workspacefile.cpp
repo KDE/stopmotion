@@ -129,6 +129,29 @@ void deleteAllFilesIn(const char* path) {
 	closedir(dir);
 }
 
+/**
+ * Returns a freshly-allocated {@c char[]} of the workspace file with basename
+ * {@a basenameIn}.
+ * @param basenameOut Pointer to the suffix of the buffer that matches
+ * {@a basenameIn}.
+ * @param basenameIn The name of the file.
+ * @return The newly-allocated buffer.
+ */
+char* getWorkspaceFilename(const char *&basenameOut, const char* basenameIn) {
+	std::stringstream p;
+	p.str("");
+	p << workspacePath;
+	int indexOfName = p.str().length();
+	p << basenameIn;
+	std::string out = p.str();
+	const char* cp = out.c_str();
+	int size = out.length() + 1;
+	char* fullPath = new char[size];
+	strncpy(fullPath, cp, size);
+	basenameOut = fullPath + indexOfName;
+	return fullPath;
+}
+
 }
 
 void WorkspaceFile::clear() {
@@ -173,17 +196,22 @@ WorkspaceFile::WorkspaceFile(const WorkspaceFile& t)
 
 WorkspaceFile::WorkspaceFile(const char* name)
 		: fullPath(0), namePart(0) {
-	std::stringstream p;
-	p.str("");
-	p << workspacePath;
-	int indexOfName = p.str().length();
-	p << name;
-	std::string out = p.str();
-	const char* cp = out.c_str();
-	int size = out.length() + 1;
-	fullPath = new char[size];
-	strncpy(fullPath, cp, size);
-	namePart = fullPath + indexOfName;
+	fullPath = getWorkspaceFilename(namePart, name);
+}
+
+WorkspaceFile::WorkspaceFile(NewModelFile)
+		: fullPath(0), namePart(0) {
+	fullPath = getWorkspaceFilename(namePart, "new.dat");
+}
+
+WorkspaceFile::WorkspaceFile(CurrentModelFile)
+		: fullPath(0), namePart(0) {
+	fullPath = getWorkspaceFilename(namePart, "current.dat");
+}
+
+WorkspaceFile::WorkspaceFile(CommandLogFile)
+		: fullPath(0), namePart(0) {
+	fullPath = getWorkspaceFilename(namePart, "command.log");
 }
 
 WorkspaceFile::~WorkspaceFile() {

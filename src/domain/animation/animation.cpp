@@ -255,15 +255,9 @@ bool Animation::openProject(const char *filename) {
 }
 
 
-//TODO do this in a less stupid way.
-bool Animation::saveProject(const char *filename) {
+void Animation::saveProject(const char *filename) {
 	assert(filename != 0);
-	std::vector<const Scene*> s;
-	int count = scenes->sceneCount();
-	for (int i = 0; i != count; ++i) {
-		s.push_back(scenes->getScene(i));
-	}
-	return serializer->save(filename, s, frontend);
+	serializer->save(filename, *scenes, frontend);
 }
 
 

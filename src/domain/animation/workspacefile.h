@@ -47,6 +47,9 @@ class WorkspaceFile {
 	char* fullPath;
 	const char* namePart;
 public:
+	enum NewModelFile { newModelFile };
+	enum CurrentModelFile { currentModelFile };
+	enum CommandLogFile { commandLogFile };
 	WorkspaceFile(const WorkspaceFile&);
 	WorkspaceFile& operator=(const WorkspaceFile&);
 	/**
@@ -62,6 +65,25 @@ public:
 	 * {@ref TemporaryWorkspaceFile::basename}.
 	 */
 	WorkspaceFile(const char* name);
+	/**
+	 * Refers to the "new" model file, which should be used by the recovery
+	 * system if either the "current" model file or the command log cannot be
+	 * found. The command log should never be used in conjunction with this
+	 * file. This should only be necessary if a crash occurred during project
+	 * save.
+	 */
+	WorkspaceFile(NewModelFile);
+	/**
+	 * Refers to the "current" model file. If it and the command log are
+	 * present, the recovery system restores from this and then plays back the
+	 * commands from the command log.
+	 */
+	WorkspaceFile(CurrentModelFile);
+	/**
+	 * Refers to the command log. This holds the commands that were issued
+	 * since the "current" model file was written.
+	 */
+	WorkspaceFile(CommandLogFile);
 	~WorkspaceFile();
 	/**
 	 * Gets the file's basename.
@@ -87,7 +109,8 @@ public:
 	/**
 	 * Returns the current sound number counter. This is cleared by a call to
 	 * {@ref clear}. Remember to call {@ref nextSoundNumber} if the sound
-	 * number actually gets used.
+	 * number actually gets used. This is the number to be used in the default
+	 * readable name of a newly-added sound.
 	 * @return One more than the number of calls to {@ref nextSoundNumber}
 	 * since the last call to {@ref clear}.
 	 */

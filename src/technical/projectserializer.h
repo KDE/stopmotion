@@ -20,18 +20,18 @@
 #ifndef PROJECTSERIALIZER_H
 #define PROJECTSERIALIZER_H
 
-#include "src/domain/animation/scene.h"
 #include "src/presentation/frontends/frontend.h"
 
 #include <libxml/tree.h>
 
+#include <vector>
+
+class AnimationImpl;
+class Scene;
 
 /**
- * Class for serializing the project. It creates differents directories containing
- * the files belonging to the current project. Finally everything is packed in
- * a tarball.
- * 
- * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad.
+ * Class for serializing the project.
+ * TODO: clean up all the obsolete stuff.
  */
 class ProjectSerializer
 {
@@ -47,14 +47,13 @@ public:
 	const std::vector<Scene*> open(const char *filename);
 	
 	/**
-	 * Saves the files in differents directories and packs the resulting files
-	 * in a tarball with the same name as 'filename' plus the '.sto' extension.
+	 * Saves the files in a tarball with the name {@a filename} plus the
+	 * {@c .sto} extension.
 	 * @param filename the project file to store the files within
 	 * @param scenes the scenes to be saved
 	 * @param frontend the frontend to display progress to
-	 * @return true if saving was successfull, false otherwise
 	 */
-	bool save(const char *filename, const std::vector<const Scene*>& scenes,
+	void save(const char *filename, const AnimationImpl& scenes,
 			Frontend *frontend);
 	
 	/**
@@ -101,10 +100,10 @@ private:
 	char *prevImgPath;// absolute
 	char *prevXmlFile;// absolute
 	
-	void setAttributes(const std::vector<const Scene*>& scenes,
+	void setAttributes(const AnimationImpl& scenes,
 			Frontend *frontend);
 	void getAttributes(xmlNodePtr node, std::vector<Scene*>& scenes);
-	bool saveDOMToFile(xmlDocPtr doc);
+	void saveDOMToFile(xmlDocPtr doc, const char* filename);
 	void setProjectPaths(const char *unpacked, bool isSave);
 	bool setProjectFile(const char *filename);
 	void cleanupPrev();

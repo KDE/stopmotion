@@ -265,7 +265,7 @@ public:
 	 * @param filename the filename to store the project files within.
 	 * @return true on success, false otherwise
 	 */
-	bool saveProject(const char *filename);
+	void saveProject(const char *filename);
 
 	/**
 	 * Creates a new project.

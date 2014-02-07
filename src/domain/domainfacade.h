@@ -187,7 +187,7 @@ public:
 	/**
 	 * Saves the active project to a XML-file which is written to disk.
 	 */
-	bool saveProject(const char *filename);
+	void saveProject(const char *filename);
 
 	/**
 	 * Creates a new project.
