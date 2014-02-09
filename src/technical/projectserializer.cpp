@@ -294,12 +294,14 @@ void ProjectSerializer::save(const char *filename,
 	images = NULL;
 	sounds = NULL;
 
+	// Write out new.dat file. The recovery system will ignore it until...
 	writeSto(filename, newDat.path(), anim);
 	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
+	// ... the curent.dat is deleted. The log file will now be ignored.
 	unlink(currentDat.path());
 	//TODO Wipe command log
-	if (!Util::copyFile(currentDat.path(), newDat.path())) {
-		throw ProjectFileCreationException("Util::copyFile", strerror(errno));
+	if (rename(newDat.path(), currentDat.path()) < 0) {
+		throw ProjectFileCreationException("rename", strerror(errno));
 	}
 	cleanupPrev();
 
