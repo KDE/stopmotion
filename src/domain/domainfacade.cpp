@@ -147,8 +147,8 @@ void DomainFacade::setSoundName(int sceneNumber, int frameNumber,
 }
 
 
-bool DomainFacade::openProject(const char *filename) {
-	return animationModel->openProject(filename);
+void DomainFacade::openProject(const char *filename) {
+	animationModel->openProject(filename);
 }
 
 

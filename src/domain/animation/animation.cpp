@@ -237,21 +237,16 @@ void Animation::clear() {
 }
 
 
-//TODO make all this exception-safe
-bool Animation::openProject(const char *filename) {
+void Animation::openProject(const char *filename) {
 	clear();
 	assert(filename != 0);
 	vector<Scene*> newScenes = serializer->open(filename);
 	int count = newScenes.size();
 	scenes->preallocateScenes(count);
+	scenes->clear();
 	for (int i = 0; i != count; ++i) {
 		scenes->addScene(i, newScenes[i]);
 	}
-	if (count > 0) {
-		loadSavedScenes();
-		return true;
-	}
-	return false;
 }
 
 
@@ -274,17 +269,6 @@ const char* Animation::getImagePath(int scene, int frame) const {
 const char* Animation::getSoundName(int scene, int frame,
 		int soundNumber) const {
 	return scenes->getScene(scene)->getFrame(frame)->getSoundName(soundNumber);
-}
-
-//TODO change this to something that sets all the scenes at once, notifying
-// once also.
-void Animation::loadSavedScenes() {
-	Logger::get().logDebug("Loading scenes in Animation:");
-
-	unsigned int numElem = scenes->sceneCount();
-	for (unsigned int i = 0; i < numElem; ++i) {
-//		notifyNewScene(i);
-	}
 }
 
 bool Animation::isUnsavedChanges() {

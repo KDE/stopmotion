@@ -182,7 +182,7 @@ public:
 	/**
 	 * Opens a project.
 	 */
-	bool openProject(const char *filename);
+	void openProject(const char *filename);
 
 	/**
 	 * Saves the active project to a XML-file which is written to disk.

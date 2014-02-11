@@ -256,9 +256,8 @@ public:
 	/**
 	 * Opens a project.
 	 * @param filename the project file to open (ends with .sto)
-	 * @return true on success, false otherwise
 	 */
-	bool openProject(const char *filename);
+	void openProject(const char *filename);
 
 	/**
 	 * Saves the active project to a XML-file which is written to disk.
@@ -353,8 +352,6 @@ private:
 
 	/** For the reporting of errors and warnings */
 	Frontend* frontend;
-
-	void loadSavedScenes();
 };
 
 #endif
