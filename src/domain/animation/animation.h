@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -21,10 +21,6 @@
 #define ANIMATION_H
 
 #include "src/config.h"
-#include "scene.h"
-#include "src/technical/projectserializer.h"
-#include "src/technical/audio/ossdriver.h"
-#include "frame.h"
 #include "src/domain/undo/executor.h"
 
 #include <vector>
@@ -37,6 +33,8 @@ class Frontend;
 class Observer;
 class ObserverNotifier;
 class VideoEncoder;
+class ProjectSerializer;
+class AudioDriver;
 
 /**
  * Represents the animation. Is responsible for the undo system and a bunch of
@@ -246,12 +244,10 @@ public:
 	void redo();
 
 	/**
-	 * Retrieves the project directory
-	 * @return the project directory if it's setted, NULL otherwise.
+	 * Retrieves the project file.
+	 * @return the project file if it has been set, NULL otherwise.
 	 */
 	const char *getProjectFile();
-
-	const char *getProjectPath();
 
 	/**
 	 * Opens a project.

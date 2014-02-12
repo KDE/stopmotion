@@ -878,9 +878,6 @@ void MainWindowGUI::saveProjectAs()
 
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
-		std::string path = DomainFacade::getFacade()->getProjectPath();
-		path += "images/";
-		changeMonitor->addDirectory(path);
 		//fileMenu->setItemEnabled(SAVE, true);
 		saveAct->setEnabled(true);
 		setMostRecentProject();

@@ -42,18 +42,19 @@ VideoFactory::~VideoFactory()
 
 const char* VideoFactory::createVideoFile(VideoEncoder *encoder)
 {
+	//TODO Make directory, link/copy into the directory
 	string startCommand = encoder->getStartCommand();
 	if ( !startCommand.empty() ) {
 		int index = startCommand.find("$IMAGEPATH");
 		if (index != -1) {
-			if ( serializer->getImagePath() ) {
-				string s = serializer->getImagePath();
-				string imagePath = s.substr(0, s.length() - 1);
-				startCommand.replace(index, strlen("$IMAGEPATH"), imagePath);
-			}
-			else {
-				return NULL;
-			}
+//			if ( serializer->getImagePath() ) {
+//				string s = serializer->getImagePath();
+//				string imagePath = s.substr(0, s.length() - 1);
+//				startCommand.replace(index, strlen("$IMAGEPATH"), imagePath);
+//			}
+//			else {
+//				return NULL;
+//			}
 		}
 		index = startCommand.find("$VIDEOFILE");
 		if (index != -1) {

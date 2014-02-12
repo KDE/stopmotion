@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -23,9 +23,12 @@
 #include "src/foundation/logger.h"
 #include "src/technical/audio/ossdriver.h"
 #include "src/technical/video/videofactory.h"
+#include "src/technical/projectserializer.h"
 #include "workspacefile.h"
 #include "scenevector.h"
 #include "sound.h"
+#include "scene.h"
+#include "frame.h"
 #include "animationimpl.h"
 #include "src/domain/observernotifier.h"
 #include "src/presentation/observer.h"
@@ -58,7 +61,6 @@ Animation::Animation()
 
 Animation::~Animation() {
 	delete scenes;
-	serializer->cleanup();
 	delete serializer;
 	serializer = NULL;
 	delete audioDriver;
@@ -224,13 +226,8 @@ const char* Animation::getProjectFile() {
 	return serializer->getProjectFile();
 }
 
-const char* Animation::getProjectPath() {
-	return serializer->getProjectPath();
-}
-
 
 void Animation::clear() {
-	serializer->cleanup();
 	scenes->clear();
 	executor->clearHistory();
 	WorkspaceFile::clear();

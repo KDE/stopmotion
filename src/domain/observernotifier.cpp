@@ -96,7 +96,8 @@ public:
 };
 
 void ObserverNotifier::clear() {
-	del->clear();
+	AnimationClearer ac;
+	doOp(ac);
 }
 
 int ObserverNotifier::sceneCount() const {

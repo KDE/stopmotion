@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -181,6 +181,7 @@ public:
 
 	/**
 	 * Opens a project.
+	 * @param filename The file to load
 	 */
 	void openProject(const char *filename);
 
@@ -232,12 +233,6 @@ public:
 	 * @return The project file if it has been set, NULL otherwise.
 	 */
 	const char* getProjectFile();
-
-	/**
-	 * Retrieves the project path.
-	 * @return the project path if it's setted, NULL otherwise.
-	 */
-	const char* getProjectPath();
 
 	/**
 	 * Undoes the last undoable operation on the model.

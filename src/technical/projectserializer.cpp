@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,10 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "projectserializer.h"
 
 #include "src/foundation/logger.h"
-#include "packer.h"
 #include "src/domain/filenamevisitor.h"
 #include "src/domain/animation/scene.h"
 #include "src/domain/animation/frame.h"
@@ -30,22 +30,14 @@
 #include "src/technical/audio/audioformat.h"
 #include "src/technical/util.h"
 
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <libgen.h>
-#include <stdlib.h>
 #include <cstring>
 #include <unistd.h>
 #include <fcntl.h>
 #include <libtar.h>
-#include <stdio.h>
 #include <errno.h>
 #include <string>
 #include <set>
 #include <exception>
-
-const char ProjectSerializer::imageDirectory[] = "images/";
-const char ProjectSerializer::soundDirectory[] = "sounds/";
 
 class FileException : public std::exception {
 	char buffer[100];
@@ -73,29 +65,14 @@ public:
 	}
 };
 
-ProjectSerializer::ProjectSerializer() {
-	doc = NULL;
-	dtd = NULL;
-	rootNode = NULL;
-	scenes = NULL;
-	images = NULL;
-	sounds = NULL;
-
+ProjectSerializer::ProjectSerializer() : projectFile(0) {
 	LIBXML_TEST_VERSION
 	;
-
-	projectPath = NULL;
-	projectFile = NULL;
-	imagePath = NULL;
-	soundPath = NULL;
-	xmlFile = NULL;
-	prevProPath = NULL;
-	prevImgPath = NULL;
-	prevXmlFile = NULL;
 }
 
 ProjectSerializer::~ProjectSerializer() {
-	cleanup();
+	delete[] projectFile;
+	projectFile = 0;
 }
 
 class TarFileRead {
@@ -207,30 +184,37 @@ void readSto(const char* filename) {
 	sto.finish();
 }
 
+// appends .sto to filename if appropriate to make a project filename
+void ProjectSerializer::setProjectFile(const char *filename) {
+	static const char* appendix = ".sto";
+	const size_t len = strlen(filename);
+	char* newProjectFile = new char[len + sizeof(appendix)];
+	strcpy(newProjectFile, filename);
+	const char *dotPtr = strrchr(filename, '.');
+	if (dotPtr == NULL || strcmp(dotPtr, ".sto") != 0) {
+		strcat(newProjectFile, ".sto");
+	}
+	delete[] projectFile;
+	projectFile = newProjectFile;
+}
+
 const std::vector<Scene*> ProjectSerializer::open(const char *filename) {
 	assert(filename != NULL);
-	bool isNewProFile = setProjectFile(filename);
+	setProjectFile(filename);
 	WorkspaceFile::clear();
 	readSto(projectFile);
 	WorkspaceFile dat(WorkspaceFile::currentModelFile);
-	doc = xmlReadFile(dat.path(), NULL, 0);
+	xmlDocPtr doc = xmlReadFile(dat.path(), NULL, 0);
 	if (doc == NULL) {
 		Logger::get().logWarning("Couldn't load XML file");
 	}
 
 	std::vector<Scene*> sVect;
-	rootNode = xmlDocGetRootElement(doc);
+	xmlNodePtr rootNode = xmlDocGetRootElement(doc);
 	getAttributes(rootNode, sVect);
 
 	xmlFreeDoc(doc);
 	xmlCleanupParser();
-
-	doc = NULL;
-	dtd = NULL;
-	rootNode = NULL;
-	scenes = NULL;
-	images = NULL;
-	sounds = NULL;
 
 	return sVect;
 }
@@ -376,40 +360,27 @@ void ProjectSerializer::save(const char *filename,
 	assert(filename != NULL);
 	assert(frontend != NULL);
 
-	if (setProjectFile(filename)) {
-		setProjectPaths(projectPath, true);
-	}
-	// Only for backwards compability
-	else if (access(soundPath, F_OK) != 0) {
-		mkdir(soundPath, 0755);
-	}
+	setProjectFile(filename);
 
-	doc = xmlNewDoc(BAD_CAST "1.0");
-	dtd = xmlCreateIntSubset(doc, BAD_CAST "smil",
+	xmlDocPtr doc = xmlNewDoc(BAD_CAST "1.0");
+	xmlDtdPtr dtd = xmlCreateIntSubset(doc, BAD_CAST "smil",
 			BAD_CAST "-//W3C//DTD SMIL 2.0//EN",
 			BAD_CAST "http://www.w3.org/2001/SMIL20/SMIL20.dtd");
 
-	rootNode = xmlNewNode(NULL, BAD_CAST "smil");
+	xmlNodePtr rootNode = xmlNewNode(NULL, BAD_CAST "smil");
 	xmlNewProp(rootNode, BAD_CAST "xmlns",
 			BAD_CAST "http://www.w3.org/2001/SMIL20/Language");
 	xmlNewProp(rootNode, BAD_CAST "xml:lang", BAD_CAST "en");
 	xmlNewProp(rootNode, BAD_CAST "title", BAD_CAST "Stopmotion");
 	xmlDocSetRootElement(doc, rootNode);
 
-	setAttributes(anim, frontend);
+	setAttributes(rootNode, anim, frontend);
 
 	WorkspaceFile newDat(WorkspaceFile::newModelFile);
 	saveDOMToFile(doc, newDat.path());
 
 	xmlFreeDoc(doc);
 	xmlCleanupParser();
-
-	doc = NULL;
-	dtd = NULL;
-	rootNode = NULL;
-	scenes = NULL;
-	images = NULL;
-	sounds = NULL;
 
 	// Write out new.dat file. The recovery system will ignore it until...
 	writeSto(projectFile, newDat.path(), anim);
@@ -420,24 +391,19 @@ void ProjectSerializer::save(const char *filename,
 	if (rename(newDat.path(), currentDat.path()) < 0) {
 		throw ProjectFileCreationException("rename", errno);
 	}
-	cleanupPrev();
 
 	int numElem = anim.sceneCount();
 	frontend->updateProgress(numElem);
 	frontend->hideProgress();
 }
 
-const char* ProjectSerializer::getProjectFile() {
-	return projectFile;
-}
-
-void ProjectSerializer::setAttributes(const AnimationImpl& anim,
-		Frontend *frontend) {
+void ProjectSerializer::setAttributes(xmlNodePtr rootNode,
+		const AnimationImpl& anim, Frontend *frontend) {
 	xmlNodePtr node = NULL;
 	const Frame *frame = NULL;
 	const AudioFormat *sound = NULL;
 
-	scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
+	xmlNodePtr scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
 
 	int numScenes = anim.sceneCount();
 	frontend->showProgress("Saving scenes to disk ...", numScenes);
@@ -447,7 +413,7 @@ void ProjectSerializer::setAttributes(const AnimationImpl& anim,
 		node = xmlNewChild(scenes, NULL, BAD_CAST "seq", NULL);
 
 		// Images
-		images = xmlNewChild(node, NULL, BAD_CAST "images", NULL);
+		xmlNodePtr images = xmlNewChild(node, NULL, BAD_CAST "images", NULL);
 		const Scene* scene = anim.getScene(i);
 		int numFrames = scene->getSize();
 		for (int j = 0; j < numFrames; ++j) {
@@ -459,7 +425,8 @@ void ProjectSerializer::setAttributes(const AnimationImpl& anim,
 			// Sounds
 			int numSounds = frame->soundCount();
 			if (numSounds > 0) {
-				sounds = xmlNewChild(node, NULL, BAD_CAST "sounds", NULL);
+				xmlNodePtr sounds = xmlNewChild(node, NULL, BAD_CAST "sounds",
+						NULL);
 				for (int k = 0; k < numSounds; ++k) {
 					sound = frame->getSound(k)->getAudio();
 					filename = sound->getBasename();
@@ -525,138 +492,6 @@ void ProjectSerializer::saveDOMToFile(xmlDocPtr doc, const char* filename) {
 	}
 }
 
-void ProjectSerializer::setProjectPaths(const char *unpacked, bool isSave) {
-	if (isSave) {
-		storeOldPaths();
-	}
-
-	char bigTmp[PATH_MAX] = { 0 };
-	char tmp[PATH_MAX] = { 0 };
-
-	if (isSave) {
-		char newDir[PATH_MAX] = { 0 };
-		strcpy(tmp, projectFile);
-		char *bname = basename(tmp);
-		char *dotPtr = strrchr(bname, '.');
-		strncpy(newDir, bname, strlen(bname) - strlen(dotPtr));
-		snprintf(bigTmp, sizeof(bigTmp), "%s/.stopmotion/packer/%s/",
-				getenv("HOME"), newDir);
-	} else {
-		snprintf(bigTmp, sizeof(bigTmp), "%s", unpacked);
-	}
-
-	projectPath = new char[strlen(bigTmp) + 1];
-	strcpy(projectPath, bigTmp);
-
-	strncpy(bigTmp, projectPath, strlen(projectPath) - 1);
-	strcat(bigTmp, "\0");
-	char *bname = basename(bigTmp);
-	strcpy(tmp, bname);
-
-	snprintf(bigTmp, sizeof(bigTmp), "%s%s.dat", projectPath, tmp);
-	xmlFile = new char[strlen(bigTmp) + 1];
-	strcpy(xmlFile, bigTmp);
-
-	snprintf(bigTmp, sizeof(bigTmp), "%s%s", projectPath, imageDirectory);
-	imagePath = new char[strlen(bigTmp) + 1];
-	strcpy(imagePath, bigTmp);
-
-	snprintf(bigTmp, sizeof(bigTmp), "%s%s", projectPath, soundDirectory);
-	soundPath = new char[strlen(bigTmp) + 1];
-	strcpy(soundPath, bigTmp);
-
-	if (isSave) {
-		if (access(projectPath, F_OK) != 0) {
-			mkdir(projectPath, 0755);
-			mkdir(imagePath, 0755);
-			mkdir(soundPath, 0755);
-		}
-	}
+const char* ProjectSerializer::getProjectFile() {
+	return projectFile;
 }
-
-bool ProjectSerializer::setProjectFile(const char *filename) {
-	assert(filename != NULL);
-	if (projectFile == NULL || strcmp(projectFile, filename) != 0) {
-		char tmp[PATH_MAX] = { 0 };
-		strcpy(tmp, filename);
-		char *dotPtr = strrchr(tmp, '.');
-
-		// if the file doesn't have an extension, or if it has and
-		// this one isn't '.sto'
-		if (dotPtr == NULL || strcmp(dotPtr, ".sto") != 0) {
-			strcat(tmp, ".sto");
-		}
-
-		if (projectFile != NULL) {
-			delete[] projectFile;
-			projectFile = NULL;
-		}
-
-		projectFile = new char[strlen(tmp) + 1];
-		strcpy(projectFile, tmp);
-		return true;
-	}
-	return false;
-}
-
-const char* ProjectSerializer::getProjectPath() {
-	return projectPath;
-}
-
-const char* ProjectSerializer::getImagePath() {
-	return imagePath;
-}
-
-void ProjectSerializer::cleanup() {
-	if (projectPath != NULL) {
-		char command[PATH_MAX] = { 0 };
-		snprintf(command, PATH_MAX, "rm -rf \"%s\"", projectPath);
-		system(command);
-
-		delete[] projectPath;
-		projectPath = NULL;
-		delete[] projectFile;
-		projectFile = NULL;
-		delete[] imagePath;
-		imagePath = NULL;
-		delete[] soundPath;
-		soundPath = NULL;
-		delete[] xmlFile;
-		xmlFile = NULL;
-
-		cleanupPrev();
-	}
-}
-
-void ProjectSerializer::cleanupPrev() {
-	if (prevProPath != NULL) {
-		char command[PATH_MAX] = { 0 };
-		snprintf(command, sizeof(command), "rm -rf \"%s\"", prevProPath);
-
-		delete[] prevProPath;
-		prevProPath = NULL;
-		delete[] prevImgPath;
-		prevImgPath = NULL;
-		delete[] prevXmlFile;
-		prevXmlFile = NULL;
-	}
-}
-
-void ProjectSerializer::storeOldPaths() {
-	if (projectPath != NULL) {
-		prevProPath = new char[strlen(projectPath) + 1];
-		strcpy(prevProPath, projectPath);
-		prevImgPath = new char[strlen(imagePath) + 1];
-		strcpy(prevImgPath, imagePath);
-		prevXmlFile = new char[strlen(xmlFile) + 1];
-		strcpy(prevXmlFile, xmlFile);
-
-		delete[] projectPath;
-		projectPath = NULL;
-		delete[] imagePath;
-		imagePath = NULL;
-		delete[] xmlFile;
-		xmlFile = NULL;
-	}
-}
-

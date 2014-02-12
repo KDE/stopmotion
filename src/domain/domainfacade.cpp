@@ -202,9 +202,6 @@ const char* DomainFacade::getProjectFile() {
 	return animationModel->getProjectFile();
 }
 
-const char* DomainFacade::getProjectPath() {
-	return animationModel->getProjectPath();
-}
 
 void DomainFacade::undo() {
 	animationModel->undo();
