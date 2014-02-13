@@ -81,7 +81,6 @@ HEADERS += src/domain/undo/filelogger.h \
     src/domain/animation/scene.h \
     src/domain/animation/scenevector.h \
     src/technical/projectserializer.h \
-    src/technical/packer.h \
     src/presentation/frontends/qtfrontend/licence.h \
     src/technical/audio/audiodriver.h \
     src/technical/audio/audioformat.h \
@@ -161,7 +160,6 @@ SOURCES += src/config.cpp \
     src/application/editmenuhandler.cpp \
     src/domain/animation/scene.cpp \
     src/technical/projectserializer.cpp \
-    src/technical/packer.c \
     src/technical/audio/ossdriver.cpp \
     src/technical/audio/oggvorbis.cpp \
     src/technical/audio/audioformat.cpp \

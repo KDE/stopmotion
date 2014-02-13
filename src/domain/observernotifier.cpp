@@ -21,6 +21,7 @@
 #include "observernotifier.h"
 #include "src/presentation/observer.h"
 #include "src/presentation/frontends/frontend.h"
+#include "src/foundation/logger.h"
 
 #include <memory>
 
@@ -80,7 +81,7 @@ void ObserverNotifier::removeObserver(Observer* o) {
 			return;
 		}
 	}
-	// not found. Fail silently?
+	Logger::get().logWarning("Failed to find Observer to remove");
 }
 
 class AnimationClearer : public ObservableOperation {

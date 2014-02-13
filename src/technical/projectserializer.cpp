@@ -66,8 +66,7 @@ public:
 };
 
 ProjectSerializer::ProjectSerializer() : projectFile(0) {
-	LIBXML_TEST_VERSION
-	;
+	LIBXML_TEST_VERSION;
 }
 
 ProjectSerializer::~ProjectSerializer() {
@@ -363,7 +362,7 @@ void ProjectSerializer::save(const char *filename,
 	setProjectFile(filename);
 
 	xmlDocPtr doc = xmlNewDoc(BAD_CAST "1.0");
-	xmlDtdPtr dtd = xmlCreateIntSubset(doc, BAD_CAST "smil",
+	xmlCreateIntSubset(doc, BAD_CAST "smil",
 			BAD_CAST "-//W3C//DTD SMIL 2.0//EN",
 			BAD_CAST "http://www.w3.org/2001/SMIL20/SMIL20.dtd");
 

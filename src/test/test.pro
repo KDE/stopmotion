@@ -36,7 +36,6 @@ HEADERS += ../domain/undo/filelogger.h \
     ../technical/video/videoencoder.h \
     ../technical/audio/ossdriver.h \
     ../technical/projectserializer.h \
-    ../technical/packer.h \
     ../domain/observernotifier.h \
     ../foundation/logger.h
 HEADERS += texecutor.h \
@@ -82,7 +81,6 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../technical/video/videoencoder.cpp \
     ../technical/audio/ossdriver.cpp \
     ../technical/projectserializer.cpp \
-    ../technical/packer.c \
     ../domain/observernotifier.cpp \
     ../foundation/logger.cpp
 SOURCES += \
