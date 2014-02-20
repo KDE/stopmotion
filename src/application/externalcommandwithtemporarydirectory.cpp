@@ -35,7 +35,7 @@ class TemporaryDirectoryCreationException : public std::exception {
 	char msg[100];
 public:
 	TemporaryDirectoryCreationException(const char* reason) {
-		strncmp(reason, msg, sizeof(msg) - 1);
+		strncpy(msg, reason, sizeof(msg) - 1);
 		msg[sizeof(msg) - 1] = '\0';
 	}
 	const char* what() const _GLIBCXX_USE_NOEXCEPT {

@@ -37,6 +37,8 @@ HEADERS += ../domain/undo/filelogger.h \
     ../technical/audio/ossdriver.h \
     ../technical/projectserializer.h \
     ../domain/observernotifier.h \
+    ../application/externalcommandwithtemporarydirectory.h \
+    ../application/externalcommand.h \
     ../foundation/logger.h
 HEADERS += texecutor.h \
 	tcache.h \
@@ -82,6 +84,8 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../technical/audio/ossdriver.cpp \
     ../technical/projectserializer.cpp \
     ../domain/observernotifier.cpp \
+    ../application/externalcommandwithtemporarydirectory.cpp \
+    ../application/externalcommand.cpp \
     ../foundation/logger.cpp
 SOURCES += \
     tmain.cpp \
