@@ -108,6 +108,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/helpwindow.h \
     src/technical/util.h \
     src/application/externalcommand.h \
+    src/application/externalcommandwithtemporarydirectory.h \
     src/presentation/frontends/qtfrontend/aboutdialog.h \
     src/technical/libng/devices.h \
     src/technical/libng/grab-ng.h \
@@ -184,6 +185,7 @@ SOURCES += src/config.cpp \
     src/presentation/frontends/qtfrontend/helpwindow.cpp \
     src/technical/util.cpp \
     src/application/externalcommand.cpp \
+    src/application/externalcommandwithtemporarydirectory.cpp \
     src/presentation/frontends/qtfrontend/aboutdialog.cpp \
     src/technical/libng/devices.c \
     src/technical/libng/grab-ng.c \

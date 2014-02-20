@@ -363,7 +363,7 @@ void Animation::animationChanged(const char *alteredFile) {
 
 
 bool Animation::exportToVideo(VideoEncoder * encoder) {
-	VideoFactory factory(serializer, frontend);
+	VideoFactory factory(scenes, frontend);
 	frontend->showProgress("Exporting ...", 0);
 	if (factory.createVideoFile(encoder) != NULL) {
 		frontend->hideProgress();

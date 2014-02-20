@@ -32,13 +32,72 @@
 #include <string.h>
 #include <cassert>
 #include <istream>
-
+#include <ftw.h>
 
 using namespace std;
 
+FileLinkException::FileLinkException(const char* message) {
+	snprintf(msg, sizeof(msg) - 1, "link error: %s", message);
+	msg[sizeof(msg) - 1] = '\0';
+}
 
-const char* Util::checkCommand(const char *command)
-{
+const char* FileLinkException::what() const _GLIBCXX_USE_NOEXCEPT {
+	return msg;
+}
+
+const char* DirectoryCreationException::what() const
+		_GLIBCXX_USE_NOEXCEPT {
+	return "Failed to create workspace directory (~/.stopmotion/tmp).";
+}
+
+namespace {
+void handleFileLinkError() {
+	switch(errno) {
+	case EACCES:
+		// do not have permissions to write (maybe wrong file system type)
+	case EXDEV:
+		// cannot link across file systems
+	case EMLINK:
+		// too many links already
+		// ...worth trying a different method.
+		return;
+	case EEXIST:
+		throw FileLinkException("File already exists");
+	case ENOENT:
+		throw FileLinkException("File does not exist to be linked to");
+	case ENOSPC:
+		throw FileLinkException("Out of disk space");
+	case EPERM:
+		throw FileLinkException("Permission denied");
+	case EROFS:
+		throw FileLinkException("Cannot write to a read-only file system");
+	case EIO:
+		throw FileLinkException("I/O error");
+	default:
+		throw FileLinkException("unknown error");
+	}
+}
+
+int removeFileOrDirectory(const char *path, const struct stat *,
+		int flag, struct FTW *info) {
+	switch (flag) {
+	case FTW_D:
+		if (info->level != info->base) {
+			if (0 != rmdir(path))
+				return FTW_STOP;
+		}
+		break;
+	default:
+		if (0 != unlink(path))
+			return FTW_STOP;
+		break;
+	}
+	return FTW_CONTINUE;
+}
+
+}
+
+const char* Util::checkCommand(const char *command) {
 	assert(command != 0);
 	
 	int len = 7 + strlen(command);
@@ -61,8 +120,7 @@ const char* Util::checkCommand(const char *command)
 }
 
 
-const vector<GrabberDevice> Util::getGrabberDevices()
-{
+const vector<GrabberDevice> Util::getGrabberDevices() {
 	// Ensures ng_init() is called once
 	static int count = 0;
 	if (count++ == 0) {
@@ -125,8 +183,7 @@ const vector<GrabberDevice> Util::getGrabberDevices()
 	return devices;
 }
 
-bool Util::copyFile(const char *destFileName, const char *srcFileName)
-{
+bool Util::copyFile(const char *destFileName, const char *srcFileName) {
     assert(destFileName != 0);
     assert(srcFileName != 0);
 
@@ -159,4 +216,43 @@ bool Util::copyFile(const char *destFileName, const char *srcFileName)
     fclose(dest);
 
     return true;
+}
+
+void Util::linkOrCopyFile(const char* newName, const char* oldName) {
+	if (-1 == link(oldName, newName)) {
+		handleFileLinkError();
+		if (-1 == symlink(oldName, newName)) {
+			handleFileLinkError();
+			if (!Util::copyFile(newName, oldName))
+				throw FileLinkException("Could not copy file");
+		}
+	}
+}
+
+bool Util::removeDirectoryContents(const char* path) {
+	static const int maxDescripotorsToConsume = 8;
+	return FTW_STOP != nftw(path, removeFileOrDirectory,
+			maxDescripotorsToConsume, FTW_PHYS | FTW_DEPTH | FTW_ACTIONRETVAL);
+}
+
+void Util::ensurePathExists(const char* path) {
+	if (0 == access(path, F_OK))
+		return;
+	std::string copy(path);
+	copy.c_str();  // ensure terminating '\0'
+	char* parent = &copy[0];
+	char* end = strrchr(parent, '/');
+	if (end && end[1] == '\0') {
+		// there is a trailing '/', so let's remove it and try again.
+		*end = '\0';
+		end = strrchr(parent, '/');
+	}
+	if (end) {
+		*end = '\0';
+		ensurePathExists(parent);
+		if (mkdir(path, 0755) < 0)
+			throw DirectoryCreationException();
+	} else {
+		throw DirectoryCreationException();
+	}
 }

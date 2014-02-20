@@ -32,10 +32,6 @@ public:
 	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
-class WorkspaceDirectoryCreationException : public std::exception {
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
-};
-
 /**
  * Represents the filename of a file in the workspace (~/.stopmotion/tmp/).
  * The file is not held open, nor is it deleted on destruction.
@@ -174,16 +170,27 @@ public:
 	 * Returns the path of the file.
 	 * @return Ownership is not returned.
 	 */
-	const char* path() {
+	const char* path() const {
 		return fullPath;
 	}
 	/**
 	 * Returns the basename (with extension) of the file.
 	 * @return Ownership is not returned.
 	 */
-	const char* basename() {
+	const char* basename() const {
 		return namePart;
 	}
+};
+
+class ExportDirectory {
+	char* p;
+public:
+	ExportDirectory();
+	~ExportDirectory();
+	const char* path() const {
+		return p;
+	}
+	void makeEmpty();
 };
 
 #endif /* WORKSPACEFILE_H_ */

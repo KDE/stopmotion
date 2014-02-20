@@ -101,7 +101,9 @@ void ExternalCommand::readFromStandardError()
 void ExternalCommand::submitInputToProgram()
 {
 	if ( lineEdit->isModified() ) {
-		process->write(lineEdit->text().toStdString().c_str());
+		QString input = lineEdit->text();
+		input.append('\n');
+		process->write(input.toLocal8Bit());
 		lineEdit->setText("");
 	}
 }

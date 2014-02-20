@@ -84,51 +84,6 @@ void getFreshFilename(char*& path, const char*& namePart,
 	namePart = path + indexOfName;
 }
 
-void ensurePathExists(const char* path) {
-	if (0 == access(path, F_OK))
-		return;
-	std::string copy(path);
-	copy.c_str();  // ensure terminating '\0'
-	char* parent = &copy[0];
-	char* end = strrchr(parent, '/');
-	if (end && end[1] == '\0') {
-		// there is a trailing '/', so let's remove it and try again.
-		*end = '\0';
-		end = strrchr(parent, '/');
-	}
-	if (end) {
-		*end = '\0';
-		ensurePathExists(parent);
-		if (mkdir(path, 0755) < 0)
-			throw WorkspaceDirectoryCreationException();
-	} else {
-		throw WorkspaceDirectoryCreationException();
-	}
-}
-
-void deleteAllFilesIn(const char* path) {
-	DIR* dir = opendir(path);
-	if (!dir)
-		throw WorkspaceDirectoryCreationException();
-	struct dirent* ent = 0;
-	std::string file;
-	while (0 != (ent = readdir(dir))) {
-		switch (ent->d_type) {
-		case DT_DIR:
-			// ignore directories for now
-			break;
-		default:
-			// delete all other types of directory entry
-			file = path;
-			file.append(1, '/');
-			file.append(ent->d_name);
-			unlink(file.c_str());
-			break;
-		}
-	}
-	closedir(dir);
-}
-
 /**
  * Returns a freshly-allocated {@c char[]} of the workspace file with basename
  * {@a basenameIn}.
@@ -158,8 +113,8 @@ void WorkspaceFile::clear() {
 	std::stringstream pathStr;
 	pathStr << workspacePath;
 	std::string path = pathStr.str();
-	ensurePathExists(path.c_str());
-	deleteAllFilesIn(path.c_str());
+	Util::ensurePathExists(path.c_str());
+	Util::removeDirectoryContents(path.c_str());
 	fileNum = 0;
 	soundNumber = 0;
 }
@@ -281,7 +236,20 @@ const char* CopyFailedException::what() const _GLIBCXX_USE_NOEXCEPT {
 	return "Failed to copy file to workspace directory (~/.stopmotion/tmp).";
 }
 
-const char* WorkspaceDirectoryCreationException::what() const
-		_GLIBCXX_USE_NOEXCEPT {
-	return "Failed to create workspace directory (~/.stopmotion/tmp).";
+ExportDirectory::ExportDirectory() : p(0) {
+	std::stringstream s;
+	s << getenv("HOME");
+	s << "/.stopmotion/export/";
+	std::string pathOut = s.str();
+	pathOut.c_str();  // force allocation of trailing '\0'
+	p = new char[pathOut.length() + 1];
+	strcpy(p, pathOut.c_str());
+}
+
+ExportDirectory::~ExportDirectory() {
+	delete[] p;
+}
+
+void ExportDirectory::makeEmpty() {
+	//TODO
 }

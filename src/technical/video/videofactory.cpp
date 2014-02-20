@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,44 +17,70 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "videofactory.h"
-#include "videoencoder.h"
-#include "src/technical/projectserializer.h"
-#include "src/presentation/frontends/frontend.h"
 
+#include "videofactory.h"
+
+#include "src/domain/animation/animationimpl.h"
+#include "src/presentation/frontends/frontend.h"
+#include "src/technical/util.h"
+#include "src/technical/video/videoencoder.h"
+#include "src/domain/filenamevisitor.h"
+#include "src/foundation/logger.h"
+#include "src/application/externalcommandwithtemporarydirectory.h"
+
+#include <unistd.h>
+#include <cstddef>
+#include <cstdlib>
 #include <cstring>
+#include <exception>
 #include <string>
+#include <sstream>
+#include <iomanip>
+#include <memory>
+
+#include <QString>
 
 using namespace std;
 
-VideoFactory::VideoFactory(ProjectSerializer *serializer, Frontend *frontend)
-		: serializer(serializer), frontend(frontend)
-{
-
+VideoFactory::VideoFactory(const AnimationImpl *animation, Frontend *frontend)
+		: anim(animation), frontend(frontend) {
 }
 
 
-VideoFactory::~VideoFactory()
-{
-
+VideoFactory::~VideoFactory() {
 }
 
+class FileCopier : public FileNameVisitor {
+	int index;
+	const char* dir;
+public:
+	FileCopier(const char* dirPath) : index(0), dir(dirPath) {
+	}
+	~FileCopier() {
+	}
+	void visitImage(const char* p) {
+		std::ostringstream ss;
+		ss << dir << "/" << std::setw(6) << std::setfill('0') << index;
+		std::string path = ss.str();
+		const char* ext = strrchr(p, '.');
+		if (ext)
+			path.append(ext);
+		Util::linkOrCopyFile(path.c_str(), p);
+		++index;
+	}
+	void visitSound(const char*) {
+	}
+};
 
-const char* VideoFactory::createVideoFile(VideoEncoder *encoder)
-{
-	//TODO Make directory, link/copy into the directory
+const char* VideoFactory::createVideoFile(VideoEncoder *encoder) {
 	string startCommand = encoder->getStartCommand();
+	std::auto_ptr<ExternalCommandWithTemporaryDirectory> ec(
+			new ExternalCommandWithTemporaryDirectory());
+	const char* tmpDir = ec->getTemporaryDirectoryPath();
 	if ( !startCommand.empty() ) {
 		int index = startCommand.find("$IMAGEPATH");
 		if (index != -1) {
-//			if ( serializer->getImagePath() ) {
-//				string s = serializer->getImagePath();
-//				string imagePath = s.substr(0, s.length() - 1);
-//				startCommand.replace(index, strlen("$IMAGEPATH"), imagePath);
-//			}
-//			else {
-//				return NULL;
-//			}
+			startCommand.replace(index, strlen("$IMAGEPATH"), tmpDir);
 		}
 		index = startCommand.find("$VIDEOFILE");
 		if (index != -1) {
@@ -70,15 +96,15 @@ const char* VideoFactory::createVideoFile(VideoEncoder *encoder)
 		if (index != -1) {
 			startCommand.replace(index, strlen("$opt"), "");
 		}
-		if ( startEncoder(startCommand.c_str()) == 0 ) {
-			return encoder->getOutputFile();
-		}
+		Logger::get().logDebug("Copying frames into temporary directory %s",
+				tmpDir);
+		FileCopier copier(tmpDir);
+		anim->accept(copier);
+		sync();
+		ec->show();
+		ec->run(QString::fromLocal8Bit(startCommand.c_str()));
+		ec.release();
+		return encoder->getOutputFile();
 	}
 	return NULL;
-}
-
-
-int VideoFactory::startEncoder(const char *command)
-{
-	return frontend->runExternalCommand(command);
 }

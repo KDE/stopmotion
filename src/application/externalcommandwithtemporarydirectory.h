@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2014 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,40 +17,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef UTIL_H
-#define UTIL_H
 
-#include <exception>
-#include <string>
-#include <vector>
+#ifndef EXTERNALCOMMANDWITHTEMPORARYDIRECTORY_H_
+#define EXTERNALCOMMANDWITHTEMPORARYDIRECTORY_H_
 
-struct GrabberDevice {
-	std::string device;
-	std::string name;
-	std::string type;
-};
+class ExternalCommand;
+class TemporaryDirectory;
+class QWidget;
+class QString;
 
-class FileLinkException : public std::exception {
-	char msg[100];
+class ExternalCommandWithTemporaryDirectory {
+	ExternalCommand* ec;
+	TemporaryDirectory* td;
+	ExternalCommandWithTemporaryDirectory&
+	operator=(const ExternalCommandWithTemporaryDirectory&);
+	ExternalCommandWithTemporaryDirectory(
+			const ExternalCommandWithTemporaryDirectory&);
 public:
-	FileLinkException(const char* message);
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
-};
-
-class DirectoryCreationException : public std::exception {
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
-};
-
-class Util
-{
-public:
-	static const char* checkCommand(const char* command);
-	static const std::vector<GrabberDevice> getGrabberDevices();
-	static bool copyFile(const char *destFileName, const char *srcFileName);
-	static void linkOrCopyFile(const char *newName, const char* oldName);
-	static bool removeDirectoryContents(const char* path);
-	static void ensurePathExists(const char* path);
+	ExternalCommandWithTemporaryDirectory(QWidget *parent = 0);
+	~ExternalCommandWithTemporaryDirectory();
+	void run(const QString &command);
+	void show();
+	const char* getTemporaryDirectoryPath() const;
 };
 
 #endif
-

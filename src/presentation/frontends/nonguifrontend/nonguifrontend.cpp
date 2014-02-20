@@ -212,7 +212,8 @@ const char* NonGUIFrontend::getAbsolutePath(const char *path)
 		snprintf(tmp, PATH_MAX, "%s/%s", getenv("PWD"), path);
 	}
 	else {
-		strncpy(tmp, path, PATH_MAX);
+		strncpy(tmp, path, PATH_MAX - 1);
+		tmp[PATH_MAX - 1] = '\0';  // ensure null-terminated
 	}
 	
 	struct stat st;
@@ -223,7 +224,8 @@ const char* NonGUIFrontend::getAbsolutePath(const char *path)
 		// and doesn't ends with a '/'
 		if ( tmp[len - 1] != '/' ) {
 			// append a '/'
-			snprintf(tmp, PATH_MAX, "%s/", tmp);
+			snprintf(tmp, PATH_MAX - 1, "%s/", tmp);
+			tmp[PATH_MAX - 1] = '\0';  // ensure null-terminated
 		}
 	}
 	
@@ -240,9 +242,10 @@ int NonGUIFrontend::checkFiles(const char *directory)
 		struct dirent *ep;
 		struct stat st;
 		char tmp[PATH_MAX] = {0};
-		
+
 		while ( (ep = readdir(dp)) ) {
 			snprintf(tmp, sizeof(tmp), "%s%s", directory, ep->d_name);
+			tmp[sizeof(tmp) - 1] = '\0';  // ensure null-terminated
 			stat(tmp, &st);
 			// is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0) {
