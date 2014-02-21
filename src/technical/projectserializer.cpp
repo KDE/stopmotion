@@ -200,7 +200,6 @@ void ProjectSerializer::setProjectFile(const char *filename) {
 const std::vector<Scene*> ProjectSerializer::open(const char *filename) {
 	assert(filename != NULL);
 	setProjectFile(filename);
-	WorkspaceFile::clear();
 	readSto(projectFile);
 	WorkspaceFile dat(WorkspaceFile::currentModelFile);
 	xmlDocPtr doc = xmlReadFile(dat.path(), NULL, 0);
@@ -353,7 +352,14 @@ void writeSto(const char* filename, const char* xmlProjectFile,
 	sto.finish();
 }
 
-// check if the user wants to save an opened project to an another file.
+/**
+ * Save the current file, putting the current state into the new model file.
+ * The caller is responsible for clearing the command log and then renaming
+ * the new model file to be the current model file.
+ * @param filename The filename to save.
+ * @param anim The animation to save.
+ * @param frontend The UI for reporting progress and errors.
+ */
 void ProjectSerializer::save(const char *filename,
 		const AnimationImpl& anim, Frontend *frontend) {
 	assert(filename != NULL);
@@ -383,14 +389,6 @@ void ProjectSerializer::save(const char *filename,
 
 	// Write out new.dat file. The recovery system will ignore it until...
 	writeSto(projectFile, newDat.path(), anim);
-	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
-	// ... the curent.dat is deleted. The log file will now be ignored.
-	unlink(currentDat.path());
-	//TODO Wipe command log
-	if (rename(newDat.path(), currentDat.path()) < 0) {
-		throw ProjectFileCreationException("rename", errno);
-	}
-
 	int numElem = anim.sceneCount();
 	frontend->updateProgress(numElem);
 	frontend->hideProgress();

@@ -37,6 +37,7 @@
 #include "src/domain/undo/command.h"
 #include "src/domain/undo/executor.h"
 #include "src/domain/undo/addallcommands.h"
+#include "src/domain/undo/filelogger.h"
 
 #include <string.h>
 #include <vector>
@@ -44,17 +45,20 @@
 #include <sstream>
 
 Animation::Animation()
-		: scenes(0), executor(0), serializer(0), audioDriver(0),
+		: scenes(0), executor(0), logger(0), serializer(0), audioDriver(0),
 		  isAudioDriverInitialized(false), frontend(0) {
 	std::auto_ptr<SceneVector> scs(new SceneVector);
 	std::auto_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));
 	scs.release();
 	std::auto_ptr<ProjectSerializer> szer(new ProjectSerializer);
-	std::auto_ptr<Executor> ex(makeAnimationCommandExecutor(*on));
 	std::auto_ptr<OSSDriver> ad(new OSSDriver("/dev/dsp"));
+	std::auto_ptr<Executor> ex(makeAnimationCommandExecutor(*on));
+	std::auto_ptr<FileCommandLogger> lgr(new FileCommandLogger);
+	ex->setCommandLogger(lgr->getLogger());
 	scenes = on.release();
 	serializer = szer.release();
 	executor = ex.release();
+	logger = lgr.release();
 	audioDriver = ad.release();
 }
 
@@ -228,6 +232,7 @@ const char* Animation::getProjectFile() {
 
 
 void Animation::clear() {
+	logger->setLogFile(0);
 	scenes->clear();
 	executor->clearHistory();
 	WorkspaceFile::clear();
@@ -235,7 +240,11 @@ void Animation::clear() {
 
 
 void Animation::openProject(const char *filename) {
+	logger->setLogFile(0);
 	clear();
+	WorkspaceFile commandLogger(WorkspaceFile::commandLogFile);
+	FILE* fh = fopen(commandLogger.path(), "w");
+	logger->setLogFile(fh);
 	assert(filename != 0);
 	vector<Scene*> newScenes = serializer->open(filename);
 	int count = newScenes.size();
@@ -244,12 +253,28 @@ void Animation::openProject(const char *filename) {
 	for (int i = 0; i != count; ++i) {
 		scenes->addScene(i, newScenes[i]);
 	}
+	if (!fh) {
+		frontend->reportError(
+				"Recovery files have not been initialized; "
+				"recovery will not be available!", 1);
+	}
 }
 
 
 void Animation::saveProject(const char *filename) {
 	assert(filename != 0);
 	serializer->save(filename, *scenes, frontend);
+	logger->setLogFile(0);
+	WorkspaceFile commandLogger(WorkspaceFile::commandLogFile);
+	FILE* fh = fopen(commandLogger.path(), "w");
+	logger->setLogFile(fh);
+	WorkspaceFile newDat(WorkspaceFile::newModelFile);
+	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
+	if (rename(newDat.path(), currentDat.path()) < 0 || fh) {
+		frontend->reportError(
+				"Recovery files have not been initialized; "
+				"recovery will not be available!", 1);
+	}
 }
 
 

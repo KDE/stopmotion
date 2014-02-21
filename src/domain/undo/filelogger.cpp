@@ -56,6 +56,10 @@ public:
 	}
 	void writeBuffer() {
 		appendNewline();
+		if (!fh) {
+			buffer.clear();
+			return;
+		}
 		while (!buffer.empty()) {
 			ssize_t s = fwrite(buffer.c_str(), 1, buffer.length(), fh);
 			if (s <= 0) {
@@ -85,7 +89,8 @@ public:
 			endingRequired = noEnding;
 		}
 		writeBuffer();
-		fflush(fh);
+		if (fh)
+			fflush(fh);
 	}
 };
 

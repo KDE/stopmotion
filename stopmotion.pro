@@ -150,6 +150,7 @@ SOURCES += src/config.cpp \
     src/domain/undo/commandaddscene.cpp \
     src/domain/undo/commandmovescene.cpp \
     src/domain/undo/commandremovescene.cpp \
+    src/domain/undo/filelogger.cpp \
     src/domain/animation/workspacefile.cpp \
     src/application/camerahandler.cpp \
     src/presentation/frontends/qtfrontend/frameview.cpp \

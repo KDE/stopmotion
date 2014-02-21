@@ -35,6 +35,7 @@ class ObserverNotifier;
 class VideoEncoder;
 class ProjectSerializer;
 class AudioDriver;
+class FileCommandLogger;
 
 /**
  * Represents the animation. Is responsible for the undo system and a bunch of
@@ -258,7 +259,6 @@ public:
 	/**
 	 * Saves the active project to a XML-file which is written to disk.
 	 * @param filename the filename to store the project files within.
-	 * @return true on success, false otherwise
 	 */
 	void saveProject(const char *filename);
 
@@ -336,6 +336,7 @@ private:
 
 	/** Undo and disaster recovery. */
 	Executor* executor;
+	FileCommandLogger* logger;
 
 	/** Serializer to be used on saving and loading of the project. */
 	ProjectSerializer *serializer;
