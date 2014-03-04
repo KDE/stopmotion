@@ -180,10 +180,13 @@ class FailingStep : public ExecutorStep {
 	ExecutorStep* del;
 	std::string nameString;
 	bool fail;
+	int totalFails;
+	int noMallocsToFailCount;
 public:
 	FailingStep(ExecutorStep* delegate)
 		: ExecutorStep(delegate? delegate->getPrevious() : 0),
-		  del(delegate), nameString("failing "), fail(false) {
+		  del(delegate), nameString("failing "), fail(false),
+		  totalFails(0), noMallocsToFailCount(0) {
 		nameString.append(del->name());
 		nameString.c_str();
 	}
@@ -196,11 +199,18 @@ public:
 	bool failed() const {
 		return fail;
 	}
+	int failedCount() const {
+		return totalFails;
+	}
+	int noMallocsCount() const {
+		return noMallocsToFailCount;
+	}
 	void doStep(Executor& e, RandomSource& rng) {
 		fail = false;
 		long mallocCount = del->getMallocCount();
 		if (mallocCount < 1) {
 			del->doStep(e, rng);
+			++noMallocsToFailCount;
 			return;
 		}
 		int muf = rng.getUniform(mallocCount - 1);
@@ -209,6 +219,7 @@ public:
 			del->doStep(e, rng);
 		} catch(...) {
 			fail = true;
+			++totalFails;
 		}
 		cancelAnyMallocFailure();
 	}
@@ -467,4 +478,9 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 	// allow the logger to write out any remaining buffer upon its
 	// destruction
 	freopen(0, "w", logFile);
+	QVERIFY2(testCount / 2 < failToUndoThenRedo.failedCount()
+			|| testCount < failToUndoThenRedo.noMallocsCount(),
+			"failToUndoThenRedo didn't fail very often");
+	QVERIFY2(testCount / 2 < failToDo.failedCount(),
+			"failToDo didn't fail very often");
 }
