@@ -289,10 +289,10 @@ public:
 	}
 };
 
-class ExecutorDoesThenRandomUndoesAndRedoes : public ExecutorStep {
+class ExecutorDoesAndRandomUndoesAndRedoes : public ExecutorStep {
 	FileCommandLogger* fLogger;
 public:
-	ExecutorDoesThenRandomUndoesAndRedoes(ExecutorStep* following,
+	ExecutorDoesAndRandomUndoesAndRedoes(ExecutorStep* following,
 			FileCommandLogger* fileLogger)
 		: ExecutorStep(following), fLogger(fileLogger) {
 	}
@@ -312,6 +312,7 @@ public:
 		for (int i = 0; i != redoCount; ++i) {
 			e.redo();
 		}
+		e.executeRandomCommands(commandCount, rng, 1, 3);
 	}
 	CommandLogger* logger() const {
 		return fLogger->getLogger();
@@ -427,8 +428,11 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 	FailingStep failToDo(&doStuff);
 
 	// (7) Do, undo some, redo some, do = replay
+	ExecutorDoesAndRandomUndoesAndRedoes doesUndoesRedoes(&construct,
+			&fileLogger);
+
 	// (8) OOM[Do, undo some, redo some, do] = replay
-	//TODO
+	FailingStep failingDur(&doesUndoesRedoes);
 
 	const int commandCount = e.commandCount();
 	const int testCount = 4 * commandCount * commandCount;
@@ -471,7 +475,12 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 		replay.runAndCheck("replays failing sequence correctly",
 				failToDo, e, helper, rng, i);
 		// (7)
-		//TODO
+		replay.runAndCheck("replays sequence of does, undoes and redoes correctly",
+				doesUndoesRedoes, e, helper, rng, i);
+		// (8)
+		replay.runAndCheck("replays failing sequence of does, undoes and redoes correctly",
+				failingDur, e, helper, rng, i);
+
 		rng = redoAgain.finalRng();
 	}
 	cancelAnyMallocFailure();
