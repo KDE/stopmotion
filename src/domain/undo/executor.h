@@ -110,8 +110,10 @@ public:
 	 * @param rng The random number generator.
 	 * @param min The minimum number of commands that should be generated.
 	 * @param max The maximum number of commands that should be generated.
+	 * @param [out] commandCount Returns the number of commands actually
+	 * executed, even if an exception is thrown.
 	 */
-	virtual void executeRandomCommands(RandomSource& rng,
+	virtual void executeRandomCommands(int& commandCount, RandomSource& rng,
 			int min, int max) = 0;
 	/**
 	 * Executes a random set of commands. Used for testing for constructing

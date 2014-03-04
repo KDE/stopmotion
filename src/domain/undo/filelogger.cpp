@@ -77,6 +77,10 @@ public:
 		close();
 		fh = f;
 	}
+	FILE* getLogFile() const {
+		return fh;
+	}
+
 	void writeCommand(const char* c) {
 		writeBuffer();
 		buffer.append(c);
@@ -104,6 +108,10 @@ FileCommandLogger::~FileCommandLogger() {
 
 void FileCommandLogger::setLogFile(FILE* f) {
 	pImpl->setLogFile(f);
+}
+
+FILE* FileCommandLogger::getLogFile() const {
+	return pImpl->getLogFile();
 }
 
 CommandLogger* FileCommandLogger::getLogger() {

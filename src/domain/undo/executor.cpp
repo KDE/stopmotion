@@ -676,7 +676,9 @@ public:
 			return false;
 		throw MalformedLineException();
 	}
-	void executeRandomCommands(RandomSource& rng, int minCount, int maxCount) {
+	void executeRandomCommands(int& commandCount, 	RandomSource& rng,
+			int minCount, int maxCount) {
+		commandCount = 0;
 		int n = factories.size();
 		if (n == 0)
 			throw UnknownCommandException();
@@ -685,7 +687,6 @@ public:
 				i != factories.end(); ++i) {
 			factoryNames.push_back(i->first);
 		}
-		int commandCount = 0;
 		bool dontEnd = false;
 		while (commandCount < maxCount) {
 			int r = rng.getUniform(dontEnd || commandCount < minCount?

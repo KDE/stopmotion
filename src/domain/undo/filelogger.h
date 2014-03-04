@@ -47,6 +47,7 @@ public:
 	FileCommandLogger(const FileCommandLogger&); // unimplemented
 	FileCommandLogger& operator=(const FileCommandLogger&); //unimplemented
 	void setLogFile(FILE* fileHandle);
+	FILE* getLogFile() const;
 	CommandLogger* getLogger();
 	const CommandLogger* getLogger() const;
 };
