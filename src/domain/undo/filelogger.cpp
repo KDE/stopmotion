@@ -20,7 +20,6 @@
 
 #include "filelogger.h"
 #include "commandlogger.h"
-#include "executor.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -34,6 +33,14 @@ class FileCommandLoggerImpl :
 	FILE* fh;
 	std::string buffer;
 	Ending endingRequired;
+	void writeChar(char c) {
+		char b[2];
+		b[0] = c;
+		b[1] = '\0';
+		ssize_t s = fwrite(b, 1, 1, fh);
+		if (s <= 0)
+			throw LoggerWriteFailedException(ferror(fh));
+	}
 public:
 	void close() {
 		if (fh) {
@@ -95,6 +102,12 @@ public:
 		writeBuffer();
 		if (fh)
 			fflush(fh);
+	}
+	void undoComplete() {
+		writeChar('?');
+	}
+	void redoComplete() {
+		writeChar('!');
 	}
 };
 

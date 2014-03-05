@@ -67,23 +67,22 @@ public:
 		if (delegate)
 			delegate->commandComplete();
 	}
+	void undoComplete() {
+		out->append("--undo---\n");
+		if (delegate)
+			delegate->undoComplete();
+	}
+	void redoComplete() {
+		out->append("--redo---\n");
+		if (delegate)
+			delegate->redoComplete();
+	}
 	void setDelegate(CommandLogger* newLogger) {
 		delegate = newLogger;
 	}
 };
 
 ModelTestHelper::~ModelTestHelper() {
-}
-
-bool executeLineFromFile(Executor& e, FILE* logFile) {
-	enum {
-		lineBufferSize = 1024
-	};
-	static char lineBuffer[lineBufferSize];
-	if (!fgets(lineBuffer, lineBufferSize, logFile))
-		return false;
-	e.executeFromLog(lineBuffer);
-	return true;
 }
 
 // runs a part of the test measuring the mallocs and logging the activity
@@ -101,10 +100,12 @@ class ExecutorStep {
 		stringLogger.setDelegate(logger);
 		e.setCommandLogger(&stringLogger);
 	}
+	int activeLog;
 	/**
 	 * Runs the step. Sets malloc count and log.
 	 */
 	void run(Executor& e, RandomSource& rng, int whichLog) {
+		activeLog = whichLog;
 		if (previous)
 			previous->run(e, rng, whichLog);
 		setup(e, logger(), whichLog);
@@ -115,6 +116,9 @@ class ExecutorStep {
 		final = rng;
 	}
 public:
+	int getCurrentlyActiveLog() const {
+		return activeLog;
+	}
 	ExecutorStep* getPrevious() const {
 		return previous;
 	}
@@ -134,13 +138,16 @@ public:
 	virtual CommandLogger* logger() const {
 		return 0;
 	}
+	virtual void appendCommandLog(std::string& out, int which) const {
+		out.append(log[which]);
+	}
 	void getLog(std::string& out, int which) const {
 		if (previous)
 			previous->getLog(out, which);
 		out.append(";\n");
 		out.append(name());
 		out.append(": ");
-		out.append(log[which]);
+		appendCommandLog(out, which);
 	}
 	long getMallocCount() const {
 		return mallocCount;
@@ -349,6 +356,11 @@ public:
 
 class ExecutorReplay : public ExecutorStep {
 	FILE* file;
+	enum {
+		lineBufferSize = 1024
+	};
+	char lineBuffer[lineBufferSize];
+	std::string replayed[2];
 public:
 	ExecutorReplay(ExecutorStep* following, FILE* fh)
 		: ExecutorStep(following), file(fh) {
@@ -356,10 +368,17 @@ public:
 	const char* name() const {
 		return "replay";
 	}
+	void appendCommandLog(std::string& out, int which) const {
+		out.append(replayed[which]);
+	}
 	void doStep(Executor& e, RandomSource&) {
+		int whichLog = getCurrentlyActiveLog();
+		replayed[whichLog].clear();
 		freopen(0, "r", file);
 		try {
-			while (executeLineFromFile(e, file)) {
+			while (fgets(lineBuffer, lineBufferSize, file)) {
+				e.executeFromLog(lineBuffer);
+				replayed[whichLog].append(lineBuffer);
 			}
 		} catch (...) {
 		}

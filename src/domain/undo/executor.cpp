@@ -349,6 +349,22 @@ public:
 		}
 		return parseSucceeded;
 	}
+	int getUndoCount() {
+		int count = 0;
+		for (; p != end; ++p) {
+			switch (*p) {
+			case '?':
+				++count;
+				break;
+			case '!':
+				--count;
+				break;
+			default:
+				return count;
+			}
+		}
+		return count;
+	}
 };
 
 class StringReaderParameters : public Parameters {
@@ -653,6 +669,9 @@ public:
 		StringReader reader;
 		reader.setBuffer(line);
 		std::string id;
+		int undoCount = reader.getUndoCount();
+		for (; undoCount != 0; --undoCount)
+			history.undo();
 		if (StringReader::parseSucceeded == reader.getIdentifier(id)) {
 			const char* commandName = id.c_str();
 			CommandFactory* f = Factory(commandName);
@@ -749,12 +768,16 @@ public:
 		if (!history.canUndo())
 			return false;
 		history.undo();
+		if (logger)
+			logger->undoComplete();
 		return true;
 	}
 	bool redo() {
 		if (!history.canRedo())
 			return false;
 		history.redo();
+		if (logger)
+			logger->redoComplete();
 		return true;
 	}
 	bool canUndo() const {

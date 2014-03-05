@@ -27,6 +27,8 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <sstream>
+#include <exception>
+#include <assert.h>
 
 #include "src/domain/undo/executor.h"
 #include "src/domain/undo/command.h"
@@ -38,6 +40,16 @@
 #include "oomtestutil.h"
 
 static const int32_t no_num = std::numeric_limits<int32_t>::min();
+
+class TestException : public std::exception {
+	const char* msg;
+public:
+	TestException(const char* message) : msg(message) {
+	}
+	const char* what() const _GLIBCXX_USE_NOEXCEPT {
+		return msg;
+	}
+};
 
 /**
  * Test factory for commands that test parsing. When executed, they write a
@@ -132,6 +144,12 @@ public:
 				ex->executeFromLog(command.c_str());
 			}
 		}
+	}
+	void undoComplete() {
+		assert(false);
+	}
+	void redoComplete() {
+		assert(false);
 	}
 };
 
@@ -280,6 +298,8 @@ public:
 };
 
 Command* AddCharFactory::AddChar::execute() {
+	if (p < 0 || static_cast<int32_t>(m->length()) < p)
+		throw TestException("AddCharFactory parameters out-of-range");
 	// insert might throw, so use an auto_ptr to avoid leaks.
 	std::auto_ptr<Command> inv(new DelCharFactory::DelChar(*m, p));
 	std::string::iterator i = m->begin();

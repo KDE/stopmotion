@@ -44,6 +44,14 @@ public:
 	 * Indicates that the command has been successfully executed.
 	 */
 	virtual void commandComplete() = 0;
+	/**
+	 * Indicates that an undo has been successfully performed.
+	 */
+	virtual void undoComplete() = 0;
+	/**
+	 * Indicates that a redo has been successfully performed.
+	 */
+	virtual void redoComplete() = 0;
 };
 
 #endif /* COMMANDLOGGER_H_ */
