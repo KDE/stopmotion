@@ -197,23 +197,27 @@ void ProjectSerializer::setProjectFile(const char *filename) {
 	projectFile = newProjectFile;
 }
 
-const std::vector<Scene*> ProjectSerializer::open(const char *filename) {
+bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) {
+	xmlDocPtr doc = xmlReadFile(filename, NULL, 0);
+	if (!doc) {
+		Logger::get().logWarning("Couldn't load XML file");
+		return false;
+	}
+	xmlNodePtr rootNode = xmlDocGetRootElement(doc);
+	out.clear();
+	getAttributes(rootNode, out);
+	xmlFreeDoc(doc);
+	xmlCleanupParser();
+	return true;
+}
+
+std::vector<Scene*> ProjectSerializer::openSto(const char *filename) {
 	assert(filename != NULL);
 	setProjectFile(filename);
 	readSto(projectFile);
 	WorkspaceFile dat(WorkspaceFile::currentModelFile);
-	xmlDocPtr doc = xmlReadFile(dat.path(), NULL, 0);
-	if (doc == NULL) {
-		Logger::get().logWarning("Couldn't load XML file");
-	}
-
 	std::vector<Scene*> sVect;
-	xmlNodePtr rootNode = xmlDocGetRootElement(doc);
-	getAttributes(rootNode, sVect);
-
-	xmlFreeDoc(doc);
-	xmlCleanupParser();
-
+	openDat(sVect, dat.path());
 	return sVect;
 }
 

@@ -46,7 +46,7 @@ WorkspacePath workspacePath;
 
 std::ostream& operator<<(std::ostream& s, WorkspacePath) {
 	s << getenv("HOME");
-	s << "/.stopmotion/tmp/";
+	s << "/.stopmotion/";
 	return s;
 }
 

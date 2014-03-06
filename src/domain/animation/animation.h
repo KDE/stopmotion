@@ -36,6 +36,7 @@ class VideoEncoder;
 class ProjectSerializer;
 class AudioDriver;
 class FileCommandLogger;
+class Scene;
 
 /**
  * Represents the animation. Is responsible for the undo system and a bunch of
@@ -251,6 +252,14 @@ public:
 	const char *getProjectFile();
 
 	/**
+	 * Clears the animation and loads it from the dat file specified.
+	 * If unsuccessful, the animation is untouched.
+	 * @param filename The XML file to load.
+	 * @return {@c true} if successful.
+	 */
+	bool loadFromDat(const char* filename);
+
+	/**
 	 * Opens a project.
 	 * @param filename the project file to open (ends with .sto)
 	 */
@@ -326,11 +335,29 @@ public:
 	bool exportToCinerella(const char *file);
 
 	/**
+	 * Sets the file to be used as the command log.
+	 * @param file The file, which must be opened for write. Ownership is
+	 * passed.
+	 */
+	void setCommandLoggerFile(FILE* file);
+
+	/**
+	 * Replay the commands in the file.
+	 * @param file The command log file, opened for reading and seeked to the
+	 * beginning of the file (or wherever is appropriate).
+	 * @return {@c true} if successful. If failed, the animation might have had
+	 * some successful operations applied to it.
+	 */
+	bool replayCommandLog(FILE* file);
+
+	/**
 	 * Have v visit all the files referenced (images and sounds)
 	 */
 	void accept(FileNameVisitor& v) const;
 
 private:
+	void setScenes(const std::vector<Scene*>& sv);
+
 	/** All of the scenes in the animation. */
 	ObserverNotifier* scenes;
 

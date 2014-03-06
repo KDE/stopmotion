@@ -180,6 +180,21 @@ public:
 	int soundCount(int scene, int frame) const;
 
 	/**
+	 * Loads the project from the {@c .dat} XML file specified. Used for
+	 * recovering from the {@c new.dat} and {@c current.dat} files.
+	 * @param filename The XML file to load.
+	 * @return {@c true} if successful.
+	 */
+	bool loadProject(const char* filename);
+
+	/**
+	 * Replay commands from the log.
+	 * @param filename Filename of the log.
+	 * @return {@c true} if successful.
+	 */
+	bool replayCommandLog(const char* filename);
+
+	/**
 	 * Opens a project.
 	 * @param filename The file to load
 	 */
@@ -307,6 +322,13 @@ public:
 	 * @return vector containing available devices.
 	 */
 	const vector<GrabberDevice> getGrabberDevices();
+
+	/**
+	 * Sets up the command logger file. If unsuccessful, a message will have
+	 * been displayed to the user.
+	 * @return {@c true} if successful, {@false} if not.
+	 */
+	bool initializeCommandLoggerFile();
 
 protected:
 	/**

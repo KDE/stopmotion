@@ -65,12 +65,15 @@ Animation::Animation()
 
 Animation::~Animation() {
 	delete scenes;
+	scenes = NULL;
 	delete serializer;
 	serializer = NULL;
 	delete audioDriver;
 	audioDriver = NULL;
 	delete executor;
 	executor = NULL;
+	delete logger;
+	logger = NULL;
 }
 
 
@@ -215,17 +218,6 @@ int Animation::sceneCount() const {
 }
 
 
-/*void Animation::playFrame(int frameNumber) {
-	if (isAudioDriverInitialized) {
-		const Frame *f = getFrame(frameNumber);
-		if (f) {
-			f->playSounds(audioDriver);
-		}
-	}
-	scenes->notifyPlayFrame(activeScene, frameNumber);
-}*/
-
-
 const char* Animation::getProjectFile() {
 	return serializer->getProjectFile();
 }
@@ -239,6 +231,25 @@ void Animation::clear() {
 }
 
 
+void Animation::setScenes(const std::vector<Scene*>& sv) {
+	int count = sv.size();
+	scenes->preallocateScenes(count);
+	scenes->clear();
+	for (int i = 0; i != count; ++i) {
+		scenes->addScene(i, sv[i]);
+	}
+}
+
+bool Animation::loadFromDat(const char* filename) {
+	std::vector<Scene*> sv;
+	if (ProjectSerializer::openDat(sv, filename)) {
+		setScenes(sv);
+		return true;
+	}
+	return false;
+}
+
+
 void Animation::openProject(const char *filename) {
 	logger->setLogFile(0);
 	clear();
@@ -246,13 +257,8 @@ void Animation::openProject(const char *filename) {
 	FILE* fh = fopen(commandLogger.path(), "w");
 	logger->setLogFile(fh);
 	assert(filename != 0);
-	vector<Scene*> newScenes = serializer->open(filename);
-	int count = newScenes.size();
-	scenes->preallocateScenes(count);
-	scenes->clear();
-	for (int i = 0; i != count; ++i) {
-		scenes->addScene(i, newScenes[i]);
-	}
+	vector<Scene*> newScenes = serializer->openSto(filename);
+	setScenes(newScenes);
 	if (!fh) {
 		frontend->reportError(
 				"Recovery files have not been initialized; "
@@ -432,4 +438,42 @@ const char* Animation::getSoundPath(int scene, int frame, int sound) const {
 
 int Animation::soundCount() const {
 	return scenes->soundCount();
+}
+
+void Animation::setCommandLoggerFile(FILE* file) {
+	logger->setLogFile(file);
+}
+
+class GetLine {
+	FILE* fh;
+	char* buffer;
+	unsigned int size;
+public:
+	GetLine(FILE* handle) : fh(handle), buffer(0), size(0) {
+	}
+	~GetLine() {
+		free(buffer);
+	}
+	const char* get() const {
+		return buffer;
+	}
+	bool next() {
+		return 0 < getline(&buffer, &size, fh);
+	}
+};
+
+bool Animation::replayCommandLog(FILE* file) {
+	GetLine lineIterator(file);
+	int r = 0;
+	try {
+		while (0 < (r = lineIterator.next())) {
+			executor->executeFromLog(lineIterator.get());
+		}
+		if (r < 0) {
+			return false;
+		}
+	} catch (std::exception&) {
+		return false;
+	}
+	return true;
 }

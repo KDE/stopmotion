@@ -26,6 +26,7 @@
 
 #include "presentation/frontends/nonguifrontend/nonguifrontend.h"
 #include "src/foundation/preferencestool.h"
+#include "src/domain/animation/workspacefile.h"
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -37,38 +38,14 @@
 #include <stdio.h>
 #include <libgen.h>
 
+bool recover(DomainFacade *facadePtr);
 
-struct AudioFile {
-	unsigned int belongsTo;
-	char filename[PATH_MAX];
-};
-
-bool init(Frontend *frontend, DomainFacade *facadePtr);
-void cleanup();
-bool isRecoveryMode();
-void createDirectories();
-void recover(DomainFacade *facadePtr);
-
-
-int main(int argc, char **argv) 
-{
-	atexit(cleanup);
+int main(int argc, char **argv) {
 	int ret = 0;
 	bool hasCorrectPermissions = true;
-	
-	// Check if ~./stopmotion directory exists, create it if not
-	char tmp[PATH_MAX] = {0};
-	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/", getenv("HOME") );
-	if ( access(tmp, F_OK) == -1 ) {
-		mkdir(tmp, 0755);
-	}
-	else if (access(tmp, R_OK | W_OK | X_OK) == -1) {
-		hasCorrectPermissions = false;
-	}
-	
-	// returns a pointer to the facade (allocated with new)
+
 	DomainFacade *facadePtr = DomainFacade::getFacade();
-	
+
 	// if program is started with --nonGUI
 	if ( argc > 1 && strcmp(argv[1], "--nonGUI") == 0 ) {
 		NonGUIFrontend nonGUIFrontend(facadePtr);
@@ -80,9 +57,8 @@ int main(int argc, char **argv)
 			facadePtr = NULL;
 			return 1;
 		}
-		
+
 		facadePtr->registerFrontend(&nonGUIFrontend);
-		init(&nonGUIFrontend, facadePtr);
 		ret = nonGUIFrontend.run(argc, argv);
 	}
 	else {
@@ -98,7 +74,17 @@ int main(int argc, char **argv)
 			return 1;
 		}
 		facadePtr->registerFrontend(&qtFrontend);
-		bool hasRecovered = init(&qtFrontend, facadePtr);
+		bool hasRecovered = recover(facadePtr);
+		if (!hasRecovered) {
+			// No recovery. Create the workspace afresh.
+			WorkspaceFile::clear();
+		}
+		if (!facadePtr->initializeCommandLoggerFile()) {
+			// report failure to initialize recovery files
+			qtFrontend.reportError(
+					"Could not initialize recovery files."
+					" Recovery will not be available!", 1);
+		}
 		if ( hasRecovered == false && argc > 1 && access(argv[1], R_OK) == 0) {
 			facadePtr->openProject(argv[1]);
 			const char *proFile = facadePtr->getProjectFile();
@@ -110,167 +96,43 @@ int main(int argc, char **argv)
 		ret = qtFrontend.run(argc, argv);
 #endif
 	}
-	
+
 	delete facadePtr;
 	facadePtr = NULL;
 	return ret;
 }
 
-
-// creates directories if they already not exist.
-bool init(Frontend *frontend, DomainFacade *facadePtr)
-{
-	if ( isRecoveryMode() ) {
-		int ret = frontend->askQuestion(
-				"Something caused Stopmotion to exit abnormally\n"
-				"last time it was run. Do you want to recover?");
-		// The user wants to recover
-		if (ret == 0) {
-			recover(facadePtr);
-			return true;
+/**
+ * Recover the project.
+ * @return {@c true} if successful, {@c false} if some file failed to load.
+ */
+bool recover(DomainFacade *facadePtr) {
+	struct stat st;
+	WorkspaceFile commandLog(WorkspaceFile::commandLogFile);
+	bool readCommandLog = 0 <= stat(commandLog.path(), &st);
+	bool loadFailed = false;
+	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
+	if (stat(currentDat.path(), &st) < 0) {
+		WorkspaceFile newDat(WorkspaceFile::newModelFile);
+		if (stat(newDat.path(), &st) < 0) {
+			if (!readCommandLog) {
+				// None of the files are present; clear and start afresh
+				WorkspaceFile::clear();
+			}
+		} else {
+			// recover from new.dat without considering command.log
+			readCommandLog = false;
+			if (!facadePtr->loadProject(newDat.path())) {
+				return false;
+			}
 		}
-		else {
-			cleanup();
-			createDirectories();
+	} else {
+		if (!facadePtr->loadProject(currentDat.path())) {
+			return false;
 		}
 	}
-	else {
-		cleanup();
-		createDirectories();
+	if (readCommandLog) {
+		facadePtr->replayCommandLog(commandLog.path());
 	}
-	return false;
-}
-
-
-// cleanup the directories
-void cleanup()
-{
-	char command[PATH_MAX] = {0};
-	snprintf( command, sizeof(command), "rm -rf %s/.stopmotion/tmp/", getenv("HOME") );
-	system(command);
-	snprintf( command, sizeof(command), "rm -rf %s/.stopmotion/trash/", getenv("HOME") );
-	system(command);
-	snprintf( command, sizeof(command), "rm -rf %s/.stopmotion/packer/", getenv("HOME") );
-	system(command);
-}
-
-
-bool isRecoveryMode()
-{
-	char tmp[PATH_MAX] = {0};
-	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/tmp/", getenv("HOME") );
-	if ( access(tmp, F_OK) == -1 ) return false;
-	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/trash/", getenv("HOME") );
-	if ( access(tmp, F_OK) == -1 ) return false;
-	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/packer/", getenv("HOME") );
-	if ( access(tmp, F_OK) == -1 ) return false;
-	
-	// Everything is intact and we have to run in recovery mode
 	return true;
 }
-
-
-void createDirectories()
-{
-	char tmp[PATH_MAX] = {0};
-	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/tmp/", getenv("HOME") );
-	mkdir(tmp, 0755);
-	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/trash/", getenv("HOME") );
-	mkdir(tmp, 0755);
-	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/packer/", getenv("HOME") );
-	mkdir(tmp, 0755);
-}
-
-
-void recover(DomainFacade *facadePtr)
-{
-	char tmp[PATH_MAX] = {0};
-	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/packer/", getenv("HOME") );
-	
-	DIR *dp = opendir(tmp);
-	if (dp) {
-		struct dirent *ep;
-		struct stat st;
-
-		while ( (ep = readdir(dp)) ) {
-			stat(ep->d_name, &st);
-			// is a directory and not a '.' or '..' directory
-			if ( S_ISDIR(st.st_mode) != 0 && ep->d_name[0] != '.') {
-				PreferencesTool *pref = PreferencesTool::get();
-				const char *mostRecent = pref->getPreference("mostRecent", "");
-				if ( strstr(mostRecent, ep->d_name) != NULL && 
-							access(mostRecent, F_OK) == 0) {
-					facadePtr->openProject(mostRecent);
-				}
-				if (strcmp(mostRecent, "") != 0) {
-					xmlFree((xmlChar*)mostRecent);
-				}
-				break;
-			}
-		}
-		closedir(dp);
-	}
-	
-	snprintf( tmp, sizeof(tmp), "%s/.stopmotion/tmp", getenv("HOME") );
-	dp = opendir(tmp);
-	if (dp) {
-		vector<const char*> frames;
-		vector<AudioFile> sounds;
-		struct dirent *ep;
-		struct stat st;
-
-		while ( (ep = readdir(dp)) ) {
-			char *fileName = new char[PATH_MAX];
-			snprintf(fileName, PATH_MAX, "%s/%s", tmp, ep->d_name);
-			stat(fileName, &st);
-			// Is a regular file, not a directory
-			if ( S_ISREG(st.st_mode) != 0) {
-				// Image file
-				if ( strstr(fileName, "snd") == NULL ) {
-					frames.push_back(fileName);
-				}
-				// Sound file
-				else {
-					char buf[PATH_MAX] = {0};
-					char index[PATH_MAX] = {0};
-					
-					char *firstDelim = strchr(fileName, '_');
-					strcpy(buf, firstDelim + 1);
-					char *secondDelim = strchr(buf, '_');
-					strncpy(index, buf, strlen(buf) - strlen(secondDelim));
-					
-					AudioFile af;
-					af.belongsTo = (unsigned int)atoi(index);
-					strcpy(af.filename, fileName);
-					sounds.push_back(af);
-					delete [] fileName;
-					fileName = NULL;
-				}
-			}
-			else {
-				delete [] fileName;
-				fileName = NULL;
-			}
-		}
-		closedir(dp);
-		
-		if (frames.size() <= 0)
-			return;
-		
-		vector<const char*>(frames).swap(frames);
-		facadePtr->addFrames(0, 0, frames);
-
-		unsigned int numElem = frames.size();
-		for (unsigned int i = 0; i < numElem; ++i) {
-			delete [] frames[i];
-			frames[i] = NULL;
-		}
-		
-		numElem = sounds.size();
-		for (unsigned int j = 0; j < numElem; ++j) {
-			facadePtr->addSound(0, sounds[j].belongsTo, sounds[j].filename);
-		}
-	}
-}
-
-

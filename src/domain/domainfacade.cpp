@@ -22,6 +22,7 @@
 #include "animation/animation.h"
 #include "src/foundation/logger.h"
 #include "src/presentation/frontends/frontend.h"
+#include "src/domain/animation/workspacefile.h"
 
 DomainFacade* DomainFacade::domainFacade = 0;
 
@@ -41,6 +42,10 @@ int DomainFacade::soundCount(int scene, int frame) const {
 		animationModel->resync(e);
 		return 0;
 	}
+}
+
+bool DomainFacade::loadProject(const char* filename) {
+	return animationModel->loadFromDat(filename);
 }
 
 DomainFacade::DomainFacade() {
@@ -287,4 +292,30 @@ const char* DomainFacade::getSoundName(int sceneNumber, int frameNumber,
 
 void DomainFacade::duplicateImage(int scene, int frame) {
 	animationModel->duplicateImage(scene, frame);
+}
+
+bool DomainFacade::initializeCommandLoggerFile() {
+	WorkspaceFile wslf(WorkspaceFile::commandLogFile);
+	FILE* log = fopen(wslf.path(), "a");
+	if (!log) {
+		animationModel->getFrontend()->reportError(
+				"Failed to initialize command log."
+				" Recovery will not be available.", 0);
+		return false;
+	}
+	animationModel->setCommandLoggerFile(log);
+	return true;
+}
+
+bool DomainFacade::replayCommandLog(const char* filename) {
+	FILE* log = fopen(filename, "r");
+	if (!log)
+		return false;
+	try {
+		animationModel->replayCommandLog(log);
+	} catch(std::exception&) {
+		fclose(log);
+		return false;
+	}
+	return true;
 }

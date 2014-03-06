@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -32,18 +32,26 @@ class Frontend;
 /**
  * Class for serializing the project.
  */
-class ProjectSerializer
-{
+class ProjectSerializer {
 public:
 	ProjectSerializer();
 	~ProjectSerializer();
 
 	/**
-	 * Creates necessary project paths and opens the project file.
-	 * @param filename the project file
-	 * @return a vector containing the scenes stored in the project file
+	 * Opens the project's model ({@c .dat}) file.
+	 * @param [out] out A vector to be filled with the scenes stored in the
+	 * project file, if the function is successful.
+	 * @param filename The model file.
+	 * @return {@c true} if successful, {@c false} otherwise.
 	 */
-	const std::vector<Scene*> open(const char *filename);
+	static bool openDat(std::vector<Scene*>& out, const char* filename);
+
+	/**
+	 * Creates necessary project paths and opens the project ({@c .sto}) file.
+	 * @param filename The project file
+	 * @return A vector containing the scenes stored in the project file.
+	 */
+	std::vector<Scene*> openSto(const char *filename);
 
 	/**
 	 * Saves the files in a tarball with the name {@a filename} plus the
@@ -65,7 +73,7 @@ private:
 	char* projectFile;
 	void setAttributes(xmlNodePtr rootNode,
 			const AnimationImpl& anim, Frontend *frontend);
-	void getAttributes(xmlNodePtr node, std::vector<Scene*>& scenes);
+	static void getAttributes(xmlNodePtr node, std::vector<Scene*>& scenes);
 	void saveDOMToFile(xmlDocPtr doc, const char* filename);
 	void setProjectFile(const char *filename);
 };
