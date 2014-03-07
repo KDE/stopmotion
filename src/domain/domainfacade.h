@@ -260,6 +260,16 @@ public:
 	void redo();
 
 	/**
+	 * Detects if undo is possible.
+	 */
+	bool canUndo();
+
+	/**
+	 * Detects if redo is possible.
+	 */
+	bool canRedo();
+
+	/**
 	 * Clears the undo history.
 	 */
 	void clearHistory();

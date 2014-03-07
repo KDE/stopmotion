@@ -319,3 +319,11 @@ bool DomainFacade::replayCommandLog(const char* filename) {
 	}
 	return true;
 }
+
+bool DomainFacade::canUndo() {
+	return animationModel->canUndo();
+}
+
+bool DomainFacade::canRedo() {
+	return animationModel->canRedo();
+}

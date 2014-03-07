@@ -373,3 +373,8 @@ int QtFrontend::runExternalCommand(const char *command)
 	ec->run( QString::fromLocal8Bit(command) );
 	return 0;
 }
+
+
+void QtFrontend::setUndoRedoEnabled() {
+	mw->activateMenuOptions();
+}

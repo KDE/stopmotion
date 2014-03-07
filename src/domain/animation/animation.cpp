@@ -477,3 +477,11 @@ bool Animation::replayCommandLog(FILE* file) {
 	}
 	return true;
 }
+
+bool Animation::canUndo() {
+	return executor->canUndo();
+}
+
+bool Animation::canRedo() {
+	return executor->canRedo();
+}

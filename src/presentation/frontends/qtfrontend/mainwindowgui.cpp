@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -225,6 +225,8 @@ void MainWindowGUI::createHandlers(QApplication *stApp)
 			modelHandler, SLOT(addFrames(const QStringList &)) );
 	connect(editMenuHandler, SIGNAL(removeFrames()),
 			modelHandler, SLOT(removeFrames()));
+	connect(editMenuHandler, SIGNAL(undoOrRedo()),
+			this, SLOT(activateMenuOptions()));
 
 	soundHandler = new SoundHandler( this, this->statusBar(), frameBar,
 			this->lastVisitedDir );
@@ -1141,10 +1143,10 @@ void MainWindowGUI::modelSizeChanged( int modelSize )
 }
 
 
-void MainWindowGUI::activateMenuOptions()
-{
-	undoAct->setEnabled(true);
-	redoAct->setEnabled(true);
+void MainWindowGUI::activateMenuOptions() {
+	DomainFacade* facade = DomainFacade::getFacade();
+	undoAct->setEnabled(facade->canUndo());
+	redoAct->setEnabled(facade->canRedo());
 }
 
 

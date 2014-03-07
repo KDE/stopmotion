@@ -78,6 +78,8 @@ int main(int argc, char **argv) {
 		if (!hasRecovered) {
 			// No recovery. Create the workspace afresh.
 			WorkspaceFile::clear();
+		} else {
+			qtFrontend.setUndoRedoEnabled();
 		}
 		if (!facadePtr->initializeCommandLoggerFile()) {
 			// report failure to initialize recovery files

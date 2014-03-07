@@ -245,6 +245,9 @@ public:
 
 	void redo();
 
+	bool canUndo();
+	bool canRedo();
+
 	/**
 	 * Retrieves the project file.
 	 * @return the project file if it has been set, NULL otherwise.

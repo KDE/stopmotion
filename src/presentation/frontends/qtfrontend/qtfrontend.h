@@ -92,7 +92,13 @@ public:
 	 * @return true if the the operation is aborted, false otherwise
 	 */
 	bool isOperationAborted();
-	
+
+	/**
+	 * Set the Undo and Redo actions to be enabled or disabled according to the
+	 * state of the command history.
+	 */
+	void setUndoRedoEnabled();
+
 	/**
 	 * Function for processing Qt events. This is useful on timeconsuming
 	 * operations which aren't running in separate processes or threads.
