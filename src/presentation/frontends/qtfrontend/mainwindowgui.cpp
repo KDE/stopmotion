@@ -783,21 +783,23 @@ void MainWindowGUI::retranslateHelpText()
 	frameBar->setWhatsThis(infoText );
 }
 
-
-void MainWindowGUI::newProject()
-{
-  int save = 0;
+int MainWindowGUI::saveIfNecessary() {
+	int save = 0;
 	bool b = DomainFacade::getFacade()->isUnsavedChanges();
 	if (b) {
-		save = QMessageBox::question(this,
-			tr("Unsaved changes"),
-			tr("There are unsaved changes. Do you want to save?"),
-		        tr("&Save"), tr("Do&n't save"), tr("Abort"),
-			0, 2 );
-		if (save == 0) { // user pressed button 0, which is 'save'
+		save = QMessageBox::question(this, tr("Unsaved changes"),
+				tr("There are unsaved changes. Do you want to save?"),
+				tr("&Save"), tr("Do&n't save"), tr("Abort"), 0, 2);
+		if (save == 0) {
+			// user pressed button 0, which is 'save'
 			saveProject();
 		}
 	}
+	return save;
+}
+
+void MainWindowGUI::newProject() {
+	int save = saveIfNecessary();
 	if (save != 2) {
 	  DomainFacade::getFacade()->newProject();
 	  //fileMenu->setItemEnabled(SAVE, false);
@@ -812,22 +814,22 @@ void MainWindowGUI::newProject()
 
 void MainWindowGUI::openProject()
 {
-	QString file = QFileDialog::
-		getOpenFileName(this,
-				tr("Choose project file"),
-				QString::fromLocal8Bit(lastVisitedDir),
-				"Stopmotion (*.sto)");
-	if ( !file.isNull() ) {
-		openProject( file.toLocal8Bit().constData() );
+	int save = saveIfNecessary();
+	if (save != 2) {
+		QString file = QFileDialog::
+			getOpenFileName(this,
+					tr("Choose project file"),
+					QString::fromLocal8Bit(lastVisitedDir),
+					"Stopmotion (*.sto)");
+		if ( !file.isNull() ) {
+			openProject( file.toLocal8Bit().constData() );
+		}
 	}
 }
 
-
-void MainWindowGUI::openProject( const char * projectFile )
-{
+void MainWindowGUI::doOpenFile(const char* projectFile) {
 	assert(projectFile != NULL);
-
-	DomainFacade::getFacade()->openProject( projectFile );
+	DomainFacade::getFacade()->openProject(projectFile);
 	saveAsAct->setEnabled(true);
 	saveAct->setEnabled(true);
 	setMostRecentProject();
@@ -836,6 +838,14 @@ void MainWindowGUI::openProject( const char * projectFile )
 		activateMenuOptions();
 		modelSizeChanged(size);
 		toolsMenu->fixNavigationButtons(size);
+	}
+}
+
+void MainWindowGUI::openProject( const char * projectFile )
+{
+	int save = saveIfNecessary();
+	if (save != 2) {
+		doOpenFile(projectFile);
 	}
 }
 
@@ -904,24 +914,7 @@ void MainWindowGUI::saveProject()
 /* Checks whether the project is saved, and asks the user if not. */
 void MainWindowGUI::quitProgram()
 {
-        bool b = DomainFacade::getFacade()->isUnsavedChanges();
-        if (b) {
-                int save = QMessageBox::question(this,
-                                                 tr("Unsaved changes"),
-                                                 tr("There are unsaved changes. Do you want to save?"),
-                                                 tr("&Save"), tr("Do&n't save"), tr("Abort"),
-                                                 0, 2 );
-                if (save == 0) { // user pressed button 0, which is 'save'
-                        saveProject();
-                        exit(0); /* FIXME! Calling exit() is rather brutal. */
-                }
-                if (save == 1) { // user pressed button 1, which is "don't save"
-                  exit(0);
-                }
-        }
-        else {
-          exit(0);
-        }
+	exit(0);
 }
 
 

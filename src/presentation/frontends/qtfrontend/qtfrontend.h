@@ -121,7 +121,8 @@ public:
 	int askQuestion(const char *question);
 
 	int runExternalCommand(const char *command);
-	
+
+	int openProject(const char* file);
 protected slots:
 	void updateProgressBar();
 	

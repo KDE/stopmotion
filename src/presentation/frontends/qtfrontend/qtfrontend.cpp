@@ -378,3 +378,7 @@ int QtFrontend::runExternalCommand(const char *command)
 void QtFrontend::setUndoRedoEnabled() {
 	mw->activateMenuOptions();
 }
+
+int QtFrontend::openProject(const char* file) {
+	mw->openProject(file);
+}

@@ -37,22 +37,88 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <libgen.h>
+#include <errno.h>
+#include <exception>
 
-bool recover(DomainFacade *facadePtr);
+class CouldNotInitializeRecoveryFiles : public std::exception {
+	int error;
+	char buffer[1024];
+public:
+	CouldNotInitializeRecoveryFiles(int err) : error(err) {
+		snprintf(buffer, sizeof(buffer),
+				"Could not initialize recovery files (%s)."
+				" You need permission to read and write in a ~/.stopmotion"
+				" directory.", strerror(err));
+	}
+    const char* what() const _GLIBCXX_USE_NOEXCEPT {
+    	return buffer;
+    }
+};
+
+class RecoveryIncompleteException : public std::exception {
+	char buffer[1024];
+public:
+	RecoveryIncompleteException(const char* filename) {
+		snprintf(buffer, sizeof(buffer),
+				"Failed to recover previous project from command log file %s."
+				" Perhaps the file is corrupt or you don't have permission"
+				" to read it.", filename);
+	}
+    const char* what() const _GLIBCXX_USE_NOEXCEPT {
+    	return buffer;
+    }
+};
+
+/**
+ * Recover the project. An exception will be throw if recovery fails.
+ */
+void recover(DomainFacade *facadePtr) {
+	struct stat st;
+	WorkspaceFile commandLog(WorkspaceFile::commandLogFile);
+	bool commandLogExists = 0 <= stat(commandLog.path(), &st);
+	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
+	if (stat(currentDat.path(), &st) < 0) {
+		WorkspaceFile newDat(WorkspaceFile::newModelFile);
+		if (stat(newDat.path(), &st) < 0) {
+			if (!commandLogExists) {
+				// None of the files are present; clear and start afresh
+				WorkspaceFile::clear();
+			}
+		} else {
+			// Program must have crashed in the middle of saving.
+			if (unlink(commandLog.path()) < 0 && errno != ENOENT) {
+				throw CouldNotInitializeRecoveryFiles(errno);
+			}
+			commandLogExists = false;
+			if (rename(newDat.path(), currentDat.path()) < 0) {
+				throw CouldNotInitializeRecoveryFiles(errno);
+			}
+			if (!facadePtr->loadProject(currentDat.path())) {
+				throw RecoveryIncompleteException(currentDat.path());
+			}
+		}
+	} else {
+		if (!facadePtr->loadProject(currentDat.path())) {
+			throw RecoveryIncompleteException(currentDat.path());
+		}
+	}
+	if (commandLogExists) {
+		facadePtr->replayCommandLog(commandLog.path());
+	}
+}
 
 int main(int argc, char **argv) {
 	int ret = 0;
-	bool hasCorrectPermissions = true;
 
 	DomainFacade *facadePtr = DomainFacade::getFacade();
 
 	// if program is started with --nonGUI
 	if ( argc > 1 && strcmp(argv[1], "--nonGUI") == 0 ) {
 		NonGUIFrontend nonGUIFrontend(facadePtr);
-		if (hasCorrectPermissions == false) {
-			nonGUIFrontend.reportError(
-					"You do not have the necessary permissions to run Stopmotion.\n"
-					"You need permission to read, write and execute on ~/.stopmotion", 1);
+		try {
+			recover(facadePtr);
+		} catch (std::exception& e) {
+			nonGUIFrontend.reportError(e.what(), 1);
 			delete facadePtr;
 			facadePtr = NULL;
 			return 1;
@@ -65,30 +131,24 @@ int main(int argc, char **argv) {
 #ifdef QTGUI
 		QtFrontend qtFrontend(argc, argv);
 		qtFrontend.processEvents();
-		if (!hasCorrectPermissions) {
-			qtFrontend.reportError(
-					"You do not have the necessary permissions to run Stopmotion.\n"
-					"You need permission to read, write and execute on ~/.stopmotion", 1);
+		try {
+			recover(facadePtr);
+		} catch (std::exception& e) {
+			qtFrontend.reportError(e.what(), 1);
 			delete facadePtr;
 			facadePtr = NULL;
 			return 1;
 		}
 		facadePtr->registerFrontend(&qtFrontend);
-		bool hasRecovered = recover(facadePtr);
-		if (!hasRecovered) {
-			// No recovery. Create the workspace afresh.
-			WorkspaceFile::clear();
-		} else {
-			qtFrontend.setUndoRedoEnabled();
-		}
+		qtFrontend.setUndoRedoEnabled();
 		if (!facadePtr->initializeCommandLoggerFile()) {
 			// report failure to initialize recovery files
 			qtFrontend.reportError(
 					"Could not initialize recovery files."
 					" Recovery will not be available!", 1);
 		}
-		if ( hasRecovered == false && argc > 1 && access(argv[1], R_OK) == 0) {
-			facadePtr->openProject(argv[1]);
+		if (argc > 1 && access(argv[1], R_OK) == 0) {
+			qtFrontend.openProject(argv[1]);
 			const char *proFile = facadePtr->getProjectFile();
 			if ( proFile != NULL ) {
 				PreferencesTool *pref = PreferencesTool::get();
@@ -102,39 +162,4 @@ int main(int argc, char **argv) {
 	delete facadePtr;
 	facadePtr = NULL;
 	return ret;
-}
-
-/**
- * Recover the project.
- * @return {@c true} if successful, {@c false} if some file failed to load.
- */
-bool recover(DomainFacade *facadePtr) {
-	struct stat st;
-	WorkspaceFile commandLog(WorkspaceFile::commandLogFile);
-	bool readCommandLog = 0 <= stat(commandLog.path(), &st);
-	bool loadFailed = false;
-	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
-	if (stat(currentDat.path(), &st) < 0) {
-		WorkspaceFile newDat(WorkspaceFile::newModelFile);
-		if (stat(newDat.path(), &st) < 0) {
-			if (!readCommandLog) {
-				// None of the files are present; clear and start afresh
-				WorkspaceFile::clear();
-			}
-		} else {
-			// recover from new.dat without considering command.log
-			readCommandLog = false;
-			if (!facadePtr->loadProject(newDat.path())) {
-				return false;
-			}
-		}
-	} else {
-		if (!facadePtr->loadProject(currentDat.path())) {
-			return false;
-		}
-	}
-	if (readCommandLog) {
-		facadePtr->replayCommandLog(commandLog.path());
-	}
-	return true;
 }
