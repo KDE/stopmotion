@@ -43,6 +43,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <memory>
 
 Animation::Animation()
 		: scenes(0), executor(0), logger(0), serializer(0), audioDriver(0),
@@ -447,7 +448,7 @@ void Animation::setCommandLoggerFile(FILE* file) {
 class GetLine {
 	FILE* fh;
 	char* buffer;
-	unsigned int size;
+	size_t size;
 public:
 	GetLine(FILE* handle) : fh(handle), buffer(0), size(0) {
 	}
