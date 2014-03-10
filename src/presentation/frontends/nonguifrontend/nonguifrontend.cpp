@@ -108,20 +108,20 @@ int NonGUIFrontend::parseArguments(int argc, char **argv)
 				break;
 	
 			case 'a':
-				//printf ("option --addFrames with arument %s\n", optarg);
+				//printf ("option --addFrames with argument %s\n", optarg);
 				addFrames(optarg);
 				break;
 	
 			case 'c':
-				printf ("option --capture with arument %s\n", optarg);
+				printf ("option --capture with argument %s\n", optarg);
 				break;
 	
 			case 'e':
-				printf ("option --export with arument %s\n", optarg);
+				printf ("option --export with argument %s\n", optarg);
 				break;
 	
 			case 's':
-				//printf ("option --save with arument %s\n", optarg);
+				//printf ("option --save with argument %s\n", optarg);
 				save(optarg);
 				break;
 	

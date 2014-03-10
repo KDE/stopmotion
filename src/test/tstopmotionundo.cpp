@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2014 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -38,6 +38,7 @@
 #include <stdlib.h>
 #include <error.h>
 #include <vector>
+#include <unistd.h>
 
 
 class RealOggEmptyJpg : public MockableFileSystem {
@@ -119,7 +120,7 @@ public:
 		// always assume files within the workspace do not exist
 		// (as access is only called to find empty slots to use in the
 		// workspace) but files requested outside of the workspace exist
-		return strstr(name, ".stopmotion/tmp")? -1 : 0;
+		return strstr(name, ".stopmotion/")? -1 : 0;
 	}
 	int ferror(FILE*) {
 		return 0;

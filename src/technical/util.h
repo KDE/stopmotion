@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -38,11 +38,13 @@ public:
 };
 
 class DirectoryCreationException : public std::exception {
+	char buffer[1024];
+public:
+	DirectoryCreationException(const char* path);
 	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
-class Util
-{
+class Util {
 public:
 	static const char* checkCommand(const char* command);
 	static const std::vector<GrabberDevice> getGrabberDevices();

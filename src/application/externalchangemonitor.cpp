@@ -39,7 +39,7 @@ ExternalChangeMonitor::ExternalChangeMonitor(QObject *parent)
     : QObject(parent), socketNotifier(0), isMonitoring(false)
 {
     string tmpDirectory = getenv("HOME");
-    tmpDirectory += "/.stopmotion/tmp";
+    tmpDirectory += "/.stopmotion";
     addDirectory(tmpDirectory);
 }
 

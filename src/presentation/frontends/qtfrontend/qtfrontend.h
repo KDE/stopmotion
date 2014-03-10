@@ -122,7 +122,7 @@ public:
 
 	int runExternalCommand(const char *command);
 
-	int openProject(const char* file);
+	void openProject(const char* file);
 protected slots:
 	void updateProgressBar();
 	

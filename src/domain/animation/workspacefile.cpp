@@ -203,7 +203,7 @@ void TemporaryWorkspaceFile::copyToWorkspace(const char* filename) {
 TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename)
 		: fullPath(0), namePart(0), toBeDeleted(false) {
 	// not a totally fullproof test...
-	if (strstr(filename, "/.stopmotion/tmp/") != NULL) {
+	if (strstr(filename, "/.stopmotion/") != NULL) {
 		// Already a workspace file; no need to copy it again
 		int size = strlen(filename) + 1;
 		fullPath = new char[size];
@@ -233,7 +233,7 @@ CopyFailedException::CopyFailedException() {
 }
 
 const char* CopyFailedException::what() const _GLIBCXX_USE_NOEXCEPT {
-	return "Failed to copy file to workspace directory (~/.stopmotion/tmp).";
+	return "Failed to copy file to workspace directory (~/.stopmotion).";
 }
 
 ExportDirectory::ExportDirectory() : p(0) {

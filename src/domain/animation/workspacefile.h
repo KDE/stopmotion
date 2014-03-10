@@ -33,7 +33,7 @@ public:
 };
 
 /**
- * Represents the filename of a file in the workspace (~/.stopmotion/tmp/).
+ * Represents the filename of a file in the workspace (~/.stopmotion/).
  * The file is not held open, nor is it deleted on destruction.
  * @par
  * To be used by commands in the undo system and objects manipulated by such
@@ -90,7 +90,7 @@ public:
 	/**
 	 * Gets the file's full path.
 	 * @return the file's full path, which will be in the workspace directory
-	 * (i.e. @c ~/.stopmotion/tmp but specified relative to /, not ~).
+	 * (i.e. @c ~/.stopmotion but specified relative to /, not ~).
 	 */
 	const char* path() const;
 	/**
@@ -119,7 +119,7 @@ public:
 
 /**
  * Represents the filename of a newly-created file in the workspace
- * (~/.stopmotion/tmp/). This file will be deleted upon destruction unless it
+ * (~/.stopmotion/). This file will be deleted upon destruction unless it
  * has been assigned to a @ref WorkspaceFile beforehand.
  * @par
  * To be used by the facade in front of the undo system.
@@ -141,7 +141,7 @@ public:
 	};
 	/**
 	 * Copy file with path @a filename into the workspace directory
-	 * ({@c ~/.stopmotion/tmp}) unless it is already in this directory.
+	 * ({@c ~/.stopmotion}) unless it is already in this directory.
 	 * A freshly-copied file will be deleted on destruction unless a
 	 * @ref WorkspaceFile is constructed from it beforehand.
 	 * @note The file is not kept open by this class.

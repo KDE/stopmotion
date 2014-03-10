@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -45,9 +45,13 @@ const char* FileLinkException::what() const _GLIBCXX_USE_NOEXCEPT {
 	return msg;
 }
 
+DirectoryCreationException::DirectoryCreationException(const char* path) {
+	snprintf(buffer, sizeof(buffer), "Failed to create directory (%s)", path);
+}
+
 const char* DirectoryCreationException::what() const
 		_GLIBCXX_USE_NOEXCEPT {
-	return "Failed to create workspace directory (~/.stopmotion/tmp).";
+	return buffer;
 }
 
 namespace {
@@ -251,8 +255,8 @@ void Util::ensurePathExists(const char* path) {
 		*end = '\0';
 		ensurePathExists(parent);
 		if (mkdir(path, 0755) < 0)
-			throw DirectoryCreationException();
+			throw DirectoryCreationException(path);
 	} else {
-		throw DirectoryCreationException();
+		throw DirectoryCreationException(path);
 	}
 }
