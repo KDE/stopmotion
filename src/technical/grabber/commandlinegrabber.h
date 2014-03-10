@@ -47,7 +47,7 @@ public:
 	 */
 	/*CommandLineGrabber(char* filePath, const char* prePoll, const char* startProcess, 
 			const char* stopProcess, bool isProcess = false);*/
-	CommandLineGrabber(char* filePath, bool isProcess = false);
+	CommandLineGrabber(const char* filePath, bool isProcess = false);
 	~CommandLineGrabber() {};
 	
 	bool setPrePollCommand(const char *command);

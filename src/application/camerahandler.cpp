@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -39,14 +39,9 @@
 
 CameraHandler::CameraHandler ( QObject *parent, QStatusBar *sb, 
 		ModelHandler* modelHandler, const char *name) 
-	: QObject(parent), statusBar(sb), modelHandler(modelHandler)
-{
-	cameraButton = 0;
-	frameView = 0;
-
-	isCameraOn = false;
-	sprintf(temp, "%s/.stopmotion/capturedfile.jpg", getenv("HOME") ); 
-	
+	: QObject(parent), statusBar(sb), cameraButton(0), timer(0),
+	  capturedFile(WorkspaceFile::capturedImage), isCameraOn(false),
+	  modelHandler(modelHandler), frameView(0) {
 	timer = new QTimer(this);
 	timer->setSingleShot(true);
 	QObject::connect( timer, SIGNAL(timeout()), this, SLOT(storeFrame()) );
@@ -54,9 +49,7 @@ CameraHandler::CameraHandler ( QObject *parent, QStatusBar *sb,
 }
 
 
-CameraHandler::~CameraHandler( )
-{
-
+CameraHandler::~CameraHandler( ) {
 }
 
 
@@ -123,9 +116,10 @@ void CameraHandler::captureFrame()
 void CameraHandler::storeFrame()
 {
 	QImage i;
-	i.load(temp);
+	const char* path = capturedFile.path();
+	i.load(path);
 	if ( !i.isNull() ) {
-		modelHandler->addFrame(temp);
+		modelHandler->addFrame(path);
 		emit capturedFrame();
 	} else {
 		timer->start(60);

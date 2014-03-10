@@ -35,7 +35,7 @@ public:
 	 * @param filePath path to the output file grabbed from a device
 	 * @param isProcess true if the process is running in daemon mode, false otherwise
 	 */
-	ImageGrabber(char* filePath, bool isProcess = false);
+	ImageGrabber(const char* filePath, bool isProcess = false);
 	virtual ~ImageGrabber() {};
 	
 	/**
@@ -67,7 +67,7 @@ public:
 	virtual bool grab() = 0;
 	
 protected:
-	char* filePath;
+	const char* filePath;
 	bool isProcess;
 };
 

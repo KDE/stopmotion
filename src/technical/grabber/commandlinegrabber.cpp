@@ -30,7 +30,7 @@
 using namespace std;
 
 
-CommandLineGrabber::CommandLineGrabber(char* filePath, bool isProcess)
+CommandLineGrabber::CommandLineGrabber(const char* filePath, bool isProcess)
 		: ImageGrabber(filePath, isProcess)
 {
 	isInitSuccess = false;

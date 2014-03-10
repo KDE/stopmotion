@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2014 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -46,6 +46,7 @@ public:
 	enum NewModelFile { newModelFile };
 	enum CurrentModelFile { currentModelFile };
 	enum CommandLogFile { commandLogFile };
+	enum CapturedImage { capturedImage };
 	WorkspaceFile(const WorkspaceFile&);
 	WorkspaceFile& operator=(const WorkspaceFile&);
 	/**
@@ -80,6 +81,10 @@ public:
 	 * since the "current" model file was written.
 	 */
 	WorkspaceFile(CommandLogFile);
+	/**
+	 * Refers to the image written to by the capture command.
+	 */
+	WorkspaceFile(CapturedImage);
 	~WorkspaceFile();
 	/**
 	 * Gets the file's basename.

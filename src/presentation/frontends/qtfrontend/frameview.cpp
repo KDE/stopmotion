@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -46,12 +46,8 @@ enum { IMAGE_CACHE_SIZE = 10 };
 
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 		: QWidget(parent), screen(0), videoSurface(0),
-		  imageCache(IMAGE_CACHE_SIZE), grabThread(0), grabber(0) {
-	char tmp[PATH_MAX];
-	snprintf(tmp, sizeof(tmp), "%s/.stopmotion/capturedfile.jpg", getenv("HOME"));
-	capturedImg = new char[strlen(tmp) + 1];
-	strcpy(capturedImg, tmp);
-
+		  imageCache(IMAGE_CACHE_SIZE), grabThread(0), grabber(0),
+		  capturedFile(WorkspaceFile::capturedImage) {
 	facade = DomainFacade::getFacade();
 
 	isPlayingVideo = false;
@@ -92,9 +88,6 @@ FrameView::~FrameView() {
 
 	delete grabber;
 	grabber = 0;
-
-	delete [] capturedImg;
-	capturedImg = 0;
 }
 
 
@@ -288,7 +281,7 @@ bool FrameView::on() {
 
 	bool isProcess = (strcmp(startDaemon, "") == 0) ? false : true;
 	bool isCameraReady = true;
-	this->grabber = new CommandLineGrabber(capturedImg, isProcess);
+	this->grabber = new CommandLineGrabber(capturedFile.path(), isProcess);
 	if ( !grabber->setPrePollCommand(prepoll) ) {
 		QMessageBox::warning(this, tr("Warning"), tr(
 					"Pre poll command does not exists"),
@@ -405,7 +398,7 @@ void FrameView::redraw() {
 		SDL_FreeSurface(videoSurface);
 		videoSurface = 0;
 	}
-	videoSurface = IMG_Load(capturedImg);
+	videoSurface = IMG_Load(capturedFile.path());
 	this->update();
 }
 

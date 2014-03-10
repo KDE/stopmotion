@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -21,6 +21,7 @@
 #define FRAMEVIEW_H
 
 #include "src/presentation/imagecache.h"
+#include "src/domain/animation/workspacefile.h"
 
 #include <QWidget>
 #include <QTimer>
@@ -145,7 +146,7 @@ private:
 	QTimer playbackTimer;
 	ImageGrabThread *grabThread;
 	ImageGrabber *grabber;
-	char *capturedImg;
+	WorkspaceFile capturedFile;
 
 	/** The facade cached away in this class for efficiency reasons */
 	DomainFacade *facade;

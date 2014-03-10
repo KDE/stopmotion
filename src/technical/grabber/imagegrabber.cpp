@@ -21,7 +21,7 @@
 
 
 
-ImageGrabber::ImageGrabber(char* filePath, bool isProcess)
+ImageGrabber::ImageGrabber(const char* filePath, bool isProcess)
 		: filePath(filePath), isProcess(isProcess)
 {
 	

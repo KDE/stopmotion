@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2014 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -167,6 +167,11 @@ WorkspaceFile::WorkspaceFile(CurrentModelFile)
 WorkspaceFile::WorkspaceFile(CommandLogFile)
 		: fullPath(0), namePart(0) {
 	fullPath = getWorkspaceFilename(namePart, "command.log");
+}
+
+WorkspaceFile::WorkspaceFile(CapturedImage)
+	: fullPath(0), namePart(0) {
+	fullPath = getWorkspaceFilename(namePart, "capturedfile.jpg");
 }
 
 WorkspaceFile::~WorkspaceFile() {
