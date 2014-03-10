@@ -581,7 +581,6 @@ public:
 			: args(a) {
 	}
 	~VaListParameters() {
-		va_end(args);
 	}
 	int32_t getInteger(int32_t, int32_t) {
 		return va_arg(args, int32_t);
@@ -649,12 +648,21 @@ public:
 		va_list args;
 		va_start(args, name);
 		VaListParameters vpsd(args);
-		WriterParametersWrapper vps(vpsd, name);
-		Command* c = f->create(vps);
-		if (c) {
-			vps.writeCommand(logger);
-			history.execute(*c, logger);
+		try {
+			WriterParametersWrapper vps(vpsd, name);
+			Command* c = f->create(vps);
+			if (c) {
+				vps.writeCommand(logger);
+				history.execute(*c, logger);
+			}
+		} catch(...) {
+			// Unfortunately we can't put this in VaListParameters's destructor
+			// because va_end must be called in the same function as va_start,
+			// according to the standard.
+			va_end(args);
+			throw;
 		}
+		va_end(args);
 	}
 	void execute(const char* name, Parameters& params) {
 		WriterParametersWrapper pw(params, name);
