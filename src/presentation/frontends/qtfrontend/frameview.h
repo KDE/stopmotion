@@ -131,6 +131,12 @@ public slots:
 	 */
 	void updatePlayFrame(int scene, int frame);
 
+	/**
+	 * Receives notification when a frame has been edited outside of this
+	 * application.
+	 */
+	void fileChanged(const QString &path);
+
 protected:
 	void resizeEvent(QResizeEvent *);
 	void paintEvent(QPaintEvent *);
@@ -181,6 +187,7 @@ private:
 	 */
 	SDL_Surface* differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2);
 	void freeProperty(const char *prop, const char *tag = "");
+	void drawOnionSkins();
 };
 
 #endif

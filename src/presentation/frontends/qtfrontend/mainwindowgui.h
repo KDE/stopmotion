@@ -20,9 +20,8 @@
 #ifndef QTGUI_H
 #define QTGUI_H
 
-#include "src/config.h"
-
-#include <QtGui>
+#include <QObject>
+#include <QMainWindow>
 
 class FrameBar;
 class FrameView;
@@ -32,12 +31,25 @@ class EditMenuHandler;
 class RunAnimationHandler;
 class ModelHandler;
 class SoundHandler;
-class ExternalChangeMonitor;
 class MenuFrame;
 class FramePreferencesMenu;
 class PreferencesMenu;
 class ToolsMenu;
 class LanguageHandler;
+class EditObserver;
+
+class QApplication;
+class QKeyEvent;
+class QMouseEvent;
+class QDragEnterEvent;
+class QDropEvent;
+class QAction;
+class QMenu;
+class QLabel;
+class QVBoxLayout;
+class QHBoxLayout;
+class QPushButton;
+class QFileSystemWatcher;
 
 /**
  *The main window class for the stopmotion application.
@@ -88,6 +100,8 @@ private:
 	FrameView *frameView;
 	QWidget *gotoMenuWidget;
 	QHBoxLayout *gotoMenuWidgetLayout;
+	QFileSystemWatcher *fileWatcher;
+	EditObserver *editObserver;
 
 	//Actions
 	QAction *newAct;
@@ -111,7 +125,7 @@ private:
 	QAction *aboutAct;
 	QAction *helpAct;
 
-	//Menues
+	//Menus
 	QMenu *fileMenu;
 	QMenu *exportMenu;
 	QMenu *mostRecentMenu;
@@ -138,9 +152,8 @@ private:
 	EditMenuHandler *editMenuHandler;
 	LanguageHandler *languageHandler;
 	RunAnimationHandler *runAnimationHandler;
-	ExternalChangeMonitor *changeMonitor;
 
-	char *lastVisitedDir;
+	QString lastVisitedDir;
 
 	/**
 	 * Creates the handlers for handling user requests.
@@ -150,8 +163,7 @@ private:
 	void createHandlers(QApplication *stApp);
 
 	/**
-	 * Sets up the ExternalChangeMonitor to monitor the project directories
-	 * for changes in the project files.
+	 * Begins monitoring the workspace directory for interesting changes.
 	 */
 	void setupDirectoryMonitoring();
 

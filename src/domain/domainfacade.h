@@ -321,13 +321,6 @@ public:
 	bool exportToCinerella(const char *file);
 
 	/**
-	 * Tells the domain that the file alteredFile has been changed outside
-	 * the program and that it should be updated.
-	 * @param alteredFile the file which has been altered.
-	 */
-	void animationChanged(const char *alteredFile);
-
-	/**
 	 * Returns available grabber devices.
 	 * @return vector containing available devices.
 	 */

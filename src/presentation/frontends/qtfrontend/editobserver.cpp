@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2014 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,19 +17,49 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef LOGGER_H
-#define LOGGER_H
 
-class Logger
-{
-public:
-	static Logger get();
-	void logDebug(const char * msg, ...);
-	void logWarning(const char * msg, ...);
-	void logFatal(const char * msg, ...);
-	
-private:
-	static Logger logger;
-};
+#include "editobserver.h"
+#include "src/domain/domainfacade.h"
 
-#endif
+#include <QFileSystemWatcher>
+
+EditObserver::EditObserver(QFileSystemWatcher* watcher) : fsw(watcher) {
+}
+
+EditObserver::~EditObserver() {
+}
+
+void EditObserver::updateAdd(int, int, int) {
+}
+
+void EditObserver::updateRemove(int, int, int) {
+}
+
+void EditObserver::updateMove(int, int, int, int, int) {
+}
+
+void EditObserver::updateClear() {
+}
+
+void EditObserver::updateNewScene(int) {
+}
+
+void EditObserver::updateRemoveScene(int) {
+}
+
+void EditObserver::updateMoveScene(int, int) {
+}
+
+void EditObserver::updateAnimationChanged(int sceneNumber, int frameNumber) {
+	const char *path = DomainFacade::getFacade()->getImagePath(sceneNumber,
+				frameNumber);
+	if (path && fsw) {
+		fsw->addPath(path);
+	}
+}
+
+void EditObserver::updateSoundChanged(int, int) {
+}
+
+void EditObserver::resync() {
+}

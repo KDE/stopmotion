@@ -236,6 +236,24 @@ void FrameBar::updateAnimationChanged(int sceneNumber, int frameNumber) {
 	thumb->update();
 }
 
+void FrameBar::fileChanged(const QString& path) {
+	DomainFacade* facade = DomainFacade::getFacade();
+	int sceneCount = facade->getNumberOfScenes();
+	if (activeScene < 0 || sceneCount <= activeScene)
+		return;
+	int sceneSize = facade->getSceneSize(activeScene);
+	const char* pathStr = path.toLocal8Bit();
+	for (int i = 0; i != sceneSize; ++i) {
+		const char* ip = facade->getImagePath(activeScene, i);
+		// This is a bit slow because we have to search through
+		// the /home/tim/.stopmotion/ bit of the path each time.
+		if (strcmp(pathStr, ip) == 0) {
+			ThumbView* thumb = getFrameThumb(i, false);
+			setThumbImage(thumb, pathStr);
+		}
+	}
+}
+
 void FrameBar::fixSize() {
 	mainWidget->resize((FRAME_WIDTH + SPACE) * thumbViews.size() - SPACE,
 			FRAME_HEIGHT);
@@ -723,6 +741,12 @@ int FrameBar::getActiveScene() const {
 	return activeScene;
 }
 
+void FrameBar::setThumbImage(ThumbView* thumb, const char* imagePath) {
+	thumb->setPixmap(
+			QPixmap::fromImage(
+					tryReadImage(imagePath).scaled(FRAME_WIDTH, FRAME_HEIGHT)));
+}
+
 ThumbView* FrameBar::getFrameThumb(int index, bool fix) {
 	int thumbIndex = activeScene + 1 + index;
 	ThumbView* thumb = thumbViews[thumbIndex];
@@ -734,8 +758,7 @@ ThumbView* FrameBar::getFrameThumb(int index, bool fix) {
 		thumb->setScaledContents(true);
 		const char* imagePath = facade->getImagePath(activeScene, index);
 		if (imagePath) {
-			thumb->setPixmap(QPixmap::fromImage(tryReadImage(imagePath)
-					.scaled(FRAME_WIDTH, FRAME_HEIGHT)));
+			setThumbImage(thumb, imagePath);
 		}
 		thumb->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 		thumb->setParent(mainWidget);

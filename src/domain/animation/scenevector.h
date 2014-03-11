@@ -168,10 +168,6 @@ public:
 	void replaceImage(int sceneNumber, int frameNumber,
 			WorkspaceFile& otherImage);
 	/**
-	 * Does nothing.
-	 */
-	void replaceImage(int sceneNumber, int frameNumber);
-	/**
 	 * Returns the number of sounds attached to a frame.
 	 * @param scene The number of the scene that contains the frame that you
 	 * need to examine.

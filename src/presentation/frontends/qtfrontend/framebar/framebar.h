@@ -217,6 +217,8 @@ public slots:
 	void selectPreviousScene();
 	void selectNextScene();
 	void updateStopped();
+	void fileChanged(const QString &path);
+	void setThumbImage(ThumbView* thumb, const char* imagePath);
 
 signals:
 	//The signals in the framebar is used for signaling small widget,

@@ -20,16 +20,23 @@
 #include "src/application/modelhandler.h"
 
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
+#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 #include "src/domain/domainfacade.h"
 
 #include <QChar>
 #include <QProcess>
+#include <QStatusBar>
+#include <QFileDialog>
+#include <QPushButton>
+#include <QStringList>
+#include <QString>
+#include <QMessageBox>
 
 
 ModelHandler::ModelHandler ( QObject *parent, QStatusBar *sb, FrameBar *frameBar,
-		ExternalChangeMonitor *changeMonitor, char *lastVisitedDir, const char *name )
+		QString* lastVisitedDir, const char *name )
 		: QObject(parent), frameBar(frameBar), statusBar(sb),
-		lastVisitedDir(lastVisitedDir), changeMonitor(changeMonitor) {
+		lastVisitedDir(lastVisitedDir) {
 	fileDialog = NULL;
 	removeFramesButton = NULL;
 	setObjectName(name);
@@ -46,8 +53,8 @@ void ModelHandler::setRemoveFramesButton(QPushButton* removeFramesButton) {
 
 
 void ModelHandler::chooseFrame() {
-	fileDialog = new QFileDialog((MainWindowGUI*)parent(), tr("Choose frames to add"),
-			QString::fromLocal8Bit(lastVisitedDir));
+	fileDialog = new QFileDialog((MainWindowGUI*)parent(),
+			tr("Choose frames to add"), *lastVisitedDir);
 	QStringList filters;
 	filters << "Images (*.png *.jpg *.jpeg  *.gif *.PNG *.JPG *.JPEG *.GIF)"
 			<< "Joint Photographic Ex. Gr. (*.jpg *.jpeg *.JPG *.JPEG)"
@@ -80,12 +87,11 @@ void ModelHandler::addFrames(const QStringList & fileNames) {
 	Logger::get().logDebug("addFrames in modelhandler");
 	QStringList names(fileNames);
 
-	changeMonitor->suspendMonitor();
 	// the fileDialog pointer is NULL when adding of frames is
 	// done by drag 'n drop
 	if ( fileDialog != NULL ) {
 		fileDialog->hide();
-		strcpy( lastVisitedDir, fileDialog->directory().path().toLocal8Bit().constData() );
+		*lastVisitedDir = fileDialog->directory().path();
 	}
 
 	if ( !names.isEmpty() ) {
@@ -121,14 +127,13 @@ void ModelHandler::addFrames(const QStringList & fileNames) {
 
 		emit modelChanged();
 	}
-	changeMonitor->resumeMonitor();
 }
 
 
 void ModelHandler::addFrame( const QString &fileName ) {
 	if (fileDialog != NULL) {
 		fileDialog->hide();
-		strcpy( lastVisitedDir, fileDialog->directory().path().toLocal8Bit().constData() );
+		*lastVisitedDir = fileDialog->directory().path();
 	}
 
 	QStringList fileNames;

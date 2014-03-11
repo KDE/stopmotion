@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2014 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,19 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef LOGGER_H
-#define LOGGER_H
 
-class Logger
-{
+#ifndef EDITOBSERVER_H_
+#define EDITOBSERVER_H_
+
+#include "src/presentation/observer.h"
+
+class QFileSystemWatcher;
+
+/**
+ * Tells a {@c QFileSystemWatcher} when a file is replaced (indicating that
+ * it is being edited).
+ */
+class EditObserver: public Observer {
+	QFileSystemWatcher* fsw;
+	EditObserver(const EditObserver&);
+	EditObserver& operator=(const EditObserver&);
 public:
-	static Logger get();
-	void logDebug(const char * msg, ...);
-	void logWarning(const char * msg, ...);
-	void logFatal(const char * msg, ...);
-	
-private:
-	static Logger logger;
+	EditObserver(QFileSystemWatcher* watcher);
+	~EditObserver();
+	void updateAdd(int scene, int index, int numFrames);
+	void updateRemove(int scene, int fromFrame, int toFrame);
+	void updateMove(int fromScene, int fromFrame, int count,
+			int toScene, int toFrame);
+	void updateClear();
+	void updateNewScene(int index);
+	void updateRemoveScene(int sceneNumber);
+	void updateMoveScene(int sceneNumber, int movePosition);
+	void updateAnimationChanged(int sceneNumber, int frameNumber);
+	void updateSoundChanged(int sceneNumber, int frameNumber);
+	void resync();
 };
 
-#endif
+#endif /* EDITOBSERVER_H_ */

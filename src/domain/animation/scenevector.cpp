@@ -195,9 +195,6 @@ void SceneVector::replaceImage(int sceneNumber, int frameNumber,
 	getMutableScene(sceneNumber)->replaceImage(frameNumber, otherImage);
 }
 
-void SceneVector::replaceImage(int, int) {
-}
-
 int SceneVector::soundCount() const {
 	return totalSoundCount;
 }

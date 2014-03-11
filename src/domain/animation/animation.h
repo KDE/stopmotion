@@ -317,13 +317,6 @@ public:
 	void shutdownAudioDevice();
 
 	/**
-	 * Function to call when a file has been altered and the gui
-	 * should be updated.
-	 * @param alteredFile the file which has been altered.
-	 */
-	void animationChanged(const char *alteredFile);
-
-	/**
 	 * Exports the current project to a video file as specified by the video encoder.
 	 * @param encoder the video encoder to use for export to video
 	 * @return true on success, false otherwise

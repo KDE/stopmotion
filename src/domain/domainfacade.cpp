@@ -270,11 +270,6 @@ bool DomainFacade::exportToCinerella(const char *file) {
 }
 
 
-void DomainFacade::animationChanged(const char * alteredFile) {
-	animationModel->animationChanged(alteredFile);
-}
-
-
 const vector<GrabberDevice> DomainFacade::getGrabberDevices() {
 	return Util::getGrabberDevices();
 }

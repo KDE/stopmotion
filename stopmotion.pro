@@ -104,8 +104,8 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/framebar/scenethumbview.h \
     src/presentation/frontends/qtfrontend/framebar/thumbview.h \
     src/presentation/frontends/qtfrontend/exporttab.h \
-    src/application/externalchangemonitor.h \
     src/presentation/frontends/qtfrontend/helpwindow.h \
+    src/presentation/frontends/qtfrontend/editobserver.h \
     src/technical/util.h \
     src/application/externalcommand.h \
     src/application/externalcommandwithtemporarydirectory.h \
@@ -182,8 +182,8 @@ SOURCES += src/config.cpp \
     src/presentation/frontends/qtfrontend/framebar/scenethumbview.cpp \
     src/presentation/frontends/qtfrontend/framebar/thumbview.cpp \
     src/presentation/frontends/qtfrontend/exporttab.cpp \
-    src/application/externalchangemonitor.cpp \
     src/presentation/frontends/qtfrontend/helpwindow.cpp \
+    src/presentation/frontends/qtfrontend/editobserver.cpp \
     src/technical/util.cpp \
     src/application/externalcommand.cpp \
     src/application/externalcommandwithtemporarydirectory.cpp \
@@ -241,7 +241,7 @@ INCLUDEPATH += . \
     $$system(xml2-config --cflags | sed -e 's/-I//g')
 LIBS += $$system(sdl-config --libs) \
         $$system(xml2-config --libs) \
-        -lSDL_image -ltar -lvorbisfile -linotifytools -lX11
+        -lSDL_image -ltar -lvorbisfile -lX11
 
 DISTFILES += src/config.cpp.in \
     graphics/stopmotion.png \

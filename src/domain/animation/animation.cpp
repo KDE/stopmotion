@@ -377,23 +377,6 @@ void Animation::shutdownAudioDevice() {
 }
 
 
-void Animation::animationChanged(const char *alteredFile) {
-	// linear search through the frames isn't very efficient;
-	// we should add something cleverer if it gets to be a problem.
-	assert(alteredFile != NULL);
-	for (int s = 0; s != sceneCount(); ++s) {
-		const Scene* scene = scenes->getScene(s);
-		int frameCount = scene->getSize();
-		for (int f = 0; f != frameCount; ++f) {
-			const Frame *frame = scene->getFrame(f);
-			if (strcmp(frame->getImagePath(), alteredFile) == 0) {
-				scenes->replaceImage(s, f);
-			}
-		}
-	}
-}
-
-
 bool Animation::exportToVideo(VideoEncoder * encoder) {
 	VideoFactory factory(scenes, frontend);
 	frontend->showProgress("Exporting ...", 0);

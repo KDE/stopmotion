@@ -21,10 +21,12 @@
 
 #include "src/domain/domainfacade.h"
 #include "src/foundation/preferencestool.h"
+#include "src/foundation/logger.h"
 #include "graphics/icons/cameraoff.xpm"
 #include "graphics/icons/cameraon.xpm"
 #include "src/application/modelhandler.h"
 #include "src/presentation/frontends/qtfrontend/frameview.h"
+#include "src/presentation/frontends/qtfrontend/qtfrontend.h"
 
 #include <QPushButton>
 #include <QStatusBar>

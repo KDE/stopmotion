@@ -165,14 +165,6 @@ public:
 	virtual void replaceImage(int sceneNumber, int frameNumber,
 			WorkspaceFile& otherImage) = 0;
 	/**
-	 * Indicates that the image of the frame at index {@a frameNumber} of scene
-	 * {@a sceneNumber} has changed. No change to the model will occur, but
-	 * observers will be notified.
-	 * @param sceneNumber The index of the scene containing the frame to alter.
-	 * @param frameNumber The index of the frame to alter.
-	 */
-	virtual void replaceImage(int sceneNumber, int frameNumber) = 0;
-	/**
 	 * Returns the number of sounds attached to a frame.
 	 * @param scene The number of the scene that contains the frame that you
 	 * need to examine.

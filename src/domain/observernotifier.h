@@ -68,7 +68,6 @@ public:
 			int toScene, int toFrame);
 	void replaceImage(int sceneNumber, int frameNumber,
 			WorkspaceFile& otherImage);
-	void replaceImage(int sceneNumber, int frameNumber);
 	int soundCount(int scene, int frame) const;
 	int soundCount() const;
 	void addSound(int scene, int frame, int soundNumber,

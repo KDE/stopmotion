@@ -31,6 +31,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stdio.h>
+#include <assert.h>
 #include <cstring>
 
 // Help function for starting a new thread

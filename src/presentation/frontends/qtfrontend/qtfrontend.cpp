@@ -22,6 +22,7 @@
 #include "src/application/externalcommand.h"
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 #include "src/foundation/preferencestool.h"
+#include "src/foundation/logger.h"
 
 #include <QProgressDialog>
 #include <QProgressBar>
@@ -34,6 +35,7 @@
 #include <unistd.h>
 #include <sstream>
 #include <stdio.h>
+#include <assert.h>
 
 QtFrontend::QtFrontend(int &argc, char **argv)
 {

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,15 +20,14 @@
 #ifndef MODELHANDLER_H
 #define MODELHANDLER_H
 
-#include "src/config.h"
-#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
-#include "src/application/externalchangemonitor.h"
+#include <QObject>
 
-#include <QStatusBar>
-#include <QFileDialog>
-#include <QPushButton>
-#include <QStringList>
-
+class FrameBar;
+class QStatusBar;
+class QFileDialog;
+class QPushButton;
+class QStringList;
+class QString;
 
 /**
  * This class handles request related to adding, removing and moving things
@@ -36,8 +35,7 @@
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class ModelHandler : public QObject
-{
+class ModelHandler : public QObject {
 	Q_OBJECT
 public:
 	/**
@@ -49,9 +47,8 @@ public:
 	 * @param name the name of the ModelHander
 	 */
 	ModelHandler( QObject *parent = 0, QStatusBar *sb = 0, FrameBar *frameBar = 0, 
-			ExternalChangeMonitor *changeMonitor = 0, char *lastVisitedDir = 0, 
-			const char *name = 0 );
-	
+			QString *lastVisitedDir = 0, const char *name = 0 );
+
 	/**
 	 * Cleans up after the modelhandler.
 	 */
@@ -66,7 +63,6 @@ public:
 	void setRemoveFramesButton(QPushButton *removeFramesButton);
 
 
-	
 public slots:
 	/**
 	 * Brings up a dialog so that the user can choose a file to load.
@@ -113,8 +109,7 @@ private:
 	QStatusBar *statusBar;
 	QPushButton *removeFramesButton;
 	QFileDialog* fileDialog;
-	char *lastVisitedDir;
-	ExternalChangeMonitor *changeMonitor;
+	QString *lastVisitedDir;
 	
 signals:
 	/**

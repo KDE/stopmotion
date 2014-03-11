@@ -129,7 +129,8 @@ public:
 		return failures;
 	}
 	ExecutorStep(ExecutorStep* following)
-		: mallocCount(0), previous(following), stringLogger(&log[0]) {
+		: mallocCount(0), previous(following), stringLogger(&log[0]),
+		  activeLog(0) {
 	}
 	virtual ~ExecutorStep() {
 	}

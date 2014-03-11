@@ -28,8 +28,6 @@
 #include "src/application/modelhandler.h"
 #include "src/application/languagehandler.h"
 #include "src/application/soundhandler.h"
-#include "src/application/externalchangemonitor.h"
-#include "src/presentation/frontends/qtfrontend/menuframe.h"
 #include "src/presentation/frontends/qtfrontend/framepreferencesmenu.h"
 #include "src/presentation/frontends/qtfrontend/preferencesmenu.h"
 #include "src/presentation/frontends/qtfrontend/toolsmenu.h"
@@ -39,6 +37,7 @@
 #include "src/presentation/frontends/qtfrontend/toolsmenu.h"
 #include "src/presentation/frontends/qtfrontend/helpwindow.h"
 #include "src/presentation/frontends/qtfrontend/aboutdialog.h"
+#include "src/presentation/frontends/qtfrontend/editobserver.h"
 
 #include "graphics/icons/windowicon.xpm"
 #include "graphics/icons/configureicon.xpm"
@@ -57,8 +56,10 @@
 #include "graphics/icons/videoexport.xpm"
 #include "graphics/icons/languages.xpm"
 
+#include <QtGui>
+#include <QFileSystemWatcher>
+
 #include <cstdlib>
-#include <iostream>
 #include <unistd.h>
 
 using namespace std;
@@ -66,59 +67,23 @@ using namespace Qt;
 
 
 MainWindowGUI::MainWindowGUI(QApplication *stApp)
-	: stApp(stApp)
-{
-	centerWidget        = 0;
-	workArea            = 0;
-	frameView           = 0;
-	frameBar            = 0;
-	newAct              = 0;
-	openAct             = 0;
-	mostRecentAct       = 0;
-	secondMostRecentAct = 0;
-	thirdMostRecentAct  = 0;
-	saveAct             = 0;
-	saveAsAct           = 0;
-	videoAct            = 0;
-	cinerellaAct        = 0;
-	quitAct             = 0;
-	undoAct             = 0;
-	redoAct             = 0;
-	cutAct              = 0;
-	copyAct             = 0;
-	pasteAct            = 0;
-	gotoFrameAct        = 0;
-	configureAct        = 0;
- 	whatsthisAct        = 0;
-	aboutAct            = 0;
-	helpAct             = 0;
-
-	fileMenu            = 0;
-	exportMenu          = 0;
-	mostRecentMenu      = 0;
-	editMenu            = 0;
-	toolsMenu           = 0;
-	framePreferencesMenu= 0;
-	preferencesMenu     = 0;
-	gotoMenuCloseButton = 0;
-	gotoMenuWidget 		= 0;
-	gotoMenuWidgetLayout= 0;
-	helpMenu            = 0;
-	lastVisitedDir      = 0;
-	numberDisplay       = 0;
-	gotoSpinner         = 0;
-	cameraHandler       = 0;
-	editMenuHandler     = 0;
-	runAnimationHandler = 0;
-	modelHandler        = 0;
-	languageHandler     = 0;
-	soundHandler        = 0;
-	changeMonitor       = 0;
-	lastVisitedDir      = 0;
-
-	lastVisitedDir = new char[PATH_MAX];
-	strncpy( lastVisitedDir, getenv("PWD"), PATH_MAX - 1 );
-	lastVisitedDir[PATH_MAX - 1] = '\0';  // ensure null-terminated
+	: stApp(stApp), centerWidget(0), centerWidgetLayout(0), bottomWidget(0),
+	  bottomWidgetLayout(0), workArea(0), workAreaLayout(0),
+	  frameBar(0), frameView(0), gotoMenuWidget(0), gotoMenuWidgetLayout(0),
+	  fileWatcher(0), editObserver(0),
+	  newAct(0), openAct(0), mostRecentAct(0), secondMostRecentAct(0),
+	  thirdMostRecentAct(0), saveAct(0), saveAsAct(0), videoAct(0), cinerellaAct(0),
+	  quitAct(0), undoAct(0), redoAct(0), cutAct(0), copyAct(0), pasteAct(0),
+	  gotoFrameAct(0), configureAct(0), whatsthisAct(0), aboutAct(0),
+	  helpAct(0),
+	  fileMenu(0), exportMenu(0), mostRecentMenu(0), editMenu(0),
+	  settingsMenu(0), languagesMenu(0), helpMenu(0), toolsMenu(0),
+	  framePreferencesMenu(0), preferencesMenu(0),
+	  gotoMenuCloseButton(0), numberDisplay(0), gotoSpinner(0),
+	  gotoFrameLabel(0),
+	  modelHandler(0), soundHandler(0), cameraHandler(0), editMenuHandler(0),
+	  languageHandler(0), runAnimationHandler(0),
+	  lastVisitedDir(getenv("PWD")) {
 
 	centerWidget = new QWidget;
 	centerWidget->setObjectName("CenterWidget");
@@ -201,21 +166,17 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 }
 
 
-MainWindowGUI::~MainWindowGUI()
-{
-	delete [] lastVisitedDir;
-	lastVisitedDir = 0;
+MainWindowGUI::~MainWindowGUI() {
 }
 
 
-void MainWindowGUI::createHandlers(QApplication *stApp)
-{
+void MainWindowGUI::createHandlers(QApplication *stApp) {
 	languageHandler = new LanguageHandler( this, stApp );
 	connect( languageHandler, SIGNAL(languageChanged()), this, SLOT(retranslateStrings()) );
 
 	runAnimationHandler = new RunAnimationHandler(this, statusBar(), frameBar);
 
-	modelHandler = new ModelHandler( this, this->statusBar(), frameBar, changeMonitor, lastVisitedDir );
+	modelHandler = new ModelHandler( this, this->statusBar(), frameBar, &lastVisitedDir );
 	connect( modelHandler, SIGNAL(modelChanged()), this, SLOT(activateMenuOptions()) );
 
 	cameraHandler = new CameraHandler( this, this->statusBar(), modelHandler );
@@ -229,13 +190,17 @@ void MainWindowGUI::createHandlers(QApplication *stApp)
 			this, SLOT(activateMenuOptions()));
 
 	soundHandler = new SoundHandler( this, this->statusBar(), frameBar,
-			this->lastVisitedDir );
+			this->lastVisitedDir.toLocal8Bit() );
 }
 
 
-void MainWindowGUI::setupDirectoryMonitoring()
-{
-	changeMonitor = new ExternalChangeMonitor(this);
+void MainWindowGUI::setupDirectoryMonitoring() {
+	fileWatcher = new QFileSystemWatcher(this);
+	editObserver = new EditObserver(fileWatcher);
+	connect(fileWatcher, SIGNAL(fileChanged(const QString&)),
+			frameBar, SLOT(fileChanged(const QString&)));
+	connect(fileWatcher, SIGNAL(fileChanged(const QString&)),
+			frameView, SLOT(fileChanged(const QString&)));
 }
 
 
@@ -819,7 +784,7 @@ void MainWindowGUI::openProject()
 		QString file = QFileDialog::
 			getOpenFileName(this,
 					tr("Choose project file"),
-					QString::fromLocal8Bit(lastVisitedDir),
+					lastVisitedDir,
 					"Stopmotion (*.sto)");
 		if ( !file.isNull() ) {
 			openProject( file.toLocal8Bit().constData() );
@@ -885,9 +850,7 @@ void MainWindowGUI::openThirdMostRecent()
 void MainWindowGUI::saveProjectAs()
 {
 	QString file = QFileDialog::getSaveFileName(this,
-			tr("Save As"),
-			QString::fromLocal8Bit(lastVisitedDir),
-			"Stopmotion (*.sto)");
+			tr("Save As"), lastVisitedDir, "Stopmotion (*.sto)");
 
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
@@ -960,7 +923,7 @@ void MainWindowGUI::exportToVideo()
 			QString file = QFileDialog::
 				getSaveFileName(this,
 						tr("Export to video file"),
-						QString::fromLocal8Bit(lastVisitedDir));
+						lastVisitedDir);
 			if ( file.isEmpty() ) {
 				isCanceled = true;
 			}
@@ -996,9 +959,7 @@ void MainWindowGUI::exportToCinerella()
 {
 	QString file = QFileDialog::
 		getSaveFileName(this,
-				tr("Export to file"),
-				QString::fromLocal8Bit(lastVisitedDir),
-				"Cinerella (*.XXX)");
+				tr("Export to file"), lastVisitedDir, "Cinerella (*.XXX)");
 
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->exportToCinerella( file.toLocal8Bit().constData() );

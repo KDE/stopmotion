@@ -327,12 +327,6 @@ void ObserverNotifier::replaceImage(int sceneNumber, int frameNumber,
 	doOp(fr);
 }
 
-void ObserverNotifier::replaceImage(int sceneNumber, int frameNumber) {
-	WorkspaceFile noFile;
-	FrameReplacer fr(sceneNumber, frameNumber, noFile);
-	doOp(fr);
-}
-
 int ObserverNotifier::soundCount(int scene, int frame) const {
 	return del->soundCount(scene, frame);
 }

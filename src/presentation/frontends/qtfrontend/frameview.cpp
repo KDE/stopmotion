@@ -151,11 +151,58 @@ void FrameView::resizeEvent(QResizeEvent*) {
 	}
 }
 
-
-void FrameView::paintEvent(QPaintEvent *) {
+void FrameView::drawOnionSkins() {
 	static SDL_Surface *frameSurface = 0;
 	DomainFacade* anim = DomainFacade::getFacade();
+	SDL_Rect dst;
+	dst.x = (screen->w - videoSurface->w) >> 1;
+	dst.y = (screen->h - videoSurface->h) >> 1;
+	dst.w = videoSurface->w;
+	dst.h = videoSurface->h;
+	SDL_BlitSurface(videoSurface, 0, screen, &dst);
+	if (isPlayingVideo && 0 <= activeScene) {
+		switch (mode) {
+		case 0:
+			// Image mixing
+			for (int i = std::max(0, activeFrame - mixCount + 1);
+					i <= activeFrame; ++i) {
+				const char* path = anim->getImagePath(activeScene, i);
+				frameSurface = imageCache.get(path);
+				if (frameSurface != 0) {
+					SDL_Rect dst2;
+					dst2.x = (screen->w - frameSurface->w) >> 1;
+					dst2.y = (screen->h - frameSurface->h) >> 1;
+					dst2.w = frameSurface->w;
+					dst2.h = frameSurface->h;
+					SDL_SetAlpha(frameSurface, SDL_SRCALPHA, alphaLut[i]);
+					SDL_BlitSurface(frameSurface, 0, screen, &dst2);
+				}
+			}
+			break;
+		case 1:
+			// Image differentiating
+			if (activeFrame == 0)
+				SDL_BlitSurface(videoSurface, 0, screen, &dst);
+			else if (0 <= activeFrame) {
+				const char* path = anim->getImagePath(activeScene, activeFrame);
+				SDL_Surface *last = imageCache.get(path);
+				SDL_Surface *tmp = differentiateSurfaces(videoSurface, last);
+				SDL_Rect dst;
+				dst.x = (screen->w - tmp->w) >> 1;
+				dst.y = (screen->h - tmp->h) >> 1;
+				dst.w = tmp->w;
+				dst.h = tmp->h;
+				SDL_BlitSurface(tmp, 0, screen, &dst);
+				SDL_FreeSurface(tmp);
+			}
+			break;
+		default:
+			break;
+		}
+	}
+}
 
+void FrameView::paintEvent(QPaintEvent *) {
 #if defined(Q_WS_X11)
 	// Make sure we're not conflicting with drawing from the Qt library
 	XSync(QX11Info::display(), FALSE);
@@ -164,57 +211,7 @@ void FrameView::paintEvent(QPaintEvent *) {
 		SDL_FillRect(screen, 0, 0);
 
 		if (videoSurface) {
-			SDL_Rect dst;
-			dst.x = (screen->w - videoSurface->w) >> 1;
-			dst.y = (screen->h - videoSurface->h) >> 1;
-			dst.w = videoSurface->w;
-			dst.h = videoSurface->h;
-			SDL_BlitSurface(videoSurface, 0, screen, &dst);
-
-			if (isPlayingVideo && 0 <= activeScene) {
-				switch (mode) {
-				case 0:
-					// Image mixing
-					for (int i = std::max(0, activeFrame - mixCount + 1);
-							i <= activeFrame; ++i) {
-						const char* path = anim->getImagePath(
-								activeScene, i);
-						frameSurface = imageCache.get(path);
-						if (frameSurface != 0) {
-							SDL_Rect dst2;
-							dst2.x = (screen->w - frameSurface->w) >> 1;
-							dst2.y = (screen->h - frameSurface->h) >> 1;
-							dst2.w = frameSurface->w;
-							dst2.h = frameSurface->h;
-							SDL_SetAlpha(frameSurface, SDL_SRCALPHA,
-									alphaLut[i]);
-							SDL_BlitSurface(frameSurface, 0, screen, &dst2);
-						}
-					}
-					break;
-				case 1:
-					// Image differentiating
-					if (activeFrame == 0)
-						SDL_BlitSurface(videoSurface, 0, screen, &dst);
-					else if (0 <= activeFrame) {
-						const char* path = anim->getImagePath(activeScene,
-								activeFrame);
-						SDL_Surface *last = imageCache.get(path);
-						SDL_Surface *tmp = differentiateSurfaces(
-								videoSurface, last);
-						SDL_Rect dst;
-						dst.x = (screen->w - tmp->w) >> 1;
-						dst.y = (screen->h - tmp->h) >> 1;
-						dst.w = tmp->w;
-						dst.h = tmp->h;
-						SDL_BlitSurface(tmp, 0, screen, &dst);
-						SDL_FreeSurface(tmp);
-					}
-					break;
-				default:
-					break;
-				}
-			}
+			drawOnionSkins();
 		}
 		SDL_Flip(screen);
 	}
@@ -526,5 +523,13 @@ SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2) 
 void FrameView::freeProperty(const char *prop, const char *tag) {
 	if (strcmp(prop, tag) != 0) {
 		xmlFree((xmlChar *)prop);
+	}
+}
+
+void FrameView::fileChanged(const QString& path) {
+	const char* p = path.toLocal8Bit();
+	imageCache.drop(p);
+	if (isPlayingVideo && 0 <= activeScene) {
+		drawOnionSkins();
 	}
 }
