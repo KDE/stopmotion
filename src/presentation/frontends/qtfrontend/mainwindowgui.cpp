@@ -94,7 +94,6 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	frameBar = new FrameBar;
 	centerWidgetLayout->addWidget(frameBar);
 
-	setupDirectoryMonitoring();
 	createHandlers(stApp);
 	createAccelerators();
 
@@ -135,13 +134,15 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 
 	makeStatusBar();
 
-	//Initializes and sets up the menue system.
+	//Initializes and sets up the menu system.
 	createActions();
 	createMenus();
 
 	//This slot will activate/deactivate menu options based on the changes in the model.
 	connect( frameBar, SIGNAL(modelSizeChanged(int)),
 			this, SLOT(modelSizeChanged(int)));
+
+	setupDirectoryMonitoring();
 
 	//Mainwindow preferences.
 	setWindowIcon( QPixmap(windowicon) );
@@ -201,6 +202,7 @@ void MainWindowGUI::setupDirectoryMonitoring() {
 			frameBar, SLOT(fileChanged(const QString&)));
 	connect(fileWatcher, SIGNAL(fileChanged(const QString&)),
 			frameView, SLOT(fileChanged(const QString&)));
+	DomainFacade::getFacade()->attach(editObserver);
 }
 
 
