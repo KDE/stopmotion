@@ -58,6 +58,7 @@
 
 #include <QtGui>
 #include <QFileSystemWatcher>
+#include <QClipboard>
 
 #include <cstdlib>
 #include <unistd.h>
@@ -138,9 +139,14 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	createActions();
 	createMenus();
 
-	//This slot will activate/deactivate menu options based on the changes in the model.
+	//These slots will activate/deactivate menu options based on the changes in the model.
 	connect( frameBar, SIGNAL(modelSizeChanged(int)),
 			this, SLOT(modelSizeChanged(int)));
+	connect( frameBar, SIGNAL(newActiveFrame(int, int)),
+			this, SLOT(updateNewActiveFrame(int, int)));
+	// update paste menu item depending on what's on the clipboard
+	connect(QApplication::clipboard(), SIGNAL(dataChanged()),
+			this, SLOT(updatePasteEnabled()));
 
 	setupDirectoryMonitoring();
 
@@ -365,6 +371,7 @@ void MainWindowGUI::createMenus()
 	redoAct->setEnabled(false);
 	cutAct->setEnabled(false);
 	copyAct->setEnabled(false);
+	updatePasteEnabled();
 	gotoFrameAct->setEnabled(false);
 
 	settingsMenu = menuBar()->addMenu(tr("&Settings"));
@@ -794,6 +801,21 @@ void MainWindowGUI::openProject()
 	}
 }
 
+void MainWindowGUI::updateNewActiveFrame(int, int frame) {
+	if (frame < 0) {
+		cutAct->setEnabled(false);
+		copyAct->setEnabled(false);
+	} else {
+		cutAct->setEnabled(true);
+		copyAct->setEnabled(true);
+	}
+}
+
+void MainWindowGUI::updatePasteEnabled() {
+	const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+	pasteAct->setEnabled(mimeData->hasUrls());
+}
+
 void MainWindowGUI::doOpenFile(const char* projectFile) {
 	assert(projectFile != NULL);
 	DomainFacade::getFacade()->openProject(projectFile);
@@ -1083,16 +1105,10 @@ void MainWindowGUI::mousePressEvent( QMouseEvent * )
 }
 
 
-void MainWindowGUI::modelSizeChanged( int modelSize )
-{
+void MainWindowGUI::modelSizeChanged( int modelSize ) {
 	if (modelSize == 0) {
-		cutAct->setEnabled(false);
-		copyAct->setEnabled(false);
 		gotoFrameAct->setEnabled(false);
-	}
-	else {
-		cutAct->setEnabled(true);
-		copyAct->setEnabled(true);
+	} else {
 		gotoFrameAct->setEnabled(true);
 		saveAsAct->setEnabled(true);
 	}

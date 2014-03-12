@@ -326,6 +326,16 @@ private slots:
 
 	void whatsThis();
 
+	/**
+	 * Notification that the framebar's active frame has changed.
+	 */
+	void updateNewActiveFrame(int scene, int frame);
+
+	/**
+	 * Notification that the clipboard contents have changed.
+	 */
+	void updatePasteEnabled();
+
 public slots:
 	/**
 	 * This slot is notified when the size of the model changes so that menuframe
