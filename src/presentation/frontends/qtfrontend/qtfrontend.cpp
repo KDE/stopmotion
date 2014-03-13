@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,6 +23,8 @@
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 #include "src/foundation/preferencestool.h"
 #include "src/foundation/logger.h"
+#include "src/technical/util.h"
+#include "src/domain/animation/workspacefile.h"
 
 #include <QProgressDialog>
 #include <QProgressBar>
@@ -175,22 +177,18 @@ void QtFrontend::initializePreferences()
 	Logger::get().logDebug("Loading preferencestool");
 
 	PreferencesTool *prefs = PreferencesTool::get();
-	std::string preferencesFile = getenv("HOME");
-	preferencesFile += "/.stopmotion/preferences.xml";
-	std::string oldPrefsFile = preferencesFile + ".OLD";
+	WorkspaceFile preferencesFile(WorkspaceFile::preferencesFile);
+	WorkspaceFile oldPrefsFile(WorkspaceFile::preferencesFileOld);
 
 	// Has to check this before calling setPreferencesFile(...) because
 	// the function creates the file if it doesn't exist.
-	int prefsFileExists = access(preferencesFile.c_str(), R_OK);
+	int prefsFileExists = access(preferencesFile.path(), R_OK);
 	if (prefsFileExists != -1) {
-		std::ostringstream copyCmd;
-		copyCmd << "/bin/cp " << preferencesFile << " " << oldPrefsFile;
-		std::string ccs = copyCmd.str();
-		system(ccs.c_str());
+		Util::copyFile(oldPrefsFile.path(), preferencesFile.path());
 	}
 
 	// If file doesn't exist or has wrong version number
-	if ( !prefs->setPreferencesFile(preferencesFile.c_str(), "0.8") ) {
+	if ( !prefs->setPreferencesFile(preferencesFile.path(), "0.8") ) {
 		// File doesn't exist
 		if (prefsFileExists == -1) {
 			setDefaultPreferences(prefs);
@@ -208,8 +206,8 @@ void QtFrontend::initializePreferences()
 			}
 			// Use old preferences
 			else {
-				rename(oldPrefsFile.c_str(), preferencesFile.c_str());
-				prefs->setPreferencesFile(preferencesFile.c_str(), prefs->getOldVersion());
+				rename(oldPrefsFile.path(), preferencesFile.path());
+				prefs->setPreferencesFile(preferencesFile.path(), prefs->getOldVersion());
 
 				// Update version
 				prefs->setVersion("0.8");

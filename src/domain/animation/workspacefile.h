@@ -47,6 +47,8 @@ public:
 	enum CurrentModelFile { currentModelFile };
 	enum CommandLogFile { commandLogFile };
 	enum CapturedImage { capturedImage };
+	enum PreferencesFile { preferencesFile };
+	enum PreferencesFileOld { preferencesFileOld };
 	WorkspaceFile(const WorkspaceFile&);
 	WorkspaceFile& operator=(const WorkspaceFile&);
 	/**
@@ -85,6 +87,14 @@ public:
 	 * Refers to the image written to by the capture command.
 	 */
 	WorkspaceFile(CapturedImage);
+	/**
+	 * Refers to the preferences file.
+	 */
+	WorkspaceFile(PreferencesFile);
+	/**
+	 * Refers to the backup preferences file.
+	 */
+	WorkspaceFile(PreferencesFileOld);
 	~WorkspaceFile();
 	/**
 	 * Gets the file's basename.

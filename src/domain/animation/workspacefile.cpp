@@ -174,6 +174,16 @@ WorkspaceFile::WorkspaceFile(CapturedImage)
 	fullPath = getWorkspaceFilename(namePart, "capturedfile.jpg");
 }
 
+WorkspaceFile::WorkspaceFile(PreferencesFile)
+	: fullPath(0), namePart(0) {
+	fullPath = getWorkspaceFilename(namePart, "preferences.xml");
+}
+
+WorkspaceFile::WorkspaceFile(PreferencesFileOld)
+	: fullPath(0), namePart(0) {
+	fullPath = getWorkspaceFilename(namePart, "preferences.xml.OLD");
+}
+
 WorkspaceFile::~WorkspaceFile() {
 	delete[] fullPath;
 }
