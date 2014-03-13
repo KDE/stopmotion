@@ -30,6 +30,7 @@ class Observer;
 class Frontend;
 class Frame;
 class VideoEncoder;
+class StringIterator;
 
 /**
  * Singleton facade for the domain level. All requests into the domain layer
@@ -86,7 +87,7 @@ public:
 	 * images to be added as frames to the animation.
 	 */
 	void addFrames(int scene, int frame,
-			const vector<const char*>& frameNames);
+			StringIterator& frameNames);
 
 	/**
 	 * Removes frames from a scene in the animation.

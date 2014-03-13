@@ -107,6 +107,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/helpwindow.h \
     src/presentation/frontends/qtfrontend/editobserver.h \
     src/technical/util.h \
+    src/technical/stringiterator.h \
     src/application/externalcommand.h \
     src/application/externalcommandwithtemporarydirectory.h \
     src/presentation/frontends/qtfrontend/aboutdialog.h \
@@ -185,6 +186,7 @@ SOURCES += src/config.cpp \
     src/presentation/frontends/qtfrontend/helpwindow.cpp \
     src/presentation/frontends/qtfrontend/editobserver.cpp \
     src/technical/util.cpp \
+    src/technical/stringiterator.cpp \
     src/application/externalcommand.cpp \
     src/application/externalcommandwithtemporarydirectory.cpp \
     src/presentation/frontends/qtfrontend/aboutdialog.cpp \

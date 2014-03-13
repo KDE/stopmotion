@@ -79,12 +79,12 @@ Animation::~Animation() {
 
 
 void Animation::addFrames(int scene, int frame,
-		const vector<const char*>& frameNames) {
+		StringIterator& frameNames) {
 	if (sceneCount() == 0) {
 		newScene(0);
 	}
 
-	int count = frameNames.size();
+	int count = frameNames.count();
 	CommandAddFactory::Parameters params(scene, frame, count);
 	bool showingProgress = 1 < count;
 	if (showingProgress) {
@@ -94,15 +94,14 @@ void Animation::addFrames(int scene, int frame,
 	// error.empty() is false if string is "\0"! So we set this explicitly on error.
 	bool isError = false;
 	int added = 0;
-	for (vector<const char*>::const_iterator i = frameNames.begin();
-			i != frameNames.end(); ++i) {
+	for (; !frameNames.atEnd(); frameNames.next()) {
 		try {
-			params.addFrame(*i);
+			params.addFrame(frameNames.get());
 			++added;
 		} catch (CopyFailedException&) {
 			isError = true;
 			error += "Cannot read file ";
-			error += *i;
+			error += frameNames.get();
 			error += "\n";
 		}
 		if (frontend->isOperationAborted()) {

@@ -109,7 +109,7 @@ private:
 	int parseArguments(int argc, char **argv);
 	void addFrames(const char *directory);
 	void save(const char *directory);
-	const char* getAbsolutePath(const char *path);
+	void getAbsolutePath(std::string& out, const char *path);
 	int checkFiles(const char *directory);
 };
 

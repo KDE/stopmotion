@@ -27,6 +27,7 @@ HEADERS += ../domain/undo/filelogger.h \
     ../domain/animation/workspacefile.h \
     ../technical/audio/oggvorbis.h \
     ../technical/util.h \
+    ../technical/stringiterator.h \
     ../technical/libng/grab-ng.h \
     ../technical/libng/struct-v4l.h \
     ../technical/libng/struct-v4l2.h \
@@ -72,6 +73,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../technical/audio/oggvorbis.cpp \
     ../technical/audio/audioformat.cpp \
     ../technical/util.cpp \
+    ../technical/stringiterator.cpp \
     ../technical/libng/grab-ng.c \
     ../technical/libng/struct-v4l.c \
     ../technical/libng/struct-v4l2.c \

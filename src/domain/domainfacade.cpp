@@ -89,7 +89,7 @@ Frontend* DomainFacade::getFrontend() {
 
 
 void DomainFacade::addFrames(int scene, int frame,
-		const vector<const char*>& frameNames) {
+		StringIterator& frameNames) {
 	try {
 		Logger::get().logDebug("Adding frames in the domainfacade");
 		animationModel->addFrames(scene, frame, frameNames);

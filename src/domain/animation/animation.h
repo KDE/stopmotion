@@ -22,6 +22,7 @@
 
 #include "src/config.h"
 #include "src/domain/undo/executor.h"
+#include "src/technical/stringiterator.h"
 
 #include <vector>
 #include <libxml/tree.h>
@@ -92,7 +93,7 @@ public:
 	 * @param frame The frame index to add the frames to in the animation.
 	 * @param frameNames a vector containing the names to be added in the model
 	 */
-	void addFrames(int scene, int frame, const vector<const char*>& frameNames);
+	void addFrames(int scene, int frame, StringIterator& frameNames);
 
 	/**
 	 * Removes frames from a scene in the animation.

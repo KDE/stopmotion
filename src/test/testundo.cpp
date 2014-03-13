@@ -160,9 +160,31 @@ public:
 	void runAndCheck(const char* name, ExecutorStep& other, Executor& executor,
 			ModelTestHelper& helper, RandomSource rng, int testNum) {
 		RandomSource r2 = rng;
-		other.run(executor, rng, 0);
+		try {
+			other.run(executor, rng, 0);
+		} catch (std::exception& e) {
+			std::string log;
+			other.getLog(log, 0);
+			std::ostringstream ss;
+			ss << "Failed to run 'other' step in test '" << name
+					<< "' on iteration " << testNum
+					<< "\nSuccessful log:" << log;
+			std::string s = ss.str();
+			QFAIL(s.c_str());
+		}
 		Hash h = helper.hashModel(executor);
-		run(executor, r2, 1);
+		try {
+			run(executor, r2, 1);
+		} catch (std::exception& e) {
+			std::string log;
+			getLog(log, 0);
+			std::ostringstream ss;
+			ss << "Failed to run 'this' step in test '" << name
+					<< "' on iteration " << testNum
+					<< "\nSuccessful log:" << log;
+			std::string s = ss.str();
+			QFAIL(s.c_str());
+		}
 		Hash h2 = helper.hashModel(executor);
 		if (h != h2) {
 			++failures;

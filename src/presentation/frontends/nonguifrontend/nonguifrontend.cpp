@@ -19,6 +19,8 @@
  ***************************************************************************/
 #include "nonguifrontend.h"
 
+#include "src/technical/stringiterator.h"
+
 #include <stdio.h>
 #include <unistd.h>
 #include <getopt.h>
@@ -27,6 +29,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <string>
 #include <string.h>
 
 
@@ -136,100 +139,88 @@ int NonGUIFrontend::parseArguments(int argc, char **argv)
 	return 0;
 }
 
-
-void NonGUIFrontend::addFrames(const char *directory)
-{
-	// returns a absolute path which is allocated with new[]
-	const char *dir = getAbsolutePath(directory);
-
-	DIR *dp = opendir(dir);
-	if (dp) {
-		vector<const char*> frames;
-		struct dirent *ep;
-		struct stat st;
-
-		while ( (ep = readdir(dp)) ) {
-			char *fileName = new char[PATH_MAX];
-			snprintf(fileName, PATH_MAX, "%s%s", dir, ep->d_name);
-			stat(fileName, &st);
-			// is a regular file, not a directory
-			if ( S_ISREG(st.st_mode) != 0 && strstr(fileName, "snd") == NULL ) {
-				frames.push_back(fileName);
-			}
-			else {
-				delete [] fileName;
-			}
-			fileName = NULL;
-		}
-		closedir(dp);
-		
-		vector<const char*>(frames).swap(frames);
-		facadePtr->addFrames(0, 0, frames);
-
-		unsigned int numElem = frames.size();
-		for (unsigned int i = 0; i < numElem; ++i) {
-			delete [] frames[i];
-		}
-		
-		char tmpDir[PATH_MAX] = {0};
-		snprintf(tmpDir, sizeof(tmpDir), "%s/.stopmotion/tmp/", getenv("HOME"));
-		int success = checkFiles(tmpDir);
-		printf("Successfully copied %d files from %s to %s\n", success, dir, tmpDir);
+class DirIterator : public StringIterator {
+	std::string buffer;
+	std::string::size_type dirLen;
+	DIR *dp;
+	struct dirent *ep;
+	struct stat st;
+public:
+	DirIterator(const char* path)
+			: buffer(path), dirLen(0), dp(opendir(path)) {
+		dirLen = buffer.size();
+		next();
 	}
-	else {
-		fprintf (stderr, "Couldn't open directory: %s; %s\n", dir, strerror (errno));
+	~DirIterator() {
+		if (dp)
+			closedir(dp);
 	}
-	
-	delete [] dir;
+	int count() {
+		if (dp) {
+			int c = 0;
+			while (atEnd()) {
+				++c;
+				next();
+			}
+			rewinddir(dp);
+			next();
+		}
+	}
+	bool atEnd() const {
+		return !dp || !ep;
+	}
+	const char* get() const {
+		return &buffer[0];
+	}
+	void next() {
+		if (dp) {
+			ep = readdir(dp);
+			while (ep && ep->d_type != DT_REG)
+				ep = readdir(dp);
+			buffer.resize(dirLen);
+			buffer.append(ep->d_name);
+			buffer.c_str();
+		}
+	}
+};
+
+void NonGUIFrontend::addFrames(const char *directory) {
+	std::string dir;
+	getAbsolutePath(dir, directory);
+	DirIterator di(dir.c_str());
+	facadePtr->addFrames(0, 0, di);
 }
 
 
-void NonGUIFrontend::save(const char *directory)
-{
+void NonGUIFrontend::save(const char *directory) {
 	// returns a absoulte path which is allocated with new[]
-	const char *dir = getAbsolutePath(directory);
-	facadePtr->saveProject(dir);
-	
-	char tmp[PATH_MAX] = {0};
-	snprintf(tmp, sizeof(tmp), "%simages/", dir);
-	int saved = checkFiles(tmp);
-	printf("Successfully saved %d files in %s\n", saved, tmp);
-	snprintf(tmp, sizeof(tmp), "%s/.stopmotion/tmp/", getenv("HOME"));
-	int numFiles = checkFiles(tmp);
-	printf("Successfully removed %d files from %s\n", saved - numFiles, tmp);
-	
-	delete [] dir;
+	std::string dir;
+	getAbsolutePath(dir, directory);
+	facadePtr->saveProject(dir.c_str());
 }
 
 
-const char* NonGUIFrontend::getAbsolutePath(const char *path)
-{
-	char *tmp = new char[PATH_MAX];
-	
+void NonGUIFrontend::getAbsolutePath(std::string& out, const char *path) {
+	if (!path || path[0] == '\0') {
+		out = "/";
+		return;
+	}
 	// isn't an absolute path
 	if (path[0] != '/') {
 		// make it absolute
-		snprintf(tmp, PATH_MAX, "%s/%s", getenv("PWD"), path);
+		out = getenv("PWD");
+		out.append("/");
+		out.append(path);
+	} else {
+		out = path;
 	}
-	else {
-		strncpy(tmp, path, PATH_MAX - 1);
-		tmp[PATH_MAX - 1] = '\0';  // ensure null-terminated
-	}
-	
 	struct stat st;
-	stat(tmp, &st);
+	stat(out.c_str(), &st);
 	// if it is a directory
 	if ( S_ISDIR(st.st_mode) != 0) {
-		int len = strlen(tmp);
-		// and doesn't ends with a '/'
-		if ( tmp[len - 1] != '/' ) {
-			// append a '/'
-			snprintf(tmp, PATH_MAX - 1, "%s/", tmp);
-			tmp[PATH_MAX - 1] = '\0';  // ensure null-terminated
-		}
+		if (out[out.size() - 1] != '/')
+			out.append("/");
 	}
-	
-	return tmp;
 }
 
 

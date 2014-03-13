@@ -20,6 +20,7 @@
 #include "framethumbview.h"
 
 #include "src/domain/domainfacade.h"
+#include "src/technical/stringiterator.h"
 #include "graphics/icons/note.xpm"
 
 #include <QApplication>
@@ -195,11 +196,45 @@ void FrameThumbView::setSelected(bool selected)
 	}
 }
 
+class FileNamesFromUrlsIterator : public StringIterator {
+	QList<QUrl>::Iterator b;
+	QList<QUrl>::Iterator e;
+	std::string buffer;
 
-/**
- *@todo FIXME this doesn't work between applications of this type because of the
- *if-check (event->source() != 0).
- */
+	void set() {
+		if (!atEnd()) {
+			QString file = b->toLocalFile();
+			buffer = file.toStdString();
+			buffer.c_str();
+		}
+	}
+
+public:
+	FileNamesFromUrlsIterator(QList<QUrl>::Iterator begin,
+			QList<QUrl>::Iterator end) : b(begin), e(end) {
+		set();
+	}
+	~FileNamesFromUrlsIterator() {
+	}
+	int count() {
+		int c = 0;
+		for (QList<QUrl>::Iterator i(b); i != e; ++i) {
+			++c;
+		}
+		return c;
+	}
+	bool atEnd() const {
+		return b == e;
+	}
+	const char* get() const {
+		return &buffer[0];
+	}
+	void next() {
+		++b;
+		set();
+	}
+};
+
 void FrameThumbView::contentsDropped(QDropEvent * event)
 {
 	int activeScene = frameBar->getActiveScene();
@@ -218,20 +253,8 @@ void FrameThumbView::contentsDropped(QDropEvent * event)
 		frameBar->updateNewActiveFrame(activeScene, number);
 		
 		if ( event->mimeData()->hasUrls() ) {
-			QStringList fileNames;
 			QList<QUrl> urls = event->mimeData()->urls();
-			int numFrames = urls.size();
-			for (int i = 0; i < numFrames; ++i) {
-				fileNames.append(urls[i].toLocalFile());
-			}
-			std::vector<const char*> fNames;
-			QStringList::Iterator it = fileNames.begin();
-			while (it != fileNames.end() ) {
-				QString fileName = *it;
-				const char *f = fileName.toStdString().c_str();
-				fNames.push_back(f);
-				++it;
-			}
+			FileNamesFromUrlsIterator fNames(urls.begin(), urls.end());
 			DomainFacade::getFacade()->addFrames(activeScene, number, fNames);
 		}
 	}

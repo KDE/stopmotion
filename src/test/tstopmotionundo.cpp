@@ -32,6 +32,7 @@
 #include "src/domain/animation/sound.h"
 #include "src/technical/audio/audioformat.h"
 #include "src/presentation/frontends/frontend.h"
+#include "src/technical/stringiterator.h"
 
 #include <QtTest/QtTest>
 
@@ -408,6 +409,32 @@ public:
 	}
 };
 
+class StringContainer : public StringIterator {
+	typedef std::vector<const char*> vect_t;
+	vect_t v;
+	vect_t::size_type i;
+public:
+	StringContainer() : i(0) {
+	}
+	~StringContainer() {
+	}
+	int count() {
+		return static_cast<int>(v.size()) - i;
+	}
+	bool atEnd() const {
+		return v.size() == i;
+	}
+	const char* get() const {
+		return v[i];
+	}
+	void next() {
+		++i;
+	}
+	void add(const char* s) {
+		v.insert(v.end(), s);
+	}
+};
+
 void TestStopmotionUndo::setUpAnim() {
 	setMockFileSystem(testEnvFs);
 	WorkspaceFile::clear();
@@ -421,16 +448,16 @@ void TestStopmotionUndo::setUpAnim() {
 	anim->newScene(0);
 	anim->newScene(1);
 	anim->newScene(2);
-	std::vector<const char*> frames0;
-	frames0.insert(frames0.end(), "resources/frame0.jpg");
-	frames0.insert(frames0.end(), "resources/frame1.jpg");
+	StringContainer frames0;
+	frames0.add("resources/frame0.jpg");
+	frames0.add("resources/frame1.jpg");
 	anim->addFrames(0, 0, frames0);
-	std::vector<const char*> frames1;
-	frames1.insert(frames1.end(), "resources/frame2.jpg");
+	StringContainer frames1;
+	frames1.add("resources/frame2.jpg");
 	anim->addFrames(1, 0, frames1);
-	std::vector<const char*> frames2;
-	frames2.insert(frames2.end(), "resources/frame3.jpg");
-	frames2.insert(frames2.end(), "resources/frame4.jpg");
+	StringContainer frames2;
+	frames2.add("resources/frame3.jpg");
+	frames2.add("resources/frame4.jpg");
 	anim->addFrames(2, 0, frames2);
 	anim->addSound(2, 0, "resources/sound0.ogg");
 	anim->addSound(2, 1, "resources/sound1.ogg");
@@ -438,9 +465,9 @@ void TestStopmotionUndo::setUpAnim() {
 
 void TestStopmotionUndo::addFrames() {
 	setUpAnim();
-	std::vector<const char*> newFrames(2);
-	newFrames[0] = "resources/frame5.jpg";
-	newFrames[1] = "resources/frame6.jpg";
+	StringContainer newFrames;
+	newFrames.add("resources/frame5.jpg");
+	newFrames.add("resources/frame6.jpg");
 	anim->addFrames(0, 1, newFrames);
 	animTester->test("0,5,6,1;2;3/0,4/1");
 }

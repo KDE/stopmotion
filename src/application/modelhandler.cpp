@@ -22,6 +22,7 @@
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 #include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 #include "src/domain/domainfacade.h"
+#include "src/technical/stringiterator.h"
 
 #include <QChar>
 #include <QProcess>
@@ -82,10 +83,47 @@ void ModelHandler::chooseFrame() {
 }
 
 
-// TODO: implement with std strings
+class StringListIterator : public StringIterator {
+	QStringList::ConstIterator b;
+	QStringList::ConstIterator e;
+	std::string buffer;
+
+	void set() {
+		if (!atEnd()) {
+			buffer = b->toStdString();
+			buffer.c_str();
+		}
+	}
+
+public:
+	StringListIterator(QStringList::ConstIterator begin,
+			QStringList::ConstIterator end) : b(begin), e(end) {
+		set();
+	}
+	~StringListIterator() {
+	}
+	int count() {
+		int c = 0;
+		for (QStringList::ConstIterator i(b); i != e; ++i) {
+			++c;
+		}
+		return c;
+	}
+	bool atEnd() const {
+		return b == e;
+	}
+	const char* get() const {
+		return &buffer[0];
+	}
+	void next() {
+		++b;
+		set();
+	}
+};
+
+
 void ModelHandler::addFrames(const QStringList & fileNames) {
 	Logger::get().logDebug("addFrames in modelhandler");
-	QStringList names(fileNames);
 
 	// the fileDialog pointer is NULL when adding of frames is
 	// done by drag 'n drop
@@ -94,18 +132,8 @@ void ModelHandler::addFrames(const QStringList & fileNames) {
 		*lastVisitedDir = fileDialog->directory().path();
 	}
 
-	if ( !names.isEmpty() ) {
-		vector<const char*> fNames;
-		QStringList::Iterator it = names.begin();
-		while (it != names.end() ) {
-			QByteArray fileName = it->toLocal8Bit();
-			char *f = new char[fileName.length() + 1];
-			strcpy(f, fileName.constData());
-			fNames.push_back(f);
-			++it;
-		}
-		// trim to size :)
-		vector<const char*>(fNames).swap(fNames);
+	if ( !fileNames.isEmpty() ) {
+		StringListIterator fNames(fileNames.begin(), fileNames.end());
 		int scene = frameBar->getActiveScene();
 		int frame = frameBar->getActiveFrame() + 1;
 		if (scene < 0) {
@@ -118,13 +146,6 @@ void ModelHandler::addFrames(const QStringList & fileNames) {
 		if (frame < 0)
 			frame = 0;
 		facade->addFrames(scene, frame, fNames);
-
-		// Cleanup
-		for (unsigned i = 0; i < fNames.size(); ++i) {
-			delete [] fNames[i];
-			fNames[i] = NULL;
-		}
-
 		emit modelChanged();
 	}
 }
