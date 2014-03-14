@@ -58,8 +58,8 @@ public:
 	 */
 	WorkspaceFile();
 	/**
-	 * Creates a WorkspaceFile referring to a file already in the workspace
-	 * (having been created by {@c TemporaryWorkspaceFile}).
+	 * Creates a WorkspaceFile referring to a sound or image file already in
+	 * the workspace (having been created by {@c TemporaryWorkspaceFile}).
 	 * @param name The basename of the file (i.e. the return value of
 	 * {@ref TemporaryWorkspaceFile::basename}).
 	 */

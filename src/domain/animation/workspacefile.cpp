@@ -39,14 +39,18 @@ uint32_t nextFileNumber() {
 	return ++fileNum;
 }
 
-class WorkspacePath {
-};
-
-WorkspacePath workspacePath;
+enum WorkspacePath { workspacePath };
+enum WorkspacePathFrames { workspacePathFrames };
 
 std::ostream& operator<<(std::ostream& s, WorkspacePath) {
 	s << getenv("HOME");
 	s << "/.stopmotion/";
+	return s;
+}
+
+std::ostream& operator<<(std::ostream& s, WorkspacePathFrames) {
+	s << getenv("HOME");
+	s << "/.stopmotion/frames/";
 	return s;
 }
 
@@ -68,7 +72,7 @@ void getFreshFilename(char*& path, const char*& namePart,
 	int size = 0;
 	do {
 		p.str("");
-		p << workspacePath;
+		p << workspacePathFrames;
 		indexOfName = p.str().length();
 		p.fill('0');
 		p.width(8);
@@ -90,12 +94,18 @@ void getFreshFilename(char*& path, const char*& namePart,
  * @param basenameOut Pointer to the suffix of the buffer that matches
  * {@a basenameIn}.
  * @param basenameIn The name of the file.
+ * @param inFrames True for a sound or image file.
  * @return The newly-allocated buffer.
  */
-char* getWorkspaceFilename(const char *&basenameOut, const char* basenameIn) {
+char* getWorkspaceFilename(const char *&basenameOut, const char* basenameIn,
+		bool inFrames = false) {
 	std::stringstream p;
 	p.str("");
-	p << workspacePath;
+	if (inFrames) {
+		p << workspacePathFrames;
+	} else {
+		p << workspacePath;
+	}
 	int indexOfName = p.str().length();
 	p << basenameIn;
 	std::string out = p.str();
@@ -110,11 +120,17 @@ char* getWorkspaceFilename(const char *&basenameOut, const char* basenameIn) {
 }
 
 void WorkspaceFile::clear() {
-	std::stringstream pathStr;
-	pathStr << workspacePath;
-	std::string path = pathStr.str();
-	Util::ensurePathExists(path.c_str());
-	Util::removeDirectoryContents(path.c_str());
+	{
+		std::stringstream pathStr;
+		pathStr << workspacePath;
+		std::string path = pathStr.str();
+		Util::ensurePathExists(path.c_str());
+		Util::removeDirectoryContents(path.c_str());
+	}
+	std::stringstream framePathStr;
+	framePathStr << workspacePathFrames;
+	std::string framePath = framePathStr.str();
+	Util::ensurePathExists(framePath.c_str());
 	fileNum = 0;
 	soundNumber = 0;
 }
@@ -151,7 +167,7 @@ WorkspaceFile::WorkspaceFile(const WorkspaceFile& t)
 
 WorkspaceFile::WorkspaceFile(const char* name)
 		: fullPath(0), namePart(0) {
-	fullPath = getWorkspaceFilename(namePart, name);
+	fullPath = getWorkspaceFilename(namePart, name, true);
 }
 
 WorkspaceFile::WorkspaceFile(NewModelFile)
@@ -217,8 +233,8 @@ void TemporaryWorkspaceFile::copyToWorkspace(const char* filename) {
 
 TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename)
 		: fullPath(0), namePart(0), toBeDeleted(false) {
-	// not a totally fullproof test...
-	if (strstr(filename, "/.stopmotion/") != NULL) {
+	// not a totally foolproof test...
+	if (strstr(filename, "/.stopmotion/frames/") != NULL) {
 		// Already a workspace file; no need to copy it again
 		int size = strlen(filename) + 1;
 		fullPath = new char[size];
