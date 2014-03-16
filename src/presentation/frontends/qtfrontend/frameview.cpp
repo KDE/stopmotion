@@ -137,17 +137,17 @@ void FrameView::resizeEvent(QResizeEvent*) {
 	sprintf(variable, "SDL_WINDOWID=0x%lx", winId());
 	putenv(variable);
 	if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
-		char msg[80] = "Unable to init SDL: ";
-		strcat( msg, SDL_GetError() );
-		Logger::get().logFatal(msg);
+		std::string msg("Unable to initialize SDL: ");
+		msg.append( SDL_GetError() );
+		Logger::get().logFatal(msg.c_str());
     }
 
 	// The previously surface is automatically deleted by SDL
 	screen = SDL_SetVideoMode(width(), height(), 0, SDL_DOUBLEBUF | SDL_SWSURFACE);
 	if (!screen) {
-		char msg[80] = "Unable to set vide mode: ";
-		strcat( msg, SDL_GetError() );
-		Logger::get().logFatal(msg);
+		std::string msg("Unable to set video mode: ");
+		msg.append( SDL_GetError() );
+		Logger::get().logFatal(msg.c_str());
 	}
 }
 
