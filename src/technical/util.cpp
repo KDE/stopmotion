@@ -99,28 +99,66 @@ int removeFileOrDirectory(const char *path, const struct stat *,
 	return FTW_CONTINUE;
 }
 
+const char* endOfArgument(const char* in) {
+	enum CharClass {
+		normalChar,
+		backslashChar,
+		squoteChar,
+		dquoteChar,
+		space
+	};
+	enum State {
+		normal,
+		backslash,
+		squote,
+		dquote,
+		dqbackslash,
+		end
+	} state = normal;
+	/* transition[state][charClass] */
+	static const State transition[5][5] = {
+			{ normal, backslash, squote, dquote, end }, // normal
+			{ normal, normal, normal, normal, normal }, // backslash
+			{ squote, squote, normal, squote, squote }, // squote
+			{ dquote, dqbackslash, dquote, normal, dquote }, // dquote
+			{ dquote, dquote, dquote, dquote, dquote } // dqbackslash
+	};
+	char c = *in;
+	while (c != '\0' && state != end) {
+		CharClass cc = c == '\\'? backslashChar
+				: c == '\''? squoteChar
+						: c == '"'? dquoteChar
+								: c == ' '? space
+										: normalChar;
+		state = transition[state][cc];
+		++in;
+		c = *in;
+	}
+	return in;
 }
 
-const char* Util::checkCommand(const char *command) {
+}
+
+bool Util::checkCommand(std::string* pathOut, const char* command) {
 	assert(command != 0);
-	
-	int len = 7 + strlen(command);
-	char tmp[len];
-	snprintf(tmp, len, "which %s", command);
-	
-	FILE *fp = popen(tmp, "r");
+	std::string which("which ");
+	const char* commandEnd = endOfArgument(command);
+	which.append(command, commandEnd);
+	FILE *fp = popen(which.c_str(), "r");
 	__gnu_cxx::stdio_filebuf<char> buf(fp, ios::in);
 	istream bufStream(&buf);
-	
-	string line = "";
-	getline(bufStream, line);
-	if (line != "") {
-		char *path = new char[line.length() + 1];
-		strcpy(path, line.c_str());
-		return path;
+	std::string dummy;
+	if (!pathOut)
+		pathOut = &dummy;
+	*pathOut = "";
+	std::getline(bufStream, *pathOut);
+	while (bufStream.good()) {
+		std::getline(bufStream, dummy);
 	}
-	
-	return 0;
+	bool bad = bufStream.bad();
+	int status = pclose(fp);
+	int exitStatus = WEXITSTATUS(status);
+	return !bad && exitStatus < 2;
 }
 
 

@@ -96,12 +96,6 @@ void VideoEncoder::setOutputFile(const char* file)
 }
 
 
-bool VideoEncoder::isValid()
-{
-	const char *path = Util::checkCommand(startCommand);
-	if ( path != 0) {
-		delete [] path;
-		return true;
-	}
-	return false;
+bool VideoEncoder::isValid() {
+	return Util::checkCommand(0, startCommand);
 }

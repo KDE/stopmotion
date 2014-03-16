@@ -118,18 +118,14 @@ string CommandLineGrabber::parseCommand(const char * command)
 {
 	string tmp = command;
 	int spaceIdx = tmp.find(" ", 0);
-	
-	const char *path = Util::checkCommand((tmp.substr(0, spaceIdx)).c_str());
-	if (path != NULL) {
+	std::string commandName = tmp.substr(0, spaceIdx);
+	std::string path;
+	if (Util::checkCommand(&path, commandName.c_str())) {
 		tmp.replace(0, spaceIdx, path);
-		delete [] path;
-		path = NULL;
-		
 		int index = tmp.find("$IMAGEFILE");
 		if (index != -1) {
 			tmp.replace(index, strlen("$IMAGEFILE"), string(filePath));
 		}
-		
 		return tmp;
 	}
 	return "";

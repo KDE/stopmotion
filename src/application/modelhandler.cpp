@@ -208,8 +208,8 @@ void ModelHandler::removeScene() {
     \fn ModelHandler::editCurrentFrame()
  */
 int ModelHandler::editCurrentFrame() {
-	const char *gimpCommand = Util::checkCommand("gimp");
-	if (!gimpCommand) {
+	std::string gimpCommand;
+	if (!Util::checkCommand(&gimpCommand, "gimp")) {
 		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
 			tr("You do not have Gimp installed on your system"),
 			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
@@ -237,7 +237,7 @@ int ModelHandler::editCurrentFrame() {
 	argList.append(QString::fromLocal8Bit(path));
 
 	QProcess process;
-	if (!process.startDetached(QLatin1String(gimpCommand), argList)) {
+	if (!process.startDetached(QLatin1String(gimpCommand.c_str()), argList)) {
 		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
 			tr("Failed to start Gimp!"),
 			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);

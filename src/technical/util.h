@@ -46,7 +46,7 @@ public:
 
 class Util {
 public:
-	static const char* checkCommand(const char* command);
+	static bool checkCommand(std::string* pathOut, const char* command);
 	static const std::vector<GrabberDevice> getGrabberDevices();
 	static bool copyFile(const char *destFileName, const char *srcFileName);
 	static void linkOrCopyFile(const char *newName, const char* oldName);
