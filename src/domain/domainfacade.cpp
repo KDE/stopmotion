@@ -289,17 +289,12 @@ void DomainFacade::duplicateImage(int scene, int frame) {
 	animationModel->duplicateImage(scene, frame);
 }
 
-bool DomainFacade::initializeCommandLoggerFile() {
+void DomainFacade::initializeCommandLoggerFile() {
 	WorkspaceFile wslf(WorkspaceFile::commandLogFile);
 	FILE* log = fopen(wslf.path(), "a");
-	if (!log) {
-		animationModel->getFrontend()->reportError(
-				"Failed to initialize command log."
-				" Recovery will not be available.", 0);
-		return false;
-	}
+	if (!log)
+		throw FailedToInitializeCommandLogger();
 	animationModel->setCommandLoggerFile(log);
-	return true;
 }
 
 bool DomainFacade::replayCommandLog(const char* filename) {
@@ -321,4 +316,11 @@ bool DomainFacade::canUndo() {
 
 bool DomainFacade::canRedo() {
 	return animationModel->canRedo();
+}
+
+FailedToInitializeCommandLogger::FailedToInitializeCommandLogger() {
+}
+
+const char* FailedToInitializeCommandLogger::what() const throw () {
+	return "Failed to initialize command logger";
 }

@@ -117,15 +117,14 @@ int main(int argc, char **argv) {
 		NonGUIFrontend nonGUIFrontend(facadePtr);
 		try {
 			recover(facadePtr);
+			facadePtr->registerFrontend(&nonGUIFrontend);
+			ret = nonGUIFrontend.run(argc, argv);
 		} catch (std::exception& e) {
 			nonGUIFrontend.reportError(e.what(), 1);
 			delete facadePtr;
 			facadePtr = NULL;
 			return 1;
 		}
-
-		facadePtr->registerFrontend(&nonGUIFrontend);
-		ret = nonGUIFrontend.run(argc, argv);
 	}
 	else {
 #ifdef QTGUI
@@ -133,27 +132,22 @@ int main(int argc, char **argv) {
 		qtFrontend.processEvents();
 		try {
 			recover(facadePtr);
+			facadePtr->registerFrontend(&qtFrontend);
+			qtFrontend.setUndoRedoEnabled();
+			facadePtr->initializeCommandLoggerFile();
+			if (argc > 1 && access(argv[1], R_OK) == 0) {
+				qtFrontend.openProject(argv[1]);
+				const char *proFile = facadePtr->getProjectFile();
+				if ( proFile != NULL ) {
+					PreferencesTool *pref = PreferencesTool::get();
+					pref->setPreference("mostRecent", proFile);
+				}
+			}
 		} catch (std::exception& e) {
 			qtFrontend.reportError(e.what(), 1);
 			delete facadePtr;
 			facadePtr = NULL;
 			return 1;
-		}
-		facadePtr->registerFrontend(&qtFrontend);
-		qtFrontend.setUndoRedoEnabled();
-		if (!facadePtr->initializeCommandLoggerFile()) {
-			// report failure to initialize recovery files
-			qtFrontend.reportError(
-					"Could not initialize recovery files."
-					" Recovery will not be available!", 1);
-		}
-		if (argc > 1 && access(argv[1], R_OK) == 0) {
-			qtFrontend.openProject(argv[1]);
-			const char *proFile = facadePtr->getProjectFile();
-			if ( proFile != NULL ) {
-				PreferencesTool *pref = PreferencesTool::get();
-				pref->setPreference("mostRecent", proFile);
-			}
 		}
 		ret = qtFrontend.run(argc, argv);
 #endif

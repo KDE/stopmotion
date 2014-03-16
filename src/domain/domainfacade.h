@@ -23,7 +23,7 @@
 #include "src/technical/util.h"
 
 #include <vector>
-using namespace std;
+#include <exception>
 
 class Animation;
 class Observer;
@@ -31,6 +31,12 @@ class Frontend;
 class Frame;
 class VideoEncoder;
 class StringIterator;
+
+class FailedToInitializeCommandLogger : std::exception {
+public:
+	FailedToInitializeCommandLogger();
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+};
 
 /**
  * Singleton facade for the domain level. All requests into the domain layer
@@ -325,14 +331,13 @@ public:
 	 * Returns available grabber devices.
 	 * @return vector containing available devices.
 	 */
-	const vector<GrabberDevice> getGrabberDevices();
+	const std::vector<GrabberDevice> getGrabberDevices();
 
 	/**
 	 * Sets up the command logger file. If unsuccessful, a message will have
 	 * been displayed to the user.
-	 * @return {@c true} if successful, {@false} if not.
 	 */
-	bool initializeCommandLoggerFile();
+	void initializeCommandLoggerFile();
 
 protected:
 	/**
