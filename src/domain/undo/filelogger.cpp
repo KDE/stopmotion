@@ -34,12 +34,9 @@ class FileCommandLoggerImpl :
 	std::string buffer;
 	Ending endingRequired;
 	void writeChar(char c) {
-		char b[2];
-		b[0] = c;
-		b[1] = '\0';
-		ssize_t s = fwrite(b, 1, 1, fh);
-		if (s <= 0)
-			throw LoggerWriteFailedException(ferror(fh));
+		writeBuffer();
+		buffer.append(1, c);
+		writeBuffer();
 	}
 public:
 	void close() {

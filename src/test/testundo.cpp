@@ -29,6 +29,8 @@
 
 #include <sstream>
 #include <stdio.h>
+#include <assert.h>
+#include <unistd.h>
 
 #include <QtTest/QtTest>
 
@@ -101,6 +103,11 @@ class ExecutorStep {
 		e.setCommandLogger(&stringLogger);
 	}
 	int activeLog;
+	void finishRun(long mallocsAtStart, RandomSource& rng) {
+		long end = mallocsSoFar();
+		mallocCount = end - mallocsAtStart;
+		final = rng;
+	}
 	/**
 	 * Runs the step. Sets malloc count and log.
 	 */
@@ -110,10 +117,13 @@ class ExecutorStep {
 			previous->run(e, rng, whichLog);
 		setup(e, logger(), whichLog);
 		long start = mallocsSoFar();
-		doStep(e, rng);
-		long end = mallocsSoFar();
-		mallocCount = end - start;
-		final = rng;
+		try {
+			doStep(e, rng);
+		} catch(...) {
+			finishRun(start, rng);
+			throw;
+		}
+		finishRun(start, rng);
 	}
 public:
 	int getCurrentlyActiveLog() const {
@@ -136,8 +146,10 @@ public:
 	}
 	virtual const char* name() const = 0;
 	virtual void doStep(Executor& e, RandomSource& rng) = 0;
-	virtual CommandLogger* logger() const {
+	virtual CommandLogger* logger() {
 		return 0;
+	}
+	virtual void cleanup() {
 	}
 	virtual void appendCommandLog(std::string& out, int which) const {
 		out.append(log[which]);
@@ -163,6 +175,7 @@ public:
 		try {
 			other.run(executor, rng, 0);
 		} catch (std::exception& e) {
+			other.cleanup();
 			std::string log;
 			other.getLog(log, 0);
 			std::ostringstream ss;
@@ -172,19 +185,25 @@ public:
 			std::string s = ss.str();
 			QFAIL(s.c_str());
 		}
+		other.cleanup();
 		Hash h = helper.hashModel(executor);
 		try {
 			run(executor, r2, 1);
 		} catch (std::exception& e) {
-			std::string log;
-			getLog(log, 0);
+			cleanup();
+			std::string logS1;
+			other.getLog(logS1, 0);
+			std::string logS2;
+			getLog(logS2, 0);
 			std::ostringstream ss;
 			ss << "Failed to run 'this' step in test '" << name
 					<< "' on iteration " << testNum
-					<< "\nSuccessful log:" << log;
+					<< "\nOther log:" << logS1
+					<< "\nSuccessful portion of 'this' log:" << logS2;
 			std::string s = ss.str();
 			QFAIL(s.c_str());
 		}
+		cleanup();
 		Hash h2 = helper.hashModel(executor);
 		if (h != h2) {
 			++failures;
@@ -223,7 +242,7 @@ public:
 	const char* name() const {
 		return nameString.c_str();
 	}
-	CommandLogger* logger() const {
+	CommandLogger* logger() {
 		return del->logger();
 	}
 	bool failed() const {
@@ -252,6 +271,9 @@ public:
 			++totalFails;
 		}
 		cancelAnyMallocFailure();
+	}
+	void cleanup() {
+		del->cleanup();
 	}
 };
 
@@ -296,10 +318,13 @@ public:
 class ExecutorDo : public ExecutorStep {
 	int min;
 	int max;
-	FileCommandLogger* fLogger;
+	FileCommandLogger fLogger;
+	const char* logFName;
+	FILE* fh;
 public:
-	ExecutorDo(ExecutorStep* following, FileCommandLogger* fileLogger)
-		: ExecutorStep(following), min(1), max(40), fLogger(fileLogger) {
+	ExecutorDo(ExecutorStep* following, const char* logFileName)
+		: ExecutorStep(following), min(1), max(40), logFName(logFileName),
+		  fh(0) {
 	}
 	void setMinimumAndMaximumCommands(int minimum, int maximum) {
 		min = minimum;
@@ -309,29 +334,37 @@ public:
 		return "random commands";
 	}
 	void doStep(Executor& e, RandomSource& rng) {
-		if (fLogger)
-			freopen(0, "w", fLogger->getLogFile());
+		fh = fopen(logFName, "w");
+		assert(fh);
+		fLogger.setLogFile(fh);
 		int cc;
 		e.executeRandomCommands(cc, rng, min, max);
 	}
-	CommandLogger* logger() const {
-		return fLogger->getLogger();
+	void cleanup() {
+		fLogger.setLogFile(0);
+		fh = 0;
+	}
+	CommandLogger* logger() {
+		return fLogger.getLogger();
 	}
 };
 
 class ExecutorDoesAndRandomUndoesAndRedoes : public ExecutorStep {
-	FileCommandLogger* fLogger;
+	FileCommandLogger fLogger;
+	const char* logFName;
+	FILE* fh;
 public:
 	ExecutorDoesAndRandomUndoesAndRedoes(ExecutorStep* following,
-			FileCommandLogger* fileLogger)
-		: ExecutorStep(following), fLogger(fileLogger) {
+			const char* logFileName)
+		: ExecutorStep(following), logFName(logFileName), fh(0) {
 	}
 	const char* name() const {
 		return "random undoes and redoes";
 	}
 	void doStep(Executor& e, RandomSource& rng) {
-		if (fLogger)
-			freopen(0, "w", fLogger->getLogFile());
+		fh = fopen(logFName, "w");
+		assert(fh);
+		fLogger.setLogFile(fh);
 		int commandCount = 0;
 		e.executeRandomCommands(commandCount, rng, 1, 20);
 		int maxUndoes = rng.getUniform(commandCount);
@@ -344,8 +377,12 @@ public:
 		}
 		e.executeRandomCommands(commandCount, rng, 1, 3);
 	}
-	CommandLogger* logger() const {
-		return fLogger->getLogger();
+	void cleanup() {
+		fLogger.setLogFile(0);
+		fh = 0;
+	}
+	CommandLogger* logger() {
+		return fLogger.getLogger();
 	}
 };
 
@@ -378,15 +415,16 @@ public:
 };
 
 class ExecutorReplay : public ExecutorStep {
-	FILE* file;
+	const char* logFName;
+	FILE* fh;
 	enum {
 		lineBufferSize = 1024
 	};
 	char lineBuffer[lineBufferSize];
 	std::string replayed[2];
 public:
-	ExecutorReplay(ExecutorStep* following, FILE* fh)
-		: ExecutorStep(following), file(fh) {
+	ExecutorReplay(ExecutorStep* following, const char* logFileName)
+		: ExecutorStep(following),  logFName(logFileName), fh(0) {
 	}
 	const char* name() const {
 		return "replay";
@@ -397,13 +435,17 @@ public:
 	void doStep(Executor& e, RandomSource&) {
 		int whichLog = getCurrentlyActiveLog();
 		replayed[whichLog].clear();
-		freopen(0, "r", file);
-		try {
-			while (fgets(lineBuffer, lineBufferSize, file)) {
-				e.executeFromLog(lineBuffer);
-				replayed[whichLog].append(lineBuffer);
-			}
-		} catch (...) {
+		fh = fopen(logFName, "r");
+		assert(fh);
+		while (fgets(lineBuffer, lineBufferSize, fh)) {
+			e.executeFromLog(lineBuffer);
+			replayed[whichLog].append(lineBuffer);
+		}
+	}
+	void cleanup() {
+		if (fh) {
+			fclose(fh);
+			fh = 0;
 		}
 	}
 };
@@ -439,17 +481,20 @@ public:
 // Also need: Do then undo some then redo some (checkpoint) then replay
 void testUndo(Executor& e, ModelTestHelper& helper) {
 	FileCommandLogger fileLogger;
-	FILE* logFile = tmpfile();
-	// ownership of logFile is passed here
-	fileLogger.setLogFile(logFile);
+	static const char tmpDirTemplate[] = "/tmp/lsmXXXXXX";
+	char tmpDirName[sizeof(tmpDirTemplate)];
+	strncpy(tmpDirName, tmpDirTemplate, sizeof(tmpDirTemplate));
+	mkdtemp(tmpDirName);
+	std::string tmpFileName(tmpDirName);
+	tmpFileName += "/command.log";
 
 	// the tree of possible execution paths that we are going to check:
 	// (1) Do = replay
 	ExecutorInit init(helper);
 	ExecutorConstruct construct(&init);
 	ClearHistory clearHistory(&construct);
-	ExecutorDo doStuff(&clearHistory, &fileLogger);
-	ExecutorReplay replay(&clearHistory, logFile);
+	ExecutorDo doStuff(&clearHistory, tmpFileName.c_str());
+	ExecutorReplay replay(&clearHistory, tmpFileName.c_str());
 
 	// (2) Do, undo = replay, undo
 	ExecutorUndoAll undoToConstruct(&doStuff);
@@ -471,7 +516,7 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 
 	// (7) Do, undo some, redo some, do = replay
 	ExecutorDoesAndRandomUndoesAndRedoes doesUndoesRedoes(&construct,
-			&fileLogger);
+			tmpFileName.c_str());
 
 	// (8) OOM[Do, undo some, redo some, do] = replay
 	FailingStep failingDur(&doesUndoesRedoes);
@@ -526,9 +571,9 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 		rng = redoAgain.finalRng();
 	}
 	cancelAnyMallocFailure();
-	// allow the logger to write out any remaining buffer upon its
-	// destruction
-	freopen(0, "w", logFile);
+
+	QVERIFY2(0 == unlink(tmpFileName.c_str()), "Could not delete test command log file");
+	QVERIFY2(0 == rmdir(tmpDirName), "Could not delete test directory");
 	QVERIFY2(testCount / 2 < failToUndoThenRedo.failedCount()
 			|| testCount < failToUndoThenRedo.noMallocsCount(),
 			"failToUndoThenRedo didn't fail very often");

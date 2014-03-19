@@ -66,7 +66,9 @@ Command* CommandMoveFactory::create(Parameters& ps) {
 		return 0;
 	int fs = ps.getInteger(0, sceneCount - 1);
 	int framesInScene = sv.frameCount(fs);
-	int ff = ps.getInteger(0, framesInScene);
+	if (framesInScene == 0)
+		return 0;
+	int ff = ps.getInteger(0, framesInScene - 1);
 	int fc = ps.getInteger(0, framesInScene - ff);
 	int ts = ps.getInteger(0, sceneCount - 1);
 	int tf = ps.getInteger(0, sv.frameCount(ts));

@@ -126,7 +126,11 @@ public:
 	int ferror(FILE*) {
 		return 0;
 	}
-	int unlink(const char *) {
+	int unlink(const char *name) {
+		static const char tmpPrefix[] = "/tmp/";
+		// really delete any files in /tmp
+		if (0 == strncmp(name, tmpPrefix, sizeof(tmpPrefix) - 1))
+			delegate->unlink(name);
 		return 0;
 	}
 	int ov_test(FILE *, OggVorbis_File *, const char *, long) {

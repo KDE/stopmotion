@@ -48,6 +48,9 @@ class MalformedLineException : public std::exception {
  * inappropriate for the current state of the model.
  */
 class ParametersOutOfRangeException : public std::exception {
+public:
+	ParametersOutOfRangeException() {
+	}
 	const char* what() const _GLIBCXX_USE_NOEXCEPT;
 };
 
@@ -100,7 +103,8 @@ public:
 	 * Executes the command described by (the first line of) @a line, a line
 	 * from a command log previously written by a call to @ref execute.
 	 * @param line Null- or line-ending-terminated string; a line from the log.
-	 * @return true if a command was executed, false if the line was empty.
+	 * @return true if a command was executed, false if the line was empty or
+	 * contained only undo and redo instructions.
 	 * @throws MalformedLineException if the line is neither empty nor starts
 	 * with a command name.
 	 */

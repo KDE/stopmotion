@@ -310,9 +310,7 @@ public:
 				if (getCharFromLine(c) == isEol)
 					// line continuation
 					chompEol();
-				if (c == ' ')
-					out.append(1, ' ');
-				else if (c == 'n')
+				if (c == 'n')
 					out.append(1, '\n');
 				else if (c == 'r')
 					out.append(1, '\r');
@@ -323,10 +321,12 @@ public:
 					while (parseSucceeded == getOctalDigit(n)) {
 						soFar = soFar * 8 + n;
 					}
-					out.append(1, soFar);
+					out += static_cast<char>(soFar);
+				} else {
+					// Backslash followed by anything else is literally that
+					// anything else (the backslash is never output).
+					out += static_cast<char>(c);
 				}
-				else
-					out.append(1, c);
 			}
 		}
 		return parseSucceeded;
@@ -466,9 +466,9 @@ public:
 				bool started = false;
 				int32_t power = 64;
 				int32_t ci = c;
-				while (1 < power) {
+				while (0 < power) {
 					int32_t digit = ci / power;
-					digit %= power;
+					digit %= 8;
 					power /= 8;
 					if (digit != 0)
 						started = true;
@@ -678,6 +678,8 @@ public:
 		reader.setBuffer(line);
 		std::string id;
 		int undoCount = reader.getUndoCount();
+		for (; undoCount < 0; ++undoCount)
+			history.redo();
 		for (; undoCount != 0; --undoCount)
 			history.undo();
 		if (StringReader::parseSucceeded == reader.getIdentifier(id)) {

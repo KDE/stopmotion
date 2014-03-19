@@ -26,7 +26,7 @@
 
 namespace {
 const char alphanumericCharacters[] =
-		"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		"04 aqBZ\"'\\\xC3\x91\xC3\xA9";
 }
 
 // This is not thread safe, but could easily be made so
