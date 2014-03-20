@@ -1,5 +1,5 @@
-CONFIG += debug
-#CONFIG += release
+#CONFIG += debug
+CONFIG += release
 CONFIG += warn_off
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
