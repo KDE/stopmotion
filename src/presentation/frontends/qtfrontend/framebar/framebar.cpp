@@ -218,6 +218,7 @@ void FrameBar::updateClear() {
 	clear();
 	activeFrame = -1;
 	activeScene = -1;
+	emit newActiveFrame(activeScene, activeFrame);
 }
 
 

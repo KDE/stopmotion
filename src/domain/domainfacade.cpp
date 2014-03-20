@@ -163,7 +163,7 @@ void DomainFacade::saveProject(const char *directory) {
 
 
 bool DomainFacade::newProject() {
-	animationModel->clear();
+	animationModel->newProject();
 	return true;
 }
 
@@ -316,11 +316,4 @@ bool DomainFacade::canUndo() {
 
 bool DomainFacade::canRedo() {
 	return animationModel->canRedo();
-}
-
-FailedToInitializeCommandLogger::FailedToInitializeCommandLogger() {
-}
-
-const char* FailedToInitializeCommandLogger::what() const throw () {
-	return "Failed to initialize command logger";
 }

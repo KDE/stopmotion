@@ -39,6 +39,12 @@ class AudioDriver;
 class FileCommandLogger;
 class Scene;
 
+class FailedToInitializeCommandLogger : public std::exception {
+public:
+	FailedToInitializeCommandLogger();
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+};
+
 /**
  * Represents the animation. Is responsible for the undo system and a bunch of
  * other minor stuff it really shouldn't be doing.
@@ -277,9 +283,11 @@ public:
 
 	/**
 	 * Creates a new project.
-	 * @return true on success, false otherwise
+	 * @throw FailedToInitializeCommandLogger if either the current project
+	 * file could not be deleted or the command log file could not be
+	 * reinitialized. The project may or may not be cleared in this case.
 	 */
-	bool newProject();
+	void newProject();
 
 	/**
 	 * Checks if there are unsaved changes in the model.
@@ -354,6 +362,7 @@ public:
 
 private:
 	void setScenes(const std::vector<Scene*>& sv);
+	FILE* initializeCommandLog();
 
 	/** All of the scenes in the animation. */
 	ObserverNotifier* scenes;

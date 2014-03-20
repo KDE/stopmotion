@@ -155,6 +155,12 @@ private:
 
 	QString lastVisitedDir;
 
+	enum SaveDialogResult {
+		saveDialogSave,
+		saveDialogDiscard,
+		saveDialogCancel
+	};
+
 	/**
 	 * Creates the handlers for handling user requests.
 	 * @param stApp the application class for changing translator
@@ -348,7 +354,7 @@ public slots:
 	 * Sets different buttons such as undo, save as and copy to be enabled.
 	 */
 	void activateMenuOptions();
-	int saveIfNecessary();
+	SaveDialogResult saveIfNecessary();
 	void doOpenFile(const char* projectFile);
 };
 

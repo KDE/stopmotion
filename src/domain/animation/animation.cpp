@@ -40,10 +40,24 @@
 #include "src/domain/undo/filelogger.h"
 
 #include <string.h>
+#include <errno.h>
 #include <vector>
 #include <iostream>
 #include <sstream>
 #include <memory>
+
+namespace {
+bool ensureUnlinked(const char* path) {
+	return 0 == unlink(path) || errno == ENOENT;
+}
+}
+
+FailedToInitializeCommandLogger::FailedToInitializeCommandLogger() {
+}
+
+const char* FailedToInitializeCommandLogger::what() const throw () {
+	return "Failed to initialize command logger";
+}
 
 Animation::Animation()
 		: scenes(0), executor(0), logger(0), serializer(0), audioDriver(0),
@@ -253,41 +267,48 @@ bool Animation::loadFromDat(const char* filename) {
 void Animation::openProject(const char *filename) {
 	logger->setLogFile(0);
 	clear();
-	WorkspaceFile commandLogger(WorkspaceFile::commandLogFile);
-	FILE* fh = fopen(commandLogger.path(), "w");
-	logger->setLogFile(fh);
+	initializeCommandLog();
 	assert(filename != 0);
 	vector<Scene*> newScenes = serializer->openSto(filename);
 	setScenes(newScenes);
-	if (!fh) {
-		frontend->reportError(
-				"Recovery files have not been initialized; "
-				"recovery will not be available!", 1);
-	}
 }
 
+FILE* Animation::initializeCommandLog() {
+	WorkspaceFile commandLogger(WorkspaceFile::commandLogFile);
+	FILE* fh = fopen(commandLogger.path(), "w");
+	if (!fh)
+		throw FailedToInitializeCommandLogger();
+	logger->setLogFile(fh);
+	return fh;
+}
 
 void Animation::saveProject(const char *filename) {
 	assert(filename != 0);
-	serializer->save(filename, *scenes, frontend);
-	logger->setLogFile(0);
-	WorkspaceFile commandLogger(WorkspaceFile::commandLogFile);
-	FILE* fh = fopen(commandLogger.path(), "w");
-	logger->setLogFile(fh);
 	WorkspaceFile newDat(WorkspaceFile::newModelFile);
-	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
-	if (rename(newDat.path(), currentDat.path()) < 0 || fh) {
-		frontend->reportError(
-				"Recovery files have not been initialized; "
-				"recovery will not be available!", 1);
+	if (!ensureUnlinked(newDat.path())) {
+		Logger::get().logWarning("newModelFile not removed prior to saving");
 	}
+	serializer->save(filename, *scenes, frontend);
+	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
+	if (ensureUnlinked(currentDat.path())) {
+		Logger::get().logWarning("currentModelFile not removed after saving");
+	}
+	logger->setLogFile(0);
+	initializeCommandLog();
+	if (rename(newDat.path(), currentDat.path()) < 0)
+		throw FailedToInitializeCommandLogger();
 }
 
 
-bool Animation::newProject() {
+void Animation::newProject() {
+	WorkspaceFile newDat(WorkspaceFile::newModelFile);
+	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
+	if (!ensureUnlinked(newDat.path())
+			|| !ensureUnlinked(currentDat.path())) {
+		throw FailedToInitializeCommandLogger();
+	}
 	clear();
-	// do something here?
-	return true;
+	initializeCommandLog();
 }
 
 const char* Animation::getImagePath(int scene, int frame) const {

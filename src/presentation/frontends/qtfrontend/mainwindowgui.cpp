@@ -753,28 +753,27 @@ void MainWindowGUI::retranslateHelpText()
 	frameBar->setWhatsThis(infoText );
 }
 
-int MainWindowGUI::saveIfNecessary() {
-	int save = 0;
+MainWindowGUI::SaveDialogResult MainWindowGUI::saveIfNecessary() {
 	bool b = DomainFacade::getFacade()->isUnsavedChanges();
 	if (b) {
-		save = QMessageBox::question(this, tr("Unsaved changes"),
+		int save = QMessageBox::question(this, tr("Unsaved changes"),
 				tr("There are unsaved changes. Do you want to save?"),
 				tr("&Save"), tr("Do&n't save"), tr("Abort"), 0, 2);
-		if (save == 0) {
-			// user pressed button 0, which is 'save'
+		if (save == 2) {
+			return saveDialogCancel;
+		} else if (save == 0) {
 			saveProject();
+			return saveDialogSave;
 		}
 	}
-	return save;
+	return saveDialogDiscard;
 }
 
 void MainWindowGUI::newProject() {
-	int save = saveIfNecessary();
-	if (save != 2) {
+	if (saveDialogCancel != saveIfNecessary()) {
 	  DomainFacade::getFacade()->newProject();
 	  //fileMenu->setItemEnabled(SAVE, false);
 	  saveAct->setEnabled(false);
-
 	  DomainFacade::getFacade()->clearHistory();
 	  modelSizeChanged(0);
 	  toolsMenu->fixNavigationButtons(0);
@@ -782,10 +781,8 @@ void MainWindowGUI::newProject() {
 }
 
 
-void MainWindowGUI::openProject()
-{
-	int save = saveIfNecessary();
-	if (save != 2) {
+void MainWindowGUI::openProject() {
+	if (saveDialogCancel != saveIfNecessary()) {
 		QString file = QFileDialog::
 			getOpenFileName(this,
 					tr("Choose project file"),
@@ -826,10 +823,8 @@ void MainWindowGUI::doOpenFile(const char* projectFile) {
 	}
 }
 
-void MainWindowGUI::openProject( const char * projectFile )
-{
-	int save = saveIfNecessary();
-	if (save != 2) {
+void MainWindowGUI::openProject( const char * projectFile ) {
+	if (saveDialogCancel != saveIfNecessary()) {
 		doOpenFile(projectFile);
 	}
 }
@@ -867,11 +862,9 @@ void MainWindowGUI::openThirdMostRecent()
 }
 
 
-void MainWindowGUI::saveProjectAs()
-{
+void MainWindowGUI::saveProjectAs() {
 	QString file = QFileDialog::getSaveFileName(this,
 			tr("Save As"), lastVisitedDir, "Stopmotion (*.sto)");
-
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
 		//fileMenu->setItemEnabled(SAVE, true);
@@ -881,13 +874,11 @@ void MainWindowGUI::saveProjectAs()
 }
 
 
-void MainWindowGUI::saveProject()
-{
+void MainWindowGUI::saveProject() {
 	const char *file = DomainFacade::getFacade()->getProjectFile();
 	if (file) {
 		DomainFacade::getFacade()->saveProject(file);
-	}
-	else {
+	} else {
 		saveProjectAs();
 	}
 }

@@ -32,12 +32,6 @@ class Frame;
 class VideoEncoder;
 class StringIterator;
 
-class FailedToInitializeCommandLogger : std::exception {
-public:
-	FailedToInitializeCommandLogger();
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
-};
-
 /**
  * Singleton facade for the domain level. All requests into the domain layer
  * has to pass through this facade. The only exception is observer requests

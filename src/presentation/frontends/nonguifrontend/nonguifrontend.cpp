@@ -156,8 +156,8 @@ public:
 			closedir(dp);
 	}
 	int count() {
+		int c = 0;
 		if (dp) {
-			int c = 0;
 			while (atEnd()) {
 				++c;
 				next();
@@ -165,6 +165,7 @@ public:
 			rewinddir(dp);
 			next();
 		}
+		return c;
 	}
 	bool atEnd() const {
 		return !dp || !ep;
