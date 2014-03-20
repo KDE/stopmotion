@@ -74,16 +74,6 @@ public:
 	void initCompleted();
 
 	/**
-	 * Turns on the webcamera/video import mode.
-	 */
-	bool on();
-
-	/**
-	 * Turns off the webcamera/video import mode.
-	 */
-	void off();
-
-	/**
 	 * Sets the viewing mode/type of effect used when displaying the video.
 	 * @param mode the type of effect to be showed on the video. The modes are:\n
 	 *             0: Image mixing/onion skinning\n
@@ -111,6 +101,16 @@ signals:
 	void cameraReady();
 
 public slots:
+	/**
+	 * Turns on the webcamera/video import mode.
+	 */
+	bool on();
+
+	/**
+	 * Turns off the webcamera/video import mode.
+	 */
+	void off();
+
 	/**
 	 * Draws the next frame from the camera.
 	 */

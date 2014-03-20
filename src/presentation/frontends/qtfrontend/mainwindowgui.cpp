@@ -294,7 +294,7 @@ void MainWindowGUI::createActions()
 	quitAct = new QAction(this);
 	quitAct->setIcon(QIcon(quiticon));
 	quitAct->setShortcut(ControlModifier+Key_Q);
-	connect(quitAct, SIGNAL(triggered()), this, SLOT(quitProgram()));
+	connect(quitAct, SIGNAL(triggered()), stApp, SLOT(quit()));
 
 	//Edit menu
 	undoAct = new QAction(this);
@@ -469,6 +469,7 @@ void MainWindowGUI::makeViews(QHBoxLayout *layout)
 	cameraHandler->setFrameView(frameView);
 	connect(frameBar, SIGNAL(newActiveFrame(int,int)),
 			frameView, SLOT(updateNewActiveFrame(int,int)));
+	connect(stApp, SIGNAL(aboutToQuit()), frameView, SLOT(off()));
 }
 
 
@@ -881,14 +882,6 @@ void MainWindowGUI::saveProject() {
 	} else {
 		saveProjectAs();
 	}
-}
-
-
-/* To be called instead of the default quit method */
-/* Checks whether the project is saved, and asks the user if not. */
-void MainWindowGUI::quitProgram()
-{
-	exit(0);
 }
 
 

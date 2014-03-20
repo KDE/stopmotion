@@ -296,8 +296,6 @@ private slots:
 	 */
 	void saveProject();
 
-	void quitProgram();
-
 	/**
 	 * Saves the project to a given filename from the user.
 	 */
