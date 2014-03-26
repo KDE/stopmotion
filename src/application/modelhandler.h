@@ -46,16 +46,16 @@ public:
 	 * @param lastVisitedDir the last visited directory
 	 * @param name the name of the ModelHander
 	 */
-	ModelHandler( QObject *parent = 0, QStatusBar *sb = 0, FrameBar *frameBar = 0, 
+	ModelHandler( QObject *parent = 0, QStatusBar *sb = 0, FrameBar *frameBar = 0,
 			QString *lastVisitedDir = 0, const char *name = 0 );
 
 	/**
 	 * Cleans up after the modelhandler.
 	 */
 	~ModelHandler();
-	
+
 	/**
-	 * Function for seting the button used for removing frames. This button is 
+	 * Function for seting the button used for removing frames. This button is
 	 * needed for checking if it is enabled when attempting to remove frames with
 	 * the delete key.
 	 * @param removeFramesButton the button used for removing frames.
@@ -68,49 +68,49 @@ public slots:
 	 * Brings up a dialog so that the user can choose a file to load.
 	 */
 	void chooseFrame();
-	
+
 	/**
-	 *Adds the file fileName to the animation throught the use of 
+	 *Adds the file fileName to the animation throught the use of
 	 *addFrames(QStringList).
 	 *@param fileName the file to be added to the animation.
 	 */
     void addFrame( const QString &fileName );
-	
+
 	/**
 	 * Removes the currently selected frame from the animation.
 	 */
 	void removeFrames();
-	
+
 	/**
 	 * Adds the files to the animation.
 	 * @param fileNames the files to be added to the animation
 	 */
 	void addFrames(const QStringList & fileNames);
-	
-	
+
+
 	/**
 	 * Creates a new scene. This will be added after the selected frame.
 	 */
 	void newScene();
-	
+
 	/**
 	 * Removes the active scene.
 	 */
 	void removeScene();
-	
+
 	 /**
 	 * Launch the gimp to edit the current frame.
 	 * @return 0 If successful, 1 on error.
 	 */
 	int editCurrentFrame();
-	
+
 private:
 	FrameBar *frameBar;
 	QStatusBar *statusBar;
 	QPushButton *removeFramesButton;
 	QFileDialog* fileDialog;
 	QString *lastVisitedDir;
-	
+
 signals:
 	/**
 	 * Notified when the model is changed.

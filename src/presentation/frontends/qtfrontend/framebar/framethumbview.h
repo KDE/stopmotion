@@ -103,6 +103,9 @@ protected:
 	void paintEvent ( QPaintEvent * );
 	
 private:	
+	/** Coordinate for calculating when a drag should start */
+	QPoint dragPos;
+
 	QString stringNumber;
 	
 	/** The width the text should have. (Cached for efficiency reasons)*/

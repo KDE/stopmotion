@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2014 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,50 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "thumbview.h"
 
-#include "src/domain/domainfacade.h"
-#include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
+#ifndef THUMBDRAGGER_H_
+#define THUMBDRAGGER_H_
 
-#include <QDropEvent>
+#include <qdrag.h>
 
+class ThumbView;
 
-ThumbView::ThumbView(FrameBar *frameBar, QWidget *parent, int number,
-		const char *name)
-	: QLabel(parent), frameBar(frameBar), number(number), refCount(1) {
-	setObjectName(name);
-}
+class ThumbDragger: public QDrag {
+public:
+	virtual ~ThumbDragger();
+	ThumbDragger(ThumbView* source);
+};
 
-
-ThumbView::~ThumbView()
-{
-}
-
-
-void ThumbView::setNumber(int number)
-{
-	this->number = number;
-}
-
-
-int ThumbView::getNumber() const
-{
-	return number;
-}
-
-
-void ThumbView::setHasSounds(bool) {}
-void ThumbView::setOpened(bool) {}
-void ThumbView::setSelected(bool) {}
-void ThumbView::contentsDropped(QDropEvent *) {
-}
-
-void ThumbView::addRef() {
-	++refCount;
-}
-
-void ThumbView::delRef() {
-	--refCount;
-	if (refCount == 0)
-		deleteLater();
-}
+#endif /* THUMBDRAGGER_H_ */

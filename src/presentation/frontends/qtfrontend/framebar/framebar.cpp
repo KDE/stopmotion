@@ -153,9 +153,13 @@ void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 			Logger::get().logDebug("Moving in framebar");
 			moveFrames(fromFrame, fromFrame + count - 1, toFrame);
 		} else {
-			Logger::get().logDebug("Moving from framebar");
-			removeFrames(fromFrame, fromFrame + count - 1);
-			emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
+			Logger::get().logDebug("Moving to a different scene");
+			setActiveScene(toScene);
+			selecting = count > 1;
+			Logger::get().logDebug("Setting new active frame in FrameBar");
+			setActiveFrameAndSelection(toFrame, toFrame + count - 1);
+			doScroll();
+			doActiveFrameNotifications();
 		}
 	} else if (toScene == activeScene) {
 		Logger::get().logDebug("Moving to framebar");
@@ -208,7 +212,7 @@ void FrameBar::updateNewActiveFrame(int sceneNumber, int frameNumber) {
 void FrameBar::clear() {
 	int size = thumbViews.size();
 	for (int i = 0; i < size; ++i) {
-		delete thumbViews[i];
+		thumbViews[i]->delRef();
 	}
 	thumbViews.clear();
 	activeSceneSize = 0;
@@ -322,7 +326,7 @@ void FrameBar::deleteFrames(int fromFrame, int frameCount) {
 			= thumbViews.begin() + fromFrame + activeScene + 1;
 	std::vector<ThumbView*>::iterator end = start + frameCount;
 	for (std::vector<ThumbView*>::iterator i = start; i != end; ++i) {
-		delete (*i);
+		(*i)->delRef();
 		(*i) = 0;
 	}
 	thumbViews.erase(start, end);
@@ -371,6 +375,10 @@ void FrameBar::removeFrames(int fromFrame, int toFrame) {
 	deleteFrames(fromFrame, frameCount);
 	for (int i = fromFrame; i != activeSceneSize; ++i) {
 		getFrameThumb(i, true);
+	}
+	int sceneCount = sceneThumbCount();
+	for (int i = activeScene + 1; i != sceneCount; ++i) {
+		getSceneThumb(i, true);
 	}
 	fixSize();
 }
@@ -546,7 +554,7 @@ void FrameBar::removeScene(int sceneNumber) {
 		return;
 	}
 
-	delete thumbViews[delThumb];
+	thumbViews[delThumb]->delRef();
 	thumbViews.erase(thumbViews.begin() + delThumb);
 
 	int sceneCount = sceneThumbCount();

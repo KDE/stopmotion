@@ -103,6 +103,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h \
     src/presentation/frontends/qtfrontend/framebar/scenethumbview.h \
     src/presentation/frontends/qtfrontend/framebar/thumbview.h \
+    src/presentation/frontends/qtfrontend/framebar/thumbdragger.h \
     src/presentation/frontends/qtfrontend/exporttab.h \
     src/presentation/frontends/qtfrontend/helpwindow.h \
     src/presentation/frontends/qtfrontend/editobserver.h \
@@ -182,6 +183,7 @@ SOURCES += src/config.cpp \
     src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.cpp \
     src/presentation/frontends/qtfrontend/framebar/scenethumbview.cpp \
     src/presentation/frontends/qtfrontend/framebar/thumbview.cpp \
+    src/presentation/frontends/qtfrontend/framebar/thumbdragger.cpp \
     src/presentation/frontends/qtfrontend/exporttab.cpp \
     src/presentation/frontends/qtfrontend/helpwindow.cpp \
     src/presentation/frontends/qtfrontend/editobserver.cpp \

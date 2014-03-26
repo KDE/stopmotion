@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -29,13 +29,12 @@ class FrameBar;
 class QDropEvent;
 
 /**
- * This abstract class represents the thumbviews in the framebar. It has 
+ * This abstract class represents the thumbviews in the framebar. It has
  * two subclasses: the FrameThumbView and the SceneThumbView.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class ThumbView : public QLabel
-{
+class ThumbView : public QLabel {
 public:
 
 	/**
@@ -45,63 +44,83 @@ public:
 	 * @param number the number of this thumbview in the framebar.
 	 */
 	ThumbView(FrameBar *frameBar, QWidget *parent, int number, const char *name = 0);
-	
+
 	/**
 	 * Cleans up after the widget.
 	 */
 	virtual ~ThumbView();
-	
+
 	/**
-	 * Function to set the number of this ThumbView in the framebar 
+	 * Adds another reference. The reference count starts at 1 on construction.
+	 */
+	void addRef();
+
+	/**
+	 * Removes a reference. If the reference count falls to zero this object is
+	 * deleted.
+	 */
+	void delRef();
+
+	/**
+	 * Function to set the number of this ThumbView in the framebar
 	 * when the ThumbView change position.
 	 * @param number the new number for the ThumbView in the framebar.
 	 */
 	virtual void setNumber(int number);
-	
+
 	/**
 	 *Retrieves the number of this ThumbView in the framebar
 	 *@return the number for this ThumbView in the framebar
 	 */
 	int getNumber() const;
-	
+
 	/**
 	 * Abstract function for telling a framethumbview that it has one or more sounds
 	 * attatched to it.
 	 * @param hasSounds true if the frame has one or more sounds attatched to it.
 	 */
 	virtual void setHasSounds(bool hasSounds);
-	
+
 	/**
 	 * Sets whether a framethumbview should be marked as selected.
 	 * @param selected whether this framethumbview should be showed as selected.
 	 */
 	virtual void setSelected(bool selected);
-	
+
 	/**
 	 * Abstract function for telling a scenethumbview whether the scene is opened or
 	 * closed
 	 * @param isOpened true if the scene is opened.
 	 */
 	virtual void setOpened(bool isOpened);
-	
+
 	/**
-	 * Notifies the thumbview that a drop have happened inside its borders. 
+	 * Notifies the thumbview that a drop have happened inside its borders.
 	 *
 	 * The reason it doesn't accept it itself is that the framebar need the information
 	 * so that it can autoscroll.
 	 * @param event information about the event.
 	 */
 	virtual void contentsDropped(QDropEvent * event);
-	
-protected:
+
+	FrameBar* getFrameBar() const {
+		return frameBar;
+	}
+
+private:
+	/**
+	 * Reference count. As a QDrag object might be referring to this object
+	 * after it has been deleted from the frame bar, we need to delay deletion
+	 * until a drag starting here has ended.
+	 */
+	int refCount;
+
 	/** The framebar for communicating with it */
 	FrameBar *frameBar;
-	
-	/**Coordinate for calculating when a drag should start to give some slack*/
-	QPoint dragPos;
-	
-	/**The number this frame has in the framebar*/
-	int number;	
+
+	/** For a scene, the scene number within the animation. For a frame, the
+	 * frame number within the scene. */
+	int number;
 };
 
 #endif
