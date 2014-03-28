@@ -395,6 +395,22 @@ private:
 	void doScroll();
 	void doActiveFrameNotifications();
 	void fixPreferencesMenu();
+	/**
+	 * Changes the selection highlight without fixing any damaged frames.
+	 * Set both {@ af} and {@sf} to {@c -1} to remove the selection.
+	 */
+	void changeSelectionHighlight(int af, int sf);
+	int getFrameThumbIndex(int index);
+	/**
+	 * Sets the frames in the current scene from index {@a start} to index
+	 * {@a end} (not including the one at {@end}) to be highlighted or not,
+	 * depending on the value of {@set}.
+	 * @param start The first index to have its highlight set.
+	 * @param end The first index not to have its highlight set.
+	 * @param set {@c true} to set the highlight on, {@c false} to set it off.
+	 * @pre {@a start} must be no greater than {@a end}.
+	 */
+	void highlight(int start,  int end, bool set);
 };
 
 #endif

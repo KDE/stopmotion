@@ -119,10 +119,8 @@ FrameBar::FrameBar(QWidget *parent)
 	DomainFacade::getFacade()->attach(this);
 }
 
-
 FrameBar::~FrameBar() {
 }
-
 
 void FrameBar::updateAdd(int scene, int index, int numFrames) {
 	if (scene == activeScene) {
@@ -135,7 +133,6 @@ void FrameBar::updateAdd(int scene, int index, int numFrames) {
 	doScroll();
 }
 
-
 void FrameBar::updateRemove(int scene, int fromFrame, int toFrame) {
 	if (scene == activeScene) {
 		Logger::get().logDebug("Receiving notification about the removal of a frame in the model");
@@ -145,27 +142,28 @@ void FrameBar::updateRemove(int scene, int fromFrame, int toFrame) {
 	updateNewActiveFrame(scene, fromFrame - 1);
 }
 
-
 void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 		int toScene, int toFrame) {
-	if (fromScene == activeScene) {
-		if (toScene == activeScene) {
+	if (toScene == activeScene) {
+		if (fromScene == activeScene) {
+			changeSelectionHighlight(fromFrame, fromFrame + count - 1);
 			Logger::get().logDebug("Moving in framebar");
 			moveFrames(fromFrame, fromFrame + count - 1, toFrame);
+			if (fromFrame < toFrame)
+				toFrame -= count;
 		} else {
-			Logger::get().logDebug("Moving to a different scene");
-			setActiveScene(toScene);
-			selecting = count > 1;
-			Logger::get().logDebug("Setting new active frame in FrameBar");
-			setActiveFrameAndSelection(toFrame, toFrame + count - 1);
-			doScroll();
-			doActiveFrameNotifications();
+			changeSelectionHighlight(-1, -1);
+			Logger::get().logDebug("Moving to framebar");
+			addFrames(toFrame, count);
 		}
-	} else if (toScene == activeScene) {
-		Logger::get().logDebug("Moving to framebar");
-		addFrames(toFrame, count);
-		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
+	} else {
+		Logger::get().logDebug("Moving to a different scene");
+		setActiveScene(toScene);
 	}
+	Logger::get().logDebug("Setting new active frame in FrameBar");
+	setActiveFrameAndSelection(toFrame, toFrame + count - 1);
+	doScroll();
+	doActiveFrameNotifications();
 }
 
 void FrameBar::updateSoundChanged(int sceneNumber, int frameNumber) {
@@ -277,8 +275,10 @@ void FrameBar::resync() {
 	thumbViews.insert(thumbViews.begin(), thumbCount, 0);
 	activeScene = scene;
 	activeSceneSize = sceneSize;
-	if (scene != activeScene || scene < 0 || sceneSize <= activeFrame)
+	if (scene != activeScene || scene < 0 || sceneSize <= activeFrame) {
 		activeFrame = -1;
+		selectionFrame = -1;
+	}
 	for (int i = 0; i != sceneCount; ++i) {
 		getSceneThumb(i, true);
 	}
@@ -438,10 +438,65 @@ bool FrameBar::isSelecting() const {
 	return selecting;
 }
 
-void swap(int& x, int& y) {
-	int t = x;
+template<typename T> void swapContents(T& x, T& y) {
+	T t = x;
 	x = y;
 	y = t;
+}
+
+void FrameBar::highlight(int start, int end, bool set) {
+	int endFrame = getFrameThumbIndex(end);
+	for (int i = getFrameThumbIndex(start); i != endFrame; ++i) {
+		thumbViews[i]->setSelected(set);
+	}
+}
+
+namespace {
+struct SelectionEnd {
+	// +1 to set, -1 to reset
+	int toSet;
+	int pos;
+};
+}
+
+void FrameBar::changeSelectionHighlight(int af, int sf) {
+	// put old selection in [a..b)
+	SelectionEnd a = {-1, activeFrame};
+	SelectionEnd b = {1, selectionFrame + 1};
+	if (activeFrame == -1) {
+		a.pos = 0;
+		b.pos = 0;
+	} else if (selectionFrame < activeFrame) {
+		a.pos = selectionFrame;
+		b.pos = activeFrame + 1;
+	}
+	activeFrame = af;
+	selectionFrame = sf;
+	// put new selection in [c..d)
+	SelectionEnd c = {1, af};
+	SelectionEnd d = {-1, sf + 1};
+	if (af == -1) {
+		c.pos = 0;
+		d.pos = 0;
+	} else if (sf < af) {
+		c.pos = sf;
+		d.pos = af + 1;
+	}
+	// put leftmost end in a
+	if (c.pos < a.pos)
+		swapContents(a, c);
+
+	// put rightmost end in d
+	if (d.pos < b.pos)
+		swapContents(b, d);
+
+	// put a,b,c,d in order
+	if (c.pos < b.pos)
+		swapContents(b, c);
+
+	highlight(a.pos, b.pos, 0 < a.toSet);
+	bool set = 0 < a.toSet + b.toSet + c.toSet;
+	highlight(c.pos, d.pos, set);
 }
 
 void FrameBar::setActiveFrameAndSelection(int af, int sf) {
@@ -452,43 +507,7 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 	if (af == activeFrame && sf == selectionFrame)
 		return;
 	// put old selection in [a..b)
-	int a = activeFrame;
-	int b = selectionFrame + 1;
-	if (selectionFrame < activeFrame) {
-		a = selectionFrame;
-		b = activeFrame + 1;
-	}
-	activeFrame = af;
-	selectionFrame = sf;
-	// put new selection in [c..d)
-	int c = af;
-	int d = sf + 1;
-	if (sf < af) {
-		c = sf;
-		d = af + 1;
-	}
-	// put leftmost end in a
-	if (c < a)
-		swap(a, c);
-
-	// put rightmost end in d
-	if (d < b)
-		swap(b, d);
-
-	// put a,b,c,d in order
-	if (c < b)
-		swap(b, c);
-
-	if (0 <= a) {
-		for (int i = a; i != b; ++i) {
-			getFrameThumb(i, true);
-		}
-	}
-	if (0 <= c) {
-		for (int i = c; i != d; ++i) {
-			getFrameThumb(i, true);
-		}
-	}
+	changeSelectionHighlight(af, sf);
 	emit newActiveFrame(activeScene, activeFrame);
 }
 
@@ -756,8 +775,12 @@ void FrameBar::setThumbImage(ThumbView* thumb, const char* imagePath) {
 					tryReadImage(imagePath).scaled(FRAME_WIDTH, FRAME_HEIGHT)));
 }
 
+int FrameBar::getFrameThumbIndex(int index) {
+	return activeScene + 1 + index;
+}
+
 ThumbView* FrameBar::getFrameThumb(int index, bool fix) {
-	int thumbIndex = activeScene + 1 + index;
+	int thumbIndex = getFrameThumbIndex(index);
 	ThumbView* thumb = thumbViews[thumbIndex];
 	DomainFacade* facade = DomainFacade::getFacade();
 	if (!thumb) {
