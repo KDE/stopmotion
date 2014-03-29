@@ -39,17 +39,14 @@
 #include <set>
 #include <exception>
 
-class FileException : public std::exception {
-	char buffer[100];
-public:
-	FileException(const char* functionName, int errorno) {
-		snprintf(buffer, sizeof(buffer), "%s(): %s", functionName,
-				strerror(errorno));
-	}
-	const char* what() const _GLIBCXX_USE_NOEXCEPT {
-		return buffer;
-	}
-};
+FileException::FileException(const char* functionName, int errorno) {
+	snprintf(buffer, sizeof(buffer), "%s(): %s", functionName,
+			strerror(errorno));
+}
+
+const char* FileException::what() const _GLIBCXX_USE_NOEXCEPT {
+	return buffer;
+}
 
 class ProjectFileCreationException : public FileException {
 public:

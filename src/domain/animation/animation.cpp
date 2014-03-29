@@ -466,20 +466,14 @@ public:
 	}
 };
 
-bool Animation::replayCommandLog(FILE* file) {
+void Animation::replayCommandLog(FILE* file) {
 	GetLine lineIterator(file);
 	int r = 0;
-	try {
-		while (0 < (r = lineIterator.next())) {
-			executor->executeFromLog(lineIterator.get());
-		}
-		if (r < 0) {
-			return false;
-		}
-	} catch (std::exception&) {
-		return false;
+	while (0 < (r = lineIterator.next())) {
+		executor->executeFromLog(lineIterator.get());
 	}
-	return true;
+	if (r < 0)
+		throw FileException("replayCommandLog", errno);
 }
 
 bool Animation::canUndo() {

@@ -303,7 +303,8 @@ bool DomainFacade::replayCommandLog(const char* filename) {
 		return false;
 	try {
 		animationModel->replayCommandLog(log);
-	} catch(std::exception&) {
+	} catch(std::exception& e) {
+		Logger::get().logFatal("Recovery failed: %s", e.what());
 		fclose(log);
 		return false;
 	}

@@ -29,6 +29,13 @@ class AnimationImpl;
 class Scene;
 class Frontend;
 
+class FileException : public std::exception {
+	char buffer[100];
+public:
+	FileException(const char* functionName, int errorno);
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+};
+
 /**
  * Class for serializing the project.
  */

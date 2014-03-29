@@ -350,10 +350,11 @@ public:
 	 * Replay the commands in the file.
 	 * @param file The command log file, opened for reading and seeked to the
 	 * beginning of the file (or wherever is appropriate).
-	 * @return {@c true} if successful. If failed, the animation might have had
-	 * some successful operations applied to it.
+	 * @throws FileException if the file could not be read in its entirety, or
+	 * another exception if decoding the log failed. Some commands may have
+	 * been applied.
 	 */
-	bool replayCommandLog(FILE* file);
+	void replayCommandLog(FILE* file);
 
 	/**
 	 * Have v visit all the files referenced (images and sounds)
