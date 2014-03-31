@@ -80,9 +80,11 @@ Scene* SceneVector::removeScene(int from) {
 
 void SceneVector::moveScene(int from, int to) {
 	int size = sceneCount();
-	if (from < 0 || size <= from || to < 0 || size <= to)
+	if (from < 0 || size <= from || to < 0 || size < to)
 		throw SceneOutOfRangeException();
 	Scene* s = removeScene(from);
+	if (from < to)
+		--to;
 	addScene(to, s);
 }
 

@@ -47,6 +47,6 @@ Command* CommandMoveSceneFactory::create(Parameters& ps) {
 	if (max < 0)
 		return 0;
 	int32_t from = ps.getInteger(0, max);
-	int32_t to = ps.getInteger(0, max);
+	int32_t to = ps.getInteger(0, max + 1);
 	return new CommandMoveScene(sv, from, to);
 }

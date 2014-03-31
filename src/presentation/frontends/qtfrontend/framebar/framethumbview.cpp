@@ -231,7 +231,15 @@ public:
 void FrameThumbView::contentsDropped(QDropEvent * event) {
 	DomainFacade* facade = DomainFacade::getFacade();
 	int activeScene = getFrameBar()->getActiveScene();
-	if ( (event->source() != 0) && (getFrameBar()->getMovingScene() == -1) ) {
+	if (event->source() == 0) {
+		Logger::get().logDebug("Adding picture(s)");
+		getFrameBar()->updateNewActiveFrame(activeScene, getNumber());
+		if ( event->mimeData()->hasUrls() ) {
+			QList<QUrl> urls = event->mimeData()->urls();
+			FileNamesFromUrlsIterator fNames(urls.begin(), urls.end());
+			DomainFacade::getFacade()->addFrames(activeScene, getNumber(), fNames);
+		}
+	} else if (getFrameBar()->getMovingScene() == -1) {
 		Logger::get().logDebug("Moving picture");
 		int selectionFrame = getFrameBar()->getSelectionAnchor();
 		int activeFrame = getFrameBar()->getActiveFrame();
@@ -242,13 +250,5 @@ void FrameThumbView::contentsDropped(QDropEvent * event) {
 		int destination = activeFrame < getNumber()? getNumber() + 1 : getNumber();
 		facade->moveFrames(activeScene, lowend,
 				highend - lowend + 1, activeScene, destination);
-	} else {
-		Logger::get().logDebug("Adding picture(s)");
-		getFrameBar()->updateNewActiveFrame(activeScene, getNumber());
-		if ( event->mimeData()->hasUrls() ) {
-			QList<QUrl> urls = event->mimeData()->urls();
-			FileNamesFromUrlsIterator fNames(urls.begin(), urls.end());
-			DomainFacade::getFacade()->addFrames(activeScene, getNumber(), fNames);
-		}
 	}
 }

@@ -161,12 +161,14 @@ void SceneThumbView::closeScene() {
  */
 void SceneThumbView::contentsDropped(QDropEvent *event) {
 	DomainFacade* facade = DomainFacade::getFacade();
+	int sceneNumber = getNumber();
 	int movingScene = getFrameBar()->getMovingScene();
 	int activeScene= getFrameBar()->getActiveScene();
-	bool movingRight = activeScene < getNumber();
-	if (event->source() && (movingScene != getNumber()) && (movingScene != -1) ) {
+	if (event->source() && (movingScene != sceneNumber)
+			&& (movingScene != -1)) {
 		Logger::get().logDebug("Moving scene");
-		int destination = movingRight? getNumber() + 1 : getNumber();
+		int destination = movingScene < sceneNumber?
+				sceneNumber + 1 : sceneNumber;
 		facade->moveScene(movingScene, destination);
 	} else if (event->source() && movingScene == -1) {
 		// moving frames into a scene
@@ -176,11 +178,12 @@ void SceneThumbView::contentsDropped(QDropEvent *event) {
 				selectionFrame : activeFrame;
 		int lowend = (selectionFrame < activeFrame )?
 				selectionFrame : activeFrame;
-		if (movingRight || getNumber() == 0) {
+		bool movingRight = activeScene < sceneNumber;
+		if (movingRight || sceneNumber == 0) {
 			facade->moveFrames(activeScene, lowend,
-					highend - lowend + 1, getNumber(), 0);
+					highend - lowend + 1, sceneNumber, 0);
 		} else {
-			int sceneDest = getNumber() - 1;
+			int sceneDest = sceneNumber - 1;
 			int sceneSize = DomainFacade::getFacade()->getSceneSize(sceneDest);
 			facade->moveFrames(activeScene, lowend,
 					highend - lowend + 1, sceneDest, sceneSize);
