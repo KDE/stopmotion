@@ -273,7 +273,7 @@ void NonGUIFrontend::reportError( const char *message, int id ) {
 }
 
 
-int NonGUIFrontend::askQuestion(const char *) {
+int NonGUIFrontend::askQuestion(Question) {
 	return 1;
 }
 

@@ -61,7 +61,7 @@ public:
 	 */
 	void processEvents();
 	void reportError(const char *message, int id);
-	int askQuestion(const char *question);
+	int askQuestion(Question question);
 	int runExternalCommand(const char *command);
 	
 private:

@@ -259,7 +259,7 @@ public:
 	}
 	void reportError(const char *, int) {
 	}
-	int askQuestion(const char *) {
+	int askQuestion(Question) {
 		return true;
 	}
 	int runExternalCommand(const char *) {

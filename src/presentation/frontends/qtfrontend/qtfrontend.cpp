@@ -204,11 +204,7 @@ void QtFrontend::initializePreferences()
 		}
 		// Has wrong version number
 		else {
-			QString question(tr(
-					"A newer version of the preferences file with few more default\n"
-					"values exists. Do you want to use this one? (Your old preferences\n "
-					"will be saved in ~/.stopmotion/preferences.xml.OLD)"));
-			int useNewPrefsFile = askQuestion(question.toUtf8());
+			int useNewPrefsFile = askQuestion(Frontend::useNewerPreferences);
 			// Use new preferences
 			if (useNewPrefsFile == 0) { // 0 = yes
 				setDefaultPreferences(prefs);
@@ -362,16 +358,20 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 }
 
 
-int QtFrontend::askQuestion(const char *question)
-{
-	int ret = QMessageBox::question(0,
-			tr("Question"),
-			QString::fromUtf8(question),
-			QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
-	if (ret == QMessageBox::Yes) {
-		return 0;
+int QtFrontend::askQuestion(Question question) {
+	QString text;
+	switch (question) {
+	case useNewerPreferences:
+		text = tr(
+				"A newer version of the preferences file with few more default\n"
+				"values exists. Do you want to use this one? (Your old preferences\n "
+				"will be saved in ~/.stopmotion/preferences.xml.OLD)");
+		break;
 	}
-	return 1;
+	int ret = QMessageBox::question(0,
+			tr("Question"), text,
+			QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
+	return ret == QMessageBox::Yes? 0 : 1;
 }
 
 

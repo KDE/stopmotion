@@ -34,6 +34,9 @@ public:
 		restoringProject,
 		savingScenesToDisk
 	};
+	enum Question {
+		useNewerPreferences
+	};
 	virtual ~Frontend() {}
 	
 	/**
@@ -85,10 +88,10 @@ public:
 	
 	/**
 	 * Abstract function for asking the user a yes/no question.
-	 * @param question the question to ask
+	 * @param question The question to ask
 	 * @return 0 if the user answer yes, 1 if no
 	 */
-	virtual int askQuestion(const char *question) = 0;
+	virtual int askQuestion(Question question) = 0;
 
 	virtual int runExternalCommand(const char *command) = 0;
 };
