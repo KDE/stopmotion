@@ -34,57 +34,65 @@
 
 
 NonGUIFrontend::NonGUIFrontend(DomainFacade *facadePtr)
-		: facadePtr(facadePtr)
-{
+		: facadePtr(facadePtr) {
 }
 
 
-NonGUIFrontend::~ NonGUIFrontend()
-{
+NonGUIFrontend::~ NonGUIFrontend() {
 }
 
 
-int NonGUIFrontend::run(int argc, char **argv) 
-{
+int NonGUIFrontend::run(int argc, char **argv) {
 	printf("NonGUIFrontend starts running ...\n");
 	return parseArguments(argc, argv);
 }
 
 
-void NonGUIFrontend::showProgress(const char *infoText, unsigned int) 
-{
+void NonGUIFrontend::showProgress(ProgressMessage message, int numOperations) {
 	// sets the stdout to be unbuffered
 	setvbuf(stdout, NULL, _IONBF,0);
-	printf("%s", infoText);
+	const char* infoText = "Please wait";
+	switch (message) {
+	case connectingCamera:
+		infoText = "Connecting camera";
+		break;
+	case exporting:
+		infoText = "Exporting";
+		break;
+	case importingFramesFromDisk:
+		infoText = "Importing frames from disk";
+		break;
+	case restoringProject:
+		infoText = "Restoring project";
+		break;
+	case savingScenesToDisk:
+		infoText = "Saving scenes to disk";
+		break;
+	}
+	printf("%s...", infoText);
 }
 
 
-void NonGUIFrontend::hideProgress() 
-{
+void NonGUIFrontend::hideProgress() {
 	printf("\nOperation finished!\n");
 	// sets the stdout the be buffered
 	setvbuf (stdout, NULL , _IOFBF , 1024);
 }
 
 
-void NonGUIFrontend::updateProgress(int) 
-{
+void NonGUIFrontend::updateProgress(int) {
 	printf(".");
 }
 
 
-void NonGUIFrontend::setProgressInfo(const char *infoText) 
-{
-	printf("\n%s\n", infoText);
+bool NonGUIFrontend::isOperationAborted() {
+	return false;
 }
 
+void NonGUIFrontend::processEvents() {
+}
 
-bool NonGUIFrontend::isOperationAborted() { return false; }
-void NonGUIFrontend::processEvents() {}
-
-
-int NonGUIFrontend::parseArguments(int argc, char **argv)
-{
+int NonGUIFrontend::parseArguments(int argc, char **argv) {
 	while (1) {
 		static struct option longOptions[] =
 			{
@@ -95,43 +103,43 @@ int NonGUIFrontend::parseArguments(int argc, char **argv)
 				{"export", 0, 0, 'e'},
 				{0, 0, 0, 0}
 			};
-		
+
 		/* getopt_long  stores the option index here. */
 		int optionIndex = 0;
 		int c = getopt_long(argc, argv, "a:c:s:e:", longOptions, &optionIndex);
-	
+
 		/* Detect the end of the options. */
 		if (c == -1) {
 			break;
 		}
-	
+
 		switch (c) {
 			case 0:
 				/* If this option set a flag, do nothing else now. */
 				break;
-	
+
 			case 'a':
 				//printf ("option --addFrames with argument %s\n", optarg);
 				addFrames(optarg);
 				break;
-	
+
 			case 'c':
 				printf ("option --capture with argument %s\n", optarg);
 				break;
-	
+
 			case 'e':
 				printf ("option --export with argument %s\n", optarg);
 				break;
-	
+
 			case 's':
 				//printf ("option --save with argument %s\n", optarg);
 				save(optarg);
 				break;
-	
+
 			case '?':
 				/* getopt_long  already printed an error message. */
 				break;
-	
+
 			default:
 				return 1;
 		}
@@ -225,11 +233,10 @@ void NonGUIFrontend::getAbsolutePath(std::string& out, const char *path) {
 }
 
 
-int NonGUIFrontend::checkFiles(const char *directory)
-{
+int NonGUIFrontend::checkFiles(const char *directory) {
 	int numSuccessFull = 0;
 	DIR *dp = opendir(directory);
-	
+
 	if (dp) {
 		struct dirent *ep;
 		struct stat st;
@@ -249,15 +256,14 @@ int NonGUIFrontend::checkFiles(const char *directory)
 	else {
 		fprintf (stderr, "Couldn't open directory: %s; %s\n",directory, strerror (errno));
 	}
-	
+
 	return numSuccessFull;
 }
 
 
-void NonGUIFrontend::reportError( const char *message, int id )
-{
+void NonGUIFrontend::reportError( const char *message, int id ) {
 	id = id != 0 && id != 1 ? 0 : id;
-	
+
 	if (id == 0) {
 		printf("Warning: %s\n", message);
 	}
@@ -267,13 +273,11 @@ void NonGUIFrontend::reportError( const char *message, int id )
 }
 
 
-int NonGUIFrontend::askQuestion(const char *)
-{
+int NonGUIFrontend::askQuestion(const char *) {
 	return 1;
 }
 
 
-int NonGUIFrontend::runExternalCommand(const char *)
-{
+int NonGUIFrontend::runExternalCommand(const char *) {
 	return 1;
 }

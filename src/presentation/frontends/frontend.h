@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,15 +20,20 @@
 #ifndef FRONTEND_H
 #define FRONTEND_H
 
-
 /**
  * The frontend interface to be used by the implemented frontend.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
 */
-class Frontend
-{
+class Frontend {
 public:
+	enum ProgressMessage {
+		connectingCamera,
+		importingFramesFromDisk,
+		exporting,
+		restoringProject,
+		savingScenesToDisk
+	};
 	virtual ~Frontend() {}
 	
 	/**
@@ -41,10 +46,10 @@ public:
 	
 	/**
 	 * Abstract function for displaying progress on timeconsuming operations.
-	 * @param infoText the text to display to the user
-	 * @param numOperations the number of calculated operations to do
+	 * @param message Indicates the message to display to the user.
+	 * @param numOperations The number of calculated operations to do.
 	 */
-	virtual void showProgress(const char *infoText, unsigned int numOperations = 0) = 0;
+	virtual void showProgress(ProgressMessage message, int numOperations = 0) = 0;
 	
 	/**
 	 * Abstract function for hiding the progress info.
@@ -56,12 +61,6 @@ public:
 	 * @param numOperationsDone the number of operations done
 	 */
 	virtual void updateProgress(int numOperationsDone) = 0;
-	
-	/**
-	 * Abstract function for changing the information to display to the user
-	 * @param infoText the text to display to the user
-	 */
-	virtual void setProgressInfo(const char *infoText) = 0;
 	
 	/**
 	 * Abstract function for checking if the user has aborted the operation 

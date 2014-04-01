@@ -102,7 +102,7 @@ void Animation::addFrames(int scene, int frame,
 	CommandAddFactory::Parameters params(scene, frame, count);
 	bool showingProgress = 1 < count;
 	if (showingProgress) {
-		frontend->showProgress("Importing frames from disk ...", count);
+		frontend->showProgress(Frontend::importingFramesFromDisk, count);
 	}
 	std::string error;
 	// error.empty() is false if string is "\0"! So we set this explicitly on error.
@@ -399,7 +399,7 @@ void Animation::shutdownAudioDevice() {
 
 bool Animation::exportToVideo(VideoEncoder * encoder) {
 	VideoFactory factory(scenes, frontend);
-	frontend->showProgress("Exporting ...", 0);
+	frontend->showProgress(Frontend::exporting, 0);
 	if (factory.createVideoFile(encoder) != NULL) {
 		frontend->hideProgress();
 		return true;
@@ -467,11 +467,28 @@ public:
 };
 
 void Animation::replayCommandLog(FILE* file) {
+	long startPos = ftell(file);
+	long length = 0;
+	if (frontend && startPos != -1 && 0 == fseek(file, 0, SEEK_END)) {
+		length = ftell(file);
+		fseek(file, startPos, SEEK_SET);
+		if (length < 1000) {
+			length = 0;
+		} else {
+			frontend->showProgress(Frontend::restoringProject, length - startPos);
+		}
+	}
 	GetLine lineIterator(file);
 	int r = 0;
 	while (0 < (r = lineIterator.next())) {
 		executor->executeFromLog(lineIterator.get());
+		if (0 < length) {
+			long pos = ftell(file) - startPos;
+			frontend->updateProgress(pos);
+		}
 	}
+	if (0 < length)
+		frontend->hideProgress();
 	if (r < 0)
 		throw FileException("replayCommandLog", errno);
 }

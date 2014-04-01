@@ -77,19 +77,35 @@ int QtFrontend::run(int, char **)
 }
 
 
-void QtFrontend::showProgress(const char* operation, unsigned int numOperations)
-{
-	if (numOperations > 0) {
-		progressDialog = new QProgressDialog( operation, tr("Cancel"), 0, numOperations,mw);
-		progressDialog->show();
+void QtFrontend::showProgress(ProgressMessage message, int numOperations) {
+	QString msg = tr("Please wait...");
+	switch (message) {
+	case connectingCamera:
+		msg = tr("Connecting camera...");
+		break;
+	case importingFramesFromDisk:
+		msg = tr("Importing frames from disk");
+		break;
+	case exporting:
+		msg = tr("Exporting...");
+		break;
+	case restoringProject:
+		msg = tr("Restoring project...");
+		break;
+	case savingScenesToDisk:
+		msg = tr("Saving scenes to disk...");
+		break;
 	}
-	else {
+	if (numOperations > 0) {
+		progressDialog = new QProgressDialog(msg, tr("Cancel"), 0,
+				numOperations, mw);
+		progressDialog->show();
+	} else {
 		progressBar = new QProgressBar;
 		progressBar->setFixedWidth(150);
-		infoText = new QLabel(operation);
+		infoText = new QLabel(msg);
 		mw->statusBar()->addWidget(infoText);
 		mw->statusBar()->addWidget(progressBar);
-
 		timer = new QTimer();
 		connect( timer, SIGNAL( timeout() ), this, SLOT( updateProgressBar() ) );
         timer->start(10);
@@ -97,14 +113,12 @@ void QtFrontend::showProgress(const char* operation, unsigned int numOperations)
 }
 
 
-void QtFrontend::hideProgress()
-{
+void QtFrontend::hideProgress() {
 	if (progressDialog) {
 		progressDialog->hide();
 		delete progressDialog;
 		progressDialog = NULL;
-	}
-	else if (progressBar) {
+	} else if (progressBar) {
 		timer->stop();
 		progressBar->hide();
 		mw->statusBar()->removeWidget(progressBar);
@@ -119,24 +133,21 @@ void QtFrontend::hideProgress()
 }
 
 
-void QtFrontend::updateProgress(int numOperationsDone)
-{
+void QtFrontend::updateProgress(int numOperationsDone) {
 	if (progressDialog) {
 		progressDialog->setValue(numOperationsDone);
 	}
 }
 
 
-void QtFrontend::setProgressInfo(const char *infoText)
-{
+void QtFrontend::setProgressInfo(const char *infoText) {
 	if (progressDialog) {
 		progressDialog->setLabelText(infoText);
 	}
 }
 
 
-bool QtFrontend::isOperationAborted()
-{
+bool QtFrontend::isOperationAborted() {
 	if (progressDialog) {
 		return progressDialog->wasCanceled();
 	}
@@ -144,14 +155,12 @@ bool QtFrontend::isOperationAborted()
 }
 
 
-void QtFrontend::processEvents()
-{
+void QtFrontend::processEvents() {
 	stApp->processEvents();
 }
 
 
-void QtFrontend::updateProgressBar()
-{
+void QtFrontend::updateProgressBar() {
     int p = progressBar->value();
     progressBar->setValue(++p);
 }

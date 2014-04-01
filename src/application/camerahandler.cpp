@@ -75,7 +75,8 @@ bool CameraHandler::setViewMode(int mode)
 
 void CameraHandler::cameraOn()
 {
-	DomainFacade::getFacade()->getFrontend()->showProgress("Connecting camera... ");
+	DomainFacade::getFacade()->getFrontend()->showProgress(
+			Frontend::connectingCamera);
 	cameraButton->setIcon( QPixmap(cameraoff) );
 	isCameraOn = frameView->on();
 	if (!isCameraOn) {

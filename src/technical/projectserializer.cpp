@@ -404,7 +404,7 @@ void ProjectSerializer::setAttributes(xmlNodePtr rootNode,
 	xmlNodePtr scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
 
 	int numScenes = anim.sceneCount();
-	frontend->showProgress("Saving scenes to disk ...", numScenes);
+	frontend->showProgress(Frontend::savingScenesToDisk, numScenes);
 	for (int i = 0; i < numScenes; ++i) {
 		frontend->updateProgress(i);
 		// Scenes

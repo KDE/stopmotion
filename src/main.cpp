@@ -131,8 +131,8 @@ int main(int argc, char **argv) {
 		QtFrontend qtFrontend(argc, argv);
 		qtFrontend.processEvents();
 		try {
-			recover(facadePtr);
 			facadePtr->registerFrontend(&qtFrontend);
+			recover(facadePtr);
 			qtFrontend.setUndoRedoEnabled();
 			facadePtr->initializeCommandLoggerFile();
 			if (argc > 1 && access(argv[1], R_OK) == 0) {

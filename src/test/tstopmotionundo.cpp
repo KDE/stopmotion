@@ -246,13 +246,11 @@ public:
 	int run(int, char **) {
 		return 0;
 	}
-	void showProgress(const char *, unsigned int) {
+	void showProgress(ProgressMessage, int) {
 	}
 	void hideProgress() {
 	}
 	void updateProgress(int) {
-	}
-	void setProgressInfo(const char *) {
 	}
 	bool isOperationAborted() {
 		return false;
