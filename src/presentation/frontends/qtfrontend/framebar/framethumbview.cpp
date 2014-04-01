@@ -20,6 +20,7 @@
 #include "framethumbview.h"
 
 #include "thumbdragger.h"
+#include "filenamesfromurlsiterator.h"
 #include "src/domain/domainfacade.h"
 #include "src/technical/stringiterator.h"
 #include "graphics/icons/note.xpm"
@@ -182,45 +183,6 @@ void FrameThumbView::setSelected(bool selected) {
 		setFrameShape(QFrame::NoFrame);
 	}
 }
-
-class FileNamesFromUrlsIterator : public StringIterator {
-	QList<QUrl>::Iterator b;
-	QList<QUrl>::Iterator e;
-	std::string buffer;
-
-	void set() {
-		if (!atEnd()) {
-			QString file = b->toLocalFile();
-			buffer = file.toStdString();
-			buffer.c_str();
-		}
-	}
-
-public:
-	FileNamesFromUrlsIterator(QList<QUrl>::Iterator begin,
-			QList<QUrl>::Iterator end) : b(begin), e(end) {
-		set();
-	}
-	~FileNamesFromUrlsIterator() {
-	}
-	int count() {
-		int c = 0;
-		for (QList<QUrl>::Iterator i(b); i != e; ++i) {
-			++c;
-		}
-		return c;
-	}
-	bool atEnd() const {
-		return b == e;
-	}
-	const char* get() const {
-		return &buffer[0];
-	}
-	void next() {
-		++b;
-		set();
-	}
-};
 
 /**
  * Moves the frames dropped to just after this frame if the frames are being

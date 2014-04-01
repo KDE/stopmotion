@@ -21,6 +21,7 @@
 #include "scenethumbview.h"
 
 #include "thumbdragger.h"
+#include "filenamesfromurlsiterator.h"
 #include "graphics/icons/clapper.xpm"
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h"
@@ -164,13 +165,13 @@ void SceneThumbView::contentsDropped(QDropEvent *event) {
 	int sceneNumber = getNumber();
 	int movingScene = getFrameBar()->getMovingScene();
 	int activeScene= getFrameBar()->getActiveScene();
-	if (event->source() && (movingScene != sceneNumber)
-			&& (movingScene != -1)) {
-		Logger::get().logDebug("Moving scene");
-		int destination = movingScene < sceneNumber?
-				sceneNumber + 1 : sceneNumber;
-		facade->moveScene(movingScene, destination);
-	} else if (event->source() && movingScene == -1) {
+	if (event->source() != 0) {
+		if ( event->mimeData()->hasUrls() ) {
+			QList<QUrl> urls = event->mimeData()->urls();
+			FileNamesFromUrlsIterator fNames(urls.begin(), urls.end());
+			DomainFacade::getFacade()->addFrames(getNumber(), 0, fNames);
+		}
+	} else if (movingScene == -1) {
 		// moving frames into a scene
 		int selectionFrame = getFrameBar()->getSelectionAnchor();
 		int activeFrame = getFrameBar()->getActiveFrame();
@@ -188,6 +189,10 @@ void SceneThumbView::contentsDropped(QDropEvent *event) {
 			facade->moveFrames(activeScene, lowend,
 					highend - lowend + 1, sceneDest, sceneSize);
 		}
+	} else if (movingScene != sceneNumber) {
+		Logger::get().logDebug("Moving scene");
+		int destination = movingScene < sceneNumber?
+				sceneNumber + 1 : sceneNumber;
+		facade->moveScene(movingScene, destination);
 	}
 }
-

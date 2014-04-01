@@ -1,5 +1,5 @@
-CONFIG += debug
-#CONFIG += release
+#CONFIG += debug
+CONFIG += release
 CONFIG += warn_off
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
@@ -100,6 +100,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/importtab.h \
     src/presentation/frontends/qtfrontend/framebar/framebar.h \
     src/presentation/frontends/qtfrontend/framebar/framethumbview.h \
+    src/presentation/frontends/qtfrontend/framebar/filenamesfromurlsiterator.h \
     src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h \
     src/presentation/frontends/qtfrontend/framebar/scenethumbview.h \
     src/presentation/frontends/qtfrontend/framebar/thumbview.h \
@@ -180,6 +181,7 @@ SOURCES += src/config.cpp \
     src/presentation/frontends/qtfrontend/importtab.cpp \
     src/presentation/frontends/qtfrontend/framebar/framebar.cpp \
     src/presentation/frontends/qtfrontend/framebar/framethumbview.cpp \
+    src/presentation/frontends/qtfrontend/framebar/filenamesfromurlsiterator.cpp \
     src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.cpp \
     src/presentation/frontends/qtfrontend/framebar/scenethumbview.cpp \
     src/presentation/frontends/qtfrontend/framebar/thumbview.cpp \
