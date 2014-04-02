@@ -195,7 +195,6 @@ void FrameThumbView::contentsDropped(QDropEvent * event) {
 	int activeScene = getFrameBar()->getActiveScene();
 	if (event->source() == 0) {
 		Logger::get().logDebug("Adding picture(s)");
-		getFrameBar()->updateNewActiveFrame(activeScene, getNumber());
 		if ( event->mimeData()->hasUrls() ) {
 			QList<QUrl> urls = event->mimeData()->urls();
 			FileNamesFromUrlsIterator fNames(urls.begin(), urls.end());

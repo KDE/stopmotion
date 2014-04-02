@@ -165,7 +165,7 @@ void SceneThumbView::contentsDropped(QDropEvent *event) {
 	int sceneNumber = getNumber();
 	int movingScene = getFrameBar()->getMovingScene();
 	int activeScene= getFrameBar()->getActiveScene();
-	if (event->source() != 0) {
+	if (event->source() == 0) {
 		if ( event->mimeData()->hasUrls() ) {
 			QList<QUrl> urls = event->mimeData()->urls();
 			FileNamesFromUrlsIterator fNames(urls.begin(), urls.end());

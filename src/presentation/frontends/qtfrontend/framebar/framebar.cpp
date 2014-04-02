@@ -146,7 +146,7 @@ void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 		int toScene, int toFrame) {
 	if (toScene == activeScene) {
 		if (fromScene == activeScene) {
-			changeSelectionHighlight(fromFrame, fromFrame + count - 1);
+			changeSelectionHighlight(fromFrame + count - 1, fromFrame);
 			Logger::get().logDebug("Moving in framebar");
 			moveFrames(fromFrame, fromFrame + count - 1, toFrame);
 			if (fromFrame < toFrame)
@@ -161,7 +161,7 @@ void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 		setActiveScene(toScene);
 	}
 	Logger::get().logDebug("Setting new active frame in FrameBar");
-	setActiveFrameAndSelection(toFrame, toFrame + count - 1);
+	setActiveFrameAndSelection(toFrame + count - 1, toFrame);
 	doScroll();
 	doActiveFrameNotifications();
 }
