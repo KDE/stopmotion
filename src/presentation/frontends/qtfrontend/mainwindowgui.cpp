@@ -1103,32 +1103,39 @@ void MainWindowGUI::activateMenuOptions() {
 	redoAct->setEnabled(facade->canRedo());
 }
 
+namespace {
+class Preference {
+	const char *content;
+public:
+	Preference(PreferencesTool *prefs, const char *key) : content(0) {
+		content = prefs->getPreference(key, "");
+	}
+	~Preference() {
+		if (content && *content)
+			xmlFree((xmlChar*)content);
+	}
+	const char *get() const {
+		return content;
+	}
+	bool equals(const char* other) {
+		return 0 == strcmp(content, other);
+	}
+};
+}
 
-void MainWindowGUI::setMostRecentProject()
-{
+void MainWindowGUI::setMostRecentProject() {
 	const char *first = DomainFacade::getFacade()->getProjectFile();
 	if (first != 0) {
 		PreferencesTool *prefs = PreferencesTool::get();
-		const char *prefsFirst = prefs->getPreference("mostRecent", "");
-		if (strcmp(first, prefsFirst) != 0) {
-			const char *second = prefs->getPreference("secondMostRecent", "");
-			const char *third = prefs->getPreference("thirdMostRecent", "");
+		Preference prefsFirst(prefs, "mostRecent");
+		if (!prefsFirst.equals(first)) {
+			Preference second(prefs, "secondMostRecent");
 			prefs->setPreference("mostRecent", first, false);
-			prefs->setPreference("secondMostRecent", prefsFirst, false);
-			prefs->setPreference("thirdMostRecent", second, false);
-
+			prefs->setPreference("secondMostRecent", prefsFirst.get(), false);
+			if (!second.equals(first)) {
+				prefs->setPreference("thirdMostRecent", second.get(), false);
+			}
 			updateMostRecentMenu();
-
-			if (strcmp(second, "") != 0) {
-				xmlFree((xmlChar*)second);
-			}
-			if (strcmp(third, "") != 0) {
-				xmlFree((xmlChar*)third);
-			}
-		}
-
-		if (strcmp(prefsFirst, "") != 0) {
-			xmlFree((xmlChar*)prefsFirst);
 		}
 	}
 }
