@@ -763,8 +763,11 @@ MainWindowGUI::SaveDialogResult MainWindowGUI::saveIfNecessary() {
 		if (save == 2) {
 			return saveDialogCancel;
 		} else if (save == 0) {
-			saveProject();
-			return saveDialogSave;
+			if (saveProject())
+				return saveDialogSave;
+			// User requested a save but cancelled the "Save As" dialog.
+			// This counts as a cancel.
+			return saveDialogCancel;
 		}
 	}
 	return saveDialogDiscard;
@@ -773,7 +776,6 @@ MainWindowGUI::SaveDialogResult MainWindowGUI::saveIfNecessary() {
 void MainWindowGUI::newProject() {
 	if (saveDialogCancel != saveIfNecessary()) {
 	  DomainFacade::getFacade()->newProject();
-	  //fileMenu->setItemEnabled(SAVE, false);
 	  saveAct->setEnabled(false);
 	  DomainFacade::getFacade()->clearHistory();
 	  modelSizeChanged(0);
@@ -790,7 +792,7 @@ void MainWindowGUI::openProject() {
 					lastVisitedDir,
 					"Stopmotion (*.sto)");
 		if ( !file.isNull() ) {
-			openProject( file.toLocal8Bit().constData() );
+			doOpenProject( file.toLocal8Bit().constData() );
 		}
 	}
 }
@@ -810,7 +812,7 @@ void MainWindowGUI::updatePasteEnabled() {
 	pasteAct->setEnabled(mimeData->hasUrls());
 }
 
-void MainWindowGUI::doOpenFile(const char* projectFile) {
+void MainWindowGUI::doOpenProject(const char* projectFile) {
 	assert(projectFile != NULL);
 	DomainFacade::getFacade()->openProject(projectFile);
 	saveAsAct->setEnabled(true);
@@ -826,7 +828,7 @@ void MainWindowGUI::doOpenFile(const char* projectFile) {
 
 void MainWindowGUI::openProject( const char * projectFile ) {
 	if (saveDialogCancel != saveIfNecessary()) {
-		doOpenFile(projectFile);
+		doOpenProject(projectFile);
 	}
 }
 
@@ -863,25 +865,26 @@ void MainWindowGUI::openThirdMostRecent()
 }
 
 
-void MainWindowGUI::saveProjectAs() {
+bool MainWindowGUI::saveProjectAs() {
 	QString file = QFileDialog::getSaveFileName(this,
 			tr("Save As"), lastVisitedDir, "Stopmotion (*.sto)");
-	if ( !file.isNull() ) {
-		DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
-		//fileMenu->setItemEnabled(SAVE, true);
-		saveAct->setEnabled(true);
-		setMostRecentProject();
-	}
+	if ( file.isNull() )
+		return false;
+	DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
+	//fileMenu->setItemEnabled(SAVE, true);
+	saveAct->setEnabled(true);
+	setMostRecentProject();
+	return false;
 }
 
 
-void MainWindowGUI::saveProject() {
+bool MainWindowGUI::saveProject() {
 	const char *file = DomainFacade::getFacade()->getProjectFile();
 	if (file) {
 		DomainFacade::getFacade()->saveProject(file);
-	} else {
-		saveProjectAs();
+		return true;
 	}
+	return saveProjectAs();
 }
 
 
@@ -941,7 +944,6 @@ void MainWindowGUI::exportToVideo()
 		}
 
 		if ( enc.isValid() && isCanceled == false ) {
-			saveProject();
 			DomainFacade::getFacade()->exportToVideo(&enc);
 		}
 		else if (!isCanceled){

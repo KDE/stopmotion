@@ -297,6 +297,7 @@ void Animation::saveProject(const char *filename) {
 	initializeCommandLog();
 	if (rename(newDat.path(), currentDat.path()) < 0)
 		throw FailedToInitializeCommandLogger();
+	executor->clearHistory();
 }
 
 

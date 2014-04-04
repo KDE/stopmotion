@@ -256,6 +256,15 @@ private:
 	 */
 	void updateMostRecentMenu();
 
+	/**
+	 * If the project has unsaved changes, asks the user if the project should
+	 * be saved. If so, saves it.
+	 * @return The user's response. {@ref SaveDialogDiscard} is returned if
+	 * there were found to be no changes.
+	 */
+	SaveDialogResult saveIfNecessary();
+	void doOpenProject(const char* projectFile);
+
 public slots:
 
 	/**
@@ -293,13 +302,17 @@ private slots:
 
 	/**
 	 * Saves the project to the last saved file.
+	 * @return {@c false} if a filename was required but the user cancelled;
+	 * in this case the project was not saved.
 	 */
-	void saveProject();
+	bool saveProject();
 
 	/**
 	 * Saves the project to a given filename from the user.
+	 * @return {@c false} if the user cancelled; in this case the project was
+	 * not saved.
 	 */
-	void saveProjectAs();
+	bool saveProjectAs();
 
 	/**
 	 * Brings up an about dialog with information about the application.
@@ -307,7 +320,7 @@ private slots:
 	void showAboutDialog();
 
 	/**
-	 * Brings up an help dialog with the stopmotion user manua.
+	 * Brings up an help dialog with the stopmotion user manual.
 	 */
 	void showHelpDialog();
 
@@ -352,8 +365,6 @@ public slots:
 	 * Sets different buttons such as undo, save as and copy to be enabled.
 	 */
 	void activateMenuOptions();
-	SaveDialogResult saveIfNecessary();
-	void doOpenFile(const char* projectFile);
 };
 
 #endif
