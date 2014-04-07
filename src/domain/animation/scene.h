@@ -31,7 +31,7 @@ class FileNameVisitor;
 class FrameOutOfRangeException : public std::exception {
 public:
 	FrameOutOfRangeException();
-    const char* what() const _GLIBCXX_USE_NOEXCEPT;
+    const char* what() const throw();
 };
 
 /**

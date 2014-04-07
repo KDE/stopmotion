@@ -50,7 +50,7 @@ public:
 				" You need permission to read and write in a ~/.stopmotion"
 				" directory.", strerror(err));
 	}
-    const char* what() const _GLIBCXX_USE_NOEXCEPT {
+    const char* what() const throw() {
     	return buffer;
     }
 };
@@ -64,7 +64,7 @@ public:
 				" Perhaps the file is corrupt or you don't have permission"
 				" to read it.", filename);
 	}
-    const char* what() const _GLIBCXX_USE_NOEXCEPT {
+    const char* what() const throw() {
     	return buffer;
     }
 };

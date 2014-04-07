@@ -41,7 +41,7 @@ FileLinkException::FileLinkException(const char* message) {
 	msg[sizeof(msg) - 1] = '\0';
 }
 
-const char* FileLinkException::what() const _GLIBCXX_USE_NOEXCEPT {
+const char* FileLinkException::what() const throw() {
 	return msg;
 }
 
@@ -50,7 +50,7 @@ DirectoryCreationException::DirectoryCreationException(const char* path) {
 }
 
 const char* DirectoryCreationException::what() const
-		_GLIBCXX_USE_NOEXCEPT {
+		throw() {
 	return buffer;
 }
 

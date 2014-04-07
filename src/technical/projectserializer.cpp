@@ -39,12 +39,15 @@
 #include <set>
 #include <exception>
 
+// for older libtars
+#define UNCONST(s) const_cast<char*>(s)
+
 FileException::FileException(const char* functionName, int errorno) {
 	snprintf(buffer, sizeof(buffer), "%s(): %s", functionName,
 			strerror(errorno));
 }
 
-const char* FileException::what() const _GLIBCXX_USE_NOEXCEPT {
+const char* FileException::what() const throw() {
 	return buffer;
 }
 
@@ -75,7 +78,7 @@ class TarFileRead {
 	TAR* tar;
 public:
 	TarFileRead(const char* filename) {
-		if (tar_open(&tar, filename, 0, O_RDONLY, 0, 0 | 0) == -1) {
+		if (tar_open(&tar, UNCONST(filename), 0, O_RDONLY, 0, 0 | 0) == -1) {
 			throw ProjectFileReadException("tar_open", errno);
 		}
 	}
@@ -277,7 +280,7 @@ class TarFileWrite {
 	TAR* tar;
 public:
 	TarFileWrite(const char* tarFilename) {
-		if (-1== tar_open(&tar, tarFilename, NULL,
+		if (-1== tar_open(&tar, UNCONST(tarFilename), NULL,
 					O_WRONLY | O_CREAT | O_TRUNC, 0644, 0)) {
 			throw ProjectFileCreationException("tar_open", errno);
 		}
@@ -285,7 +288,7 @@ public:
 	~TarFileWrite() {
 	}
 	void add(const char* realPath, const char* storedPath) {
-		if (-1 == tar_append_file(tar, realPath, storedPath)) {
+		if (-1 == tar_append_file(tar, UNCONST(realPath), UNCONST(storedPath))) {
 			throw ProjectFileCreationException("tar_append_file", errno);
 		}
 	}

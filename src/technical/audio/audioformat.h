@@ -25,13 +25,13 @@
 class CouldNotOpenFileException : public std::exception {
 public:
 	CouldNotOpenFileException();
-    const char* what() const _GLIBCXX_USE_NOEXCEPT;
+    const char* what() const throw();
 };
 
 class InvalidAudioFormatException : public std::exception {
 public:
 	InvalidAudioFormatException();
-    const char* what() const _GLIBCXX_USE_NOEXCEPT;
+    const char* what() const throw();
 };
 
 /**

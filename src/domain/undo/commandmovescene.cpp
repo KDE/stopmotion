@@ -31,8 +31,13 @@ CommandMoveScene::~CommandMoveScene() {
 Command* CommandMoveScene::execute() {
 	sv.moveScene(from, to);
 	int32_t t = from;
-	from = to;
-	to = t;
+	if (from < to) {
+		from = to - 1;
+		to = t;
+	} else {
+		from = to;
+		to = t + 1;
+	}
 	return this;
 }
 

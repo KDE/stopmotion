@@ -33,7 +33,7 @@ class SoundOutOfRangeException : public std::exception {
 public:
 	SoundOutOfRangeException() {
 	}
-    const char* what() const _GLIBCXX_USE_NOEXCEPT {
+    const char* what() const throw() {
     	return "Internal error: Sound out of range!";
     }
 };
