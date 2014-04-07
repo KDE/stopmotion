@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,330 +19,142 @@
  ***************************************************************************/
 #include "frame.h"
 
-#include "src/technical/audio/oggvorbis.h"
-#include "src/technical/util.h"
+#include "src/technical/audio/audiodriver.h"
+#include "src/domain/filenamevisitor.h"
+#include "src/config.h"
+#include "sound.h"
 
 #include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
 #include <sstream>
-#include <libgen.h>
+#include <memory>
 
 
-unsigned int Frame::tmpNum   = 0;
-unsigned int Frame::trashNum = 0;
-char Frame::tempPath[PATH_MAX]   = {0};
-char Frame::trashPath[PATH_MAX]  = {0};
+class SoundOutOfRangeException : public std::exception {
+public:
+	SoundOutOfRangeException() {
+	}
+    const char* what() const _GLIBCXX_USE_NOEXCEPT {
+    	return "Internal error: Sound out of range!";
+    }
+};
 
 
-Frame::Frame(const char *filename)
-{
-	assert(filename != NULL);
-	
-	snprintf(tempPath, sizeof(tempPath), "%s/.stopmotion/tmp/", getenv("HOME"));
-	snprintf(trashPath, sizeof(trashPath), "%s/.stopmotion/trash/", getenv("HOME"));
-	
-	int len = strlen(filename) + 1;
-	imagePath = new char[len];
-	strcpy(imagePath, filename);
-	isProjectFile = false;
-	soundNum = -1;
-	
-	assert(tempPath  != NULL);
-	assert(trashPath != NULL);
-	assert(imagePath != NULL);
+Frame::Frame(WorkspaceFile& file) {
+	assert(file.path() != NULL);
+	imagePath.swap(file);
 }
 
 
-Frame::~Frame()
-{
-	delete [] imagePath;
-	imagePath = NULL;
-	
-	unsigned int numElem = sounds.size();
-	for (unsigned int i = 0; i < numElem; ++i) {
+Frame::~Frame() {
+	int numElem = sounds.size();
+	for (int i = 0; i < numElem; ++i) {
 		delete sounds[i];
 		sounds[i] = NULL;
 	}
 }
 
 
-char* Frame::getImagePath()
-{
-	assert(imagePath != NULL);
-	Logger::get().logDebug("Retrieving picture from frame: ");
-	Logger::get().logDebug(imagePath);
-	return imagePath;
+const char* Frame::getImagePath() const {
+	assert(imagePath.path() != NULL);
+	return imagePath.path();
 }
 
 
-/**
- *@todo check audio type (ogg, mp3, wav ...)
- */
-int Frame::addSound(const char *filename)
-{
+const char* Frame::getBasename() const {
+	assert(imagePath.basename() != 0);
+	return imagePath.basename();
+}
+
+int Frame::newSound(WorkspaceFile& file) {
 	Logger::get().logDebug("Adding sound in frame");
-	AudioFormat *f = new OggVorbis();
-	int ret = f->setFilename(filename);
-	if (ret != 0) {
-		delete f;
-		return ret;
-	}
-	
-	// Check if the file exsists, which it probably should do. 
-	// The setFilename function will fail if the file doesn't exists,
-	// but paranoid people have to dobbel check :-).
-	if ( access(filename, F_OK) == 0 ) {
-		// Create a new path
-		char *imgId = getImageId();
-		char newSoundPath[PATH_MAX] = {0};
-		snprintf(newSoundPath, sizeof(newSoundPath), "%s%s_snd_%d%s",
-			tempPath, imgId, ++soundNum, strrchr(filename,'.'));
-		delete [] imgId;
-		
-		// Check if the sound already is inside the tmp directory.
-		// (This can be the fact if we runs in recovery mode.)
-		if ( strstr(filename, "/.stopmotion/tmp/") == NULL ) {
-			Util::copyFile(newSoundPath, filename);
-		}
-		else {
-			rename(filename, newSoundPath);
-		}
-		
-		// Update with the new path
-		f->setFilename(newSoundPath);
-		// and add it to the vector
-		sounds.push_back(f);
+	preallocateSounds(1);
+	std::auto_ptr<Sound> sound(new Sound());
+	std::stringstream ss;
+	std::stringstream::pos_type zeroOff = ss.tellp();
+	ss << "Sound" << WorkspaceFile::getSoundNumber();
+	int size = (ss.tellp() - zeroOff) + 1;
+	char* soundName = new char[size];
+	std::string cs = ss.str();
+	strncpy(soundName, cs.c_str(), size);
+	const char* oldName = sound->setName(soundName);
+	assert(oldName == NULL);
+	sound->open(file);
+	WorkspaceFile::nextSoundNumber();
+	sounds.push_back(sound.release());
 
-		stringstream ss;
-		ss << "Sound" << soundNum;
-		soundNames.push_back( ss.str() );
-		return 0;
-	}
-	return 1;
+	return 0;
 }
 
+void Frame::addSound(int index, Sound* sound) {
+	if (index < 0 || soundCount() < index)
+		throw SoundOutOfRangeException();
+	sounds.insert(sounds.begin() + index, sound);
+}
 
-void Frame::removeSound(unsigned int soundNumber)
-{
-	assert(sounds[soundNumber] != NULL);
-	
-	AudioFormat *f = sounds[soundNumber];
-	if ( access( f->getSoundPath(), F_OK ) == 0 ) {
-		unlink( f->getSoundPath() );
-	}
-	delete sounds[soundNumber];
-	sounds[soundNumber] = NULL;
+void Frame::preallocateSounds(int extra) {
+	sounds.reserve(soundCount() + extra);
+}
+
+Sound* Frame::removeSound(int soundNumber) {
+	if (soundNumber < 0 || soundCount() <= soundNumber)
+		throw SoundOutOfRangeException();
+	Sound* s = sounds[soundNumber];
 	sounds.erase(sounds.begin() + soundNumber);
+	return s;
 }
 
 
-unsigned int Frame::getNumberOfSounds( )
-{
+Sound* Frame::getSound(int soundNumber) {
+	if (soundNumber < 0 || soundCount() <= soundNumber)
+		throw SoundOutOfRangeException();
+	return sounds[soundNumber];
+}
+
+
+const Sound* Frame::getSound(int soundNumber) const {
+	if (soundNumber < 0 || soundCount() <= soundNumber)
+		throw SoundOutOfRangeException();
+	return sounds[soundNumber];
+}
+
+
+int Frame::soundCount() const {
 	return sounds.size();
 }
 
 
-vector<AudioFormat*>& Frame::getSounds()
-{
-	return sounds;
+const char* Frame::setSoundName(int soundNumber, const char* soundName) {
+	if (soundNumber < 0 || soundCount() <= soundNumber)
+		throw SoundOutOfRangeException();
+	return sounds[soundNumber]->setName(soundName);
 }
 
 
-void Frame::setSoundName(unsigned int soundNumber, char* soundName)
-{
-	soundNames[soundNumber] = soundName;
+const char* Frame::getSoundName(int soundNumber) const {
+	if (soundNumber < 0 || soundCount() <= soundNumber)
+		throw SoundOutOfRangeException();
+	return sounds[soundNumber]->getName();
 }
 
 
-char* Frame::getSoundName(unsigned int soundNumber)
-{
-	return (char*)soundNames[soundNumber].c_str();
-}
-
-
-void Frame::moveToProjectDir(
-		const char *imageDir, const char *soundDir , unsigned int imgNum )
-{
-	moveToImageDir(imageDir, imgNum);
-	if (sounds.size() > 0) {
-		moveToSoundDir(soundDir);
+void Frame::playSounds(AudioDriver *driver) const {
+	SoundVector::const_iterator i = sounds.begin();
+	for (; i != sounds.end(); ++i) {
+		driver->addAudioFile((*i)->getAudio());
 	}
-}
-
-
-void Frame::moveToImageDir(const char *directory, unsigned int imgNum)
-{
-	assert(directory != 0);
-	
-	char newPath[PATH_MAX]  = {0};
-	char filename[12] = {0};
-	char tmp[7] = {0};
-	
-	snprintf(tmp, 7, "%d", imgNum);
-	int fileLength = strlen(tmp);
-	
-	// creates a filename with six characters as total length,
-	// empty characters are filled with zeros
-	for (int i = 0; i < 6 - fileLength; ++i) {
-		filename[i] = '0';
-	}
-	strcat(filename, tmp);
-
-	// gets a pointer to the last occurence of a '.'
-	// and appends the extension
-	char *dotPtr = strrchr(imagePath,'.');
-	strncat (filename, dotPtr, 5);
-	
-	// creates new image path
-	strcpy(newPath, directory);
-	strcat(newPath, filename);
-	
-	rename(imagePath, newPath);
-	
-	delete [] imagePath;
-	imagePath = NULL;
-	
-	imagePath = new char[strlen(newPath) + 1];
-	strcpy(imagePath, newPath);
-}
-
-
-void Frame::moveToSoundDir(const char *directory)
-{
-	assert(directory != NULL);
-	
-	// Gets the id for this frame
-	char *imgId = getImageId();
-	
-	// Move all of the sounds belonging to this frame
-	// to the sounds directory
-	unsigned int numSounds = sounds.size();
-	for (unsigned int i = 0; i < numSounds; ++i) {
-		AudioFormat *f = sounds[i];
-		char *soundPath = f->getSoundPath();
-		
-		// Create a new sound path
-		char newSoundPath[PATH_MAX] = {0};
-		snprintf(newSoundPath, sizeof(newSoundPath), "%s%s_snd_%d%s",
-			directory, imgId, ++soundNum, strrchr(soundPath,'.'));
-		
-		if (access(soundPath, F_OK) == 0) {
-			// Move from old path to new path
-			rename(soundPath, newSoundPath);
-		}
-		// Update with the new path
-		f->setFilename(newSoundPath);
-		f = NULL;
-		soundPath = NULL;
-	}
-	
-	delete [] imgId;
-}
-
-
-void Frame::copyToTemp()
-{
-	char newImagePath[PATH_MAX] = {0};
-	
-	// gets a pointer to the extension
-	char *dotPtr = strrchr(imagePath,'.');
-	
-	// creates a new image path
-	snprintf(newImagePath, sizeof(newImagePath), "%stmp_%d%s", tempPath, tmpNum, dotPtr);
-
-	// the image isn't in the trash directory
-	if (strstr(imagePath, "/.stopmotion/trash/") == NULL) {
-		if (strcmp(imagePath, newImagePath) != 0) {
-		  Util::copyFile(newImagePath, imagePath);
-		}
-	}
-	else {
-		if (strcmp(imagePath, newImagePath) != 0) {
-			rename(imagePath, newImagePath);
-		}
-	}
-	
-	delete [] imagePath;
-	imagePath = NULL;
-	
-	imagePath = new char[strlen(newImagePath) + 1];
-	strcpy(imagePath, newImagePath);
-
-	++tmpNum;
-}
-
-
-void Frame::moveToTrash()
-{
-	char newImagePath[PATH_MAX] = {0};
-	
-	char *dotPtr = strrchr(imagePath,'.');
-	snprintf(newImagePath, sizeof(newImagePath), "%strash_%d%s", trashPath, trashNum, dotPtr);
-
-	rename(imagePath, newImagePath);
-	
-	delete [] imagePath;
-	imagePath = new char[strlen(newImagePath) + 1];
-	strcpy(imagePath, newImagePath);
-	
-	// Remove all of the sounds added to this frame. This should be
-	// added to the undo history in the future.
-	unsigned int numSounds = sounds.size();
-	for (unsigned int i = 0; i < numSounds; ++i) {
-		AudioFormat *f = sounds[i];
-		if (access(f->getSoundPath(), F_OK) == 0) {
-			unlink( f->getSoundPath() );
-		}
-		delete sounds[i];
-		sounds[i] = NULL;
-	}
-	sounds.clear();
-
-	++trashNum;
-}
-
-
-void Frame::markAsProjectFile()
-{
-	isProjectFile = true;
-}
-
-
-void Frame::playSounds(AudioDriver *driver)
-{
-	unsigned int numElem = sounds.size();
-	if (numElem > 0) {
-		for (unsigned int i = 0; i < numElem; ++i) {
-				driver->addAudioFile(sounds[i]);
-		}
+	if (i != sounds.begin())
 		driver->playInThread();
+}
+
+void Frame::replaceImage(WorkspaceFile& otherImage) {
+	otherImage.swap(imagePath);
+}
+
+void Frame::accept(FileNameVisitor& v) const {
+	v.visitImage(imagePath.path());
+	for(SoundVector::const_iterator i = sounds.begin();
+			i != sounds.end();
+			++i) {
+		v.visitSound((*i)->getAudio()->getSoundPath());
 	}
 }
-
-
-char* Frame::getImageId()
-{
-	char tmp[PATH_MAX] = {0};
-	strcpy(tmp, imagePath);
-	char *bname = basename(tmp);
-	char *dotPtr = strrchr(imagePath, '.');
-	
-	char imgID[PATH_MAX] = {0};
-	strncpy(imgID, bname, strlen(bname) - strlen(dotPtr) );
-	strcat(imgID, "\0");
-	
-	char *ret = new char[strlen(imgID) + 1];
-	strcpy(ret, imgID);
-	
-	return ret;
-}
-
-
-bool Frame::isProjectFrame()
-{
-	return isProjectFile;
-}
-

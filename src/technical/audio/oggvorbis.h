@@ -23,7 +23,7 @@
 #include "audioformat.h"
 
 #include <vorbis/vorbisfile.h>
-
+#include "src/domain/animation/workspacefile.h"
 
 /**
  * Class for decoding of oggvorbis data to raw PCM data.
@@ -44,12 +44,9 @@ public:
 	 * Function for registering the given filename to  be an ogg file. This
 	 * function checks that the file can be opened and that it is a valid
 	 * ogg file.
-	 * @param filename the filename to register
-	 * @return zero on success, less than zero on failure.
-	 * -1 = cannot open file for reading
-	 * -2 = not a valid oggVorbis file
+	 * @param file the filename to register
 	 */
-	int setFilename(const char* filename);
+	void setFilename(WorkspaceFile& file);
 	
 	/**
 	 * Function for opening the file registered with setFilename.
@@ -76,14 +73,20 @@ public:
 	 * Function for retrieving the sound path.
 	 * @return the sound path
 	 */
-	char* getSoundPath();
-	
+	const char* getSoundPath() const;
+
+	/**
+	 * Retrieves the basename of the sound file.
+	 * @return The filename with extension and without any path.
+	 */
+	const char* getBasename() const;
+
 private:
 	/** The ogg representation of the file registered in this class. */
 	OggVorbis_File *oggFile;
 	
 	/** The filename registred in this class. Hopefully a valid ogg file. */
-	char *filename;
+	WorkspaceFile filename;
 };
 
 #endif

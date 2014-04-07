@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,96 +17,72 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #ifndef PROJECTSERIALIZER_H
 #define PROJECTSERIALIZER_H
 
-#include "src/domain/animation/scene.h"
-#include "src/presentation/frontends/frontend.h"
-
 #include <libxml/tree.h>
 
+#include <vector>
+
+class AnimationImpl;
+class Scene;
+class Frontend;
+
+class FileException : public std::exception {
+	char buffer[100];
+public:
+	FileException(const char* functionName, int errorno);
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+};
 
 /**
- * Class for serializing the project. It creates differents directories containing
- * the files belonging to the current project. Finally everything is packed in
- * a tarball.
- * 
- * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad.
+ * Class for serializing the project.
  */
-class ProjectSerializer
-{
+class ProjectSerializer {
 public:
 	ProjectSerializer();
 	~ProjectSerializer();
-	
+
 	/**
-	 * Creates necessary project paths and opens the project file.
-	 * @param filename the project file
-	 * @return a vector containing the scenes stored in the project file
+	 * Opens the project's model ({@c .dat}) file.
+	 * @param [out] out A vector to be filled with the scenes stored in the
+	 * project file, if the function is successful.
+	 * @param filename The model file.
+	 * @return {@c true} if successful, {@c false} otherwise.
 	 */
-	const vector<Scene*> open(const char *filename);
-	
+	static bool openDat(std::vector<Scene*>& out, const char* filename);
+
 	/**
-	 * Saves the files in differents directories and packs the resulting files
-	 * in a tarball with the same name as 'filename' plus the '.sto' extension.
+	 * Creates necessary project paths and opens the project ({@c .sto}) file.
+	 * @param filename The project file
+	 * @return A vector containing the scenes stored in the project file.
+	 */
+	std::vector<Scene*> openSto(const char *filename);
+
+	/**
+	 * Saves the files in a tarball with the name {@a filename} plus the
+	 * {@c .sto} extension.
 	 * @param filename the project file to store the files within
 	 * @param scenes the scenes to be saved
 	 * @param frontend the frontend to display progress to
-	 * @return true if saving was successfull, false otherwise
 	 */
-	bool save(const char *filename, const vector<Scene*>& scenes, Frontend *frontend);
-	
+	void save(const char *filename, const AnimationImpl& scenes,
+			Frontend *frontend);
+
 	/**
 	 * Retrieves the project file.
 	 * @return the project path if it exist, NULL otherwise
 	 */
 	const char* getProjectFile();
-	
-	/**
-	 * Retrieves the absolute project path. This is the path where the files
-	 * within the tarball are located. (~/.stopmotion/packer/xxx)
-	 * @return the project path if it exist, NULL otherwise
-	 */
-	const char* getProjectPath();
-	
-	/**
-	 * Retrieves the absolute image path. This is the path where the images
-	 * can be found. (~/.stopmotion/packer/xxx/images)
-	 * @return 
-	 */
-	const char* getImagePath();
-	
-	/**
-	 * Deletes unessecary files and pointers.
-	 */
-	void cleanup();
-	
+
 private:
-	xmlDocPtr doc;
-	xmlDtdPtr dtd;
-	xmlNodePtr rootNode;
-	xmlNodePtr scenes;
-	xmlNodePtr images;
-	xmlNodePtr sounds;
-	
-	static const char imageDirectory[]; // relative to projectDirectory
-	static const char soundDirectory[]; // releative to projectDirectory
-	char *projectPath;// absolute
-	char *projectFile;// absolute
-	char *imagePath;  // absolute
-	char *soundPath;  // absolute
-	char *xmlFile;    // absolute
-	char *prevProPath;// absolute
-	char *prevImgPath;// absolute
-	char *prevXmlFile;// absolute
-	
-	void setAttributes(const vector<Scene*>& scenes, Frontend *frontend);
-	void getAttributes(xmlNodePtr node, vector<Scene*>& scenes);
-	bool saveDOMToFile(xmlDocPtr doc);
-	void setProjectPaths(const char *unpacked, bool isSave);
-	bool setProjectFile(const char *filename);
-	void cleanupPrev();
-	void storeOldPaths();
+	char* projectFile;
+	void setAttributes(xmlNodePtr rootNode,
+			const AnimationImpl& anim, Frontend *frontend);
+	static void getAttributes(xmlNodePtr node, std::vector<Scene*>& scenes);
+	void saveDOMToFile(xmlDocPtr doc, const char* filename);
+	void setProjectFile(const char *filename);
 };
 
 #endif

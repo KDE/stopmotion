@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,14 +20,12 @@
 #ifndef EDITMENUHANDLER_H
 #define EDITMENUHANDLER_H
 
-#include "src/config.h"
-#include "src/presentation/frontends/qtfrontend/menuframe.h"
-#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
-#include "modelhandler.h"
-
 #include <QObject>
-#include <QStatusBar>
 
+class MenuFrame;
+class FrameBar;
+class ModelHandler;
+class QStatusBar;
 
 /**
  * This class handles request related to the editmenu (undo, redo, copy, cut, etc)
@@ -77,7 +75,12 @@ public slots:
 	 * Redoes the last undo the user have done.
 	 */
 	void redo();
-	
+
+	/**
+	 * Copies and deletes the section.
+	 */
+	void cut();
+
 	/**
 	 * Copies a selection to the global clipboard.
 	 */
@@ -99,6 +102,14 @@ signals:
 	 * @param l the list containing pointers to the frames
 	 */
 	void addFrames(const QStringList &l);
+	/**
+	 * Removes the frames in the selection.
+	 */
+	void removeFrames();
+	/**
+	 * Undo or redo has happened
+	 */
+	void undoOrRedo();
 };
 
 #endif

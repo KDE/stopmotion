@@ -22,13 +22,12 @@
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 
-#include <QLabel>
 #include <QDropEvent>
 
 
-ThumbView::ThumbView(FrameBar *frameBar, QWidget *parent, int number, const char *name) 
-	: QLabel(parent), frameBar(frameBar), number(number)
-{
+ThumbView::ThumbView(FrameBar *frameBar, QWidget *parent, int number,
+		const char *name)
+	: QLabel(parent), frameBar(frameBar), number(number), refCount(1) {
 	setObjectName(name);
 }
 
@@ -53,6 +52,15 @@ int ThumbView::getNumber() const
 void ThumbView::setHasSounds(bool) {}
 void ThumbView::setOpened(bool) {}
 void ThumbView::setSelected(bool) {}
-void ThumbView::contentsDropped(QDropEvent *) {}
+void ThumbView::contentsDropped(QDropEvent *) {
+}
 
+void ThumbView::addRef() {
+	++refCount;
+}
 
+void ThumbView::delRef() {
+	--refCount;
+	if (refCount == 0)
+		deleteLater();
+}

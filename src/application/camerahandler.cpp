@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,9 +21,16 @@
 
 #include "src/domain/domainfacade.h"
 #include "src/foundation/preferencestool.h"
+#include "src/foundation/logger.h"
 #include "graphics/icons/cameraoff.xpm"
 #include "graphics/icons/cameraon.xpm"
+#include "src/application/modelhandler.h"
+#include "src/presentation/frontends/qtfrontend/frameview.h"
+#include "src/presentation/frontends/qtfrontend/qtfrontend.h"
 
+#include <QPushButton>
+#include <QStatusBar>
+#include <QTimer>
 #include <QImage>
 #include <QInputDialog>
 #include <QWhatsThis>
@@ -34,14 +41,9 @@
 
 CameraHandler::CameraHandler ( QObject *parent, QStatusBar *sb, 
 		ModelHandler* modelHandler, const char *name) 
-	: QObject(parent), statusBar(sb), modelHandler(modelHandler)
-{
-	cameraButton = 0;
-	frameView = 0;
-
-	isCameraOn = false;
-	sprintf(temp, "%s/.stopmotion/capturedfile.jpg", getenv("HOME") ); 
-	
+	: QObject(parent), statusBar(sb), cameraButton(0), timer(0),
+	  capturedFile(WorkspaceFile::capturedImage), isCameraOn(false),
+	  modelHandler(modelHandler), frameView(0) {
 	timer = new QTimer(this);
 	timer->setSingleShot(true);
 	QObject::connect( timer, SIGNAL(timeout()), this, SLOT(storeFrame()) );
@@ -49,9 +51,7 @@ CameraHandler::CameraHandler ( QObject *parent, QStatusBar *sb,
 }
 
 
-CameraHandler::~CameraHandler( )
-{
-
+CameraHandler::~CameraHandler( ) {
 }
 
 
@@ -69,17 +69,20 @@ void CameraHandler::setCameraButton( QPushButton *cameraButton )
 
 bool CameraHandler::setViewMode(int mode)
 {
-	return frameView->setViewMode(mode);
+	return frameView->setViewMode((FrameView::ImageMode) mode);
 }
 
 
 void CameraHandler::cameraOn()
 {
-	DomainFacade::getFacade()->getFrontend()->showProgress("Connecting camera... ");
+	DomainFacade::getFacade()->getFrontend()->showProgress(
+			Frontend::connectingCamera);
 	cameraButton->setIcon( QPixmap(cameraoff) );
 	isCameraOn = frameView->on();
 	if (!isCameraOn) {
 		cameraOff();
+	} else {
+		emit cameraStateChanged(true);
 	}
 	DomainFacade::getFacade()->getFrontend()->hideProgress();
 }
@@ -88,10 +91,9 @@ void CameraHandler::cameraOn()
 void CameraHandler::cameraOff()
 {
 	cameraButton->setIcon( QPixmap(cameraon) );
-	emit cameraStateChanged(false);
 	frameView->off();
 	isCameraOn = false;
-	DomainFacade::getFacade()->setActiveFrame(DomainFacade::getFacade()->getActiveFrameNumber());
+	emit cameraStateChanged(false);
 }
 
 
@@ -117,14 +119,12 @@ void CameraHandler::captureFrame()
 void CameraHandler::storeFrame()
 {
 	QImage i;
-	i.load(temp);
+	const char* path = capturedFile.path();
+	i.load(path);
 	if ( !i.isNull() ) {
-		modelHandler->addFrame(temp);
-		if (DomainFacade::getFacade()->getActiveFrameNumber() == 0) {
-			emit capturedFrame();
-		}
-	}
-	else {
+		modelHandler->addFrame(path);
+		emit capturedFrame();
+	} else {
 		timer->start(60);
 	}
 }

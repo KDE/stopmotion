@@ -21,6 +21,9 @@
 
 #include "src/foundation/preferencestool.h"
 #include "flexiblelineedit.h"
+#include "importtab.h"
+#include "exporttab.h"
+#include "devicetab.h"
 
 #include <QVBoxLayout>
 

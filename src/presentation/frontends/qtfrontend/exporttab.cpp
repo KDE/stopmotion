@@ -25,9 +25,17 @@
 #include "src/foundation/logger.h"
 
 #include <QFileDialog>
-#include <QLabel>
-#include <QInputDialog>
+#include <QGridLayout>
+#include <QGroupBox>
 #include <QHeaderView>
+#include <QInputDialog>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QTableWidget>
+#include <QTextEdit>
+#include <QToolBox>
 
 
 ExportTab::ExportTab(QWidget *parent) : QWidget(parent)

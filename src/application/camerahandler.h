@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,15 +20,15 @@
 #ifndef CAMERAHANDLER_H
 #define CAMERAHANDLER_H
 
-#include "src/config.h"
-#include "src/presentation/frontends/qtfrontend/frameview.h"
-#include "src/application/modelhandler.h"
-
 #include <QObject>
-#include <QPushButton>
-#include <QStatusBar>
-#include <QTimer>
+#include "src/domain/animation/workspacefile.h"
 
+class FrameView;
+class ModelHandler;
+
+class QPushButton;
+class QStatusBar;
+class QTimer;
 
 /**
  *
@@ -83,7 +83,7 @@ private:
 	QStatusBar *statusBar;
 	QPushButton *cameraButton;
 	QTimer *timer;
-	char temp[PATH_MAX];
+	WorkspaceFile capturedFile;
 	bool isCameraOn;
 	ModelHandler *modelHandler;
 	

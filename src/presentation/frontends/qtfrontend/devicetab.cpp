@@ -23,8 +23,16 @@
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/flexiblelineedit.h"
 #include "src/foundation/preferencestool.h"
+#include "src/foundation/logger.h"
 
 #include <QHeaderView>
+#include <QTableWidget>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QTextEdit>
 
 
 DeviceTab::DeviceTab(QWidget *parent) 
@@ -137,7 +145,7 @@ void DeviceTab::initialize()
 	Logger::get().logDebug("Initializing video device settings");
 	PreferencesTool *pref = PreferencesTool::get();
 	
-	vector<GrabberDevice> devices = DomainFacade::getFacade()->getGrabberDevices();
+	std::vector<GrabberDevice> devices = DomainFacade::getFacade()->getGrabberDevices();
 	numAutoDetectedDevices = devices.size();
 	deviceTable->setRowCount(numAutoDetectedDevices);
 	

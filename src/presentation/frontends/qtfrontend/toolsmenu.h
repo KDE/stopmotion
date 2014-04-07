@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,13 +20,15 @@
 #ifndef TOOLSMENU_H
 #define TOOLSMENU_H
 
-#include "src/application/runanimationhandler.h"
-#include "src/application/modelhandler.h"
-#include "src/application/camerahandler.h"
-
-#include <QShortcut>
 #include <QWidget>
 
+class QShortcut;
+class QTimer;
+class QWidget;
+class RunAnimationHandler;
+class ModelHandler;
+class CameraHandler;
+class FrameBar;
 class Ui_Form;
 
 /**
@@ -34,65 +36,66 @@ class Ui_Form;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class ToolsMenu : public QWidget
-{
+class ToolsMenu : public QWidget {
 	Q_OBJECT
 public:
 	/**
 	 * Sets up the toolsmenu.
 	 * @param parent the parent of the widget.
 	 */
-	ToolsMenu( RunAnimationHandler *runAnimationHandler, ModelHandler *modelHandler,
-			CameraHandler *cameraHandler, QWidget *parent = 0 );
-	
+	ToolsMenu( RunAnimationHandler *runAnimationHandler,
+			ModelHandler *modelHandler, CameraHandler *cameraHandler,
+			FrameBar *frameBar, QWidget *parent = 0 );
+
 	/**
 	 * Retranslates the strings.
-	 * This function is called after a new translator has been installed so that 
+	 * This function is called after a new translator has been installed so that
 	 * the program strings are retranslated to the new language.
 	 */
 	void retranslateStrings();
-	
+
 public slots:
-	
+
 	/**
 	 * Activates or deactivates the captureGroup
 	 * @param activate true if the group should be activated.
 	 */
 	void activateCaptureGroup(bool activate);
-	
+
 	/**
 	 * This slot is notified when the size of the model changes so that menuframe
 	 * menu options can be adjusted (activated/deactivated, etc).
 	 * @param modelSize the new size of the model.
 	 */
-	void modelSizeChanged(int modelSize);
-	
+	void fixNavigationButtons(int modelSize);
+
 private:
 	Ui_Form* ui;
-	
+
 	RunAnimationHandler *runAnimationHandler;
 	ModelHandler *modelHandler;
 	CameraHandler *cameraHandler;
-	
+	FrameBar *frameBar;
+
 	QShortcut *loopAccel;
 	QShortcut *playAccel;
 	QShortcut *mixAccel;
 	QShortcut *diffAccel;
 	QShortcut *playbackAccel;
 	QTimer *captureTimer;
-	
+
 	/**
-	 * Creates connections, adds icons to the buttons and sets 
+	 * Creates connections, adds icons to the buttons and sets
 	 * different properities.
 	 */
 	void setupUi();
-	
-	/** 
+
+	/**
 	 * Creates key accelerators (keyboard shortcuts)
 	 * More can be found in the function MainWindowGUI::createAccelerators().
 	 */
 	void createAccelerators();
-	
+
 private slots:
 
 	/**
@@ -101,44 +104,44 @@ private slots:
 	 * @param index the new viewing mode.
 	 */
 	void changeViewingMode(int index);
-	
+
 	/**
 	 * Slot for notified the toolsmenu when the unit mode changes.
 	 * @param index the new unit mode.
 	 */
 	void changeUnitMode(int index);
-	
+
 	/**
 	 * Slot for updating the slider value when running in automatic mode.
 	 * @param value the new slider value.
 	 */
 	void updateSliderValue(int value);
-	
+
 	/**
 	 * Slot for setting the camera mode to mixing.
 	 * Used by the shortcut key.
 	 */
 	void setMixingMode();
-	
+
 	/**
 	 * Slot for setting the camera mode to Diffing.
 	 * Used by the shortcut key.
 	 */
 	void setDiffingMode();
-	
+
 	/**
 	 * Slot for setting the camera mode to Playback.
 	 * Used by the shortcut key.
 	 */
 	void setPlaybackMode();
-	
+
 	/**
 	 * Slot for being notified when the camera is turned on so that
 	 * it disable of some buttons.
-	 * @param isOn true if the camera is turned on. 
+	 * @param isOn true if the camera is turned on.
 	 */
 	void cameraOn(bool isOn);
-	
+
 signals:
 	void viewingModeChanged();
 };

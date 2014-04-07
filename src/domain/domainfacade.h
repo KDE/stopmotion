@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,16 +20,17 @@
 #ifndef DOMAINFACADE_H
 #define DOMAINFACADE_H
 
-#include "src/config.h"
-#include "animation/animationmodel.h"
-#include "src/domain/undo/undohistory.h"
-#include "src/presentation/frontends/frontend.h"
-#include "src/technical/video/videoencoder.h"
 #include "src/technical/util.h"
 
 #include <vector>
-using namespace std;
+#include <exception>
 
+class Animation;
+class Observer;
+class Frontend;
+class Frame;
+class VideoEncoder;
+class StringIterator;
 
 /**
  * Singleton facade for the domain level. All requests into the domain layer
@@ -40,228 +41,259 @@ using namespace std;
  *
  *@author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class DomainFacade
-{
+class DomainFacade {
 public:
 	~DomainFacade();
-	
+
 	/**
-	 * Static function to retrieve the factory instance object from the singleton 
+	 * Static function to retrieve the factory instance object from the singleton
 	 * class.
 	 * @return the factory for sending requests into the domain.
 	 */
 	static DomainFacade* getFacade();
-	
+
 	/**
-	 * Attatches a new observer to the model. The observer will be notified when
+	 * Attaches a new observer to the model. The observer will be notified when
 	 * something is changed in the model.
-	 * @param o the observer to be attatched to the model.
+	 * @param o the observer to be attached to the model.
 	 */
-	void attatch(Observer *o);
-	
+	void attach(Observer *o);
+
 	/**
-	 * Detatches an observer from the model. The observer will no longer be notified 
+	 * Detaches an observer from the model. The observer will no longer be notified
 	 * when something is changed in the model.
-	 * @param o the observer to be detatched from the model.
+	 * @param o the observer to be detached from the model.
 	 */
-	void detatch(Observer *o);
-	
+	void detach(Observer *o);
+
 	/**
 	 * Registers the GUI frontend which is used to display and update
 	 * a progress bar when running time consuming operations.
 	 * @param frontend the GUI frontend
 	 */
 	void registerFrontend(Frontend *frontend);
-	
+
 	/**
 	 * Retrieves the registered frontend.
 	 * @return the frontend if it is a valid frontend pointer, NULL otherwise.
 	 */
 	Frontend* getFrontend();
-	
+
 	/**
-	 * Function to change the currently active frame. (Working frame).
-	 * @param frameNumber the number of the new active frame.
+	 * Adds the frames in the vector to the animation model.
+	 * @param scene The index of the scene to add frames to.
+	 * @param frame Where in the scene to add the frames.
+	 * @param frameNames A vector containing the names of the filenames of the
+	 * images to be added as frames to the animation.
 	 */
-	void setActiveFrame(int frameNumber);   
-	
+	void addFrames(int scene, int frame,
+			StringIterator& frameNames);
+
 	/**
-	 * Returns the number of the currently active frame in the model.
-	 * @return 
+	 * Removes frames from a scene in the animation.
+	 * @param scene The scene from which to remove the frames.
+	 * @param frame The first frame to remove.
+	 * @param count The number of frames to remove.
 	 */
-	int getActiveFrameNumber();
-	 
+	void removeFrames(int scene, int frame, int count);
+
 	/**
-	 * Adds the frames in the vector to the animation model and sets up the undo 
-	 * command object
-	 * @param frameNames a vector containing the frames to be added to the animation.
+	 * Moves frames from one position in the animation to another.
+	 * @param fromScene The scene from which to move the frames.
+	 * @param fromFrame The first frame within that scene to move.
+	 * @param count The number of frames to move; all frames moved must be
+	 * within the same scene.
+	 * @param fromScene The scene to move the frames to.
+	 * @param toFrame The position within the scene {@a toScene} to which
+	 * the frames should be moved.
 	 */
-	void addFrames(const vector<char*>& frameNames);
-	
+	void moveFrames(int fromScene, int fromFrame,
+			int count, int toScene, int toFrame);
+
 	/**
-	 * Removes the frame between (inclusive) fromFrame and toFrame from
-	 * the animation model.
-	 * @param fromFrame the first frame to remove.
-	 * @param toFrame the last frame to remove.
+	 * Duplicates the image file of the specified frame, setting the image to
+	 * the duplicate. This is used when the image is to be edited so that the
+	 * edit can be undone and so that shared images are unshared.
+	 * @param scene The index of the scene to which the frame belongs.
+	 * @param frame The index of the frame within the scene.
 	 */
-	void removeFrames(unsigned int fromFrame, unsigned int toFrame);
-	
+	void duplicateImage(int scene, int frame);
+
 	/**
-	 * Moves the frames in the frameNumbers container to toPosition.
-	 * @param fromFrame the first frame in the selection.
-	 * @param toFrame the last frame in the selection.
-	 * @param movePosition the position to move the selected frames
+	 * Returns the image file for the frame specified.
+	 * @param scene The scene to which the frame belongs.
+	 * @param frame The frame number to examine.
+	 * @return The path to the image file for this frame. Ownership is not
+	 * returned.
 	 */
-	void moveFrames(unsigned int fromFrame, unsigned int toFrame, 
-			unsigned int movePosition);
-	
+	const char* getImagePath(int scene, int frame);
+
 	/**
-	 * Adds a sound the given frame number. An error message will be 
+	 * Adds a sound the given frame number. An error message will be
 	 * sent to the frontend if somethings goes wrong with the adding.
+	 * @param sceneNumber The scene containing the frame to which a sound
+	 * will be added.
 	 * @param frameNumber the number of the frame to add the sound to
 	 * @param filename the path to the file with the sound
 	 * @return zero on success, less than zero on failure
 	 */
-	int addSound(unsigned int frameNumber, const char* filename);
-	
+	int addSound(int sceneNumber, int frameNumber, const char* filename);
+
 	/**
 	 * Removes the sound with index soundNumber from the frame with index
 	 * frameNumber.
+	 * @param sceneNumber The scene containing the frame from which a sound
+	 * is to be removed.
 	 * @param frameNumber the index of the frame to remove a sound from.
 	 * @param soundNumber the index of the sound to remove from the frame.
 	 */
-	void removeSound(unsigned int frameNumber, unsigned int soundNumber);
-	
+	void removeSound(int sceneNumber, int frameNumber, int soundNumber);
+
 	/**
 	 * Sets the name of the sound with index soundNumber in the frame with
 	 * index frameNumber to soundName.
+	 * @param sceneNumber The scene containing the frame containing the sound
+	 * to be renamed.
 	 * @param frameNumber the index of the frame the sound is in.
 	 * @param soundNumber the index to the sound to change the name of.
 	 * @param soundName the new name of the sound.
 	 */
-	void setSoundName(unsigned int frameNumber, unsigned int soundNumber,
-			char* soundName);
-	
+	void setSoundName(int sceneNumber, int frameNumber, int soundNumber,
+			const char* soundName);
+
 	/**
-	 * Plays the frame with the number frameNumber
-	 * @param frameNumber the number of the frame to play
+	 * Returns the name of a sound attached to a frame in the active scene.
+	 * @param sceneNumber The scene containing the frame to query.
+	 * @param frameNumber The frame within the scene {@a sceneNumber}.
+	 * @param The number of the sound whose name is to be returned.
+	 * @return The sound name. Ownership is not returned.
 	 */
-	void playFrame(int frameNumber);
-	
+	const char* getSoundName(int sceneNumber, int frameNumber,
+			int soundNumber) const;
+
+	/**
+	 * Returns the number of sounds attached to the frame specified.
+	 * @param scene The scene that the frame belongs to.
+	 * @param frame The frame within that scene.
+	 * @return The number of sounds attached to frame number {@a frame} of
+	 * scene number {@a scene}.
+	 */
+	int soundCount(int scene, int frame) const;
+
+	/**
+	 * Loads the project from the {@c .dat} XML file specified. Used for
+	 * recovering from the {@c new.dat} and {@c current.dat} files.
+	 * @param filename The XML file to load.
+	 * @return {@c true} if successful.
+	 */
+	bool loadProject(const char* filename);
+
+	/**
+	 * Replay commands from the log.
+	 * @param filename Filename of the log.
+	 * @return {@c true} if successful.
+	 */
+	bool replayCommandLog(const char* filename);
+
 	/**
 	 * Opens a project.
+	 * @param filename The file to load
 	 */
-	bool openProject(const char *filename);
-	
+	void openProject(const char *filename);
+
 	/**
 	 * Saves the active project to a XML-file which is written to disk.
 	 */
-	bool saveProject(const char *filename);
-	
+	void saveProject(const char *filename);
+
 	/**
 	 * Creates a new project.
 	 */
 	bool newProject();
-	
+
 	/**
 	 * Checks if there are unsaved changes in the model.
 	 * @return true if there are unsaved changes, false otherwise.
 	 */
 	bool isUnsavedChanges();
-	
-	/**
-	 * Retrieves a given frame.
-	 * @param frameNumber the number of the frame to retrieve.
-	 * @param sceneNumber the number of the scene to retrieve the frame from.
-	 * @return the frame at location frameNumber in the scene at location sceneNumber.
-	 */
-	Frame* getFrame(unsigned int frameNumber, unsigned int sceneNumber);
-	 
-	/**
-	 * Overloaded function for convenience. Assumes the scene to retrieve there
-	 * frame from is the active scene.
-	 * @param frameNumber the number of the frame to retrieve.
-	 * @return the frame at location frameNumber in the active scene. 
-	 */
-	Frame* getFrame(unsigned int frameNumber);
-	
+
 	/**
 	 * Retrieves the size of the model
 	 * @return the size of the model
 	 */
-	unsigned int getModelSize();
-	
+	int getModelSize() const;
+
 	/**
 	 * Function for retrieving number of frames in a given scene.
 	 * @param sceneNumber the scene number
 	 * @return number of frames
 	 */
-	unsigned int getSceneSize(int sceneNumber);
-	
+	int getSceneSize(int sceneNumber) const;
+
 	/**
 	 * Function for retrieving number of scenes.
 	 * @return number of scenes
 	 */
-	unsigned int getNumberOfScenes();
-	
+	int getNumberOfScenes() const;
+
+	/**
+	 * Returns the number of sounds attached to a frame
+	 * @param scene The index of the scene containing the frame.
+	 * @param frame The index within the scene of the frame.
+	 * @return The number of sounds belonging to the specified frame.
+	 */
+	int getNumberOfSounds(int scene, int frame) const;
+
 	/**
 	 * Retrieves the project file.
-	 * @return the project file if it's setted, NULL otherwise.
+	 * @return The project file if it has been set, NULL otherwise.
 	 */
 	const char* getProjectFile();
-	 
-	/**
-	 * Retrieves the project path.
-	 * @return the project path if it's setted, NULL otherwise.
-	 */
-	const char* getProjectPath();
 
 	/**
 	 * Undoes the last undoable operation on the model.
 	 */
-	bool undo();
-	
+	void undo();
+
 	/**
 	 * Redoes the last undo operation.
 	 */
-	bool redo();
-	
+	void redo();
+
+	/**
+	 * Detects if undo is possible.
+	 */
+	bool canUndo();
+
+	/**
+	 * Detects if redo is possible.
+	 */
+	bool canRedo();
+
 	/**
 	 * Clears the undo history.
 	 */
 	void clearHistory();
-	
-	/**
-	 * Sets a new active scene (the scene to be worked on now).
-	 * @param sceneNumber the new active scene.
-	 */
-	void setActiveScene(int sceneNumber);
-	
-	/**
-	 * Returns the number of the currently active scene.
-	 * @return the number of the active scene.
-	 */
-	int getActiveSceneNumber();
-	
+
 	/**
 	 * Creates a new scene in the animation project.
 	 * @param index the place the new scene should be added to.
 	 */
 	void newScene(int index);
-	
+
 	/**
 	 * Removes the scene at the location sceneNumber from the animation.
 	 * @param sceneNumber the scene to be removed from the animation.
 	 */
 	void removeScene(int sceneNumber);
-	
+
 	/**
 	 * Moves the scene at position sceneNumber to the position movePosition.
 	 * @param sceneNumber the number of the scene to move.
 	 * @param movePosition the position to move the scene to.
 	 */
 	void moveScene(int sceneNumber, int movePosition);
-	
+
 	/**
 	 * Initializes the audio device so it is ready to play sounds. It will sends
 	 * an error message to the frontend if somethings goes wrong, and audio will
@@ -269,56 +301,51 @@ public:
 	 * @return true on success, false otherwise
 	 */
 	bool initAudioDevice();
-	
+
 	/**
 	 * Shutdowns the audio device so other programs can use it.
 	 */
 	void shutdownAudioDevice();
-	
+
 	/**
 	 * Exports the current project to a video file as specified by the video encoder.
 	 * @param encoder the video encoder to use for export to video
 	 * @return true on success, false otherwise
 	 */
 	bool exportToVideo(VideoEncoder *encoder);
-	
+
 	/**
-	 * Exports the current project to a Cinerella project. 
+	 * Exports the current project to a Cinerella project.
 	 * @param file the Cinerella project file
 	 * @return true on success, false otherwise
 	 */
 	bool exportToCinerella(const char *file);
-	
-	/**
-	 * Tells the domain that the file alteredFile has been changed outside 
-	 * the program and that it should be updated.
-	 * @param alteredFile the file which has been altered.
-	 */
-	void animationChanged(const char *alteredFile);
 
-	/** 
+	/**
 	 * Returns available grabber devices.
 	 * @return vector containing available devices.
 	 */
-	const vector<GrabberDevice> getGrabberDevices();	
-	 
+	const std::vector<GrabberDevice> getGrabberDevices();
+
+	/**
+	 * Sets up the command logger file. If unsuccessful, a message will have
+	 * been displayed to the user.
+	 */
+	void initializeCommandLoggerFile();
+
 protected:
 	/**
 	 * The constructor. It is protected so that it will be impossible for other classes,
-	 * which don't inherit from it to instanciate the singleton. 
+	 * classes that don't inherit from it to instantiate the singleton.
 	 */
 	DomainFacade();
-	
+
 private:
 	/**The singleton instance of this class.*/
 	static DomainFacade *domainFacade;
-	
+
 	/**The datamodel in the program*/
-	AnimationModel *animationModel;
-	
-	/**Container where one can register and retrieve undo objects for undo and
-	 remove operations*/
-	UndoHistory *undoHistory;
+	Animation *animationModel;
 };
 
 #endif

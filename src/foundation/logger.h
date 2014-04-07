@@ -20,9 +20,6 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include "src/config.h"
-
-
 class Logger
 {
 public:

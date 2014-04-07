@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,19 +17,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "scene.h"
+#include "src/domain/filenamevisitor.h"
+
 #include <sstream>
 #include <cstring>
 #include <unistd.h>
 
-Scene::Scene()
-{
-	
+
+FrameOutOfRangeException::FrameOutOfRangeException() {
+}
+
+const char* FrameOutOfRangeException::what() const _GLIBCXX_USE_NOEXCEPT {
+	return "Internal error: Frame out of range!";
 }
 
 
-Scene::~Scene()
-{
+Scene::Scene() {
+}
+
+
+Scene::~Scene() {
 	unsigned int numElem = frames.size();
 	for (unsigned int i = 0; i < numElem; ++i) {
 		delete frames[i];
@@ -37,157 +46,82 @@ Scene::~Scene()
 }
 
 
-vector<Frame*>& Scene::getFrames()
-{
-	return frames;
-}
-
-
-unsigned int Scene::getSize()
-{
+int Scene::getSize() const {
 	return frames.size();
 }
 
 
-Frame* Scene::getFrame(unsigned int frameNumber)
-{
+const Frame* Scene::getFrame(int frameNumber) const {
+	if (frameNumber < 0 || getSize() <= frameNumber)
+		throw FrameOutOfRangeException();
 	return frames[frameNumber];
 }
 
 
-const vector<char*> Scene::addFrames(const vector<char*>& frameNames, unsigned int index,
-		Frontend *frontend, unsigned int &numberOfCanceledFrames)
-{
-	Logger::get().logDebug("Adding frames in Animation:");
-	
-	vector<char*> newImagePaths;
-	bool isImportingAborted = false;
-	
-	unsigned i = 0;
-	unsigned numElem = frameNames.size();
-	
-	if (frameNames.size() == 1) {
-		char* file = frameNames[i];
-		if (access(file, R_OK) == 0) {
-			newImagePaths.push_back( addFrame(file, index) );
-		}
-		else {
-			frontend->reportError("You do not have permission to read that file", 0);
-			return newImagePaths;
-		}
-	}	
-	else {
-		frontend->showProgress("Importing frames from disk ...", numElem * 2);
-		
-		unsigned numNotReadable = 0;
-		for (; i < numElem; ++i) {
-			frontend->updateProgress(i);
-			char* file = frameNames[i];
-			if (access(file, R_OK) == 0) {
-				newImagePaths.push_back( addFrame(frameNames[i], index) );
-			}
-			else {
-				Logger::get().logWarning("Wrong permission:");
-				Logger::get().logWarning(file);
-				++numNotReadable;	
-			}
-			
-			// Doesn't want to process events for each new frame added.
-			if ( (i % 10) == 0) {
-				frontend->processEvents();
-			}
-			if ( frontend->isOperationAborted() ) {
-				isImportingAborted = true;
-				++i; // does this to make cleaning of frames general
-				break;
-			}
-		}
-		frontend->updateProgress(numElem);
-		
-		if (isImportingAborted) {
-			numberOfCanceledFrames = i;
-			newImagePaths.clear();
-		}
-		else {
-			numberOfCanceledFrames = numElem;
-		}
-
-		if (numNotReadable > 0) {
-			stringstream ss;
-			ss << "You do not have permission to read " << numNotReadable << " file(s)";
-			frontend->reportError(ss.str().c_str(), 0);
-		}
-	}
-	
-	// trim to size :)
-	vector<char*>(newImagePaths).swap(newImagePaths);
-	return newImagePaths;
-}
-
-
-void Scene::cleanFrames(unsigned int fromFrame, unsigned int toFrame)
-{
+void Scene::cleanFrames(int fromFrame, int toFrame) {
+	if (fromFrame < 0 || toFrame < fromFrame || getSize() <= toFrame)
+		throw FrameOutOfRangeException();
 	frames.erase(frames.begin() + fromFrame, frames.begin() + toFrame);
 }
 
 
-char* Scene::addFrame(char* frameName, unsigned int &index)
-{
-	char *newPath;
-
-	Frame *f = new Frame(frameName);
-	f->copyToTemp();
-	newPath = new char[PATH_MAX];
-	strncpy( newPath, f->getImagePath(), PATH_MAX );
+void Scene::addFrame(Frame* f, int index) {
+	if (index < 0 || getSize() < index)
+		throw FrameOutOfRangeException();
 	frames.insert(frames.begin() + index, f);
-	++index;
+}
 
-	return newPath;
+void Scene::addFrames(int where, const std::vector<Frame*>& fs) {
+	int sceneSize = getSize();
+	if (where < 0 || sceneSize < where)
+		throw FrameOutOfRangeException();
+	std::vector<Frame*>::size_type newFramesCount = fs.size();
+	preallocateFrames(newFramesCount);
+	frames.reserve(sceneSize + newFramesCount);
+	frames.insert(frames.begin() + where,
+			fs.begin(), fs.end());
+}
+
+void Scene::preallocateFrames(int count) {
+	frames.reserve(frames.size() + count);
 }
 
 
-void Scene::addSavedFrame(Frame *f)
-{
+void Scene::addSavedFrame(Frame *f) {
 	frames.push_back(f);
 }
 
-
-const vector< char * > Scene::removeFrames( unsigned int fromFrame, const unsigned int toFrame )
-{
-	vector<char*> newImagePaths;
-	char *newPath;
-	
-	if ( toFrame < frames.size() ) { 
-		for (unsigned int i = fromFrame; i <= toFrame; ++i) {
-			Frame *f = frames[fromFrame];
-			f->moveToTrash();
-			newPath = new char[PATH_MAX];
-			strncpy(newPath, f->getImagePath(), PATH_MAX);
-			newImagePaths.push_back(newPath);
-			newPath = NULL;
-			delete frames[fromFrame];
-			frames.erase(frames.begin() + fromFrame);
-		}
-	}
-	
-	// trim to size :)
-	vector<char*>(newImagePaths).swap(newImagePaths);
-	return newImagePaths;
+Frame* Scene::removeFrame(int frame) {
+	if (frame < 0 || getSize() <= frame)
+		throw FrameOutOfRangeException();
+	Frame* f = frames[frame];
+	frames.erase(frames.begin() + frame);
+	return f;
 }
 
+void Scene::removeFrames(int frame, int count, std::vector<Frame*>& out) {
+	if (count < 0 || frame < 0 || getSize() < frame + count)
+		throw FrameOutOfRangeException();
+	out.reserve(out.size() + count);
+	std::vector<Frame*>::iterator begin = frames.begin() + frame;
+	std::vector<Frame*>::iterator end = frames.begin() + (frame + count);
+	out.insert(out.end(), begin, end);
+	frames.erase(begin, end);
+}
 
-void Scene::moveFrames( unsigned int fromFrame, unsigned int toFrame, 
-		unsigned int movePosition )
-{
+void Scene::moveFrames(int fromFrame, int toFrame, int movePosition ) {
+	int size = getSize();
+	if (fromFrame < 0 || toFrame < fromFrame || size <= toFrame
+			|| movePosition < 0 || size <= movePosition)
+		throw FrameOutOfRangeException();
 	if (movePosition < fromFrame) {
-		for (unsigned int i = fromFrame, j = movePosition; i <= toFrame; ++i, ++j) {
+		for (int i = fromFrame, j = movePosition; i <= toFrame; ++i, ++j) {
 			Frame *f = frames[i];
 			frames.erase(frames.begin() + i);
 			frames.insert(frames.begin() + j, f);
 		}
-	}
-	else {
-		for (unsigned int i = fromFrame; i <= toFrame; ++i) {
+	} else {
+		for (int i = fromFrame; i <= toFrame; ++i) {
 			Frame *f = frames[fromFrame];
 			frames.erase(frames.begin() + fromFrame);
 			frames.insert(frames.begin() + movePosition, f);
@@ -195,34 +129,69 @@ void Scene::moveFrames( unsigned int fromFrame, unsigned int toFrame,
 	}
 }
 
-
-int Scene::addSound( unsigned int frameNumber, const char *sound )
-{
-	Logger::get().logDebug("Adding sound in scene");
-	return frames[frameNumber]->addSound(sound);
+void Scene::addSound(int frameNumber, int soundNumber, Sound* sound) {
+	if (frameNumber < 0 || getSize() <= frameNumber)
+		throw FrameOutOfRangeException();
+	frames[frameNumber]->addSound(soundNumber, sound);
 }
 
-
-void Scene::removeSound( unsigned int frameNumber, unsigned int soundNumber )
-{
-	frames[frameNumber]->removeSound(soundNumber);
+Sound* Scene::removeSound(int frameNumber, int index) {
+	if (frameNumber < 0 || getSize() <= frameNumber)
+		throw FrameOutOfRangeException();
+	return frames[frameNumber]->removeSound(index);
 }
 
-
-void Scene::setSoundName( unsigned int frameNumber, unsigned int soundNumber, 
-		char * soundName )
-{
-	frames[frameNumber]->setSoundName(soundNumber, soundName);
+const Sound* Scene::getSound(int frameNumber, int index) const {
+	if (frameNumber < 0 || getSize() <= frameNumber)
+		throw FrameOutOfRangeException();
+	return frames[frameNumber]->getSound(index);
 }
 
+int Scene::soundCount(int frameNumber) const {
+	if (frameNumber < 0 || getSize() <= frameNumber)
+		throw FrameOutOfRangeException();
+	return frames[frameNumber]->soundCount();
+}
 
-vector<char *> Scene::getImagePaths( )
-{
-	vector<char*> imagePaths;
-	unsigned int size = frames.size();
-	for (unsigned int i = 0; i < size; ++i) {
-		imagePaths.push_back(frames[i]->getImagePath());
+const char* Scene::setSoundName(int frameNumber, int soundNumber,
+		const char* soundName) {
+	if (frameNumber < 0 || getSize() <= frameNumber)
+		throw FrameOutOfRangeException();
+	return frames[frameNumber]->setSoundName(soundNumber, soundName);
+}
+
+const char* Scene::getSoundName(int frameNumber, int soundNumber) const {
+	if (frameNumber < 0 || getSize() <= frameNumber)
+		throw FrameOutOfRangeException();
+	return frames[frameNumber]->getSoundName(soundNumber);
+}
+
+void Scene::replaceImage(int frameNumber, WorkspaceFile& otherImage) {
+	if (frameNumber < 0 || getSize() <= frameNumber)
+		throw FrameOutOfRangeException();
+	frames[frameNumber]->replaceImage(otherImage);
+}
+
+int Scene::newSound(int frameNumber, WorkspaceFile& file) {
+	if (frameNumber < 0 || getSize() <= frameNumber)
+		throw FrameOutOfRangeException();
+	return frames[frameNumber]->newSound(file);
+}
+
+int Scene::soundCount() const {
+	int s = 0;
+	for (FrameVector::const_iterator i = frames.begin();
+			i != frames.end();
+			++i) {
+		s += (*i)->soundCount();
 	}
-	return imagePaths;
+	return s;
 }
 
+void Scene::accept(FileNameVisitor& v) const {
+	for (FrameVector::const_iterator i = frames.begin();
+			i != frames.end();
+			++i) {
+		(*i)->accept(v);
+	}
+}

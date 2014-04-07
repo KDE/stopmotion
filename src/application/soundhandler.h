@@ -26,13 +26,14 @@
 #include <QStatusBar>
 #include <QListWidget>
 
+class FrameBar;
+
 /**
  * This class handles request related to sounds (adding, removing, etc).
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class SoundHandler : public QObject
-{
+class SoundHandler : public QObject {
 	Q_OBJECT
 public:
 	/**
@@ -42,7 +43,8 @@ public:
 	 * @param homeDir the home directory of the user.
 	 * @param name the name of the soundhandler
 	 */
-	SoundHandler ( QObject *parent = 0, QStatusBar *sb = 0, const char* homeDir = 0,
+	SoundHandler ( QObject *parent = 0, QStatusBar *sb = 0,
+			const FrameBar* frameBar = 0, const char* homeDir = 0,
 			const char *name = 0 );
 	
 	/**
@@ -72,12 +74,10 @@ public slots:
 
 private:
 	QStatusBar *statusBar;
+	const FrameBar* frameBar;
 	const char* homeDir;
 	//Q3ListBox *soundsList;
 	QListWidget *soundsList;
-	
-signals:
-	void soundsChanged();
 };
 
 #endif

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,6 +21,9 @@
 
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
+#include "src/presentation/frontends/qtfrontend/menuframe.h"
+#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
+#include "modelhandler.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -28,6 +31,7 @@
 #include <QStringList>
 #include <QList>
 #include <QUrl>
+#include <QStatusBar>
 
 
 EditMenuHandler::EditMenuHandler ( QObject *parent, QStatusBar *sb, 
@@ -47,8 +51,8 @@ void EditMenuHandler::setGotoMenu( QWidget * gotoMenu )
 
 void EditMenuHandler::gotoFrame(int frameNumber)
 {
-	DomainFacade::getFacade()->setActiveFrame(frameNumber);
-	this->closeGotoMenu();
+	frameBar->updateNewActiveFrame(frameBar->getActiveScene(), frameNumber);
+	closeGotoMenu();
 }
 
 
@@ -61,12 +65,14 @@ void EditMenuHandler::closeGotoMenu()
 void EditMenuHandler::undo()
 {
 	DomainFacade::getFacade()->undo();
+	emit undoOrRedo();
 }
 
 
 void EditMenuHandler::redo()
 {
 	DomainFacade::getFacade()->redo();
+	emit undoOrRedo();
 }
 
 
@@ -74,13 +80,17 @@ void EditMenuHandler::copy()
 {
 	QList<QUrl> urls;
 
-	int selectionFrame = frameBar->getSelectionFrame();
-	int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
+	int selectionFrame = frameBar->getSelectionAnchor();
+	int activeScene = frameBar->getActiveScene();
+	int activeFrame = frameBar->getActiveFrame();
 	int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 	int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 
+	DomainFacade* facade = DomainFacade::getFacade();
 	for (int i = lowend; i <= highend; ++i) {
-		urls.append(QUrl::fromLocalFile(DomainFacade::getFacade()->getFrame(i)->getImagePath()));
+		const char* imagePath = facade->getImagePath(activeScene, i);
+		if (imagePath)
+			urls.append(QUrl::fromLocalFile(imagePath));
 	}
 
 	//QDrag *drag = new QDrag((MainWindowGUI*)this->parent());
@@ -93,6 +103,10 @@ void EditMenuHandler::copy()
 	QApplication::clipboard()->setMimeData(mimeData);
 }
 
+void EditMenuHandler::cut() {
+	copy();
+	emit removeFrames();
+}
 
 void EditMenuHandler::paste()
 {

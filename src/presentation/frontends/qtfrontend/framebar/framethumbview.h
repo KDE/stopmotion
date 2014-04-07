@@ -22,10 +22,9 @@
 
 #include "src/presentation/frontends/qtfrontend/framebar/thumbview.h"
 
-#include <QMouseEvent>
-#include <QDropEvent>
-#include <QPaintEvent>
-
+class QMouseEvent;
+class QDropEvent;
+class QPaintEvent;
 
 /**
  * Widget representing a frame in the animation.
@@ -104,6 +103,9 @@ protected:
 	void paintEvent ( QPaintEvent * );
 	
 private:	
+	/** Coordinate for calculating when a drag should start */
+	QPoint dragPos;
+
 	QString stringNumber;
 	
 	/** The width the text should have. (Cached for efficiency reasons)*/

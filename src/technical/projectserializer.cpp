@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,247 +17,464 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "projectserializer.h"
 
 #include "src/foundation/logger.h"
-#include "packer.h"
+#include "src/domain/filenamevisitor.h"
+#include "src/domain/animation/scene.h"
 #include "src/domain/animation/frame.h"
+#include "src/domain/animation/sound.h"
+#include "src/domain/animation/animationimpl.h"
+#include "src/domain/animation/workspacefile.h"
+#include "src/technical/audio/audioformat.h"
+#include "src/technical/util.h"
 
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <libgen.h>
-#include <stdlib.h>
 #include <cstring>
 #include <unistd.h>
+#include <fcntl.h>
+#include <libtar.h>
+#include <errno.h>
+#include <string>
+#include <set>
+#include <exception>
 
-const char ProjectSerializer::imageDirectory[] = "images/";
-const char ProjectSerializer::soundDirectory[] = "sounds/";
+FileException::FileException(const char* functionName, int errorno) {
+	snprintf(buffer, sizeof(buffer), "%s(): %s", functionName,
+			strerror(errorno));
+}
 
+const char* FileException::what() const _GLIBCXX_USE_NOEXCEPT {
+	return buffer;
+}
 
-ProjectSerializer::ProjectSerializer()
-{
-	doc      = NULL;
-	dtd      = NULL;
-	rootNode = NULL;
-	scenes   = NULL;
-	images   = NULL;
-	sounds   = NULL;
-	
+class ProjectFileCreationException : public FileException {
+public:
+	ProjectFileCreationException(const char* functionName, int errorno)
+			: FileException(functionName, errorno) {
+	}
+};
+
+class ProjectFileReadException : public FileException {
+public:
+	ProjectFileReadException(const char* functionName, int errorno)
+			: FileException(functionName, errorno) {
+	}
+};
+
+ProjectSerializer::ProjectSerializer() : projectFile(0) {
 	LIBXML_TEST_VERSION;
-	
-	projectPath = NULL;
-	projectFile = NULL;
-	imagePath   = NULL;
-	soundPath   = NULL;
-	xmlFile     = NULL;
-	prevProPath = NULL;
-	prevImgPath = NULL;
-	prevXmlFile = NULL;
 }
 
-
-ProjectSerializer::~ProjectSerializer()
-{
-	cleanup();
+ProjectSerializer::~ProjectSerializer() {
+	delete[] projectFile;
+	projectFile = 0;
 }
 
-
-const vector<Scene*> ProjectSerializer::open(const char *filename)
-{
-	assert(filename != NULL);
-
-	bool isNewProFile = setProjectFile(filename);
-	char rootDir[PATH_MAX] = {0};
-	snprintf(rootDir, sizeof(rootDir), "%s/.stopmotion/packer/", getenv("HOME"));
-	char *unpackedAs = unpack(projectFile, rootDir);
-	
-	if ( isNewProFile ) {
-		setProjectPaths(unpackedAs, false);
+class TarFileRead {
+	TAR* tar;
+public:
+	TarFileRead(const char* filename) {
+		if (tar_open(&tar, filename, 0, O_RDONLY, 0, 0 | 0) == -1) {
+			throw ProjectFileReadException("tar_open", errno);
+		}
 	}
-	
-	doc = xmlReadFile(xmlFile, NULL, 0);
-	if (doc == NULL) {
+	~TarFileRead() {
+	}
+	bool next() {
+		int ret = th_read(tar);
+		if (ret == 0)
+			return true;
+		if (ret < 0)
+			throw ProjectFileReadException("th_read", errno);
+		return false;
+	}
+	const char *regularFileFilename() const {
+		return TH_ISREG(tar)? th_get_pathname(tar) : 0;
+	}
+	void extract(std::string& filename) {
+		filename.c_str();
+		if (tar_extract_regfile(tar, &filename[0]) < 0) {
+			throw ProjectFileReadException("th_extract_regfile", errno);
+		}
+	}
+	void finish() {
+		if (tar_close(tar) < 0)
+			throw ProjectFileReadException("tar_close", errno);
+		tar = 0;
+	}
+};
+
+class StoFileRead {
+	TarFileRead tar;
+	static bool isProjectFile(const char* filename) {
+		if (filename) {
+			const char* slash1 = strchr(filename, '/');
+			if (slash1) {
+				++slash1;
+				if (!strchr(slash1, '/')) {
+					const char* dot = strrchr(slash1, '.');
+					if (dot && strcmp(dot, ".dat") == 0) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	// returns the basename portion of the argument if it is an image or sound,
+	// null otherwise
+	static const char* imageOrSoundFile(const char* filename) {
+		static const char images[] = "images";
+		static const char sounds[] = "sounds";
+		if (filename) {
+			const char* slash1 = strchr(filename, '/');
+			if (slash1) {
+				++slash1;
+				const char* slash2 = strchr(slash1, '/');
+				if (slash2) {
+					std::ptrdiff_t dirLen = slash2 - slash1;
+					++slash2;
+					if ((strncmp(images, slash1, dirLen) == 0
+							|| strncmp(sounds, slash1, dirLen))
+							&& strchr(slash2, '/') == 0) {
+						return slash2;
+					}
+				}
+			}
+		}
+		return 0;
+	}
+public:
+	StoFileRead(const char* filename) : tar(filename) {
+	}
+	~StoFileRead() {
+	}
+	void unpack() {
+		while (tar.next()) {
+			const char* fn = tar.regularFileFilename();
+			const char* base = imageOrSoundFile(fn);
+			if (base) {
+				// image or sound
+				WorkspaceFile wf(base);
+				std::string path = wf.path();
+				tar.extract(path);
+			} else if (isProjectFile(fn)) {
+				WorkspaceFile dat(WorkspaceFile::currentModelFile);
+				std::string path = dat.path();
+				tar.extract(path);
+			} else if (fn) {
+				Logger::get().logWarning(
+						"Did not know what to do with tarred file %s", fn);
+			}
+		}
+	}
+	void finish() {
+		tar.finish();
+	}
+};
+
+void readSto(const char* filename) {
+	StoFileRead sto(filename);
+	sto.unpack();
+	sto.finish();
+}
+
+// appends .sto to filename if appropriate to make a project filename
+void ProjectSerializer::setProjectFile(const char *filename) {
+	static const char* appendix = ".sto";
+	const size_t len = strlen(filename);
+	char* newProjectFile = new char[len + sizeof(appendix)];
+	strcpy(newProjectFile, filename);
+	const char *dotPtr = strrchr(filename, '.');
+	if (dotPtr == NULL || strcmp(dotPtr, ".sto") != 0) {
+		strcat(newProjectFile, ".sto");
+	}
+	delete[] projectFile;
+	projectFile = newProjectFile;
+}
+
+bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) {
+	xmlDocPtr doc = xmlReadFile(filename, NULL, 0);
+	if (!doc) {
 		Logger::get().logWarning("Couldn't load XML file");
+		return false;
 	}
-	
-	vector<Scene*> sVect;
-	rootNode = xmlDocGetRootElement(doc);
-	getAttributes(rootNode, sVect);
-	
+	xmlNodePtr rootNode = xmlDocGetRootElement(doc);
+	out.clear();
+	getAttributes(rootNode, out);
 	xmlFreeDoc(doc);
 	xmlCleanupParser();
-	
-	doc      = NULL;
-	dtd      = NULL;
-	rootNode = NULL;
-	scenes   = NULL;
-	images   = NULL;
-	sounds   = NULL;
-	free(unpackedAs);
-	unpackedAs = NULL;
-	
+	return true;
+}
+
+std::vector<Scene*> ProjectSerializer::openSto(const char *filename) {
+	assert(filename != NULL);
+	setProjectFile(filename);
+	readSto(projectFile);
+	WorkspaceFile dat(WorkspaceFile::currentModelFile);
+	std::vector<Scene*> sVect;
+	openDat(sVect, dat.path());
 	return sVect;
 }
 
+class UniqueVisitor: public FileNameVisitor {
+	std::set<std::string> visited;
+	FileNameVisitor* del;
+public:
+	UniqueVisitor(FileNameVisitor* delegate) :
+			del(delegate) {
+	}
+	~UniqueVisitor() {
+	}
+	void visitImage(const char* path) {
+		std::string p(path);
+		if (visited.find(p) == visited.end()) {
+			visited.insert(p);
+			del->visitImage(path);
+		}
+	}
+	void visitSound(const char* path) {
+		std::string p(path);
+		if (visited.find(p) == visited.end()) {
+			visited.insert(p);
+			del->visitSound(path);
+		}
+	}
+};
 
-// check if the user wants to save an opened project to an another file.
-bool ProjectSerializer::save( 	const char *filename, 
-								const vector<Scene*>& sVect, 
-								Frontend *frontend	)
-{
+std::string getProjectName(const char* filename) {
+	const char* nameBegin = strrchr(filename, '/');
+	nameBegin = !nameBegin? filename : nameBegin + 1;
+	const char* nameEnd = strrchr(filename, '.');
+	if (!nameEnd || nameEnd < nameBegin)
+		nameEnd = filename + strlen(filename);
+	return std::string(nameBegin, nameEnd);
+}
+
+class TarPath {
+	std::string path;
+	std::string::size_type length;
+public:
+	TarPath(const std::string& rootDir, const char* ext)
+			: path(rootDir), length(0) {
+		path.append(ext);
+		length = path.length();
+	}
+	/**
+	 * Returns the argument prefixed with the rootDir and ext supplied
+	 * to the constructor. The result is valid until the next call of getPath
+	 * or this object is destroyed.
+	 */
+	const char* getPath(const char* fname) {
+		path.resize(length);
+		path.append(fname);
+		return path.c_str();
+	}
+};
+
+class TarFileWrite {
+	TAR* tar;
+public:
+	TarFileWrite(const char* tarFilename) {
+		if (-1== tar_open(&tar, tarFilename, NULL,
+					O_WRONLY | O_CREAT | O_TRUNC, 0644, 0)) {
+			throw ProjectFileCreationException("tar_open", errno);
+		}
+	}
+	~TarFileWrite() {
+	}
+	void add(const char* realPath, const char* storedPath) {
+		if (-1 == tar_append_file(tar, realPath, storedPath)) {
+			throw ProjectFileCreationException("tar_append_file", errno);
+		}
+	}
+	void eof() {
+		if (tar_close(tar) < 0) {
+			throw ProjectFileCreationException("tar_close", errno);
+		}
+		tar = 0;
+	}
+};
+
+class StoFileWrite {
+	TarFileWrite tar;
+	std::string name;
+	TarPath imagePath;
+	TarPath soundPath;
+	std::set<std::string> alreadyPacked;
+public:
+	StoFileWrite(const char* stoFilename)
+			: tar(stoFilename),
+			  name(getProjectName(stoFilename)),
+			  imagePath(name, "/images/"),
+			  soundPath(name, "/sounds/") {
+	}
+	void addProjectFile(const char* projectFilename) {
+		std::string projectFileName = name;
+		projectFileName.append("/");
+		projectFileName.append(name);
+		projectFileName.append(".dat");
+		tar.add(projectFilename, projectFileName.c_str());
+	}
+	void addImage(const char* realName, const char* baseName) {
+		std::string bn(baseName);
+		if (alreadyPacked.insert(bn).second)
+			tar.add(realName, imagePath.getPath(baseName));
+	}
+	void addSound(const char* realName, const char* baseName) {
+		std::string bn(baseName);
+		if (alreadyPacked.insert(bn).second)
+			tar.add(realName, soundPath.getPath(baseName));
+	}
+	void finish() {
+		tar.eof();
+	}
+};
+
+void writeSto(const char* filename, const char* xmlProjectFile,
+			const AnimationImpl& anim) {
+	StoFileWrite sto(filename);
+	sto.addProjectFile(xmlProjectFile);
+	int sceneCount = anim.sceneCount();
+	for (int i = 0; i != sceneCount; ++i) {
+		const Scene* scene = anim.getScene(i);
+		int frameCount = scene->getSize();
+		for (int j = 0; j != frameCount; ++j) {
+			const Frame* frame = scene->getFrame(j);
+			sto.addImage(frame->getImagePath(), frame->getBasename());
+			int soundCount = frame->soundCount();
+			for (int k = 0; k != soundCount; ++k) {
+				const AudioFormat* audio = frame->getSound(k)->getAudio();
+				sto.addSound(audio->getSoundPath(), audio->getBasename());
+			}
+		}
+	}
+	sto.finish();
+}
+
+/**
+ * Save the current file, putting the current state into the new model file.
+ * The caller is responsible for clearing the command log and then renaming
+ * the new model file to be the current model file.
+ * @param filename The filename to save.
+ * @param anim The animation to save.
+ * @param frontend The UI for reporting progress and errors.
+ */
+void ProjectSerializer::save(const char *filename,
+		const AnimationImpl& anim, Frontend *frontend) {
 	assert(filename != NULL);
 	assert(frontend != NULL);
-	
-	if ( setProjectFile(filename) ) {
-		setProjectPaths(projectPath, true);
-	}
-	// Only for backwards compability
-	else if (access(soundPath, F_OK) != 0) {
-		mkdir(soundPath, 0755);
-	} 
-	
-	doc = xmlNewDoc(BAD_CAST "1.0");
-	dtd = xmlCreateIntSubset(doc, BAD_CAST "smil", BAD_CAST "-//W3C//DTD SMIL 2.0//EN",
-				BAD_CAST"http://www.w3.org/2001/SMIL20/SMIL20.dtd");
-	
-	rootNode = xmlNewNode(NULL, BAD_CAST "smil");
-	xmlNewProp(rootNode, BAD_CAST "xmlns", BAD_CAST "http://www.w3.org/2001/SMIL20/Language");
+
+	setProjectFile(filename);
+
+	xmlDocPtr doc = xmlNewDoc(BAD_CAST "1.0");
+	xmlCreateIntSubset(doc, BAD_CAST "smil",
+			BAD_CAST "-//W3C//DTD SMIL 2.0//EN",
+			BAD_CAST "http://www.w3.org/2001/SMIL20/SMIL20.dtd");
+
+	xmlNodePtr rootNode = xmlNewNode(NULL, BAD_CAST "smil");
+	xmlNewProp(rootNode, BAD_CAST "xmlns",
+			BAD_CAST "http://www.w3.org/2001/SMIL20/Language");
 	xmlNewProp(rootNode, BAD_CAST "xml:lang", BAD_CAST "en");
 	xmlNewProp(rootNode, BAD_CAST "title", BAD_CAST "Stopmotion");
 	xmlDocSetRootElement(doc, rootNode);
-	
-	setAttributes(sVect, frontend);
-	
-	bool isSaved = saveDOMToFile(doc);
+
+	setAttributes(rootNode, anim, frontend);
+
+	WorkspaceFile newDat(WorkspaceFile::newModelFile);
+	saveDOMToFile(doc, newDat.path());
 
 	xmlFreeDoc(doc);
 	xmlCleanupParser();
-	
-	doc      = NULL;
-	dtd      = NULL;
-	rootNode = NULL;
-	scenes   = NULL;
-	images   = NULL;
-	sounds   = NULL;
-	
-	pack(projectPath, projectFile);
-	cleanupPrev();
-	
-	unsigned int numElem = sVect.size();
+
+	// Write out new.dat file. The recovery system will ignore it until...
+	writeSto(projectFile, newDat.path(), anim);
+	int numElem = anim.sceneCount();
 	frontend->updateProgress(numElem);
 	frontend->hideProgress();
-	
-	return isSaved;
 }
 
-
-const char* ProjectSerializer::getProjectFile()
-{
-	return projectFile;
-}
-
-
-void ProjectSerializer::setAttributes(const vector<Scene*>& sVect, Frontend *frontend)
-{
+void ProjectSerializer::setAttributes(xmlNodePtr rootNode,
+		const AnimationImpl& anim, Frontend *frontend) {
 	xmlNodePtr node = NULL;
-	char *absPath    = NULL;
-	Frame *frame     = NULL;
-	AudioFormat *sound = NULL;
-	unsigned int index = 0;
-	
-	// Removes frames which already are saved. Had to do this to prevent
-	// frames to overwrite each other.
-	unsigned int numScenes = sVect.size();
-	for (unsigned int m = 0; m < numScenes; ++m) {
-		vector<Frame*> frames = sVect[m]->getFrames();
-		
-		unsigned int numFrames = frames.size();
-		for (unsigned int l = 0; l < numFrames; ++l) {
-			frame = frames[l];
-			if ( frame->isProjectFrame() ) {
-				frame->copyToTemp();
-			}
-		}
-	}
-	
-	scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
-	
-	//unsigned int numScenes = sVect.size();
-	frontend->showProgress("Saving scenes to disk ...", numScenes);
-	for (unsigned int i = 0; i < numScenes; ++i) {
+	const Frame *frame = NULL;
+	const AudioFormat *sound = NULL;
+
+	xmlNodePtr scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
+
+	int numScenes = anim.sceneCount();
+	frontend->showProgress(Frontend::savingScenesToDisk, numScenes);
+	for (int i = 0; i < numScenes; ++i) {
 		frontend->updateProgress(i);
 		// Scenes
 		node = xmlNewChild(scenes, NULL, BAD_CAST "seq", NULL);
-		
+
 		// Images
-		images = xmlNewChild(node, NULL, BAD_CAST "images", NULL);
-		vector<Frame*> frames = sVect[i]->getFrames();
-		unsigned int numFrames = frames.size();
-		for (unsigned int j = 0; j < numFrames; ++j) {
-			frame = frames[j];
-			frame->moveToProjectDir(imagePath, soundPath, ++index);
-			frame->markAsProjectFile();
-			absPath = frame->getImagePath();
-			char *relPath = basename(absPath);
+		xmlNodePtr images = xmlNewChild(node, NULL, BAD_CAST "images", NULL);
+		const Scene* scene = anim.getScene(i);
+		int numFrames = scene->getSize();
+		for (int j = 0; j < numFrames; ++j) {
+			frame = scene->getFrame(j);
+			const char *filename = frame->getBasename();
 			node = xmlNewChild(images, NULL, BAD_CAST "img", NULL);
-			xmlNewProp(node, BAD_CAST "src", BAD_CAST relPath);
-			
+			xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
+
 			// Sounds
-			unsigned int numSounds = frame->getNumberOfSounds();
+			int numSounds = frame->soundCount();
 			if (numSounds > 0) {
-				sounds = xmlNewChild(node, NULL, BAD_CAST "sounds", NULL);
-				vector<AudioFormat*> audioFiles = frame->getSounds();
-				for (unsigned int k = 0; k < numSounds; ++k) {
-					sound = audioFiles[k];
-					relPath = basename(audioFiles[k]->getSoundPath());
+				xmlNodePtr sounds = xmlNewChild(node, NULL, BAD_CAST "sounds",
+						NULL);
+				for (int k = 0; k < numSounds; ++k) {
+					sound = frame->getSound(k)->getAudio();
+					filename = sound->getBasename();
 					node = xmlNewChild(sounds, NULL, BAD_CAST "audio", NULL);
-					xmlNewProp(node, BAD_CAST "src", BAD_CAST relPath);
-					xmlNewProp(node, BAD_CAST "alt", BAD_CAST frame->getSoundName(i));
+					xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
+					xmlNewProp(node, BAD_CAST "alt",
+							BAD_CAST frame->getSoundName(i));
 				}
 			}
 		}
-		frames.clear();
 	}
 }
 
-
-void ProjectSerializer::getAttributes(xmlNodePtr node, vector<Scene*>& sVect)
-{
+void ProjectSerializer::getAttributes(xmlNodePtr node,
+		std::vector<Scene*>& sVect) {
 	xmlNodePtr currNode = NULL;
 	for (currNode = node; currNode; currNode = currNode->next) {
 		if (currNode->type == XML_ELEMENT_NODE) {
-			char *nodeName = (char*)currNode->name;
+			char *nodeName = (char*) currNode->name;
 			// We either have a image node or a sound node
-			if ( strcmp(nodeName, "img") == 0 || strcmp(nodeName, "audio") == 0 ) {
-				char *filename = (char*)xmlGetProp(currNode, BAD_CAST "src");
+			if (strcmp(nodeName, "img") == 0
+					|| strcmp(nodeName, "audio") == 0) {
+				char *filename = (char*) xmlGetProp(currNode, BAD_CAST "src");
 				if (filename != NULL) {
-					char tmp[PATH_MAX] = {0};
 					// The node is a image node
-					if ( strcmp(nodeName, "img") == 0 ) {
-						snprintf(tmp, sizeof(tmp), "%s%s", imagePath, filename);
-						Frame *f = new Frame(tmp);
+					if (strcmp(nodeName, "img") == 0) {
+						WorkspaceFile wf(filename);
+						Frame *f = new Frame(wf);
 						Scene *s = sVect.back();
 						s->addSavedFrame(f);
-						f->markAsProjectFile();
 					}
 					// The node is a sound node
 					else {
-						snprintf(tmp, sizeof(tmp), "%s%s", soundPath, filename);
 						Scene *s = sVect.back();
-						Frame *f = s->getFrame(s->getSize() - 1);
-						f->addSound(tmp);
-						char *soundName = (char*)xmlGetProp(currNode, BAD_CAST "alt");
+						int frameNum = s->getSize() - 1;
+						WorkspaceFile wf(filename);
+						int soundNum = s->soundCount(frameNum);
+						s->newSound(frameNum, wf);
+						char *soundName = (char*) xmlGetProp(currNode,
+								BAD_CAST "alt");
 						if (soundName != NULL) {
-							unsigned int soundNum = f->getNumberOfSounds() - 1;
-							f->setSoundName(soundNum,  soundName);
-							xmlFree((xmlChar*)soundName);
+							s->setSoundName(frameNum, soundNum, soundName);
+							xmlFree((xmlChar*) soundName);
 						}
 					}
-					xmlFree((xmlChar*)filename);
+					xmlFree((xmlChar*) filename);
 				}
 			}
 			// The node is a scene node
-			else if ( strcmp((char*)currNode->name, "seq") == 0 ) {
+			else if (strcmp((char*) currNode->name, "seq") == 0) {
 				Scene *s = new Scene();
 				sVect.push_back(s);
 			}
@@ -266,163 +483,13 @@ void ProjectSerializer::getAttributes(xmlNodePtr node, vector<Scene*>& sVect)
 	}
 }
 
-
-bool ProjectSerializer::saveDOMToFile(xmlDocPtr doc)
-{
-	int ret = xmlSaveFormatFile(xmlFile, doc, 1);
+void ProjectSerializer::saveDOMToFile(xmlDocPtr doc, const char* filename) {
+	int ret = xmlSaveFormatFile(filename, doc, 1);
 	if (ret == -1) {
-		Logger::get().logWarning("Couldnt save DOM to file");
-		return false;
-	}
-	return true;
-}
-
-
-void ProjectSerializer::setProjectPaths(const char *unpacked, bool isSave)
-{
-	if (isSave) {
-		storeOldPaths();
-	}
-	
-	char bigTmp[PATH_MAX] = {0};
-	char tmp[PATH_MAX] = {0};
-
-	if (isSave) {
-		char newDir[PATH_MAX] = {0};
-		strcpy(tmp, projectFile);
-		char *bname = basename(tmp);
-		char *dotPtr = strrchr(bname, '.');
-		strncpy( newDir, bname, strlen(bname) - strlen(dotPtr) );
-		snprintf(bigTmp, sizeof(bigTmp), "%s/.stopmotion/packer/%s/", getenv("HOME"), newDir);
-	}
-	else {
-		snprintf(bigTmp, sizeof(bigTmp), "%s", unpacked);
-	}
-	
-	projectPath = new char[strlen(bigTmp) + 1];
-	strcpy(projectPath, bigTmp);
-		
-	strncpy(bigTmp, projectPath, strlen(projectPath) - 1 );
-	strcat(bigTmp, "\0");
-	char *bname= basename(bigTmp);
-	strcpy(tmp, bname);
-	
-	snprintf(bigTmp, sizeof(bigTmp), "%s%s.dat", projectPath, tmp);
-	xmlFile = new char[strlen(bigTmp) + 1];
-	strcpy(xmlFile, bigTmp);
-		
-	snprintf(bigTmp, sizeof(bigTmp), "%s%s", projectPath, imageDirectory);
-	imagePath = new char[strlen(bigTmp) + 1];
-	strcpy(imagePath, bigTmp);
-	
-	snprintf(bigTmp, sizeof(bigTmp), "%s%s", projectPath, soundDirectory);
-	soundPath = new char[strlen(bigTmp) + 1];
-	strcpy(soundPath, bigTmp);
-
-	if (isSave) {
-		if ( access(projectPath, F_OK) != 0 ) {
-			mkdir(projectPath, 0755);
-			mkdir(imagePath, 0755);
-			mkdir(soundPath, 0755);
-		}
+		throw ProjectFileCreationException("xmlSaveFormatFile", errno);
 	}
 }
 
-
-bool ProjectSerializer::setProjectFile(const char *filename)
-{
-	assert(filename != NULL);
-	if (projectFile == NULL || strcmp(projectFile, filename) != 0) {
-		char tmp[PATH_MAX] = {0};
-		strcpy(tmp, filename);
-		char *dotPtr = strrchr(tmp, '.');
-	
-		// if the file doesn't have an extension, or if it has and 
-		// this one isn't '.sto'
-		if (dotPtr == NULL || strcmp(dotPtr, ".sto") != 0 ) {
-			strcat(tmp, ".sto");
-		}
-	
-		if (projectFile != NULL) {
-			delete [] projectFile;
-			projectFile = NULL;
-		}
-		
-		projectFile = new char[strlen(tmp) + 1];
-		strcpy(projectFile, tmp);
-		return true;
-	}
-	return false;
+const char* ProjectSerializer::getProjectFile() {
+	return projectFile;
 }
-
-
-const char* ProjectSerializer::getProjectPath()
-{
-	return projectPath;
-}
-
-
-const char* ProjectSerializer::getImagePath()
-{
-	return imagePath;
-}
-
-
-void ProjectSerializer::cleanup()
-{
-	if (projectPath != NULL) {
-		char command[PATH_MAX] = {0};
-		snprintf(command, PATH_MAX, "rm -rf \"%s\"", projectPath);
-		system(command);
-		
-		delete [] projectPath;
-		projectPath = NULL;
-		delete [] projectFile;
-		projectFile = NULL;
-		delete [] imagePath;
-		imagePath = NULL;
-		delete [] soundPath;
-		soundPath = NULL;
-		delete [] xmlFile;
-		xmlFile = NULL;
-	
-		cleanupPrev();
-	}
-}
-
-
-void ProjectSerializer::cleanupPrev()
-{
-	if (prevProPath != NULL) {
-		char command[PATH_MAX] = {0};
-		snprintf(command, sizeof(command), "rm -rf \"%s\"", prevProPath);
-		
-		delete [] prevProPath;
-		prevProPath = NULL;
-		delete [] prevImgPath;
-		prevImgPath = NULL;
-		delete [] prevXmlFile;
-		prevXmlFile = NULL;
-	}
-}
-
-
-void ProjectSerializer::storeOldPaths()
-{
-	if (projectPath != NULL) {
-		prevProPath = new char[strlen(projectPath) + 1];
-		strcpy(prevProPath, projectPath);
-		prevImgPath = new char[strlen(imagePath) + 1];
-		strcpy(prevImgPath, imagePath);
-		prevXmlFile = new char[strlen(xmlFile) + 1];
-		strcpy(prevXmlFile, xmlFile);
-	
-		delete [] projectPath;
-		projectPath = NULL;
-		delete [] imagePath;
-		imagePath = NULL;
-		delete [] xmlFile;
-		xmlFile = NULL; 
-	}
-}
-

@@ -20,16 +20,16 @@
 #ifndef DEVICETAB_H
 #define DEVICETAB_H
 
-#include <QTableWidget>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QLabel>
-#include <QGridLayout>
 #include <QWidget>
-#include <QGroupBox>
-#include <QTableWidget>
-#include <QTextEdit>
 
+class QTableWidget;
+class QLineEdit;
+class QPushButton;
+class QLabel;
+class QGridLayout;
+class QGroupBox;
+class QTextEdit;
+class QTableWidgetItem;
 
 class DeviceTab : public QWidget
 {

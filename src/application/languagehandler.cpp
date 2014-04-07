@@ -30,53 +30,52 @@
 
 #include <QDebug>
 LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const char *name) 
-	: QObject(parent)
-{
+		: QObject(parent), languagesMenu(0) {
 	qmPath = QString(stopmotion::translationsDirectory);
 	activeAction = 0;
 	translator = new QTranslator(this);
 
-        // Get system locale.
-        QString locale = QLocale::system().name().toLower();
-        if (locale == QLatin1String("nb_no"))
-            locale = QLatin1String("no_nb");
-        else if (locale == QLatin1String("nn_no"))
-            locale = QLatin1String("no_nn");
-        else if (locale == QLatin1String("se_no"))
-            locale = QLatin1String("no_se");
-        else
-            locale.truncate(2);
+	// Get system locale.
+	QString locale = QLocale::system().name().toLower();
+	if (locale == QLatin1String("nb_no"))
+	    locale = QLatin1String("no_nb");
+	else if (locale == QLatin1String("nn_no"))
+	    locale = QLatin1String("no_nn");
+	else if (locale == QLatin1String("se_no"))
+	    locale = QLatin1String("no_se");
+	else
+	    locale.truncate(2);
 
-        // Put together a translation file based on the qmPath or keep
-        // it empty if the locale is english.
-        const bool englishLocale = (locale == QLatin1String("en"));
-        const QString prefix = qmPath + QLatin1Char('/') + QLatin1String("stopmotion_");
-        QString translationFile = englishLocale ? QString() : prefix + locale;
+	// Put together a translation file based on the qmPath or keep
+	// it empty if the locale is english.
+	const bool englishLocale = (locale == QLatin1String("en"));
+	const QString prefix = qmPath + QLatin1Char('/') + QLatin1String("stopmotion_");
+	QString translationFile = englishLocale ? QString() : prefix + locale;
 
-        if (!englishLocale && !QFile::exists(translationFile + QLatin1String(".qm"))) {
-            // Was not able to find a translation file for the locale, so use the
-            // language saved in the preferences file, or use English as fall-back.
-            const QByteArray localeArray = locale.toLatin1();
-            const char *localePtr = localeArray.constData();
-            const char *languagePref = PreferencesTool::get()->getPreference("language", localePtr);
-            if (languagePref) {
-                translationFile = prefix + QLatin1String(languagePref);
-                if (!QFile::exists(translationFile + QLatin1String(".qm")))
-                    translationFile = QString();
-	        if (strcmp(languagePref, localePtr) != 0)
-		    xmlFree((xmlChar*)languagePref);
-            } else {
-                translationFile = QString();
-            }
-        } else {
+	if (!englishLocale && !QFile::exists(translationFile + QLatin1String(".qm"))) {
+		// Was not able to find a translation file for the locale, so use the
+		// language saved in the preferences file, or use English as fall-back.
+		const QByteArray localeArray = locale.toLatin1();
+		const char *localePtr = localeArray.constData();
+		const char *languagePref = PreferencesTool::get()->getPreference("language", localePtr);
+		if (languagePref) {
+			translationFile = prefix + QLatin1String(languagePref);
+			if (!QFile::exists(translationFile + QLatin1String(".qm")))
+				translationFile = QString();
+			if (strcmp(languagePref, localePtr) != 0)
+				xmlFree((xmlChar*)languagePref);
+	    } else {
+	    	translationFile = QString();
+	    }
+	} else {
 	    PreferencesTool::get()->setPreference("language", locale.toLatin1().constData());
-        }
+	}
 
-        if (!translationFile.isEmpty()) {
-            Logger::get().logDebug("Loading translator: ");
-            Logger::get().logDebug(translationFile.toLatin1().constData());
-            translator->load(translationFile);
-        }
+	if (!translationFile.isEmpty()) {
+	    Logger::get().logDebug("Loading translator: ");
+	    Logger::get().logDebug(translationFile.toLatin1().constData());
+	    translator->load(translationFile);
+	}
 
 	stApp->installTranslator(translator);
 	setObjectName(name);

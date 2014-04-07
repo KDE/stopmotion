@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,11 +20,9 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include "src/technical/util.h"
-
+#include <exception>
 #include <string>
 #include <vector>
-
 
 struct GrabberDevice {
 	std::string device;
@@ -32,13 +30,28 @@ struct GrabberDevice {
 	std::string type;
 };
 
-
-class Util
-{
+class FileLinkException : public std::exception {
+	char msg[100];
 public:
-	static const char* checkCommand(const char* command);
+	FileLinkException(const char* message);
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+};
+
+class DirectoryCreationException : public std::exception {
+	char buffer[1024];
+public:
+	DirectoryCreationException(const char* path);
+	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+};
+
+class Util {
+public:
+	static bool checkCommand(std::string* pathOut, const char* command);
 	static const std::vector<GrabberDevice> getGrabberDevices();
 	static bool copyFile(const char *destFileName, const char *srcFileName);
+	static void linkOrCopyFile(const char *newName, const char* oldName);
+	static bool removeDirectoryContents(const char* path);
+	static void ensurePathExists(const char* path);
 };
 
 #endif

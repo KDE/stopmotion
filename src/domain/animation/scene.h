@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -24,79 +24,62 @@
 #include "frame.h"
 #include "src/presentation/frontends/frontend.h"
 
+#include <exception>
+
+class FileNameVisitor;
+
+class FrameOutOfRangeException : public std::exception {
+public:
+	FrameOutOfRangeException();
+    const char* what() const _GLIBCXX_USE_NOEXCEPT;
+};
 
 /**
  * Class representing the scenes in the animation
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class Scene
-{
+class Scene {
 public:
 	/**
 	 * Initializes the scene
 	 */
-	 Scene(); 
-	 
+	 Scene();
+
 	/**
 	 * Cleans up the scene and delete the frames.
 	 */
 	 ~Scene();
-	 
-	/**
-	 *Temporary functions to assist in an orderly transfer of functionality from
-	 *Animation, without having to break the project for big time-periods.
-	 */
-	vector<Frame*>& getFrames();
-	
-	/**
-	 * Retrieves the image paths of all the frames in this scene. 
-	 *(This is an convenience function and is used when opening scenes)
-	 * @return the image paths of all the frames in this scene.
-	 */
-	vector<char*> getImagePaths();
-	
+
 	/**
 	 * Retrieves the size of the scene (the number of frames in it).
 	 * @return the number of frames in the scene.
 	 */
-	unsigned int getSize();
-	 
+	int getSize() const;
+
 	/**
 	 * Retrieves the frame at position frameNumber in the scene.
 	 * @param frameNumber the number of the frame to retrieve.
 	 * @return the frame at position frameNumber.
 	 */
-	Frame* getFrame(unsigned int frameNumber);
-	
+	const Frame* getFrame(int frameNumber) const;
+
 	/**
-	 * Adds the frames in the vector frameNames to the vector at position
-	 * index.
-	 * @param frameNames the paths to the pictures of the frames to add to the
-	 * scene.
-	 * @param index the location to add the frames to.
-	 * @param frontend the frontend for process handling.
-	 * @param numberOfCanceledFrames reference transfered int for setting how many
-	 * frames was canceled in case the user aborts the adding while this functions
-	 * runs.
-	 * @return the new paths of the frames for the undo object, or NULL if the 
-	 * operation was canceled.
+	 * Removes a frame from the scene.
+	 * @param frame The frame to remove.
+	 * @return The removed frame. Ownership is returned.
 	 */
-	const vector<char*> addFrames(const vector<char*>& frameNames,
-			unsigned int index, Frontend *frontend, 
-			unsigned int &numberOfCanceledFrames );
-	
+	Frame* removeFrame(int frame);
+
 	/**
-	 * Remove the frames at the positions from fromFrame to toFrame (inclusive) 
-	 * from the scene.
-	 * @param fromFrame the first frame to remove from the scene.
-	 * @param toFrame the last frame to remove from the scene.
-	 * @return the new paths where the frame pictures has been moved. This is
-	 * for the undo object.
+	 * Removes frames from the animation.
+	 * @param frame The index from which to begin removing.
+	 * @param cound The number of frames to remove.
+	 * @param [out] out The removed frames.
 	 */
-	const vector<char*> removeFrames(unsigned int fromFrame, 
-			const unsigned int toFrame);
-	
+	void removeFrames(int frame, int count,
+			std::vector<Frame*>& out);
+
 	/**
 	 * Moves the frames at the positions from fromFrame to toFrame (inclusive)
 	 * to the position movePosition inside the scene.
@@ -104,64 +87,133 @@ public:
 	 * @param toFrame the lst frame to move.
 	 * @param movePosition the position to move the frames to.
 	 */
-	void moveFrames(unsigned int fromFrame, unsigned int toFrame, 
-			unsigned int movePosition);
-	 
+	void moveFrames(int fromFrame, int toFrame, int movePosition);
+
 	/**
 	 * Cleans frames from the scene without moving them around. Used when the user
 	 * aborts while adding frames.
 	 * @param fromFrame the first frame to remove.
 	 * @param toFrame the last frame to remove.
 	 */
-	void cleanFrames(unsigned int fromFrame, unsigned int toFrame);
-	
+	void cleanFrames(int fromFrame, int toFrame);
+
 	/**
-	 * Creates a frame with the picture at location frameName and adds it at position
-	 * at position index in the scene.
-	 * @param frameName the path to the picture to the frame to create.
-	 * @param index the place to create the frame.
-	 * @return the new path to the picture file for the undo object.
+	 * Adds a frame at @a index. Will not fail if {@ref preallocateFrames}
+	 * has been called with the appropriate number beforehand.
+	 * @param f The frame to add.
+	 * @param index The index at which to add the frame. Must be between
+	 * 0 and @code{.cpp} getSize() @endcode inclusive.
 	 */
-	char* addFrame(char* frameName, unsigned int &index);
-	
+	void addFrame(Frame* f, int index);
+
+	/**
+	 * Adds frames to the scene.
+	 * @param where Frame index to add the new frames.
+	 * @param fs The frames to add.
+	 */
+	void addFrames(int where, const std::vector<Frame*>& fs);
+
+	/**
+	 * Reserves space for @a count more frames to be added without the risk of
+	 * an exception being thrown.
+	 * @param count The number of frames that need to be added.
+	 */
+	void preallocateFrames(int count);
+
+	/**
+	 * Replaces the image of the frame at index {@a frameNumber}.
+	 * @param frameNumber The index of the frame to alter.
+	 * @param [in,out] The image to swap with. On exit, the frame at index
+	 * {@a frameNumber} will have the image formerly held by
+	 * {@a otherImage} and {@a otherImage} will have the image formerly held
+	 * by the frame.
+	 */
+	void replaceImage(int frameNumber, WorkspaceFile& otherImage);
+
 	/**
 	 * Adds an already saved frame.
 	 * @param f the frame to add
 	 */
 	void addSavedFrame(Frame *f);
-	
+
 	/**
-	 * Adds a sound located at the path ``sound'' to the frame at location frameNumber 
-	 * in the scene.
-	 * @param frameNumber the frame to add the sound to.
-	 * @param sound the path to the sound file containing the sound.
+	 * Adds the sound in the file filename to the end of the sounds in the
+	 * frame with index {@a frameNumber}, giving it an arbitrary name.
+	 * @param file The file that holds the sound.
 	 * @return zero on success, less than zero on failure;
 	 * -1 = file is not readable
 	 * -2 = not a valid audio file
 	 */
-	int addSound(unsigned int frameNumber, const char *sound);
-	
+	int newSound(int frameNumber, WorkspaceFile& file);
+
 	/**
-	 * Removes the the sound with the number soundNumber from the frame at location
-	 * frameNumber.
-	 * @param frameNumber the frame to remove the sound from.
-	 * @param soundNumber the index of the sound to remove from the frame at index
-	 * frameNumber.
+	 * Adds a sound to the frame specified.
+	 * @param frameNumber Index of the frame to add a sound to.
+	 * @param soundNumber Index that the sound is to have.
+	 * @param sound The sound to add.
 	 */
-	void removeSound(unsigned int frameNumber, unsigned int soundNumber);
-	
+	void addSound(int frameNumber, int soundNumber, Sound* sound);
+
 	/**
-	 * Sets the name of the sound at index soundNumber in the frame at location
-	 * frameNumber to soundName.
-	 * @param frameNumber the frame containing the sound to change the name of.
-	 * @param soundNumber the sound to change the name of.
-	 * @param soundName the new name for the sound.
+	 * Removes a sound from the specified frame.
+	 * @param frameNumber The frame from which to remove the sound.
+	 * @param index Which sound to remove.
+	 * @return The removed sound. Ownership is passed.
 	 */
-	void setSoundName(unsigned int frameNumber, unsigned int soundNumber,
-			char* soundName);
-		
+	Sound* removeSound(int frameNumber, int index);
+
+	/**
+	 * Gets a sound from a frame.
+	 * @param frameNumber The index of the frame.
+	 * @param index The index of the sound.
+	 * @return The sound. Ownership is not passed.
+	 */
+	const Sound* getSound(int frameNumber, int index) const;
+
+	/**
+	 * Returns the number of sounds in the specified frame.
+	 * @param frameNumber Index of the frame.
+	 * @return the number of sounds in frame {@a frameNumber}.
+	 */
+	int soundCount(int frameNumber) const;
+
+	/**
+	 * Returns the total number of sounds in all the frames in this scene.
+	 * @return the number of sounds.
+	 */
+	int soundCount() const;
+
+	/**
+	 * Sets the name of the sound at index soundNumber in the specified frame
+	 * to soundName
+	 * @param frameNumber Index of the frame.
+	 * @param soundNumber the number of the sound to change the name of.
+	 * @param soundName the new name of the sound. Ownership is passed; must
+	 * have been allocated with new char[].
+	 * @return The old name for this sound. Ownership is returned; must be
+	 * freed with delete[].
+	 */
+	const char* setSoundName(int frameNumber, int soundNumber,
+			const char* soundName);
+
+	/**
+	 * Retrieves the name of the sound at index soundNumber in the specified
+	 * frame.
+	 * @param frameNumber Index of the frame.
+	 * @param soundNumber the sound to return.
+	 * @return the sound at index soundNumber in this frame. Ownership is
+	 * not returned.
+	 */
+	const char* getSoundName(int frameNumber, int soundNumber) const;
+
+	/**
+	 * Have v visit all the files referenced (images and sounds)
+	 */
+	void accept(FileNameVisitor& v) const;
+
 private:
-	vector<Frame*> frames;
+	typedef std::vector<Frame*> FrameVector;
+	FrameVector frames;
 };
 
 #endif

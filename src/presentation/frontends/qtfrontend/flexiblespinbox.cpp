@@ -69,3 +69,7 @@ void FlexibleSpinBox::showEvent(QShowEvent *)
 	this->setFocus();
 	this->selectAll();
 }
+
+void FlexibleSpinBox::setIndexSecond(int, int index) {
+	setValue(index + 1);
+}

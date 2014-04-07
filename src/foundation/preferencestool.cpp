@@ -30,16 +30,9 @@ using namespace std;
 PreferencesTool* PreferencesTool::preferencesTool = 0;
 
 
-PreferencesTool::PreferencesTool()
-{
-	doc      = NULL;    
-	dtd      = NULL; 
-	rootNode = NULL;
-	versionNode = NULL;
-	
-	preferencesFile = NULL;
-	oldVersion = NULL;
-	
+PreferencesTool::PreferencesTool() :
+		doc(0), dtd(0), rootNode(0), preferences(0), versionNode(0),
+		preferencesFile(0), oldVersion(0) {
 	LIBXML_TEST_VERSION;
 }
 

@@ -21,6 +21,8 @@
 
 #include "src/domain/domainfacade.h"
 #include "graphics/icons/close.xpm"
+#include "src/application/soundhandler.h"
+#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 
 #include <QToolTip>
 #include <QLabel>
@@ -28,9 +30,9 @@
 
 
 FramePreferencesMenu::FramePreferencesMenu( QWidget * parent, 
-		SoundHandler *soundHandler, const char * name )
-	: MenuFrame(parent, name), soundHandler(soundHandler)
-{
+		SoundHandler *soundHandler, const FrameBar* fb, const char * name )
+	: MenuFrame(parent, name), soundHandler(soundHandler),
+	  frameBar(fb) {
 	soundsList = 0;
 	soundsLabel = 0;
 	closeButton = 0;
@@ -84,17 +86,20 @@ FramePreferencesMenu::FramePreferencesMenu( QWidget * parent,
 }
 
 
-void FramePreferencesMenu::open()
-{
+void FramePreferencesMenu::open() {
 	soundsList->clear();
-	unsigned int numSounds = DomainFacade::getFacade()->getFrame( 
-			DomainFacade::getFacade()->getActiveFrameNumber() )->getNumberOfSounds();
-	
-	unsigned int activeFrame = DomainFacade::getFacade()->getActiveFrameNumber();
-	for (unsigned int i = 0; i < numSounds; ++i) {
-		soundsList->addItem( new QListWidgetItem(DomainFacade::getFacade()->getFrame(activeFrame)->getSoundName(i)));
+	int activeFrame = frameBar->getActiveFrame();
+	int activeScene = frameBar->getActiveScene();
+	DomainFacade* facade = DomainFacade::getFacade();
+	int numSounds = facade->getNumberOfSounds(activeScene,
+					activeFrame);
+	for (int i = 0; i < numSounds; ++i) {
+		const char* soundName = facade->getSoundName(
+				activeScene, activeFrame, i);
+		if (soundName)
+			soundsList->addItem(new QListWidgetItem(soundName));
 	}
-	this->show();
+	show();
 }
 
 
@@ -141,4 +146,7 @@ void FramePreferencesMenu::retranslateStrings()
 			"until they are done.</p>");
 	soundsLabel->setToolTip(infoText);
 	soundsList->setWhatsThis(infoText);
+}
+
+FramePreferencesMenu::~FramePreferencesMenu() {
 }

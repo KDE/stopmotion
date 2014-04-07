@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -37,18 +37,28 @@
 #include "graphics/icons/removescene.xpm"
 #include "graphics/icons/gimp.xpm"
 
+#include "src/application/runanimationhandler.h"
+#include "src/application/modelhandler.h"
+#include "src/application/camerahandler.h"
+#include "src/domain/domainfacade.h"
+#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
+
+#include <QShortcut>
+#include <QWidget>
 #include <QToolTip>
 #include <QAction>
 #include <QMessageBox>
 #include <QPixmap>
 #include <QLabel>
+#include <QTimer>
 
 
 ToolsMenu::ToolsMenu(RunAnimationHandler *runAnimationHandler,
 		ModelHandler *modelHandler, CameraHandler *cameraHandler,
-		QWidget *parent)
+		FrameBar *frameBar, QWidget *parent)
 	: QWidget(parent), ui(0), runAnimationHandler(runAnimationHandler),
-	  modelHandler(modelHandler), cameraHandler(cameraHandler) {
+	  modelHandler(modelHandler), cameraHandler(cameraHandler),
+	  frameBar(frameBar) {
 	ui = new Ui::Form;
 	ui->setupUi(this);
 
@@ -132,23 +142,27 @@ void ToolsMenu::setupUi() {
 	ui->nextFrameButton->setIcon( QPixmap(fastforwardicon) );
 	ui->nextFrameButton->setFocusPolicy( Qt::NoFocus );
 	ui->nextFrameButton->setAutoRepeat(true);
-	connect( ui->nextFrameButton, SIGNAL(clicked()), runAnimationHandler, SLOT(selectNextFrame()) );
+	connect( ui->nextFrameButton, SIGNAL(clicked()),
+			frameBar, SLOT(selectNextFrame()) );
 	ui->nextFrameButton->setEnabled(false);
 
 	ui->previousFrameButton->setIcon( QIcon(QPixmap(rewindicon)) );
 	ui->previousFrameButton->setFocusPolicy( Qt::NoFocus );
 	ui->previousFrameButton->setAutoRepeat(true);
-	connect( ui->previousFrameButton, SIGNAL(clicked()), runAnimationHandler, SLOT(selectPreviousFrame()) );
+	connect( ui->previousFrameButton, SIGNAL(clicked()),
+			frameBar, SLOT(selectPreviousFrame()) );
 	ui->previousFrameButton->setEnabled(false);
 
 	ui->toEndButton->setIcon( QIcon(QPixmap(steptoendicon)) );
 	ui->toEndButton->setFocusPolicy( Qt::NoFocus );
-	connect( ui->toEndButton, SIGNAL(clicked()), runAnimationHandler, SLOT(selectNextScene()) );
+	connect( ui->toEndButton, SIGNAL(clicked()),
+			frameBar, SLOT(selectNextScene()) );
 	ui->toEndButton->setEnabled(false);
 
 	ui->toBeginningButton->setIcon( QIcon(QPixmap(steptobeginningicon)) );
 	ui->toBeginningButton->setFocusPolicy( Qt::NoFocus );
-	connect( ui->toBeginningButton, SIGNAL(clicked()), runAnimationHandler, SLOT(selectPreviousScene()) );
+	connect( ui->toBeginningButton, SIGNAL(clicked()),
+			frameBar, SLOT(selectPreviousScene()) );
 	ui->toBeginningButton->setEnabled(false);
 
 	ui->stopButton->setIcon( QIcon(QPixmap(stopicon)) );
@@ -166,6 +180,7 @@ void ToolsMenu::setupUi() {
 	ui->loopButton->setFocusPolicy( Qt::NoFocus );
 	runAnimationHandler->setLoopButton(ui->loopButton);
 	connect( ui->loopButton, SIGNAL(clicked()), runAnimationHandler, SLOT(toggleLooping()) );
+	ui->loopButton->setEnabled(false);
 
 	//Launcher for the Gimp.
 	ui->launchGimp->setIcon(QIcon(QPixmap(gimpicon)));
@@ -445,7 +460,7 @@ void ToolsMenu::changeUnitMode(int index) {
 }
 
 
-void ToolsMenu::modelSizeChanged(int modelSize) {
+void ToolsMenu::fixNavigationButtons(int modelSize) {
 	//Not <=1 because it is signed with a meaning for -1.
 	if (modelSize == 0 || modelSize == 1) {
 		if (ui->previousFrameButton->isEnabled()) {
@@ -489,4 +504,5 @@ void ToolsMenu::cameraOn(bool isOn) {
 			captureTimer->stop();
 		}
 	}
+	fixNavigationButtons(DomainFacade::getFacade()->getModelSize());
 }

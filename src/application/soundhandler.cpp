@@ -20,52 +20,44 @@
 #include "src/application/soundhandler.h"
 
 #include "src/domain/domainfacade.h"
+#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 
 #include <QFileDialog>
 #include <QInputDialog>
 
 
-SoundHandler::SoundHandler(QObject *parent, QStatusBar *sb, const char* homeDir, const char *name) 
-	: QObject(parent), statusBar(sb), homeDir(homeDir)
-{
+SoundHandler::SoundHandler(QObject *parent, QStatusBar *sb,
+		const FrameBar* fb, const char* homeDir, const char *name)
+	: QObject(parent), statusBar(sb), frameBar(fb), homeDir(homeDir) {
 	soundsList = NULL;
 	setObjectName(name);
 }
 
 
-void SoundHandler::setSoundsList(QListWidget *soundsList)
-{
+void SoundHandler::setSoundsList(QListWidget *soundsList) {
 	this->soundsList = soundsList;
 }
 
 
-void SoundHandler::addSound()
-{
+void SoundHandler::addSound() {
 	QString file = QFileDialog::
 		getOpenFileName(0, tr("Choose sound file"), QString(homeDir), tr("Sounds (*.ogg)") );
 	if ( !file.isNull() ) {
 		DomainFacade *facade = DomainFacade::getFacade();
-		int ret = facade->addSound( facade->getActiveFrameNumber(), file.toLocal8Bit().constData() );
-		if (ret == 0) {
-			Frame *frame = facade->getFrame( facade->getActiveFrameNumber() );
-			if (frame) {
-				soundsList->insertItem(soundsList->count(), 
-						new QListWidgetItem( frame->getSoundName(soundsList->count())) );
-				emit soundsChanged();
-			}
-		}
+		int activeScene = frameBar->getActiveScene();
+		int activeFrame = frameBar->getActiveFrame();
+		facade->addSound( activeScene, activeFrame,
+				file.toLocal8Bit().constData() );
 	}
 }
 
 
-void SoundHandler::removeSound()
-{
+void SoundHandler::removeSound() {
 	int index = soundsList->currentRow();
 	if (index >= 0) {
-		DomainFacade::getFacade()->removeSound(DomainFacade::getFacade()->getActiveFrameNumber(), index);
-		QListWidgetItem *qlwi = soundsList->takeItem(index);
-		delete qlwi;
-		emit soundsChanged();
+		int scene = frameBar->getActiveScene();
+		int frame = frameBar->getActiveFrame();
+		DomainFacade::getFacade()->removeSound(scene, frame, index);
 	}
 }
 
@@ -75,12 +67,14 @@ void SoundHandler::setSoundName()
 	int index = soundsList->currentRow();
 	if (index >= 0) {
 		bool ok = false;
-		QString text = QInputDialog::getText(0, tr("Sound name"), tr("Enter the name of the sound:"), 
+		QString text = QInputDialog::getText(0, tr("Sound name"),
+				tr("Enter the name of the sound:"),
 				QLineEdit::Normal,QString::null, &ok);
 		if ( ok && !text.isEmpty() ) {
-			DomainFacade::getFacade()->setSoundName(DomainFacade::getFacade()->getActiveFrameNumber(), 
+			int scene = frameBar->getActiveScene();
+			int frame = frameBar->getActiveFrame();
+			DomainFacade::getFacade()->setSoundName(scene, frame,
 					index, text.toLocal8Bit().data() );
-			soundsList->item(index)->setText(text);
 		}
 	}
 }

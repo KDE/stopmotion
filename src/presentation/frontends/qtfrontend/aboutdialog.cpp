@@ -29,7 +29,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 	: QDialog(parent)
 {
 	tabWidget = new QTabWidget;
-	
+
 	QWidget *widget = new QWidget;
 	QVBoxLayout *layout = new QVBoxLayout;
 	QLabel *label = new QLabel;
@@ -38,37 +38,43 @@ AboutDialog::AboutDialog(QWidget *parent)
 	layout->addWidget(label);
 	layout->addWidget( new QLabel(
 				"<p>" + tr("This is the Stopmotion application for creating stop motion animations.") + "</p>"
-				"<p> &copy; 2005-2008, Bjørn Erik Nilsen and Fredrik Berg Kjølstad </p>"));
+				+ QString::fromUtf8(
+						"<p> &copy; 2005-2008, Bj\xc3\xb8rn Erik Nilsen and Fredrik Berg Kj\xc3\xb8lstad </p>")));
 	widget->setLayout(layout);
-	
+
 	tabWidget->addTab(widget, tr("&About") );
-	
+
 	tabWidget->addTab( new QLabel(
 				"<p><b>" + tr("Main developers") + "</b><br>"
-				"Bjørn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>"
-				"Fredrik Berg Kjølstad &lt;fredrikbk@hotmail.com&gt;<br>"
-				"<p><b>" + tr("Contributors") + "</b><br>"
-				"Eric Stolten &lt;stoltene2@gmail.com&gt;<br>"
-				"Josh Green &lt;josh@resonance.org&gt;<br>"
-				"Jehan Pagès<br>"
+				+ QString::fromUtf8(
+						"Bj\xc3\xb8rn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>"
+						"Fredrik Berg Kj\xc3\xb8lstad &lt;fredrikbk@hotmail.com&gt;<br>")
+				+ "<p><b>" + tr("Contributors") + "</b><br>"
+				+ QString::fromUtf8(
+					"Eric Stolten &lt;stoltene2@gmail.com&gt;<br>"
+					"Josh Green &lt;josh@resonance.org&gt;<br>"
+					"Jehan Pag\xc3\xa9s<br>"
 				"Tim Band<br>"
 				"Ying-Chun Liu (PaulLiu) &lt;paulliu@debian.org&gt;<br>"
 				"Barak A. Pearlmutter &lt;bap@debian.org&gt;<br>"
-				"Cyril Brulebois &lt;kibi@debian.org&gt;<br>"
-                                "</p>"),
+				"Cyril Brulebois &lt;kibi@debian.org&gt;<br>")
+				+ "<p>"),
 				tr("A&uthors"));
-	
+
 	QTextEdit *qte = new QTextEdit;
-	qte->setHtml( 
+	qte->setHtml(
 				"<p><b>" + tr("Translation") + "</b><br>"
 				"George Helebrant &lt;helb@skatekralovice.com&gt; (" + tr("Czech") + ")<br>"
 				"Gorazd Bizjak and Matej Lavreni &lt;info@zapstudio.net&gt; (" + tr("Slovenian") + ")<br>"
 				"Guillaume B &lt;littletux@zarb.org&gt; (" + tr("French") + ")<br>"
 				"Martin Herweg &lt;m.herweg@gmx.de&gt; (" + tr("German") + ")<br>"
-				"José Jorge &lt;jjorge@free.fr&gt; (" + tr("Portuguese") + ")<br>"
-				"Manuel Quiñones &lt;manuel.por.aca@gmail.com&gt; (" + tr("Spanish") + ")<br>"
+				+ QString::fromUtf8(
+				"Jos\xc3\xa9 Jorge &lt;jjorge@free.fr&gt; (") + tr("Portuguese") + ")<br>"
+				+ QString::fromUtf8(
+				"Manuel Qui\xc3\xb1ones &lt;manuel.por.aca@gmail.com&gt; (") + tr("Spanish") + ")<br>"
 				"David Hjelm &lt;dav.hjelm@spray.se&gt; (" + tr("Swedish") + ")<br>"
-				"Koray Löker &lt;loker@pardus.org.tr&gt; (" + tr("Turkish") + ")<br>"
+				+ QString::fromUtf8(
+				"Koray L\xc3\xb6ker &lt;loker@pardus.org.tr&gt; (") + tr("Turkish") + ")<br>"
 				"Diego Giordano &lt;fusion_machine@tin.it&gt; (" + tr("Italian") + ")<br>"
 				"Matteo Comisso &lt;teomatteo8.9@hotmail.it&gt; (" + tr("Italian") + ")<br>"
 				"Wei-Lun Chao &lt;bluebat@member.fsf.org&gt; (" + tr("Traditional Chinese") +")<br>"
@@ -80,15 +86,17 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"Gorazd Bizjak &lt;gorazd@zapstudio.net&gt;<br>"
 				"<p><b>" + tr("Coordinating") + "</b><br>"
 				"Herman Robak &lt;herman@skolelinux.no&gt;<br>"
-				"Øyvind Kolås &lt;pippin@gimp.org&gt;</p>"
-				"<p><b>" + tr("Testing") + "</b><br>"
+				+ QString::fromUtf8(
+				"\xc3\x98yvind Kol\xc3\xa5s &lt;pippin@gimp.org&gt;</p>")
+				+ "<p><b>" + tr("Testing") + "</b><br>"
+				+ QString::fromUtf8(
 				"Tore Sinding Bekkedal &lt;toresbe@ifi.uio.no&gt;<br>"
 				"Finn Arne Johansen &lt;faj@bzz.no&gt;<br>"
 				"Halvor Borgen &lt;halvor.borgen@hig.no&gt;<br>"
-				"Bjørn Are Hansen &lt;post@bahansen.net&gt;<br>"
-				"John Steinar Bildøy &lt;johnsbil@haldenfriskole.no&gt;<br>"
+				"Bj\xc3\xb8rn Are Hansen &lt;post@bahansen.net&gt;<br>"
+				"John Steinar Bild\xc3\xb8y &lt;johnsbil@haldenfriskole.no&gt;<br>"
 				"Ole-Anders Andreassen &lt;ole-anders.andreassen@sunndal.kommune.no&gt;<br>"
-				"</p>"
+				"</p>")
 				);
 	qte->setReadOnly(true);
 	qte->setBackgroundRole(backgroundRole());

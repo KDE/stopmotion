@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,10 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "src/presentation/frontends/qtfrontend/framebar/scenethumbview.h"
 
+#include "scenethumbview.h"
+
+#include "thumbdragger.h"
+#include "filenamesfromurlsiterator.h"
 #include "graphics/icons/clapper.xpm"
 #include "src/domain/domainfacade.h"
+#include "src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h"
 
 #include <QPainter>
 #include <QImage>
@@ -36,48 +40,45 @@
 #include <QUrl>
 
 
-SceneThumbView::SceneThumbView(FrameBar *frameBar, QWidget *parent, int number, const char * name) 
-	: ThumbView(frameBar, parent, number, name)
-{
+SceneThumbView::SceneThumbView(FrameBar *frameBar, QWidget *parent, int number,
+		const char * name)
+		: ThumbView(frameBar, parent, number, name) {
 	this->isOpened = false;
-	
+
 	arrowButton = new SceneArrowButton(this);
-	int width = frameBar->getFrameWidth();
-	int height = frameBar->getFrameHeight();
+	int width = getFrameBar()->getFrameWidth();
+	int height = getFrameBar()->getFrameHeight();
 	arrowButton->setGeometry( width - width / 4, height / 9, width / 6, width / 6 );
 	arrowButton->show();
 	QObject::connect( arrowButton, SIGNAL(clicked()), this, SLOT(closeScene()) );
-	
+
 	f.setPointSize(12);
 	centerIcon = QPixmap(clapper);
 }
 
 
-SceneThumbView::~SceneThumbView() {}
+SceneThumbView::~SceneThumbView() {
+}
 
 
-void SceneThumbView::setOpened( bool isOpened )
-{
+void SceneThumbView::setOpened( bool isOpened ) {
 	this->isOpened = isOpened;
 	arrowButton->setOpened(isOpened);
-	
-	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
-		Frame *frame = DomainFacade::getFacade()->getFrame(0, number);
-		if (frame) {
-			centerIcon = QPixmap::fromImage( 
-					QImage(frame->getImagePath()).scaled(width() / 2, height() / 2) );
+	DomainFacade* facade = DomainFacade::getFacade();
+	if (!isOpened && (facade->getSceneSize(getNumber()) > 0)) {
+		const char *path = facade->getImagePath(getNumber(), 0);
+		if (path) {
+			QImage half = QImage(path).scaled(width() / 2, height() / 2);
+			centerIcon = QPixmap::fromImage(half);
 		}
-	}
-	else {
+	} else {
 		centerIcon = QPixmap(clapper);
 	}
-	
 	this->update();
 }
 
 
-bool SceneThumbView::getIsOpened() const
-{
+bool SceneThumbView::getIsOpened() const {
 	return isOpened;
 }
 
@@ -86,16 +87,15 @@ bool SceneThumbView::getIsOpened() const
  * @todo the width can be cached somewhere so that the function width() don't have
  * to be called for every frame and scene thumbview.
  */
-void SceneThumbView::paintEvent ( QPaintEvent * )
-{
+void SceneThumbView::paintEvent ( QPaintEvent * ) {
 	int width = this->width();
-	
+
 	QPainter paint(this);
 	paint.setPen(Qt::black);
 	paint.setFont(f);
-	paint.drawText( 7, width / 4, QString("%1").arg(number + 1) );
-	
-	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(number) > 0) ) {
+	paint.drawText( 7, width / 4, QString("%1").arg(getNumber() + 1) );
+
+	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(getNumber()) > 0) ) {
 		paint.drawPixmap(width / 4, width / 3, centerIcon);
 	}
 	else {
@@ -104,26 +104,18 @@ void SceneThumbView::paintEvent ( QPaintEvent * )
 }
 
 
-void SceneThumbView::mousePressEvent(QMouseEvent *e)
-{
-	//For calculating the manhattan length to avoid unvanted drags.
+void SceneThumbView::mousePressEvent(QMouseEvent *e) {
+	//For calculating the manhattan length to avoid unwanted drags.
 	dragPos = e->pos();
 }
 
 
-void SceneThumbView::mouseReleaseEvent( QMouseEvent * )
-{
-	if ((DomainFacade::getFacade()->getActiveSceneNumber() != this->number) &&
-			(frameBar->isOpeningScene() == false) ) {
-		frameBar->setOpeningScene(true);
-		DomainFacade::getFacade()->setActiveScene(number);
-		frameBar->setOpeningScene(false);
-	}
+void SceneThumbView::mouseReleaseEvent( QMouseEvent * ) {
+	getFrameBar()->updateNewActiveScene(getNumber());
 }
 
 
-void SceneThumbView::mouseMoveEvent(QMouseEvent * me)
-{
+void SceneThumbView::mouseMoveEvent(QMouseEvent * me) {
 	// it should probably be me->button() here...
 	if (me->buttons() & Qt::LeftButton) {
 		int distance = (me->pos() - dragPos).manhattanLength();
@@ -135,12 +127,11 @@ void SceneThumbView::mouseMoveEvent(QMouseEvent * me)
 }
 
 
-void SceneThumbView::startDrag()
-{
+void SceneThumbView::startDrag() {
 	Logger::get().logDebug("Starting drag of the scene");
-	frameBar->setMovingScene(this->number);
-	
-	QDrag *drag = new QDrag(this);
+	getFrameBar()->setMovingScene(getNumber());
+
+	QDrag *drag = new ThumbDragger(this);
 	QMimeData *mimeData = new QMimeData;
 	QList<QUrl> urls;
 	mimeData->setUrls(urls);
@@ -152,26 +143,56 @@ void SceneThumbView::startDrag()
 }
 
 
-void SceneThumbView::closeScene()
-{
-	DomainFacade *facade = DomainFacade::getFacade();
-	if ( !frameBar->isOpeningScene() && this->number >= 0) {
-		if (facade->getActiveSceneNumber() == this->number && this->number > 0) {
-			facade->setActiveScene(this->number - 1);
-		}
-		else {
-			DomainFacade::getFacade()->setActiveScene(number);
+void SceneThumbView::closeScene() {
+	if ( getNumber() >= 0) {
+		if (getFrameBar()->getActiveScene() == getNumber() && getNumber() > 0) {
+			getFrameBar()->updateNewActiveScene(getNumber() - 1);
+		} else {
+			getFrameBar()->updateNewActiveScene(getNumber());
 		}
 	}
 }
 
 
-void SceneThumbView::contentsDropped(QDropEvent *event)
-{
-	int movingScene = frameBar->getMovingScene();
-	if ((event->source() != 0) && (movingScene != this->number) && (movingScene != -1) ) {
+/**
+ * Scenes should be dropped after this frame if moving right or before if
+ * moving left. This makes sense to users, who expect the dropped scene to
+ * appear where they dropped it. Frames should always move to the start of the
+ * scene they are dropped in.
+ */
+void SceneThumbView::contentsDropped(QDropEvent *event) {
+	DomainFacade* facade = DomainFacade::getFacade();
+	int sceneNumber = getNumber();
+	int movingScene = getFrameBar()->getMovingScene();
+	int activeScene= getFrameBar()->getActiveScene();
+	if (event->source() == 0) {
+		if ( event->mimeData()->hasUrls() ) {
+			QList<QUrl> urls = event->mimeData()->urls();
+			FileNamesFromUrlsIterator fNames(urls.begin(), urls.end());
+			DomainFacade::getFacade()->addFrames(getNumber(), 0, fNames);
+		}
+	} else if (movingScene == -1) {
+		// moving frames into a scene
+		int selectionFrame = getFrameBar()->getSelectionAnchor();
+		int activeFrame = getFrameBar()->getActiveFrame();
+		int highend = (selectionFrame > activeFrame)?
+				selectionFrame : activeFrame;
+		int lowend = (selectionFrame < activeFrame )?
+				selectionFrame : activeFrame;
+		bool movingRight = activeScene < sceneNumber;
+		if (movingRight || sceneNumber == 0) {
+			facade->moveFrames(activeScene, lowend,
+					highend - lowend + 1, sceneNumber, 0);
+		} else {
+			int sceneDest = sceneNumber - 1;
+			int sceneSize = DomainFacade::getFacade()->getSceneSize(sceneDest);
+			facade->moveFrames(activeScene, lowend,
+					highend - lowend + 1, sceneDest, sceneSize);
+		}
+	} else if (movingScene != sceneNumber) {
 		Logger::get().logDebug("Moving scene");
-		DomainFacade::getFacade()->moveScene(movingScene, this->number);
+		int destination = movingScene < sceneNumber?
+				sceneNumber + 1 : sceneNumber;
+		facade->moveScene(movingScene, destination);
 	}
 }
-

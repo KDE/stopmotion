@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "src/technical/video/videoencoder.h"
 
 #include "src/technical/util.h"
@@ -95,12 +96,6 @@ void VideoEncoder::setOutputFile(const char* file)
 }
 
 
-bool VideoEncoder::isValid()
-{
-	const char *path = Util::checkCommand(startCommand);
-	if ( path != 0) {
-		delete [] path;
-		return true;
-	}
-	return false;
+bool VideoEncoder::isValid() {
+	return Util::checkCommand(0, startCommand);
 }

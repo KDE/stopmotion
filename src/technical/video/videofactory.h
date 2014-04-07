@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,31 +17,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #ifndef VIDEOFACTORY_H
 #define VIDEOFACTORY_H
 
-#include "videoencoder.h"
-#include "src/technical/projectserializer.h"
-#include "src/presentation/frontends/frontend.h"
-
+class Frontend;
+class VideoEncoder;
+class AnimationImpl;
 
 /**
  * Class for exporting a stopmotion project ccntaining images and sounds to
- * to a video file. 
+ * to a video file.
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class VideoFactory
-{
+class VideoFactory {
 public:
 	/**
-	 * Registers a serializer that will be used to gather information about
-	 * image paths etc.
-	 * @param serializer the serializer used by stopmotion
-	 * @param frontend the frontend to display information to
+	 * Objects of this class make a video file.
+	 * @param animation The animation to be turned into a video
+	 * @param frontend The frontend to display information to
 	 */
-	VideoFactory(ProjectSerializer *serializer, Frontend *frontend);
+	VideoFactory(const AnimationImpl *animation, Frontend *frontend);
 	~VideoFactory();
-	
+
 	/**
 	 * Creates the video file based on the passed encoder. The encoder holds
 	 * information needed to complete the export.
@@ -51,10 +49,8 @@ public:
 	const char* createVideoFile(VideoEncoder *encoder);
 
 private:
-	ProjectSerializer *serializer;
+	const AnimationImpl *anim;
 	Frontend *frontend;
-	
-	int startEncoder(const char* command);
 };
 
 #endif

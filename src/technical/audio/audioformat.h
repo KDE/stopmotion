@@ -20,6 +20,19 @@
 #ifndef AUDIOFORMAT_H
 #define AUDIOFORMAT_H
 
+#include <exception>
+
+class CouldNotOpenFileException : public std::exception {
+public:
+	CouldNotOpenFileException();
+    const char* what() const _GLIBCXX_USE_NOEXCEPT;
+};
+
+class InvalidAudioFormatException : public std::exception {
+public:
+	InvalidAudioFormatException();
+    const char* what() const _GLIBCXX_USE_NOEXCEPT;
+};
 
 /**
  * Interface to be used by the implemented audio formats. They
@@ -30,31 +43,20 @@
 class AudioFormat
 {
 public:
-	virtual ~AudioFormat() {};
-	
-	/**
-	 * Abstract function for registering the given filename to be an audio 
-	 * format file. This function checks that the file can be opened and that
-	 * it is a valid audio format file.
-	 * @param filename the filename to register
-	 * @return zero on success, less than zero on failure.
-	 * -1 = cannot open file for reading
-	 * -2 = not a valid audio format file
-	 */
-	virtual int setFilename(const char* filename) = 0;
-	
+	virtual ~AudioFormat();
+
 	/**
 	 * Abstract function for opening the file registered with setFilename.
 	 * @return 0 on success, -1 on failure
 	 */
 	virtual int open() = 0;
-	
+
 	/**
 	 * Abstract function for closing the file registered with setFilename.
 	 * @return 0 on success, -1 on failure
 	 */
 	virtual int close() = 0;
-	
+
 	/**
 	 * Abstract function for filling the buffer with raw PCM data. It
 	 * fills the buffer with up to 'numBytes' bytes.
@@ -63,12 +65,18 @@ public:
 	 * @return number of bytes written to buffer
 	 */
 	virtual int fillBuffer(char *audioBuffer, int numBytes) = 0;
-	
+
 	/**
 	 * Abstract function for retrieving the sound path.
 	 * @return the sound path
 	 */
-	virtual char* getSoundPath() = 0;
+	virtual const char* getSoundPath() const = 0;
+
+	/**
+	 * Retrieves the basename of the sound file.
+	 * @return The filename with extension and without any path.
+	 */
+	virtual const char* getBasename() const = 0;
 };
 
 #endif

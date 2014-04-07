@@ -24,36 +24,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
-
-OggVorbis::OggVorbis()
-{
+OggVorbis::OggVorbis() {
 	oggFile  = NULL;
-	filename = NULL;
 }
 
 
-OggVorbis::~OggVorbis()
-{
+OggVorbis::~OggVorbis() {
 	if (oggFile != NULL) {
 		ov_clear(oggFile);
 		free(oggFile);
 		oggFile = NULL;
 	}
-	if (filename != NULL) {
-		delete [] filename;
-		filename = NULL;
-	}
-
 }
 
 
-int OggVorbis::setFilename(const char *filename)
-{
-	assert(filename != NULL);
+void OggVorbis::setFilename(WorkspaceFile& file) {
+	assert(file.path() != NULL);
 
 	// Opens the file and tests for vorbis-ness
-	FILE *f = fopen(filename, "r");
+	FILE *f = fopen(file.path(), "r");
 	if (f) {
 		if (oggFile != NULL) {
 			free(oggFile);
@@ -71,34 +62,25 @@ int OggVorbis::setFilename(const char *filename)
 			fclose(f);
 			free(oggFile);
 			oggFile = NULL;
-			return -2;
+			throw InvalidAudioFormatException();
 		}
 		
 		// This also closes the file stream (f)
 		ov_clear(oggFile);
 		free(oggFile);
 		oggFile = NULL;
-		// The given filename is a valid ogg file and we wants
-		// to save it for later usage.
-		if (this->filename != NULL) {
-			delete [] this->filename;
-			this->filename = NULL;
-		}
-		this->filename = new char[strlen(filename) + 1];
-		strcpy(this->filename, filename);
+		this->filename.swap(file);
 	}
 	else {
 		Logger::get().logDebug("Cannot open file for reading");
-		return -1;
+		throw CouldNotOpenFileException();
 	}
-	
-	return 0;
 }
 
 
 int OggVorbis::open()
 {
-	FILE *f = fopen(filename, "r");
+	FILE *f = fopen(filename.path(), "r");
 	if (f) {
 		oggFile = (OggVorbis_File*)malloc( sizeof(OggVorbis_File) );
 		if (oggFile == NULL) {
@@ -140,7 +122,11 @@ int OggVorbis::fillBuffer(char *audioBuffer, int numBytes)
 }
 
 
-char* OggVorbis::getSoundPath()
-{
-	return filename;
+const char* OggVorbis::getSoundPath() const {
+	return filename.path();
 }
+
+const char* OggVorbis::getBasename() const {
+	return filename.basename();
+}
+

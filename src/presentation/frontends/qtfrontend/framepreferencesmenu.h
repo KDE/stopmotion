@@ -21,7 +21,6 @@
 #define FRAMEPREFERENCESMENU_H
 
 #include "menuframe.h"
-#include "src/application/soundhandler.h"
 
 #include <QListWidget>
 #include <QPushButton>
@@ -29,17 +28,18 @@
 #include <QLayout>
 #include <QGridLayout>
 
+class SoundHandler;
+class FrameBar;
 
 /**
- * A customized GUI menu class for the fram preferences menu.
+ * A customized GUI menu class for the frame preferences menu.
  *
  * Inherits from MenuFrame but adds some functionality around loading the
  * present preferences when opened.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class FramePreferencesMenu : public MenuFrame
-{
+class FramePreferencesMenu : public MenuFrame {
 	Q_OBJECT
 public:
 	
@@ -47,11 +47,14 @@ public:
 	 * Creates and sets up the preferences menu. 
 	 * @param parent the parent widget
 	 * @param soundHandler the sound handler
+	 * @param frameBar The frame bar.
 	 * @param name the name of the menu
 	 */
-	FramePreferencesMenu( QWidget * parent = 0, SoundHandler *soundHandler = 0, 
-			const char * name = 0);
-	
+	FramePreferencesMenu( QWidget * parent = 0, SoundHandler *soundHandler = 0,
+			const FrameBar *frameBar = 0, const char * name = 0);
+
+	virtual ~FramePreferencesMenu();
+
 	/**
 	 * Retranslates the strings in the frame preferences menu.
 	 */
@@ -59,6 +62,7 @@ public:
 	
 private:
 	SoundHandler *soundHandler;
+	const FrameBar *frameBar;
 	QListWidget *soundsList;
 	QLabel *soundsLabel;
 	QPushButton *closeButton;

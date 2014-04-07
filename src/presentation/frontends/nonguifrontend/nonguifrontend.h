@@ -48,35 +48,10 @@ public:
 	 */
 	int run(int argc, char **argv);
 	
-	/**
-	 * Function for displaying progress on timeconsuming operations.
-	 * @param infoText the text to display to the user
-	 * @param numOperations the number of calculated operations to do
-	 */
-	void showProgress(const char *infoText, unsigned int numOperations);
-	
-	/**
-	 * Function for hiding the progress info.
-	 */
+	void showProgress(ProgressMessage message, int numOperations);
 	void hideProgress();
-
-	/**
-	 * Function for updating the progress.
-	 * @param numOperationsDone the number of operations done
-	 */
 	void updateProgress(int numOperationsDone);
-	
-	/**
-	 * Function for changing the information to display to the user
-	 * @param infoText the text to display to the user
-	 */
 	void setProgressInfo(const char *infoText);
-	
-	/**
-	 * Function for checking if the user has aborted the operation 
-	 * (eg pressed cancel)
-	 * @return true if the the operation is aborted, false otherwise
-	 */
 	bool isOperationAborted();
 	
 	/**
@@ -85,22 +60,8 @@ public:
 	 * This function is actually not needed in this frontend.
 	 */
 	void processEvents();
-	
-	/**
-	 * Function for reporting an error to the user. It has two categories
-	 * of errors; warning and critical.
-	 * @param message the error message to display to the user
-	 * @param id kind of error; 0 for warning, 1 for critical
-	 */
 	void reportError(const char *message, int id);
-	
-	/**
-	 * Function for asking the user a yes/no question.
-	 * @param question the question to ask
-	 * @return 0 if the user answer yes, 1 if no
-	 */
-	int askQuestion(const char *question);
-
+	int askQuestion(Question question);
 	int runExternalCommand(const char *command);
 	
 private:
@@ -109,7 +70,7 @@ private:
 	int parseArguments(int argc, char **argv);
 	void addFrames(const char *directory);
 	void save(const char *directory);
-	const char* getAbsolutePath(const char *path);
+	void getAbsolutePath(std::string& out, const char *path);
 	int checkFiles(const char *directory);
 };
 

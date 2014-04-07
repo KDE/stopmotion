@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,63 +20,74 @@
 #ifndef QTGUI_H
 #define QTGUI_H
 
-#include "src/config.h"
-#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
-#include "src/presentation/frontends/qtfrontend/frameview.h"
-#include "src/presentation/frontends/qtfrontend/flexiblespinbox.h"
-#include "src/application/camerahandler.h"
-#include "src/application/editmenuhandler.h"
-#include "src/application/runanimationhandler.h"
-#include "src/application/modelhandler.h"
-#include "src/application/languagehandler.h"
-#include "src/application/soundhandler.h"
-#include "src/application/externalchangemonitor.h"
-#include "src/presentation/frontends/qtfrontend/menuframe.h"
-#include "src/presentation/frontends/qtfrontend/framepreferencesmenu.h"
-#include "src/presentation/frontends/qtfrontend/preferencesmenu.h"
-#include "src/presentation/frontends/qtfrontend/toolsmenu.h"
+#include <QObject>
+#include <QMainWindow>
 
-#include <QtGui>
+class FrameBar;
+class FrameView;
+class FlexibleSpinBox;
+class CameraHandler;
+class EditMenuHandler;
+class RunAnimationHandler;
+class ModelHandler;
+class SoundHandler;
+class MenuFrame;
+class FramePreferencesMenu;
+class PreferencesMenu;
+class ToolsMenu;
+class LanguageHandler;
+class EditObserver;
 
+class QApplication;
+class QKeyEvent;
+class QMouseEvent;
+class QDragEnterEvent;
+class QDropEvent;
+class QAction;
+class QMenu;
+class QLabel;
+class QVBoxLayout;
+class QHBoxLayout;
+class QPushButton;
+class QFileSystemWatcher;
 
 /**
- *The main window class for the stopmotion application. 
+ *The main window class for the stopmotion application.
  *This class sets up the main GUI and connects the buttons.
  *
  *@author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
 */
-class MainWindowGUI : public QMainWindow
-{
+class MainWindowGUI : public QMainWindow {
 	Q_OBJECT
 public:
 	enum {SAVE, SAVE_AS, UNDO, REDO, CUT, COPY, PASTE, GOTO};
-	
+
 	/**
 	 * Sets up the program main GUI and connect the widgets and handlers.
 	 * @param stApp the application class for changing translator
 	 * on runtime.
 	 */
 	MainWindowGUI(QApplication *stApp);
-	
+
 	/**
 	 * Cleans up after the mainwindowgui.
 	 */
 	~MainWindowGUI();
-	
+
 	/**
 	 * Overloaded mouse listener. Closes the embedded menues when the user
 	 * clicks inside the main window.
 	 * @param e information about the event.
 	 */
 	void mousePressEvent ( QMouseEvent * e );
-	
+
 	/**
 	 * Overloaded event listener which recieves information when a keyboard key is
 	 * pressed.
-	 * @param k information about the key event. 
+	 * @param k information about the key event.
 	 */
 	void keyPressEvent( QKeyEvent *k );
-	
+
 private:
 	QApplication *stApp;
 	QWidget *centerWidget;
@@ -89,7 +100,9 @@ private:
 	FrameView *frameView;
 	QWidget *gotoMenuWidget;
 	QHBoxLayout *gotoMenuWidgetLayout;
-	
+	QFileSystemWatcher *fileWatcher;
+	EditObserver *editObserver;
+
 	//Actions
 	QAction *newAct;
 	QAction *openAct;
@@ -111,8 +124,8 @@ private:
  	QAction *whatsthisAct;
 	QAction *aboutAct;
 	QAction *helpAct;
-	
-	//Menues
+
+	//Menus
 	QMenu *fileMenu;
 	QMenu *exportMenu;
 	QMenu *mostRecentMenu;
@@ -123,15 +136,15 @@ private:
 	ToolsMenu *toolsMenu;
 	FramePreferencesMenu *framePreferencesMenu;
 	PreferencesMenu *preferencesMenu;
-	
+
 	//MenuFrame *gotoMenu;
 	QPushButton *gotoMenuCloseButton;
-	
+
 	//Widgets
 	QLabel *numberDisplay;
 	FlexibleSpinBox *gotoSpinner;
 	QLabel *gotoFrameLabel;
-	
+
 	//Handlers
 	ModelHandler *modelHandler;
 	SoundHandler *soundHandler;
@@ -139,183 +152,207 @@ private:
 	EditMenuHandler *editMenuHandler;
 	LanguageHandler *languageHandler;
 	RunAnimationHandler *runAnimationHandler;
-	ExternalChangeMonitor *changeMonitor;
-	
-	char *lastVisitedDir;
-	
+
+	QString lastVisitedDir;
+
+	enum SaveDialogResult {
+		saveDialogSave,
+		saveDialogDiscard,
+		saveDialogCancel
+	};
+
 	/**
 	 * Creates the handlers for handling user requests.
 	 * @param stApp the application class for changing translator
 	 * on runtime.
 	 */
 	void createHandlers(QApplication *stApp);
-	
+
 	/**
-	 * Sets up the ExternalChangeMonitor to monitor the project directories
-	 * for changes in the project files.
+	 * Begins monitoring the workspace directory for interesting changes.
 	 */
 	void setupDirectoryMonitoring();
-	
+
 	/**
 	 * Creates key accelerators (keyboard shortcuts)
 	 *
 	 * More can be found in the function ToolsMenu::createAccelerators().
 	 */
 	void createAccelerators();
-	
+
 	/**
 	 * Creates the actions from which the menus are created.
 	 */
 	void createActions();
-	
+
 	/**
 	 * Creates and sets up the menu and the toolbar.
 	 */
 	 void createMenus();
-	
+
 	/**
 	 * Creates the preferences menu.
-	 * @param parent 
+	 * @param parent
 	 */
 	void makePreferencesMenu(QVBoxLayout *layout);
-	
+
 	/**
 	 *Creates and sets up the frameview.
 	 *@param parent the widget the frameview will be inserted into.
 	 */
 	void makeViews(QHBoxLayout *layout);
-	
+
 	/**
 	 *Creates and sets up the toolsmenu.
 	 *@param parent the widget the toolsmenu will be inserted into.
 	 */
 	void makeToolsMenu(QHBoxLayout *layout);
-	
+
 	/**
 	 * Creates and sets up the menu for going to a specified framenumber.
 	 * @param parent the widget the gotomenu will be inserted into.
 	 */
 	void makeGotoMenu(QVBoxLayout *layout);
-	
+
 	/**
 	 * Sets up the statusbar with custom widgets.
 	 */
 	void makeStatusBar();
-		
+
 	/**
 	 *Overloaded event listener for when when a drag enters the application.
 	 *@param event information about the dragEnterEvent
 	 */
 	void dragEnterEvent ( QDragEnterEvent * event);
-	
+
 	/**
 	 *Overloaded event listener for when a drop event occur in the application.
 	 *@param event information about the dropEvent
 	 */
 	void dropEvent(QDropEvent *event);
-	
+
 	/**
 	 * Overloaded event listener which recieves information when a keyboard key is
 	 * released
-	 * @param k information about the key event. 
+	 * @param k information about the key event.
 	 */
 	void keyReleaseEvent ( QKeyEvent * k );
-	
+
 	/**
 	 * Retranslates the tooltip and whatsthis text.
 	 *
 	 * This function is called from retranslateStrings.
 	 */
 	void retranslateHelpText();
-	
+
 	/**
 	 * Changes the project history so that they shows correctly in the
 	 * most recent menu.
 	 */
 	void setMostRecentProject();
-	
+
 	/**
 	 * Updates the most recent menu.
 	 */
 	void updateMostRecentMenu();
-	
-private slots:
-	
+
 	/**
-	 * Retranslates the strings.
-	 *
-	 * This function is called after a new translator has been installed so that 
-	 * the program strings are retranslated to the new language.
+	 * If the project has unsaved changes, asks the user if the project should
+	 * be saved. If so, saves it.
+	 * @return The user's response. {@ref SaveDialogDiscard} is returned if
+	 * there were found to be no changes.
 	 */
-	void retranslateStrings();
-	
-	/**
-	 * Creates a new project.
-	 */
-	void newProject();
-	
-	/**
-	 * Opens a project.
-	 */
-	void openProject();
-	
+	SaveDialogResult saveIfNecessary();
+	void doOpenProject(const char* projectFile);
+
+public slots:
+
 	/**
 	 * Opens a saved project.
 	 * @param projectFile the project to open
 	 */
 	void openProject(const char *projectFile);
-	
+
+private slots:
+
+	/**
+	 * Retranslates the strings.
+	 *
+	 * This function is called after a new translator has been installed so that
+	 * the program strings are retranslated to the new language.
+	 */
+	void retranslateStrings();
+
+	/**
+	 * Creates a new project.
+	 */
+	void newProject();
+
+	/**
+	 * Opens a project.
+	 */
+	void openProject();
+
 	/**
 	 * Opens a project.
 	 */
 	void openMostRecent();
 	void openSecondMostRecent();
 	void openThirdMostRecent();
-	
+
 	/**
 	 * Saves the project to the last saved file.
+	 * @return {@c false} if a filename was required but the user cancelled;
+	 * in this case the project was not saved.
 	 */
-	void saveProject();
+	bool saveProject();
 
-        /** 
-         * Quits gracefully (asking the user to save unsaved work)
-         */
-        void quitProgram();
-	
 	/**
 	 * Saves the project to a given filename from the user.
+	 * @return {@c false} if the user cancelled; in this case the project was
+	 * not saved.
 	 */
-	void saveProjectAs();
-	
+	bool saveProjectAs();
+
 	/**
 	 * Brings up an about dialog with information about the application.
 	 */
 	void showAboutDialog();
-	
+
 	/**
-	 * Brings up an help dialog with the stopmotion user manua.
+	 * Brings up an help dialog with the stopmotion user manual.
 	 */
 	void showHelpDialog();
-	
+
 	/**
 	 * Brings up a preferences menu where the user can set preferences for the
 	 * application.
 	 */
 	void showPreferencesMenu();
-	
+
 	/**
 	 * Exports the current project to a video file choosen by the user. It uses the
 	 * registered video encoder -- if registered -- to export.
 	 */
 	void exportToVideo();
-	
+
 	/**
 	 * Exports the current project to a valid Cinerella project.
 	 */
 	void exportToCinerella();
 
 	void whatsThis();
-	
+
+	/**
+	 * Notification that the framebar's active frame has changed.
+	 */
+	void updateNewActiveFrame(int scene, int frame);
+
+	/**
+	 * Notification that the clipboard contents have changed.
+	 */
+	void updatePasteEnabled();
+
 public slots:
 	/**
 	 * This slot is notified when the size of the model changes so that menuframe
@@ -323,9 +360,9 @@ public slots:
 	 * @param modelSize the new size of the model.
 	 */
 	void modelSizeChanged( int modelSize );
-	
+
 	/**
-	 * Sets differents buttons such as undo, save as and copy to be enabled.
+	 * Sets different buttons such as undo, save as and copy to be enabled.
 	 */
 	void activateMenuOptions();
 };
