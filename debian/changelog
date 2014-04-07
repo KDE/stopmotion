@@ -1,3 +1,25 @@
+stopmotion (0.8.0~beta1-1) unstable; urgency=medium
+
+  * New upstream version 0.8.0beta1
+  * No longer uses libinotify
+  * Fixes many issues in Ubuntu but tracker:
+    - 863965 No save dialog on exit (not fixed, but not so relevant now
+      that recovery is seamless)
+    - 910532 Edit operations are not correct
+    - 923447 Deleting scene not undoable
+    - 1194805 Resume capture will start at a random point
+    - 1194818 Recovery function puts frames in the wrong order
+    - 863979 Captured frames not stored on disk
+    - 1069370 Cut and paste doesn't work on the timeline
+    - 864052 Autosaving (recovery does this job)
+    - 1036282 Onionskinning ignores changes in the timeline
+    - 1050180 Framebar reentrancy causes crashes
+    - 1069372 Inconsistent drag and drop behaviour
+    - 1210879 We need a decent undo and recovery system
+  * Exporting gets the frames in the right order
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Mon, 07 Apr 2014 23:47:18 +0100
+
 stopmotion (0.7.2-1) unstable; urgency=low
 
   * New upstream version
