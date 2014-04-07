@@ -44,7 +44,7 @@ FileException::FileException(const char* functionName, int errorno) {
 			strerror(errorno));
 }
 
-const char* FileException::what() const _GLIBCXX_USE_NOEXCEPT {
+const char* FileException::what() const throw() {
 	return buffer;
 }
 

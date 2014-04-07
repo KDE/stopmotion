@@ -42,7 +42,7 @@ class Scene;
 class FailedToInitializeCommandLogger : public std::exception {
 public:
 	FailedToInitializeCommandLogger();
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+	const char* what() const throw();
 };
 
 /**

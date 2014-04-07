@@ -46,7 +46,7 @@ class TestException : public std::exception {
 public:
 	TestException(const char* message) : msg(message) {
 	}
-	const char* what() const _GLIBCXX_USE_NOEXCEPT {
+	const char* what() const throw() {
 		return msg;
 	}
 };

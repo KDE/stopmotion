@@ -32,7 +32,7 @@
  * that is of the wrong type, is not present or otherwise does not parse.
  */
 class IncorrectParameterException : public std::exception {
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+	const char* what() const throw();
 };
 
 /**
@@ -40,7 +40,7 @@ class IncorrectParameterException : public std::exception {
  * characters at its end.
  */
 class MalformedLineException : public std::exception {
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+	const char* what() const throw();
 };
 
 /**
@@ -51,7 +51,7 @@ class ParametersOutOfRangeException : public std::exception {
 public:
 	ParametersOutOfRangeException() {
 	}
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+	const char* what() const throw();
 };
 
 class CommandReplayerImpl;
@@ -67,11 +67,11 @@ class RandomSource;
  * on a @ref CommandFactory which has had no constructive commands set.
  */
 class UnknownCommandException : public std::exception {
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+	const char* what() const throw();
 };
 
 class CommandNameAlreadyUsedException : public std::exception {
-	const char* what() const _GLIBCXX_USE_NOEXCEPT;
+	const char* what() const throw();
 };
 
 class Executor {

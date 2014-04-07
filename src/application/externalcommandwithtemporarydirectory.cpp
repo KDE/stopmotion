@@ -38,7 +38,7 @@ public:
 		strncpy(msg, reason, sizeof(msg) - 1);
 		msg[sizeof(msg) - 1] = '\0';
 	}
-	const char* what() const _GLIBCXX_USE_NOEXCEPT {
+	const char* what() const throw() {
 		return msg;
 	}
 };

@@ -29,7 +29,7 @@
 FrameOutOfRangeException::FrameOutOfRangeException() {
 }
 
-const char* FrameOutOfRangeException::what() const _GLIBCXX_USE_NOEXCEPT {
+const char* FrameOutOfRangeException::what() const throw() {
 	return "Internal error: Frame out of range!";
 }
 
