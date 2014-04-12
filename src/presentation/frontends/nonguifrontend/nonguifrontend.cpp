@@ -152,7 +152,6 @@ class DirIterator : public StringIterator {
 	std::string::size_type dirLen;
 	DIR *dp;
 	struct dirent *ep;
-	struct stat st;
 public:
 	DirIterator(const char* path)
 			: buffer(path), dirLen(0), dp(opendir(path)) {
@@ -186,9 +185,11 @@ public:
 			ep = readdir(dp);
 			while (ep && ep->d_type != DT_REG)
 				ep = readdir(dp);
-			buffer.resize(dirLen);
-			buffer.append(ep->d_name);
-			buffer.c_str();
+			if (ep) {
+				buffer.resize(dirLen);
+				buffer.append(ep->d_name);
+				buffer.c_str();
+			}
 		}
 	}
 };
@@ -223,13 +224,9 @@ void NonGUIFrontend::getAbsolutePath(std::string& out, const char *path) {
 	} else {
 		out = path;
 	}
-	struct stat st;
-	stat(out.c_str(), &st);
-	// if it is a directory
-	if ( S_ISDIR(st.st_mode) != 0) {
-		if (out[out.size() - 1] != '/')
-			out.append("/");
-	}
+	// ensure it ends in /
+	if (out[out.size() - 1] != '/')
+		out.append("/");
 }
 
 
