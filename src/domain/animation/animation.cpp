@@ -472,7 +472,8 @@ void Animation::replayCommandLog(FILE* file) {
 	long length = 0;
 	if (frontend && startPos != -1 && 0 == fseek(file, 0, SEEK_END)) {
 		length = ftell(file);
-		fseek(file, startPos, SEEK_SET);
+		if (0 != fseek(file, startPos, SEEK_SET))
+			throw FileException("replayCommandLog", errno);
 		if (length < 1000) {
 			length = 0;
 		} else {

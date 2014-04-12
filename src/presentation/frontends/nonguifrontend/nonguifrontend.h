@@ -70,6 +70,12 @@ private:
 	int parseArguments(int argc, char **argv);
 	void addFrames(const char *directory);
 	void save(const char *directory);
+	/**
+	 * Sets {@a out} to be the absolute path of {@a path}, always with a
+	 * trailing backslash.
+	 * @param[out] out Receives the path returned.
+	 * @param[in] path The path to make absolute.
+	 */
 	void getAbsolutePath(std::string& out, const char *path);
 	int checkFiles(const char *directory);
 };
