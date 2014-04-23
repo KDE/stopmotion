@@ -259,11 +259,11 @@ DISTFILES += src/config.cpp.in \
     AUTHORS \
     README \
     COPYING \
-    $$system(ls -x manual/*.html) \
-    $$system(ls -x manual/graphic/*.png) \
-    $$system(ls -x manual/icons/*.png) \
-    $$system(ls -x manual/screenshots/*.png) \
-    $$system(ls -x translations/*.qm)
+    $$system(ls -1 manual/*.html) \
+    $$system(ls -1 manual/graphic/*.png) \
+    $$system(ls -1 manual/icons/*.png) \
+    $$system(ls -1 manual/screenshots/*.png) \
+    $$system(ls -1 translations/*.ts | sed -e 's/\\.ts$/\\.qm/')
 DISTFILES -= stopmotion.pro \
              src/config.cpp
 
