@@ -40,8 +40,6 @@
 #include <cstring>
 
 
-const int FrameView::alphaLut[5] = { 128, 64, 43, 32, 26 };
-
 enum { IMAGE_CACHE_SIZE = 10 };
 
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
@@ -164,9 +162,9 @@ void FrameView::drawOnionSkins() {
 		switch (mode) {
 		case 0:
 			// Image mixing
-			for (int i = std::max(0, activeFrame - mixCount + 1);
-					i <= activeFrame; ++i) {
-				const char* path = anim->getImagePath(activeScene, i);
+			for (int i = 0; i != std::min(mixCount, activeFrame + 1); ++i) {
+				const char* path = anim->getImagePath(
+						activeScene, activeFrame - i);
 				frameSurface = imageCache.get(path);
 				if (frameSurface != 0) {
 					SDL_Rect dst2;
@@ -174,16 +172,15 @@ void FrameView::drawOnionSkins() {
 					dst2.y = (screen->h - frameSurface->h) >> 1;
 					dst2.w = frameSurface->w;
 					dst2.h = frameSurface->h;
-					SDL_SetAlpha(frameSurface, SDL_SRCALPHA, alphaLut[i]);
+					int alpha = 256 / (i + 2);
+					SDL_SetAlpha(frameSurface, SDL_SRCALPHA, alpha);
 					SDL_BlitSurface(frameSurface, 0, screen, &dst2);
 				}
 			}
 			break;
 		case 1:
 			// Image differentiating
-			if (activeFrame == 0)
-				SDL_BlitSurface(videoSurface, 0, screen, &dst);
-			else if (0 <= activeFrame) {
+			if (0 <= activeFrame) {
 				const char* path = anim->getImagePath(activeScene, activeFrame);
 				SDL_Surface *last = imageCache.get(path);
 				SDL_Surface *tmp = differentiateSurfaces(videoSurface, last);
