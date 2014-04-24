@@ -467,6 +467,7 @@ void ToolsMenu::fixNavigationButtons(int modelSize) {
 			ui->previousFrameButton->setEnabled(false);
 			ui->nextFrameButton->setEnabled(false);
 			ui->playButton->setEnabled(false);
+			ui->loopButton->setEnabled(false);
 			ui->pauseButton->setEnabled(false);
 			ui->stopButton->setEnabled(false);
 			ui->toEndButton->setEnabled(false);
@@ -477,6 +478,7 @@ void ToolsMenu::fixNavigationButtons(int modelSize) {
 			ui->previousFrameButton->setEnabled(true);
 			ui->nextFrameButton->setEnabled(true);
 			ui->playButton->setEnabled(true);
+			ui->loopButton->setEnabled(true);
 			ui->pauseButton->setEnabled(true);
 			ui->stopButton->setEnabled(true);
 			ui->toEndButton->setEnabled(true);
@@ -489,6 +491,7 @@ void ToolsMenu::fixNavigationButtons(int modelSize) {
 void ToolsMenu::cameraOn(bool isOn) {
 	if (isOn) {
 		ui->playButton->setEnabled(false);
+		ui->loopButton->setEnabled(false);
 		ui->pauseButton->setEnabled(false);
 		ui->stopButton->setEnabled(false);
 		ui->launchGimp->setEnabled(false);
@@ -497,6 +500,7 @@ void ToolsMenu::cameraOn(bool isOn) {
 		ui->viewChooseCombo->setCurrentIndex(0);
 	} else {
 		ui->playButton->setEnabled(true);
+		ui->loopButton->setEnabled(true);
 		ui->pauseButton->setEnabled(true);
 		ui->stopButton->setEnabled(true);
 		ui->launchGimp->setEnabled(true);
