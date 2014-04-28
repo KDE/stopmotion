@@ -1,4 +1,4 @@
-stopmotion (0.8.0~beta3-1) unstable; urgency=medium
+stopmotion (0.8.0~beta4-1) unstable; urgency=medium
 
   * New upstream version
   * No longer uses libinotify
@@ -18,7 +18,7 @@ stopmotion (0.8.0~beta3-1) unstable; urgency=medium
     - 1210879 We need a decent undo and recovery system
   * Exporting gets the frames in the right order
 
- -- Barak A. Pearlmutter <bap@debian.org>  Mon, 07 Apr 2014 23:56:21 +0100
+ -- Barak A. Pearlmutter <bap@debian.org>  Mon, 28 Apr 2014 19:00:28 +0100
 
 stopmotion (0.7.2-1) unstable; urgency=low
 
