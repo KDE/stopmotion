@@ -242,12 +242,8 @@ INCLUDEPATH += . \
     src/foundation \
     src/domain \
     src/domain/animation \
-    src/presentation \
-    $$system(sdl-config --cflags | sed -e 's/-I//g') \
-    $$system(xml2-config --cflags | sed -e 's/-I//g')
-LIBS += $$system(sdl-config --libs) \
-        $$system(xml2-config --libs) \
-        -lSDL_image -ltar -lvorbisfile -lX11
+    src/presentation
+LIBS += -lSDL_image -ltar -lvorbisfile -lX11
 
 DISTFILES += src/config.cpp.in \
     graphics/stopmotion.png \
@@ -259,11 +255,11 @@ DISTFILES += src/config.cpp.in \
     AUTHORS \
     README \
     COPYING \
-    $$system(ls -x manual/*.html) \
-    $$system(ls -x manual/graphic/*.png) \
-    $$system(ls -x manual/icons/*.png) \
-    $$system(ls -x manual/screenshots/*.png) \
-    $$system(ls -x translations/*.qm)
+    $$system(ls -1 manual/*.html) \
+    $$system(ls -1 manual/graphic/*.png) \
+    $$system(ls -1 manual/icons/*.png) \
+    $$system(ls -1 manual/screenshots/*.png) \
+    $$system(ls -1 translations/*.ts | sed -e 's/\\.ts$/\\.qm/')
 DISTFILES -= stopmotion.pro \
              src/config.cpp
 
@@ -273,7 +269,7 @@ isEmpty(PREFIX) {
  PREFIX = /usr/local
 }
 
-PKGCONFIG += sdl SDL_image vorbisfile
+PKGCONFIG += sdl SDL_image vorbisfile libxml-2.0
 DEFINES += PREFIX_PATH=\"\\\"$${PREFIX}\\\"\"
 TEMPLATE = app
 DESTDIR=.
