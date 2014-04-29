@@ -185,7 +185,7 @@ void readSto(const char* filename) {
 
 // appends .sto to filename if appropriate to make a project filename
 void ProjectSerializer::setProjectFile(const char *filename) {
-	static const char* appendix = ".sto";
+	static const char appendix[] = ".sto";
 	const size_t len = strlen(filename);
 	char* newProjectFile = new char[len + sizeof(appendix)];
 	strcpy(newProjectFile, filename);
