@@ -775,14 +775,16 @@ MainWindowGUI::SaveDialogResult MainWindowGUI::saveIfNecessary() {
 
 void MainWindowGUI::newProject() {
 	if (saveDialogCancel != saveIfNecessary()) {
-	  DomainFacade::getFacade()->newProject();
-	  saveAct->setEnabled(false);
-	  DomainFacade::getFacade()->clearHistory();
-	  modelSizeChanged(0);
-	  toolsMenu->fixNavigationButtons(0);
+		DomainFacade::getFacade()->newProject();
+		// It would be better if this was a signal emission, but it seems that
+		// connect(this, ...) is problematic for some reason.
+		frameView->workspaceCleared();
+		saveAct->setEnabled(false);
+		DomainFacade::getFacade()->clearHistory();
+		modelSizeChanged(0);
+		toolsMenu->fixNavigationButtons(0);
 	}
 }
-
 
 void MainWindowGUI::openProject() {
 	if (saveDialogCancel != saveIfNecessary()) {
@@ -815,6 +817,7 @@ void MainWindowGUI::updatePasteEnabled() {
 void MainWindowGUI::doOpenProject(const char* projectFile) {
 	assert(projectFile != NULL);
 	DomainFacade::getFacade()->openProject(projectFile);
+	frameView->workspaceCleared();
 	saveAsAct->setEnabled(true);
 	saveAct->setEnabled(true);
 	setMostRecentProject();

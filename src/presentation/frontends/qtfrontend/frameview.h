@@ -137,6 +137,11 @@ public slots:
 	 */
 	void fileChanged(const QString &path);
 
+	/**
+	 * Receives notification that the files in the workspace have changed.
+	 */
+	void workspaceCleared();
+
 protected:
 	void resizeEvent(QResizeEvent *);
 	void paintEvent(QPaintEvent *);

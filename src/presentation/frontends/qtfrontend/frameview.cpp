@@ -127,6 +127,11 @@ void FrameView::updatePlayFrame(int sceneNumber, int frameNumber) {
 }
 
 
+void FrameView::workspaceCleared() {
+	imageCache.clear();
+}
+
+
 void FrameView::resizeEvent(QResizeEvent*) {
 	QApplication::syncX();
 
