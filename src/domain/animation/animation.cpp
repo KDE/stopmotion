@@ -290,7 +290,7 @@ void Animation::saveProject(const char *filename) {
 	}
 	serializer->save(filename, *scenes, frontend);
 	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
-	if (ensureUnlinked(currentDat.path())) {
+	if (!ensureUnlinked(currentDat.path())) {
 		Logger::get().logWarning("currentModelFile not removed after saving");
 	}
 	logger->setLogFile(0);

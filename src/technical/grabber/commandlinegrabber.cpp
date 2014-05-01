@@ -106,7 +106,7 @@ bool CommandLineGrabber::tearDown()
 
 bool CommandLineGrabber::grab()
 {
-	if ( system(prePoll.c_str()) != 0 ) {
+	if ( prePoll.empty() || system(prePoll.c_str()) != 0 ) {
 		isInitSuccess = false;
 		return false;
 	}

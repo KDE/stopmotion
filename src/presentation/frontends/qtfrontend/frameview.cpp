@@ -38,7 +38,7 @@
 #include <cstdio>
 #include <stdlib.h>
 #include <cstring>
-
+#include <sstream>
 
 enum { IMAGE_CACHE_SIZE = 10 };
 
@@ -131,9 +131,10 @@ void FrameView::resizeEvent(QResizeEvent*) {
 	QApplication::syncX();
 
 	// Set the new video mode with the new window size
-	char variable[64];
-	sprintf(variable, "SDL_WINDOWID=0x%lx", winId());
-	putenv(variable);
+	std::stringstream windowId;
+	windowId << "0x" << std::hex << static_cast<long>(winId());
+	std::string wid = windowId.str();
+	setenv("SDL_WINDOWID", wid.c_str(), 1);
 	if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
 		std::string msg("Unable to initialize SDL: ");
 		msg.append( SDL_GetError() );
