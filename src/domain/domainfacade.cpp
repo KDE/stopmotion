@@ -318,3 +318,7 @@ bool DomainFacade::canUndo() {
 bool DomainFacade::canRedo() {
 	return animationModel->canRedo();
 }
+
+void DomainFacade::setUndoRedoObserver(UndoRedoObserver* observer) {
+	animationModel->setUndoRedoObserver(observer);
+}

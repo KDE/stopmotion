@@ -256,6 +256,12 @@ public:
 	bool canRedo();
 
 	/**
+	 * Sets the observer to receive notification when the can undo/can redo
+	 * state changes.
+	 */
+	void setUndoRedoObserver(UndoRedoObserver* observer);
+
+	/**
 	 * Retrieves the project file.
 	 * @return the project file if it has been set, NULL otherwise.
 	 */

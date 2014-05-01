@@ -157,6 +157,10 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	//Sets all the text in the program.
 	retranslateStrings();
 
+	DomainFacade* facade = DomainFacade::getFacade();
+	setTitle(facade->canUndo());
+	facade->setUndoRedoObserver(this);
+
 	/* Add another logo here
 	QLabel *l = new QLabel(this);
 	l->setMaximumSize(150, menuBar()->height() - 5);
@@ -780,6 +784,7 @@ void MainWindowGUI::newProject() {
 		// connect(this, ...) is problematic for some reason.
 		frameView->workspaceCleared();
 		saveAct->setEnabled(false);
+		setTitle(false);
 		DomainFacade::getFacade()->clearHistory();
 		modelSizeChanged(0);
 		toolsMenu->fixNavigationButtons(0);
@@ -819,7 +824,8 @@ void MainWindowGUI::doOpenProject(const char* projectFile) {
 	DomainFacade::getFacade()->openProject(projectFile);
 	frameView->workspaceCleared();
 	saveAsAct->setEnabled(true);
-	saveAct->setEnabled(true);
+	saveAct->setEnabled(false);
+	setTitle(false);
 	setMostRecentProject();
 	int size = DomainFacade::getFacade()->getModelSize();
 	if (size > 0) {
@@ -874,8 +880,8 @@ bool MainWindowGUI::saveProjectAs() {
 	if ( file.isNull() )
 		return false;
 	DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
-	//fileMenu->setItemEnabled(SAVE, true);
-	saveAct->setEnabled(true);
+	saveAct->setEnabled(false);
+	setTitle(false);
 	setMostRecentProject();
 	return false;
 }
@@ -1043,6 +1049,15 @@ void MainWindowGUI::keyPressEvent( QKeyEvent *k )
 	}
 }
 
+void MainWindowGUI::updateCanUndo(bool newCanUndo) {
+	undoAct->setEnabled(newCanUndo);
+	saveAct->setEnabled(newCanUndo);
+	setTitle(newCanUndo);
+}
+
+void MainWindowGUI::updateCanRedo(bool newCanRedo) {
+	redoAct->setEnabled(newCanRedo);
+}
 
 void MainWindowGUI::keyReleaseEvent ( QKeyEvent * k )
 {
@@ -1054,6 +1069,23 @@ void MainWindowGUI::keyReleaseEvent ( QKeyEvent * k )
 			break;
 		}
 	}
+}
+
+
+void MainWindowGUI::setTitle(bool modified) {
+	std::string title;
+	if (modified)
+		title = "* ";
+	const char* name = DomainFacade::getFacade()->getProjectFile();
+	if (name) {
+		const char* lastDot = strrchr(name, '.');
+		const char* lastSlash = strrchr(name, '/');
+		title.append(lastSlash? lastSlash + 1 : name,
+				lastDot? lastDot : name + strlen(name));
+	} else {
+		title.append("Stopmotion");
+	}
+	setWindowTitle(title.c_str());
 }
 
 

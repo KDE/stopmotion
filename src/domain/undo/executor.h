@@ -183,6 +183,13 @@ public:
 	 * Useful for determining how many randomized tests to run.
 	 */
 	virtual int commandCount() const = 0;
+	/**
+	 * Sets the observer to be notified when {@ref canUndo} or {@ref canRedo}
+	 * change what they would return.
+	 * @param observer The new observer to be set. The old observer is unset.
+	 * A null pointer means no observer. Ownership is not passed.
+	 */
+	virtual void setUndoRedoObserver(UndoRedoObserver* observer) = 0;
 };
 
 /**

@@ -27,6 +27,7 @@
 class CommandList;
 class FileNameVisitor;
 class CommandLogger;
+class UndoRedoObserver;
 
 /**
  * Base class of all command classes, objects of which are manipulated by the
@@ -126,9 +127,21 @@ Command* createNullCommand();
 class CommandHistory {
 	CommandList* past;
 	CommandList* future;
+	UndoRedoObserver* observer;
+	bool previousCanUndo;
+	bool previousCanRedo;
+	void notifyObserver();
 public:
 	CommandHistory();
 	~CommandHistory();
+	/**
+	 * Sets a new observer to be notified when the functions {@ref canUndo} and
+	 * {@ref canRedo} change what they would return.
+	 * @param observer The new observer. Any previous observer is unset. A null
+	 * pointer means that the old observer will be unset and no new observer
+	 * will be set. Ownership is not passed.
+	 */
+	void setUndoRedoObserver(UndoRedoObserver* observer);
 	/**
 	 * Returns 'true' if and only if Undo will perform an action, i.e. if
 	 * there are any actions in the history to undo.

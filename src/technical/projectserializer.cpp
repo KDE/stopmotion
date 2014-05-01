@@ -70,8 +70,7 @@ ProjectSerializer::ProjectSerializer() : projectFile(0) {
 }
 
 ProjectSerializer::~ProjectSerializer() {
-	delete[] projectFile;
-	projectFile = 0;
+	resetProjectFile();
 }
 
 class TarFileRead {
@@ -495,4 +494,9 @@ void ProjectSerializer::saveDOMToFile(xmlDocPtr doc, const char* filename) {
 
 const char* ProjectSerializer::getProjectFile() {
 	return projectFile;
+}
+
+void ProjectSerializer::resetProjectFile() {
+	delete[] projectFile;
+	projectFile = 0;
 }
