@@ -218,11 +218,27 @@ void MainWindowGUI::createAccelerators()
 	connect(nextFrameAccel, SIGNAL(activated()), frameBar, SLOT(selectNextFrame()));
 	QShortcut *nextFrameAccel2 = new QShortcut(QKeySequence(Qt::Key_Right), this);
 	connect(nextFrameAccel2, SIGNAL(activated()), frameBar, SLOT(selectNextFrame()));
+	QShortcut *nextFrameSelectionAccel = new QShortcut(
+			QKeySequence(Qt::ShiftModifier + Qt::Key_L), this);
+	connect(nextFrameSelectionAccel, SIGNAL(activated()),
+			frameBar, SLOT(moveSelectionToNextFrame()));
+	QShortcut *nextFrameSelectionAccel2 = new QShortcut(
+			QKeySequence(Qt::ShiftModifier + Qt::Key_Right), this);
+	connect(nextFrameSelectionAccel2, SIGNAL(activated()),
+			frameBar, SLOT(moveSelectionToNextFrame()));
 
 	QShortcut *previousFrameAccel = new QShortcut(QKeySequence(Qt::Key_J), this);
 	connect(previousFrameAccel, SIGNAL(activated()), frameBar, SLOT(selectPreviousFrame()));
 	QShortcut *previousFrameAccel2 = new QShortcut(QKeySequence(Qt::Key_Left), this );
 	connect(previousFrameAccel2, SIGNAL(activated()), frameBar, SLOT(selectPreviousFrame()));
+	QShortcut *previousFrameSelectionAccel = new QShortcut(
+			QKeySequence(Qt::ShiftModifier + Qt::Key_J), this);
+	connect(previousFrameSelectionAccel, SIGNAL(activated()),
+			frameBar, SLOT(moveSelectionToPreviousFrame()));
+	QShortcut *previousFrameSelectionAccel2 = new QShortcut(
+			QKeySequence(Qt::ShiftModifier + Qt::Key_Left), this);
+	connect(previousFrameSelectionAccel2, SIGNAL(activated()),
+			frameBar, SLOT(moveSelectionToPreviousFrame()));
 
 	QShortcut *nextSceneAccel = new QShortcut(QKeySequence(Qt::Key_O), this);
 	connect(nextSceneAccel, SIGNAL(activated()), frameBar, SLOT(selectNextScene()));
