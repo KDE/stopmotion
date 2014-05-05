@@ -263,12 +263,12 @@ bool FrameView::on() {
 		const char *device =
 			prefs->getPreference(QString("device%1").arg(activeDev).toLatin1().constData(), "");
 		QString pre = QString(prepoll).replace("$VIDEODEVICE", device);
-		freeProperty(prepoll);
+		xmlFree((xmlChar*)prepoll);
 		prepoll = strdup(pre.toLatin1().constData());
 		QString sd = QString(startDaemon).replace("$VIDEODEVICE", device);
-		freeProperty(startDaemon);
+		xmlFree((xmlChar*)startDaemon);
 		startDaemon = strdup(sd.toLatin1().constData());
-		freeProperty(device);
+		xmlFree((xmlChar*)device);
 	}
 	else {
 		QMessageBox::warning(this, tr("Warning"), tr(
@@ -310,7 +310,7 @@ bool FrameView::on() {
 	startDaemon = 0;
 
 	grabber->setStopCommand(stopDaemon);
-	freeProperty(stopDaemon);
+	xmlFree((xmlChar*)stopDaemon);
 
 	if (isCameraReady) {
 		this->initCompleted();
@@ -520,13 +520,6 @@ SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2) 
 	SDL_UnlockSurface(diffSurface);
 
 	return diffSurface;
-}
-
-
-void FrameView::freeProperty(const char *prop, const char *tag) {
-	if (strcmp(prop, tag) != 0) {
-		xmlFree((xmlChar *)prop);
-	}
 }
 
 void FrameView::fileChanged(const QString& path) {
