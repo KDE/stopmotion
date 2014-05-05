@@ -75,6 +75,9 @@ ToolsMenu::ToolsMenu(RunAnimationHandler *runAnimationHandler,
 	createAccelerators();
 }
 
+ToolsMenu::~ToolsMenu() {
+	delete captureTimer;
+}
 
 void ToolsMenu::setupUi() {
 	ui->addFramesButton->setIcon( QPixmap(addframeicon) );

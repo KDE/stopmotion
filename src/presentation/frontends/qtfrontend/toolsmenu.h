@@ -47,6 +47,8 @@ public:
 			ModelHandler *modelHandler, CameraHandler *cameraHandler,
 			FrameBar *frameBar, QWidget *parent = 0 );
 
+	~ToolsMenu();
+
 	/**
 	 * Retranslates the strings.
 	 * This function is called after a new translator has been installed so that

@@ -87,13 +87,13 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 	assert(parent);
 	// For the .po files. findtr isn't as intelligent as luptate
 	tr("English");
-	
+
 	languagesMenu = parent->addMenu(tr("&Translation"));
 	connect(languagesMenu, SIGNAL(triggered(QAction *)), this, SLOT(changeLanguage(QAction *)));
-	
+
 	QDir dir(qmPath);
 	QStringList fileNames = dir.entryList(QStringList("stopmotion_*.qm"));
-	
+
 	//English is a special case (base language)
 	QAction *langAct = languagesMenu->addAction("&1 English");
 	langAct->setCheckable(true);
@@ -103,28 +103,29 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 	for (int i = 0; i < fileNames.size(); ++i) {
 		QTranslator translator;
 		translator.load(fileNames[i], qmPath);
-		
+
 		QString language = translator.translate("LanguageHandler", "English", 
 			"This should be translated to the name of the "
 			"language you are translating to, in that language. "
 			"Example: English = Deutsch (Deutsch is \"German\" "
 			"in German)");
-		
+
 		// Checks that the mimimum requirement for accepting a string is covered.
 		// The mimimum requirement is that the menu option string (English) is translated.
 		if (language != "") {
 			langAct = languagesMenu->addAction(QString("&%1 %2").arg(num++).arg(language));
 			langAct->setCheckable(true);
 			langAct->setChecked(false);
-			
+
 			QString locale = fileNames[i];
 			locale = locale.mid(locale.indexOf('_') + 1);
 			locale.truncate(locale.indexOf('.'));
 			locales.insert(langAct, locale);
 		}
 	}
-	
-	const char *languagePref = PreferencesTool::get()->getPreference("language", "en");
+
+	const char *en = "en";
+	const char *languagePref = PreferencesTool::get()->getPreference("language", en);
 	activeAction = locales.key(QString(languagePref));
 	if (activeAction != 0) {
 		activeAction->setChecked(true);
@@ -132,11 +133,11 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 	else {
 		Logger::get().logWarning("Something wrong with the locale!");
 	}
-	
-	if ( strcmp(languagePref, "en") != 0) {
+
+	if (languagePref != en) {
 		xmlFree((xmlChar*)languagePref);
 	}
-	
+
 	return languagesMenu;
 }
 

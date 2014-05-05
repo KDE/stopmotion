@@ -174,6 +174,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 
 
 MainWindowGUI::~MainWindowGUI() {
+	delete editObserver;
 }
 
 

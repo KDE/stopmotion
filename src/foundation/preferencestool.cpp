@@ -220,17 +220,13 @@ int PreferencesTool::getPreference(const char * key, const int defaultValue)
 {
 	checkInitialized();
 	xmlNode *node = findNode(key);
-	if (node != NULL) {
-		char *tmp = (char*)xmlGetProp(node, BAD_CAST "attribute");
-		int ret = atoi(tmp);
-		if (xmlStrEqual((xmlChar*)tmp, BAD_CAST key)) {
-			xmlFree((xmlChar*)tmp);
-		}
-		return ret;
-	}
-	else {
+	if (!node) {
 		return defaultValue;
 	}
+	xmlChar *tmp = xmlGetProp(node, BAD_CAST "attribute");
+	int ret = atoi((char*)tmp);
+	xmlFree(tmp);
+	return ret;
 }
 
 
@@ -257,22 +253,20 @@ bool PreferencesTool::flushPreferences()
 }
 
 
-xmlNodePtr PreferencesTool::findNode(const char * key)
-{
+xmlNodePtr PreferencesTool::findNode(const char * key) {
 	//Search through the preferences for the element with a key which
 	//equals the key parameter.
 	xmlNode *node = preferences->children;
 	for (; node; node = node->next) {
 		if (node->type == XML_ELEMENT_NODE) {
-			xmlChar *prop = xmlGetProp(node, BAD_CAST "key");	
-			if (xmlStrEqual(prop, BAD_CAST key)) {
-				xmlFree(prop);
-				break;
-			}
+			xmlChar *prop = xmlGetProp(node, BAD_CAST "key");
+			int found = xmlStrEqual(prop, BAD_CAST key);
 			xmlFree(prop);
+			if (found)
+				return node;
 		}
 	}
-	return node;
+	return 0;
 }
 
 

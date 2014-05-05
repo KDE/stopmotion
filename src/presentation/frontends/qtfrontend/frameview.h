@@ -191,6 +191,10 @@ private:
 	 * @return a surface with the rgb difference of s1 and s2.
 	 */
 	SDL_Surface* differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2);
+	/**
+	 * @todo this function just cannot be used correctly. Remove tag parameter
+	 * at least; but better to have an object to look after the xmlChar*.
+	 */
 	void freeProperty(const char *prop, const char *tag = "");
 	void drawOnionSkins();
 };
