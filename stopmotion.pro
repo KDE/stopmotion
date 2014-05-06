@@ -319,3 +319,8 @@ dummy.extra += chmod 755 $(INSTALL_ROOT)/$${PREFIX}/share/stopmotion/translation
 INSTALLS += target translations htmldoc icon desktop dummy
 
 QMAKE_STRIP=:
+
+# Build and run tests with make test
+QMAKE_EXTRA_TARGETS += test
+test.target = test
+test.commands = cd src/test && qmake && make test
