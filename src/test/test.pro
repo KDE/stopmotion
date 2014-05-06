@@ -103,7 +103,7 @@ INCLUDEPATH += ../.. \
 oomtestutil.target = oomteststub.o
 oomtestutil.commands = make -f oomtestutil.mak
 oomtestutil.depends = oomteststub.cpp oomtestutil.cpp oomtestutil.h
-QMAKE_EXTRA_TARGETS += oomtestutil
+QMAKE_EXTRA_TARGETS += oomtestutil test
 QMAKE_CLEAN += oomteststub.o oomtestutil.so
 PRE_TARGETDEPS = oomteststub.o
 LIBS += oomteststub.o -ldl \
@@ -118,3 +118,6 @@ debug:TARGET = test-d
 MOC_DIR = build
 RCC_DIR = build
 UI_DIR = build
+test.target=test
+test.commands=LD_PRELOAD=./oomtestutil.so ./test-d
+test.depends=oomtestutil.so test-d
