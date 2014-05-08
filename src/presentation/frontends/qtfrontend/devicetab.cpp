@@ -35,7 +35,7 @@
 #include <QTextEdit>
 
 
-DeviceTab::DeviceTab(QWidget *parent) 
+DeviceTab::DeviceTab(QWidget *parent)
 	: QWidget(parent)
 {
 	deviceTable          = 0;
@@ -48,7 +48,7 @@ DeviceTab::DeviceTab(QWidget *parent)
 	deviceLabel          = 0;
 	checkTableItem       = 0;
 	informationText      = 0;
-	
+
 	numAutoDetectedDevices = -1;
 	makeGUI();
 }
@@ -57,23 +57,23 @@ DeviceTab::DeviceTab(QWidget *parent)
 void DeviceTab::makeGUI()
 {
 	this->setFocusPolicy(Qt::ClickFocus);
-	
+
 	informationText = new QTextEdit;
 	informationText->setReadOnly(true);
 	informationText->setHtml(
 		"<p>" + tr("Below you can set which device Stopmotion should use for grabbing images "
-		"and displaying video.") + "<br><br>" + 
+		"and displaying video.") + "<br><br>" +
 		tr("You can select from the auto-detected devices below or add devices yourself. "
 		"It is not recommended to use devices which is not auto-detected, but feel free to do "
 		"it if you are an advanced user.") + "<br><br>" +
-		tr("The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import.") + 
+		tr("The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import.") +
 		"</p>");
 	informationText->setMinimumWidth(440);
 	informationText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	
+
 	QStringList lst;
 	lst << tr("Name") << tr("Description");
-	
+
 	deviceTable = new QTableWidget;
 	deviceTable->setColumnCount(2);
 	deviceTable->setRowCount(0);
@@ -82,35 +82,35 @@ void DeviceTab::makeGUI()
 	deviceTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
 	deviceTable->setHorizontalHeaderLabels(lst);
 	deviceTable->verticalHeader()->setVisible(false);
-	
+
 	connect(deviceTable, SIGNAL(cellClicked(int, int)), this, SLOT(activeCellChanged(int, int)));
 	connect(deviceTable, SIGNAL(cellChanged(int, int)), this, SLOT(contentsChanged(int, int)));
-	
+
 	addButton = new QPushButton(tr("&Add"));
 	addButton->setFocusPolicy( Qt::NoFocus );
 	connect(addButton, SIGNAL(clicked()), this, SLOT(addDevice()));
-	
+
 	removeButton = new QPushButton(tr("&Remove"));
 	connect( removeButton, SIGNAL(clicked()), this, SLOT(removeDevice()));
-	
+
 	editButton = new QPushButton(tr("&Edit"));
 	QObject::connect( editButton, SIGNAL(clicked()), this, SLOT(editDevice()));
-	
+
 	devicePreferences = new QGroupBox;
 	devicePreferences->setTitle(tr("Video device settings"));
 	devicePreferences->hide();
-	
+
 	closeChangeBoxButton = new QPushButton;
 	closeChangeBoxButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
 	closeChangeBoxButton->setIcon(QPixmap(closeicon));
 	closeChangeBoxButton->setFlat(true);
 	connect(closeChangeBoxButton, SIGNAL(clicked()),this, SLOT(closeChangeBox()));
-	
+
 	deviceLabel = new QLabel( tr("Video Device ($VIDEODEVICE): ") );
 	deviceEdit = new FlexibleLineEdit;
-	connect(deviceEdit, SIGNAL(textChanged(const QString &)), 
+	connect(deviceEdit, SIGNAL(textChanged(const QString &)),
 			this, SLOT(updateDeviceString(const QString &)));
-	
+
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(informationText);
 	QVBoxLayout *buttonLayout = new QVBoxLayout;
@@ -138,32 +138,32 @@ void DeviceTab::makeGUI()
 	devicePrefsLayout->addWidget(deviceEdit);
 	devicePreferences->setLayout(devicePrefsLayout);
 }
-	
+
 
 void DeviceTab::initialize()
 {
 	Logger::get().logDebug("Initializing video device settings");
 	PreferencesTool *pref = PreferencesTool::get();
-	
+
 	std::vector<GrabberDevice> devices = DomainFacade::getFacade()->getGrabberDevices();
 	numAutoDetectedDevices = devices.size();
 	deviceTable->setRowCount(numAutoDetectedDevices);
-	
+
 	// Auto-detected devices
 	for (int i = 0; i < numAutoDetectedDevices; ++i) {
 		QString name( devices[i].name.c_str() );
 		QString device( devices[i].device.c_str() );
-		QString desc(QString("*Autodetected* ") + devices[i].type.c_str() + "-" + 
+		QString desc(QString("*Autodetected* ") + devices[i].type.c_str() + "-" +
 			tr("device") + " (" + device + ")");
-		
+
 		QTableWidgetItem *item = new QTableWidgetItem(name);
 		item->setFlags( item->flags() & (~Qt::ItemIsEditable) );
 		deviceTable->setItem(i, 0,  item);
-		
+
 		item = new QTableWidgetItem(desc);
 		item->setFlags( item->flags() & (~Qt::ItemIsEditable) );
 		deviceTable->setItem(i, 1, item);
-		
+
 		deviceNameStrings.push_back(name);
 		deviceStrings.push_back(device);
 		deviceDescriptionStrings.push_back(desc);
@@ -179,18 +179,14 @@ void DeviceTab::initialize()
 		int idx = 0;
 
 		for (int i = 0; i < numUserDevices; ++i) {
-			prop = pref->getPreference(QString("deviceDescription%1").arg(i).toUtf8().constData(),"");
-			QString desc(prop);
-			freeProperty(prop);
+			Preference descP(QString("deviceDescription%1").arg(i).toUtf8().constData(),"");
+			QString desc(descP.get());
 
 			if ( !desc.startsWith("*Autodetected*") ) {
-				prop = pref->getPreference(QString("deviceName%1").arg(i).toUtf8().constData(),"");
-				QString name(prop);
-				freeProperty(prop);
-
-				prop = pref->getPreference(QString("device%1").arg(i).toUtf8().constData(),"");
-				QString device(prop);
-				freeProperty(prop);
+				Preference nameP(QString("deviceName%1").arg(i).toUtf8().constData(),"");
+				QString name(nameP.get());
+				Preference deviceP(QString("device%1").arg(i).toUtf8().constData(),"");
+				QString device(deviceP.get());
 
 				deviceTable->setItem(idx + numAutoDetectedDevices, 0, new QTableWidgetItem(name) );
 				deviceTable->setItem(idx++ + numAutoDetectedDevices, 1, new QTableWidgetItem(desc) );
@@ -207,14 +203,14 @@ void DeviceTab::initialize()
 			}
 		}
 	}
-	
+
 	if (active != -1) {
 		deviceTable->setCurrentCell(active, 0);
 	}
 	else if (numAutoDetectedDevices > 0) {
 		deviceTable->setCurrentCell(numAutoDetectedDevices - 1, 0);
 	}
-	
+
 	this->apply();
 	pref->flushPreferences();
 }
@@ -223,7 +219,7 @@ void DeviceTab::initialize()
 void DeviceTab::apply()
 {
 	PreferencesTool *prefs = PreferencesTool::get();
-	
+
 	// Remove old preferences
 	int numDevices = prefs->getPreference("numDevices", -1);
  	if (numDevices > 0) {
@@ -279,7 +275,7 @@ void DeviceTab::activeCellChanged(int, int)
 		editDevice();
 	}
 }
-	
+
 
 void DeviceTab::editDevice()
 {
@@ -287,7 +283,7 @@ void DeviceTab::editDevice()
 	if (selected >= 0) {
 		deviceEdit->setText(deviceStrings[selected]);
 		devicePreferences->show();
-		
+
 		// Disables editing of autodetected devices
 		if (selected < numAutoDetectedDevices) {
 			deviceEdit->setReadOnly(true);
@@ -304,7 +300,7 @@ void DeviceTab::closeChangeBox()
 	devicePreferences->hide();
 	this->resize(minimumSize());
 }
-	
+
 
 void DeviceTab::updateDeviceString(const QString &txt)
 {
@@ -339,25 +335,17 @@ void DeviceTab::removeDevice()
 }
 
 
-void DeviceTab::freeProperty(const char *prop, const char *tag)
-{
-	if (strcmp(prop, tag) != 0) {
-		xmlFree((xmlChar *)prop);
-	}
-}
-
-
 void DeviceTab::retranslateStrings()
 {
 	informationText->setHtml(
 		"<p>" + tr("Below you can set which device Stopmotion should use for grabbing images "
-		"and displaying video.") + "<br><br>" + 
+		"and displaying video.") + "<br><br>" +
 		tr("You can select from the auto-detected devices below or add devices yourself. "
 		"It is not recommended to use devices which is not auto-detected, but feel free to do "
 		"it if you are an advanced user.") + "<br><br>" +
-		tr("The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import.") + 
+		tr("The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import.") +
 		"</p>");
-	
+
 	QStringList lst;
 	lst << tr("Name") << tr("Description");
 	deviceTable->setHorizontalHeaderLabels(lst);
@@ -365,7 +353,7 @@ void DeviceTab::retranslateStrings()
 	addButton->setText( tr("&Add") );
 	removeButton->setText( tr("&Remove") );
 	editButton->setText( tr("&Edit") );
-	
+
 
 	devicePreferences->setTitle(tr("Video device settings"));
 	deviceLabel->setText( tr("Video Device ($VIDEODEVICE): ") );

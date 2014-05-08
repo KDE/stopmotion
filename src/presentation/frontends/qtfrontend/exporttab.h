@@ -48,22 +48,22 @@ public:
 	 * @param parent the parent of the this widget
 	 */
 	ExportTab(QWidget *parent = 0);
-	
+
 	/**
 	 * Applies the settings in the import tab.
 	 */
 	void apply();
-	
+
 	/**
 	 * Initializes the table and fills it with starting values.
 	 */
 	void initialize();
 
 	void retranslateStrings();
-	
+
 protected:
 	void resizeEvent(QResizeEvent *event);
-	
+
 private slots:
 	void addEncoder();
 	void removeEncoder();
@@ -77,12 +77,12 @@ private slots:
 	void setYesButtonOn();
 	void setNoButtonOn();
 	void browseFiles();
-	
+
 private:
 	std::vector<QString>startEncoderStrings;
 	std::vector<QString>stopEncoderStrings;
 	std::vector<QString>outputFiles;
-	
+
 	QPushButton *addButton;
 	QPushButton *removeButton;
 	QPushButton *editButton;
@@ -100,9 +100,8 @@ private:
 	QLabel *defaultOutputLabel;
 	QLabel *askForOutput;
 	QTextEdit *infoText;
-	
+
 	void makeGUI();
-	void freeProperty(const char *prop, const char *tag = "");
 };
 
 #endif

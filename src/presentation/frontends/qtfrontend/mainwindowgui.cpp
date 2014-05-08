@@ -858,36 +858,23 @@ void MainWindowGUI::openProject( const char * projectFile ) {
 	}
 }
 
-void MainWindowGUI::openMostRecent()
-{
-	PreferencesTool *pref = PreferencesTool::get();
-	const char *prop = pref->getPreference("mostRecent", "");
-	openProject(prop);
-	if (strcmp(prop, "") != 0) {
-		xmlFree((xmlChar*)prop);
-	}
+void MainWindowGUI::openMostRecent() {
+	Preference prop("mostRecent", "");
+	openProject(prop.get());
 }
 
 
 void MainWindowGUI::openSecondMostRecent()
 {
-	PreferencesTool *pref = PreferencesTool::get();
-	const char *prop = pref->getPreference("secondMostRecent", "");
-	openProject(prop);
-	if (strcmp(prop, "") != 0) {
-		xmlFree((xmlChar*)prop);
-	}
+	Preference prop("secondMostRecent", "");
+	openProject(prop.get());
 }
 
 
 void MainWindowGUI::openThirdMostRecent()
 {
-	PreferencesTool *pref = PreferencesTool::get();
-	const char *prop = pref->getPreference("thirdMostRecent", "");
-	openProject(prop);
-	if (strcmp(prop, "") != 0) {
-		xmlFree((xmlChar*)prop);
-	}
+	Preference prop("thirdMostRecent", "");
+	openProject(prop.get());
 }
 
 
@@ -937,36 +924,27 @@ void MainWindowGUI::exportToVideo()
 		VideoEncoder enc;
 
 		sprintf(tmp, "startEncoder%d", active);
-		const char *prop = prefs->getPreference(tmp, "");
-		enc.setStartCommand(prop);
-		if (strcmp(prop, "") != 0) {
-			xmlFree((xmlChar*)prop);
-		}
+		Preference start(tmp, "");
+		enc.setStartCommand(start.get());
 
 		sprintf(tmp, "stopEncoder%d", active);
-		prop = prefs->getPreference(tmp, "");
-		enc.setStopCommand(prop);
-		if (strcmp(prop, "") != 0) {
-			xmlFree((xmlChar*)prop);
-		}
+		Preference stop(tmp, "");
+		enc.setStopCommand(stop.get());
 
 		sprintf(tmp, "outputFile%d", active);
-		const char *output = prefs->getPreference(tmp, "");
-		if (strcmp(output, "") == 0) {
+		Preference output(tmp);
+		if (output.get()) {
+			enc.setOutputFile(output.get());
+		} else {
 			QString file = QFileDialog::
 				getSaveFileName(this,
 						tr("Export to video file"),
 						lastVisitedDir);
 			if ( file.isEmpty() ) {
 				isCanceled = true;
-			}
-			else {
+			} else {
 				enc.setOutputFile( file.toLocal8Bit().constData() );
 			}
-		}
-		else {
-			enc.setOutputFile(output);
-			xmlFree((xmlChar*)output);
 		}
 
 		if ( enc.isValid() && isCanceled == false ) {
@@ -1155,33 +1133,14 @@ void MainWindowGUI::activateMenuOptions() {
 	redoAct->setEnabled(facade->canRedo());
 }
 
-namespace {
-class Preference {
-	const char *content;
-public:
-	Preference(PreferencesTool *prefs, const char *key) : content(0) {
-		content = prefs->getPreference(key, "");
-	}
-	~Preference() {
-		if (content && *content)
-			xmlFree((xmlChar*)content);
-	}
-	const char *get() const {
-		return content;
-	}
-	bool equals(const char* other) {
-		return 0 == strcmp(content, other);
-	}
-};
-}
 
 void MainWindowGUI::setMostRecentProject() {
 	const char *first = DomainFacade::getFacade()->getProjectFile();
 	if (first != 0) {
 		PreferencesTool *prefs = PreferencesTool::get();
-		Preference prefsFirst(prefs, "mostRecent");
+		Preference prefsFirst("mostRecent");
 		if (!prefsFirst.equals(first)) {
-			Preference second(prefs, "secondMostRecent");
+			Preference second("secondMostRecent");
 			prefs->setPreference("mostRecent", first, false);
 			prefs->setPreference("secondMostRecent", prefsFirst.get(), false);
 			if (!second.equals(first)) {
@@ -1199,39 +1158,27 @@ void MainWindowGUI::updateMostRecentMenu()
 	mostRecentMenu->setTitle(tr("Open &Recent"));
 	PreferencesTool *pref = PreferencesTool::get();
 
-	const char *first = pref->getPreference("mostRecent", "");
-	if (strcmp(first, "") != 0) {
-		if (access(first, R_OK) == 0) {
-			mostRecentAct->setVisible(true);
-			mostRecentAct->setText(QString::fromLocal8Bit(first));
-		}
-		xmlFree((xmlChar*)first);
-	}
-	else {
+	Preference first("mostRecent", "");
+	if (first.get() && access(first.get(), R_OK) == 0) {
+		mostRecentAct->setVisible(true);
+		mostRecentAct->setText(QString::fromLocal8Bit(first.get()));
+	} else {
 		mostRecentAct->setVisible(false);
 	}
 
-	const char *second = pref->getPreference("secondMostRecent", "");
-	if (strcmp(second, "") != 0) {
-		if (access(second, R_OK) == 0) {
-			secondMostRecentAct->setVisible(true);
-			secondMostRecentAct->setText(QString::fromLocal8Bit(second));
-		}
-		xmlFree((xmlChar*)second);
-	}
-	else {
+	Preference second("secondMostRecent", "");
+	if (second.get() && access(second.get(), R_OK) == 0) {
+		secondMostRecentAct->setVisible(true);
+		secondMostRecentAct->setText(QString::fromLocal8Bit(second.get()));
+	} else {
 		secondMostRecentAct->setVisible(false);
 	}
 
-	const char *third = pref->getPreference("thirdMostRecent", "");
-	if (strcmp(third, "") != 0) {
-		if (access(third, R_OK) == 0) {
-			thirdMostRecentAct->setVisible(true);
-			thirdMostRecentAct->setText(QString::fromLocal8Bit(third));
-		}
-		xmlFree((xmlChar*)third);
-	}
-	else {
+	Preference third("thirdMostRecent", "");
+	if (third.get() && access(third.get(), R_OK) == 0) {
+		thirdMostRecentAct->setVisible(true);
+		thirdMostRecentAct->setText(QString::fromLocal8Bit(third.get()));
+	} else {
 		thirdMostRecentAct->setVisible(false);
 	}
 

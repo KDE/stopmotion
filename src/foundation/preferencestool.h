@@ -22,6 +22,44 @@
 
 #include <libxml/tree.h>
 
+/**
+ * Represents one string from the preferences file.
+ */
+class Preference {
+	const char* val;
+	bool owns;
+public:
+	/**
+	 * Retrieves the value associated with {@a key}. {@ref get} will return
+	 * this value, or {@c 0} if no such value exists.
+	 */
+	Preference(const char* key);
+	/**
+	 * Retrieves the value associated with {@a key}. {@ref get} will return
+	 * this value, or {@a defaultValue} if no such value exists.
+	 * @note No copy of the string pointed to by {@a defaultValue} will be
+	 * taken; it must remain valid until any caller of {@ref get} has finished
+	 * with it.
+	 */
+	Preference(const char* key, const char* defaultValue);
+	~Preference();
+	/**
+	 * Retrieves the value associated with the key passed in the constructor.
+	 * If there was no such value, the pointer passed as the default value in
+	 * the contsructor is returned. Otherwise, null is returned.
+	 * @return The associated value (which becomes invalid after this object
+	 * goes out of scope), the default value (which is not a copy), or null.
+	 * Ownership is not returned.
+	 */
+	const char* get() const;
+	/**
+	 * Tests the retrieved (or default) value against the argument.
+	 * @param str The string to compare against.
+	 * @return {@c true} if both {@a str} and the value is null, or if both
+	 * compare equal. {@c false} otherwise.
+	 */
+	bool equals(const char* str);
+};
 
 /**
  * A xml based tool for adding, changing and removing of
@@ -94,12 +132,9 @@ public:
 	/**
 	 * Retrieves a string preference.
 	 * @param key the key of the preference to retrieve.
-	 * @param defaultValue a default value for preferences which aren't set
-	 * by the user yet.
-	 * @return the attribute for the given key or "defaultValue" if the key 
-	 * wasn't found.
+	 * @return the attribute for the given key or null if the key wasn't found.
 	 */
-	const char* getPreference(const char* key, const char* defaultValue);
+	const char* getPreference(const char* key);
 	
 	/**
 	 * Retrieves an int preference.

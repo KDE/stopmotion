@@ -50,17 +50,17 @@ public:
 	 * @param parent the parent of the widget.
 	 */
 	ImportTab( QWidget *parent = 0 );
-	
+
 	/**
 	 * Sets up the gui for the tab and connects the buttons.
 	 */
 	void makeGUI();
-	
+
 	/**
 	 * Initializes the table and fills it with starting values.
 	 */
 	void initializeImportValues();
-	
+
 	/**
 	 * Applies the settings in the import tab.
 	 */
@@ -70,7 +70,7 @@ public:
 
 protected:
 	void resizeEvent(QResizeEvent *event);
-	
+
 private slots:
 	void addImportProgram();
 	void removeImportProgram();
@@ -81,12 +81,12 @@ private slots:
 	void updatePrePollString(const QString &txt);
 	void updateStartDaemonString(const QString &txt);
 	void updatestopDaemonString(const QString &txt);
-	
+
 private:
 	vector<QString>prePollStrings;
 	vector<QString>startDaemonStrings;
 	vector<QString>stopDaemonStrings;
-	
+
 	QTableWidget *deviceSelectionTable;
 	QPushButton *addButton;
 	QPushButton *removeButton;
@@ -101,8 +101,6 @@ private:
 	QLabel *stopDaemonLabel;
 	QTableWidgetItem *checkTableItem;
 	QTextEdit *informationText;
-	
-	void freeProperty(const char *prop, const char *tag = "");
 };
 
 #endif
