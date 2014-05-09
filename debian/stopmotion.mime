@@ -1,1 +1,1 @@
-application/x-stopmotion;  /usr/bin/stopmotion  -caption "Animation Creator" %s;   nametemplate=%s.sto; test=test "$DISPLAY" != ""; priority=9
+application/x-stopmotion;  /usr/bin/stopmotion  -caption "Animation Creator" '%s';   nametemplate='%s.sto'; test=test "$DISPLAY" != ""; priority=9
