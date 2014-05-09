@@ -17,8 +17,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #ifndef QTGUI_H
 #define QTGUI_H
+
+#include "src/domain/undo/undoredoobserver.h"
 
 #include <QObject>
 #include <QMainWindow>
@@ -57,7 +60,7 @@ class QFileSystemWatcher;
  *
  *@author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
 */
-class MainWindowGUI : public QMainWindow {
+class MainWindowGUI : public QMainWindow, public UndoRedoObserver {
 	Q_OBJECT
 public:
 	enum {SAVE, SAVE_AS, UNDO, REDO, CUT, COPY, PASTE, GOTO};
@@ -87,6 +90,9 @@ public:
 	 * @param k information about the key event.
 	 */
 	void keyPressEvent( QKeyEvent *k );
+
+	void updateCanUndo(bool newCanUndo);
+	void updateCanRedo(bool newCanRedo);
 
 private:
 	QApplication *stApp;
@@ -255,6 +261,14 @@ private:
 	 * Updates the most recent menu.
 	 */
 	void updateMostRecentMenu();
+
+	/**
+	 * Sets the title to the project name and an indicator for whether the
+	 * project is saved or not.
+	 * @param modified Whether or not the project is different from the most
+	 * recently saved project.
+	 */
+	void setTitle(bool modified);
 
 	/**
 	 * If the project has unsaved changes, asks the user if the project should

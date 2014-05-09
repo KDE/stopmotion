@@ -157,6 +157,10 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	//Sets all the text in the program.
 	retranslateStrings();
 
+	DomainFacade* facade = DomainFacade::getFacade();
+	setTitle(facade->canUndo());
+	facade->setUndoRedoObserver(this);
+
 	/* Add another logo here
 	QLabel *l = new QLabel(this);
 	l->setMaximumSize(150, menuBar()->height() - 5);
@@ -170,6 +174,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 
 
 MainWindowGUI::~MainWindowGUI() {
+	delete editObserver;
 }
 
 
@@ -214,11 +219,27 @@ void MainWindowGUI::createAccelerators()
 	connect(nextFrameAccel, SIGNAL(activated()), frameBar, SLOT(selectNextFrame()));
 	QShortcut *nextFrameAccel2 = new QShortcut(QKeySequence(Qt::Key_Right), this);
 	connect(nextFrameAccel2, SIGNAL(activated()), frameBar, SLOT(selectNextFrame()));
+	QShortcut *nextFrameSelectionAccel = new QShortcut(
+			QKeySequence(Qt::ShiftModifier + Qt::Key_L), this);
+	connect(nextFrameSelectionAccel, SIGNAL(activated()),
+			frameBar, SLOT(moveSelectionToNextFrame()));
+	QShortcut *nextFrameSelectionAccel2 = new QShortcut(
+			QKeySequence(Qt::ShiftModifier + Qt::Key_Right), this);
+	connect(nextFrameSelectionAccel2, SIGNAL(activated()),
+			frameBar, SLOT(moveSelectionToNextFrame()));
 
 	QShortcut *previousFrameAccel = new QShortcut(QKeySequence(Qt::Key_J), this);
 	connect(previousFrameAccel, SIGNAL(activated()), frameBar, SLOT(selectPreviousFrame()));
 	QShortcut *previousFrameAccel2 = new QShortcut(QKeySequence(Qt::Key_Left), this );
 	connect(previousFrameAccel2, SIGNAL(activated()), frameBar, SLOT(selectPreviousFrame()));
+	QShortcut *previousFrameSelectionAccel = new QShortcut(
+			QKeySequence(Qt::ShiftModifier + Qt::Key_J), this);
+	connect(previousFrameSelectionAccel, SIGNAL(activated()),
+			frameBar, SLOT(moveSelectionToPreviousFrame()));
+	QShortcut *previousFrameSelectionAccel2 = new QShortcut(
+			QKeySequence(Qt::ShiftModifier + Qt::Key_Left), this);
+	connect(previousFrameSelectionAccel2, SIGNAL(activated()),
+			frameBar, SLOT(moveSelectionToPreviousFrame()));
 
 	QShortcut *nextSceneAccel = new QShortcut(QKeySequence(Qt::Key_O), this);
 	connect(nextSceneAccel, SIGNAL(activated()), frameBar, SLOT(selectNextScene()));
@@ -775,14 +796,17 @@ MainWindowGUI::SaveDialogResult MainWindowGUI::saveIfNecessary() {
 
 void MainWindowGUI::newProject() {
 	if (saveDialogCancel != saveIfNecessary()) {
-	  DomainFacade::getFacade()->newProject();
-	  saveAct->setEnabled(false);
-	  DomainFacade::getFacade()->clearHistory();
-	  modelSizeChanged(0);
-	  toolsMenu->fixNavigationButtons(0);
+		DomainFacade::getFacade()->newProject();
+		// It would be better if this was a signal emission, but it seems that
+		// connect(this, ...) is problematic for some reason.
+		frameView->workspaceCleared();
+		saveAct->setEnabled(false);
+		setTitle(false);
+		DomainFacade::getFacade()->clearHistory();
+		modelSizeChanged(0);
+		toolsMenu->fixNavigationButtons(0);
 	}
 }
-
 
 void MainWindowGUI::openProject() {
 	if (saveDialogCancel != saveIfNecessary()) {
@@ -815,8 +839,10 @@ void MainWindowGUI::updatePasteEnabled() {
 void MainWindowGUI::doOpenProject(const char* projectFile) {
 	assert(projectFile != NULL);
 	DomainFacade::getFacade()->openProject(projectFile);
+	frameView->workspaceCleared();
 	saveAsAct->setEnabled(true);
-	saveAct->setEnabled(true);
+	saveAct->setEnabled(false);
+	setTitle(false);
 	setMostRecentProject();
 	int size = DomainFacade::getFacade()->getModelSize();
 	if (size > 0) {
@@ -871,8 +897,8 @@ bool MainWindowGUI::saveProjectAs() {
 	if ( file.isNull() )
 		return false;
 	DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
-	//fileMenu->setItemEnabled(SAVE, true);
-	saveAct->setEnabled(true);
+	saveAct->setEnabled(false);
+	setTitle(false);
 	setMostRecentProject();
 	return false;
 }
@@ -1040,6 +1066,15 @@ void MainWindowGUI::keyPressEvent( QKeyEvent *k )
 	}
 }
 
+void MainWindowGUI::updateCanUndo(bool newCanUndo) {
+	undoAct->setEnabled(newCanUndo);
+	saveAct->setEnabled(newCanUndo);
+	setTitle(newCanUndo);
+}
+
+void MainWindowGUI::updateCanRedo(bool newCanRedo) {
+	redoAct->setEnabled(newCanRedo);
+}
 
 void MainWindowGUI::keyReleaseEvent ( QKeyEvent * k )
 {
@@ -1051,6 +1086,23 @@ void MainWindowGUI::keyReleaseEvent ( QKeyEvent * k )
 			break;
 		}
 	}
+}
+
+
+void MainWindowGUI::setTitle(bool modified) {
+	std::string title;
+	if (modified)
+		title = "* ";
+	const char* name = DomainFacade::getFacade()->getProjectFile();
+	if (name) {
+		const char* lastDot = strrchr(name, '.');
+		const char* lastSlash = strrchr(name, '/');
+		title.append(lastSlash? lastSlash + 1 : name,
+				lastDot? lastDot : name + strlen(name));
+	} else {
+		title.append("Stopmotion");
+	}
+	setWindowTitle(title.c_str());
 }
 
 

@@ -212,8 +212,18 @@ protected:
 
 public slots:
 	void updateNewActiveFrame(int scene, int frame);
+	/**
+	 * Move the active frame and selection to the selection before the current
+	 * anchor. Make the selection just this single frame.
+	 */
 	void selectPreviousFrame();
 	void selectNextFrame();
+	/**
+	 * Move the selection, not the active frame, thus extending/diminishing the
+	 * selection.
+	 */
+	void moveSelectionToPreviousFrame();
+	void moveSelectionToNextFrame();
 	void selectPreviousScene();
 	void selectNextScene();
 	void updateStopped();

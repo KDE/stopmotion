@@ -137,6 +137,11 @@ public slots:
 	 */
 	void fileChanged(const QString &path);
 
+	/**
+	 * Receives notification that the files in the workspace have changed.
+	 */
+	void workspaceCleared();
+
 protected:
 	void resizeEvent(QResizeEvent *);
 	void paintEvent(QPaintEvent *);
@@ -186,7 +191,6 @@ private:
 	 * @return a surface with the rgb difference of s1 and s2.
 	 */
 	SDL_Surface* differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2);
-	void freeProperty(const char *prop, const char *tag = "");
 	void drawOnionSkins();
 };
 

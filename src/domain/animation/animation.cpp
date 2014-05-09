@@ -309,6 +309,7 @@ void Animation::newProject() {
 		throw FailedToInitializeCommandLogger();
 	}
 	clear();
+	serializer->resetProjectFile();
 	initializeCommandLog();
 }
 
@@ -501,4 +502,8 @@ bool Animation::canUndo() {
 
 bool Animation::canRedo() {
 	return executor->canRedo();
+}
+
+void Animation::setUndoRedoObserver(UndoRedoObserver* observer) {
+	executor->setUndoRedoObserver(observer);
 }

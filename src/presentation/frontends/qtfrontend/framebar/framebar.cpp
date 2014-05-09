@@ -862,6 +862,18 @@ void FrameBar::selectNextFrame() {
 	doScroll();
 }
 
+void FrameBar::moveSelectionToPreviousFrame() {
+	if (0 < selectionFrame) {
+		setActiveFrameAndSelection(activeFrame, selectionFrame - 1);
+	}
+}
+
+void FrameBar::moveSelectionToNextFrame() {
+	if (selectionFrame < activeSceneSize - 1) {
+		setActiveFrameAndSelection(activeFrame, selectionFrame + 1);
+	}
+}
+
 void FrameBar::selectPreviousScene() {
 	int s = activeScene - 1;
 	if (0 <= s) {

@@ -76,6 +76,12 @@ public:
 	 */
 	const char* getProjectFile();
 
+	/**
+	 * After this call (and until a subsequent call to {@ref save} or
+	 * {@ref openSto}) {@ref getProjectFile} will return a null pointer.
+	 */
+	void resetProjectFile();
+
 private:
 	char* projectFile;
 	void setAttributes(xmlNodePtr rootNode,

@@ -796,6 +796,9 @@ public:
 	bool canRedo() const {
 		return history.canRedo();
 	}
+	void setUndoRedoObserver(UndoRedoObserver* observer) {
+		history.setUndoRedoObserver(observer);
+	}
 };
 
 Executor* makeExecutor() {

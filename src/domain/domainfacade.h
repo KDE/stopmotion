@@ -31,6 +31,7 @@ class Frontend;
 class Frame;
 class VideoEncoder;
 class StringIterator;
+class UndoRedoObserver;
 
 /**
  * Singleton facade for the domain level. All requests into the domain layer
@@ -274,6 +275,12 @@ public:
 	 * Clears the undo history.
 	 */
 	void clearHistory();
+
+	/**
+	 * Sets the observer to receive notification of when the can undo/can redo
+	 * state changes.
+	 */
+	void setUndoRedoObserver(UndoRedoObserver* observer);
 
 	/**
 	 * Creates a new scene in the animation project.

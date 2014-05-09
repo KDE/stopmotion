@@ -21,6 +21,7 @@
 #include "command.h"
 #include "../filenamevisitor.h"
 #include "commandlogger.h"
+#include "undoredoobserver.h"
 
 #include <list>
 #include <memory>
@@ -181,7 +182,8 @@ int32_t Parameters::getHowMany() {
 	return getInteger(1, INT32_MAX);
 }
 
-CommandHistory::CommandHistory() : past(0), future(0) {
+CommandHistory::CommandHistory() : past(0), future(0), observer(0),
+		previousCanUndo(false), previousCanRedo(false) {
 	past = new CommandList();
 	future = new CommandList();
 }
@@ -201,10 +203,12 @@ bool CommandHistory::canRedo() const {
 
 void CommandHistory::undo() {
 	past->executeFront(*future);
+	notifyObserver();
 }
 
 void CommandHistory::redo() {
 	future->executeFront(*past);
+	notifyObserver();
 }
 
 void CommandHistory::execute(Command& c, CommandLogger* logger) {
@@ -214,14 +218,35 @@ void CommandHistory::execute(Command& c, CommandLogger* logger) {
 	if (logger) {
 		logger->commandComplete();
 	}
+	notifyObserver();
 }
 
 void CommandHistory::clear() {
 	future->clear();
 	past->clear();
+	notifyObserver();
 }
 
 void CommandHistory::accept(FileNameVisitor& v) const {
 	future->accept(v);
 	past->accept(v);
+}
+
+void CommandHistory::setUndoRedoObserver(UndoRedoObserver* ob) {
+	observer = ob;
+}
+
+void CommandHistory::notifyObserver() {
+	bool cu = canUndo();
+	if (cu != previousCanUndo) {
+		previousCanUndo = cu;
+		if (observer)
+			observer->updateCanUndo(cu);
+	}
+	bool cr = canRedo();
+	if (cr != previousCanRedo) {
+		previousCanRedo = cr;
+		if (observer)
+			observer->updateCanRedo(cr);
+	}
 }
