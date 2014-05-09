@@ -1,10 +1,9 @@
-stopmotion (0.8.0~beta5-1) unstable; urgency=medium
+stopmotion (0.8.0~beta6+git.3.g009a89f-1) unstable; urgency=medium
 
   * New upstream version
   * No longer uses libinotify
   * Fixes many issues in Ubuntu bug tracker:
-    - 863965 No save dialog on exit (not fixed, but not so relevant now
-      that recovery is seamless)
+    - 863965 No save dialog on exit (unnecessary as recovery is now seamless)
     - 910532 Edit operations are not correct
     - 923447 Deleting scene not undoable
     - 1194805 Resume capture will start at a random point
@@ -16,9 +15,15 @@ stopmotion (0.8.0~beta5-1) unstable; urgency=medium
     - 1050180 Framebar reentrancy causes crashes
     - 1069372 Inconsistent drag and drop behaviour
     - 1210879 We need a decent undo and recovery system
-  * Exporting gets the frames in the right order
+  * Other notable upstream changes and fixes:
+    - Exporting gets the frames in the right order
+    - Allows selection with shift+left/right
+    - Correctly en/disables undo/redo/save and sets title
+    - enable/disable loop button whenever play button enabled/disabled
+    - onionskinning alpha value fix
+    - and many more
 
- -- Barak A. Pearlmutter <bap@debian.org>  Thu, 01 May 2014 21:48:25 +0100
+ -- Barak A. Pearlmutter <bap@debian.org>  Fri, 09 May 2014 08:37:18 +0100
 
 stopmotion (0.7.2-1) unstable; urgency=low
 
