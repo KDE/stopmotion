@@ -496,7 +496,17 @@ const char* ProjectSerializer::getProjectFile() {
 	return projectFile;
 }
 
-void ProjectSerializer::resetProjectFile() {
+void ProjectSerializer::resetProjectFile(const char* filename) {
+	char* copy = 0;
+	if (filename) {
+		size_t len = strlen(filename);
+		copy = new char[len + 1];
+		strncpy(copy, filename, len + 1);
+	}
 	delete[] projectFile;
-	projectFile = 0;
+	projectFile = copy;
+}
+
+void ProjectSerializer::resetProjectFile() {
+	resetProjectFile(0);
 }

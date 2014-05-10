@@ -252,12 +252,6 @@ private:
 	void retranslateHelpText();
 
 	/**
-	 * Changes the project history so that they shows correctly in the
-	 * most recent menu.
-	 */
-	void setMostRecentProject();
-
-	/**
 	 * Updates the most recent menu.
 	 */
 	void updateMostRecentMenu();
@@ -366,6 +360,7 @@ private slots:
 	 * Notification that the clipboard contents have changed.
 	 */
 	void updatePasteEnabled();
+	void createMostRecentMenu();
 
 public slots:
 	/**

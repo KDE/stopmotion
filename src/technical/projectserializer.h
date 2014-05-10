@@ -72,7 +72,8 @@ public:
 
 	/**
 	 * Retrieves the project file.
-	 * @return the project path if it exist, NULL otherwise
+	 * @return the project path if it exist, NULL otherwise. Ownership is not
+	 * returned.
 	 */
 	const char* getProjectFile();
 
@@ -81,6 +82,16 @@ public:
 	 * {@ref openSto}) {@ref getProjectFile} will return a null pointer.
 	 */
 	void resetProjectFile();
+
+	/**
+	 * After this call (and until a subsequent call to {@ref save} or
+	 * {@ref openSto}) {@ref getProjectFile} will return a string equal to
+	 * {@a filename}.
+	 * @param filename The new file name to set. Ownership is not passed. A
+	 * copy is taken, so the contents of the string need not be preserved. If
+	 * null is passed, {@ref getProjectFile} will subsequently return null.
+	 */
+	void resetProjectFile(const char* filename);
 
 private:
 	char* projectFile;

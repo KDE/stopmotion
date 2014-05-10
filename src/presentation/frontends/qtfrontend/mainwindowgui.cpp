@@ -535,7 +535,7 @@ void MainWindowGUI::retranslateStrings()
 	fileMenu->addAction(openAct);
 	fileMenu->addMenu(mostRecentMenu);
 
-	updateMostRecentMenu();
+	createMostRecentMenu();
 
 	fileMenu->addSeparator();
 	fileMenu->addAction(saveAct);
@@ -843,7 +843,7 @@ void MainWindowGUI::doOpenProject(const char* projectFile) {
 	saveAsAct->setEnabled(true);
 	saveAct->setEnabled(false);
 	setTitle(false);
-	setMostRecentProject();
+	updateMostRecentMenu();
 	int size = DomainFacade::getFacade()->getModelSize();
 	if (size > 0) {
 		activateMenuOptions();
@@ -886,7 +886,7 @@ bool MainWindowGUI::saveProjectAs() {
 	DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
 	saveAct->setEnabled(false);
 	setTitle(false);
-	setMostRecentProject();
+	updateMostRecentMenu();
 	return false;
 }
 
@@ -1129,35 +1129,16 @@ void MainWindowGUI::modelSizeChanged( int modelSize ) {
 
 void MainWindowGUI::activateMenuOptions() {
 	DomainFacade* facade = DomainFacade::getFacade();
-	undoAct->setEnabled(facade->canUndo());
+	bool canUndo = facade->canUndo();
+	undoAct->setEnabled(canUndo);
 	redoAct->setEnabled(facade->canRedo());
+	setTitle(canUndo);
 }
 
-
-void MainWindowGUI::setMostRecentProject() {
-	const char *first = DomainFacade::getFacade()->getProjectFile();
-	if (first != 0) {
-		PreferencesTool *prefs = PreferencesTool::get();
-		Preference prefsFirst("mostRecent");
-		if (!prefsFirst.equals(first)) {
-			Preference second("secondMostRecent");
-			prefs->setPreference("mostRecent", first, false);
-			prefs->setPreference("secondMostRecent", prefsFirst.get(), false);
-			if (!second.equals(first)) {
-				prefs->setPreference("thirdMostRecent", second.get(), false);
-			}
-			updateMostRecentMenu();
-		}
-	}
-}
-
-
-void MainWindowGUI::updateMostRecentMenu()
-{
+void MainWindowGUI::createMostRecentMenu() {
 	mostRecentMenu->clear();
 	mostRecentMenu->setTitle(tr("Open &Recent"));
-	PreferencesTool *pref = PreferencesTool::get();
-
+	PreferencesTool* pref = PreferencesTool::get();
 	Preference first("mostRecent", "");
 	if (first.get() && access(first.get(), R_OK) == 0) {
 		mostRecentAct->setVisible(true);
@@ -1165,7 +1146,6 @@ void MainWindowGUI::updateMostRecentMenu()
 	} else {
 		mostRecentAct->setVisible(false);
 	}
-
 	Preference second("secondMostRecent", "");
 	if (second.get() && access(second.get(), R_OK) == 0) {
 		secondMostRecentAct->setVisible(true);
@@ -1173,7 +1153,6 @@ void MainWindowGUI::updateMostRecentMenu()
 	} else {
 		secondMostRecentAct->setVisible(false);
 	}
-
 	Preference third("thirdMostRecent", "");
 	if (third.get() && access(third.get(), R_OK) == 0) {
 		thirdMostRecentAct->setVisible(true);
@@ -1181,9 +1160,12 @@ void MainWindowGUI::updateMostRecentMenu()
 	} else {
 		thirdMostRecentAct->setVisible(false);
 	}
-
 	mostRecentMenu->addAction(mostRecentAct);
 	mostRecentMenu->addAction(secondMostRecentAct);
 	mostRecentMenu->addAction(thirdMostRecentAct);
 }
 
+void MainWindowGUI::updateMostRecentMenu() {
+	DomainFacade::getFacade()->setMostRecentProject();
+	createMostRecentMenu();
+}

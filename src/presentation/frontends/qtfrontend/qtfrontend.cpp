@@ -324,7 +324,6 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	//-------------------------------------------------------------------------
 }
 
-
 void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 {
 	// Replace all occurences of '(DEFAULTPATH)' with '$IMAGEFILE'  (version 0.3 and 0.4)

@@ -23,6 +23,7 @@
 #include "src/foundation/logger.h"
 #include "src/presentation/frontends/frontend.h"
 #include "src/domain/animation/workspacefile.h"
+#include "src/foundation/preferencestool.h"
 
 DomainFacade* DomainFacade::domainFacade = 0;
 
@@ -44,8 +45,31 @@ int DomainFacade::soundCount(int scene, int frame) const {
 	}
 }
 
-bool DomainFacade::loadProject(const char* filename) {
-	return animationModel->loadFromDat(filename);
+bool DomainFacade::loadProject(const char* datFilename,
+		const char* projectFilename) {
+	return animationModel->loadFromDat(datFilename, projectFilename);
+}
+
+void DomainFacade::setMostRecentProject() {
+	const char *first = DomainFacade::getFacade()->getProjectFile();
+	PreferencesTool *prefs = PreferencesTool::get();
+	if (first) {
+		prefs->setPreference("projectFile", first, false);
+	} else {
+		prefs->removePreference("projectFile");
+	}
+	if (first != 0) {
+		Preference prefsFirst("mostRecent");
+		if (!prefsFirst.equals(first)) {
+			Preference second("secondMostRecent");
+			prefs->setPreference("mostRecent", first, false);
+			prefs->setPreference("secondMostRecent", prefsFirst.get(), false);
+			if (!second.equals(first)) {
+				prefs->setPreference("thirdMostRecent", second.get(), false);
+			}
+		}
+	}
+	prefs->flushPreferences();
 }
 
 DomainFacade::DomainFacade() {
@@ -164,6 +188,7 @@ void DomainFacade::saveProject(const char *directory) {
 
 bool DomainFacade::newProject() {
 	animationModel->newProject();
+	setMostRecentProject();
 	return true;
 }
 
