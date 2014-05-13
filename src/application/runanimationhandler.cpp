@@ -95,9 +95,10 @@ void RunAnimationHandler::runAnimation() {
 	sceneNr = 0;
 	startFrame = 0;
 	endFrame = 0;
+	int activeFrame = selection->getActiveFrame();
 	if (selection) {
 		sceneNr = selection->getActiveScene();
-		startFrame = selection->getActiveFrame();
+		startFrame = activeFrame;
 		int sel = selection->getSelectionAnchor();
 		if (startFrame < sel) {
 			endFrame = sel + 1;
@@ -107,8 +108,9 @@ void RunAnimationHandler::runAnimation() {
 		}
 	}
 	if (endFrame - startFrame <= 1) {
-		// only one or zero frames selected. Play the entire frame.
-		startFrame = 0;
+		// only one or zero frames selected. Play the entire scene from the
+		// selected frame.
+		startFrame = std::max(activeFrame, 0);
 		endFrame = DomainFacade::getFacade()->getSceneSize(sceneNr) ;
 	}
 	frameNr = startFrame;
@@ -133,7 +135,8 @@ void RunAnimationHandler::stopAnimation() {
 
 		statusBar->clearMessage();
 		timer->stop();
-		emit stopped();
+		if (startFrame < endFrame)
+			emit stopped(sceneNr, startFrame, endFrame - 1);
 	}
 }
 

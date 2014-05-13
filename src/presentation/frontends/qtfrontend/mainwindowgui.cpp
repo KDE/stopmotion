@@ -183,6 +183,8 @@ void MainWindowGUI::createHandlers(QApplication *stApp) {
 	connect( languageHandler, SIGNAL(languageChanged()), this, SLOT(retranslateStrings()) );
 
 	runAnimationHandler = new RunAnimationHandler(this, statusBar(), frameBar);
+	connect(runAnimationHandler, SIGNAL(stopped(int, int, int)),
+			frameBar, SLOT(setSelection(int, int, int)));
 
 	modelHandler = new ModelHandler( this, this->statusBar(), frameBar, &lastVisitedDir );
 	connect( modelHandler, SIGNAL(modelChanged()), this, SLOT(activateMenuOptions()) );

@@ -229,6 +229,7 @@ public slots:
 	void updateStopped();
 	void fileChanged(const QString &path);
 	void setThumbImage(ThumbView* thumb, const char* imagePath);
+	void setSelection(int scene, int selectionFrame, int activeFrame);
 
 signals:
 	//The signals in the framebar is used for signaling small widget,
