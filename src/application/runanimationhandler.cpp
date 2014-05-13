@@ -33,7 +33,7 @@ RunAnimationHandler::RunAnimationHandler(QObject *parent, QStatusBar *sb,
 		  playButton(0), removeFramesButton(0), loopButton(0),
 		  pauseButton(0), timer(0), sceneNr(0), frameNr(0),
 		  fps(0), isLooping(false),
-		  startFrame(0), endFrame(0) {
+		  startFrame(-1), endFrame(0) {
 	fps = PreferencesTool::get()->getPreference("fps", 10);
 	timer = new QTimer(this);
 	QObject::connect( timer, SIGNAL(timeout()), this, SLOT(playNextFrame()) );
@@ -60,6 +60,8 @@ void RunAnimationHandler::setLoopButton(QPushButton * loopButton) {
 void RunAnimationHandler::toggleRunning() {
 	if(timer->isActive()) {
 		stopAnimation();
+	} else if (startFrame < 0) {
+		runAnimation();
 	} else {
 		resumeAnimation();
 	}
@@ -137,6 +139,7 @@ void RunAnimationHandler::stopAnimation() {
 		timer->stop();
 		if (startFrame < endFrame)
 			emit stopped(sceneNr, startFrame, endFrame - 1);
+		startFrame = -1;
 	}
 }
 
