@@ -897,10 +897,6 @@ void FrameBar::selectNextScene() {
 	doScroll();
 }
 
-void FrameBar::updateStopped() {
-	emit newActiveFrame(activeScene, activeFrame);
-}
-
 void FrameBar::setSelection(int scene, int selectionFrame, int activeFrame) {
 	setActiveScene(scene);
 	setActiveFrameAndSelection(activeFrame, selectionFrame);

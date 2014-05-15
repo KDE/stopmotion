@@ -120,8 +120,6 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	workArea->setLayout(workAreaLayout);
 	connect(runAnimationHandler, SIGNAL(playFrame(int,int)),
 			frameView, SLOT(updatePlayFrame(int,int)));
-	connect(runAnimationHandler, SIGNAL(stopped()),
-			frameBar, SLOT(updateStopped()));
 	connect(frameBar, SIGNAL(newActiveFrame(int,int)),
 			runAnimationHandler, SLOT(stopAnimation()));
 
