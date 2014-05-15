@@ -267,8 +267,10 @@ private:
 	/** The scene which are being moved when draging a scene */
 	int movingScene;
 
-	/** The other border frame in a selection together with activeFrame.
-	*   If only one is selected selectionFrame == activeFrame            */
+	/**
+	 * The anchor in a selection.
+	 *   If only one frame is selected selectionFrame == activeFrame
+	 */
 	int selectionFrame;
 
 	/** Direction to scroll when dragging.
