@@ -6,11 +6,9 @@ See http://linuxstopmotion.org for more info.
 
 INSTALLATION
 ------------
-0) lrelease stopmotion.pro   # to generate compiled translation files
-1) qmake stopmotion.pro      # to generate Makefile
-2) make                      # to build the software
-3) make install              # to install things
- 
+1) qmake
+2) make install
+
 You need the following libraries installed to compile:
     - Qt4
     - libtar
@@ -20,7 +18,6 @@ You need the following libraries installed to compile:
     - vorbisfile
     - FAM/Gamin
     - pkg-config
-    - libinotifytools0-dev
 
 WHO CAN USE IT
 --------------
@@ -33,5 +30,22 @@ DO YOU WANT TO CONTRIBUTE?
 Do not hesitate to contact us if you want to contribute with translations,
 graphics, code, +++ 
 
+The mailing list is at linuxstopmotion-users-devs@lists.sourceforge.net
+
 Your help is very much appreciated.
 
+DEVELOPMENT
+-----------
+
+After qmake, the following make targets are available:
+
+make debug   # build a debug version of the project, called stopmotion-d
+make release # build a release version of the project, called stopmotion
+make         # build both debug and release versions
+make install # build and install the release version in /usr/local
+make test    # build and run the unit tests
+
+To install to a specific location (other than /usr/local):
+
+qmake PREFIX=/path/to/installation
+make install
