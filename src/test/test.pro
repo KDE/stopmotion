@@ -100,10 +100,13 @@ FORMS +=
 RESOURCES += 
 INCLUDEPATH += ../.. \
     $$system(xml2-config --cflags | sed -e 's/-I//g')
-oomtestutil.target = oomteststub.o
-oomtestutil.commands = make -f oomtestutil.mak
-oomtestutil.depends = oomteststub.cpp oomtestutil.cpp oomtestutil.h
-QMAKE_EXTRA_TARGETS += oomtestutil test
+oomteststub.target = oomteststub.o
+oomteststub.commands = make -f oomtestutil.mak oomteststub.o
+oomteststub.depends = oomteststub.cpp oomtestutil.h
+oomtestutil.target = oomtestutil.so
+oomtestutil.commands = make -f oomtestutil.mak oomtestutil.so
+oomtestutil.depends = oomtestutil.cpp
+QMAKE_EXTRA_TARGETS += oomtestutil oomteststub test
 QMAKE_CLEAN += oomteststub.o oomtestutil.so
 PRE_TARGETDEPS = oomteststub.o
 LIBS += oomteststub.o -ldl \

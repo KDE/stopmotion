@@ -329,5 +329,4 @@ lrelease.CONFIG  += no_link target_predeps
 
 # Build and run tests with make test
 QMAKE_EXTRA_TARGETS += test
-test.target = test
 test.commands = cd src/test && qmake && make test
