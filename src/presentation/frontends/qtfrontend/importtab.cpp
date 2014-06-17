@@ -44,7 +44,7 @@ ImportTab::ImportTab( QWidget *parent ) : QWidget(parent)
 	stopDaemonLabel      = 0;
 	checkTableItem       = 0;
 	informationText      = 0;
-	
+
 	makeGUI();
 }
 
@@ -57,7 +57,7 @@ void ImportTab::makeGUI()
 	informationText->setReadOnly(true);
 	informationText->setHtml(
 		"<p>" + tr("Below you can set which program/process Stopmotion should use "
-		"for grabbing images from the selected device.") + "</p><p>" + 
+		"for grabbing images from the selected device.") + "</p><p>" +
 		tr("You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 		"the video device and the image file, respectively.") + "</p>");
 	informationText->setMinimumWidth(440);
@@ -75,9 +75,9 @@ void ImportTab::makeGUI()
 	deviceSelectionTable->setHorizontalHeaderLabels(lst);
 	deviceSelectionTable->verticalHeader()->setVisible(false);
 
-	connect(deviceSelectionTable, SIGNAL(cellClicked(int, int)), 
+	connect(deviceSelectionTable, SIGNAL(cellClicked(int, int)),
 			this, SLOT(activeCellChanged(int, int)));
-	connect(deviceSelectionTable, SIGNAL(cellChanged(int, int)), 
+	connect(deviceSelectionTable, SIGNAL(cellChanged(int, int)),
 			this, SLOT(contentsChanged(int, int)));
 
 	addButton = new QPushButton(tr("&Add"));
@@ -104,23 +104,23 @@ void ImportTab::makeGUI()
 	prePollEdit = new FlexibleLineEdit;
 	prePollLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	prePollEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	QObject::connect( prePollEdit, SIGNAL(textChanged(const QString &)), 
+	QObject::connect( prePollEdit, SIGNAL(textChanged(const QString &)),
 			this, SLOT(updatePrePollString(const QString &)));
-	
+
 	startDaemonLabel = new QLabel( tr("Start daemon") );
 	startDaemonEdit = new FlexibleLineEdit;
 	startDaemonLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	startDaemonEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	QObject::connect( startDaemonEdit, SIGNAL(textChanged(const QString &)), 
+	QObject::connect( startDaemonEdit, SIGNAL(textChanged(const QString &)),
 			this, SLOT(updateStartDaemonString(const QString &)));
-	
+
 	stopDaemonLabel = new QLabel( tr("Stop daemon") );
 	stopDaemonEdit = new FlexibleLineEdit;
 	stopDaemonLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	stopDaemonEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	QObject::connect( stopDaemonEdit, SIGNAL(textChanged(const QString &)), 
+	QObject::connect( stopDaemonEdit, SIGNAL(textChanged(const QString &)),
 			this, SLOT(updatestopDaemonString(const QString &)) );
-	
+
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(informationText);
 	QVBoxLayout *buttonLayout = new QVBoxLayout;
@@ -156,32 +156,22 @@ void ImportTab::initializeImportValues()
 
 	int numImports = pref->getPreference("numberofimports", 0);
 	deviceSelectionTable->setRowCount(numImports);
-	const char *prop = 0;
 	for (int i = 0; i < numImports; ++i) {
-		prop = pref->getPreference(QString("importname%1").arg(i).toLatin1().constData(), "");
-		QString name(prop);
-		freeProperty(prop);
-		
-		prop = pref->getPreference(QString("importdescription%1").arg(i).toLatin1().constData(), "");
-		QString desc(prop);
-		freeProperty(prop);
-		
-		deviceSelectionTable->setItem( i, 0, new QTableWidgetItem(name) );
-		deviceSelectionTable->setItem( i, 1, new QTableWidgetItem(desc) );
-		
-		prop = pref->getPreference(QString("importprepoll%1").arg(i).toLatin1().constData(), "");
-		prePollStrings.push_back(QString(prop));
-		freeProperty(prop);
-		
-		prop = pref->getPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(), "");
-		startDaemonStrings.push_back(QString(prop));
-		freeProperty(prop);
-		
-		prop = pref->getPreference(QString("importstopdaemon%1").arg(i).toLatin1().constData(), "");
-		stopDaemonStrings.push_back(QString(prop));
-		freeProperty(prop);
+		Preference name(QString("importname%1").arg(i).toLatin1().constData(), "");
+		deviceSelectionTable->setItem( i, 0, new QTableWidgetItem(name.get()) );
+		Preference desc(QString("importdescription%1").arg(i).toLatin1().constData(), "");
+		deviceSelectionTable->setItem( i, 1, new QTableWidgetItem(desc.get()) );
+
+		Preference prepoll(QString("importprepoll%1").arg(i).toLatin1().constData(), "");
+		prePollStrings.push_back(QString(prepoll.get()));
+
+		Preference start(QString("importstartdaemon%1").arg(i).toLatin1().constData(), "");
+		startDaemonStrings.push_back(QString(start.get()));
+
+		Preference stop(QString("importstopdaemon%1").arg(i).toLatin1().constData(), "");
+		stopDaemonStrings.push_back(QString(stop.get()));
 	}
-	
+
 	int activeCommand = pref->getPreference("activedevice", -1);
 	if (activeCommand > -1) {
 		deviceSelectionTable->setCurrentCell(activeCommand, 0);
@@ -192,7 +182,7 @@ void ImportTab::initializeImportValues()
 void ImportTab::apply()
 {
 	PreferencesTool *prefs = PreferencesTool::get();
-	
+
 	// Remove old preferences
 	int numImports = prefs->getPreference("numberofimports", -1);
  	if (numImports > 0) {
@@ -204,13 +194,13 @@ void ImportTab::apply()
 			prefs->removePreference(QString("importstopdaemon%1").arg(i).toLatin1().constData());
 		}
 	}
-	
+
 	numImports = deviceSelectionTable->rowCount();
 	if (numImports > 0) {
 		prefs->setPreference("numberofimports", numImports, true);
 		prefs->setPreference("activedevice", deviceSelectionTable->currentRow(), true);
 		for (int i = 0; i < numImports; ++i) {
-			prefs->setPreference(QString("importname%1").arg(i).toLatin1().constData(), 
+			prefs->setPreference(QString("importname%1").arg(i).toLatin1().constData(),
 					deviceSelectionTable->item(i, 0)->text().toLatin1().constData(), true);
 			prefs->setPreference(QString("importdescription%1").arg(i).toLatin1().constData(),
 					deviceSelectionTable->item(i, 1)->text().toLatin1().constData(), true);
@@ -311,30 +301,22 @@ void ImportTab::updatestopDaemonString(const QString &txt)
 	stopDaemonStrings[deviceSelectionTable->currentRow()] = txt;
 }
 
-	
-void ImportTab::freeProperty(const char *prop, const char *tag)
-{
-	if (strcmp(prop, tag) != 0) {
-		xmlFree((xmlChar *)prop);
-	}
-}
-
 
 void ImportTab::closeChangeBox()
 {
 	grabberPreferences->hide();
 	this->resize(minimumSize());
 }
-	
+
 
 void ImportTab::retranslateStrings()
 {
 	informationText->setHtml(
 		"<p>" + tr("Below you can set which program/process Stopmotion should use "
-		"for grabbing images from the selected device.") + "</p><p>" + 
+		"for grabbing images from the selected device.") + "</p><p>" +
 		tr("You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 		"the video device and the image file, respectively.") + "</p>");
-	
+
 	QStringList lst;
 	lst << tr("Name") << tr("Description");
 	deviceSelectionTable->setHorizontalHeaderLabels(lst);
@@ -342,7 +324,7 @@ void ImportTab::retranslateStrings()
 	addButton->setText( tr("&Add") );
 	removeButton->setText( tr("&Remove") );
 	changeButton->setText( tr("&Edit") );
-	
+
 	grabberPreferences->setTitle( tr("Import device settings") );
 	prePollLabel->setText( tr("Pre-poll command") );
 	startDaemonLabel->setText( tr("Start daemon") );

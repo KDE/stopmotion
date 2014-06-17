@@ -33,7 +33,7 @@ RunAnimationHandler::RunAnimationHandler(QObject *parent, QStatusBar *sb,
 		  playButton(0), removeFramesButton(0), loopButton(0),
 		  pauseButton(0), timer(0), sceneNr(0), frameNr(0),
 		  fps(0), isLooping(false),
-		  startFrame(0), endFrame(0) {
+		  startFrame(-1), endFrame(0) {
 	fps = PreferencesTool::get()->getPreference("fps", 10);
 	timer = new QTimer(this);
 	QObject::connect( timer, SIGNAL(timeout()), this, SLOT(playNextFrame()) );
@@ -60,6 +60,8 @@ void RunAnimationHandler::setLoopButton(QPushButton * loopButton) {
 void RunAnimationHandler::toggleRunning() {
 	if(timer->isActive()) {
 		stopAnimation();
+	} else if (startFrame < 0) {
+		runAnimation();
 	} else {
 		resumeAnimation();
 	}
@@ -95,9 +97,10 @@ void RunAnimationHandler::runAnimation() {
 	sceneNr = 0;
 	startFrame = 0;
 	endFrame = 0;
+	int activeFrame = selection->getActiveFrame();
 	if (selection) {
 		sceneNr = selection->getActiveScene();
-		startFrame = selection->getActiveFrame();
+		startFrame = activeFrame;
 		int sel = selection->getSelectionAnchor();
 		if (startFrame < sel) {
 			endFrame = sel + 1;
@@ -107,8 +110,9 @@ void RunAnimationHandler::runAnimation() {
 		}
 	}
 	if (endFrame - startFrame <= 1) {
-		// only one or zero frames selected. Play the entire frame.
-		startFrame = 0;
+		// only one or zero frames selected. Play the entire scene from the
+		// selected frame.
+		startFrame = std::max(activeFrame, 0);
 		endFrame = DomainFacade::getFacade()->getSceneSize(sceneNr) ;
 	}
 	frameNr = startFrame;
@@ -133,7 +137,9 @@ void RunAnimationHandler::stopAnimation() {
 
 		statusBar->clearMessage();
 		timer->stop();
-		emit stopped();
+		if (startFrame < endFrame)
+			emit stopped(sceneNr, startFrame, endFrame - 1);
+		startFrame = -1;
 	}
 }
 

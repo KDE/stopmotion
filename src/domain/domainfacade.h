@@ -184,10 +184,15 @@ public:
 	/**
 	 * Loads the project from the {@c .dat} XML file specified. Used for
 	 * recovering from the {@c new.dat} and {@c current.dat} files.
-	 * @param filename The XML file to load.
+	 * @param datFilename The XML file to load.
+	 * @param projectFilename The name of the {@c .sto} file that this XML file
+	 * came from or was last saved into, if known. Null if this is unknown. It
+	 * does not matter if this file still exists or not; it will not be
+	 * accessed in this operation, it is simply to set the default name to save
+	 * to and main window title.
 	 * @return {@c true} if successful.
 	 */
-	bool loadProject(const char* filename);
+	bool loadProject(const char* datFilename, const char* projectFilename);
 
 	/**
 	 * Replay commands from the log.
@@ -250,6 +255,12 @@ public:
 	 * @return The project file if it has been set, NULL otherwise.
 	 */
 	const char* getProjectFile();
+
+	/**
+	 * Sets the preferences in the preferences file for current,
+	 * most recent, second most recent and third most recent project filenames.
+	 */
+	void setMostRecentProject();
 
 	/**
 	 * Undoes the last undoable operation on the model.

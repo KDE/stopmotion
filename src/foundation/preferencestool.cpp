@@ -203,16 +203,10 @@ bool PreferencesTool::setPreference(const char * key, const int attribute, bool 
 }
 
 
-const char* PreferencesTool::getPreference(const char* key, const char* defaultValue)
-{
+const char* PreferencesTool::getPreference(const char* key) {
 	checkInitialized();
 	xmlNode *node = findNode(key);
-	if (node != NULL) {
-		return (const char*)xmlGetProp(node, BAD_CAST "attribute");
-	}
-	else {
-		return defaultValue;
-	}
+	return (const char*)xmlGetProp(node, BAD_CAST "attribute");
 }
 
 
@@ -298,4 +292,37 @@ void PreferencesTool::cleanTree()
 	dtd             = NULL;
 	rootNode        = NULL;
 	preferences     = NULL;
+}
+
+Preference::Preference(const char* key) : val(0), owns(false) {
+	val = PreferencesTool::get()->getPreference(key);
+	if (val)
+		owns = true;
+}
+
+Preference::Preference(const char* key, const char* defaultValue)
+	: val(0), owns(false) {
+	val = PreferencesTool::get()->getPreference(key);
+	if (val) {
+		owns = true;
+	} else {
+		val = defaultValue;
+	}
+}
+
+Preference::~Preference() {
+	if (owns)
+		xmlFree((xmlChar*)val);
+}
+
+const char* Preference::get() const {
+	return val;
+}
+
+bool Preference::equals(const char* str) {
+	if (str) {
+		return val? 0 == strcmp(val, str) : false;
+	} else {
+		return !val;
+	}
 }

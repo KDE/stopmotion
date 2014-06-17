@@ -36,7 +36,7 @@ class DeviceTab : public QWidget
 	Q_OBJECT
 public:
 	DeviceTab(QWidget *parent = 0);
-	
+
 	void initialize();
 	void apply();
 	void retranslateStrings();
@@ -68,9 +68,8 @@ private:
 	std::vector<QString> deviceNameStrings;
 	std::vector<QString> deviceDescriptionStrings;
 	int numAutoDetectedDevices;
-	
+
 	void makeGUI();
-	void freeProperty(const char *prop, const char *tag = "");
 };
 
 #endif

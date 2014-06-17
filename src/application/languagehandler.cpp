@@ -57,13 +57,11 @@ LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const cha
 		// language saved in the preferences file, or use English as fall-back.
 		const QByteArray localeArray = locale.toLatin1();
 		const char *localePtr = localeArray.constData();
-		const char *languagePref = PreferencesTool::get()->getPreference("language", localePtr);
-		if (languagePref) {
-			translationFile = prefix + QLatin1String(languagePref);
+		Preference languagePref("language", localePtr);
+		if (languagePref.get()) {
+			translationFile = prefix + QLatin1String(languagePref.get());
 			if (!QFile::exists(translationFile + QLatin1String(".qm")))
 				translationFile = QString();
-			if (strcmp(languagePref, localePtr) != 0)
-				xmlFree((xmlChar*)languagePref);
 	    } else {
 	    	translationFile = QString();
 	    }
@@ -124,20 +122,13 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 		}
 	}
 
-	const char *en = "en";
-	const char *languagePref = PreferencesTool::get()->getPreference("language", en);
-	activeAction = locales.key(QString(languagePref));
+	Preference languagePref("language", "en");
+	activeAction = locales.key(QString(languagePref.get()));
 	if (activeAction != 0) {
 		activeAction->setChecked(true);
-	}
-	else {
+	} else {
 		Logger::get().logWarning("Something wrong with the locale!");
 	}
-
-	if (languagePref != en) {
-		xmlFree((xmlChar*)languagePref);
-	}
-
 	return languagesMenu;
 }
 

@@ -254,10 +254,12 @@ void Animation::setScenes(const std::vector<Scene*>& sv) {
 	}
 }
 
-bool Animation::loadFromDat(const char* filename) {
+bool Animation::loadFromDat(const char* filename,
+		const char* projectFilename) {
 	std::vector<Scene*> sv;
 	if (ProjectSerializer::openDat(sv, filename)) {
 		setScenes(sv);
+		serializer->resetProjectFile(projectFilename);
 		return true;
 	}
 	return false;

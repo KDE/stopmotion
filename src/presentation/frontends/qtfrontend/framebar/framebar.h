@@ -226,9 +226,9 @@ public slots:
 	void moveSelectionToNextFrame();
 	void selectPreviousScene();
 	void selectNextScene();
-	void updateStopped();
 	void fileChanged(const QString &path);
 	void setThumbImage(ThumbView* thumb, const char* imagePath);
+	void setSelection(int scene, int selectionFrame, int activeFrame);
 
 signals:
 	//The signals in the framebar is used for signaling small widget,
@@ -266,8 +266,10 @@ private:
 	/** The scene which are being moved when draging a scene */
 	int movingScene;
 
-	/** The other border frame in a selection together with activeFrame.
-	*   If only one is selected selectionFrame == activeFrame            */
+	/**
+	 * The anchor in a selection.
+	 *   If only one frame is selected selectionFrame == activeFrame
+	 */
 	int selectionFrame;
 
 	/** Direction to scroll when dragging.

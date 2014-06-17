@@ -90,15 +90,13 @@ void recover(DomainFacade *facadePtr) {
 				throw CouldNotInitializeRecoveryFiles(errno);
 			}
 			commandLogExists = false;
-			if (rename(newDat.path(), currentDat.path()) < 0) {
-				throw CouldNotInitializeRecoveryFiles(errno);
-			}
-			if (!facadePtr->loadProject(currentDat.path())) {
-				throw RecoveryIncompleteException(currentDat.path());
+			if (!facadePtr->loadProject(newDat.path(), 0)) {
+				throw RecoveryIncompleteException(newDat.path());
 			}
 		}
 	} else {
-		if (!facadePtr->loadProject(currentDat.path())) {
+		Preference projectFile("projectFile");
+		if (!facadePtr->loadProject(currentDat.path(), projectFile.get())) {
 			throw RecoveryIncompleteException(currentDat.path());
 		}
 	}
@@ -137,11 +135,7 @@ int main(int argc, char **argv) {
 			facadePtr->initializeCommandLoggerFile();
 			if (argc > 1 && access(argv[1], R_OK) == 0) {
 				qtFrontend.openProject(argv[1]);
-				const char *proFile = facadePtr->getProjectFile();
-				if ( proFile != NULL ) {
-					PreferencesTool *pref = PreferencesTool::get();
-					pref->setPreference("mostRecent", proFile);
-				}
+				facadePtr->setMostRecentProject();
 			}
 		} catch (std::exception& e) {
 			qtFrontend.reportError(e.what(), 1);

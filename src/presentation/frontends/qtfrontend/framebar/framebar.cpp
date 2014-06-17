@@ -512,7 +512,7 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 }
 
 void FrameBar::setSelection(int sf) {
-	setActiveFrameAndSelection(activeFrame, sf);
+	setActiveFrameAndSelection(sf, selectionFrame);
 }
 
 int FrameBar::getSelectionAnchor() const {
@@ -863,14 +863,14 @@ void FrameBar::selectNextFrame() {
 }
 
 void FrameBar::moveSelectionToPreviousFrame() {
-	if (0 < selectionFrame) {
-		setActiveFrameAndSelection(activeFrame, selectionFrame - 1);
+	if (0 < activeFrame) {
+		setSelection(activeFrame - 1);
 	}
 }
 
 void FrameBar::moveSelectionToNextFrame() {
-	if (selectionFrame < activeSceneSize - 1) {
-		setActiveFrameAndSelection(activeFrame, selectionFrame + 1);
+	if (activeFrame < activeSceneSize - 1) {
+		setSelection(activeFrame + 1);
 	}
 }
 
@@ -897,6 +897,7 @@ void FrameBar::selectNextScene() {
 	doScroll();
 }
 
-void FrameBar::updateStopped() {
-	emit newActiveFrame(activeScene, activeFrame);
+void FrameBar::setSelection(int scene, int selectionFrame, int activeFrame) {
+	setActiveScene(scene);
+	setActiveFrameAndSelection(activeFrame, selectionFrame);
 }

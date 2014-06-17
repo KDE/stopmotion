@@ -271,9 +271,11 @@ public:
 	 * Clears the animation and loads it from the dat file specified.
 	 * If unsuccessful, the animation is untouched.
 	 * @param filename The XML file to load.
+	 * @param projectFilename The name of the project file this XML file came
+	 * from or was last saved to, if known.
 	 * @return {@c true} if successful.
 	 */
-	bool loadFromDat(const char* filename);
+	bool loadFromDat(const char* filename, const char* projectFilename);
 
 	/**
 	 * Opens a project.

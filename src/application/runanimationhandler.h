@@ -83,7 +83,7 @@ signals:
 	 */
 	void playFrame(int scene, int frame);
 	void paused();
-	void stopped();
+	void stopped(int scene, int startFrame, int endFrame);
 
 public slots:
 

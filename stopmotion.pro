@@ -1,5 +1,4 @@
-#CONFIG += debug
-CONFIG += release
+CONFIG += debug_and_release
 CONFIG += warn_off
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
@@ -261,9 +260,10 @@ DISTFILES += src/config.cpp.in \
     $$system(ls -1 manual/graphic/*.png) \
     $$system(ls -1 manual/icons/*.png) \
     $$system(ls -1 manual/screenshots/*.png) \
-    $$system(ls -1 translations/*.ts | sed -e 's/\\.ts$/\\.qm/')
+    $$system(ls -1 translations/*.ts | sed -e 's/translations\\(.*\\)\\.ts$/build\\1\\.qm/')
 DISTFILES -= stopmotion.pro \
-             src/config.cpp
+             src/config.cpp \
+             stopmotion-d
 
 CONFIG += link_pkgconfig
 
@@ -292,7 +292,7 @@ UI_DIR = build
 target.path = $${PREFIX}/bin
 
 translations.path = $${PREFIX}/share/stopmotion/translations
-translations.files = translations/*.qm
+translations.files = build/*.qm
 
 htmldoc.path = $${PREFIX}/share/doc/stopmotion/html
 htmldoc.files = manual/*.html
@@ -319,3 +319,14 @@ dummy.extra += chmod 755 $(INSTALL_ROOT)/$${PREFIX}/share/stopmotion/translation
 INSTALLS += target translations htmldoc icon desktop dummy
 
 QMAKE_STRIP=:
+
+# Build translations
+QMAKE_EXTRA_COMPILERS += lrelease
+lrelease.input    = TRANSLATIONS
+lrelease.output   = ${QMAKE_FILE_BASE}.qm
+lrelease.commands = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN} -qm build/${QMAKE_FILE_BASE}.qm
+lrelease.CONFIG  += no_link target_predeps
+
+# Build and run tests with make test
+QMAKE_EXTRA_TARGETS += test
+test.commands = cd src/test && qmake && make test

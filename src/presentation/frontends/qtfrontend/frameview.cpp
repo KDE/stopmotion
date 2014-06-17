@@ -251,26 +251,15 @@ bool FrameView::on() {
 	PreferencesTool *prefs = PreferencesTool::get();
 	int activeCmd = prefs->getPreference("activedevice", 0);
 
-	const char* prepoll =
-		prefs->getPreference(QString("importprepoll%1").arg(activeCmd).toLatin1().constData(), "");
-	const char* startDaemon = 
-		prefs->getPreference(QString("importstartdaemon%1").arg(activeCmd).toLatin1().constData(), "");
-	const char* stopDaemon = 
-		prefs->getPreference(QString("importstopdaemon%1").arg(activeCmd).toLatin1().constData(), "");
+	Preference prepoll(QString("importprepoll%1")
+			.arg(activeCmd).toLatin1().constData(), "");
+	Preference startDaemon(QString("importstartdaemon%1")
+			.arg(activeCmd).toLatin1().constData());
+	Preference stopDaemon(QString("importstopdaemon%1")
+			.arg(activeCmd).toLatin1().constData(), "");
 
 	int activeDev = prefs->getPreference("activeVideoDevice", -1);
-	if (activeDev > -1) {
-		const char *device =
-			prefs->getPreference(QString("device%1").arg(activeDev).toLatin1().constData(), "");
-		QString pre = QString(prepoll).replace("$VIDEODEVICE", device);
-		xmlFree((xmlChar*)prepoll);
-		prepoll = strdup(pre.toLatin1().constData());
-		QString sd = QString(startDaemon).replace("$VIDEODEVICE", device);
-		xmlFree((xmlChar*)startDaemon);
-		startDaemon = strdup(sd.toLatin1().constData());
-		xmlFree((xmlChar*)device);
-	}
-	else {
+	if (activeDev <0) {
 		QMessageBox::warning(this, tr("Warning"), tr(
 			"No video device selected in the preferences menu."),
 			QMessageBox::Ok,
@@ -278,11 +267,14 @@ bool FrameView::on() {
 			Qt::NoButton);
 		return false;
 	}
+	Preference device(QString("device%1")
+			.arg(activeDev).toLatin1().constData(), "");
+	QString pre = QString(prepoll.get()).replace("$VIDEODEVICE", device.get());
+	bool isProcess = startDaemon.get();
 
-	bool isProcess = (strcmp(startDaemon, "") == 0) ? false : true;
 	bool isCameraReady = true;
 	this->grabber = new CommandLineGrabber(capturedFile.path(), isProcess);
-	if ( !grabber->setPrePollCommand(prepoll) ) {
+	if ( !grabber->setPrePollCommand(pre.toLatin1().constData()) ) {
 		QMessageBox::warning(this, tr("Warning"), tr(
 					"Pre poll command does not exists"),
 					QMessageBox::Ok,
@@ -292,33 +284,27 @@ bool FrameView::on() {
 		isCameraReady = false;
 	}
 
-	free(const_cast<char *>(prepoll));
-	prepoll = 0;
-
-	if ( !grabber->setStartCommand(startDaemon) ) {
-		DomainFacade::getFacade()->getFrontend()->hideProgress();
-		QMessageBox::warning(this, tr("Warning"), tr(
-					"You do not have the given grabber installed on your system"),
-					QMessageBox::Ok,
-					Qt::NoButton,
-					Qt::NoButton);
-		isCameraReady = false;
-		//return false;
+	if (isProcess) {
+		QString sd = QString(startDaemon.get()).replace("$VIDEODEVICE", device.get());
+		if ( !grabber->setStartCommand(sd.toLatin1().constData()) ) {
+			DomainFacade::getFacade()->getFrontend()->hideProgress();
+			QMessageBox::warning(this, tr("Warning"), tr(
+						"You do not have the given grabber installed on your system"),
+						QMessageBox::Ok,
+						Qt::NoButton,
+						Qt::NoButton);
+			isCameraReady = false;
+			//return false;
+		}
 	}
 
-	free(const_cast<char *>(startDaemon));
-	startDaemon = 0;
+	grabber->setStopCommand(stopDaemon.get());
 
-	grabber->setStopCommand(stopDaemon);
-	xmlFree((xmlChar*)stopDaemon);
-
-	if (isCameraReady) {
-		this->initCompleted();
-		this->isPlayingVideo = true;
-	}
-	else {
+	if (!isCameraReady) {
 		return false;
 	}
+	this->initCompleted();
+	this->isPlayingVideo = true;
 
 	if ( prefs->getPreference("numberofimports", 1) > 0 ) {
 		// If the grabber is running in it's own process we use a timer.
