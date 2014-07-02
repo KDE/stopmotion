@@ -39,9 +39,9 @@ DEVELOPMENT
 
 After qmake, the following make targets are available:
 
+make         # build a release version of the project, called stopmotion
 make debug   # build a debug version of the project, called stopmotion-d
-make release # build a release version of the project, called stopmotion
-make         # build both debug and release versions
+make all     # build both debug and release versions
 make install # build and install the release version in /usr/local
 make test    # build and run the unit tests
 
