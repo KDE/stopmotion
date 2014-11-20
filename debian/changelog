@@ -1,4 +1,4 @@
-stopmotion (0.8.0~beta6+git.3.g009a89f-1) unstable; urgency=medium
+stopmotion (0.8.0-1) unstable; urgency=medium
 
   * New upstream version
   * No longer uses libinotify
@@ -22,8 +22,10 @@ stopmotion (0.8.0~beta6+git.3.g009a89f-1) unstable; urgency=medium
     - enable/disable loop button whenever play button enabled/disabled
     - onionskinning alpha value fix
     - and many more
+  * Work around *.qm issue in build system: must exist in build/ prior to
+    qmake to get *.qm included in install target
 
- -- Barak A. Pearlmutter <bap@debian.org>  Fri, 09 May 2014 08:37:18 +0100
+ -- Barak A. Pearlmutter <bap@debian.org>  Thu, 20 Nov 2014 19:52:52 +0000
 
 stopmotion (0.7.2-1) unstable; urgency=low
 
