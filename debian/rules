@@ -6,6 +6,8 @@
 override_dh_auto_configure:
 	@echo "generating binary translation files translations/*.qm"
 	lrelease stopmotion.pro
+	mkdir --parent build
+	mv translations/*.qm build/
 	dh_auto_configure
 
 # prevent attempt when parallel to chmod installed *.qm before they're installed
