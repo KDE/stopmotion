@@ -164,11 +164,17 @@ public:
 		if (home) {
 			static const char appendix[] = "/.stopmotion/test";
 			unsigned int len = strlen(home);
-			fakeHome = (char*) malloc(len + sizeof(appendix));
+			std::size_t bufferSize = len + sizeof(appendix);
+			fakeHome = (char*) malloc(bufferSize);
 			if (fakeHome) {
 				strncpy(fakeHome, home, len);
 				strncpy(fakeHome + len, appendix, sizeof(appendix));
+			} else {
+				printf("ERROR: could not malloc %d bytes for fakeHome\n",
+						bufferSize);
 			}
+		} else {
+			printf("ERROR: could not read HOME environment variable\n");
 		}
 	}
 	FILE* fopen(const char* filename, const char* mode) {
