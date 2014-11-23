@@ -40,6 +40,7 @@
 #include <error.h>
 #include <vector>
 #include <unistd.h>
+#include <errno.h>
 
 
 class RealOggEmptyJpg : public MockableFileSystem {
@@ -155,27 +156,25 @@ class TestHome : public MockableFileSystem {
 	char* fakeHome;
 public:
 	TestHome() : delegate(0), fakeHome(0) {
+		std::string tmpdir("/tmp/t_home_lsmXXXXXX");
+		tmpdir.c_str(); // ensure trailing null is present
+		if (mkdtemp(&tmpdir[0])) {
+			std::string::size_type bufferSize = tmpdir.length() + 1;
+			fakeHome = (char *) malloc(bufferSize);
+			if (fakeHome) {
+				strncpy(fakeHome, tmpdir.c_str(), bufferSize);
+			} else {
+				printf("Could not create temporary directory: Out Of Memory!\n");
+			}
+		} else {
+			printf("Could not create temporary directory; error code: %d\n",
+					errno);
+		}
 	}
 	~TestHome() {
 	}
 	void setDelegate(MockableFileSystem* mfs) {
 		delegate = mfs;
-		char* home = delegate->getenv("HOME");
-		if (home) {
-			static const char appendix[] = "/.stopmotion/test";
-			unsigned int len = strlen(home);
-			std::size_t bufferSize = len + sizeof(appendix);
-			fakeHome = (char*) malloc(bufferSize);
-			if (fakeHome) {
-				strncpy(fakeHome, home, len);
-				strncpy(fakeHome + len, appendix, sizeof(appendix));
-			} else {
-				printf("ERROR: could not malloc %d bytes for fakeHome\n",
-						bufferSize);
-			}
-		} else {
-			printf("ERROR: could not read HOME environment variable\n");
-		}
 	}
 	FILE* fopen(const char* filename, const char* mode) {
 		return delegate->fopen(filename, mode);
