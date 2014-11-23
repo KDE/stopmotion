@@ -208,27 +208,7 @@ SOURCES += src/config.cpp \
     src/domain/undo/executor.cpp \
     src/domain/undo/addallcommands.cpp \
     src/domain/undo/random.cpp
-TRANSLATIONS += translations/stopmotion_no_nb.ts \
-                translations/stopmotion_no_nn.ts \
-                translations/stopmotion_no_se.ts \
-                translations/stopmotion_de.ts \
-                translations/stopmotion_sv.ts \
-                translations/stopmotion_fr.ts \
-                translations/stopmotion_br.ts \
-                translations/stopmotion_dk.ts \
-                translations/stopmotion_fi.ts \
-                translations/stopmotion_gr.ts \
-                translations/stopmotion_he.ts \
-                translations/stopmotion_ru.ts \
-                translations/stopmotion_es.ts \
-                translations/stopmotion_kl.ts \
-		translations/stopmotion_cz.ts \
-		translations/stopmotion_sl.ts \
-		translations/stopmotion_pt.ts \
-		translations/stopmotion_it.ts \
-		translations/stopmotion_tr.ts \
-		translations/stopmotion_zh_TW.ts \
-		translations/stopmotion_ar.ts
+TRANSLATIONS += $$system(ls -1 translations/*.ts)
 DEPENDPATH += src \
     src/domain \
     src/foundation \
@@ -323,7 +303,7 @@ QMAKE_STRIP=:
 # Build translations
 QMAKE_EXTRA_COMPILERS += lrelease
 lrelease.input    = TRANSLATIONS
-lrelease.output   = ${QMAKE_FILE_BASE}.qm
+lrelease.output   = build/${QMAKE_FILE_BASE}.qm
 lrelease.commands = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN} -qm build/${QMAKE_FILE_BASE}.qm
 lrelease.CONFIG  += no_link target_predeps
 
