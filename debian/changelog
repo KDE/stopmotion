@@ -1,3 +1,13 @@
+stopmotion (0.8.0-2) unstable; urgency=medium
+
+  * Merge upstream fixes
+    - da7af98 corrected README. 'make' makes just release, not release+debug
+    - 678cdf7 Fix lintian issue desktop-mime-but-no-exec-code
+    - 473a291 Removed last PATH_MAX references to allow it to compile on Hurd
+  * disable dh_auto_test because it fails on the autobuilders
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Mon, 24 Nov 2014 16:58:44 +0000
+
 stopmotion (0.8.0-1) unstable; urgency=medium
 
   * New upstream version
