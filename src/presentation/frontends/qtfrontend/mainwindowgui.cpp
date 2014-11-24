@@ -62,6 +62,7 @@
 
 #include <cstdlib>
 #include <unistd.h>
+#include <sstream>
 
 using namespace std;
 using namespace Qt;
@@ -920,20 +921,26 @@ void MainWindowGUI::exportToVideo()
 	}
 	else {
 		bool isCanceled = false;
-		char tmp[PATH_MAX];
+		std::stringstream key;
+		std::string k;
 		VideoEncoder enc;
 
-		sprintf(tmp, "startEncoder%d", active);
-		Preference start(tmp, "");
+		key << "startEncoder" << active;
+		k = key.str();
+		Preference start(k.c_str(), "");
 		enc.setStartCommand(start.get());
 
-		sprintf(tmp, "stopEncoder%d", active);
-		Preference stop(tmp, "");
+		key.str("");
+		key << "stopEncoder" << active;
+		k = key.str();
+		Preference stop(k.c_str(), "");
 		enc.setStopCommand(stop.get());
 
-		sprintf(tmp, "outputFile%d", active);
-		Preference output(tmp);
-		if (output.get()) {
+		key.str("");
+		key << "outputFile" << active;
+		k = key.str();
+		Preference output(k.c_str());
+		if (output.get() && *output.get()) {
 			enc.setOutputFile(output.get());
 		} else {
 			QString file = QFileDialog::

@@ -31,6 +31,7 @@
 #include <errno.h>
 #include <string>
 #include <string.h>
+#include <sstream>
 
 
 NonGUIFrontend::NonGUIFrontend(DomainFacade *facadePtr)
@@ -237,12 +238,13 @@ int NonGUIFrontend::checkFiles(const char *directory) {
 	if (dp) {
 		struct dirent *ep;
 		struct stat st;
-		char tmp[PATH_MAX] = {0};
+		std::stringstream path;
 
 		while ( (ep = readdir(dp)) ) {
-			snprintf(tmp, sizeof(tmp), "%s%s", directory, ep->d_name);
-			tmp[sizeof(tmp) - 1] = '\0';  // ensure null-terminated
-			stat(tmp, &st);
+			path.str("");
+			path << directory << ep->d_name;
+			std::string p(path.str());
+			stat(p.c_str(), &st);
 			// is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0) {
 				++numSuccessFull;

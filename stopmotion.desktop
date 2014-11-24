@@ -2,7 +2,7 @@
 Name=Stopmotion
 Icon=stopmotion
 Comment=Program to create stop-motion animations
-Exec=stopmotion
+Exec=stopmotion %f
 Terminal=false
 Type=Application
 Categories=AudioVideo;Video;AudioVideoEditing;KDE;Qt;
