@@ -45,6 +45,7 @@ HEADERS += texecutor.h \
 	tcache.h \
     oomtestutil.h \
     testundo.h \
+    testhome.h \
     hash.h \
     tstopmotionundo.h
 SOURCES += ../domain/undo/filelogger.cpp \
@@ -94,6 +95,7 @@ SOURCES += \
     texecutor.cpp \
     tcache.cpp \
     testundo.cpp \
+    testhome.cpp \
     hash.cpp \
     tstopmotionundo.cpp
 FORMS += 

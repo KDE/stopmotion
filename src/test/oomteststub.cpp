@@ -26,12 +26,12 @@ namespace {
 typedef void setMallocsUntilFailure_t(int);
 typedef long mallocsSoFar_t(void);
 typedef void init_t(void);
-typedef void setMockFileSystem_t(MockableFileSystem*);
+typedef void wrapFileSystem_t(MockableFileSystem*);
 
 init_t* init;
 setMallocsUntilFailure_t* smuf;
 mallocsSoFar_t* msf;
-setMockFileSystem_t* smfs;
+wrapFileSystem_t* wfs;
 }
 
 MockableFileSystem::~MockableFileSystem() {
@@ -53,9 +53,9 @@ int loadOomTestUtil() {
 				"realSetMallocsUntilFailure");
 	if (!msf)
 		msf = (mallocsSoFar_t*)dlsym(RTLD_DEFAULT, "realMallocsSoFar");
-	if (!smfs)
-		smfs = (setMockFileSystem_t*)dlsym(RTLD_DEFAULT, "realSetMockFileSystem");
-	if (!init || !smuf || !msf || !smfs)
+	if (!wfs)
+		wfs = (wrapFileSystem_t*)dlsym(RTLD_DEFAULT, "realWrapFileSystem");
+	if (!init || !smuf || !msf || !wfs)
 		return 0;
 	init();
 	return 1;
@@ -77,7 +77,7 @@ long mallocsSoFar() {
 	return 0;
 }
 
-void setMockFileSystem(MockableFileSystem* mfs) {
-	if (smfs)
-		smfs(mfs);
+void wrapFileSystem(MockableFileSystem* mfs) {
+	if (wfs)
+		wfs(mfs);
 }

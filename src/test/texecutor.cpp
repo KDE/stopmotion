@@ -38,6 +38,7 @@
 
 #include "testundo.h"
 #include "oomtestutil.h"
+#include "testhome.h"
 
 static const int32_t no_num = std::numeric_limits<int32_t>::min();
 

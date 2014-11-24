@@ -86,12 +86,13 @@ void cancelAnyMallocFailure();
 long mallocsSoFar();
 
 /**
- * Sets the mock file system object.
- * @param mfs The object to use as the mock file system. {@c setDelegate} will
- * be called on {@a mfs} with an object representing the real versions of these
- * functions which can be used as a delegate.
+ * Wraps the mock file system object.
+ * @param mfs The new object with which to wrap the file system.
+ * {@c setDelegate} will be called on {@a mfs} with an object representing the
+ * current versions of these functions which can be used as a delegate. If 0 is
+ * passed the file system will be returned to its natural unwrapped state.
  */
-void setMockFileSystem(MockableFileSystem* mfs);
+void wrapFileSystem(MockableFileSystem* mfs);
 
 }
 
