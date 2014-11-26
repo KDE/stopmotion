@@ -226,6 +226,10 @@ INCLUDEPATH += . \
     src/presentation
 LIBS += -lSDL_image -ltar -lvorbisfile -lX11
 
+QM_FILES = $$TRANSLATIONS
+QM_FILES~= s:^translations/:build/:g
+QM_FILES~= s:[.]ts$:.qm:g
+
 DISTFILES += src/config.cpp.in \
     graphics/stopmotion.png \
     stopmotion.pro.in \
@@ -240,7 +244,7 @@ DISTFILES += src/config.cpp.in \
     $$system(ls -1 manual/graphic/*.png) \
     $$system(ls -1 manual/icons/*.png) \
     $$system(ls -1 manual/screenshots/*.png) \
-    $$system(ls -1 translations/*.ts | sed -e 's/translations\\(.*\\)\\.ts$/build\\1\\.qm/')
+    $$QM_FILES
 DISTFILES -= stopmotion.pro \
              src/config.cpp \
              stopmotion-d
@@ -272,7 +276,7 @@ UI_DIR = build
 target.path = $${PREFIX}/bin
 
 translations.path = $${PREFIX}/share/stopmotion/translations
-translations.files = build/*.qm
+translations.files = $$QM_FILES
 
 htmldoc.path = $${PREFIX}/share/doc/stopmotion/html
 htmldoc.files = manual/*.html
