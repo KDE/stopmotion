@@ -49,7 +49,8 @@ int NonGUIFrontend::run(int argc, char **argv) {
 }
 
 
-void NonGUIFrontend::showProgress(ProgressMessage message, int numOperations) {
+void NonGUIFrontend::showProgress(ProgressMessage message,
+		int /*numOperations*/) {
 	// sets the stdout to be unbuffered
 	setvbuf(stdout, NULL, _IONBF,0);
 	const char* infoText = "Please wait";

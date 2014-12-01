@@ -77,28 +77,36 @@ bool CommandLineGrabber::setStopCommand(const char *command)
 }
 
 
-bool CommandLineGrabber::init()
-{
+bool CommandLineGrabber::init() {
 	if (isProcess) {
 		if (startProcess != "") {
-			Logger::get().logDebug("Attemting to start process");
-			system(startProcess.c_str());
-			
+			Logger::get().logDebug("Attempting to start process");
+			int r = system(startProcess.c_str());
+			if (r != 0) {
+				Logger::get().logFatal(
+						"Grab start process '%s' returned code %d",
+						startProcess.c_str(), r);
+			} else {
+				return true;
+			}
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 	return true;
 }
 
 
-bool CommandLineGrabber::tearDown()
-{
-	Logger::get().logDebug("Attemting to shutt down process");
+bool CommandLineGrabber::tearDown() {
+	Logger::get().logDebug("Attempting to shutt down process");
 	if (stopProcess != "") {
-		system( stopProcess.c_str() );
-		return true;
+		int r = system( stopProcess.c_str() );
+		if (r != 0) {
+			Logger::get().logFatal(
+					"Grab stop process '%s' returned code %d",
+					stopProcess.c_str(), r);
+		} else {
+			return true;
+		}
 	}
 	return false;
 }

@@ -1145,7 +1145,6 @@ void MainWindowGUI::activateMenuOptions() {
 void MainWindowGUI::createMostRecentMenu() {
 	mostRecentMenu->clear();
 	mostRecentMenu->setTitle(tr("Open &Recent"));
-	PreferencesTool* pref = PreferencesTool::get();
 	Preference first("mostRecent", "");
 	if (first.get() && access(first.get(), R_OK) == 0) {
 		mostRecentAct->setVisible(true);

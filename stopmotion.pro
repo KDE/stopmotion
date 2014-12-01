@@ -1,5 +1,4 @@
 CONFIG += debug_and_release
-CONFIG += warn_off
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
     src/domain/domainfacade.h \

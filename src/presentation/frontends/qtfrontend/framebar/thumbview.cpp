@@ -27,7 +27,7 @@
 
 ThumbView::ThumbView(FrameBar *frameBar, QWidget *parent, int number,
 		const char *name)
-	: QLabel(parent), frameBar(frameBar), number(number), refCount(1) {
+	: QLabel(parent), refCount(1), frameBar(frameBar), number(number) {
 	setObjectName(name);
 }
 
