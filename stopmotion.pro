@@ -112,14 +112,6 @@ HEADERS += src/domain/undo/filelogger.h \
     src/application/externalcommand.h \
     src/application/externalcommandwithtemporarydirectory.h \
     src/presentation/frontends/qtfrontend/aboutdialog.h \
-    src/technical/libng/devices.h \
-    src/technical/libng/grab-ng.h \
-    src/technical/libng/list.h \
-    src/technical/libng/struct-dump.h \
-    src/technical/libng/struct-v4l2.h \
-    src/technical/libng/struct-v4l.h \
-    src/technical/libng/videodev2.h \
-    src/technical/libng/videodev.h \
     src/presentation/frontends/qtfrontend/devicetab.h \
     src/domain/undo/command.h \
     src/domain/undo/undoredoobserver.h \
@@ -194,13 +186,6 @@ SOURCES += src/config.cpp \
     src/application/externalcommand.cpp \
     src/application/externalcommandwithtemporarydirectory.cpp \
     src/presentation/frontends/qtfrontend/aboutdialog.cpp \
-    src/technical/libng/devices.c \
-    src/technical/libng/grab-ng.c \
-    src/technical/libng/struct-dump.c \
-    src/technical/libng/struct-v4l2.c \
-    src/technical/libng/struct-v4l.c \
-    src/technical/libng/plugins/drv0-v4l2.c \
-    src/technical/libng/plugins/drv1-v4l.c \
     src/presentation/frontends/qtfrontend/devicetab.cpp \
     src/domain/undo/command.cpp \
     src/domain/undo/undoredoobserver.cpp \
