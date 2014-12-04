@@ -282,24 +282,8 @@ icon.files = graphics/stopmotion.svg
 desktop.path = $${PREFIX}/share/applications
 desktop.files = stopmotion.desktop
 
-# Dummy target to fix permissions.
-dummy.path = $${PREFIX}/share
-dummy.extra += chmod 644 \
-	$(INSTALL_ROOT)$${PREFIX}/share/stopmotion/translations/*.qm \
-	$(INSTALL_ROOT)$${PREFIX}/share/doc/stopmotion/html/*.html \
-	$(INSTALL_ROOT)$${PREFIX}/share/doc/stopmotion/html/graphic/* \
-	$(INSTALL_ROOT)$${PREFIX}/share/doc/stopmotion/html/icons/* \
-    $(INSTALL_ROOT)$${PREFIX}/share/doc/stopmotion/html/screenshots/*;
-dummy.extra += chmod 755 \
-	$(INSTALL_ROOT)$${PREFIX}/share/stopmotion/translations \
-	$(INSTALL_ROOT)$${PREFIX}/bin/$(QMAKE_TARGET) \
-	$(INSTALL_ROOT)$${PREFIX}/share/doc/stopmotion/html \
-	$(INSTALL_ROOT)$${PREFIX}/share/doc/stopmotion/html/graphic \
-    $(INSTALL_ROOT)$${PREFIX}/share/doc/stopmotion/html/icons \
-	$(INSTALL_ROOT)$${PREFIX}/share/doc/stopmotion/html/screenshots;
-
 INSTALLS += target translations icon desktop \
-	docgraphics docicons docscreens htmldoc dummy
+	docgraphics docicons docscreens htmldoc
 
 QMAKE_STRIP=:
 
