@@ -261,7 +261,8 @@ UI_DIR = build
 target.path = $${PREFIX}/bin
 
 translations.path = $${PREFIX}/share/stopmotion/translations
-translations.files = $$QM_FILES
+translations.files = $${QM_FILES}
+translations.CONFIG += no_check_exist
 
 docgraphics.path = $${PREFIX}/share/doc/stopmotion/html/graphic
 docgraphics.files = manual/graphic/*.png
