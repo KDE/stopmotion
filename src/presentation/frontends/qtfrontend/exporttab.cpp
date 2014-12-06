@@ -189,7 +189,6 @@ void ExportTab::initialize()
 
 	int numEncoders = pref->getPreference("numEncoders", 0);
 	encoderTable->setRowCount(numEncoders);
-	const char *prop = 0;
 	for (int i = 0; i < numEncoders; ++i) {
 		Preference name(QString("encoderName%1").arg(i).toLatin1().constData(),"");
 		encoderTable->setItem(i, 0, new QTableWidgetItem(name.get()) );

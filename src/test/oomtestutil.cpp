@@ -33,7 +33,7 @@ malloc_t malloc;
 void init();
 void realSetMallocsUntilFailure(int);
 long realMallocsSoFar();
-void realSetMockFileSystem(MockableFileSystem* mfs);
+void realWrapFileSystem(MockableFileSystem* mfs);
 FILE* fopen(const char* filename, const char* mode);
 FILE* freopen(const char* filename, const char* mode, FILE* fh);
 int fclose(FILE* fh);
@@ -215,9 +215,9 @@ long realMallocsSoFar() {
 	return mallocCount;
 }
 
-void realSetMockFileSystem(MockableFileSystem* mfs) {
+void realWrapFileSystem(MockableFileSystem* mfs) {
 	if (mfs) {
-		mfs->setDelegate(realFs);
+		mfs->setDelegate(requiredFs);
 		requiredFs = mfs;
 	} else {
 		requiredFs = realFs;

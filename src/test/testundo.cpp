@@ -22,6 +22,8 @@
 
 #include "oomtestutil.h"
 
+#include "tstopmotionundo.h" // this will be moved.
+
 #include "src/domain/undo/executor.h"
 #include "src/domain/undo/commandlogger.h"
 #include "src/domain/undo/filelogger.h"
@@ -518,7 +520,7 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 	ExecutorDoesAndRandomUndoesAndRedoes doesUndoesRedoes(&construct,
 			tmpFileName.c_str());
 
-	// (8) OOM[Do, undo some, redo some, do] = replay
+	// (8) OOM[Do, undo some, redo sometestundo, do] = replay
 	FailingStep failingDur(&doesUndoesRedoes);
 
 	const int commandCount = e.commandCount();
@@ -574,6 +576,11 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 
 	QVERIFY2(0 == unlink(tmpFileName.c_str()), "Could not delete test command log file");
 	QVERIFY2(0 == rmdir(tmpDirName), "Could not delete test directory");
+	// The tests that rely on failing commands will pass if the fake malloc
+	// somehow does not cause any command to fail (this will happen, for
+	// example, if no allocations are actually made). If this happens too much
+	// then these tests are not being useful, so we check here that at least
+	// half of the tests run in each case did require recovering from a failure.
 	QVERIFY2(testCount / 2 < failToUndoThenRedo.failedCount()
 			|| testCount < failToUndoThenRedo.noMallocsCount(),
 			"failToUndoThenRedo didn't fail very often");

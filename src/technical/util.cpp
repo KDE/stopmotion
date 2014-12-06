@@ -19,13 +19,12 @@
  ***************************************************************************/
 #include "src/technical/util.h"
 
-#include "src/technical/libng/grab-ng.h"
-
 #include <ext/stdio_filebuf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/ioctl.h>
 #include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -33,6 +32,10 @@
 #include <cassert>
 #include <istream>
 #include <ftw.h>
+#include <glob.h>
+#include <linux/videodev2.h>
+#include <sstream>
+#include <new>
 
 using namespace std;
 
@@ -161,67 +164,47 @@ bool Util::checkCommand(std::string* pathOut, const char* command) {
 	return !bad && exitStatus < 2;
 }
 
+namespace {
+
+template <std::size_t S> void setString(std::string& output, const __u8 (&in)[S]) {
+	const char* p = reinterpret_cast<const char*>(in);
+	output.assign(p, strnlen(p, S));
+}
+
+bool getGrabberDevice(const char* dev, GrabberDevice& d) {
+	int fd;
+	struct v4l2_capability video_cap;
+
+	if((fd = open(dev, O_RDONLY)) == -1){
+		return false;
+	}
+
+	int vcrv = ioctl(fd, VIDIOC_QUERYCAP, &video_cap);
+	close(fd);
+	if (vcrv == -1)
+		return false;
+	if (!(video_cap.capabilities & V4L2_CAP_VIDEO_CAPTURE))
+		return false;
+	d.device.assign(dev);
+	setString(d.name, video_cap.card);
+	setString(d.type, video_cap.driver);
+	return true;
+}
+}
 
 const vector<GrabberDevice> Util::getGrabberDevices() {
-	// Ensures ng_init() is called once
-	static int count = 0;
-	if (count++ == 0) {
-		ng_init();
-	}
-	
 	vector<GrabberDevice> devices;
-	const struct ng_vid_driver *driver = 0;
-	void *handle = 0;
-	struct stat st;
-	int fh    = -1;
-	int flags = -1;
-
-	for (int i = 0; ng_dev.video_scan[i] != 0; ++i) {
-		if (lstat(ng_dev.video_scan[i], &st) == -1) {
-			if (errno == ENOENT) {
-				continue;
-			}
-#ifndef NO_DEBUG
-			fprintf(stderr,"%s: %s\n",ng_dev.video_scan[i],strerror(errno));
-#endif
-			continue;
-		}
-
-		fh = open(ng_dev.video_scan[i], O_RDWR);
-		if (fh == -1) {
-			if (ENODEV == errno) {
-				continue;
-			}
-#ifndef NO_DEBUG
-			fprintf(stderr,"%s: %s\n",ng_dev.video_scan[i],strerror(errno));
-#endif
-			continue;
-		}
-		close(fh);
-
-		driver = ng_vid_open(ng_dev.video_scan[i], 0, 0, 0, &handle);
-		if (driver == 0) {
-#ifndef NO_DEBUG
-			fprintf(stderr,"%s: initialization failed\n",ng_dev.video_scan[i]);
-#endif
-			continue;
-		}
-
-		flags = driver->capabilities(handle);
-		if (flags & CAN_CAPTURE) {
-			GrabberDevice d;
-			d.device = ng_dev.video_scan[i];
-			if (driver->get_devname) {
-				d.name = driver->get_devname(handle);
-			}
-			d.type = driver->name;
-			devices.push_back(d);
-		}
-
-		driver->close(handle);
+	glob_t matches;
+	int globRv = glob("/dev/video*", 0, 0, &matches);
+	for (char** match = matches.gl_pathv; *match; ++match) {
+		GrabberDevice gd;
+		if (getGrabberDevice(*match, gd))
+			devices.push_back(gd);
 	}
-
+	globfree(&matches);
 	vector<GrabberDevice>(devices).swap(devices);
+	if (globRv == GLOB_NOSPACE)
+		throw std::bad_alloc();
 	return devices;
 }
 

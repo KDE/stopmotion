@@ -1,5 +1,4 @@
 CONFIG += debug_and_release
-CONFIG += warn_off
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
     src/domain/domainfacade.h \
@@ -112,14 +111,6 @@ HEADERS += src/domain/undo/filelogger.h \
     src/application/externalcommand.h \
     src/application/externalcommandwithtemporarydirectory.h \
     src/presentation/frontends/qtfrontend/aboutdialog.h \
-    src/technical/libng/devices.h \
-    src/technical/libng/grab-ng.h \
-    src/technical/libng/list.h \
-    src/technical/libng/struct-dump.h \
-    src/technical/libng/struct-v4l2.h \
-    src/technical/libng/struct-v4l.h \
-    src/technical/libng/videodev2.h \
-    src/technical/libng/videodev.h \
     src/presentation/frontends/qtfrontend/devicetab.h \
     src/domain/undo/command.h \
     src/domain/undo/undoredoobserver.h \
@@ -194,13 +185,6 @@ SOURCES += src/config.cpp \
     src/application/externalcommand.cpp \
     src/application/externalcommandwithtemporarydirectory.cpp \
     src/presentation/frontends/qtfrontend/aboutdialog.cpp \
-    src/technical/libng/devices.c \
-    src/technical/libng/grab-ng.c \
-    src/technical/libng/struct-dump.c \
-    src/technical/libng/struct-v4l2.c \
-    src/technical/libng/struct-v4l.c \
-    src/technical/libng/plugins/drv0-v4l2.c \
-    src/technical/libng/plugins/drv1-v4l.c \
     src/presentation/frontends/qtfrontend/devicetab.cpp \
     src/domain/undo/command.cpp \
     src/domain/undo/undoredoobserver.cpp \
@@ -208,27 +192,7 @@ SOURCES += src/config.cpp \
     src/domain/undo/executor.cpp \
     src/domain/undo/addallcommands.cpp \
     src/domain/undo/random.cpp
-TRANSLATIONS += translations/stopmotion_no_nb.ts \
-                translations/stopmotion_no_nn.ts \
-                translations/stopmotion_no_se.ts \
-                translations/stopmotion_de.ts \
-                translations/stopmotion_sv.ts \
-                translations/stopmotion_fr.ts \
-                translations/stopmotion_br.ts \
-                translations/stopmotion_dk.ts \
-                translations/stopmotion_fi.ts \
-                translations/stopmotion_gr.ts \
-                translations/stopmotion_he.ts \
-                translations/stopmotion_ru.ts \
-                translations/stopmotion_es.ts \
-                translations/stopmotion_kl.ts \
-		translations/stopmotion_cz.ts \
-		translations/stopmotion_sl.ts \
-		translations/stopmotion_pt.ts \
-		translations/stopmotion_it.ts \
-		translations/stopmotion_tr.ts \
-		translations/stopmotion_zh_TW.ts \
-		translations/stopmotion_ar.ts
+TRANSLATIONS += $$system(ls -1 translations/*.ts)
 DEPENDPATH += src \
     src/domain \
     src/foundation \
@@ -246,6 +210,10 @@ INCLUDEPATH += . \
     src/presentation
 LIBS += -lSDL_image -ltar -lvorbisfile -lX11
 
+QM_FILES = $$TRANSLATIONS
+QM_FILES~= s:^translations/:build/:g
+QM_FILES~= s:[.]ts$:.qm:g
+
 DISTFILES += src/config.cpp.in \
     graphics/stopmotion.png \
     stopmotion.pro.in \
@@ -260,19 +228,20 @@ DISTFILES += src/config.cpp.in \
     $$system(ls -1 manual/graphic/*.png) \
     $$system(ls -1 manual/icons/*.png) \
     $$system(ls -1 manual/screenshots/*.png) \
-    $$system(ls -1 translations/*.ts | sed -e 's/translations\\(.*\\)\\.ts$/build\\1\\.qm/')
+    $$QM_FILES
 DISTFILES -= stopmotion.pro \
              src/config.cpp \
              stopmotion-d
 
 CONFIG += link_pkgconfig
 
+PKGCONFIG += sdl SDL_image vorbisfile libxml-2.0
+
 isEmpty(PREFIX) {
- PREFIX = /usr/local
+	PREFIX =/usr/local
 }
 
-PKGCONFIG += sdl SDL_image vorbisfile libxml-2.0
-DEFINES += PREFIX_PATH=\"\\\"$${PREFIX}\\\"\"
+DEFINES += PREFIX_PATH=\'\"$${PREFIX}\"\'
 TEMPLATE = app
 DESTDIR=.
 
@@ -292,13 +261,20 @@ UI_DIR = build
 target.path = $${PREFIX}/bin
 
 translations.path = $${PREFIX}/share/stopmotion/translations
-translations.files = build/*.qm
+translations.files = $${QM_FILES}
+translations.CONFIG += no_check_exist
+
+docgraphics.path = $${PREFIX}/share/doc/stopmotion/html/graphic
+docgraphics.files = manual/graphic/*.png
+
+docicons.path = $${PREFIX}/share/doc/stopmotion/html/icons
+docicons.files = manual/icons/*.png
+
+docscreens.path = $${PREFIX}/share/doc/stopmotion/html/screenshots
+docscreens.files = manual/screenshots/*.png
 
 htmldoc.path = $${PREFIX}/share/doc/stopmotion/html
 htmldoc.files = manual/*.html
-htmldoc.extra = $(INSTALL_DIR) manual/graphic $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
-htmldoc.extra += $(INSTALL_DIR) manual/icons $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
-htmldoc.extra += $(INSTALL_DIR) manual/screenshots $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html;
 
 icon.path = $${PREFIX}/share/icons
 icon.files = graphics/stopmotion.svg
@@ -306,24 +282,15 @@ icon.files = graphics/stopmotion.svg
 desktop.path = $${PREFIX}/share/applications
 desktop.files = stopmotion.desktop
 
-# Dummy target to fix permissions. 
-dummy.path = $${PREFIX}/bin
-dummy.extra += chmod 644 $(INSTALL_ROOT)/$${PREFIX}/share/stopmotion/translations/*.qm $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/*.html \
-	$(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/graphic/* $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/icons/* \
-    $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/screenshots/*;
-dummy.extra += chmod 755 $(INSTALL_ROOT)/$${PREFIX}/share/stopmotion/translations $(INSTALL_ROOT)/$${PREFIX}/bin/$(QMAKE_TARGET) \
-	$(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/graphic \
-    $(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/icons \
-	$(INSTALL_ROOT)/$${PREFIX}/share/doc/stopmotion/html/screenshots;
-
-INSTALLS += target translations htmldoc icon desktop dummy
+INSTALLS += target translations icon desktop \
+	docgraphics docicons docscreens htmldoc
 
 QMAKE_STRIP=:
 
 # Build translations
 QMAKE_EXTRA_COMPILERS += lrelease
 lrelease.input    = TRANSLATIONS
-lrelease.output   = ${QMAKE_FILE_BASE}.qm
+lrelease.output   = build/${QMAKE_FILE_BASE}.qm
 lrelease.commands = $$[QT_INSTALL_BINS]/lrelease ${QMAKE_FILE_IN} -qm build/${QMAKE_FILE_BASE}.qm
 lrelease.CONFIG  += no_link target_predeps
 

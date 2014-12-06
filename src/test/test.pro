@@ -28,11 +28,6 @@ HEADERS += ../domain/undo/filelogger.h \
     ../technical/audio/oggvorbis.h \
     ../technical/util.h \
     ../technical/stringiterator.h \
-    ../technical/libng/grab-ng.h \
-    ../technical/libng/struct-v4l.h \
-    ../technical/libng/struct-v4l2.h \
-    ../technical/libng/devices.h \
-    ../technical/libng/struct-dump.h \
     ../technical/video/videofactory.h \
     ../technical/video/videoencoder.h \
     ../technical/audio/ossdriver.h \
@@ -45,6 +40,7 @@ HEADERS += texecutor.h \
 	tcache.h \
     oomtestutil.h \
     testundo.h \
+    testhome.h \
     hash.h \
     tstopmotionundo.h
 SOURCES += ../domain/undo/filelogger.cpp \
@@ -74,13 +70,6 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../technical/audio/audioformat.cpp \
     ../technical/util.cpp \
     ../technical/stringiterator.cpp \
-    ../technical/libng/grab-ng.c \
-    ../technical/libng/struct-v4l.c \
-    ../technical/libng/struct-v4l2.c \
-    ../technical/libng/plugins/drv0-v4l2.c \
-    ../technical/libng/plugins/drv1-v4l.c \
-    ../technical/libng/devices.c \
-    ../technical/libng/struct-dump.c \
     ../technical/video/videofactory.cpp \
     ../technical/video/videoencoder.cpp \
     ../technical/audio/ossdriver.cpp \
@@ -94,6 +83,7 @@ SOURCES += \
     texecutor.cpp \
     tcache.cpp \
     testundo.cpp \
+    testhome.cpp \
     hash.cpp \
     tstopmotionundo.cpp
 FORMS += 

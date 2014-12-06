@@ -21,6 +21,7 @@
 #include "tstopmotionundo.h"
 
 #include "testundo.h"
+#include "testhome.h"
 #include "oomtestutil.h"
 #include "hash.h"
 #include "src/domain/undo/addallcommands.h"
@@ -40,7 +41,6 @@
 #include <error.h>
 #include <vector>
 #include <unistd.h>
-
 
 class RealOggEmptyJpg : public MockableFileSystem {
 	MockableFileSystem* delegate;
@@ -150,78 +150,6 @@ public:
 	}
 };
 
-class TestHome : public MockableFileSystem {
-	MockableFileSystem* delegate;
-	char* fakeHome;
-public:
-	TestHome() : delegate(0), fakeHome(0) {
-	}
-	~TestHome() {
-	}
-	void setDelegate(MockableFileSystem* mfs) {
-		delegate = mfs;
-		char* home = delegate->getenv("HOME");
-		if (home) {
-			static const char appendix[] = "/.stopmotion/test";
-			unsigned int len = strlen(home);
-			fakeHome = (char*) malloc(len + sizeof(appendix));
-			if (fakeHome) {
-				strncpy(fakeHome, home, len);
-				strncpy(fakeHome + len, appendix, sizeof(appendix));
-			}
-		}
-	}
-	FILE* fopen(const char* filename, const char* mode) {
-		return delegate->fopen(filename, mode);
-	}
-	FILE* freopen(const char* filename, const char* mode, FILE* fh) {
-		return delegate->freopen(filename, mode, fh);
-	}
-	int fclose(FILE* fh) {
-		return delegate->fclose(fh);
-	}
-	int fflush(FILE* fh) {
-		return delegate->fflush(fh);
-	}
-	size_t fread (void *out, size_t blockSize,
-			     size_t blockCount, FILE *fh) {
-		return delegate->fread(out, blockSize, blockCount, fh);
-	}
-	size_t fwrite (const void *in, size_t blockSize,
-			      size_t blockCount, FILE *fh) {
-		return delegate->fwrite(in, blockSize, blockCount, fh);
-	}
-	int access (const char *name, int type) {
-		return delegate->access(name, type);
-	}
-	int ferror(FILE* fh) {
-		return delegate->ferror(fh);
-	}
-	int unlink(const char *name) {
-		return delegate->unlink(name);
-	}
-	int ov_test(FILE *f, OggVorbis_File *vf, const char *initial, long ibytes) {
-		return delegate->ov_test(f, vf, initial, ibytes);
-	}
-	int ov_clear(OggVorbis_File *vf) {
-		return delegate->ov_clear(vf);
-	}
-	int ov_open(FILE *f, OggVorbis_File *vf, const char *initial, long ibytes) {
-		return delegate->ov_open(f, vf, initial, ibytes);
-	}
-	long ov_read(OggVorbis_File *vf,char *buffer, int length, int bigendianp,
-			int word, int sgned, int *bitstream) {
-		return delegate->ov_read(vf, buffer, length, bigendianp, word, sgned,
-				bitstream);
-	}
-	char *getenv(const char *name) {
-		if (0 == strcmp(name, "HOME")) {
-			return fakeHome;
-		}
-		return delegate->getenv(name);
-	}
-};
-
 void getHashes(std::vector<Hash>& out, const char* filenameTemplate) {
 	std::string filenameStr(filenameTemplate);
 	char* filename = &filenameStr[0];
@@ -278,7 +206,7 @@ TestStopmotionUndo::TestStopmotionUndo() : anim(0), mockFrontend(0),
 }
 
 TestStopmotionUndo::~TestStopmotionUndo() {
-	setMockFileSystem(0);
+	wrapFileSystem(0);
 	delete mockFrontend;
 }
 
@@ -319,9 +247,11 @@ public:
 
 void TestStopmotionUndo::stopmotionCommandsInvertCorrectly() {
 	SceneVectorTestHelper helper(*sv);
-	setMockFileSystem(mfs);
+	wrapFileSystem(0);
+	wrapFileSystem(testEnvFs);
+	wrapFileSystem(mfs);
 	testUndo(*ex, helper);
-	setMockFileSystem(0);
+	wrapFileSystem(0);
 }
 
 class AnimTester {
@@ -438,7 +368,8 @@ public:
 };
 
 void TestStopmotionUndo::setUpAnim() {
-	setMockFileSystem(testEnvFs);
+	wrapFileSystem(0);
+	wrapFileSystem(testEnvFs);
 	WorkspaceFile::clear();
 	delete anim;
 	anim = 0;

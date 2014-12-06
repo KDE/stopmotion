@@ -1,5 +1,5 @@
 /* XPM */
-static char * windowicon[] = {
+static const char * windowicon[] = {
 "16 16 7 1",
 " 	c None",
 ".	c #D40000",

@@ -175,7 +175,6 @@ void DeviceTab::initialize()
 
 	if (numUserDevices > 0 ) {
 		deviceTable->setRowCount( numUserDevices + numAutoDetectedDevices );
-		const char *prop = 0;
 		int idx = 0;
 
 		for (int i = 0; i < numUserDevices; ++i) {

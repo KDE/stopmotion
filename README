@@ -7,7 +7,7 @@ See http://linuxstopmotion.org for more info.
 INSTALLATION
 ------------
 1) qmake
-2) make install
+2) sudo make install
 
 You need the following libraries installed to compile:
     - Qt4
@@ -39,13 +39,23 @@ DEVELOPMENT
 
 After qmake, the following make targets are available:
 
-make         # build a release version of the project, called stopmotion
-make debug   # build a debug version of the project, called stopmotion-d
-make all     # build both debug and release versions
-make install # build and install the release version in /usr/local
-make test    # build and run the unit tests
+make           # build a release version of the project, called stopmotion
+make debug     # build a debug version of the project, called stopmotion-d
+make all       # build both debug and release versions
+make test      # build and run the unit tests
+make clean     # remove all build products
+make install   # install stopmotion
+make uninstall # remove installation
 
-To install to a specific location (other than /usr/local):
+To install in a specific location:
 
-qmake PREFIX=/path/to/installation
-make install
+qmake PREFIX=/specific/location
+sudo make install
+
+To put the files somewhere before copying them for installation (after qmake):
+
+make INSTALL_ROOT=/somewhere/writeable install
+cp -fr /somewhere/writeable/* /
+
+PREFIX is where the files will ultimately end up. make install will put them in
+$(INSTALL_ROOT)$(PREFIX)
