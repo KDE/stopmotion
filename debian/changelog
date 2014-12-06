@@ -1,3 +1,26 @@
+stopmotion (0.8.0-3) unstable; urgency=medium
+
+  * Merge upstream fixes
+    - acbfcf4 Added some logging for mock file system initialization errors
+    - 269f47a Fixed lrelease output directory
+    - 3dce257 Using /tmp not home directory for generated test files
+    - 87a451d Factored out TestHome and used it to wrap the real command tests
+    - 6b8fc18 Listed *.qm files more sanely
+    - 2a5de1c Fixed target.path configs and PREFIX
+    - 04f10de Fixed INSTALL_ROOT and PREFIX to match convention
+    - ad1d9cf Using standard ioctl to detect webcams
+    - 6a2ed5b Deleted libng source
+    - 653bb40 Turned warnings on and eliminated most of them
+    - da252f3 translation install target appears even if no qm files yet
+    - 6124aa0 removed dummy target
+    These fix two things:
+    - build system fixes, to install *.qm files without workarounds
+    - update camera detection to use ioctl mechanisms, for portability
+  * upstream build system fixes obviate necessity of *.qm workaround
+  * re-enable dh_auto_test but ignore failures
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Sat, 06 Dec 2014 22:15:07 +0000
+
 stopmotion (0.8.0-2) unstable; urgency=medium
 
   * Merge upstream fixes
