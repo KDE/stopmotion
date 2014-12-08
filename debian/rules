@@ -2,8 +2,3 @@
 
 %:
 	dh $@ --parallel
-
-# Testing fails on autobuilders because it puts stuff in
-# $HOME/something, re-enable dh_auto_test when fixed upstream.
-override_dh_auto_test:
-	dh_auto_test  || echo "Warning: ignoring auto test failure."
