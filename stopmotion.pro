@@ -1,4 +1,5 @@
 CONFIG += debug_and_release
+CONFIG += warn_on
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
     src/domain/domainfacade.h \
@@ -156,6 +157,7 @@ SOURCES += src/config.cpp \
     src/application/editmenuhandler.cpp \
     src/domain/animation/scene.cpp \
     src/technical/projectserializer.cpp \
+    src/technical/audio/audiodriver.cpp \
     src/technical/audio/ossdriver.cpp \
     src/technical/audio/oggvorbis.cpp \
     src/technical/audio/audioformat.cpp \

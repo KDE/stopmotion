@@ -22,6 +22,7 @@
 
 #include "src/foundation/logger.h"
 #include "src/technical/audio/ossdriver.h"
+#include "src/technical/audio/audioformat.h"
 #include "src/technical/video/videofactory.h"
 #include "src/technical/projectserializer.h"
 #include "workspacefile.h"
@@ -66,7 +67,9 @@ Animation::Animation()
 	std::auto_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));
 	scs.release();
 	std::auto_ptr<ProjectSerializer> szer(new ProjectSerializer);
-	std::auto_ptr<OSSDriver> ad(new OSSDriver("/dev/dsp"));
+	std::auto_ptr<OSSDriver> ossd(new OSSDriver("/dev/dsp"));
+	std::auto_ptr<AudioDriver> ad(SimpleAudioDriver::makeAudioDriver(ossd.get()));
+	ossd.release();
 	std::auto_ptr<Executor> ex(makeAnimationCommandExecutor(*on));
 	std::auto_ptr<FileCommandLogger> lgr(new FileCommandLogger);
 	ex->setCommandLogger(lgr->getLogger());

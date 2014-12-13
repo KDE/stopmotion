@@ -20,6 +20,7 @@
 #include "frame.h"
 
 #include "src/technical/audio/audiodriver.h"
+#include "src/technical/audio/audioformat.h"
 #include "src/domain/filenamevisitor.h"
 #include "src/config.h"
 #include "sound.h"

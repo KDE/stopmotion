@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -33,8 +33,7 @@
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class OSSDriver : public AudioDriver
-{
+class OSSDriver : public SimpleAudioDriver {
 public:
 	/**
 	 * Registers the given device.
@@ -42,58 +41,14 @@ public:
 	 */
 	OSSDriver(const char *device);
 	~OSSDriver();
-	
-	/**
-	 * Function for playing PCM data. The registered audio format
-	 * takes care of decoding to raw PCM. This function will not free the
-	 * CPU until the playing is finished. Use the playInThread function if
-	 * you want to play the sound in a separate thread.
-	 */
-	void play();
-	
-	/**
-	 * Function for playing PCM data. It works excactly like the play
-	 * function except that it plays in a separate thread.
-	 */
-	void playInThread();
-	
-	/**
-	 * Function for adding a audio file which later on can be played
-	 * with the play or playInThread functions.
-	 * @param audioFile the audio file to be played
-	 */
-	void addAudioFile(AudioFormat *audioFile);
-	
-	/**
-	 * Function for initializing the registered audio device.
-	 * @return true on success, false otherwise
-	 */
+	void play(const char* buffer, int bytes);
 	bool initialize();
-	
-	/**
-	 * Function for freeing the audio device so that other programs can use it.
-	 */
 	void shutdown();
-
 private:
 	/** Descriptor to the audio device. */
 	int audioFD;
-
-	/** 0 = play, 1 = stop */
-	int stopPlaying;
-		
 	/** Pointer to the registered audio device. */
 	char *audioDevice;
-	
-	/** Buffer to be used on playing. This will be filled by the AudioFormat object. */
-	char audioBuffer[4096];
-	
-	/** Contains all of the sounds to be played. */
-	std::vector<AudioFormat*> audioFiles;
-	
-	/** Contains indentifications to the threads. */
-	std::vector<pthread_t> audioThreads;
-	
 	/**
 	 * Does a ioctl call with the given parameters. It checks if the call
 	 * was successfully done.

@@ -31,6 +31,7 @@ HEADERS += ../domain/undo/filelogger.h \
     ../technical/video/videofactory.h \
     ../technical/video/videoencoder.h \
     ../technical/audio/ossdriver.h \
+    ../technical/audio/audiodriver.h \
     ../technical/projectserializer.h \
     ../domain/observernotifier.h \
     ../application/externalcommandwithtemporarydirectory.h \
@@ -68,6 +69,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/animation/workspacefile.cpp \
     ../technical/audio/oggvorbis.cpp \
     ../technical/audio/audioformat.cpp \
+    ../technical/audio/audiodriver.cpp \
     ../technical/util.cpp \
     ../technical/stringiterator.cpp \
     ../technical/video/videofactory.cpp \
