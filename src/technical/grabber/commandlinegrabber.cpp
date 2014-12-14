@@ -27,12 +27,39 @@
 #include <iostream>
 #include <cstring>
 
-using namespace std;
+enum WarnIfExitOne { noWarn, doWarn };
+
+bool callSystem(const char* task, const char* commandLine,
+		WarnIfExitOne warn = doWarn) {
+	if (!commandLine || strlen(commandLine) == 0) {
+		Logger::get().logDebug("No process defined for '%s'", task);
+		return true;
+	}
+	Logger::get().logDebug("Attempting task '%s'", task);
+	int r = system(commandLine);
+	if (!WIFEXITED(r)) {
+		Logger::get().logFatal("Could not start task '%s': %s", task,
+				commandLine);
+		return false;
+	}
+	int code = WEXITSTATUS(r);
+	if (code == 0)
+		return true;
+	if (code == 1) {
+		if (warn == doWarn)
+			Logger::get().logWarning("Task '%s' returned code 1: %s", task,
+					commandLine);
+		return true;
+	}
+	Logger::get().logFatal(
+		"Task '%s' returned code %d: %s",
+				task, r, commandLine);
+	return false;
+}
 
 
 CommandLineGrabber::CommandLineGrabber(const char* filePath, bool isProcess)
-		: ImageGrabber(filePath, isProcess)
-{
+		: ImageGrabber(filePath, isProcess) {
 	isInitSuccess = false;
 	this->prePoll = "";
 	this->startProcess = "";
@@ -40,13 +67,11 @@ CommandLineGrabber::CommandLineGrabber(const char* filePath, bool isProcess)
 }
 
 
-bool CommandLineGrabber::setPrePollCommand(const char *command) 
-{
+bool CommandLineGrabber::setPrePollCommand(const char *command)  {
 	// This happens if the user doesn't uses pre poll
 	if ( strcmp(command, "") == 0) {
 		return true;
 	}
-	
 	prePoll = parseCommand(command);
 	if (prePoll != "") {
 		return true;
@@ -55,13 +80,11 @@ bool CommandLineGrabber::setPrePollCommand(const char *command)
 }
 
 
-bool CommandLineGrabber::setStartCommand(const char *command)
-{
+bool CommandLineGrabber::setStartCommand(const char *command) {
 	// This happens if the user doesn't uses start command
 	if ( strcmp(command, "") == 0) {
 		return true;
 	}
-	
 	startProcess = parseCommand(command);
 	if (startProcess != "") {
 		return true;
@@ -70,51 +93,26 @@ bool CommandLineGrabber::setStartCommand(const char *command)
 }
 
 
-bool CommandLineGrabber::setStopCommand(const char *command)
-{
-	stopProcess	= parseCommand(command);
+bool CommandLineGrabber::setStopCommand(const char *command) {
+	stopProcess = parseCommand(command);
 	return true;
 }
 
 
 bool CommandLineGrabber::init() {
-	if (isProcess) {
-		if (startProcess != "") {
-			Logger::get().logDebug("Attempting to start process");
-			int r = system(startProcess.c_str());
-			if (r < 0 || 512 <= r) {
-				Logger::get().logFatal(
-						"Grab start process '%s' returned code %d",
-						startProcess.c_str(), r);
-			} else {
-				return true;
-			}
-		}
-		return false;
-	}
-	return true;
+	if (!isProcess)
+		return true;
+	return callSystem("start grabber", startProcess.c_str());
 }
 
 
 bool CommandLineGrabber::tearDown() {
-	Logger::get().logDebug("Attempting to shutt down process");
-	if (stopProcess != "") {
-		int r = system( stopProcess.c_str() );
-		if (r != 0) {
-			Logger::get().logFatal(
-					"Grab stop process '%s' returned code %d",
-					stopProcess.c_str(), r);
-		} else {
-			return true;
-		}
-	}
-	return false;
+	return callSystem("stop grabber", stopProcess.c_str());
 }
 
 
-bool CommandLineGrabber::grab()
-{
-	if ( prePoll.empty() || system(prePoll.c_str()) != 0 ) {
+bool CommandLineGrabber::grab() {
+	if ( prePoll.empty() || callSystem("grab", prePoll.c_str(), noWarn) ) {
 		isInitSuccess = false;
 		return false;
 	}
@@ -122,8 +120,7 @@ bool CommandLineGrabber::grab()
 }
 
 
-string CommandLineGrabber::parseCommand(const char * command)
-{
+string CommandLineGrabber::parseCommand(const char * command) {
 	string tmp = command;
 	int spaceIdx = tmp.find(" ", 0);
 	std::string commandName = tmp.substr(0, spaceIdx);
@@ -138,4 +135,3 @@ string CommandLineGrabber::parseCommand(const char * command)
 	}
 	return "";
 }
-
