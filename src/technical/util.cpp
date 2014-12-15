@@ -198,10 +198,12 @@ const vector<GrabberDevice> Util::getGrabberDevices() {
 	vector<GrabberDevice> devices;
 	glob_t matches;
 	int globRv = glob("/dev/video*", 0, 0, &matches);
-	for (char** match = matches.gl_pathv; *match; ++match) {
-		GrabberDevice gd;
-		if (getGrabberDevice(*match, gd))
-			devices.push_back(gd);
+	if (0 < matches.gl_pathc) {
+		for (char** match = matches.gl_pathv; *match; ++match) {
+			GrabberDevice gd;
+			if (getGrabberDevice(*match, gd))
+				devices.push_back(gd);
+		}
 	}
 	globfree(&matches);
 	vector<GrabberDevice>(devices).swap(devices);
