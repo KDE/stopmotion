@@ -17,18 +17,21 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "imagegrabber.h"
+#include <string.h>
 
-
-
-ImageGrabber::ImageGrabber(const char* filePath, bool isProcess)
-		: filePath(filePath), isProcess(isProcess)
-{
-	
+ImageGrabber::ImageGrabber(const char* filePath)
+		: path(0) {
+	size_t pathLen = strlen(filePath) + 1;
+	path = new char[pathLen];
+	strncpy(path, filePath, pathLen);
 }
 
-bool ImageGrabber::isGrabberProcess()
-{
-	return isProcess;
+ImageGrabber::~ImageGrabber() {
+	delete[] path;
 }
 
+const char* ImageGrabber::filePath() const {
+	return path;
+}

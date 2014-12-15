@@ -102,7 +102,9 @@ int removeFileOrDirectory(const char *path, const struct stat *,
 	return FTW_CONTINUE;
 }
 
-const char* endOfArgument(const char* in) {
+}
+
+const char* Util::endOfArgument(const char* in) {
 	enum CharClass {
 		normalChar,
 		backslashChar,
@@ -127,19 +129,19 @@ const char* endOfArgument(const char* in) {
 			{ dquote, dquote, dquote, dquote, dquote } // dqbackslash
 	};
 	char c = *in;
-	while (c != '\0' && state != end) {
+	while (c != '\0') {
 		CharClass cc = c == '\\'? backslashChar
 				: c == '\''? squoteChar
 						: c == '"'? dquoteChar
-								: c == ' '? space
+								: c == ' ' || c == '\t'? space
 										: normalChar;
 		state = transition[state][cc];
+		if (state == end)
+			return in;
 		++in;
 		c = *in;
 	}
 	return in;
-}
-
 }
 
 bool Util::checkCommand(std::string* pathOut, const char* command) {

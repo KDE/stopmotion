@@ -270,10 +270,10 @@ bool FrameView::on() {
 	Preference device(QString("device%1")
 			.arg(activeDev).toLatin1().constData(), "");
 	QString pre = QString(prepoll.get()).replace("$VIDEODEVICE", device.get());
-	bool isProcess = startDaemon.get();
+	bool isProcess = startDaemon.get() && *startDaemon.get() != '\0';
 
 	bool isCameraReady = true;
-	this->grabber = new CommandLineGrabber(capturedFile.path(), isProcess);
+	this->grabber = new CommandLineGrabber(capturedFile.path());
 	if ( !grabber->setPrePollCommand(pre.toLatin1().constData()) ) {
 		QMessageBox::warning(this, tr("Warning"), tr(
 					"Pre poll command does not exists"),

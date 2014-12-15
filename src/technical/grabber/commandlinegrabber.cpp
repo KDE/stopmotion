@@ -58,8 +58,8 @@ bool callSystem(const char* task, const char* commandLine,
 }
 
 
-CommandLineGrabber::CommandLineGrabber(const char* filePath, bool isProcess)
-		: ImageGrabber(filePath, isProcess) {
+CommandLineGrabber::CommandLineGrabber(const char* path)
+		: ImageGrabber(path) {
 	isInitSuccess = false;
 	this->prePoll = "";
 	this->startProcess = "";
@@ -100,7 +100,7 @@ bool CommandLineGrabber::setStopCommand(const char *command) {
 
 
 bool CommandLineGrabber::init() {
-	if (!isProcess)
+	if (!isGrabberProcess())
 		return true;
 	return callSystem("start grabber", startProcess.c_str());
 }
@@ -112,7 +112,7 @@ bool CommandLineGrabber::tearDown() {
 
 
 bool CommandLineGrabber::grab() {
-	if ( prePoll.empty() || callSystem("grab", prePoll.c_str(), noWarn) ) {
+	if ( !callSystem("grab", prePoll.c_str(), noWarn) ) {
 		isInitSuccess = false;
 		return false;
 	}
@@ -120,18 +120,22 @@ bool CommandLineGrabber::grab() {
 }
 
 
-string CommandLineGrabber::parseCommand(const char * command) {
-	string tmp = command;
-	int spaceIdx = tmp.find(" ", 0);
+std::string CommandLineGrabber::parseCommand(const char * command) {
+	std::string tmp = command;
+	int spaceIdx = Util::endOfArgument(command) - command;
 	std::string commandName = tmp.substr(0, spaceIdx);
 	std::string path;
 	if (Util::checkCommand(&path, commandName.c_str())) {
 		tmp.replace(0, spaceIdx, path);
 		int index = tmp.find("$IMAGEFILE");
 		if (index != -1) {
-			tmp.replace(index, strlen("$IMAGEFILE"), string(filePath));
+			tmp.replace(index, strlen("$IMAGEFILE"), string(filePath()));
 		}
 		return tmp;
 	}
 	return "";
+}
+
+bool CommandLineGrabber::isGrabberProcess() {
+	return !startProcess.empty();
 }
