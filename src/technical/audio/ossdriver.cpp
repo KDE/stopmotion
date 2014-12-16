@@ -24,8 +24,7 @@
 #include <sys/ioctl.h>
 #if defined(__linux__)
 #include <linux/soundcard.h>
-#endif
-#if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+#else
 #include <sys/soundcard.h>
 #endif	
 #include <fcntl.h>
