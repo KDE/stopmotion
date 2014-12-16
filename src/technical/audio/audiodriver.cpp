@@ -57,7 +57,7 @@ public:
 				int written = af->fillBuffer(audioBuffer, sizeof(audioBuffer));
 				if (written <= 0)
 					break;
-				simple->play(audioBuffer, sizeof(audioBuffer));
+				simple->play(audioBuffer, written);
 			}
 			af->close();
 		}

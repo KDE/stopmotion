@@ -48,8 +48,9 @@ OSSDriver::~OSSDriver() {
 
 void OSSDriver::play(const char* buffer, int bytes) {
 	if (audioFD != -1 && audioFD != EBUSY) {
-		while (0 < bytes) {
-			bytes -= write(audioFD, buffer, bytes);
+		const char* end = buffer + bytes;
+		while (buffer < end) {
+			buffer += write(audioFD, buffer, end - buffer);
 		}
 	}
 }
