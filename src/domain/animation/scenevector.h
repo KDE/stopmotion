@@ -30,6 +30,7 @@ class Frame;
 class Sound;
 class FileNameVisitor;
 class WorkspaceFile;
+class AudioDriver;
 
 class SceneVector : public AnimationImpl {
 	std::vector<Scene*> scenes;
@@ -219,6 +220,13 @@ public:
 	 * @throws Nothing.
 	 */
 	Sound* removeSound(int scene, int frame, int soundNumber);
+	/**
+	 * Plays the sounds attached to the specified frame.
+	 * @param scene The number of the scene containing the sounds.
+	 * @param frame The number of the frame within scene number @a scene
+	 * @param audioDriver The audio driver to play the sounds with
+	 */
+	void playSounds(int scene, int frame, AudioDriver* audioDriver) const;
 	void accept(FileNameVisitor& v) const;
 };
 

@@ -212,3 +212,7 @@ void SceneVector::accept(FileNameVisitor& v) const {
 const char* SceneVector::getImagePath(int scene, int frame) const {
 	return getScene(scene)->getFrame(frame)->getImagePath();
 }
+
+void SceneVector::playSounds(int scene, int frame, AudioDriver* driver) const {
+	getScene(scene)->getFrame(frame)->playSounds(driver);
+}

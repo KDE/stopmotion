@@ -363,6 +363,9 @@ int Animation::soundCount(int scene, int frame) const {
 	return scenes->soundCount(scene, frame);
 }
 
+void Animation::playSounds(int scene, int frame) const {
+	scenes->playSounds(scene, frame, audioDriver);
+}
 
 void Animation::newScene(int32_t index) {
 	executor->execute(Commands::addScene, index);

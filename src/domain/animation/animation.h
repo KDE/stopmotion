@@ -205,6 +205,13 @@ public:
 	const char* getSoundPath(int scene, int frame, int sound) const;
 
 	/**
+	 * Play the sounds in the specified frame.
+	 * @param scene The scene that the frame belongs to.
+	 * @param frame The frame within that scene.
+	 */
+	void playSounds(int scene, int frame) const;
+
+	/**
 	 * Returns the total number of frames in the model.
 	 * @return The total number of frames in all scenes of the model.
 	 */

@@ -347,3 +347,7 @@ bool DomainFacade::canRedo() {
 void DomainFacade::setUndoRedoObserver(UndoRedoObserver* observer) {
 	animationModel->setUndoRedoObserver(observer);
 }
+
+void DomainFacade::playSounds(int scene, int frame) const {
+	animationModel->playSounds(scene, frame);
+}

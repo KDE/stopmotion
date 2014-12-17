@@ -27,6 +27,7 @@
 class Observer;
 class Frontend;
 class ObservableOperation;
+class AudioDriver;
 
 class ObserverNotifier : public AnimationImpl {
 	AnimationImpl* del;
@@ -50,6 +51,7 @@ public:
 	// derived from AnimationImpl
 	void clear();
 	int sceneCount() const;
+
 	void addScene(int where, Scene* newScene);
 	void addScene(int where);
 	void preallocateScenes(int count);
@@ -75,6 +77,7 @@ public:
 	const char* setSoundName(int scene, int frame, int soundNumber,
 			const char* soundName);
 	Sound* removeSound(int scene, int frame, int soundNumber);
+	void playSounds(int scene, int frame, AudioDriver* audioDriver) const;
 	void resync();
 	void accept(FileNameVisitor& v) const;
 };
