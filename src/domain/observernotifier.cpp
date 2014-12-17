@@ -439,6 +439,10 @@ int ObserverNotifier::soundCount() const {
 	return del->soundCount();
 }
 
+void ObserverNotifier::playSounds(int scene, int frame, AudioDriver* audioDriver) const {
+	del->playSounds(scene, frame, audioDriver);
+}
+
 void ObserverNotifier::accept(FileNameVisitor& v) const {
 	del->accept(v);
 }

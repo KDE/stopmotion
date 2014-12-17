@@ -182,6 +182,13 @@ public:
 	int soundCount(int scene, int frame) const;
 
 	/**
+	 * Play the sounds in the specified frame.
+	 * @param scene The scene that the frame belongs to.
+	 * @param frame The frame within that scene.
+	 */
+	void playSounds(int scene, int frame) const;
+
+	/**
 	 * Loads the project from the {@c .dat} XML file specified. Used for
 	 * recovering from the {@c new.dat} and {@c current.dat} files.
 	 * @param datFilename The XML file to load.
