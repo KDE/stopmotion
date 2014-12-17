@@ -42,6 +42,7 @@
 
 #include <string.h>
 #include <errno.h>
+#include <unistd.h>
 #include <vector>
 #include <iostream>
 #include <sstream>

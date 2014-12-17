@@ -21,10 +21,6 @@
 #define OSSDRIVER_H
 
 #include "audiodriver.h"
-#include <vector>
-#include <pthread.h>
-#include <unistd.h>
-
 
 /**
  * OSS audio driver. This takes care of initializing the registered audio

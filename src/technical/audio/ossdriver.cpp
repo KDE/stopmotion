@@ -31,6 +31,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <cstring>
 
 OSSDriver::OSSDriver(const char *device) : audioFD(-1), audioDevice(0) {
