@@ -37,7 +37,7 @@ extern "C" void* startupThread(void *arg)
 
 class WrappedAudioDriver : public AudioDriver {
 	SimpleAudioDriver* simple;
-	bool stopPlaying;
+	volatile bool stopPlaying;
 	char audioBuffer[4096];
 	std::vector<AudioFormat*> audioFiles;
 	std::vector<pthread_t> audioThreads;
@@ -53,7 +53,7 @@ public:
 		AudioFormat *af = audioFiles.front();
 		audioFiles.erase(audioFiles.begin());
 		if ( af->open() != -1 ) {
-			while (true) {
+			while (!stopPlaying) {
 				int written = af->fillBuffer(audioBuffer, sizeof(audioBuffer));
 				if (written <= 0)
 					break;
