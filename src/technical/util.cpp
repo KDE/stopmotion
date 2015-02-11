@@ -163,7 +163,7 @@ bool Util::checkCommand(std::string* pathOut, const char* command) {
 	bool bad = bufStream.bad();
 	int status = pclose(fp);
 	int exitStatus = WEXITSTATUS(status);
-	return !bad && exitStatus < 2;
+	return !bad && exitStatus == 0;
 }
 
 namespace {
