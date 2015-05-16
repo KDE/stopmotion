@@ -119,7 +119,7 @@ bool OSSDriver::initialize()
 	// Storing the request and its argument
 	int initValues[2][4] = 
 	{ 
-		{SNDCTL_DSP_RESET, SNDCTL_DSP_SETFMT, SOUND_PCM_WRITE_CHANNELS, SOUND_PCM_WRITE_RATE},
+		{SNDCTL_DSP_RESET, SNDCTL_DSP_SETFMT, SNDCTL_DSP_CHANNELS, SNDCTL_DSP_SPEED},
 		{1, AFMT_S16_LE, 2, 44100} 
 	};
 	

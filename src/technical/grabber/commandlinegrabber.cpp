@@ -82,10 +82,12 @@ bool CommandLineGrabber::init() {
 		if (startProcess != "") {
 			Logger::get().logDebug("Attempting to start process");
 			int r = system(startProcess.c_str());
-			if (r != 0) {
+			if ((r != 0) && (r != 256)) {
+			        // r==256 is possible for vgrabbj in daemon mode
 				Logger::get().logFatal(
 						"Grab start process '%s' returned code %d",
 						startProcess.c_str(), r);
+				return true;
 			} else {
 				return true;
 			}
