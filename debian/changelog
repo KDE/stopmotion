@@ -1,3 +1,10 @@
+stopmotion (0.8.0-5) unstable; urgency=medium
+
+  * patch from Georges Khaznadar <georgesk@debian.org> for vgrabbj daemon
+    mode return code (closes: #785459)
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Sun, 17 May 2015 10:17:56 +0100
+
 stopmotion (0.8.0-4) unstable; urgency=medium
 
   * stop ignoring failures in dh_auto_test
