@@ -251,7 +251,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("importstartdaemon1",
 			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250000 -F 4");
 	prefs->setPreference("importstopdaemon1",
-			"kill -9 $(pidof vgrabbj)");
+			"kill $(pidof vgrabbj)");
 
 	// Default import option 3
 	prefs->setPreference("importname2", tr("uvccapture").toUtf8().constData());
@@ -277,10 +277,10 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			tr("Grabbing from DV-cam.").toUtf8().constData());
 	prefs->setPreference("importprepoll4", "");
 	prefs->setPreference("importstartdaemon4",
-			"dvgrab --format jpeg --jpeg-overwrite --jpeg-temp dvtemp.jpeg "
+			"dvgrab --format jpeg --jpeg-overwrite --jpeg-temp $(tempfile) "
 			"--every 25 $IMAGEFILE &");
 	prefs->setPreference("importstopdaemon4",
-			"kill -9 $(pidof dvgrab)");
+			"kill -2 $(pidof dvgrab)");
 	// -----------------------------------------------------------------------
 
 	// Default export options ------------------------------------------------
@@ -335,7 +335,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 		std::string start(startPref.get());
 		int index = start.find("(DEFAULTPATH)");
 		if (index != -1) {
-			start.replace(index, strlen("(DEFAULTPATH)"),
+			start.replace(index, (int) strlen("(DEFAULTPATH)"),
 					std::string("$IMAGEFILE"));
 		}
 		QString s(start.c_str());
@@ -349,7 +349,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 		std::string prepoll(prepollPref.get());
 		index = prepoll.find("(DEFAULTPATH)");
 		if (index != -1) {
-			prepoll.replace(index, strlen("(DEFAULTPATH)"),
+			prepoll.replace(index, (int) strlen("(DEFAULTPATH)"),
 					std::string("$IMAGEFILE"));
 		}
 		QString ss(prepoll.c_str());

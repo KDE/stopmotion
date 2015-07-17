@@ -43,11 +43,17 @@ bool callSystem(const char* task, const char* commandLine,
 		return false;
 	}
 	int code = WEXITSTATUS(r);
-	if (code == 0)
+	if (code == 0) {
+		Logger::get().logDebug("Task '%s' returned code 0: %s", task,
+				commandLine);
 		return true;
+	}
 	if (code == 1) {
 		if (warn == doWarn)
 			Logger::get().logWarning("Task '%s' returned code 1: %s", task,
+					commandLine);
+		else
+			Logger::get().logDebug("Task '%s' returned code 1: %s", task,
 					commandLine);
 		return true;
 	}
@@ -129,7 +135,7 @@ std::string CommandLineGrabber::parseCommand(const char * command) {
 		tmp.replace(0, spaceIdx, path);
 		int index = tmp.find("$IMAGEFILE");
 		if (index != -1) {
-			tmp.replace(index, strlen("$IMAGEFILE"), string(filePath()));
+			tmp.replace(index, (int) strlen("$IMAGEFILE"), string(filePath()));
 		}
 		return tmp;
 	}
