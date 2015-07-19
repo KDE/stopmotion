@@ -249,7 +249,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			tr("Starts vgrabbj as a daemon. Pretty fast.").toUtf8().constData());
 	prefs->setPreference("importprepoll1", "");
 	prefs->setPreference("importstartdaemon1",
-			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250000 -F 4");
+			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250000");
 	prefs->setPreference("importstopdaemon1",
 			"kill $(pidof vgrabbj)");
 
