@@ -248,6 +248,7 @@ void FrameView::setActiveFrame(int sceneNumber, int frameNumber) {
 
 // TODO: Refactor this terrible ugly method. This one is really bad!!
 bool FrameView::on() {
+	const char* DEVICE_TOKEN = "$VIDEODEVICE";
 	PreferencesTool *prefs = PreferencesTool::get();
 	int activeCmd = prefs->getPreference("activedevice", 0);
 
@@ -258,18 +259,26 @@ bool FrameView::on() {
 	Preference stopDaemon(QString("importstopdaemon%1")
 			.arg(activeCmd).toLatin1().constData(), "");
 
-	int activeDev = prefs->getPreference("activeVideoDevice", -1);
-	if (activeDev <0) {
-		QMessageBox::warning(this, tr("Warning"), tr(
-			"No video device selected in the preferences menu."),
-			QMessageBox::Ok,
-			Qt::NoButton,
-			Qt::NoButton);
-		return false;
+	bool prepollRequiresDevice = strstr(prepoll.get(), DEVICE_TOKEN);
+	bool startDaemonRequiresDevice = strstr(startDaemon.get(), DEVICE_TOKEN);
+	QString device;
+	if (prepollRequiresDevice || startDaemonRequiresDevice) {
+		int activeDev = prefs->getPreference("activeVideoDevice", -1);
+		if (0 <= activeDev) {
+			Preference deviceP(QString("device%1")
+					.arg(activeDev).toLatin1().constData(), "");
+			device = QString(deviceP.get()).trimmed();
+		}
+		if (device.isEmpty()) {
+			QMessageBox::warning(this, tr("Warning"), tr(
+				"No video device selected in the preferences menu."),
+				QMessageBox::Ok,
+				Qt::NoButton,
+				Qt::NoButton);
+			return false;
+		}
 	}
-	Preference device(QString("device%1")
-			.arg(activeDev).toLatin1().constData(), "");
-	QString pre = QString(prepoll.get()).replace("$VIDEODEVICE", device.get());
+	QString pre = QString(prepoll.get()).replace(DEVICE_TOKEN, device);
 	bool isProcess = startDaemon.get() && *startDaemon.get() != '\0';
 
 	bool isCameraReady = true;
@@ -285,7 +294,7 @@ bool FrameView::on() {
 	}
 
 	if (isProcess) {
-		QString sd = QString(startDaemon.get()).replace("$VIDEODEVICE", device.get());
+		QString sd = QString(startDaemon.get()).replace(DEVICE_TOKEN, device);
 		if ( !grabber->setStartCommand(sd.toLatin1().constData()) ) {
 			DomainFacade::getFacade()->getFrontend()->hideProgress();
 			QMessageBox::warning(this, tr("Warning"), tr(
@@ -362,16 +371,15 @@ void FrameView::off() {
 			grabTimer.stop();
 			playbackTimer.stop();
 		}
-		delete grabber;
-		grabber = 0;
 	}
-
 	if (grabThread != 0) {
 		grabThread->terminate();
 		grabThread->wait();
 		delete grabThread;
 		grabThread = 0;
 	}
+	delete grabber;
+	grabber = 0;
 
 	this->isPlayingVideo = false;
 	setActiveFrame(activeScene, activeFrame);
