@@ -73,6 +73,10 @@ CommandLineGrabber::CommandLineGrabber(const char* path)
 }
 
 
+CommandLineGrabber::~CommandLineGrabber() {
+};
+
+
 bool CommandLineGrabber::setPrePollCommand(const char *command)  {
 	// This happens if the user doesn't uses pre poll
 	if ( strcmp(command, "") == 0) {

@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "src/technical/util.h"
+#include "logger.h"
 
 #include <ext/stdio_filebuf.h>
 #include <stdio.h>
@@ -177,19 +178,26 @@ bool getGrabberDevice(const char* dev, GrabberDevice& d) {
 	int fd;
 	struct v4l2_capability video_cap;
 
-	if((fd = open(dev, O_RDONLY)) == -1){
+	if((fd = open(dev, O_RDONLY)) == -1) {
+		Logger::get().logWarning("Could not open device %s", dev);
 		return false;
 	}
 
 	int vcrv = ioctl(fd, VIDIOC_QUERYCAP, &video_cap);
 	close(fd);
-	if (vcrv == -1)
+	if (vcrv == -1) {
+		Logger::get().logWarning("Could not read from device %s", dev);
 		return false;
-	if (!(video_cap.capabilities & V4L2_CAP_VIDEO_CAPTURE))
+	}
+	if (!(video_cap.capabilities & V4L2_CAP_VIDEO_CAPTURE)) {
+		Logger::get().logDebug("Device %s is not a V4L2 capture device", dev);
 		return false;
+	}
 	d.device.assign(dev);
 	setString(d.name, video_cap.card);
 	setString(d.type, video_cap.driver);
+	Logger::get().logDebug("Got device %s: card %s, type %s", dev,
+			d.name.c_str(), d.type.c_str());
 	return true;
 }
 }

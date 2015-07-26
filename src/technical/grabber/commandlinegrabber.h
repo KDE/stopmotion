@@ -44,7 +44,7 @@ public:
 	 * @param isProcess true if the process is running in daemon mode, false otherwise
 	 */
 	CommandLineGrabber(const char* filePath);
-	~CommandLineGrabber() {};
+	~CommandLineGrabber();
 	bool setPrePollCommand(const char *command);
 	bool setStartCommand(const char *command);
 	bool setStopCommand(const char *command);
