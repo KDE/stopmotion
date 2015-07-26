@@ -171,44 +171,61 @@ void DeviceTab::initialize()
 
 	// Userdefined devices
 	int active = pref->getPreference("activeVideoDevice", -1);
-	int numUserDevices = pref->getPreference("numDevices", -1);
+	int numDevices = pref->getPreference("numDevices", 0);
+	int numUserDevices = 0;
+	int newActive = -1;
+	std::string oldDevice;
+	std::string oldName;
+	bool oldWasAutoDetected = false;
 
-	if (numUserDevices > 0 ) {
-		deviceTable->setRowCount( numUserDevices + numAutoDetectedDevices );
-		int idx = 0;
+	for (int i = 0; i < numDevices; ++i) {
+		Preference descP(QString("deviceDescription%1").arg(i).toUtf8().constData(),"");
+		QString desc(descP.get());
+		Preference nameP(QString("deviceName%1").arg(i).toUtf8().constData(),"");
+		QString name(nameP.get());
+		Preference deviceP(QString("device%1").arg(i).toUtf8().constData(),"");
+		QString device(deviceP.get());
+		if (active == i) {
+			oldDevice = device.toStdString();
+			oldName = name.toStdString();
+		}
 
-		for (int i = 0; i < numUserDevices; ++i) {
-			Preference descP(QString("deviceDescription%1").arg(i).toUtf8().constData(),"");
-			QString desc(descP.get());
+		if ( !desc.startsWith("*Autodetected*") ) {
+			if (active == i)
+				newActive = numUserDevices + numAutoDetectedDevices;
+			deviceTable->setRowCount( numUserDevices + numAutoDetectedDevices + 1 );
+			deviceTable->setItem(numUserDevices + numAutoDetectedDevices,
+					0, new QTableWidgetItem(name));
+			deviceTable->setItem(numUserDevices + numAutoDetectedDevices,
+					1, new QTableWidgetItem(desc));
+			++numUserDevices;
 
-			if ( !desc.startsWith("*Autodetected*") ) {
-				Preference nameP(QString("deviceName%1").arg(i).toUtf8().constData(),"");
-				QString name(nameP.get());
-				Preference deviceP(QString("device%1").arg(i).toUtf8().constData(),"");
-				QString device(deviceP.get());
-
-				deviceTable->setItem(idx + numAutoDetectedDevices, 0, new QTableWidgetItem(name) );
-				deviceTable->setItem(idx++ + numAutoDetectedDevices, 1, new QTableWidgetItem(desc) );
-
-				deviceNameStrings.push_back(name);
-				deviceStrings.push_back(device);
-				deviceDescriptionStrings.push_back(desc);
-			}
-			else {
-				if (active == i) {
-					active = -1;
-				}
-				deviceTable->setRowCount( deviceTable->rowCount() - 1);
-			}
+			deviceNameStrings.push_back(name);
+			deviceStrings.push_back(device);
+			deviceDescriptionStrings.push_back(desc);
+		} else if (active == i) {
+			oldWasAutoDetected = true;
 		}
 	}
 
-	if (active != -1) {
-		deviceTable->setCurrentCell(active, 0);
+	if (oldWasAutoDetected && 0 < numAutoDetectedDevices) {
+		// try to find a reasonable match for the last chosen auto detected
+		// device
+		int bestScore = 0;
+		newActive = numAutoDetectedDevices - 1;
+		for (int i = 0; i != numAutoDetectedDevices; ++i) {
+			int score = 0;
+			if (oldName == devices[i].name)
+				score = 2;
+			if (oldDevice == devices[i].device)
+				score += 1;
+			if (bestScore < score) {
+				newActive = i;
+			}
+		}
 	}
-	else if (numAutoDetectedDevices > 0) {
-		deviceTable->setCurrentCell(numAutoDetectedDevices - 1, 0);
-	}
+	if (0 <= newActive)
+		deviceTable->setCurrentCell(newActive, 0);
 
 	this->apply();
 	pref->flushPreferences();
