@@ -49,8 +49,12 @@ make uninstall # remove installation
 
 To install in a specific location:
 
-qmake PREFIX=/specific/location
+qmake PREFIX=/specific/location HTML_PATH=/docs/go/here TRANSLATIONS_PATH=/translations/go/here
 sudo make install
+
+The defines are optional. PREFIX defaults to /usr/local.
+HTML_PATH defaults to ${PREFIX}/share/doc/stopmotion/html.
+TRANSLATIONS_PATH defaults to ${PREFIX}/share/doc/stopmotion/translations.
 
 To put the files somewhere before copying them for installation (after qmake):
 

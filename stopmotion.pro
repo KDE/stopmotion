@@ -241,6 +241,14 @@ isEmpty(PREFIX) {
 	PREFIX =/usr/local
 }
 
+isEmpty(HTML_PATH) {
+	HTML_PATH =$${PREFIX}/share/doc/stopmotion/html
+}
+
+isEmpty(TRANSLATIONS_PATH) {
+	TRANSLATIONS_PATH =$${PREFIX}/share/doc/stopmotion/translations
+}
+
 DEFINES += PREFIX_PATH=\'\"$${PREFIX}\"\'
 TEMPLATE = app
 DESTDIR=.
@@ -260,20 +268,20 @@ UI_DIR = build
 
 target.path = $${PREFIX}/bin
 
-translations.path = $${PREFIX}/share/stopmotion/translations
+translations.path = $${TRANSLATIONS_PATH}
 translations.files = $${QM_FILES}
 translations.CONFIG += no_check_exist
 
-docgraphics.path = $${PREFIX}/share/doc/stopmotion/html/graphic
+docgraphics.path = $${HTML_PATH}/graphic
 docgraphics.files = manual/graphic/*.png
 
-docicons.path = $${PREFIX}/share/doc/stopmotion/html/icons
+docicons.path = $${HTML_PATH}/icons
 docicons.files = manual/icons/*.png
 
-docscreens.path = $${PREFIX}/share/doc/stopmotion/html/screenshots
+docscreens.path = $${HTML_PATH}/screenshots
 docscreens.files = manual/screenshots/*.png
 
-htmldoc.path = $${PREFIX}/share/doc/stopmotion/html
+htmldoc.path = $${HTML_PATH}
 htmldoc.files = manual/*.html
 
 icon.path = $${PREFIX}/share/icons
