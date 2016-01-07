@@ -108,17 +108,17 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="346"/>
         <source>Below you can set which device Stopmotion should use for grabbing images and displaying video.</source>
-        <translation>Unten können sie das Gerät einstellen, welches für Video Ein- und Ausgabe genutzt werden soll.</translation>
+        <translation>Unten können Sie das Gerät einstellen, welches für Video-Ein- und -Ausgabe genutzt werden soll.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="349"/>
         <source>You can select from the auto-detected devices below or add devices yourself. It is not recommended to use devices which is not auto-detected, but feel free to do it if you are an advanced user.</source>
-        <translation>Wählen sie eines der automatisch erkannten Geräte oder fügen sie ein Gerät hinzu, welches nicht automatisch erkannt wurde.</translation>
+        <translation>Wählen Sie eines der automatisch erkannten Geräte oder fügen Sie ein Gerät hinzu, welches nicht automatisch erkannt wurde.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="351"/>
         <source>The selected device is recognized as &lt;b&gt;$VIDEODEVICE&lt;/b&gt; under Video Import.</source>
-        <translation>Das gewählte Gerät wurde als &lt;b&gt;$VIDEODEVICE&lt;/b&gt; unter Video Import erkannt.</translation>
+        <translation>Das gewählte Gerät wurde als &lt;b&gt;$VIDEODEVICE&lt;/b&gt; unter Video-Import erkannt.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="354"/>
@@ -148,12 +148,12 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="362"/>
         <source>Video device settings</source>
-        <translation>Video Geräteeinstellung</translation>
+        <translation>Videogeräte-Einstellung</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="363"/>
         <source>Video Device ($VIDEODEVICE): </source>
-        <translation>Video Gerät ($VIDEODEVICE):(sp)</translation>
+        <translation>Video-Gerät ($VIDEODEVICE):(sp)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/devicetab.cpp" line="149"/>
@@ -191,12 +191,12 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="97"/>
         <source>Encoder settings</source>
-        <translation>Encoder Einstellungen</translation>
+        <translation>Encoder-Einstellungen</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="418"/>
         <source>Do you want to be asked for an output file everytime you choose to export?</source>
-        <translation>Möchten sie jedesmal nach einem Dateinamen gefragt werden, wenn sie Export wählen ?</translation>
+        <translation>Möchten Sie jedesmal nach einem Dateinamen gefragt werden, wenn Sie Export wählen?</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="420"/>
@@ -211,12 +211,12 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="422"/>
         <source>Set default output file:</source>
-        <translation>Wählen sie die Standard Ausgabe-Dateinamen:</translation>
+        <translation>Wählen Sie die Standard-Ausgabe-Dateinamen:</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="423"/>
         <source>Browse</source>
-        <translation>DurchsuchenBlättern</translation>
+        <translation>Durchsuchen</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="424"/>
@@ -231,17 +231,17 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="391"/>
         <source>Choose output file</source>
-        <translation>Wählen sie die Ausgabe-Datei</translation>
+        <translation>Wählen Sie die Ausgabe-Datei</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="402"/>
         <source>Below you can set which program/process Stopmotion should use for encoding the currently active project to a video file.</source>
-        <translation>Unten können sie auswählen, welches Programm benutzt werden soll, um das aktuelle Projekt zu einer Videodatei zu encodieren.</translation>
+        <translation>Unten können Sie auswählen, welches Programm benutzt werden soll, um das aktuelle Projekt zu einer Videodatei zu encodieren.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="404"/>
         <source>You should always use &lt;b&gt;$IMAGEPATH&lt;/b&gt; and &lt;b&gt;$VIDEOFILE&lt;/b&gt; to represent the image path and the video file, respectively.</source>
-        <translation>Sie sollten immer  &lt;b&gt;$IMAGEPATH&lt;/b&gt; und &lt;b&gt;$VIDEOFILE&lt;/b&gt; benutzen um den Bilder-Ordner und die Videodatei zu bestimmen.</translation>
+        <translation>Sie sollten immer  &lt;b&gt;$IMAGEPATH&lt;/b&gt; und &lt;b&gt;$VIDEOFILE&lt;/b&gt; benutzen, um den Bilder-Ordner und die Videodatei zu bestimmen.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="405"/>
@@ -328,17 +328,17 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="118"/>
         <source>&lt;h4&gt;Add sound&lt;/h4&gt; &lt;p&gt;With this button you can &lt;em&gt;add sounds&lt;/em&gt; to the selected frame.&lt;/p&gt; &lt;p&gt;The sound will begin playing when this frame is shown and play until it is done.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Ton hinzufügen&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können sie  &lt;em&gt;Töne zum gewählten Bild hinzufügen&lt;/em&gt;.&lt;/p&gt; &lt;p&gt;Der Ton beginnt, wenn das Bild erscheint und endet auch mit dem Ende des Bildes.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Ton hinzufügen&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können Sie  &lt;em&gt;Töne zum gewählten Bild hinzufügen&lt;/em&gt;.&lt;/p&gt; &lt;p&gt;Der Ton beginnt, wenn das Bild erscheint und endet auch mit dem Ende des Bildes.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="125"/>
         <source>&lt;h4&gt;Remove sound&lt;/h4&gt; &lt;p&gt;With this button you can &lt;em&gt;remove&lt;/em&gt; the selected sound from this frame.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Ton entfernen&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können sie den gewälten Ton von diesem Bild  &lt;em&gt;entfernen&lt;/em&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Ton entfernen&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können Sie den gewälten Ton von diesem Bild  &lt;em&gt;entfernen&lt;/em&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="133"/>
         <source>&lt;h4&gt;Change name&lt;/h4&gt; &lt;p&gt;With this button you can change the name of the selected sound. &lt;BR&gt;The name of the sound has no other effect than making it easier work with the animation.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Namen ändern&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können sie den Namen des gewählten Tons ändern.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Namen ändern&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können Sie den Namen des gewählten Tons ändern.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="141"/>
@@ -358,7 +358,7 @@
         <source>Grabbing failed. This may happen if you try
 to grab from an invalid device. Please check
 your grabber settings in the preferences menu.</source>
-        <translation>Grabbing fehlgeschlagen. Bitte überprüfen sie ihre Grabber-Einstellungen im Einstellungen-Menü.</translation>
+        <translation>Grabbing fehlgeschlagen. Bitte überprüfen Sie die Grabber-Einstellungen im Einstellungen-Menü.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="446"/>
@@ -374,7 +374,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="386"/>
         <source>You do not have the given grabber installed on your system</source>
-        <translation>Der eingestellete Videograbber ist auf ihrem System nicht installiert</translation>
+        <translation>Der eingestellete Videograbber ist auf dem System nicht installiert</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="360"/>
@@ -432,7 +432,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="332"/>
         <source>Below you can set which program/process Stopmotion should use for grabbing images from the selected device.</source>
-        <translation>Unten können sie das Programm einstellen, welches für Videograbbing genutzt werden soll.</translation>
+        <translation>Unten können Sie das Programm einstellen, welches für Videograbbing genutzt werden soll.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="334"/>
@@ -557,7 +557,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="631"/>
         <source>&lt;h4&gt;Cut&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Cuts&lt;/em&gt; the selected frames out of the animation and adds them to the clipboard so that you can paste them in somewhere else.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Ausschneiden&lt;/h4&gt; &lt;p&gt;Schneidet die gewählten Bilder aus und verschibt sie in die Zwischenablage. Anschliessend kann man sie an anderer Stelle wieder einfügen.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Ausschneiden&lt;/h4&gt; &lt;p&gt;Schneidet die gewählten Bilder aus und verschiebt diese in die Zwischenablage. Anschliessend kann man sie an anderer Stelle wieder einfügen.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="483"/>
@@ -567,7 +567,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="640"/>
         <source>&lt;h4&gt;Copy&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Copies&lt;/em&gt; the selected frames to the clipboard. You can then paste them in another place.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Kopieren&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Kopiert&lt;/em&gt; die gewählten Bilder in die Zwischenablage . Danach können sie diese Bilder an einer anderen Stelle einfügen.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Kopieren&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Kopiert&lt;/em&gt; die gewählten Bilder in die Zwischenablage. Danach können Sie diese Bilder an einer anderen Stelle einfügen.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="484"/>
@@ -577,7 +577,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="650"/>
         <source>&lt;h4&gt;Paste&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Pastes&lt;/em&gt; the frames which are currently in the clipboard into the selected location.&lt;/p&gt; &lt;p&gt;You can copy/cut images from another programs and then use this option to paste them into this animation.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Einfügen&lt;/h4&gt; &lt;p&gt;Fügt Bilder aus der Zwischenablage an der gewählten Position ein&lt;/p&gt; &lt;p&gt;Sie können auch Bilder aus anderen Programmen kopieren/ausschneiden und sie hiermit hier einfügen&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Einfügen&lt;/h4&gt; &lt;p&gt;Fügt Bilder aus der Zwischenablage an der gewählten Position ein&lt;/p&gt; &lt;p&gt;Sie können auch Bilder aus anderen Programmen kopieren/ausschneiden und diese hiermit hier einfügen&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="485"/>
@@ -587,7 +587,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="659"/>
         <source>&lt;h4&gt;Go to frame&lt;/h4&gt; &lt;p&gt;This will bring up a popup-menu at the bottom where you can choose a frame you want to &lt;em&gt;go to&lt;/em&gt;.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Springe zu &lt;/h4&gt; &lt;p&gt;Hier können sie zu einem bestimmten Bild springen.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Springe zu &lt;/h4&gt; &lt;p&gt;Hier können Sie zu einem bestimmten Bild springen.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="533"/>
@@ -607,7 +607,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="679"/>
         <source>&lt;h4&gt;What&apos;s This&lt;/h4&gt; &lt;p&gt;This will give you a WhatsThis mouse cursor which can be used to bring up helpful information like this.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;was ist das ?&lt;/h4&gt; &lt;p&gt;Der Mauszeiger ändert sich und zeigt hilfreiche Informationen uber das angeklickte Objekt.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;was ist das?&lt;/h4&gt; &lt;p&gt;Der Mauszeiger ändert sich und zeigt hilfreiche Informationen uber das angeklickte Objekt.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="489"/>
@@ -627,7 +627,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="745"/>
         <source>&lt;h4&gt;FrameBar&lt;/h4&gt; &lt;p&gt;In this area you can see the frames and scenes in the animations and build the animation by moving the them around.&lt;/p&gt;&lt;p&gt;You can switch to the next and the previous frame using the &lt;b&gt;arrow buttons&lt;/b&gt; or &lt;b&gt;x&lt;/b&gt; and &lt;b&gt;z&lt;/b&gt;&lt;/p&gt; </source>
-        <translation>&lt;h4&gt;Bildleiste&lt;/h4&gt; &lt;p&gt;In diesem Bereich sehen sie Bilder und Szenen der Animation. Sie diese hin und herschieben.&lt;/p&gt;&lt;p&gt;Mit den &lt;b&gt;Pfeiltasten&lt;/b&gt; oder &lt;b&gt;x&lt;/b&gt; und &lt;b&gt;z&lt;/b&gt; navigieren sie ein Bild vor oder zurück&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Bildleiste&lt;/h4&gt; &lt;p&gt;In diesem Bereich sehen Sie Bilder und Szenen der Animation. Sie diese hin und herschieben.&lt;/p&gt;&lt;p&gt;Mit den &lt;b&gt;Pfeiltasten&lt;/b&gt; oder &lt;b&gt;x&lt;/b&gt; und &lt;b&gt;z&lt;/b&gt; navigieren Sie ein Bild vor oder zurück&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="735"/>
@@ -637,12 +637,12 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="729"/>
         <source>&lt;h4&gt;Frame preferences menu&lt;/h4&gt; &lt;p&gt;In this menu you can set preferences for the selected frame/frames, such as &lt;b&gt;subtitles&lt;/b&gt;, &lt;b&gt;sound effects&lt;/b&gt;, etc.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Bildeigenschaften Menu&lt;/h4&gt; &lt;p&gt;In diesem Menu können sie die Eigenschaften des gewälten Bildes/ der geählten Bilder, z.B. &lt;b&gt;Untertitel&lt;/b&gt; und &lt;b&gt;Toneffekte&lt;/b&gt; einstellen&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Bildeigenschaften Menu&lt;/h4&gt; &lt;p&gt;In diesem Menu können Sie die Eigenschaften des gewälten Bildes/ der geählten Bilder, z.B. &lt;b&gt;Untertitel&lt;/b&gt; und &lt;b&gt;Toneffekte&lt;/b&gt; einstellen&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="722"/>
         <source>&lt;h4&gt;Go to frame menu&lt;/h4&gt; &lt;p&gt;Here you can specify a framenumber and the program will jump to the specified frame&lt;/p&gt; </source>
-        <translation>&lt;h4&gt;Springe zu Bild Menu &lt;/h4&gt; &lt;p&gt;Hier können sie zu einem bestimmten Bild springen.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Springe zu Bild Menu &lt;/h4&gt; &lt;p&gt;Hier können Sie zu einem bestimmten Bild springen.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="494"/>
@@ -657,7 +657,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="716"/>
         <source>&lt;h4&gt;FrameView&lt;/h4&gt;&lt;p&gt; In this area you can see the selected frame. You can also play animations in this window by pressing the &lt;b&gt;Play&lt;/b&gt; button.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Bildanzeige&lt;/h4&gt;&lt;p&gt; In diesem Bereich sehen sie das gewählte Bild. Hier laufen auch die Animationen ab, wenn sie  &lt;b&gt;Start&lt;/b&gt; drücken.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Bildanzeige&lt;/h4&gt;&lt;p&gt; In diesem Bereich sehen Sie das gewählte Bild. Hier laufen auch die Animationen ab, wenn Sie  &lt;b&gt;Start&lt;/b&gt; drücken.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="755"/>
@@ -667,7 +667,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="756"/>
         <source>There are unsaved changes. Do you want to save?</source>
-        <translation>Es gibt ungespeicherte Änderungen. Möchten sie speichern?</translation>
+        <translation>Es gibt ungespeicherte Änderungen. Möchten Sie speichern?</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="923"/>
@@ -707,12 +707,12 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="589"/>
         <source>&lt;h4&gt;Video&lt;/h4&gt; &lt;p&gt;Exports the current project as &lt;em&gt;video&lt;/em&gt;.&lt;/p&gt;You will be given a wizard to guide you.</source>
-        <translation>&lt;h4&gt;Video&lt;/h4&gt; &lt;p&gt;Exportiert das aktuelle Projekt als &lt;em&gt;Videodatei&lt;/em&gt;.&lt;/p&gt;Ein Assistent wird sie dabei unterstützen.</translation>
+        <translation>&lt;h4&gt;Video&lt;/h4&gt; &lt;p&gt;Exportiert das aktuelle Projekt als &lt;em&gt;Videodatei&lt;/em&gt;.&lt;/p&gt;Ein Assistent wird Sie dabei unterstützen.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="596"/>
         <source>&lt;h4&gt;Cinerella&lt;/h4&gt; &lt;p&gt;Exports the current animation as a &lt;em&gt;Cinerella&lt;/em&gt; project.&lt;/p&gt;You will be given a wizard to guide you.</source>
-        <translation>&lt;h4&gt;Cinerella&lt;/h4&gt; &lt;p&gt;Exportiert die aktuelle Animation als ein &lt;em&gt;Cinerella&lt;/em&gt; Projekt.&lt;/p&gt;Ein Assistent wird sie führen.</translation>
+        <translation>&lt;h4&gt;Cinerella&lt;/h4&gt; &lt;p&gt;Exportiert die aktuelle Animation als ein &lt;em&gt;Cinerella&lt;/em&gt; Projekt.&lt;/p&gt;Ein Assistent wird Sie führen.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="478"/>
@@ -722,7 +722,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="486"/>
         <source>&amp;Configure Stopmotion</source>
-        <translation>Stopmotion &amp;kofigurieren</translation>
+        <translation>Stopmotion &amp;konfigurieren</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="1113"/>
@@ -787,7 +787,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="668"/>
         <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will opens a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Stopmotion konfigurieren&lt;/h4&gt; &lt;p&gt;Dies öffnet ein Fenster in dem sie Stopmotion und verscheidene Ein und Ausgabegeräte &lt;em&gt;konfigurieren&lt;/em&gt; können&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Stopmotion konfigurieren&lt;/h4&gt; &lt;p&gt;Dies öffnet ein Fenster in dem Sie Stopmotion und verscheidene Ein- und Ausgabegeräte &lt;em&gt;konfigurieren&lt;/em&gt; können&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="671"/>
@@ -817,8 +817,8 @@ menu. Export to video will not be possible until you
 have setted an encoder to use. Do you want to set it now?</source>
         <translation>Für den Video-Export konnte kein Encoder gefunden werden.
 Sie können dies im Einstellungs-Menü ändern. Video-Export
-wird erst möglich, wenn sie einen Encoder eingestellt haben.
-Wollen sie dies nun tun ?</translation>
+wird erst möglich, wenn Sie einen Encoder eingestellt haben.
+Wollen Sie dies nun tun?</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="901"/>
@@ -829,8 +829,8 @@ Wollen sie dies nun tun ?</translation>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="922"/>
         <source>The registered encoder is not valid. Do you want
 to check your settings in the preferences menu?</source>
-        <translation>Der gewählte Encoder ist nicht gültig. Möchten sie
-die Einstellungen überprüfen ?</translation>
+        <translation>Der gewählte Encoder ist nicht gültig. Möchten Sie
+die Einstellungen überprüfen?</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="936"/>
@@ -840,7 +840,7 @@ die Einstellungen überprüfen ?</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="687"/>
         <source>&lt;h4&gt;Help&lt;/h4&gt; &lt;p&gt;This button will bring up a dialog with the Stopmotion manual&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Hilfe&lt;/h4&gt; &lt;p&gt;Dieser Knopf führt sie zum Stopmotion Handbuch&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Hilfe&lt;/h4&gt; &lt;p&gt;Dieser Knopf führt Sie zum Stopmotion-Handbuch&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="690"/>
@@ -855,7 +855,7 @@ die Einstellungen überprüfen ?</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="778"/>
         <source>Choose project file</source>
-        <translation>Wählen sie eine Projekt-Datei</translation>
+        <translation>Wählen Sie eine Projekt-Datei</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="837"/>
@@ -868,12 +868,12 @@ die Einstellungen überprüfen ?</translation>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="53"/>
         <source>Choose frames to add</source>
-        <translation>Wählen sie Bilder zum hinzufügen</translation>
+        <translation>Wählen Sie Bilder zum Hinzufügen</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="143"/>
         <source>Removed the selected frame</source>
-        <translation>Das gewählte Bild wurde entfernt </translation>
+        <translation>Das gewählte Bild wurde entfernt</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="216"/>
@@ -987,7 +987,7 @@ die Einstellungen überprüfen ?</translation>
 values exists. Do you want to use this one? (Your old preferences
  will be saved in ~/.stopmotion/preferences.xml.OLD)</source>
         <translation>Es gibt eine neue Version der Einstellungsdatei mit ein paar zusätzlichen Werten.
-Möchten sie diese nutzen ? (Ihre alten Einstellungen werden in  ~/.stopmotion/preferences.xml.OLD gespeichert.)</translation>
+Möchten Sie diese nutzen? (Ihre alten Einstellungen werden in  ~/.stopmotion/preferences.xml.OLD gespeichert.)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="283"/>
@@ -1048,12 +1048,12 @@ Möchten sie diese nutzen ? (Ihre alten Einstellungen werden in  ~/.stopmotion/p
     <message>
         <location filename="../src/application/soundhandler.cpp" line="78"/>
         <source>Enter the name of the sound:</source>
-        <translation>Geben sie einen Namen für diesen Ton ein:</translation>
+        <translation>Geben Sie einen Namen für diesen Ton ein:</translation>
     </message>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="45"/>
         <source>Choose sound file</source>
-        <translation>Wählen sie eine Tondatei</translation>
+        <translation>Wählen Sie eine Tondatei</translation>
     </message>
 </context>
 <context>
@@ -1066,7 +1066,7 @@ Möchten sie diese nutzen ? (Ihre alten Einstellungen werden in  ~/.stopmotion/p
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="294"/>
         <source>&lt;h4&gt;FPS chooser&lt;/h4&gt; &lt;p&gt;By changing the value in this chooser you set which speed the animation in the &lt;b&gt;FrameView&lt;/b&gt; should run at.&lt;/p&gt; &lt;p&gt;To start an animation press the &lt;b&gt;Run Animation&lt;/b&gt; button.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Bilder pro Sekunde&lt;/h4&gt; &lt;p&gt;Hiermit können sie die Geschwindigkeit einstellen, mi der die Animation im &lt;b&gt;Bildbetrachter&lt;/b&gt; abläuft.&lt;/p&gt; &lt;p&gt;Um die Animation zu starten, drücken sie den &lt;b&gt;Start&lt;/b&gt; Knopf.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Bilder pro Sekunde&lt;/h4&gt; &lt;p&gt;Hiermit können Sie die Geschwindigkeit einstellen, mit der die Animation im &lt;b&gt;Bildbetrachter&lt;/b&gt; abläuft.&lt;/p&gt; &lt;p&gt;Um die Animation zu starten, drücken Sie den &lt;b&gt;Start&lt;/b&gt; Knopf.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="211"/>
@@ -1091,37 +1091,37 @@ Möchten sie diese nutzen ? (Ihre alten Einstellungen werden in  ~/.stopmotion/p
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="230"/>
         <source>&lt;h4&gt;Add Frames (CTRL+F)&lt;/h4&gt; &lt;p&gt;Click on this button to &lt;em&gt;add&lt;/em&gt; frames to the animation.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Bilder hinzufügen&lt;/h4&gt; &lt;p&gt;Drücken sie diesen Knopf wenn sie der Animation Bilder hinzufügen wollen.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Bilder hinzufügen&lt;/h4&gt; &lt;p&gt;Drücken Sie diesen Knopf, wenn Sie der Animation Bilder hinzufügen wollen.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="237"/>
         <source>&lt;h4&gt;Remove Selection (Delete)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;remove&lt;/em&gt; the selected frames from the animation.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Auswahl entfernen (Entf)&lt;/h4&gt; &lt;p&gt;Drücken sie diesen Knopf um die gewählten Bilder aus der Animation zu entfernen.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Auswahl entfernen (Entf)&lt;/h4&gt; &lt;p&gt;Drücken Sie diesen Knopf um die gewählten Bilder aus der Animation zu entfernen.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="244"/>
         <source>&lt;h4&gt;New Scene (CTRL+E)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;create&lt;/em&gt; a new &lt;em&gt;scene&lt;/em&gt; to the animation.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Neue Szene&lt;/h4&gt; &lt;p&gt;Drücken sie diesen Knopf um der Animation eine neue Szene hinzuzufügen&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Neue Szene&lt;/h4&gt; &lt;p&gt;Drücken Sie diesen Knopf um der Animation eine neue Szene hinzuzufügen&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="251"/>
         <source>&lt;h4&gt;Remove Scene (SHIFT+Delete)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;remove&lt;/em&gt; the selected scene from the animation.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Szene entfernen (SHIFT+Entf)&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können sie die gewählte Szene aus der Animation entfernen.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Szene entfernen (SHIFT+Entf)&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können Sie die gewählte Szene aus der Animation entfernen.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="257"/>
         <source>&lt;h4&gt;Toggle camera on/off (C)&lt;/h4&gt; &lt;p&gt;Click this button to toggle the camera on and off&lt;/p&gt; </source>
-        <translation>&lt;h4&gt;Kamera ein/aus (K)&lt;/h4&gt; &lt;p&gt;Hiermit können sie die Kamera ein- und ausschalten&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Kamera ein/aus (K)&lt;/h4&gt; &lt;p&gt;Hiermit können Sie die Kamera ein- und ausschalten&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="272"/>
         <source>&lt;h4&gt;Capture Frame (Space)&lt;/h4&gt; &lt;p&gt;Click on this button to &lt;em&gt;capture&lt;/em&gt; a frame from the camera an put it in the animation&lt;/p&gt; &lt;p&gt; This can also be done by pressing the &lt;b&gt;Space key&lt;/b&gt;&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Bild aufnehmen (Leertaste)&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können sie einzelne Bilder aufnehmen und der Animation hizufügen. Das geht auch in dem sie die  &lt;b&gt;Leertaste&lt;/b&gt; drücken&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Bild aufnehmen (Leertaste)&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können Sie einzelne Bilder aufnehmen und der Animation hizufügen. Das geht auch in dem Sie die  &lt;b&gt;Leertaste&lt;/b&gt; drücken&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="283"/>
         <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Anzahl der Bilder&lt;/h4&gt; &lt;p&gt;Mit diesem Regler können sie einstellen, wieviele Vorgänger-Bilder der Animation im Kamerabild eingeblendet werden sollten. Im playback-Modus: wie viele Bilder abgespielt werden. &lt;/p&gt; &lt;p&gt;Dadurch können sie besser sehen wie das nächste Bild im Verhältnis zu den vorhergehenden Bildern sein wird. Dies ermöglicht gleichmässige Bewegungsabläufe.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Anzahl der Bilder&lt;/h4&gt; &lt;p&gt;Mit diesem Regler können Sie einstellen, wieviele Vorgänger-Bilder der Animation im Kamerabild eingeblendet werden sollten. Im playback-Modus: wie viele Bilder abgespielt werden. &lt;/p&gt; &lt;p&gt;Dadurch können Sie besser sehen, wie das nächste Bild im Verhältnis zu den vorhergehenden Bildern sein wird. Dies ermöglicht gleichmässige Bewegungsabläufe.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="298"/>
@@ -1156,7 +1156,7 @@ Möchten sie diese nutzen ? (Ihre alten Einstellungen werden in  ~/.stopmotion/p
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="318"/>
         <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinetly.&lt;/p&gt;</source>
-        <translation>&lt;h4&gt;Endlosschleife (CTRL+L)&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können sie wählen, ob die Animation nur einmal oder in einer Endlosschleife abgespielt werden soll.&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;Endlosschleife (CTRL+L)&lt;/h4&gt; &lt;p&gt;Mit diesem Knopf können Sie wählen, ob die Animation nur einmal oder in einer Endlosschleife abgespielt werden soll.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="408"/>
@@ -1169,7 +1169,7 @@ Möchten sie diese nutzen ? (Ihre alten Einstellungen werden in  ~/.stopmotion/p
 as a daemon. Go to the preferences menu (CTRL+P) to switch 
 to running the image grabbing as a daemon.</source>
         <translation>Der Playback-Modus funktioniert nur, wenn der Grabber als Hintergrundprozess
-läuft. Bitte ändern sie dies im Einstellungs-Menü. </translation>
+läuft. Bitte ändern Sie dies im Einstellungs-Menü.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="217"/>
