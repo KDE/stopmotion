@@ -93,9 +93,15 @@ public:
 
 	/**
 	 * Sets the speed for the playback.
-	 * @param playbackSpeed the speed to be setted
+	 * @param playbackSpeed the speed to be set.
 	 */
 	void setPlaybackSpeed(int playbackSpeed);
+
+	/**
+	 * Gets the speed for playback.
+	 * @returns Frames per second.
+	 */
+	int getPlaybackSpeed() const;
 
 signals:
 	void cameraReady();

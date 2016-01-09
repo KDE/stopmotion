@@ -43,10 +43,13 @@ public:
 	/**
 	 * Creates the video file based on the passed encoder. The encoder holds
 	 * information needed to complete the export.
-	 * @param encoder the encoder to be used for video export
+	 * @param encoder The encoder to be used for video export
+	 * @param playbackSpeed The frame rate (in frames per second) at which
+	 * the video should be encoded, assuming the video encoder supports
+	 * this adjustment.
 	 * @return path to the created video file
 	 */
-	const char* createVideoFile(VideoEncoder *encoder);
+	const char* createVideoFile(VideoEncoder *encoder, int playbackSpeed);
 
 private:
 	const AnimationImpl *anim;

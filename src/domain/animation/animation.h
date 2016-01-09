@@ -342,10 +342,13 @@ public:
 
 	/**
 	 * Exports the current project to a video file as specified by the video encoder.
-	 * @param encoder the video encoder to use for export to video
+	 * @param encoder The encoder to be used for video export
+	 * @param playbackSpeed The frame rate (in frames per second) at which
+	 * the video should be encoded, assuming the video encoder supports
+	 * this adjustment.
 	 * @return true on success, false otherwise
 	 */
-	bool exportToVideo(VideoEncoder *encoder);
+	bool exportToVideo(VideoEncoder *encoder, int playbackSpeed);
 
 	/**
 	 * Exports the current project to a Cinerella project.

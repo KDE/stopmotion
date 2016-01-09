@@ -468,6 +468,9 @@ void FrameView::setPlaybackSpeed(int playbackSpeed) {
 	}
 }
 
+int FrameView::getPlaybackSpeed() const {
+	return playbackSpeed;
+}
 
 // The only thing left which is a little expensive is the MapRGB function.
 SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2) {

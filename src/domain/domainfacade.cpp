@@ -285,8 +285,8 @@ void DomainFacade::shutdownAudioDevice() {
 }
 
 
-bool DomainFacade::exportToVideo(VideoEncoder *encoder) {
-	return animationModel->exportToVideo(encoder);
+bool DomainFacade::exportToVideo(VideoEncoder *encoder, int playbackSpeed) {
+	return animationModel->exportToVideo(encoder, playbackSpeed);
 }
 
 

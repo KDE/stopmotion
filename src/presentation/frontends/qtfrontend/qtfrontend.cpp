@@ -284,7 +284,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	// -----------------------------------------------------------------------
 
 	// Default export options ------------------------------------------------
-	prefs->setPreference("numEncoders", 4);
+	prefs->setPreference("numEncoders", 5);
 	prefs->setPreference("activeEncoder", 3);
 
 	// Default export option 1
@@ -292,7 +292,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription0",
 			tr("Exports from jpeg images to mpeg1 video").toUtf8().constData());
 	prefs->setPreference("startEncoder0",
-			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=12:type=jpg "
+			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=$FRAMERATE:type=jpg "
 			"-ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder0", "");
 
@@ -301,7 +301,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription1",
 			tr("Exports from jpeg images to mpeg2 video").toUtf8().constData());
 	prefs->setPreference("startEncoder1",
-			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=12:type=jpg "
+			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=$FRAMERATE:type=jpg "
 			"-ovc lavc -lavcopts vcodec=mpeg2video -oac copy -o \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder1", "");
 
@@ -310,7 +310,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription2",
 			tr("Exports from jpeg images to mpeg4 video").toUtf8().constData());
 	prefs->setPreference("startEncoder2",
-			"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1:$opt -mf type=jpg:fps=12 "
+			"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1:$opt -mf type=jpg:fps=$FRAMERATE "
 			"-o \"$VIDEOFILE\" \"mf://$IMAGEPATH/*.jpg\"");
 	prefs->setPreference("stopEncoder2", "");
 
@@ -319,8 +319,16 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription3",
 			tr("Exports from jpeg images to mpeg4 video").toUtf8().constData());
 	prefs->setPreference("startEncoder3",
-			"avconv -r 12 -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
+			"avconv -y -r $FRAMERATE -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder3", "");
+
+	// Default export option 5 -- ffmpeg
+	prefs->setPreference("encoderName4", "ffmpeg");
+	prefs->setPreference("encoderDescription4",
+			tr("Exports from jpeg images to mpeg4 video").toUtf8().constData());
+	prefs->setPreference("startEncoder4",
+			"ffmpeg -r $FRAMERATE -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
+	prefs->setPreference("stopEncoder4", "");
 	//-------------------------------------------------------------------------
 }
 

@@ -404,10 +404,10 @@ void Animation::shutdownAudioDevice() {
 }
 
 
-bool Animation::exportToVideo(VideoEncoder * encoder) {
+bool Animation::exportToVideo(VideoEncoder * encoder, int playbackSpeed) {
 	VideoFactory factory(scenes, frontend);
 	frontend->showProgress(Frontend::exporting, 0);
-	if (factory.createVideoFile(encoder) != NULL) {
+	if (factory.createVideoFile(encoder, playbackSpeed) != NULL) {
 		frontend->hideProgress();
 		return true;
 	}
