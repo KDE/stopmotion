@@ -246,7 +246,7 @@ isEmpty(HTML_PATH) {
 }
 
 isEmpty(TRANSLATIONS_PATH) {
-	TRANSLATIONS_PATH =$${PREFIX}/share/doc/stopmotion/translations
+	TRANSLATIONS_PATH =$${PREFIX}/share/stopmotion/translations
 }
 
 DEFINES += PREFIX_PATH=\'\"$${PREFIX}\"\'
