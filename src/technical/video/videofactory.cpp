@@ -74,9 +74,13 @@ public:
 
 bool replaceText(string& text, const char* searchFor, const char* replaceWith) {
 	int index = text.find(searchFor);
-	if (index == -1)
+	if (index < 0)
 		return false;
-	text.replace(index, strlen(searchFor), replaceWith);
+	int replaceLength = strlen(replaceWith);
+	while (0 <= index) {
+		text.replace(index, strlen(searchFor), replaceWith);
+		index = text.find(searchFor, index + replaceLength);
+	}
 	return true;
 }
 
