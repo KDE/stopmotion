@@ -214,107 +214,102 @@
         <translation type="obsolete">Aktivno</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="+89"/>
-        <location line="+304"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="+382"/>
         <source>Name</source>
         <translation type="unfinished">Ime</translation>
     </message>
     <message>
-        <location line="-304"/>
-        <location line="+304"/>
+        <location line="+0"/>
         <source>Description</source>
         <translation type="unfinished">Opis</translation>
     </message>
     <message>
-        <location line="-297"/>
-        <location line="+300"/>
+        <location line="-299"/>
+        <location line="+302"/>
         <source>&amp;Add</source>
         <translation type="unfinished">&amp;Dodaj</translation>
     </message>
     <message>
-        <location line="-296"/>
-        <location line="+297"/>
+        <location line="-298"/>
+        <location line="+299"/>
         <source>&amp;Remove</source>
         <translation type="unfinished">&amp;Odstrani</translation>
     </message>
     <message>
-        <location line="-294"/>
-        <location line="+295"/>
+        <location line="-296"/>
+        <location line="+297"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Uredi</translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-293"/>
         <source>Encoder settings</source>
         <translation type="unfinished">Nastavitve kodirnika</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+284"/>
+        <location line="+286"/>
         <source>Do you want to be asked for an output file everytime you choose to export?</source>
         <translation type="unfinished">Želite biti vprašani o izhodni datoteki vsakič, ko se odločite za izvažanje?</translation>
     </message>
     <message>
-        <location line="-282"/>
-        <location line="+284"/>
+        <location line="-284"/>
+        <location line="+286"/>
         <source>Yes</source>
         <translation type="unfinished">Da</translation>
     </message>
     <message>
-        <location line="-279"/>
-        <location line="+280"/>
+        <location line="-281"/>
+        <location line="+282"/>
         <source>No</source>
         <translation type="unfinished">Ne</translation>
     </message>
     <message>
-        <location line="-275"/>
-        <location line="+276"/>
+        <location line="-277"/>
+        <location line="+278"/>
         <source>Set default output file:</source>
         <translation type="unfinished">Nastavi defoltno izvozno datoteko:</translation>
     </message>
     <message>
-        <location line="-270"/>
-        <location line="+271"/>
+        <location line="-272"/>
+        <location line="+273"/>
         <source>Browse</source>
         <translation type="unfinished">Brskaj</translation>
     </message>
     <message>
-        <location line="-266"/>
-        <location line="+267"/>
+        <location line="-268"/>
+        <location line="+269"/>
         <source>Start encoder:</source>
         <translation type="unfinished">Zaženi kodirnik:</translation>
     </message>
     <message>
-        <location line="-262"/>
-        <location line="+263"/>
+        <location line="-264"/>
+        <location line="+265"/>
         <source>Stop encoder:</source>
         <translation type="unfinished">Zaustavi kodirnik:</translation>
     </message>
     <message>
-        <location line="-34"/>
+        <location line="-36"/>
         <source>Choose output file</source>
         <translation type="unfinished">Izberi datoteko za izvoz</translation>
     </message>
     <message>
-        <location line="-304"/>
-        <location line="+314"/>
+        <location line="+10"/>
         <source>Below you can set which program/process Stopmotion should use for encoding the currently active project to a video file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-312"/>
-        <location line="+314"/>
+        <location line="+2"/>
         <source>You should always use &lt;b&gt;$IMAGEPATH&lt;/b&gt; and &lt;b&gt;$VIDEOFILE&lt;/b&gt; to represent the image path and the video file, respectively.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-312"/>
-        <source>You can use &lt;b&gt;$FRAMERATE&lt;/b&gt; to represent the frame rate currently in use in the project, but beware that some formats only permit certain frame rates.</source>
+        <location line="+2"/>
+        <source>You can use &lt;b&gt;$FRAMERATE&lt;/b&gt; to represent the frame rate currently in use in the project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+312"/>
         <source>Example with mencoder (jpeg images to mpeg4 video):</source>
         <translation type="unfinished"></translation>
     </message>

@@ -258,7 +258,7 @@
         <translation>以 mencoder 為例 (jpeg 圖像轉 mpeg4 視訊)：</translation>
     </message>
     <message>
-        <source>You can use &lt;b&gt;$FRAMERATE&lt;/b&gt; to represent the frame rate currently in use in the project, but beware that some formats only permit certain frame rates.</source>
+        <source>You can use &lt;b&gt;$FRAMERATE&lt;/b&gt; to represent the frame rate currently in use in the project.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

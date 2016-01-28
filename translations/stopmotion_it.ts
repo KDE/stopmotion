@@ -206,107 +206,102 @@
 <context>
     <name>ExportTab</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="89"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="393"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="382"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="89"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="393"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="382"/>
         <source>Description</source>
         <translation>Descrizione</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="96"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="396"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="83"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="385"/>
         <source>&amp;Add</source>
         <translation>&amp;Aggiungere</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="100"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="397"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="87"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="386"/>
         <source>&amp;Remove</source>
         <translation>&amp;Rimuovere</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="103"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="398"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="90"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="387"/>
         <source>&amp;Edit</source>
         <translation>&amp;Modificare</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="107"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="94"/>
         <source>Encoder settings</source>
         <translation>Preferenze di codifica</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="117"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="401"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="104"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="390"/>
         <source>Do you want to be asked for an output file everytime you choose to export?</source>
         <translation>Desideri essere informato da un messaggio ogni volta che scegli di esportare?</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="119"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="403"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="106"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="392"/>
         <source>Yes</source>
         <translation>Sì</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="124"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="404"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="111"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="393"/>
         <source>No</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="129"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="405"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="116"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="394"/>
         <source>Set default output file:</source>
         <translation>Seleziona il file di uscita predefinito:</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="135"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="406"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="122"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="395"/>
         <source>Browse</source>
         <translation>Sfoglia</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="140"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="407"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="127"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="396"/>
         <source>Start encoder:</source>
         <translation>Inizia la codifica:</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="145"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="408"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="132"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="397"/>
         <source>Stop encoder:</source>
         <translation>Ferma la codifica:</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="374"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="361"/>
         <source>Choose output file</source>
         <translation>Scegliere il file di uscita</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="70"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="384"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="371"/>
         <source>Below you can set which program/process Stopmotion should use for encoding the currently active project to a video file.</source>
         <translation>Di seguito puoi selezionare quale programma Stopmotion dovrebbe utilizzare per codificare il progetto attivo corrente in un file video.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="72"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="386"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="373"/>
         <source>You should always use &lt;b&gt;$IMAGEPATH&lt;/b&gt; and &lt;b&gt;$VIDEOFILE&lt;/b&gt; to represent the image path and the video file, respectively.</source>
         <translation>Dovresti sempre usare &lt;b&gt;$IMAGEPATH&lt;/b&gt; e &lt;b&gt;$VIDEOFILE&lt;/b&gt; per indicare rispettivamente il percorso dell&apos;immagine e del file video.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="74"/>
-        <source>You can use &lt;b&gt;$FRAMERATE&lt;/b&gt; to represent the frame rate currently in use in the project, but beware that some formats only permit certain frame rates.</source>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="375"/>
+        <source>You can use &lt;b&gt;$FRAMERATE&lt;/b&gt; to represent the frame rate currently in use in the project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="76"/>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="388"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="377"/>
         <source>Example with mencoder (jpeg images to mpeg4 video):</source>
         <translation>Esempio con mencoder (da immagini jpeg a video mpeg4):</translation>
     </message>
