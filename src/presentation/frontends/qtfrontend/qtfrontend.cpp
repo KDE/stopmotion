@@ -189,6 +189,8 @@ void QtFrontend::initializePreferences()
 	WorkspaceFile preferencesFile(WorkspaceFile::preferencesFile);
 	WorkspaceFile oldPrefsFile(WorkspaceFile::preferencesFileOld);
 
+	WorkspaceFile::ensureStopmotionDirectoriesExist();
+
 	// Has to check this before calling setPreferencesFile(...) because
 	// the function creates the file if it doesn't exist.
 	int prefsFileExists = access(preferencesFile.path(), R_OK);

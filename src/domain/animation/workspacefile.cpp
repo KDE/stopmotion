@@ -119,18 +119,32 @@ char* getWorkspaceFilename(const char *&basenameOut, const char* basenameIn,
 
 }
 
-void WorkspaceFile::clear() {
+void WorkspaceFile::ensureStopmotionDirectoriesExist(AndClear clear) {
 	{
 		std::stringstream pathStr;
 		pathStr << workspacePath;
 		std::string path = pathStr.str();
 		Util::ensurePathExists(path.c_str());
-		Util::removeDirectoryContents(path.c_str());
 	}
-	std::stringstream framePathStr;
-	framePathStr << workspacePathFrames;
-	std::string framePath = framePathStr.str();
-	Util::ensurePathExists(framePath.c_str());
+	{
+		std::stringstream pathStr;
+		pathStr << workspacePathFrames;
+		std::string path = pathStr.str();
+		Util::ensurePathExists(path.c_str());
+		if (clear == andClear) {
+			Util::removeDirectoryContents(path.c_str());
+		}
+	}
+}
+
+void WorkspaceFile::clear() {
+	ensureStopmotionDirectoriesExist(andClear);
+	WorkspaceFile nm(newModelFile);
+	unlink(nm.path());
+	WorkspaceFile cm(currentModelFile);
+	unlink(cm.path());
+	WorkspaceFile cl(commandLogFile);
+	unlink(cl.path());
 	fileNum = 0;
 	soundNumber = 0;
 }

@@ -90,14 +90,19 @@ int removeFileOrDirectory(const char *path, const struct stat *,
 		int flag, struct FTW *info) {
 	switch (flag) {
 	case FTW_D:
-		if (info->level != info->base) {
-			if (0 != rmdir(path))
+	case FTW_DP:
+		if (info->level != 0) {
+			if (0 != rmdir(path)) {
+				Logger::get().logWarning("Could not remove directory %s", path);
 				return FTW_STOP;
+			}
 		}
 		break;
 	default:
-		if (0 != unlink(path))
+		if (0 != unlink(path)) {
+			Logger::get().logWarning("Could not remove file %s", path);
 			return FTW_STOP;
+		}
 		break;
 	}
 	return FTW_CONTINUE;
