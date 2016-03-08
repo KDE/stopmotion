@@ -210,84 +210,82 @@
         <translation type="obsolete">Activé</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="+89"/>
-        <location line="+304"/>
+        <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="+382"/>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
     <message>
-        <location line="-304"/>
-        <location line="+304"/>
+        <location line="+0"/>
         <source>Description</source>
         <translation>Description</translation>
     </message>
     <message>
-        <location line="-297"/>
-        <location line="+300"/>
+        <location line="-299"/>
+        <location line="+302"/>
         <source>&amp;Add</source>
         <translation>&amp;Ajouter</translation>
     </message>
     <message>
-        <location line="-296"/>
-        <location line="+297"/>
+        <location line="-298"/>
+        <location line="+299"/>
         <source>&amp;Remove</source>
         <translation>&amp;Supprimer</translation>
     </message>
     <message>
-        <location line="-294"/>
-        <location line="+295"/>
+        <location line="-296"/>
+        <location line="+297"/>
         <source>&amp;Edit</source>
         <translation>&amp;Modifier</translation>
     </message>
     <message>
-        <location line="-291"/>
+        <location line="-293"/>
         <source>Encoder settings</source>
         <translation>Paramètres de l&apos;encodeur</translation>
     </message>
     <message>
         <location line="+10"/>
-        <location line="+284"/>
+        <location line="+286"/>
         <source>Do you want to be asked for an output file everytime you choose to export?</source>
         <translation>Voulez-vous choisir le fichier destination à chaque export ?</translation>
     </message>
     <message>
-        <location line="-282"/>
-        <location line="+284"/>
+        <location line="-284"/>
+        <location line="+286"/>
         <source>Yes</source>
         <translation>Oui</translation>
     </message>
     <message>
-        <location line="-279"/>
-        <location line="+280"/>
+        <location line="-281"/>
+        <location line="+282"/>
         <source>No</source>
         <translation>Non</translation>
     </message>
     <message>
-        <location line="-275"/>
-        <location line="+276"/>
+        <location line="-277"/>
+        <location line="+278"/>
         <source>Set default output file:</source>
         <translation>Définir le fichier destination par défaut :</translation>
     </message>
     <message>
-        <location line="-270"/>
-        <location line="+271"/>
+        <location line="-272"/>
+        <location line="+273"/>
         <source>Browse</source>
         <translation>Parcourir</translation>
     </message>
     <message>
-        <location line="-266"/>
-        <location line="+267"/>
+        <location line="-268"/>
+        <location line="+269"/>
         <source>Start encoder:</source>
         <translation>Lancer l&apos;encodeur :</translation>
     </message>
     <message>
-        <location line="-262"/>
-        <location line="+263"/>
+        <location line="-264"/>
+        <location line="+265"/>
         <source>Stop encoder:</source>
         <translation>Arrêter l&apos;encodeur :</translation>
     </message>
     <message>
-        <location line="-34"/>
+        <location line="-36"/>
         <source>Choose output file</source>
         <translation>Choisir le fichier destination</translation>
     </message>
@@ -296,25 +294,22 @@
         <translation type="obsolete">&lt;p&gt;Vous pouvez sélectionner ci-dessous quel programme / processus stopmotion doit utiliser pour encoder le projet en cours en un fichier vidéo.&lt;/p&gt;&lt;p&gt;Dans la ligne de commande, vous pouvez utiliser des variables.&lt;b&gt;$IMAGEPATH&lt;/b&gt; représente le chemin vers les images (chemin absolu vers le dossier contenant les images). &lt;b&gt;$VIDEOFILE&lt;/b&gt; représente le fichier destination (le fichier vidéo généré par l&apos;encodeur). Ceci est indépendant du fait de sélectionner le fichier à chaque export ou d&apos;utiliser un fichier par défaut.&lt;br&gt;&lt;/p&gt;&lt;p&gt;Exemple avec mencoder (conversion de jpg vers mpeg1): &lt;br&gt;mencoder mf://$IMAGEPATH/*.jpg -mf w=640:h=480:fps=12:type=jpg -ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o $VIDEOFILE &lt;br&gt;</translation>
     </message>
     <message>
-        <location line="-304"/>
-        <location line="+314"/>
+        <location line="+10"/>
         <source>Below you can set which program/process Stopmotion should use for encoding the currently active project to a video file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-312"/>
-        <location line="+314"/>
+        <location line="+2"/>
         <source>You should always use &lt;b&gt;$IMAGEPATH&lt;/b&gt; and &lt;b&gt;$VIDEOFILE&lt;/b&gt; to represent the image path and the video file, respectively.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-312"/>
-        <source>You can use &lt;b&gt;$FRAMERATE&lt;/b&gt; to represent the frame rate currently in use in the project, but beware that some formats only permit certain frame rates.</source>
+        <location line="+2"/>
+        <source>You can use &lt;b&gt;$FRAMERATE&lt;/b&gt; to represent the frame rate currently in use in the project.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+312"/>
         <source>Example with mencoder (jpeg images to mpeg4 video):</source>
         <translation type="unfinished"></translation>
     </message>

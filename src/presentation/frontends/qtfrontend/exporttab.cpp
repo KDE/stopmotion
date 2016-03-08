@@ -373,7 +373,7 @@ void ExportTab::retranslateStrings()
 		tr("You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
 		"the image path and the video file, respectively.") + "</p><p>" +
 		tr("You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
-				"in the project, but beware that some formats only permit certain frame rates.") + "</p><p>" +
+				"in the project.") + "</p><p>" +
 		tr("Example with mencoder (jpeg images to mpeg4 video):") + "<br>" +
 		"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1 -mf type=jpg:fps=$FRAMERATE -o "
 		"$VIDEOFILE mf://$IMAGEPATH/*.jpg");
