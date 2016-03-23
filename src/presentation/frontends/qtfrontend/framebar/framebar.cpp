@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2016 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -27,7 +27,7 @@
 
 #include <QImage>
 #include <QFrame>
-#include <QPixmap>
+#include <QImage>
 #include <QDragEnterEvent>
 #include <QResizeEvent>
 #include <QDropEvent>

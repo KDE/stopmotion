@@ -12,8 +12,6 @@ INSTALLATION
 You need the following libraries installed to compile:
     - Qt4
     - libtar
-    - SDL
-    - SDL_image
     - XML2
     - vorbisfile
     - FAM/Gamin

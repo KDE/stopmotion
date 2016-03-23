@@ -21,8 +21,7 @@
 #define IMAGEGRABBER_H
 
 /**
- * Abstract class for the different video grabbers used by the SDLVideoView
- * widget.
+ * Abstract class for the different video grabbers.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */

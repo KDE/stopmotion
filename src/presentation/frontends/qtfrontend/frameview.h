@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2016 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -27,17 +27,16 @@
 #include <QTimer>
 
 class ImageGrabThread;
-struct SDL_Surface;
 class QResizeEvent;
 class QPaintEvent;
+class QImage;
 class ImageGrabThread;
 class ImageGrabber;
 class DomainFacade;
 
 /**
- * Widget for viewing the frames in the animation using SDL. This widget also
- * serves as videoview widget for displaying video from an external source
- * by grabbing through the harddrive.
+ * Widget for viewing the frames in the animation and image about to be
+ * captured.
  */
 class FrameView : public QWidget {
 	Q_OBJECT
@@ -155,8 +154,7 @@ protected:
 private:
 	static const int alphaLut[5];
 
-	SDL_Surface *screen;
-	SDL_Surface *videoSurface;
+	QPixmap cameraOutput;
 	ImageCache imageCache;
 
 	QTimer grabTimer;
@@ -177,6 +175,7 @@ private:
 	int activeScene;
 	int activeFrame;
 	int mixCount;
+	int playbackModeFrame;
 
 	/**
 	 * Loads the new active frames picture into the frameview.
@@ -186,17 +185,9 @@ private:
 	void setActiveFrame(int sceneNumber, int frameNumber);
 
 	/**
-	 * Highly tweaked/optimized homemade function for taking the rgb differences
-	 * between two surfaces.
-	 *
-	 * deltaRed = abs(r1 - r2), deltaGreen = abs(g1 - g2), deltaBlue = abs(b1 - b2)
-	 * for all pixels.
-	 *
-	 * @param s1 the first surface of the two to differentiate.
-	 * @param s2 the second surface of the two to differentiate.
-	 * @return a surface with the rgb difference of s1 and s2.
+	 * Draws the appropriate blend of frames and camera output based on the
+	 * current image mode.
 	 */
-	SDL_Surface* differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2);
 	void drawOnionSkins();
 };
 

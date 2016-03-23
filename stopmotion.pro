@@ -208,7 +208,7 @@ INCLUDEPATH += . \
     src/domain \
     src/domain/animation \
     src/presentation
-LIBS += -lSDL_image -ltar -lvorbisfile -lX11
+LIBS += -ltar -lvorbisfile -lX11
 
 QM_FILES = $$TRANSLATIONS
 QM_FILES~= s:^translations/:build/:g
@@ -235,7 +235,7 @@ DISTFILES -= stopmotion.pro \
 
 CONFIG += link_pkgconfig
 
-PKGCONFIG += sdl SDL_image vorbisfile libxml-2.0
+PKGCONFIG += vorbisfile libxml-2.0
 
 isEmpty(PREFIX) {
 	PREFIX =/usr/local
