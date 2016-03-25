@@ -21,7 +21,7 @@
 #ifndef IMAGECACHE_H_
 #define IMAGECACHE_H_
 
-class QImage;
+class QPixmap;
 
 struct SurfaceLoader;
 template<typename T> class LoadCache;
@@ -39,7 +39,7 @@ public:
 	 * Pulls the named image into the cache, if necessary, and returns it.
 	 * @param path The path of the file.
 	 */
-	QImage* get(const char* path);
+	QPixmap* get(const char* path);
 	/**
 	 * Removes the named image from the cache, if it is present.
 	 * @param path The path of the file.

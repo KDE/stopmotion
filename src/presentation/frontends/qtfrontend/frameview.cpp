@@ -181,33 +181,42 @@ void FrameView::drawOnionSkins() {
 			for (int i = 0; i != frameCount; ++i) {
 				const char* path = anim->getImagePath(
 						activeScene, activeFrame - i);
-				QImage* image = imageCache.get(path);
+				QPixmap* image = imageCache.get(path);
 				if (image) {
 					painter.setOpacity(qreal(1)/(i + 2));
-					painter.drawImage(dst, *image);
+					painter.drawPixmap(dst, *image);
 				}
 			}
 			break;
 		}
 		case imageModeDiff:
-			painter.drawPixmap(dst, cameraOutput);
+		{
+			QSize differenceSize(cameraOutput.size());
+			QRect differenceRect(QPoint(0, 0), differenceSize);
+			QImage difference(differenceSize, QImage::Format_RGB888);
+			QPainter differencePainter(&difference);
+			differencePainter.drawPixmap(differenceRect, cameraOutput);
 			if (0 <= activeFrame) {
 				const char* path = anim->getImagePath(activeScene, activeFrame);
-				QImage* image = imageCache.get(path);
+				QPixmap* image = imageCache.get(path);
 				if (image) {
-					painter.setCompositionMode(QPainter::CompositionMode_Difference);
-					painter.drawImage(dst, *image);
+					differencePainter.setCompositionMode(
+							QPainter::CompositionMode_Difference);
+					differencePainter.drawPixmap(differenceRect, *image);
 				}
 			}
+			differencePainter.end();
+			painter.drawImage(dst, difference);
 			break;
+		}
 		case imageModePlayback:
 			if (playbackModeFrame < 0) {
 				painter.drawPixmap(dst, cameraOutput);
 			} else {
 				const char* path = anim->getImagePath(activeScene, playbackModeFrame);
-				QImage* image = imageCache.get(path);
+				QPixmap* image = imageCache.get(path);
 				if (image) {
-					painter.drawImage(dst, *image);
+					painter.drawPixmap(dst, *image);
 				}
 			}
 			break;
@@ -229,12 +238,12 @@ void FrameView::paintEvent(QPaintEvent *) {
 		DomainFacade* anim = DomainFacade::getFacade();
 		if (0 <= activeScene && 0 <= activeFrame) {
 			const char* path = anim->getImagePath(activeScene, activeFrame);
-			QImage* image = imageCache.get(path);
+			QPixmap* image = imageCache.get(path);
 			if (image) {
 				QRect destination;
 				getMaximumScaledRectangle(destination, image->width(), image->height(), rect());
 				drawBorders(painter, destination, rect());
-				painter.drawImage(destination, *image);
+				painter.drawPixmap(destination, *image);
 				return;
 			}
 		}

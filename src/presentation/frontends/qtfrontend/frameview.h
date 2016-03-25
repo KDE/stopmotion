@@ -29,7 +29,7 @@
 class ImageGrabThread;
 class QResizeEvent;
 class QPaintEvent;
-class QImage;
+class QPixmap;
 class ImageGrabThread;
 class ImageGrabber;
 class DomainFacade;

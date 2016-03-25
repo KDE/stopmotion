@@ -21,17 +21,17 @@
 #include "imagecache.h"
 #include "loadcache.h"
 
-#include <QImage>
+#include <QPixmap>
 #include <memory>
 
 struct SurfaceLoader {
-	typedef QImage value_t;
+	typedef QPixmap value_t;
 	static value_t* load(const char*);
 	static void free(value_t*);
 };
 
 SurfaceLoader::value_t* SurfaceLoader::load(const char* path) {
-	std::auto_ptr<QImage> p(new QImage);
+	std::auto_ptr<QPixmap> p(new QPixmap);
 	if (p->load(path)) {
 		return p.release();
 	}
@@ -50,7 +50,7 @@ ImageCache::~ImageCache() {
 	delete delegate;
 }
 
-QImage* ImageCache::get(const char* path) {
+QPixmap* ImageCache::get(const char* path) {
 	if (!path)
 		return 0;
 	return delegate->get(path);
