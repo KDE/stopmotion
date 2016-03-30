@@ -223,6 +223,8 @@ void FrameView::drawOnionSkins() {
 		default:
 			break;
 		}
+	} else {
+		painter.drawPixmap(dst, cameraOutput);
 	}
 }
 

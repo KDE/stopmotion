@@ -9,12 +9,12 @@ INSTALLATION
 1) qmake
 2) sudo make install
 
-You need the following libraries installed to compile:
-    - Qt4
+You need the following packages installed to compile:
+    - build-essentials
+    - Qt4 (libqt4-dev and qt4-dev-tools)
     - libtar
     - XML2
     - vorbisfile
-    - FAM/Gamin
     - pkg-config
 
 WHO CAN USE IT
