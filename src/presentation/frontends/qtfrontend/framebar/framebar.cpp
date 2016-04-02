@@ -115,7 +115,7 @@ FrameBar::FrameBar(QWidget *parent)
 	setBackgroundRole(QPalette::Dark);
 	setAcceptDrops(true);
 
-	Logger::get().logDebug("FrameBar is attatched to the model");
+	Logger::get().logDebug("FrameBar is attached to the model");
 	DomainFacade::getFacade()->attach(this);
 }
 

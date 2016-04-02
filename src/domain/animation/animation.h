@@ -62,9 +62,9 @@ public:
 	~Animation();
 
 	/**
-	 * Attatches a new observer to the model. The observer will be notified when
+	 * Attaches a new observer to the model. The observer will be notified when
 	 * something is changed in the model.
-	 * @param o the observer to be attatched to the model.
+	 * @param o the observer to be attached to the model.
 	 */
 	void attach(Observer *o);
 

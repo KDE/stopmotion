@@ -58,7 +58,7 @@ public:
 public slots:
 
 	/**
-	 * Attatches a sound to a frame in the animation.
+	 * Attaches a sound to a frame in the animation.
 	 */
 	void addSound();
 	

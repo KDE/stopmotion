@@ -76,8 +76,8 @@ public:
 
 	/**
 	 * Abstract function for telling a framethumbview that it has one or more sounds
-	 * attatched to it.
-	 * @param hasSounds true if the frame has one or more sounds attatched to it.
+	 * attached to it.
+	 * @param hasSounds true if the frame has one or more sounds attached to it.
 	 */
 	virtual void setHasSounds(bool hasSounds);
 
