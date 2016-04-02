@@ -42,7 +42,7 @@ SceneArrowButton::SceneArrowButton( QWidget *parent ) : QWidget(parent)
 void SceneArrowButton::setOpened(bool isOpened)
 {
 	this->isOpened = isOpened;
-	this->repaint();
+	update();
 }
 
 
@@ -66,7 +66,7 @@ void SceneArrowButton::paintEvent( QPaintEvent * )
 void SceneArrowButton::moveIcon()
 {
 	this->iconX = (iconX == 0) ? 2 : 0;
-	this->repaint();
+	update();
 }
 
 
@@ -76,7 +76,7 @@ void SceneArrowButton::mouseReleaseEvent( QMouseEvent * e )
 		emit clicked();
 		moveTimer->stop();
 		this->iconX = 2;
-		this->repaint();
+		update();
 	}
 	else {
 		e->ignore();
@@ -97,5 +97,5 @@ void SceneArrowButton::leaveEvent( QEvent * )
 {
 	moveTimer->stop();
 	this->iconX = 2;
-	this->repaint();
+	update();
 }
