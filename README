@@ -10,11 +10,12 @@ INSTALLATION
 2) sudo make install
 
 You need the following packages installed to compile:
-    - build-essentials
+    - make and gcc (build-essential)
+    - gdb
     - Qt4 (libqt4-dev and qt4-dev-tools)
-    - libtar
-    - XML2
-    - vorbisfile
+    - tar (libtar-dev)
+    - XML2 (libxml2-dev)
+    - vorbisfile (libvorbis-dev)
     - pkg-config
 
 WHO CAN USE IT
