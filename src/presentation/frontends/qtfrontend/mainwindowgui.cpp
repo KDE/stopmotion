@@ -888,7 +888,7 @@ bool MainWindowGUI::saveProjectAs() {
 	saveAct->setEnabled(false);
 	setTitle(false);
 	updateMostRecentMenu();
-	return false;
+	return true;
 }
 
 
