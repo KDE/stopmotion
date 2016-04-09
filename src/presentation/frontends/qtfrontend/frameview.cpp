@@ -436,7 +436,6 @@ bool FrameView::setViewMode(ImageMode mode) {
 		return true;
 	if (mode == imageModePlayback) {
 		if ( grabber->isGrabberProcess() ) {
-			grabTimer.stop();
 			playbackTimer.start(1000/playbackSpeed);
 		} else {
 			return false;
@@ -444,7 +443,6 @@ bool FrameView::setViewMode(ImageMode mode) {
 	} else if (mode != imageModePlayback) {
 		if ( grabber->isGrabberProcess() ) {
 			playbackTimer.stop();
-			grabTimer.start(150);
 		}
 	}
 	this->mode = mode;
