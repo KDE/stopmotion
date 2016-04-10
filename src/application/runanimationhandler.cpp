@@ -138,7 +138,7 @@ void RunAnimationHandler::stopAnimation() {
 		statusBar->clearMessage();
 		timer->stop();
 		if (startFrame < endFrame)
-			emit stopped(sceneNr, startFrame, endFrame - 1);
+			emit stopped(sceneNr, endFrame - 1, startFrame);
 		startFrame = -1;
 	}
 }

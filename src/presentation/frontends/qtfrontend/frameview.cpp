@@ -257,7 +257,8 @@ void FrameView::paintEvent(QPaintEvent *) {
 void FrameView::setActiveFrame(int sceneNumber, int frameNumber) {
 	activeScene = sceneNumber;
 	activeFrame = frameNumber;
-	Logger::get().logDebug("Setting new active frame in FrameView");
+	Logger::get().logDebug("Setting new active frame %d and scene %d in FrameView",
+			activeFrame, activeScene);
 	update();
 }
 
@@ -434,6 +435,8 @@ void FrameView::nextPlayBack() {
 bool FrameView::setViewMode(ImageMode mode) {
 	if (mode == this->mode)
 		return true;
+	if (!grabber)
+		return false;
 	if (mode == imageModePlayback) {
 		if ( grabber->isGrabberProcess() ) {
 			playbackTimer.start(1000/playbackSpeed);

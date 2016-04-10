@@ -420,7 +420,7 @@ void FrameBar::doScroll() {
 
 void FrameBar::setActiveFrame(int frameNumber) {
 	selecting = false;
-	Logger::get().logDebug("Setting new active frame in FrameBar");
+	Logger::get().logDebug("Setting new active frame %d in FrameBar", activeFrame);
 	setActiveFrameAndSelection(frameNumber, frameNumber);
 	// If there is a frame to set as active
 	if (frameNumber >= 0) {
@@ -504,10 +504,11 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 		resync();
 		return;
 	}
-	if (af == activeFrame && sf == selectionFrame)
-		return;
-	// put old selection in [a..b)
-	changeSelectionHighlight(af, sf);
+	if (af != activeFrame || sf != selectionFrame) {
+		changeSelectionHighlight(af, sf);
+		Logger::get().logDebug("Setting new active frame %d and scene %d in FrameBar",
+				activeFrame, activeScene);
+	}
 	emit newActiveFrame(activeScene, activeFrame);
 }
 
@@ -651,6 +652,9 @@ void FrameBar::setActiveScene(int sceneNumber) {
 	int count = anim->getSceneSize(activeScene);
 	insertFrames(0, count);
 	fixSize();
+
+	Logger::get().logDebug("Setting new active scene %d in FrameBar", activeScene);
+
 	emit newActiveFrame(activeScene, activeFrame);
 
 	doScroll();
