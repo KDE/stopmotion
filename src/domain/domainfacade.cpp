@@ -25,6 +25,8 @@
 #include "src/domain/animation/workspacefile.h"
 #include "src/foundation/preferencestool.h"
 
+#include <sys/file.h>
+
 DomainFacade* DomainFacade::domainFacade = 0;
 
 const char* DomainFacade::getImagePath(int scene, int frame) {
@@ -317,9 +319,14 @@ void DomainFacade::duplicateImage(int scene, int frame) {
 void DomainFacade::initializeCommandLoggerFile() {
 	WorkspaceFile wslf(WorkspaceFile::commandLogFile);
 	FILE* log = fopen(wslf.path(), "a");
-	if (!log)
-		throw FailedToInitializeCommandLogger();
-	animationModel->setCommandLoggerFile(log);
+	if (log) {
+		if (!flock(fileno(log), LOCK_EX | LOCK_NB)) {
+			animationModel->setCommandLoggerFile(log);
+			return;
+		}
+		fclose(log);
+	}
+	throw FailedToInitializeCommandLogger();
 }
 
 bool DomainFacade::replayCommandLog(const char* filename) {
