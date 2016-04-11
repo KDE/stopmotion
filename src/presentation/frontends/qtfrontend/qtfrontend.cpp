@@ -321,7 +321,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription3",
 			tr("Exports from jpeg images to mpeg4 video").toUtf8().constData());
 	prefs->setPreference("startEncoder3",
-			"avconv -y -r $FRAMERATE -b 6000 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
+			"avconv -y -r $FRAMERATE -i \"$IMAGEPATH/%06d.jpg\" -b 6000 \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder3", "");
 
 	// Default export option 5 -- ffmpeg
