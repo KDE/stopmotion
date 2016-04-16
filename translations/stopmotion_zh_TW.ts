@@ -1178,6 +1178,10 @@ values exists. Do you want to use this one? (Your old preferences
         <source>Grabbing from V4L2 devices</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Stopmotion cannot be started; it seems like it is already running.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RunAnimationHandler</name>

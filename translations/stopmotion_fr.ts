@@ -422,7 +422,7 @@
 <context>
     <name>FrameView</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="+273"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="+290"/>
         <location line="+14"/>
         <location line="+13"/>
         <location line="+25"/>
@@ -1092,7 +1092,7 @@ vos paramètres dans la fenêtre de préférences ?</translation>
         <translation>Choisir les images à ajouter</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+121"/>
         <source>Removed the selected frame</source>
         <translation>L&apos;image sélectionnée a été supprimée</translation>
     </message>
@@ -1161,17 +1161,19 @@ vos paramètres dans la fenêtre de préférences ?</translation>
 <context>
     <name>QtFrontend</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="+174"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="+192"/>
+        <location line="+15"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-11"/>
+        <location line="+8"/>
         <source>Fatal</source>
         <translation>Fatal</translation>
     </message>
     <message>
-        <location line="-78"/>
+        <location line="-84"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -1184,7 +1186,7 @@ vos paramètres dans la fenêtre de préférences ?</translation>
         <translation type="obsolete">Capture VGA unique (vgrabbj)</translation>
     </message>
     <message>
-        <location line="+147"/>
+        <location line="+158"/>
         <source>vgrabbj VGA daemon</source>
         <translation>Démon de capture VGA (vgrabbj)</translation>
     </message>
@@ -1194,7 +1196,12 @@ vos paramètres dans la fenêtre de préférences ?</translation>
         <translation>Lance vgrabbj comme un démon. Plutôt rapide.</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+88"/>
+        <source>Stopmotion cannot be started; it seems like it is already running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
         <source>Question</source>
         <translation>Question</translation>
     </message>
@@ -1207,7 +1214,7 @@ vos paramètres dans la fenêtre de préférences ?</translation>
         <translation type="obsolete">&amp;Non</translation>
     </message>
     <message>
-        <location line="-141"/>
+        <location line="-147"/>
         <source>The simplest setting. Fairly slow</source>
         <translation>Le paramétrage le plus simple. Assez lent</translation>
     </message>
@@ -1217,7 +1224,7 @@ vos paramètres dans la fenêtre de préférences ?</translation>
         <translation>Exporter des images jpeg vers une vidéo mpeg1</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+87"/>
         <source>A newer version of the preferences file with few more default
 values exists. Do you want to use this one? (Your old preferences
  will be saved in ~/.stopmotion/preferences.xml.OLD)</source>
@@ -1226,12 +1233,12 @@ Voulez-vous utiliser ce fichier ? ( Votre précédent fichier de préférences
  sera sauvegardé sous ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
-        <location line="-72"/>
+        <location line="-78"/>
         <source>Exports from jpeg images to mpeg2 video</source>
         <translation>Exporter des images jpeg vers une vidéo mpeg2</translation>
     </message>
     <message>
-        <location line="-221"/>
+        <location line="-232"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1261,7 +1268,7 @@ Voulez-vous utiliser ce fichier ? ( Votre précédent fichier de préférences
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+153"/>
         <source>vgrabbj</source>
         <translation type="unfinished"></translation>
     </message>

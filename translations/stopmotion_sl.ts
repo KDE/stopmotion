@@ -422,7 +422,7 @@
 <context>
     <name>FrameView</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="+273"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="+290"/>
         <location line="+14"/>
         <location line="+13"/>
         <location line="+25"/>
@@ -1096,7 +1096,7 @@ preveriti vaše nastavitve v nastavitvenem meniju?</translation>
         <translation type="unfinished">Izberi sličice, ki naj se dodajo</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+121"/>
         <source>Removed the selected frame</source>
         <translation type="unfinished">Odstrani izbrane sličice</translation>
     </message>
@@ -1165,7 +1165,7 @@ preveriti vaše nastavitve v nastavitvenem meniju?</translation>
 <context>
     <name>QtFrontend</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="+100"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="+120"/>
         <source>Cancel</source>
         <translation type="unfinished">Prekliči</translation>
     </message>
@@ -1174,17 +1174,19 @@ preveriti vaše nastavitve v nastavitvenem meniju?</translation>
         <translation type="obsolete">Napredek</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+72"/>
+        <location line="+15"/>
         <source>Warning</source>
         <translation type="unfinished">Opozorilo</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-11"/>
+        <location line="+8"/>
         <source>Fatal</source>
         <translation type="unfinished">Usodno</translation>
     </message>
     <message>
-        <location line="+196"/>
+        <location line="+207"/>
         <source>A newer version of the preferences file with few more default
 values exists. Do you want to use this one? (Your old preferences
  will be saved in ~/.stopmotion/preferences.xml.OLD)</source>
@@ -1197,7 +1199,7 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
         <translation type="obsolete">vgrabbj VGA z enim posnetkom</translation>
     </message>
     <message>
-        <location line="-293"/>
+        <location line="-310"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1227,7 +1229,7 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+153"/>
         <source>vgrabbj</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1274,7 +1276,12 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
         <translation type="unfinished">Izvozi iz jpeg slik v mpeg4 video</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+9"/>
+        <source>Stopmotion cannot be started; it seems like it is already running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
         <source>Question</source>
         <translation type="unfinished">Vprašanje</translation>
     </message>
@@ -1287,7 +1294,7 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
         <translation type="obsolete">&amp;Ne</translation>
     </message>
     <message>
-        <location line="-106"/>
+        <location line="-112"/>
         <source>dvgrab</source>
         <translation type="unfinished"></translation>
     </message>

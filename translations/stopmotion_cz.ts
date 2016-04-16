@@ -422,7 +422,7 @@
 <context>
     <name>FrameView</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="+273"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="+290"/>
         <location line="+14"/>
         <location line="+13"/>
         <location line="+25"/>
@@ -1094,7 +1094,7 @@ to check your settings in the preferences menu?</source>
         <translation>Vyberte rámy, které se mají přidat</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+121"/>
         <source>Removed the selected frame</source>
         <translation>Smazat označený rám</translation>
     </message>
@@ -1163,7 +1163,7 @@ to check your settings in the preferences menu?</source>
 <context>
     <name>QtFrontend</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="+100"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="+120"/>
         <source>Cancel</source>
         <translation>Storno</translation>
     </message>
@@ -1172,12 +1172,14 @@ to check your settings in the preferences menu?</source>
         <translation type="obsolete">Průběh</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+72"/>
+        <location line="+15"/>
         <source>Warning</source>
         <translation>Varování</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-11"/>
+        <location line="+8"/>
         <source>Fatal</source>
         <translation>Chyba</translation>
     </message>
@@ -1186,7 +1188,7 @@ to check your settings in the preferences menu?</source>
         <translation type="obsolete">vgrabbj VGA singleshot</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+67"/>
         <source>The simplest setting. Fairly slow</source>
         <translation>Nejjednodušší nastavení. Poměrně pomalé...</translation>
     </message>
@@ -1210,7 +1212,7 @@ to check your settings in the preferences menu?</source>
         <translation type="obsolete">&lt;p&gt;&lt;b&gt;Main developers&lt;/b&gt;&lt;br&gt;Fredrik Berg Kjølstad &amp;lt;fredrikbk@hotmail.com&amp;gt;&lt;br&gt;Bjørn Erik Nilsen &amp;lt;bjoern.nilsen@bjoernen.com&amp;gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+94"/>
         <source>Question</source>
         <translation>Otázka</translation>
     </message>
@@ -1230,12 +1232,12 @@ values exists. Do you want to use this one? (Your old preferences
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-72"/>
+        <location line="-78"/>
         <source>Exports from jpeg images to mpeg2 video</source>
         <translation type="unfinished">Exportuje z obrázků (jpeg) do videa (mpeg2)</translation>
     </message>
     <message>
-        <location line="-221"/>
+        <location line="-232"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1265,7 +1267,7 @@ values exists. Do you want to use this one? (Your old preferences
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+142"/>
+        <location line="+153"/>
         <source>vgrabbj</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1287,7 +1289,12 @@ values exists. Do you want to use this one? (Your old preferences
         <translation type="unfinished">Exportuje z obrázků (jpeg) do videa (mpeg4)</translation>
     </message>
     <message>
-        <location line="-53"/>
+        <location line="+9"/>
+        <source>Stopmotion cannot be started; it seems like it is already running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-62"/>
         <source>dvgrab</source>
         <translation type="unfinished"></translation>
     </message>

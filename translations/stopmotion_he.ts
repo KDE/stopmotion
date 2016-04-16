@@ -407,18 +407,18 @@
 <context>
     <name>FrameView</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="273"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="287"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="300"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="325"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="343"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="355"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="290"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="304"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="317"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="342"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="360"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="372"/>
         <source>Warning</source>
         <translation>אזהרה</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="325"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="343"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="342"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="360"/>
         <source>Grabbing failed. This may happen if you try
 to grab from an invalid device. Please check
 your grabber settings in the preferences menu.</source>
@@ -427,24 +427,24 @@ your grabber settings in the preferences menu.</source>
 הלוכד שלך בתפריט ההעדפות.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="355"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="372"/>
         <source>You have to define an image grabber to use.
 This can be set in the preferences menu.</source>
         <translation>תוכל להגדיר את לוכד התמונות לשימוש.
 ניתן להגדיר זאת בתפריט ההעדפות.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="287"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="304"/>
         <source>Pre poll command does not exists</source>
         <translation>פקודת תשאול הקדם אינה קיימת</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="300"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="317"/>
         <source>You do not have the given grabber installed on your system</source>
         <translation>הלוכד הנתון אינו מותקן במערכת שלך</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="273"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="290"/>
         <source>No video device selected in the preferences menu.</source>
         <translation>לא נבחר התקן וידאו בתפריט ההעדפות.</translation>
     </message>
@@ -970,24 +970,24 @@ to check your settings in the preferences menu?</source>
         <translation>בחר שקופיות להוספה</translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="176"/>
+        <location filename="../src/application/modelhandler.cpp" line="179"/>
         <source>Removed the selected frame</source>
         <translation>השקופית שנבחרה הוסרה</translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="213"/>
-        <location filename="../src/application/modelhandler.cpp" line="224"/>
-        <location filename="../src/application/modelhandler.cpp" line="241"/>
+        <location filename="../src/application/modelhandler.cpp" line="216"/>
+        <location filename="../src/application/modelhandler.cpp" line="227"/>
+        <location filename="../src/application/modelhandler.cpp" line="244"/>
         <source>Warning</source>
         <translation>אזהרה</translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="214"/>
+        <location filename="../src/application/modelhandler.cpp" line="217"/>
         <source>You do not have Gimp installed on your system</source>
         <translation>הגימפ אינו מותקן במערכת שלך</translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="225"/>
+        <location filename="../src/application/modelhandler.cpp" line="228"/>
         <source>There is no active frame to open</source>
         <translation>אין שקופית פעילה לפתיחה</translation>
     </message>
@@ -996,7 +996,7 @@ to check your settings in the preferences menu?</source>
         <translation type="obsolete">השקופית הפעילה פגומה</translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="242"/>
+        <location filename="../src/application/modelhandler.cpp" line="245"/>
         <source>Failed to start Gimp!</source>
         <translation>כשל בהפעלת הגימפ!</translation>
     </message>
@@ -1043,17 +1043,19 @@ to check your settings in the preferences menu?</source>
 <context>
     <name>QtFrontend</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="174"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="192"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="207"/>
         <source>Warning</source>
         <translation>אזהרה</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="178"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="196"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="204"/>
         <source>Fatal</source>
         <translation>קריטי</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="100"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="120"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
@@ -1062,77 +1064,82 @@ to check your settings in the preferences menu?</source>
         <translation type="obsolete">vgrabbj VGA singleshot</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="247"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="278"/>
         <source>vgrabbj VGA daemon</source>
         <translation>vgrabbj תהליך רקע VGA</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="249"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="280"/>
         <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation>הפעלת vgrabbj כתהליך רקע. די מהיר.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="381"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="418"/>
         <source>Question</source>
         <translation>שאלה</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="240"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="271"/>
         <source>The simplest setting. Fairly slow</source>
         <translation>ההגדרה הפשוטה ביותר. איטי למדי</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="81"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="101"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="84"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="104"/>
         <source>Connecting camera...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="87"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="107"/>
         <source>Importing frames from disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="90"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="110"/>
         <source>Exporting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="93"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="113"/>
         <source>Restoring project...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="96"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="116"/>
         <source>Saving scenes to disk...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="238"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="269"/>
         <source>vgrabbj</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="257"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="288"/>
         <source>uvccapture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="259"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="290"/>
         <source>Grabbing from V4L2 devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="293"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="324"/>
         <source>Exports from jpeg images to mpeg1 video</source>
         <translation>מייצא מתמונות jpeg לווידאו מסוג mpeg1</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="374"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="368"/>
+        <source>Stopmotion cannot be started; it seems like it is already running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="411"/>
         <source>A newer version of the preferences file with few more default
 values exists. Do you want to use this one? (Your old preferences
  will be saved in ~/.stopmotion/preferences.xml.OLD)</source>
@@ -1141,19 +1148,19 @@ values exists. Do you want to use this one? (Your old preferences
 ישמר תחת ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="302"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="333"/>
         <source>Exports from jpeg images to mpeg2 video</source>
         <translation>מייצא מתמונות jpeg לווידאו מסוג mpeg2</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="311"/>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="320"/>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="328"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="342"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="351"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="359"/>
         <source>Exports from jpeg images to mpeg4 video</source>
         <translation>מייצא מתמונות jpeg לווידאו מסוג mpeg4</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="275"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="306"/>
         <source>dvgrab</source>
         <translation>dvgrab</translation>
     </message>
@@ -1162,17 +1169,17 @@ values exists. Do you want to use this one? (Your old preferences
         <translation type="obsolete">לכידה ממצלמת וידאו דיגיטלית. (נסיוני)</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="266"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="297"/>
         <source>videodog singleshot</source>
         <translation>videodog singleshot</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="268"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="299"/>
         <source>Videodog.</source>
         <translation>Videodog.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="277"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="308"/>
         <source>Grabbing from DV-cam.</source>
         <translation>לכידה ממצלמת וידאו דיגיטלית.</translation>
     </message>

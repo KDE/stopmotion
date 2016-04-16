@@ -407,18 +407,18 @@
 <context>
     <name>FrameView</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="273"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="287"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="300"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="325"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="343"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="355"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="290"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="304"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="317"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="342"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="360"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="372"/>
         <source>Warning</source>
         <translation>Dikkat</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="325"/>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="343"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="342"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="360"/>
         <source>Grabbing failed. This may happen if you try
 to grab from an invalid device. Please check
 your grabber settings in the preferences menu.</source>
@@ -427,24 +427,24 @@ bir aygıttan görüntü yakalamayı denediyseniz
 olmuş olabilir. Seçenekler menüsünü kontrol edin.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="355"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="372"/>
         <source>You have to define an image grabber to use.
 This can be set in the preferences menu.</source>
         <translation>Görüntü yakalama aygıtı belirlemelisiniz.
 Seçenekler menüsünden yapabilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="287"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="304"/>
         <source>Pre poll command does not exists</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="300"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="317"/>
         <source>You do not have the given grabber installed on your system</source>
         <translation>Seçilen yakalama aygıtı sistemde bulunamıyor.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="273"/>
+        <location filename="../src/presentation/frontends/qtfrontend/frameview.cpp" line="290"/>
         <source>No video device selected in the preferences menu.</source>
         <translation>Seçenekler menüsünde video aygıtı belirlenmemiş.</translation>
     </message>
@@ -970,29 +970,29 @@ kontrol etmek ister misiniz?</translation>
         <translation>Eklenecek kareleri seçin</translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="176"/>
+        <location filename="../src/application/modelhandler.cpp" line="179"/>
         <source>Removed the selected frame</source>
         <translation>Seçili kareyi çıkar</translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="213"/>
-        <location filename="../src/application/modelhandler.cpp" line="224"/>
-        <location filename="../src/application/modelhandler.cpp" line="241"/>
+        <location filename="../src/application/modelhandler.cpp" line="216"/>
+        <location filename="../src/application/modelhandler.cpp" line="227"/>
+        <location filename="../src/application/modelhandler.cpp" line="244"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="214"/>
+        <location filename="../src/application/modelhandler.cpp" line="217"/>
         <source>You do not have Gimp installed on your system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="225"/>
+        <location filename="../src/application/modelhandler.cpp" line="228"/>
         <source>There is no active frame to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/application/modelhandler.cpp" line="242"/>
+        <location filename="../src/application/modelhandler.cpp" line="245"/>
         <source>Failed to start Gimp!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1039,17 +1039,19 @@ kontrol etmek ister misiniz?</translation>
 <context>
     <name>QtFrontend</name>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="174"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="192"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="207"/>
         <source>Warning</source>
         <translation>Dikkat</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="178"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="196"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="204"/>
         <source>Fatal</source>
         <translation>Kritik</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="100"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="120"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
@@ -1058,77 +1060,82 @@ kontrol etmek ister misiniz?</translation>
         <translation type="obsolete">vgrabbj VGA tek çekim</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="247"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="278"/>
         <source>vgrabbj VGA daemon</source>
         <translation>vgrabbj VGA servis</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="249"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="280"/>
         <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation>vgrabbj servis olarak başlat. Hız kazandırır.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="381"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="418"/>
         <source>Question</source>
         <translation>Soru</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="240"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="271"/>
         <source>The simplest setting. Fairly slow</source>
         <translation>Basit yapılandırma. Oldukça yavaştır.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="81"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="101"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="84"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="104"/>
         <source>Connecting camera...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="87"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="107"/>
         <source>Importing frames from disk</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="90"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="110"/>
         <source>Exporting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="93"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="113"/>
         <source>Restoring project...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="96"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="116"/>
         <source>Saving scenes to disk...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="238"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="269"/>
         <source>vgrabbj</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="257"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="288"/>
         <source>uvccapture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="259"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="290"/>
         <source>Grabbing from V4L2 devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="293"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="324"/>
         <source>Exports from jpeg images to mpeg1 video</source>
         <translation>jpeg görüntüleri mpeg1 video dosyasına aktarır.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="374"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="368"/>
+        <source>Stopmotion cannot be started; it seems like it is already running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="411"/>
         <source>A newer version of the preferences file with few more default
 values exists. Do you want to use this one? (Your old preferences
  will be saved in ~/.stopmotion/preferences.xml.OLD)</source>
@@ -1137,19 +1144,19 @@ yeni bir kopyası bulundu. Bunu kullanmak ister misiniz?
 (Eski dosya ~/.stopmotion/preferences.xml.OLD olarak korunacak.)</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="302"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="333"/>
         <source>Exports from jpeg images to mpeg2 video</source>
         <translation>jpeg görüntüleri mpeg2 video dosyasına aktarır</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="311"/>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="320"/>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="328"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="342"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="351"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="359"/>
         <source>Exports from jpeg images to mpeg4 video</source>
         <translation>jpeg görüntüleri mpeg4 video dosyasına aktarır</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="275"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="306"/>
         <source>dvgrab</source>
         <translation>dvgrab</translation>
     </message>
@@ -1158,17 +1165,17 @@ yeni bir kopyası bulundu. Bunu kullanmak ister misiniz?
         <translation type="obsolete">DV-cam&apos;den aktarır. (Deneme aşamasında)</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="266"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="297"/>
         <source>videodog singleshot</source>
         <translation>videodog tekçekim</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="268"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="299"/>
         <source>Videodog.</source>
         <translation>Videodog.</translation>
     </message>
     <message>
-        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="277"/>
+        <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="308"/>
         <source>Grabbing from DV-cam.</source>
         <translation>DV-cam&apos;den aktarıyor.</translation>
     </message>
