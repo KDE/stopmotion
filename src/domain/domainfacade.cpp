@@ -319,14 +319,13 @@ void DomainFacade::duplicateImage(int scene, int frame) {
 void DomainFacade::initializeCommandLoggerFile() {
 	WorkspaceFile wslf(WorkspaceFile::commandLogFile);
 	FILE* log = fopen(wslf.path(), "a");
-	if (log) {
-		if (!flock(fileno(log), LOCK_EX | LOCK_NB)) {
-			animationModel->setCommandLoggerFile(log);
-			return;
-		}
+	if (!log)
+		throw FailedToInitializeCommandLogger();
+	if (flock(fileno(log), LOCK_EX | LOCK_NB)) {
 		fclose(log);
+		getFrontend()->fatalError(Frontend::failedToGetExclusiveLock);
 	}
-	throw FailedToInitializeCommandLogger();
+	animationModel->setCommandLoggerFile(log);
 }
 
 bool DomainFacade::replayCommandLog(const char* filename) {

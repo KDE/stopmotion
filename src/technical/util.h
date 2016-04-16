@@ -24,6 +24,8 @@
 #include <string>
 #include <vector>
 
+class QString;
+
 struct GrabberDevice {
 	std::string device;
 	std::string name;
@@ -42,6 +44,13 @@ class DirectoryCreationException : public std::exception {
 public:
 	DirectoryCreationException(const char* path);
 	const char* what() const throw();
+};
+
+class LocalizedError : public std::exception {
+public:
+	virtual ~LocalizedError() throw() = 0;
+	virtual const QString& message() const throw() = 0;
+	virtual bool isCritical() const throw() = 0;
 };
 
 class Util {

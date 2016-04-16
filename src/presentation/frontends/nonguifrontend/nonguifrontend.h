@@ -60,9 +60,10 @@ public:
 	 * This function is actually not needed in this frontend.
 	 */
 	void processEvents();
-	void reportError(const char *message, int id);
+	void reportError(const char *message, ErrorType type);
 	int askQuestion(Question question);
 	int runExternalCommand(const char *command);
+	void fatalError(Error);
 	
 private:
 	DomainFacade *facadePtr;

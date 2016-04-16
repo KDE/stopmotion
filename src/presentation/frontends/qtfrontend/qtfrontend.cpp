@@ -39,6 +39,26 @@
 #include <stdio.h>
 #include <assert.h>
 
+class GenericLocalizedError : public LocalizedError {
+	QString qm;
+	const char* am;
+public:
+	GenericLocalizedError(const QString& qStringMessage, const char* asciiMessage)
+			: qm(qStringMessage), am(asciiMessage) {
+	}
+	~GenericLocalizedError() throw() {
+	}
+	const QString& message() const throw() {
+		return qm;
+	}
+	bool isCritical() const throw() {
+		return true;
+	}
+	const char* what() const throw() {
+		return am;
+	}
+};
+
 QtFrontend::QtFrontend(int &argc, char **argv)
 {
 	stApp = new QApplication(argc, argv);
@@ -166,16 +186,25 @@ void QtFrontend::updateProgressBar() {
 }
 
 
-void QtFrontend::reportError(const char *message, int id)
+void QtFrontend::reportError(const char *message, ErrorType type)
 {
-	id = id != 0 && id != 1 ? 0 : id;
-
-	if (id == 0) {
+	if (type == warning) {
 		QMessageBox::warning(mw, tr("Warning"), message, QMessageBox::Ok,
 				QMessageBox::NoButton, QMessageBox::NoButton);
 	}
 	else {
 		QMessageBox::critical(mw, tr("Fatal"), message, QMessageBox::Ok,
+				QMessageBox::NoButton, QMessageBox::NoButton);
+	}
+}
+
+
+void QtFrontend::reportLocalizedError(const LocalizedError& e) {
+	if (e.isCritical()) {
+		QMessageBox::critical(mw, tr("Fatal"), e.message(), QMessageBox::Ok,
+				QMessageBox::NoButton, QMessageBox::NoButton);
+	} else {
+		QMessageBox::warning(mw, tr("Warning"), e.message(), QMessageBox::Ok,
 				QMessageBox::NoButton, QMessageBox::NoButton);
 	}
 }
@@ -332,6 +361,12 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			"ffmpeg -y -framerate $FRAMERATE -i \"$IMAGEPATH/%06d.jpg\" -codec:v mpeg4 -b:v 6k \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder4", "");
 	//-------------------------------------------------------------------------
+}
+
+void QtFrontend::fatalError(Error) {
+	throw GenericLocalizedError(
+			tr("Stopmotion cannot be started; it seems like it is already running."),
+			"Failed to get exclusive lock on command.log. Perhaps Stopmotion is already running.");
 }
 
 void QtFrontend::updateOldPreferences(PreferencesTool *prefs)

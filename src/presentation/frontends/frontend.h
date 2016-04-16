@@ -37,6 +37,13 @@ public:
 	enum Question {
 		useNewerPreferences
 	};
+	enum Error {
+		failedToGetExclusiveLock
+	};
+	enum ErrorType {
+		warning,
+		critical
+	};
 	virtual ~Frontend() {}
 	
 	/**
@@ -82,9 +89,9 @@ public:
 	 * Abstract function for reporting an error to the user. It has two categories
 	 * of errors; warning and critical.
 	 * @param message the error message to display to the user
-	 * @param id kind of error; 0 for warning, 1 for critical
+	 * @param type warning or critical
 	 */
-	virtual void reportError(const char *message, int id) = 0;
+	virtual void reportError(const char *message, ErrorType type) = 0;
 	
 	/**
 	 * Abstract function for asking the user a yes/no question.
@@ -92,6 +99,11 @@ public:
 	 * @return 0 if the user answer yes, 1 if no
 	 */
 	virtual int askQuestion(Question question) = 0;
+
+	/**
+	 * Abstract function for throwing a fatal error and exiting the program
+	 */
+	virtual void fatalError(Error) = 0;
 
 	virtual int runExternalCommand(const char *command) = 0;
 };

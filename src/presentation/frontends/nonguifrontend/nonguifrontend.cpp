@@ -261,10 +261,8 @@ int NonGUIFrontend::checkFiles(const char *directory) {
 }
 
 
-void NonGUIFrontend::reportError( const char *message, int id ) {
-	id = id != 0 && id != 1 ? 0 : id;
-
-	if (id == 0) {
+void NonGUIFrontend::reportError( const char *message, ErrorType type ) {
+	if (type == warning) {
 		printf("Warning: %s\n", message);
 	}
 	else {
@@ -280,4 +278,9 @@ int NonGUIFrontend::askQuestion(Question) {
 
 int NonGUIFrontend::runExternalCommand(const char *) {
 	return 1;
+}
+
+void NonGUIFrontend::fatalError(Error) {
+	printf("Could not get exclusive lock. This error shouldn't happen in the non-gui front end :-(");
+	exit(2);
 }
