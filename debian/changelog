@@ -1,3 +1,15 @@
+stopmotion (0.8.1-1) unstable; urgency=medium
+
+  * New upstream release
+  * remove menu file per tech-ctte decision on #741573
+  * enable hardening
+  * disable dh_auto_test, due to test-jig compile-time error
+  * force use of qt4
+  * bump policy version
+  * use https for packaging repo
+  
+ -- Barak A. Pearlmutter <bap@debian.org>  Tue, 26 Jul 2016 09:13:44 +0200
+
 stopmotion (0.8.0-5) unstable; urgency=medium
 
   * patch from Georges Khaznadar <georgesk@debian.org> for vgrabbj daemon
