@@ -111,7 +111,7 @@ private:
 	/** The width the text should have. (Cached for efficiency reasons)*/
 	int textWidth;
 	
-	/** Whether this frame has sounds attatched to it */
+	/** Whether this frame has sounds attached to it */
 	bool hasSounds;
 	
 	/** Specifies whether this frame is selected. */

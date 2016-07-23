@@ -62,9 +62,9 @@ public:
 	~Animation();
 
 	/**
-	 * Attatches a new observer to the model. The observer will be notified when
+	 * Attaches a new observer to the model. The observer will be notified when
 	 * something is changed in the model.
-	 * @param o the observer to be attatched to the model.
+	 * @param o the observer to be attached to the model.
 	 */
 	void attach(Observer *o);
 
@@ -205,6 +205,13 @@ public:
 	const char* getSoundPath(int scene, int frame, int sound) const;
 
 	/**
+	 * Play the sounds in the specified frame.
+	 * @param scene The scene that the frame belongs to.
+	 * @param frame The frame within that scene.
+	 */
+	void playSounds(int scene, int frame) const;
+
+	/**
 	 * Returns the total number of frames in the model.
 	 * @return The total number of frames in all scenes of the model.
 	 */
@@ -335,10 +342,13 @@ public:
 
 	/**
 	 * Exports the current project to a video file as specified by the video encoder.
-	 * @param encoder the video encoder to use for export to video
+	 * @param encoder The encoder to be used for video export
+	 * @param playbackSpeed The frame rate (in frames per second) at which
+	 * the video should be encoded, assuming the video encoder supports
+	 * this adjustment.
 	 * @return true on success, false otherwise
 	 */
-	bool exportToVideo(VideoEncoder *encoder);
+	bool exportToVideo(VideoEncoder *encoder, int playbackSpeed);
 
 	/**
 	 * Exports the current project to a Cinerella project.

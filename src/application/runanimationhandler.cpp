@@ -188,6 +188,7 @@ void RunAnimationHandler::playNextFrame() {
 	DomainFacade *facade = DomainFacade::getFacade();
 	if (sceneNr >= 0) {
 		emit playFrame(sceneNr, frameNr);
+		facade->playSounds(sceneNr, frameNr);
 		++frameNr;
 		int sceneSize = facade->getSceneSize(sceneNr);
 		if (sceneSize < endFrame)

@@ -39,6 +39,26 @@
 #include <stdio.h>
 #include <assert.h>
 
+class GenericLocalizedError : public LocalizedError {
+	QString qm;
+	const char* am;
+public:
+	GenericLocalizedError(const QString& qStringMessage, const char* asciiMessage)
+			: qm(qStringMessage), am(asciiMessage) {
+	}
+	~GenericLocalizedError() throw() {
+	}
+	const QString& message() const throw() {
+		return qm;
+	}
+	bool isCritical() const throw() {
+		return true;
+	}
+	const char* what() const throw() {
+		return am;
+	}
+};
+
 QtFrontend::QtFrontend(int &argc, char **argv)
 {
 	stApp = new QApplication(argc, argv);
@@ -166,16 +186,25 @@ void QtFrontend::updateProgressBar() {
 }
 
 
-void QtFrontend::reportError(const char *message, int id)
+void QtFrontend::reportError(const char *message, ErrorType type)
 {
-	id = id != 0 && id != 1 ? 0 : id;
-
-	if (id == 0) {
+	if (type == warning) {
 		QMessageBox::warning(mw, tr("Warning"), message, QMessageBox::Ok,
 				QMessageBox::NoButton, QMessageBox::NoButton);
 	}
 	else {
 		QMessageBox::critical(mw, tr("Fatal"), message, QMessageBox::Ok,
+				QMessageBox::NoButton, QMessageBox::NoButton);
+	}
+}
+
+
+void QtFrontend::reportLocalizedError(const LocalizedError& e) {
+	if (e.isCritical()) {
+		QMessageBox::critical(mw, tr("Fatal"), e.message(), QMessageBox::Ok,
+				QMessageBox::NoButton, QMessageBox::NoButton);
+	} else {
+		QMessageBox::warning(mw, tr("Warning"), e.message(), QMessageBox::Ok,
 				QMessageBox::NoButton, QMessageBox::NoButton);
 	}
 }
@@ -188,6 +217,8 @@ void QtFrontend::initializePreferences()
 	PreferencesTool *prefs = PreferencesTool::get();
 	WorkspaceFile preferencesFile(WorkspaceFile::preferencesFile);
 	WorkspaceFile oldPrefsFile(WorkspaceFile::preferencesFileOld);
+
+	WorkspaceFile::ensureStopmotionDirectoriesExist();
 
 	// Has to check this before calling setPreferencesFile(...) because
 	// the function creates the file if it doesn't exist.
@@ -249,9 +280,9 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			tr("Starts vgrabbj as a daemon. Pretty fast.").toUtf8().constData());
 	prefs->setPreference("importprepoll1", "");
 	prefs->setPreference("importstartdaemon1",
-			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250");
+			"vgrabbj -f $IMAGEFILE -d $VIDEODEVICE -b -D 0 -i vga -L250000");
 	prefs->setPreference("importstopdaemon1",
-			"kill -9 $(pidof vgrabbj)");
+			"kill $(pidof vgrabbj)");
 
 	// Default import option 3
 	prefs->setPreference("importname2", tr("uvccapture").toUtf8().constData());
@@ -277,14 +308,14 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 			tr("Grabbing from DV-cam.").toUtf8().constData());
 	prefs->setPreference("importprepoll4", "");
 	prefs->setPreference("importstartdaemon4",
-			"dvgrab --format jpeg --jpeg-overwrite --jpeg-temp dvtemp.jpeg "
+			"dvgrab --format jpeg --jpeg-overwrite --jpeg-temp $(tempfile) "
 			"--every 25 $IMAGEFILE &");
 	prefs->setPreference("importstopdaemon4",
-			"kill -9 $(pidof dvgrab)");
+			"kill -2 $(pidof dvgrab)");
 	// -----------------------------------------------------------------------
 
 	// Default export options ------------------------------------------------
-	prefs->setPreference("numEncoders", 4);
+	prefs->setPreference("numEncoders", 5);
 	prefs->setPreference("activeEncoder", 3);
 
 	// Default export option 1
@@ -292,7 +323,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription0",
 			tr("Exports from jpeg images to mpeg1 video").toUtf8().constData());
 	prefs->setPreference("startEncoder0",
-			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=12:type=jpg "
+			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=$FRAMERATE:type=jpg "
 			"-ovc lavc -lavcopts vcodec=mpeg1video -oac copy -o \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder0", "");
 
@@ -301,7 +332,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription1",
 			tr("Exports from jpeg images to mpeg2 video").toUtf8().constData());
 	prefs->setPreference("startEncoder1",
-			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=12:type=jpg "
+			"mencoder \"mf://$IMAGEPATH/*.jpg\" -mf w=640:h=480:fps=$FRAMERATE:type=jpg "
 			"-ovc lavc -lavcopts vcodec=mpeg2video -oac copy -o \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder1", "");
 
@@ -310,7 +341,7 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription2",
 			tr("Exports from jpeg images to mpeg4 video").toUtf8().constData());
 	prefs->setPreference("startEncoder2",
-			"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1:$opt -mf type=jpg:fps=12 "
+			"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1:$opt -mf type=jpg:fps=$FRAMERATE "
 			"-o \"$VIDEOFILE\" \"mf://$IMAGEPATH/*.jpg\"");
 	prefs->setPreference("stopEncoder2", "");
 
@@ -319,9 +350,23 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("encoderDescription3",
 			tr("Exports from jpeg images to mpeg4 video").toUtf8().constData());
 	prefs->setPreference("startEncoder3",
-			"avconv -r 12 -b 1800 -i \"$IMAGEPATH/%06d.jpg\" \"$VIDEOFILE\"");
+			"avconv -y -r $FRAMERATE -i \"$IMAGEPATH/%06d.jpg\" -b 6000 \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder3", "");
+
+	// Default export option 5 -- ffmpeg
+	prefs->setPreference("encoderName4", "ffmpeg");
+	prefs->setPreference("encoderDescription4",
+			tr("Exports from jpeg images to mpeg4 video").toUtf8().constData());
+	prefs->setPreference("startEncoder4",
+			"ffmpeg -y -framerate $FRAMERATE -i \"$IMAGEPATH/%06d.jpg\" -codec:v mpeg4 -b:v 6k \"$VIDEOFILE\"");
+	prefs->setPreference("stopEncoder4", "");
 	//-------------------------------------------------------------------------
+}
+
+void QtFrontend::fatalError(Error) {
+	throw GenericLocalizedError(
+			tr("Stopmotion cannot be started; it seems like it is already running."),
+			"Failed to get exclusive lock on command.log. Perhaps Stopmotion is already running.");
 }
 
 void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
@@ -335,7 +380,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 		std::string start(startPref.get());
 		int index = start.find("(DEFAULTPATH)");
 		if (index != -1) {
-			start.replace(index, strlen("(DEFAULTPATH)"),
+			start.replace(index, (int) strlen("(DEFAULTPATH)"),
 					std::string("$IMAGEFILE"));
 		}
 		QString s(start.c_str());
@@ -349,7 +394,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
 		std::string prepoll(prepollPref.get());
 		index = prepoll.find("(DEFAULTPATH)");
 		if (index != -1) {
-			prepoll.replace(index, strlen("(DEFAULTPATH)"),
+			prepoll.replace(index, (int) strlen("(DEFAULTPATH)"),
 					std::string("$IMAGEFILE"));
 		}
 		QString ss(prepoll.c_str());

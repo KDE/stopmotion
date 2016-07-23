@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2016 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -27,7 +27,7 @@
 
 #include <QImage>
 #include <QFrame>
-#include <QPixmap>
+#include <QImage>
 #include <QDragEnterEvent>
 #include <QResizeEvent>
 #include <QDropEvent>
@@ -115,7 +115,7 @@ FrameBar::FrameBar(QWidget *parent)
 	setBackgroundRole(QPalette::Dark);
 	setAcceptDrops(true);
 
-	Logger::get().logDebug("FrameBar is attatched to the model");
+	Logger::get().logDebug("FrameBar is attached to the model");
 	DomainFacade::getFacade()->attach(this);
 }
 
@@ -420,7 +420,7 @@ void FrameBar::doScroll() {
 
 void FrameBar::setActiveFrame(int frameNumber) {
 	selecting = false;
-	Logger::get().logDebug("Setting new active frame in FrameBar");
+	Logger::get().logDebug("Setting new active frame %d in FrameBar", activeFrame);
 	setActiveFrameAndSelection(frameNumber, frameNumber);
 	// If there is a frame to set as active
 	if (frameNumber >= 0) {
@@ -504,10 +504,11 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 		resync();
 		return;
 	}
-	if (af == activeFrame && sf == selectionFrame)
-		return;
-	// put old selection in [a..b)
-	changeSelectionHighlight(af, sf);
+	if (af != activeFrame || sf != selectionFrame) {
+		changeSelectionHighlight(af, sf);
+		Logger::get().logDebug("Setting new active frame %d and scene %d in FrameBar",
+				activeFrame, activeScene);
+	}
 	emit newActiveFrame(activeScene, activeFrame);
 }
 
@@ -651,6 +652,9 @@ void FrameBar::setActiveScene(int sceneNumber) {
 	int count = anim->getSceneSize(activeScene);
 	insertFrames(0, count);
 	fixSize();
+
+	Logger::get().logDebug("Setting new active scene %d in FrameBar", activeScene);
+
 	emit newActiveFrame(activeScene, activeFrame);
 
 	doScroll();

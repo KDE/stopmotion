@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2016 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,22 +18,16 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-// This widget is created from a widget in an example program for Qt. Available at
-// http://www.libsdl.org/cvs/qtSDL.tar.gz
-
 #include "src/foundation/preferencestool.h"
 #include "src/technical/grabber/commandlinegrabber.h"
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/imagegrabthread.h"
 #include "src/presentation/frontends/qtfrontend/qtfrontend.h"
 
-#include <SDL/SDL_image.h>
 #include <QX11Info>
 #include <QMessageBox>
 #include <QApplication>
-#if defined(Q_WS_X11)
-#include <X11/Xlib.h>
-#endif
+#include <QPainter>
 
 #include <cstdio>
 #include <stdlib.h>
@@ -42,8 +36,52 @@
 
 enum { IMAGE_CACHE_SIZE = 10 };
 
+namespace {
+void getMaximumScaledRectangle(QRect& out, int w, int h, const QRect& window) {
+	int vw = window.width();
+	int vh = window.height();
+	int dw = vw;
+	int dh = vh;
+	// Find out whether to scale by width or height.
+	// Width if w/dw < h/dh <=> w*dh < h*dw
+	if (w*dh < h*dw) {
+		dw = (w * dh + h/2)/h;
+		int left = (vw - dw)/2;
+		out.setLeft(left);
+		out.setRight(left + dw);
+		out.setTop(window.top());
+		out.setBottom(window.bottom());
+	} else {
+		dh = (h * dw + w/2)/w;
+		int top = (vh - dh)/2;
+		out.setTop(top);
+		out.setBottom(top + dh);
+		out.setLeft(window.left());
+		out.setRight(window.right());
+	}
+}
+void drawBorders(QPainter& painter, const QRect& inner, const QRect& outer) {
+	int topBorder = inner.top() - outer.top();
+	if (0 < topBorder) {
+		painter.drawRect(outer.left(), outer.top(), outer.width(), topBorder);
+	}
+	int bottomBorder = outer.bottom() - inner.bottom();
+	if (0 < bottomBorder) {
+		painter.drawRect(outer.left(), inner.bottom(), outer.width(), bottomBorder);
+	}
+	int leftBorder = inner.left() - outer.left();
+	if (0 < leftBorder) {
+		painter.drawRect(outer.left(), inner.top(), leftBorder, inner.height());
+	}
+	int rightBorder = outer.right() - inner.right();
+	if (0 < rightBorder) {
+		painter.drawRect(inner.right(), inner.top(), rightBorder, inner.height());
+	}
+}
+}
+
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
-		: QWidget(parent), screen(0), videoSurface(0),
+		: QWidget(parent),
 		  imageCache(IMAGE_CACHE_SIZE), grabThread(0), grabber(0),
 		  capturedFile(WorkspaceFile::capturedImage) {
 	facade = DomainFacade::getFacade();
@@ -57,16 +95,16 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 	activeScene = -1;
 	activeFrame = -1;
 	mixCount = 2;
+	playbackModeFrame = -1;
 
 	connect(&grabTimer, SIGNAL(timeout()), this, SLOT(redraw()));
 	connect(&playbackTimer, SIGNAL(timeout()),this, SLOT(nextPlayBack()));
 
 	setNormalRatio();
-	setAttribute(Qt::WA_PaintOnScreen);
 	setAttribute(Qt::WA_NoSystemBackground);
 	setObjectName(name);
 
-	Logger::get().logDebug("FrameView is attatched to the model and the model to FrameView");
+	Logger::get().logDebug("FrameView is attached to the model and the model to FrameView");
 }
 
 
@@ -75,15 +113,6 @@ FrameView::~FrameView() {
 	if (isPlayingVideo) {
 		off();
 	}
-
-	if (videoSurface) {
-		SDL_FreeSurface(videoSurface);
-		videoSurface = 0;
-	}
-
-	// Freeing resources allocated to SDL and shutdown
-	SDL_Quit();
-
 	delete grabber;
 	grabber = 0;
 }
@@ -118,10 +147,7 @@ void FrameView::updateNewActiveFrame(int sceneNumber, int frameNumber) {
 void FrameView::updatePlayFrame(int sceneNumber, int frameNumber) {
 	if (frameNumber > -1) {
 		setActiveFrame(sceneNumber, frameNumber);
-	}
-	else {
-		SDL_FreeSurface(videoSurface);
-		videoSurface = 0;
+	} else {
 		this->update();
 	}
 }
@@ -133,121 +159,113 @@ void FrameView::workspaceCleared() {
 
 
 void FrameView::resizeEvent(QResizeEvent*) {
-	QApplication::syncX();
-
-	// Set the new video mode with the new window size
-	std::stringstream windowId;
-	windowId << "0x" << std::hex << static_cast<long>(winId());
-	std::string wid = windowId.str();
-	setenv("SDL_WINDOWID", wid.c_str(), 1);
-	if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
-		std::string msg("Unable to initialize SDL: ");
-		msg.append( SDL_GetError() );
-		Logger::get().logFatal(msg.c_str());
-    }
-
-	// The previously surface is automatically deleted by SDL
-	screen = SDL_SetVideoMode(width(), height(), 0, SDL_DOUBLEBUF | SDL_SWSURFACE);
-	if (!screen) {
-		std::string msg("Unable to set video mode: ");
-		msg.append( SDL_GetError() );
-		Logger::get().logFatal(msg.c_str());
-	}
+	update();
 }
 
 void FrameView::drawOnionSkins() {
-	static SDL_Surface *frameSurface = 0;
+	int w = cameraOutput.width();
+	int h = cameraOutput.height();
+	QRect dst;
+	getMaximumScaledRectangle(dst, w, h, rect());
+	QPainter painter(this);
+	painter.setBackgroundMode(Qt::OpaqueMode);
+	painter.setBrush(QColor::fromRgb(0, 0, 0, 255));
+	drawBorders(painter, dst, rect());
 	DomainFacade* anim = DomainFacade::getFacade();
-	SDL_Rect dst;
-	dst.x = (screen->w - videoSurface->w) >> 1;
-	dst.y = (screen->h - videoSurface->h) >> 1;
-	dst.w = videoSurface->w;
-	dst.h = videoSurface->h;
-	SDL_BlitSurface(videoSurface, 0, screen, &dst);
 	if (isPlayingVideo && 0 <= activeScene) {
 		switch (mode) {
-		case 0:
-			// Image mixing
-			for (int i = 0; i != std::min(mixCount, activeFrame + 1); ++i) {
+		case imageModeMix:
+		{
+			painter.drawPixmap(dst, cameraOutput);
+			const int frameCount = std::min(mixCount, activeFrame + 1);
+			for (int i = 0; i != frameCount; ++i) {
 				const char* path = anim->getImagePath(
 						activeScene, activeFrame - i);
-				frameSurface = imageCache.get(path);
-				if (frameSurface != 0) {
-					SDL_Rect dst2;
-					dst2.x = (screen->w - frameSurface->w) >> 1;
-					dst2.y = (screen->h - frameSurface->h) >> 1;
-					dst2.w = frameSurface->w;
-					dst2.h = frameSurface->h;
-					int alpha = 256 / (i + 2);
-					SDL_SetAlpha(frameSurface, SDL_SRCALPHA, alpha);
-					SDL_BlitSurface(frameSurface, 0, screen, &dst2);
+				QPixmap* image = imageCache.get(path);
+				if (image) {
+					painter.setOpacity(qreal(1)/(i + 2));
+					painter.drawPixmap(dst, *image);
 				}
 			}
 			break;
-		case 1:
-			// Image differentiating
+		}
+		case imageModeDiff:
+		{
+			QSize differenceSize(cameraOutput.size());
+			QRect differenceRect(QPoint(0, 0), differenceSize);
+			QImage difference(differenceSize, QImage::Format_RGB888);
+			QPainter differencePainter(&difference);
+			differencePainter.drawPixmap(differenceRect, cameraOutput);
 			if (0 <= activeFrame) {
 				const char* path = anim->getImagePath(activeScene, activeFrame);
-				SDL_Surface *last = imageCache.get(path);
-				SDL_Surface *tmp = differentiateSurfaces(videoSurface, last);
-				SDL_Rect dst;
-				dst.x = (screen->w - tmp->w) >> 1;
-				dst.y = (screen->h - tmp->h) >> 1;
-				dst.w = tmp->w;
-				dst.h = tmp->h;
-				SDL_BlitSurface(tmp, 0, screen, &dst);
-				SDL_FreeSurface(tmp);
+				QPixmap* image = imageCache.get(path);
+				if (image) {
+					differencePainter.setCompositionMode(
+							QPainter::CompositionMode_Difference);
+					differencePainter.drawPixmap(differenceRect, *image);
+				}
+			}
+			differencePainter.end();
+			painter.drawImage(dst, difference);
+			break;
+		}
+		case imageModePlayback:
+			if (playbackModeFrame < 0) {
+				painter.drawPixmap(dst, cameraOutput);
+			} else {
+				const char* path = anim->getImagePath(activeScene, playbackModeFrame);
+				QPixmap* image = imageCache.get(path);
+				if (image) {
+					painter.drawPixmap(dst, *image);
+				}
 			}
 			break;
 		default:
+			painter.drawPixmap(dst, cameraOutput);
 			break;
 		}
+	} else {
+		painter.drawPixmap(dst, cameraOutput);
 	}
 }
 
 void FrameView::paintEvent(QPaintEvent *) {
-#if defined(Q_WS_X11)
-	// Make sure we're not conflicting with drawing from the Qt library
-	XSync(QX11Info::display(), FALSE);
-#endif
-	if (screen) {
-		SDL_FillRect(screen, 0, 0);
-
-		if (videoSurface) {
+	if (isPlayingVideo) {
+		if (!cameraOutput.isNull()) {
 			drawOnionSkins();
 		}
-		SDL_Flip(screen);
+	} else {
+		QPainter painter(this);
+		painter.setBackgroundMode(Qt::OpaqueMode);
+		painter.setBrush(QColor::fromRgb(0, 0, 0, 255));
+		DomainFacade* anim = DomainFacade::getFacade();
+		if (0 <= activeScene && 0 <= activeFrame) {
+			const char* path = anim->getImagePath(activeScene, activeFrame);
+			QPixmap* image = imageCache.get(path);
+			if (image) {
+				QRect destination;
+				getMaximumScaledRectangle(destination, image->width(), image->height(), rect());
+				drawBorders(painter, destination, rect());
+				painter.drawPixmap(destination, *image);
+				return;
+			}
+		}
+		painter.drawRect(rect());
 	}
 }
-
 
 void FrameView::setActiveFrame(int sceneNumber, int frameNumber) {
 	activeScene = sceneNumber;
 	activeFrame = frameNumber;
-	Logger::get().logDebug("Setting new active frame in FrameView");
-	const char *fileName = 0 <= sceneNumber && 0 <=frameNumber?
-			facade->getImagePath(sceneNumber, frameNumber) : 0;
-
-	if (videoSurface) {
-		SDL_FreeSurface(videoSurface);
-		videoSurface = 0;
-	}
-	if (fileName) {
-		Logger::get().logDebug("Loading image");
-		videoSurface = IMG_Load(fileName);
-		if (videoSurface == 0) {
-			printf("IMG_Load: %s\n", IMG_GetError());
-		}
-		Logger::get().logDebug("Loading image finished");
-	} else {
-		Logger::get().logDebug("Failed to get image path from animation");
-	}
-	this->update();
+	Logger::get().logDebug("Setting new active frame %d and scene %d in FrameView",
+			activeFrame, activeScene);
+	update();
 }
 
 
 // TODO: Refactor this terrible ugly method. This one is really bad!!
 bool FrameView::on() {
+	const char* DEVICE_TOKEN = "$VIDEODEVICE";
 	PreferencesTool *prefs = PreferencesTool::get();
 	int activeCmd = prefs->getPreference("activedevice", 0);
 
@@ -258,22 +276,30 @@ bool FrameView::on() {
 	Preference stopDaemon(QString("importstopdaemon%1")
 			.arg(activeCmd).toLatin1().constData(), "");
 
-	int activeDev = prefs->getPreference("activeVideoDevice", -1);
-	if (activeDev <0) {
-		QMessageBox::warning(this, tr("Warning"), tr(
-			"No video device selected in the preferences menu."),
-			QMessageBox::Ok,
-			Qt::NoButton,
-			Qt::NoButton);
-		return false;
+	bool prepollRequiresDevice = strstr(prepoll.get(), DEVICE_TOKEN);
+	bool startDaemonRequiresDevice = strstr(startDaemon.get(), DEVICE_TOKEN);
+	QString device;
+	if (prepollRequiresDevice || startDaemonRequiresDevice) {
+		int activeDev = prefs->getPreference("activeVideoDevice", -1);
+		if (0 <= activeDev) {
+			Preference deviceP(QString("device%1")
+					.arg(activeDev).toLatin1().constData(), "");
+			device = QString(deviceP.get()).trimmed();
+		}
+		if (device.isEmpty()) {
+			QMessageBox::warning(this, tr("Warning"), tr(
+				"No video device selected in the preferences menu."),
+				QMessageBox::Ok,
+				Qt::NoButton,
+				Qt::NoButton);
+			return false;
+		}
 	}
-	Preference device(QString("device%1")
-			.arg(activeDev).toLatin1().constData(), "");
-	QString pre = QString(prepoll.get()).replace("$VIDEODEVICE", device.get());
-	bool isProcess = startDaemon.get();
+	QString pre = QString(prepoll.get()).replace(DEVICE_TOKEN, device);
+	bool isProcess = startDaemon.get() && *startDaemon.get() != '\0';
 
 	bool isCameraReady = true;
-	this->grabber = new CommandLineGrabber(capturedFile.path(), isProcess);
+	grabber = new CommandLineGrabber(capturedFile.path());
 	if ( !grabber->setPrePollCommand(pre.toLatin1().constData()) ) {
 		QMessageBox::warning(this, tr("Warning"), tr(
 					"Pre poll command does not exists"),
@@ -285,7 +311,7 @@ bool FrameView::on() {
 	}
 
 	if (isProcess) {
-		QString sd = QString(startDaemon.get()).replace("$VIDEODEVICE", device.get());
+		QString sd = QString(startDaemon.get()).replace(DEVICE_TOKEN, device);
 		if ( !grabber->setStartCommand(sd.toLatin1().constData()) ) {
 			DomainFacade::getFacade()->getFrontend()->hideProgress();
 			QMessageBox::warning(this, tr("Warning"), tr(
@@ -303,8 +329,8 @@ bool FrameView::on() {
 	if (!isCameraReady) {
 		return false;
 	}
-	this->initCompleted();
-	this->isPlayingVideo = true;
+	initCompleted();
+	isPlayingVideo = true;
 
 	if ( prefs->getPreference("numberofimports", 1) > 0 ) {
 		// If the grabber is running in it's own process we use a timer.
@@ -362,75 +388,57 @@ void FrameView::off() {
 			grabTimer.stop();
 			playbackTimer.stop();
 		}
-		delete grabber;
-		grabber = 0;
 	}
-
 	if (grabThread != 0) {
 		grabThread->terminate();
 		grabThread->wait();
 		delete grabThread;
 		grabThread = 0;
 	}
+	delete grabber;
+	grabber = 0;
 
-	this->isPlayingVideo = false;
+	isPlayingVideo = false;
 	setActiveFrame(activeScene, activeFrame);
-	this->update();
+	update();
 }
 
 
 void FrameView::redraw() {
-	if (videoSurface) {
-		SDL_FreeSurface(videoSurface);
-		videoSurface = 0;
-	}
-	videoSurface = IMG_Load(capturedFile.path());
-	this->update();
+	cameraOutput.load(capturedFile.path());
+	update();
 }
 
 
 void FrameView::nextPlayBack() {
-	//TODO re-write this vile function
-	static int i = 0;
-
-	// Need to check that there is an active scene before checking
-	// what its size is.
-
-	if (0 <= activeScene) {
-		if (i < mixCount && i < activeFrame + 1) {
-			const char *path = activeFrame <= mixCount?
-				facade->getImagePath(activeScene, i)
-				: facade->getImagePath(activeScene,
-						activeFrame - mixCount + i);
-			++i;
-
-			if (videoSurface) {
-				SDL_FreeSurface(videoSurface);
-				videoSurface = 0;
+	if (0 <= activeScene && 0 <= activeFrame) {
+		int firstFrame = std::max(activeFrame - mixCount + 1, 0);
+		if (playbackModeFrame < firstFrame) {
+			// restart playback
+			playbackModeFrame = firstFrame;
+		} else {
+			++playbackModeFrame;
+			if (activeFrame < playbackModeFrame) {
+				// negative number means that the camera output should be shown
+				playbackModeFrame = -1;
 			}
-			if (path)
-				videoSurface = IMG_Load(path);
-
-			this->update();
-			//Exit from function/skip redraw(). This is better than having a bool which is
-			//set because this is a play function run "often".
-			return;
 		}
+		update();
+		return;
 	}
-
-	// This code is run if one of the two above tests fail. Can't be an else because
-	// then I would have to have two such elses, and I think the return is better.
-	i = 0;
-	redraw();
+	// Set display image to camera output
+	playbackModeFrame = -1;
+	update();
 }
 
 
 bool FrameView::setViewMode(ImageMode mode) {
 	if (mode == this->mode)
 		return true;
+	if (!grabber)
+		return false;
 	if (mode == imageModePlayback) {
 		if ( grabber->isGrabberProcess() ) {
-			grabTimer.stop();
 			playbackTimer.start(1000/playbackSpeed);
 		} else {
 			return false;
@@ -438,7 +446,6 @@ bool FrameView::setViewMode(ImageMode mode) {
 	} else if (mode != imageModePlayback) {
 		if ( grabber->isGrabberProcess() ) {
 			playbackTimer.stop();
-			grabTimer.start(150);
 		}
 	}
 	this->mode = mode;
@@ -460,58 +467,14 @@ void FrameView::setPlaybackSpeed(int playbackSpeed) {
 	}
 }
 
-
-// The only thing left which is a little expensive is the MapRGB function.
-SDL_Surface* FrameView::differentiateSurfaces(SDL_Surface *s1, SDL_Surface *s2) {
-	int width = s2->w;
-	int height = s2->h;
-
-	SDL_Surface *diffSurface = SDL_CreateRGBSurface(
-			SDL_SWSURFACE, width, height, 32, 0xff000000, 0x00ff0000, 0x0000ff00, 0x000000ff);
-
-	// Lock the surfaces before working with the pixels
-	SDL_LockSurface(s1);
-	SDL_LockSurface(s2);
-	SDL_LockSurface(diffSurface);
-
-	// Pointers to the first byte of the first pixel on the input surfaces.
-	Uint8 *p1 = static_cast<Uint8 *>(s1->pixels);
-	Uint8 *p2 = static_cast<Uint8 *>(s2->pixels);
-
-	// Pointers to the first pixel on the resulting surface
-	Uint32 *pDiff =  static_cast<Uint32 *>(diffSurface->pixels);
-
-	SDL_PixelFormat fDiff = *diffSurface->format;
-	Uint32  differencePixel;
-	Uint8 dr, dg, db;
-
-	// Goes through the surfaces as one-dimensional arrays.
-	int offset = 0, pixelOffset = 0;
-	for (int i = 0; i < height; ++i) {
-		for (int j = 1; j < width; ++j) {
-			dr = abs(p1[offset    ] - p2[offset    ]);
-			dg = abs(p1[offset + 1] - p2[offset + 1]);
-			db = abs(p1[offset + 2] - p2[offset + 2]);
-			differencePixel = SDL_MapRGB(&fDiff, dr, dg, db);
-			pDiff[pixelOffset++] = differencePixel;
-			offset += 3;
-		}
-		++pixelOffset;
-		offset += 3;
-	}
-
-	// Unlock the surfaces for displaying them.
-	SDL_UnlockSurface(s1);
-	SDL_UnlockSurface(s2);
-	SDL_UnlockSurface(diffSurface);
-
-	return diffSurface;
+int FrameView::getPlaybackSpeed() const {
+	return playbackSpeed;
 }
 
 void FrameView::fileChanged(const QString& path) {
 	const char* p = path.toLocal8Bit();
 	imageCache.drop(p);
 	if (isPlayingVideo && 0 <= activeScene) {
-		drawOnionSkins();
+		update();
 	}
 }

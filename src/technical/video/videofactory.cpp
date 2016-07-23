@@ -72,30 +72,38 @@ public:
 	}
 };
 
-const char* VideoFactory::createVideoFile(VideoEncoder *encoder) {
-	string startCommand = encoder->getStartCommand();
+bool replaceText(string& text, const char* searchFor, const char* replaceWith) {
+	int index = text.find(searchFor);
+	if (index < 0)
+		return false;
+	int replaceLength = strlen(replaceWith);
+	while (0 <= index) {
+		text.replace(index, strlen(searchFor), replaceWith);
+		index = text.find(searchFor, index + replaceLength);
+	}
+	return true;
+}
+
+std::string integerToString(int n) {
+	std::stringstream stream;
+	stream << n;
+	return stream.str();
+}
+
+const char* VideoFactory::createVideoFile(VideoEncoder *encoder,
+		int playbackSpeed) {
+	std::string startCommand = encoder->getStartCommand();
 	std::auto_ptr<ExternalCommandWithTemporaryDirectory> ec(
 			new ExternalCommandWithTemporaryDirectory());
 	const char* tmpDir = ec->getTemporaryDirectoryPath();
 	if ( !startCommand.empty() ) {
-		int index = startCommand.find("$IMAGEPATH");
-		if (index != -1) {
-			startCommand.replace(index, strlen("$IMAGEPATH"), tmpDir);
+		replaceText(startCommand, "$IMAGEPATH", tmpDir);
+		if (!replaceText(startCommand, "$VIDEOFILE", encoder->getOutputFile())) {
+			return NULL;
 		}
-		index = startCommand.find("$VIDEOFILE");
-		if (index != -1) {
-			if ( encoder->getOutputFile() ) {
-				string outputFile = encoder->getOutputFile();
-				startCommand.replace(index, strlen("$VIDEOFILE"), outputFile);
-			}
-			else {
-				return NULL;
-			}
-		}
-		index = startCommand.find("$opt");
-		if (index != -1) {
-			startCommand.replace(index, strlen("$opt"), "");
-		}
+		replaceText(startCommand, "$opt", "");
+		std::string playbackSpeedString = integerToString(playbackSpeed);
+		replaceText(startCommand, "$FRAMERATE", playbackSpeedString.c_str());
 		Logger::get().logDebug("Copying frames into temporary directory %s",
 				tmpDir);
 		FileCopier copier(tmpDir);

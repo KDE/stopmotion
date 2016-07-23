@@ -39,7 +39,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 	layout->addWidget( new QLabel(
 				"<p>" + tr("This is the Stopmotion application for creating stop motion animations.") + "</p>"
 				+ QString::fromUtf8(
-						"<p> &copy; 2005-2008, Bj\xc3\xb8rn Erik Nilsen and Fredrik Berg Kj\xc3\xb8lstad </p>")));
+						"<p> &copy; 2005-2016 Bj\xc3\xb8rn Erik Nilsen, Fredrik Berg Kj\xc3\xb8lstad et al </p>")));
 	widget->setLayout(layout);
 
 	tabWidget->addTab(widget, tr("&About") );

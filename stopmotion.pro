@@ -208,7 +208,7 @@ INCLUDEPATH += . \
     src/domain \
     src/domain/animation \
     src/presentation
-LIBS += -lSDL_image -ltar -lvorbisfile -lX11
+LIBS += -ltar -lvorbisfile -lX11
 
 QM_FILES = $$TRANSLATIONS
 QM_FILES~= s:^translations/:build/:g
@@ -235,13 +235,22 @@ DISTFILES -= stopmotion.pro \
 
 CONFIG += link_pkgconfig
 
-PKGCONFIG += sdl SDL_image vorbisfile libxml-2.0
+PKGCONFIG += vorbisfile libxml-2.0
 
 isEmpty(PREFIX) {
 	PREFIX =/usr/local
 }
 
-DEFINES += PREFIX_PATH=\'\"$${PREFIX}\"\'
+isEmpty(HTML_PATH) {
+	HTML_PATH =$${PREFIX}/share/doc/stopmotion/html
+}
+
+isEmpty(TRANSLATIONS_PATH) {
+	TRANSLATIONS_PATH =$${PREFIX}/share/stopmotion/translations
+}
+
+DEFINES += TRANSLATIONS_PATH=\'\"$${TRANSLATIONS_PATH}\"\'
+DEFINES += HTML_PATH=\'\"$${HTML_PATH}\"\'
 TEMPLATE = app
 DESTDIR=.
 
@@ -260,20 +269,20 @@ UI_DIR = build
 
 target.path = $${PREFIX}/bin
 
-translations.path = $${PREFIX}/share/stopmotion/translations
+translations.path = $${TRANSLATIONS_PATH}
 translations.files = $${QM_FILES}
 translations.CONFIG += no_check_exist
 
-docgraphics.path = $${PREFIX}/share/doc/stopmotion/html/graphic
+docgraphics.path = $${HTML_PATH}/graphic
 docgraphics.files = manual/graphic/*.png
 
-docicons.path = $${PREFIX}/share/doc/stopmotion/html/icons
+docicons.path = $${HTML_PATH}/icons
 docicons.files = manual/icons/*.png
 
-docscreens.path = $${PREFIX}/share/doc/stopmotion/html/screenshots
+docscreens.path = $${HTML_PATH}/screenshots
 docscreens.files = manual/screenshots/*.png
 
-htmldoc.path = $${PREFIX}/share/doc/stopmotion/html
+htmldoc.path = $${HTML_PATH}
 htmldoc.files = manual/*.html
 
 icon.path = $${PREFIX}/share/icons

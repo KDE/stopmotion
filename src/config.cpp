@@ -1,10 +1,12 @@
 #include "src/config.h"
 
-#ifndef PREFIX_PATH
-#define PREFIX_PATH "/usr/local"
+#ifndef HTML_PATH
+#define HTML_PATH "/usr/local/share/doc/stopmotion/html"
 #endif
 
-const char *const stopmotion::htmlDirectory
-		= PREFIX_PATH "/share/doc/stopmotion/html";
-const char *const stopmotion::translationsDirectory
-		= PREFIX_PATH "/share/stopmotion/translations";
+#ifndef TRANSLATIONS_PATH
+#define TRANSLATIONS_PATH "/usr/local/share/stopmotion/translations"
+#endif
+
+const char *const stopmotion::htmlDirectory = HTML_PATH;
+const char *const stopmotion::translationsDirectory = TRANSLATIONS_PATH;

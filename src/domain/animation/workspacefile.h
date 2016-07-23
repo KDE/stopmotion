@@ -49,6 +49,7 @@ public:
 	enum CapturedImage { capturedImage };
 	enum PreferencesFile { preferencesFile };
 	enum PreferencesFileOld { preferencesFileOld };
+	enum AndClear { doNotClear, andClear };
 	WorkspaceFile(const WorkspaceFile&);
 	WorkspaceFile& operator=(const WorkspaceFile&);
 	/**
@@ -114,7 +115,15 @@ public:
 	 */
 	void swap(WorkspaceFile& w);
 	/**
-	 * Clears (creating if necessary) the workspace directory
+	 * Ensures that the ~/.stopmotion and frames directories exist if they do
+	 * not already.
+	 * @param clear Pass @c andClear to clear the frames directory contents, if
+	 * any.
+	 */
+	static void ensureStopmotionDirectoriesExist(AndClear clear = doNotClear);
+	/**
+	 * Clears (creating if necessary) model files, frames, sounds and logs from
+	 * the workspace directory
 	 */
 	static void clear();
 	/**

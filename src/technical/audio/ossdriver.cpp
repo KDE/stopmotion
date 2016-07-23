@@ -24,8 +24,7 @@
 #include <sys/ioctl.h>
 #if defined(__linux__)
 #include <linux/soundcard.h>
-#endif
-#if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+#else
 #include <sys/soundcard.h>
 #endif	
 #include <fcntl.h>
@@ -119,7 +118,7 @@ bool OSSDriver::initialize()
 	// Storing the request and its argument
 	int initValues[2][4] = 
 	{ 
-		{SNDCTL_DSP_RESET, SNDCTL_DSP_SETFMT, SNDCTL_DSP_CHANNELS, SNDCTL_DSP_SPEED},
+		{SNDCTL_DSP_RESET, SNDCTL_DSP_SETFMT, SOUND_PCM_WRITE_CHANNELS, SOUND_PCM_WRITE_RATE},
 		{1, AFMT_S16_LE, 2, 44100} 
 	};
 	

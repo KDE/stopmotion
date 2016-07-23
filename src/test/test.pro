@@ -100,9 +100,8 @@ QMAKE_EXTRA_TARGETS += oomtestutil oomteststub test
 QMAKE_CLEAN += oomteststub.o oomtestutil.so
 PRE_TARGETDEPS = oomteststub.o
 LIBS += oomteststub.o -ldl \
-	$$system(sdl-config --libs) \
 	$$system(xml2-config --libs) \
-	-lSDL_image -ltar -lvorbisfile -lX11
+	-ltar -lvorbisfile -lX11
 DESTDIR=.
 release:OBJECTS_DIR=build/release
 release:TARGET = test

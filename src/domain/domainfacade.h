@@ -182,6 +182,13 @@ public:
 	int soundCount(int scene, int frame) const;
 
 	/**
+	 * Play the sounds in the specified frame.
+	 * @param scene The scene that the frame belongs to.
+	 * @param frame The frame within that scene.
+	 */
+	void playSounds(int scene, int frame) const;
+
+	/**
 	 * Loads the project from the {@c .dat} XML file specified. Used for
 	 * recovering from the {@c new.dat} and {@c current.dat} files.
 	 * @param datFilename The XML file to load.
@@ -327,10 +334,13 @@ public:
 
 	/**
 	 * Exports the current project to a video file as specified by the video encoder.
-	 * @param encoder the video encoder to use for export to video
+	 * @param encoder The encoder to be used for video export
+	 * @param playbackSpeed The frame rate (in frames per second) at which
+	 * the video should be encoded, assuming the video encoder supports
+	 * this adjustment.
 	 * @return true on success, false otherwise
 	 */
-	bool exportToVideo(VideoEncoder *encoder);
+	bool exportToVideo(VideoEncoder *encoder, int playbackSpeed);
 
 	/**
 	 * Exports the current project to a Cinerella project.

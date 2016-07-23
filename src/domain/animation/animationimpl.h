@@ -30,6 +30,7 @@ class Scene;
 class Frame;
 class Sound;
 class FileNameVisitor;
+class AudioDriver;
 
 /**
  * Base class for implementation class of the animation, and any wrappers.
@@ -217,6 +218,13 @@ public:
 	 * @throws Nothing.
 	 */
 	virtual Sound* removeSound(int scene, int frame, int soundNumber) = 0;
+	/**
+	 * Plays the sounds from the frame specified.
+	 * @param scene The scene to which the frame belongs.
+	 * @param frame The frame within that scene.
+	 * @param driver The audio driver with which to play the sounds.
+	 */
+	virtual void playSounds(int scene, int frame, AudioDriver* driver) const = 0;
 	virtual void accept(FileNameVisitor& v) const = 0;
 };
 

@@ -170,6 +170,9 @@ void ModelHandler::removeFrames() {
 		int activeFrame = frameBar->getActiveFrame();
 		int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 		int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
+		if (activeScene < 0 || lowend < 0) {
+			return;
+		}
 
 		DomainFacade::getFacade()->removeFrames(activeScene, lowend,
 				highend - lowend + 1);

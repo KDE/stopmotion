@@ -33,10 +33,8 @@ using std::string;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class CommandLineGrabber : public ImageGrabber
-{
+class CommandLineGrabber : public ImageGrabber {
 public:
-	
 	/**
 	 * Initializes the member variables.
 	 * @param filePath path to the output file grabbed from a device
@@ -45,14 +43,12 @@ public:
 	 * @param stopProcess command line for stopping the process
 	 * @param isProcess true if the process is running in daemon mode, false otherwise
 	 */
-	/*CommandLineGrabber(char* filePath, const char* prePoll, const char* startProcess, 
-			const char* stopProcess, bool isProcess = false);*/
-	CommandLineGrabber(const char* filePath, bool isProcess = false);
-	~CommandLineGrabber() {};
-	
+	CommandLineGrabber(const char* filePath);
+	~CommandLineGrabber();
 	bool setPrePollCommand(const char *command);
 	bool setStartCommand(const char *command);
 	bool setStopCommand(const char *command);
+	bool isGrabberProcess();
 	
 	/**
 	 * Starts the grabber if it is marked to be run in daemon mode.

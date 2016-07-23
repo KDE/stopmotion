@@ -1,5 +1,5 @@
 QString licence = 
-"(c) 2005-2008, Fredrik Berg Kjølstad and Bjørn Erik Nilsen\n"
+"(c) 2005-2016, Fredrik Berg Kj\xf6lstad and Bj\xf6rn Erik Nilsen\n"
 "\n"
 "This program is distributed under the terms of the GPL v2.\n"
 "\n"

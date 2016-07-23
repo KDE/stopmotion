@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2016 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -21,7 +21,7 @@
 #ifndef IMAGECACHE_H_
 #define IMAGECACHE_H_
 
-class SDL_Surface;
+class QPixmap;
 
 struct SurfaceLoader;
 template<typename T> class LoadCache;
@@ -39,7 +39,7 @@ public:
 	 * Pulls the named image into the cache, if necessary, and returns it.
 	 * @param path The path of the file.
 	 */
-	SDL_Surface* get(const char* path);
+	QPixmap* get(const char* path);
 	/**
 	 * Removes the named image from the cache, if it is present.
 	 * @param path The path of the file.

@@ -24,6 +24,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <iostream>
+#include <sys/file.h>
+
 using namespace std;
 
 
@@ -37,8 +39,7 @@ PreferencesTool::PreferencesTool() :
 }
 
 
-PreferencesTool::~PreferencesTool()
-{
+PreferencesTool::~PreferencesTool() {
 	cleanTree();
 	
 	delete[] preferencesFile;
@@ -49,8 +50,7 @@ PreferencesTool::~PreferencesTool()
 }
 
 
-PreferencesTool* PreferencesTool::get() 
-{
+PreferencesTool* PreferencesTool::get() {
 	//Lazy initialization
 	if (preferencesTool == NULL) {
 		preferencesTool = new PreferencesTool();
@@ -59,8 +59,7 @@ PreferencesTool* PreferencesTool::get()
 }
 
 
-bool PreferencesTool::setPreferencesFile( const char *filePath, const char *version )
-{
+bool PreferencesTool::setPreferencesFile( const char *filePath, const char *version ) {
 	xmlNode *node        = NULL;
  	char* currentVersion = NULL;
 	
@@ -148,22 +147,19 @@ bool PreferencesTool::setPreferencesFile( const char *filePath, const char *vers
 }
 
 
-void PreferencesTool::setVersion(const char* version)
-{
+void PreferencesTool::setVersion(const char* version) {
 	checkInitialized();
 	xmlSetProp(versionNode, BAD_CAST "version", BAD_CAST version);
 	flushPreferences();
 }
 
 
-const char* PreferencesTool::getOldVersion()
-{
+const char* PreferencesTool::getOldVersion() {
 	return oldVersion;
 }
 
 
-bool PreferencesTool::setPreference(const char* key, const char* attribute, bool flushLater )
-{
+bool PreferencesTool::setPreference(const char* key, const char* attribute, bool flushLater ) {
 	checkInitialized();
 	xmlNodePtr node = NULL;
 	node = findNode(key);
@@ -181,8 +177,7 @@ bool PreferencesTool::setPreference(const char* key, const char* attribute, bool
 }
 
 
-bool PreferencesTool::setPreference(const char * key, const int attribute, bool flushLater)
-{
+bool PreferencesTool::setPreference(const char * key, const int attribute, bool flushLater) {
 	checkInitialized();
 	xmlNodePtr node = NULL;
 	node = findNode(key);
@@ -210,8 +205,7 @@ const char* PreferencesTool::getPreference(const char* key) {
 }
 
 
-int PreferencesTool::getPreference(const char * key, const int defaultValue)
-{
+int PreferencesTool::getPreference(const char * key, const int defaultValue) {
 	checkInitialized();
 	xmlNode *node = findNode(key);
 	if (!node) {
@@ -224,8 +218,7 @@ int PreferencesTool::getPreference(const char * key, const int defaultValue)
 }
 
 
-void PreferencesTool::removePreference( const char * key )
-{
+void PreferencesTool::removePreference( const char * key ) {
 	checkInitialized();
 	xmlNode *node = findNode(key);
 	if (node != NULL) {
@@ -236,14 +229,34 @@ void PreferencesTool::removePreference( const char * key )
 }
 
 
-bool PreferencesTool::flushPreferences()
-{
-	if (xmlSaveFormatFile(preferencesFile, doc, 1) == -1) {
-		return false;
+// looks after a locked, writeable file
+class WriteableFile {
+	FILE* f;
+public:
+	WriteableFile() : f(0) {
 	}
-	else {
+	~WriteableFile() {
+		fclose(f);
+	}
+	bool open(const char* filename) {
+		f = fopen(filename, "w");
+		if (!f)
+			return false;
+		flock(fileno(f), LOCK_EX);
 		return true;
 	}
+	FILE* file() const {
+		return f;
+	}
+};
+
+bool PreferencesTool::flushPreferences() {
+	WriteableFile prefs;
+	if (!prefs.open(preferencesFile))
+		return false;
+	if (xmlDocFormatDump(prefs.file(), doc, 1) == -1)
+		return false;
+	return true;
 }
 
 
@@ -264,8 +277,7 @@ xmlNodePtr PreferencesTool::findNode(const char * key) {
 }
 
 
-bool PreferencesTool::fileExists(const char * filePath)
-{
+bool PreferencesTool::fileExists(const char * filePath) {
 	if (access(filePath, R_OK) == -1) {
 		return false;
 	}
@@ -273,8 +285,7 @@ bool PreferencesTool::fileExists(const char * filePath)
 }
 
 
-void PreferencesTool::checkInitialized()
-{
+void PreferencesTool::checkInitialized() {
 	if (doc == NULL) {
 		printf(	"A preferencesfile has to be specified before "
 				"using the PreferencesTool.");
@@ -283,8 +294,7 @@ void PreferencesTool::checkInitialized()
 }
 
 
-void PreferencesTool::cleanTree()
-{
+void PreferencesTool::cleanTree() {
 	xmlFreeDoc(doc);
 	xmlCleanupParser();
 	

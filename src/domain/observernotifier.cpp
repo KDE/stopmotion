@@ -50,7 +50,7 @@ void ObserverNotifier::doOp(ObservableOperation& oo) {
 		} catch (std::exception& e) {
 			try {
 				if (frontend)
-					frontend->reportError(e.what(), 0);
+					frontend->reportError(e.what(), Frontend::warning);
 			} catch (...) {
 			}
 			for (observers_t::iterator i = observers.begin();
@@ -437,6 +437,10 @@ void ObserverNotifier::resync() {
 
 int ObserverNotifier::soundCount() const {
 	return del->soundCount();
+}
+
+void ObserverNotifier::playSounds(int scene, int frame, AudioDriver* audioDriver) const {
+	del->playSounds(scene, frame, audioDriver);
 }
 
 void ObserverNotifier::accept(FileNameVisitor& v) const {

@@ -106,7 +106,7 @@ void recover(DomainFacade *facadePtr) {
 }
 
 int main(int argc, char **argv) {
-	int ret = 0;
+	int ret = 1;
 
 	DomainFacade *facadePtr = DomainFacade::getFacade();
 
@@ -118,10 +118,7 @@ int main(int argc, char **argv) {
 			facadePtr->registerFrontend(&nonGUIFrontend);
 			ret = nonGUIFrontend.run(argc, argv);
 		} catch (std::exception& e) {
-			nonGUIFrontend.reportError(e.what(), 1);
-			delete facadePtr;
-			facadePtr = NULL;
-			return 1;
+			nonGUIFrontend.reportError(e.what(), Frontend::critical);
 		}
 	}
 	else {
@@ -137,13 +134,12 @@ int main(int argc, char **argv) {
 				qtFrontend.openProject(argv[1]);
 				facadePtr->setMostRecentProject();
 			}
+			ret = qtFrontend.run(argc, argv);
+		} catch (LocalizedError& e) {
+			qtFrontend.reportLocalizedError(e);
 		} catch (std::exception& e) {
-			qtFrontend.reportError(e.what(), 1);
-			delete facadePtr;
-			facadePtr = NULL;
-			return 1;
+			qtFrontend.reportError(e.what(), Frontend::critical);
 		}
-		ret = qtFrontend.run(argc, argv);
 #endif
 	}
 

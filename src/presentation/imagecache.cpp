@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2016 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -21,20 +21,25 @@
 #include "imagecache.h"
 #include "loadcache.h"
 
-#include <SDL/SDL_image.h>
+#include <QPixmap>
+#include <memory>
 
 struct SurfaceLoader {
-	typedef SDL_Surface value_t;
+	typedef QPixmap value_t;
 	static value_t* load(const char*);
 	static void free(value_t*);
 };
 
 SurfaceLoader::value_t* SurfaceLoader::load(const char* path) {
-	return IMG_Load(path);
+	std::auto_ptr<QPixmap> p(new QPixmap);
+	if (p->load(path)) {
+		return p.release();
+	}
+	return 0;
 }
 
 void SurfaceLoader::free(SurfaceLoader::value_t* s) {
-	SDL_FreeSurface(s);
+	delete s;
 }
 
 ImageCache::ImageCache(int cacheSize) : delegate(0) {
@@ -45,7 +50,7 @@ ImageCache::~ImageCache() {
 	delete delegate;
 }
 
-SDL_Surface* ImageCache::get(const char* path) {
+QPixmap* ImageCache::get(const char* path) {
 	if (!path)
 		return 0;
 	return delegate->get(path);

@@ -888,7 +888,7 @@ bool MainWindowGUI::saveProjectAs() {
 	saveAct->setEnabled(false);
 	setTitle(false);
 	updateMostRecentMenu();
-	return false;
+	return true;
 }
 
 
@@ -955,7 +955,8 @@ void MainWindowGUI::exportToVideo()
 		}
 
 		if ( enc.isValid() && isCanceled == false ) {
-			DomainFacade::getFacade()->exportToVideo(&enc);
+			DomainFacade::getFacade()->exportToVideo(&enc,
+					frameView->getPlaybackSpeed());
 		}
 		else if (!isCanceled){
 			int ret = QMessageBox::warning(this,

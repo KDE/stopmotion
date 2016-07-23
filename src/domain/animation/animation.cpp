@@ -131,7 +131,7 @@ void Animation::addFrames(int scene, int frame,
 	if (showingProgress)
 		frontend->hideProgress();
 	if (isError)
-		frontend->reportError(error.c_str(), 0);
+		frontend->reportError(error.c_str(), Frontend::warning);
 }
 
 
@@ -180,13 +180,13 @@ int Animation::addSound(int32_t scene, int32_t frameNumber,
 				"Cannot open the selected audio file for reading.\n"
 				"Check that you have the right permissions set.\n"
 				"The animation will run without this sound if you\n"
-				"choose to play.", 0);
+				"choose to play.", Frontend::warning);
 		return -1;
 	} catch (InvalidAudioFormatException&) {
 		frontend->reportError(
 				"The selected audio file is not a recognized\n"
 				"audio format. The animation will run without\n"
-				"this sound if you choose to play.", 0);
+				"this sound if you choose to play.", Frontend::warning);
 		return -2;
 	}
 	soundFileWs.retainFile();
@@ -363,6 +363,9 @@ int Animation::soundCount(int scene, int frame) const {
 	return scenes->soundCount(scene, frame);
 }
 
+void Animation::playSounds(int scene, int frame) const {
+	scenes->playSounds(scene, frame, audioDriver);
+}
 
 void Animation::newScene(int32_t index) {
 	executor->execute(Commands::addScene, index);
@@ -389,7 +392,7 @@ bool Animation::initAudioDevice() {
 					"Cannot play sound. Check that you have the right\n"
 					"permissions and other programs do not block\n"
 					"the audio device. Audio will be disabled until you\n"
-					"have fixed the problem.", 0);
+					"have fixed the problem.", Frontend::warning);
 	}
 	return isAudioDriverInitialized;
 }
@@ -401,10 +404,10 @@ void Animation::shutdownAudioDevice() {
 }
 
 
-bool Animation::exportToVideo(VideoEncoder * encoder) {
+bool Animation::exportToVideo(VideoEncoder * encoder, int playbackSpeed) {
 	VideoFactory factory(scenes, frontend);
 	frontend->showProgress(Frontend::exporting, 0);
-	if (factory.createVideoFile(encoder) != NULL) {
+	if (factory.createVideoFile(encoder, playbackSpeed) != NULL) {
 		frontend->hideProgress();
 		return true;
 	}
@@ -435,7 +438,7 @@ void Animation::clearHistory() {
 
 void Animation::resync(std::exception& e) {
 	if (frontend)
-		frontend->reportError(e.what(), 1);
+		frontend->reportError(e.what(), Frontend::critical);
 	scenes->resync();
 }
 

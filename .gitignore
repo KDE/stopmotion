@@ -4,7 +4,6 @@
 /Makefile
 /stopmotion
 /translations/stopmotion_*.qm
-/stopmotion
 /Makefile
 /Makefile.Debug
 /Makefile.Release
@@ -24,3 +23,5 @@
 .settings/
 .cproject
 .project
+# Coverity intermediate files
+/cov-int

@@ -66,14 +66,6 @@ void ExportTab::makeGUI()
 {
 	infoText = new QTextEdit;
 	infoText->setReadOnly(true);
-	infoText->setHtml(
-		"<p>" + tr("Below you can set which program/process Stopmotion should use "
-		"for encoding the currently active project to a video file.") + "</p><p>" +
-		tr("You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
-		"the image path and the video file, respectively.") + "</p><p>" +
-		tr("Example with mencoder (jpeg images to mpeg4 video):") + "<br>" +
-		"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1 -mf type=jpg:fps=8 -o "
-		"$VIDEOFILE mf://$IMAGEPATH/*.jpg");
 	infoText->setMinimumWidth(440);
 	infoText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
@@ -83,9 +75,6 @@ void ExportTab::makeGUI()
 	encoderTable->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Maximum);
 	encoderTable->setSelectionMode(QAbstractItemView::SingleSelection);
 	encoderTable->setSelectionBehavior(QAbstractItemView::SelectRows);
-	QStringList lst;
-	lst << tr("Name") << tr("Description");
-	encoderTable->setHorizontalHeaderLabels(lst);
 	encoderTable->verticalHeader()->setVisible(false);
 
 	connect(encoderTable, SIGNAL(cellClicked(int, int)), this, SLOT(activeCellChanged(int, int)));
@@ -383,8 +372,10 @@ void ExportTab::retranslateStrings()
 		"for encoding the currently active project to a video file.") + "</p><p>" +
 		tr("You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
 		"the image path and the video file, respectively.") + "</p><p>" +
+		tr("You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
+				"in the project.") + "</p><p>" +
 		tr("Example with mencoder (jpeg images to mpeg4 video):") + "<br>" +
-		"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1 -mf type=jpg:fps=8 -o "
+		"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1 -mf type=jpg:fps=$FRAMERATE -o "
 		"$VIDEOFILE mf://$IMAGEPATH/*.jpg");
 
 	QStringList lst;

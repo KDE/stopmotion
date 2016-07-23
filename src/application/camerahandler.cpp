@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2016 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -29,12 +29,6 @@
 #include "src/presentation/frontends/qtfrontend/qtfrontend.h"
 
 #include <QPushButton>
-#include <QStatusBar>
-#include <QTimer>
-#include <QImage>
-#include <QInputDialog>
-#include <QWhatsThis>
-#include <QPixmap>
 
 #include <vector>
 

@@ -25,6 +25,8 @@
 #include "src/domain/animation/workspacefile.h"
 #include "src/foundation/preferencestool.h"
 
+#include <sys/file.h>
+
 DomainFacade* DomainFacade::domainFacade = 0;
 
 const char* DomainFacade::getImagePath(int scene, int frame) {
@@ -285,8 +287,8 @@ void DomainFacade::shutdownAudioDevice() {
 }
 
 
-bool DomainFacade::exportToVideo(VideoEncoder *encoder) {
-	return animationModel->exportToVideo(encoder);
+bool DomainFacade::exportToVideo(VideoEncoder *encoder, int playbackSpeed) {
+	return animationModel->exportToVideo(encoder, playbackSpeed);
 }
 
 
@@ -319,6 +321,10 @@ void DomainFacade::initializeCommandLoggerFile() {
 	FILE* log = fopen(wslf.path(), "a");
 	if (!log)
 		throw FailedToInitializeCommandLogger();
+	if (flock(fileno(log), LOCK_EX | LOCK_NB)) {
+		fclose(log);
+		getFrontend()->fatalError(Frontend::failedToGetExclusiveLock);
+	}
 	animationModel->setCommandLoggerFile(log);
 }
 
@@ -346,4 +352,8 @@ bool DomainFacade::canRedo() {
 
 void DomainFacade::setUndoRedoObserver(UndoRedoObserver* observer) {
 	animationModel->setUndoRedoObserver(observer);
+}
+
+void DomainFacade::playSounds(int scene, int frame) const {
+	animationModel->playSounds(scene, frame);
 }

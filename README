@@ -9,14 +9,13 @@ INSTALLATION
 1) qmake
 2) sudo make install
 
-You need the following libraries installed to compile:
-    - Qt4
-    - libtar
-    - SDL
-    - SDL_image
-    - XML2
-    - vorbisfile
-    - FAM/Gamin
+You need the following packages installed to compile:
+    - make and gcc (build-essential)
+    - gdb
+    - Qt4 (libqt4-dev and qt4-dev-tools)
+    - tar (libtar-dev)
+    - XML2 (libxml2-dev)
+    - vorbisfile (libvorbis-dev)
     - pkg-config
 
 WHO CAN USE IT
@@ -49,8 +48,12 @@ make uninstall # remove installation
 
 To install in a specific location:
 
-qmake PREFIX=/specific/location
+qmake PREFIX=/specific/location HTML_PATH=/docs/go/here TRANSLATIONS_PATH=/translations/go/here
 sudo make install
+
+The defines are optional. PREFIX defaults to /usr/local.
+HTML_PATH defaults to ${PREFIX}/share/doc/stopmotion/html.
+TRANSLATIONS_PATH defaults to ${PREFIX}/share/doc/stopmotion/translations.
 
 To put the files somewhere before copying them for installation (after qmake):
 
