@@ -20,7 +20,7 @@ Vcs-Browser: https://anonscm.debian.org/gitweb/?p=collab-maint/stopmotion.git
 Package: stopmotion
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Recommends: vgrabbj, dvgrab, ffmpeg
+Recommends: vgrabbj, dvgrab, ffmpeg, uvccapture
 Suggests: gimp
 Description: create stop-motion animations
  Create stop-motion animations with images grabbed from a video
