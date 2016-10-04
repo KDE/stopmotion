@@ -193,6 +193,10 @@ public:
 	int runExternalCommand(const char *) {
 		return 0;
 	}
+	void reportError(const char *, ErrorType) {
+	}
+	void fatalError(Error) {
+	}
 };
 
 TestStopmotionUndo::TestStopmotionUndo() : anim(0), mockFrontend(0),

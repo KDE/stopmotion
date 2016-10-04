@@ -31,6 +31,7 @@
 
 #include <sstream>
 #include <stdio.h>
+#include <cerrno>
 #include <assert.h>
 #include <unistd.h>
 
@@ -39,9 +40,11 @@
 class StringLoggerWrapper: public CommandLogger {
 	CommandLogger* delegate;
 	std::string* out;
+	std::string pending;
+	int committedUpTo;
 public:
 	StringLoggerWrapper(std::string* output) :
-			delegate(0), out(output) {
+			delegate(0), out(output), committedUpTo(0) {
 	}
 	/**
 	 * Create a logger that writes to a std::string and also passes writes
@@ -50,7 +53,7 @@ public:
 	 * @param output The string to be logged to. Ownership is not passed.
 	 */
 	StringLoggerWrapper(std::string* output, CommandLogger* wrapped) :
-			delegate(wrapped), out(output) {
+			delegate(wrapped), out(output), committedUpTo(0) {
 	}
 	StringLoggerWrapper(const StringLoggerWrapper&); // unimplemented
 	StringLoggerWrapper& operator=(const StringLoggerWrapper&); // unimplemented
@@ -59,27 +62,36 @@ public:
 	void setOutputString(std::string* output) {
 		out = output;
 	}
-	void writeCommand(const char* command) {
-		if (out) {
-			out->append(command);
-			out->append(1, '\n');
-		}
-		if (delegate)
-			delegate->writeCommand(command);
+	void flush(std::string* to) {
+		if (to)
+			to->append(pending, 0, committedUpTo);
+		pending.erase(0, committedUpTo);
+		committedUpTo = 0;
 	}
-	void commandComplete() {
+	void writePendingCommand(const char* command) {
+		pending.resize(committedUpTo);
+		pending.append(command);
+		pending.append("!\n");
 		if (delegate)
-			delegate->commandComplete();
+			delegate->writePendingCommand(command);
 	}
-	void undoComplete() {
-		out->append("--undo---\n");
+	void commit() {
+		committedUpTo = pending.length();
+		flush(out);
 		if (delegate)
-			delegate->undoComplete();
+			delegate->commit();
 	}
-	void redoComplete() {
-		out->append("--redo---\n");
+	void writePendingUndo() {
+		pending.resize(committedUpTo);
+		pending.append("--undo---\n");
 		if (delegate)
-			delegate->redoComplete();
+			delegate->writePendingUndo();
+	}
+	void writePendingRedo() {
+		pending.resize(committedUpTo);
+		pending.append("--redo---\n");
+		if (delegate)
+			delegate->writePendingRedo();
 	}
 	void setDelegate(CommandLogger* newLogger) {
 		delegate = newLogger;
@@ -153,10 +165,11 @@ public:
 	}
 	virtual void cleanup() {
 	}
-	virtual void appendCommandLog(std::string& out, int which) const {
+	virtual void appendCommandLog(std::string& out, int which) {
+		stringLogger.flush(&log[which]);
 		out.append(log[which]);
 	}
-	void getLog(std::string& out, int which) const {
+	void getLog(std::string& out, int which) {
 		if (previous)
 			previous->getLog(out, which);
 		out.append(";\n");
@@ -223,6 +236,17 @@ public:
 };
 
 int ExecutorStep::failures = 0;
+
+FILE* fileOpen(const char* path, const char* mode) {
+	FILE* fh = fopen(path, mode);
+	if (fh)
+		return fh;
+	int err = errno;
+	// for some reason errno can be 0 when fopen returns 0
+	if (err == 0 || err == ENOMEM)
+		throw std::bad_alloc();
+	return 0;
+}
 
 /**
  * Can only be run successfully if the delegate has already been run.
@@ -336,7 +360,7 @@ public:
 		return "random commands";
 	}
 	void doStep(Executor& e, RandomSource& rng) {
-		fh = fopen(logFName, "w");
+		fh = fileOpen(logFName, "w");
 		assert(fh);
 		fLogger.setLogFile(fh);
 		int cc;
@@ -364,7 +388,7 @@ public:
 		return "random undoes and redoes";
 	}
 	void doStep(Executor& e, RandomSource& rng) {
-		fh = fopen(logFName, "w");
+		fh = fileOpen(logFName, "w");
 		assert(fh);
 		fLogger.setLogFile(fh);
 		int commandCount = 0;
@@ -437,7 +461,7 @@ public:
 	void doStep(Executor& e, RandomSource&) {
 		int whichLog = getCurrentlyActiveLog();
 		replayed[whichLog].clear();
-		fh = fopen(logFName, "r");
+		fh = fileOpen(logFName, "r");
 		assert(fh);
 		while (fgets(lineBuffer, lineBufferSize, fh)) {
 			e.executeFromLog(lineBuffer);

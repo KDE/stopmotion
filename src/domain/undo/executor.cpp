@@ -559,7 +559,7 @@ public:
 	}
 	void writeCommand(CommandLogger* logger) {
 		if (logger)
-			logger->writeCommand(writer.result());
+			logger->writePendingCommand(writer.result());
 		writer.reset();
 	}
 };
@@ -653,7 +653,8 @@ public:
 			Command* c = f->create(vps);
 			if (c) {
 				vps.writeCommand(logger);
-				history.execute(*c, logger);
+				history.execute(*c);
+				logger->commit();
 			}
 		} catch(...) {
 			// Unfortunately we can't put this in VaListParameters's destructor
@@ -670,7 +671,8 @@ public:
 		Command* c = f->create(pw);
 		if (c) {
 			pw.writeCommand(logger);
-			history.execute(*c, logger);
+			history.execute(*c);
+			logger->commit();
 		}
 	}
 	bool executeFromLog(const char* line) {
@@ -698,7 +700,7 @@ public:
 					== reader.getEndOfCommand(subcommands, finished))
 				throw MalformedLineException();
 			if (finished)
-				history.execute(*c, logger);
+				history.execute(*c);
 			return true;
 		}
 		if (StringReader::parseSucceeded == reader.isEndOfLine())
@@ -730,7 +732,9 @@ public:
 			if (c) {
 				if (logger)
 					rps.writeCommand(logger);
-				history.execute(*c, logger);
+				history.execute(*c);
+				if (logger)
+					logger->commit();
 				++commandCount;
 			}
 		}
@@ -750,7 +754,9 @@ public:
 			if (c) {
 				if (logger)
 					rps.writeCommand(logger);
-				history.execute(*c, logger);
+				history.execute(*c);
+				if (logger)
+					logger->commit();
 			}
 		}
 	}
@@ -777,17 +783,21 @@ public:
 	bool undo() {
 		if (!history.canUndo())
 			return false;
+		if (logger)
+			logger->writePendingUndo();
 		history.undo();
 		if (logger)
-			logger->undoComplete();
+			logger->commit();
 		return true;
 	}
 	bool redo() {
 		if (!history.canRedo())
 			return false;
+		if (logger)
+			logger->writePendingRedo();
 		history.redo();
 		if (logger)
-			logger->redoComplete();
+			logger->commit();
 		return true;
 	}
 	bool canUndo() const {

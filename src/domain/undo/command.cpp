@@ -20,7 +20,6 @@
 
 #include "command.h"
 #include "../filenamevisitor.h"
-#include "commandlogger.h"
 #include "undoredoobserver.h"
 
 #include <list>
@@ -211,13 +210,10 @@ void CommandHistory::redo() {
 	notifyObserver();
 }
 
-void CommandHistory::execute(Command& c, CommandLogger* logger) {
+void CommandHistory::execute(Command& c) {
 	future->clear();
 	future->push(c);
 	redo();
-	if (logger) {
-		logger->commandComplete();
-	}
 	notifyObserver();
 }
 

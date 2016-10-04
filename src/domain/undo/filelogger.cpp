@@ -25,19 +25,10 @@
 #include <string.h>
 #include <string>
 
-class FileCommandLoggerImpl :
-		public CommandLogger {
-	enum Ending {
-		noEnding, newline, bangNewline
-	};
+class FileCommandLoggerImpl : public CommandLogger {
 	FILE* fh;
 	std::string buffer;
-	Ending endingRequired;
-	void writeChar(char c) {
-		writeBuffer();
-		buffer.append(1, c);
-		writeBuffer();
-	}
+	std::string::size_type committedUpTo;
 public:
 	void close() {
 		if (fh) {
@@ -46,33 +37,23 @@ public:
 		}
 		fh = 0;
 	}
-	void appendNewline() {
-		switch (endingRequired) {
-		case noEnding:
-			break;
-		case newline:
-			buffer.push_back('\n');
-			break;
-		case bangNewline:
-			buffer.append("!\n");
-			break;
-		}
-	}
 	void writeBuffer() {
-		appendNewline();
 		if (!fh) {
-			buffer.clear();
+			buffer.erase(0, committedUpTo);
+			committedUpTo = 0;
 			return;
 		}
-		while (!buffer.empty()) {
-			ssize_t s = fwrite(buffer.c_str(), 1, buffer.length(), fh);
+		while (0 < committedUpTo) {
+			ssize_t s = fwrite(buffer.c_str(), 1, committedUpTo, fh);
 			if (s <= 0) {
 				throw LoggerWriteFailedException(ferror(fh));
 			}
 			buffer.erase(0, s);
+			committedUpTo -= s;
 		}
+		fflush(fh);
 	}
-	FileCommandLoggerImpl() : fh(0), endingRequired(noEnding) {
+	FileCommandLoggerImpl() : fh(0), committedUpTo(0) {
 	}
 	~FileCommandLoggerImpl() {
 		close();
@@ -84,27 +65,25 @@ public:
 	FILE* getLogFile() const {
 		return fh;
 	}
-
-	void writeCommand(const char* c) {
+	void deleteUncommitted() {
+		buffer.resize(committedUpTo);
+	}
+	void writePendingCommand(const char* text) {
+		deleteUncommitted();
+		buffer.append(text);
+		buffer.append("!\n");
+	}
+	void writePendingUndo() {
+		deleteUncommitted();
+		buffer.append("?\n");
+	}
+	void writePendingRedo() {
+		deleteUncommitted();
+		buffer.append("!\n");
+	}
+	void commit() {
+		committedUpTo = buffer.length();
 		writeBuffer();
-		buffer.append(c);
-		endingRequired = newline;
-	}
-	void commandComplete() {
-		if (endingRequired != noEnding) {
-			endingRequired = bangNewline;
-			buffer.append("!\n");
-			endingRequired = noEnding;
-		}
-		writeBuffer();
-		if (fh)
-			fflush(fh);
-	}
-	void undoComplete() {
-		writeChar('?');
-	}
-	void redoComplete() {
-		writeChar('!');
 	}
 };
 
