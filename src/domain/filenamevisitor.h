@@ -33,6 +33,8 @@ public:
 	virtual void visitImage(const char*) = 0;
 	/** Called to report a sound file referenced. */
 	virtual void visitSound(const char*) = 0;
+	/** For an animation, reports when a scene starts. */
+	virtual void reportNewScene();
 };
 
 #endif /* FILENAMEVISITOR_H_ */

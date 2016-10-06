@@ -150,6 +150,9 @@ void CommandList::executeFront(CommandList& to) {
 FileNameVisitor::~FileNameVisitor() {
 }
 
+void FileNameVisitor::reportNewScene() {
+}
+
 Command::Command() {
 }
 

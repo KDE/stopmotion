@@ -189,6 +189,7 @@ int Scene::soundCount() const {
 }
 
 void Scene::accept(FileNameVisitor& v) const {
+	v.reportNewScene();
 	for (FrameVector::const_iterator i = frames.begin();
 			i != frames.end();
 			++i) {

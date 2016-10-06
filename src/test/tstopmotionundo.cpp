@@ -31,6 +31,7 @@
 #include "src/domain/animation/scene.h"
 #include "src/domain/animation/frame.h"
 #include "src/domain/animation/sound.h"
+#include "src/domain/filenamevisitor.h"
 #include "src/technical/audio/audioformat.h"
 #include "src/presentation/frontends/frontend.h"
 #include "src/technical/stringiterator.h"
@@ -216,6 +217,26 @@ TestStopmotionUndo::~TestStopmotionUndo() {
 
 class SceneVectorTestHelper : public ModelTestHelper {
 	SceneVector& sv;
+	class HashingFileNameVisitor : public FileNameVisitor {
+		Hash h;
+	public:
+		HashingFileNameVisitor(SceneVector& sv) {
+			sv.accept(*this);
+		}
+		Hash get() const {
+			return h;
+		}
+		void visitImage(const char* s) {
+			h.add("");
+			h.add(s);
+		}
+		void visitSound(const char*s) {
+			h.add(s);
+		}
+		void reportNewScene() {
+			h.add("");
+		}
+	};
 public:
 	SceneVectorTestHelper(SceneVector& s) : sv(s) {
 	}
@@ -225,27 +246,8 @@ public:
 		sv.clear();
 	}
 	Hash hashModel(const Executor&) {
-		Hash h;
-		// soundCount is kept as a separate variable so we hash this as well
-		// so that we can be sure that it is kept in sync with the actual
-		// number of sounds.
-		h.add(sv.soundCount());
-		int sceneCount = sv.sceneCount();
-		for (int s = 0; s != sceneCount; ++s) {
-			const Scene *scene = sv.getScene(s);
-			int frameCount = scene->getSize();
-			for (int f = 0; f != frameCount; ++f) {
-				const Frame* frame = scene->getFrame(f);
-				h.add(frame->getImagePath());
-				int soundCount = frame->soundCount();
-				for (int snd = 0; snd != soundCount; ++snd) {
-					const Sound* sound = frame->getSound(snd);
-					h.add(sound->getName());
-					h.add(sound->getAudio()->getSoundPath());
-				}
-			}
-		}
-		return h;
+		HashingFileNameVisitor v(sv);
+		return v.get();
 	}
 };
 
