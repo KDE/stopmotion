@@ -239,13 +239,18 @@ int ExecutorStep::failures = 0;
 
 FILE* fileOpen(const char* path, const char* mode) {
 	FILE* fh = fopen(path, mode);
-	if (fh)
-		return fh;
-	int err = errno;
-	// for some reason errno can be 0 when fopen returns 0
-	if (err == 0 || err == ENOMEM)
-		throw std::bad_alloc();
-	return 0;
+	if (!fh) {
+		sleep(1);
+		fh = fopen(path, mode);
+	}
+	if (!fh) {
+		int err = errno;
+		// for some reason errno can be 0 when fopen returns 0
+		if (err == 0 || err == ENOMEM) {
+			throw std::bad_alloc();
+		}
+	}
+	return fh;
 }
 
 /**
@@ -452,6 +457,9 @@ public:
 	ExecutorReplay(ExecutorStep* following, const char* logFileName)
 		: ExecutorStep(following),  logFName(logFileName), fh(0) {
 	}
+	~ExecutorReplay() {
+		cleanup();
+	}
 	const char* name() const {
 		return "replay";
 	}
@@ -459,6 +467,7 @@ public:
 		out.append(replayed[which]);
 	}
 	void doStep(Executor& e, RandomSource&) {
+		cleanup();
 		int whichLog = getCurrentlyActiveLog();
 		replayed[whichLog].clear();
 		fh = fileOpen(logFName, "r");
