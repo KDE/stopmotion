@@ -25,6 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <new>
+#include <cerrno>
 
 OggVorbis::OggVorbis() {
 	oggFile  = NULL;
@@ -50,13 +52,12 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 			free(oggFile);
 			oggFile = NULL;
 		}
-		
+
 		oggFile = (OggVorbis_File*)malloc( sizeof(OggVorbis_File) );
 		if (oggFile == NULL) {
-			// logFatal terminates the application
-			Logger::get().logFatal("Cannot allocate, out of memory!");
+			throw std::bad_alloc();
 		}
-		
+
 		if ( ov_test(f, oggFile, NULL, 0) < 0 ) {
 			Logger::get().logDebug("Not a valid oggfile");
 			fclose(f);
@@ -64,7 +65,7 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 			oggFile = NULL;
 			throw InvalidAudioFormatException();
 		}
-		
+
 		// This also closes the file stream (f)
 		ov_clear(oggFile);
 		free(oggFile);
@@ -72,7 +73,11 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 		this->filename.swap(file);
 	}
 	else {
-		Logger::get().logDebug("Cannot open file for reading");
+		int err = errno;
+		if (err == ENOMEM) {
+			throw std::bad_alloc();
+		}
+		Logger::get().logDebug("Cannot open file '%s' for reading", file.path());
 		throw CouldNotOpenFileException();
 	}
 }

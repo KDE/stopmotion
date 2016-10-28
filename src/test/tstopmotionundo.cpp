@@ -66,7 +66,7 @@ public:
 	void setDelegate(MockableFileSystem* mfs) {
 		delegate = mfs;
 	}
-	FILE* openFake(const char* filename, const char* mode) {
+	FILE* fopen(const char* filename, const char* mode) {
 		if (isImage(filename)) {
 			fakeReads = 0;
 			return fake;
@@ -75,12 +75,6 @@ public:
 				return delegate->fopen("resources/click.ogg", mode);
 			return fake;
 		}
-		return 0;
-	}
-	FILE* fopen(const char* filename, const char* mode) {
-		FILE* r = openFake(filename, mode);
-		if (r)
-			return r;
 		return delegate->fopen(filename, mode);
 	}
 	FILE* freopen(const char* filename, const char* mode, FILE* fh) {

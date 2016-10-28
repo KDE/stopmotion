@@ -101,7 +101,11 @@ public:
 ModelTestHelper::~ModelTestHelper() {
 }
 
-// runs a part of the test measuring the mallocs and logging the activity
+// In order to test the executor and its ability to survive exceptions being
+// thrown, we chain together a load of executor steps, and compare the
+// result of running both. For example, we might run a load of commands
+// with a randomly-failing mallocker and compare the result against
+// running the commands from the log thus produced.
 class ExecutorStep {
 	static int failures;
 	long mallocCount;
@@ -209,7 +213,7 @@ public:
 			std::string logS1;
 			other.getLog(logS1, 0);
 			std::string logS2;
-			getLog(logS2, 0);
+			getLog(logS2, 1);
 			std::ostringstream ss;
 			ss << "Failed to run 'this' step in test '" << name
 					<< "' on iteration " << testNum
@@ -233,6 +237,34 @@ public:
 			QFAIL(s.c_str());
 		}
 	}
+	/**
+	 * Runs this series of steps and {@a other} and tests the results against
+	 * one another. {@a other} is run first.
+	 * Just like runAndCheck but pre-runs this.run. Useful if "this" contains a
+	 * FailingStep (whose delegate needs to be pre-run).
+	 */
+	void runAndCheckWithPreRun(const char* name, ExecutorStep& other, Executor& executor,
+			ModelTestHelper& helper, RandomSource rng, int testNum) {
+		RandomSource r1 = rng;
+		try {
+			run(executor, r1, 1);
+		} catch (std::exception& e) {
+			cleanup();
+			std::string logS1;
+			other.getLog(logS1, 0);
+			std::string logS2;
+			getLog(logS2, 0);
+			std::ostringstream ss;
+			ss << "Failed to pre-run 'this' step in test '" << name
+					<< "' on iteration " << testNum
+					<< "\nOther log:" << logS1
+					<< "\nSuccessful portion of 'this' log:" << logS2;
+			std::string s = ss.str();
+			QFAIL(s.c_str());
+		}
+		cleanup();
+		runAndCheck(name, other, executor, helper, rng, testNum);
+	}
 };
 
 int ExecutorStep::failures = 0;
@@ -254,7 +286,9 @@ FILE* fileOpen(const char* path, const char* mode) {
 }
 
 /**
- * Can only be run successfully if the delegate has already been run.
+ * Runs the delegate, failing one of its mallocs.
+ * It works best as part of the "this" in a call to runAndCheck with
+ * the delegate a non-failing part of the "other" argument.
  */
 class FailingStep : public ExecutorStep {
 	ExecutorStep* del;
@@ -463,7 +497,7 @@ public:
 	const char* name() const {
 		return "replay";
 	}
-	void appendCommandLog(std::string& out, int which) const {
+	void appendCommandLog(std::string& out, int which) {
 		out.append(replayed[which]);
 	}
 	void doStep(Executor& e, RandomSource&) {
@@ -600,7 +634,8 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 		replay.runAndCheck("replays sequence of does, undoes and redoes correctly",
 				doesUndoesRedoes, e, helper, rng, i);
 		// (8)
-		replay.runAndCheck("replays failing sequence of does, undoes and redoes correctly",
+		replay.runAndCheckWithPreRun(
+				"replays failing sequence of does, undoes and redoes correctly",
 				failingDur, e, helper, rng, i);
 
 		rng = redoAgain.finalRng();
