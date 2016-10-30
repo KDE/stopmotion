@@ -23,6 +23,8 @@
 
 #include "hash.h"
 
+#include <iosfwd>
+
 class Executor;
 
 /**
@@ -44,6 +46,10 @@ public:
 	 * @param [in] The exector that owns the model to be hashed.
 	 */
 	virtual Hash hashModel(const Executor& e) = 0;
+	/**
+	 * Returns a text string describing the model.
+	 */
+	virtual void dumpModel(std::string& out, const Executor& e) = 0;
 };
 
 /**

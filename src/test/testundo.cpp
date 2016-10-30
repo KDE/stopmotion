@@ -206,6 +206,8 @@ public:
 		}
 		other.cleanup();
 		Hash h = helper.hashModel(executor);
+		std::string model;
+		helper.dumpModel(model, executor);
 		try {
 			run(executor, r2, 1);
 		} catch (std::exception& e) {
@@ -233,6 +235,9 @@ public:
 			std::ostringstream ss;
 			ss << "Failed test '" << name << "' on iteration " << testNum
 					<< "\nTesting:" << logS1 << "\nAgainst:" << logS2;
+			std::string model2;
+			helper.dumpModel(model2, executor);
+			ss << "Resulting in:\n" << model << "And:\n" << model2;
 			std::string s = ss.str();
 			QFAIL(s.c_str());
 		}

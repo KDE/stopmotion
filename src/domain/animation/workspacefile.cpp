@@ -99,8 +99,7 @@ void getFreshFilename(char*& path, const char*& namePart,
  */
 char* getWorkspaceFilename(const char *&basenameOut, const char* basenameIn,
 		bool inFrames = false) {
-	std::stringstream p;
-	p.str("");
+	std::stringstream p(std::ios_base::out);
 	if (inFrames) {
 		p << workspacePathFrames;
 	} else {

@@ -41,6 +41,7 @@
 #include <stdlib.h>
 #include <error.h>
 #include <vector>
+#include <string>
 #include <unistd.h>
 
 class RealOggEmptyJpg : public MockableFileSystem {
@@ -224,11 +225,33 @@ class SceneVectorTestHelper : public ModelTestHelper {
 			h.add("");
 			h.add(s);
 		}
-		void visitSound(const char*s) {
+		void visitSound(const char* s) {
 			h.add(s);
 		}
 		void reportNewScene() {
 			h.add("");
+		}
+	};
+	class DumpingFileNameVisitor : public FileNameVisitor {
+		std::string dump;
+	public:
+		DumpingFileNameVisitor(SceneVector& sv) {
+			sv.accept(*this);
+		}
+		std::string get() const {
+			return dump;
+		}
+		void visitImage(const char* s) {
+			dump.append("frame:\n");
+			dump.append(s);
+			dump.append("\n");
+		}
+		void visitSound(const char* s) {
+			dump.append(s);
+			dump.append("\n");
+		}
+		void reportNewScene() {
+			dump.append("scene:\n");
 		}
 	};
 public:
@@ -242,6 +265,10 @@ public:
 	Hash hashModel(const Executor&) {
 		HashingFileNameVisitor v(sv);
 		return v.get();
+	}
+	void dumpModel(std::string& out, const Executor&) {
+		DumpingFileNameVisitor v(sv);
+		out = v.get();
 	}
 };
 

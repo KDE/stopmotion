@@ -341,6 +341,9 @@ public:
 		h.add(s->c_str());
 		return h;
 	}
+	void dumpModel(std::string& out, const Executor&) {
+		out = *s;
+	}
 };
 
 class AddDelTestBed {
