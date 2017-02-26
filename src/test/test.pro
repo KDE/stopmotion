@@ -35,6 +35,7 @@ HEADERS += ../domain/undo/filelogger.h \
     ../domain/observernotifier.h \
     ../application/externalcommandwithtemporarydirectory.h \
     ../application/externalcommand.h \
+    ../foundation/stringwriter.h \
     ../foundation/logger.h
 HEADERS += texecutor.h \
 	tcache.h \
@@ -77,6 +78,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/observernotifier.cpp \
     ../application/externalcommandwithtemporarydirectory.cpp \
     ../application/externalcommand.cpp \
+    ../foundation/stringwriter.cpp \
     ../foundation/logger.cpp
 SOURCES += \
     tmain.cpp \

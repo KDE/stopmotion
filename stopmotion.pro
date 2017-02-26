@@ -5,6 +5,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/domain/filenamevisitor.h \
     src/domain/observernotifier.h \
     src/foundation/logger.h \
+    src/foundation/stringwriter.h \
     src/presentation/observer.h \
     src/domain/animation/animation.h \
     src/domain/animation/animationimpl.h \
@@ -124,6 +125,7 @@ SOURCES += src/config.cpp \
     src/domain/domainfacade.cpp \
     src/domain/observernotifier.cpp \
     src/foundation/logger.cpp \
+    src/foundation/stringwriter.cpp \
     src/domain/animation/animation.cpp \
     src/domain/animation/animationimpl.cpp \
     src/domain/animation/frame.cpp \

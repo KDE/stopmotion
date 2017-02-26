@@ -35,6 +35,7 @@
 #include "src/technical/audio/audioformat.h"
 #include "src/presentation/frontends/frontend.h"
 #include "src/technical/stringiterator.h"
+#include "src/foundation/stringwriter.h"
 
 #include <QtTest/QtTest>
 
@@ -233,25 +234,27 @@ class SceneVectorTestHelper : public ModelTestHelper {
 		}
 	};
 	class DumpingFileNameVisitor : public FileNameVisitor {
-		std::string dump;
+		StringWriter dump;
 	public:
 		DumpingFileNameVisitor(SceneVector& sv) {
 			sv.accept(*this);
 		}
-		std::string get() const {
-			return dump;
+		const char* get() const {
+			return dump.result();
 		}
 		void visitImage(const char* s) {
-			dump.append("frame:\n");
-			dump.append(s);
-			dump.append("\n");
+			dump.writeIdentifier("frame:");
+			dump.writeChar('\n');
+			dump.writeString(s);
+			dump.writeChar('\n');
 		}
 		void visitSound(const char* s) {
-			dump.append(s);
-			dump.append("\n");
+			dump.writeString(s);
+			dump.writeChar('\n');
 		}
 		void reportNewScene() {
-			dump.append("scene:\n");
+			dump.writeIdentifier("scene:");
+			dump.writeChar('\n');
 		}
 	};
 public:

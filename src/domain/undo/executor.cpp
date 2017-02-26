@@ -24,13 +24,13 @@
 #include "command.h"
 #include "random.h"
 #include "commandlogger.h"
+#include "src/foundation/stringwriter.h"
 
 #include <map>
 #include <vector>
 #include <string>
 #include <memory>
 
-#include <string.h>
 #include <stdint.h>
 
 // help out Eclipse's C++ parsing
@@ -386,134 +386,6 @@ public:
 	}
 };
 
-
-class StringWriter {
-	bool startOfLine;
-	std::string buffer;
-public:
-	StringWriter() : startOfLine(true) {
-	}
-	/**
-	 * Returns the written string.
-	 * @return The null-terminated string written to.
-	 */
-	const char* result() const {
-		return buffer.c_str();
-	}
-	/**
-	 * Begins a new line, reusing the same buffer.
-	 */
-	void reset() {
-		startOfLine = true;
-		buffer.clear();
-	}
-	/**
-	 * Returns the number of characters that would have been written to the
-	 * buffer if it has been long enough. If it was long enough, this will be
-	 * the length of the string written into the buffer passed in SetBuffer.
-	 */
-	int32_t length() const {
-		return buffer.length();
-	}
-	/**
-	 * Writes a single character to the buffer.
-	 */
-	void writeChar(char c) {
-		buffer.append(1, c);
-	}
-	/**
-	 * Writes a space to the buffer, if we are not at the start of a line.
-	 */
-	void beginArgument() {
-		if (!startOfLine) {
-			writeChar(' ');
-		}
-		startOfLine = false;
-	}
-	/**
-	 * Writes a decimal (or octal!) digit.
-	 */
-	void writeDigit(int32_t d) {
-		writeChar(static_cast<char>('0' + d));
-	}
-	/**
-	 * Writes a string surrounded by double quotes.
-	 * @param s The null-terminated string to write.
-	 */
-	void writeString(const char* s) {
-		beginArgument();
-		writeChar('"');
-		bool allowDigits = true;
-		while (*s) {
-			unsigned char c = *reinterpret_cast<const unsigned char*>(s);
-			++s;
-			if (strchr("\r\n\\\"", c)) {
-				writeChar('\\');
-				if (c == '\r')
-					writeChar('r');
-				else if (c == '\n')
-					writeChar('n');
-				else
-					writeChar(c);
-				allowDigits = true;
-			} else if ((32 <= c && c < '0') || ('9' < c && c < 128)) {
-				writeChar(c);
-				allowDigits = true;
-			} else if (allowDigits && '0' <= c && c <= '9') {
-				writeChar(c);
-			} else {
-				writeChar('\\');
-				bool started = false;
-				int32_t power = 64;
-				int32_t ci = c;
-				while (0 < power) {
-					int32_t digit = ci / power;
-					digit %= 8;
-					power /= 8;
-					if (digit != 0)
-						started = true;
-					if (started || power == 1)
-						writeDigit(digit);
-				}
-				allowDigits = false;
-			}
-		}
-		writeChar('"');
-	}
-	/**
-	 * Writes a decimal integer to the buffer. Writes negative numbers preceded
-	 * with '-' and positive numbers without prefix.
-	 */
-	void writeInteger(int32_t n) {
-		beginArgument();
-		if (n < 0) {
-			writeChar('-');
-			n = -n;
-		}
-		int power = 1;
-		int nOver10 = n / 10;
-		while (power <= nOver10) {
-			power *= 10;
-		}
-		while (power) {
-			int32_t digit = n / power;
-			n %= power;
-			power /= 10;
-			writeChar('0' + digit);
-		}
-	}
-	/**
-	 * Writes an identifier, which must not contain whitespace or backslashes.
-	 * @param id The null-terminated string to write.
-	 */
-	void writeIdentifier(const char* id) {
-		beginArgument();
-		while (*id) {
-			writeChar(*id);
-			++id;
-		}
-	}
-};
 
 Executor::~Executor() {
 }
