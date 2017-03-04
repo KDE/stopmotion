@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2013-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -42,6 +42,7 @@ public:
 class WorkspaceFile {
 	char* fullPath;
 	const char* namePart;
+	void setFilename(const char* basename, bool inFrames);
 public:
 	enum NewModelFile { newModelFile };
 	enum CurrentModelFile { currentModelFile };

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -60,6 +60,11 @@ public:
 	 * Indicates that the command, undo or redo has been successfully executed.
 	 */
 	virtual void commit() = 0;
+	/**
+	 * Writes committed commands to the file. This will only have an effect if
+	 * a previous call to commit() threw an exception.
+	 */
+	virtual void flush() = 0;
 };
 
 #endif /* COMMANDLOGGER_H_ */

@@ -104,7 +104,7 @@ void Scene::removeFrames(int frame, int count, std::vector<Frame*>& out) {
 		throw FrameOutOfRangeException();
 	out.reserve(out.size() + count);
 	std::vector<Frame*>::iterator begin = frames.begin() + frame;
-	std::vector<Frame*>::iterator end = frames.begin() + (frame + count);
+	std::vector<Frame*>::iterator end = begin + count;
 	out.insert(out.end(), begin, end);
 	frames.erase(begin, end);
 }

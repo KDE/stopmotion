@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -62,7 +62,7 @@ public:
 	void setOutputString(std::string* output) {
 		out = output;
 	}
-	void flush(std::string* to) {
+	void output(std::string* to) {
 		if (to)
 			to->append(pending, 0, committedUpTo);
 		pending.erase(0, committedUpTo);
@@ -77,9 +77,9 @@ public:
 	}
 	void commit() {
 		committedUpTo = pending.length();
-		flush(out);
 		if (delegate)
 			delegate->commit();
+		output(out);
 	}
 	void writePendingUndo() {
 		pending.resize(committedUpTo);
@@ -95,6 +95,11 @@ public:
 	}
 	void setDelegate(CommandLogger* newLogger) {
 		delegate = newLogger;
+	}
+	void flush() {
+		output(out);
+		if (delegate)
+			delegate->flush();
 	}
 };
 
@@ -170,7 +175,7 @@ public:
 	virtual void cleanup() {
 	}
 	virtual void appendCommandLog(std::string& out, int which) {
-		stringLogger.flush(&log[which]);
+		stringLogger.output(&log[which]);
 		out.append(log[which]);
 	}
 	void getLog(std::string& out, int which) {
@@ -411,6 +416,7 @@ public:
 		e.executeRandomCommands(cc, rng, min, max);
 	}
 	void cleanup() {
+		fLogger.getLogger()->flush();
 		fLogger.setLogFile(0);
 		fh = 0;
 	}

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2013-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -27,6 +27,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sstream>
+#include <memory>
 #include <memory.h>
 #include <dirent.h>
 
@@ -88,34 +89,36 @@ void getFreshFilename(char*& path, const char*& namePart,
 	namePart = path + indexOfName;
 }
 
+}
+
 /**
- * Returns a freshly-allocated {@c char[]} of the workspace file with basename
- * {@a basenameIn}.
- * @param basenameOut Pointer to the suffix of the buffer that matches
- * {@a basenameIn}.
- * @param basenameIn The name of the file.
+ * Sets @c fullPath and namePart.
+ * @param basename The name of the file.
  * @param inFrames True for a sound or image file.
- * @return The newly-allocated buffer.
  */
-char* getWorkspaceFilename(const char *&basenameOut, const char* basenameIn,
-		bool inFrames = false) {
-	std::stringstream p(std::ios_base::out);
+void WorkspaceFile::setFilename(const char* basename, bool inFrames = false) {
+	namePart = 0;
+	delete[] fullPath;
+	fullPath = 0;
+	std::stringstream p;
+	if (p.fail())
+		throw CopyFailedException();
 	if (inFrames) {
 		p << workspacePathFrames;
 	} else {
 		p << workspacePath;
 	}
-	int indexOfName = p.str().length();
-	p << basenameIn;
-	std::string out = p.str();
-	const char* cp = out.c_str();
-	int size = out.length() + 1;
-	char* fullPath = new char[size];
-	strncpy(fullPath, cp, size);
-	basenameOut = fullPath + indexOfName;
-	return fullPath;
-}
-
+	int indexOfName = p.tellp();
+	p << basename;
+	int size = p.tellp();
+	if (p.fail())
+		throw CopyFailedException();
+	fullPath = new char[size + 1];
+	p.read(fullPath, size);
+	if (p.fail())
+		throw CopyFailedException();
+	fullPath[size] = '\0';
+	namePart = fullPath + indexOfName;
 }
 
 void WorkspaceFile::ensureStopmotionDirectoriesExist(AndClear clear) {
@@ -180,37 +183,37 @@ WorkspaceFile::WorkspaceFile(const WorkspaceFile& t)
 
 WorkspaceFile::WorkspaceFile(const char* name)
 		: fullPath(0), namePart(0) {
-	fullPath = getWorkspaceFilename(namePart, name, true);
+	setFilename(name, true);
 }
 
 WorkspaceFile::WorkspaceFile(NewModelFile)
 		: fullPath(0), namePart(0) {
-	fullPath = getWorkspaceFilename(namePart, "new.dat");
+	setFilename("new.dat");
 }
 
 WorkspaceFile::WorkspaceFile(CurrentModelFile)
 		: fullPath(0), namePart(0) {
-	fullPath = getWorkspaceFilename(namePart, "current.dat");
+	setFilename("current.dat");
 }
 
 WorkspaceFile::WorkspaceFile(CommandLogFile)
 		: fullPath(0), namePart(0) {
-	fullPath = getWorkspaceFilename(namePart, "command.log");
+	setFilename("command.log");
 }
 
 WorkspaceFile::WorkspaceFile(CapturedImage)
 	: fullPath(0), namePart(0) {
-	fullPath = getWorkspaceFilename(namePart, "capturedfile.jpg");
+	setFilename("capturedfile.jpg");
 }
 
 WorkspaceFile::WorkspaceFile(PreferencesFile)
 	: fullPath(0), namePart(0) {
-	fullPath = getWorkspaceFilename(namePart, "preferences.xml");
+	setFilename("preferences.xml");
 }
 
 WorkspaceFile::WorkspaceFile(PreferencesFileOld)
 	: fullPath(0), namePart(0) {
-	fullPath = getWorkspaceFilename(namePart, "preferences.xml.OLD");
+	setFilename("preferences.xml.OLD");
 }
 
 WorkspaceFile::~WorkspaceFile() {

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -155,6 +155,10 @@ public:
 	}
 	void writePendingRedo() {
 		assert(false);
+	}
+	void flush() {
+		// For the tests we will assume that commit() never fails, so we do not
+		// need an implementation here.
 	}
 };
 

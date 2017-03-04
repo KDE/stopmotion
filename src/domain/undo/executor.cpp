@@ -579,7 +579,7 @@ public:
 			return false;
 		throw MalformedLineException();
 	}
-	void executeRandomCommands(int& commandCount, 	RandomSource& rng,
+	void executeRandomCommands(int& commandCount, RandomSource& rng,
 			int minCount, int maxCount) {
 		commandCount = 0;
 		int n = factories.size();

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -32,12 +32,12 @@ class FileCommandLoggerImpl : public CommandLogger {
 public:
 	void close() {
 		if (fh) {
-			writeBuffer();
+			flush();
 			fclose(fh);
 		}
 		fh = 0;
 	}
-	void writeBuffer() {
+	void flush() {
 		if (!fh) {
 			buffer.erase(0, committedUpTo);
 			committedUpTo = 0;
@@ -83,7 +83,7 @@ public:
 	}
 	void commit() {
 		committedUpTo = buffer.length();
-		writeBuffer();
+		flush();
 	}
 };
 
