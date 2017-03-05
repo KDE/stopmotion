@@ -1,21 +1,21 @@
 Linux Stopmotion
-===============
+================
 
 Stopmotion is a program to create stop motion animations.
-See [http://linuxstopmotion.org](http://linuxstopmotion.org) for more info.
+See <http://linuxstopmotion.org> for more info.
 
 
 INSTALLATION
 ------------
 
 You need the following packages installed to compile:
-- make and gcc (build-essential)
-- gdb
-- Qt4 (libqt4-dev and qt4-dev-tools)
-- tar (libtar-dev)
-- XML2 (libxml2-dev)
-- vorbisfile (libvorbis-dev)
-- pkg-config
+- make and gcc (`build-essential`)
+- `gdb`
+- Qt4 (`libqt4-dev` and `qt4-dev-tools`)
+- tar (`libtar-dev`)
+- XML2 (`libxml2-dev`)
+- vorbisfile (`libvorbis-dev`)
+- `pkg-config`
 
 Then you can type the following to build:
 
@@ -66,3 +66,6 @@ To put the files somewhere before copying them for installation (after `qmake`):
 
 `PREFIX` is where the files will ultimately end up. `make install` will put them in
 `$(INSTALL_ROOT)$(PREFIX)`
+
+Please see `src/domain/undo/README.md` for some notes on Stopmotion's
+architecture.
