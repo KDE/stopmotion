@@ -31,6 +31,8 @@ class WorkspaceFile;
 class Sound {
 	AudioFormat* af;
 	const char* name;
+	Sound& operator=(const Sound&) const;
+	Sound(const Sound&);
 public:
 	Sound();
 	~Sound();
