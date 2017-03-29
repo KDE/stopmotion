@@ -31,15 +31,18 @@
 #include "src/domain/animation/scene.h"
 #include "src/domain/animation/frame.h"
 #include "src/domain/animation/sound.h"
+#include "src/domain/filenamevisitor.h"
 #include "src/technical/audio/audioformat.h"
 #include "src/presentation/frontends/frontend.h"
 #include "src/technical/stringiterator.h"
+#include "src/foundation/stringwriter.h"
 
 #include <QtTest/QtTest>
 
 #include <stdlib.h>
 #include <error.h>
 #include <vector>
+#include <string>
 #include <unistd.h>
 
 class RealOggEmptyJpg : public MockableFileSystem {
@@ -65,7 +68,7 @@ public:
 	void setDelegate(MockableFileSystem* mfs) {
 		delegate = mfs;
 	}
-	FILE* openFake(const char* filename, const char* mode) {
+	FILE* fopen(const char* filename, const char* mode) {
 		if (isImage(filename)) {
 			fakeReads = 0;
 			return fake;
@@ -74,12 +77,6 @@ public:
 				return delegate->fopen("resources/click.ogg", mode);
 			return fake;
 		}
-		return 0;
-	}
-	FILE* fopen(const char* filename, const char* mode) {
-		FILE* r = openFake(filename, mode);
-		if (r)
-			return r;
 		return delegate->fopen(filename, mode);
 	}
 	FILE* freopen(const char* filename, const char* mode, FILE* fh) {
@@ -193,6 +190,10 @@ public:
 	int runExternalCommand(const char *) {
 		return 0;
 	}
+	void reportError(const char *, ErrorType) {
+	}
+	void fatalError(Error) {
+	}
 };
 
 TestStopmotionUndo::TestStopmotionUndo() : anim(0), mockFrontend(0),
@@ -212,6 +213,50 @@ TestStopmotionUndo::~TestStopmotionUndo() {
 
 class SceneVectorTestHelper : public ModelTestHelper {
 	SceneVector& sv;
+	class HashingFileNameVisitor : public FileNameVisitor {
+		Hash h;
+	public:
+		HashingFileNameVisitor(SceneVector& sv) {
+			sv.accept(*this);
+		}
+		Hash get() const {
+			return h;
+		}
+		void visitImage(const char* s) {
+			h.add("");
+			h.add(s);
+		}
+		void visitSound(const char* s) {
+			h.add(s);
+		}
+		void reportNewScene() {
+			h.add("");
+		}
+	};
+	class DumpingFileNameVisitor : public FileNameVisitor {
+		StringWriter dump;
+	public:
+		DumpingFileNameVisitor(SceneVector& sv) {
+			sv.accept(*this);
+		}
+		const char* get() const {
+			return dump.result();
+		}
+		void visitImage(const char* s) {
+			dump.writeIdentifier("frame:");
+			dump.writeChar('\n');
+			dump.writeString(s);
+			dump.writeChar('\n');
+		}
+		void visitSound(const char* s) {
+			dump.writeString(s);
+			dump.writeChar('\n');
+		}
+		void reportNewScene() {
+			dump.writeIdentifier("scene:");
+			dump.writeChar('\n');
+		}
+	};
 public:
 	SceneVectorTestHelper(SceneVector& s) : sv(s) {
 	}
@@ -221,27 +266,12 @@ public:
 		sv.clear();
 	}
 	Hash hashModel(const Executor&) {
-		Hash h;
-		// soundCount is kept as a separate variable so we hash this as well
-		// so that we can be sure that it is kept in sync with the actual
-		// number of sounds.
-		h.add(sv.soundCount());
-		int sceneCount = sv.sceneCount();
-		for (int s = 0; s != sceneCount; ++s) {
-			const Scene *scene = sv.getScene(s);
-			int frameCount = scene->getSize();
-			for (int f = 0; f != frameCount; ++f) {
-				const Frame* frame = scene->getFrame(f);
-				h.add(frame->getImagePath());
-				int soundCount = frame->soundCount();
-				for (int snd = 0; snd != soundCount; ++snd) {
-					const Sound* sound = frame->getSound(snd);
-					h.add(sound->getName());
-					h.add(sound->getAudio()->getSoundPath());
-				}
-			}
-		}
-		return h;
+		HashingFileNameVisitor v(sv);
+		return v.get();
+	}
+	void dumpModel(std::string& out, const Executor&) {
+		DumpingFileNameVisitor v(sv);
+		out = v.get();
 	}
 };
 

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -31,6 +31,7 @@
 
 #include <sstream>
 #include <stdio.h>
+#include <cerrno>
 #include <assert.h>
 #include <unistd.h>
 
@@ -39,9 +40,11 @@
 class StringLoggerWrapper: public CommandLogger {
 	CommandLogger* delegate;
 	std::string* out;
+	std::string pending;
+	int committedUpTo;
 public:
 	StringLoggerWrapper(std::string* output) :
-			delegate(0), out(output) {
+			delegate(0), out(output), committedUpTo(0) {
 	}
 	/**
 	 * Create a logger that writes to a std::string and also passes writes
@@ -50,7 +53,7 @@ public:
 	 * @param output The string to be logged to. Ownership is not passed.
 	 */
 	StringLoggerWrapper(std::string* output, CommandLogger* wrapped) :
-			delegate(wrapped), out(output) {
+			delegate(wrapped), out(output), committedUpTo(0) {
 	}
 	StringLoggerWrapper(const StringLoggerWrapper&); // unimplemented
 	StringLoggerWrapper& operator=(const StringLoggerWrapper&); // unimplemented
@@ -59,37 +62,55 @@ public:
 	void setOutputString(std::string* output) {
 		out = output;
 	}
-	void writeCommand(const char* command) {
-		if (out) {
-			out->append(command);
-			out->append(1, '\n');
-		}
-		if (delegate)
-			delegate->writeCommand(command);
+	void output(std::string* to) {
+		if (to)
+			to->append(pending, 0, committedUpTo);
+		pending.erase(0, committedUpTo);
+		committedUpTo = 0;
 	}
-	void commandComplete() {
+	void writePendingCommand(const char* command) {
+		pending.resize(committedUpTo);
+		pending.append(command);
+		pending.append("!\n");
 		if (delegate)
-			delegate->commandComplete();
+			delegate->writePendingCommand(command);
 	}
-	void undoComplete() {
-		out->append("--undo---\n");
+	void commit() {
+		committedUpTo = pending.length();
 		if (delegate)
-			delegate->undoComplete();
+			delegate->commit();
+		output(out);
 	}
-	void redoComplete() {
-		out->append("--redo---\n");
+	void writePendingUndo() {
+		pending.resize(committedUpTo);
+		pending.append("--undo---\n");
 		if (delegate)
-			delegate->redoComplete();
+			delegate->writePendingUndo();
+	}
+	void writePendingRedo() {
+		pending.resize(committedUpTo);
+		pending.append("--redo---\n");
+		if (delegate)
+			delegate->writePendingRedo();
 	}
 	void setDelegate(CommandLogger* newLogger) {
 		delegate = newLogger;
+	}
+	void flush() {
+		output(out);
+		if (delegate)
+			delegate->flush();
 	}
 };
 
 ModelTestHelper::~ModelTestHelper() {
 }
 
-// runs a part of the test measuring the mallocs and logging the activity
+// In order to test the executor and its ability to survive exceptions being
+// thrown, we chain together a load of executor steps, and compare the
+// result of running both. For example, we might run a load of commands
+// with a randomly-failing mallocker and compare the result against
+// running the commands from the log thus produced.
 class ExecutorStep {
 	static int failures;
 	long mallocCount;
@@ -153,10 +174,11 @@ public:
 	}
 	virtual void cleanup() {
 	}
-	virtual void appendCommandLog(std::string& out, int which) const {
+	virtual void appendCommandLog(std::string& out, int which) {
+		stringLogger.output(&log[which]);
 		out.append(log[which]);
 	}
-	void getLog(std::string& out, int which) const {
+	void getLog(std::string& out, int which) {
 		if (previous)
 			previous->getLog(out, which);
 		out.append(";\n");
@@ -189,6 +211,8 @@ public:
 		}
 		other.cleanup();
 		Hash h = helper.hashModel(executor);
+		std::string model;
+		helper.dumpModel(model, executor);
 		try {
 			run(executor, r2, 1);
 		} catch (std::exception& e) {
@@ -196,7 +220,7 @@ public:
 			std::string logS1;
 			other.getLog(logS1, 0);
 			std::string logS2;
-			getLog(logS2, 0);
+			getLog(logS2, 1);
 			std::ostringstream ss;
 			ss << "Failed to run 'this' step in test '" << name
 					<< "' on iteration " << testNum
@@ -216,16 +240,65 @@ public:
 			std::ostringstream ss;
 			ss << "Failed test '" << name << "' on iteration " << testNum
 					<< "\nTesting:" << logS1 << "\nAgainst:" << logS2;
+			std::string model2;
+			helper.dumpModel(model2, executor);
+			ss << "Resulting in:\n" << model << "And:\n" << model2;
 			std::string s = ss.str();
 			QFAIL(s.c_str());
 		}
+	}
+	/**
+	 * Runs this series of steps and {@a other} and tests the results against
+	 * one another. {@a other} is run first.
+	 * Just like runAndCheck but pre-runs this.run. Useful if "this" contains a
+	 * FailingStep (whose delegate needs to be pre-run).
+	 */
+	void runAndCheckWithPreRun(const char* name, ExecutorStep& other, Executor& executor,
+			ModelTestHelper& helper, RandomSource rng, int testNum) {
+		RandomSource r1 = rng;
+		try {
+			run(executor, r1, 1);
+		} catch (std::exception& e) {
+			cleanup();
+			std::string logS1;
+			other.getLog(logS1, 0);
+			std::string logS2;
+			getLog(logS2, 0);
+			std::ostringstream ss;
+			ss << "Failed to pre-run 'this' step in test '" << name
+					<< "' on iteration " << testNum
+					<< "\nOther log:" << logS1
+					<< "\nSuccessful portion of 'this' log:" << logS2;
+			std::string s = ss.str();
+			QFAIL(s.c_str());
+		}
+		cleanup();
+		runAndCheck(name, other, executor, helper, rng, testNum);
 	}
 };
 
 int ExecutorStep::failures = 0;
 
+FILE* fileOpen(const char* path, const char* mode) {
+	FILE* fh = fopen(path, mode);
+	if (!fh) {
+		sleep(1);
+		fh = fopen(path, mode);
+	}
+	if (!fh) {
+		int err = errno;
+		// for some reason errno can be 0 when fopen returns 0
+		if (err == 0 || err == ENOMEM) {
+			throw std::bad_alloc();
+		}
+	}
+	return fh;
+}
+
 /**
- * Can only be run successfully if the delegate has already been run.
+ * Runs the delegate, failing one of its mallocs.
+ * It works best as part of the "this" in a call to runAndCheck with
+ * the delegate a non-failing part of the "other" argument.
  */
 class FailingStep : public ExecutorStep {
 	ExecutorStep* del;
@@ -336,13 +409,14 @@ public:
 		return "random commands";
 	}
 	void doStep(Executor& e, RandomSource& rng) {
-		fh = fopen(logFName, "w");
+		fh = fileOpen(logFName, "w");
 		assert(fh);
 		fLogger.setLogFile(fh);
 		int cc;
 		e.executeRandomCommands(cc, rng, min, max);
 	}
 	void cleanup() {
+		fLogger.getLogger()->flush();
 		fLogger.setLogFile(0);
 		fh = 0;
 	}
@@ -364,7 +438,7 @@ public:
 		return "random undoes and redoes";
 	}
 	void doStep(Executor& e, RandomSource& rng) {
-		fh = fopen(logFName, "w");
+		fh = fileOpen(logFName, "w");
 		assert(fh);
 		fLogger.setLogFile(fh);
 		int commandCount = 0;
@@ -428,16 +502,20 @@ public:
 	ExecutorReplay(ExecutorStep* following, const char* logFileName)
 		: ExecutorStep(following),  logFName(logFileName), fh(0) {
 	}
+	~ExecutorReplay() {
+		cleanup();
+	}
 	const char* name() const {
 		return "replay";
 	}
-	void appendCommandLog(std::string& out, int which) const {
+	void appendCommandLog(std::string& out, int which) {
 		out.append(replayed[which]);
 	}
 	void doStep(Executor& e, RandomSource&) {
+		cleanup();
 		int whichLog = getCurrentlyActiveLog();
 		replayed[whichLog].clear();
-		fh = fopen(logFName, "r");
+		fh = fileOpen(logFName, "r");
 		assert(fh);
 		while (fgets(lineBuffer, lineBufferSize, fh)) {
 			e.executeFromLog(lineBuffer);
@@ -567,7 +645,8 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 		replay.runAndCheck("replays sequence of does, undoes and redoes correctly",
 				doesUndoesRedoes, e, helper, rng, i);
 		// (8)
-		replay.runAndCheck("replays failing sequence of does, undoes and redoes correctly",
+		replay.runAndCheckWithPreRun(
+				"replays failing sequence of does, undoes and redoes correctly",
 				failingDur, e, helper, rng, i);
 
 		rng = redoAgain.finalRng();

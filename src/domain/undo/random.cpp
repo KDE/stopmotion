@@ -93,9 +93,10 @@ RandomSource::~RandomSource() {
 }
 
 RandomSource& RandomSource::operator=(const RandomSource& other) {
-	impl->delRef();
 	other.impl->addRef();
+	impl->delRef();
 	impl = other.impl;
+	index = other.index;
 	return*this;
 }
 

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2013-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -108,6 +108,10 @@ public:
 
 /**
  * Re-executes the command that is logged.
+ * This is used to test that executing from the log is the same as executing
+ * normally, without the bother of actually using a log; the logged commands
+ * are executed as we go along. We can then test the results of executing from
+ * the log against the results of executing the commands normally.
  */
 class CloneLogger : public CommandLogger {
 	Executor* ex;
@@ -132,10 +136,10 @@ public:
 	void SetExecutor(Executor* e) {
 		ex = e;
 	}
-	void writeCommand(const char* lineToLog) {
+	void writePendingCommand(const char* lineToLog) {
 		command = lineToLog;
 	}
-	void commandComplete() {
+	void commit() {
 		if (!alreadyIn) {
 			// Make sure we don't recursively call ourselves
 			AlreadyIn a(alreadyIn);
@@ -146,11 +150,15 @@ public:
 			}
 		}
 	}
-	void undoComplete() {
+	void writePendingUndo() {
 		assert(false);
 	}
-	void redoComplete() {
+	void writePendingRedo() {
 		assert(false);
+	}
+	void flush() {
+		// For the tests we will assume that commit() never fails, so we do not
+		// need an implementation here.
 	}
 };
 
@@ -336,6 +344,9 @@ public:
 		Hash h;
 		h.add(s->c_str());
 		return h;
+	}
+	void dumpModel(std::string& out, const Executor&) {
+		out = *s;
 	}
 };
 

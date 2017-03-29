@@ -166,10 +166,8 @@ public:
 	 * after a thrown exception will be on the Redo stack. Ownership of
 	 * the command is passed.
 	 * @param c The command to be executed.
-	 * @param logger {@ref CommandLogger::commandComplete} will be called on
-	 * @a logger if the execution is successful.
 	 */
-	void execute(Command& c, CommandLogger* logger);
+	void execute(Command& c);
 	/**
 	 * Clears all the undo history (and future)
 	 */
