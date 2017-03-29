@@ -434,7 +434,7 @@ stopmotion (0.pre3.0-1) unstable; urgency=low
 stopmotion (0.2.0-1) unstable; urgency=low
 
   * Kicked out GStreamer and made it possible to define own image grabbers.
-    This has been successfull since most of the bugs are now gone.
+    This has been successful since most of the bugs are now gone.
     Onionskinning is also implemented and it is possible to play sounds
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@hig.no>  Wed, 30 Mar 2005 16:16:37 +0200
