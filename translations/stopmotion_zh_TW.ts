@@ -289,7 +289,7 @@
         <translation>失敗！</translation>
     </message>
     <message>
-        <source>Successfull!</source>
+        <source>Successful!</source>
         <translation>成功！</translation>
     </message>
 </context>

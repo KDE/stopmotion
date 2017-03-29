@@ -29,7 +29,7 @@
 /**
  * OSS audio driver. This takes care of initializing the registered audio
  * device with differents parameters. The device will then by ready to
- * to play sound if the initializing was successfull.
+ * to play sound if the initializing was successful.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */

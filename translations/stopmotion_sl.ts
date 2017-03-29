@@ -349,7 +349,7 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Successfull!</source>
+        <source>Successful!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

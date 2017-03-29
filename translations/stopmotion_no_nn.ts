@@ -372,7 +372,7 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Successfull!</source>
+        <source>Successful!</source>
         <translation>Suksess!</translation>
     </message>
 </context>

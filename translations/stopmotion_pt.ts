@@ -341,7 +341,7 @@
     </message>
     <message>
         <location filename="../src/application/externalcommand.cpp" line="118"/>
-        <source>Successfull!</source>
+        <source>Successful!</source>
         <translation>Conseguiu!</translation>
     </message>
 </context>
