@@ -937,9 +937,9 @@ utilizar. Isto pode ser feito nas preferências.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="912"/>
         <source>Cannot find any registered encoder to be used for
-video export. This can be setted in the preferences
+video export. This can be set in the preferences
 menu. Export to video will not be possible until you
-have setted an encoder to use. Do you want to set it now?</source>
+have set an encoder to use. Do you want to set it now?</source>
         <translation>Não consigo encontrar um codificador para exportar
 o vídeo. Isto pode ser configurado nas preferências.
 Não vai ser possível exportar até que você indique o

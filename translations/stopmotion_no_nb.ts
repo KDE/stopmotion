@@ -1113,9 +1113,9 @@ Dette kan settes i preferanse-menyen.</translation>
     <message>
         <location line="-51"/>
         <source>Cannot find any registered encoder to be used for
-video export. This can be setted in the preferences
+video export. This can be set in the preferences
 menu. Export to video will not be possible until you
-have setted an encoder to use. Do you want to set it now?</source>
+have set an encoder to use. Do you want to set it now?</source>
         <translation>Ingen registrerte enkodere for eksport til video. Dette
 kan settes i preferansemenyen. Eksport til video vil ikke
 være mulig før du har satt en gyldig enkoder. 

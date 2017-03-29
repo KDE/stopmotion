@@ -1019,9 +1019,9 @@ To lahko storite v nastavitvenem meniju.</translation>
     <message>
         <location line="-51"/>
         <source>Cannot find any registered encoder to be used for
-video export. This can be setted in the preferences
+video export. This can be set in the preferences
 menu. Export to video will not be possible until you
-have setted an encoder to use. Do you want to set it now?</source>
+have set an encoder to use. Do you want to set it now?</source>
         <translation type="unfinished">Ne najdem nobenega registriranega kodirnika za(new line)
 izvoz videa. To lahko nastavite v nastavitvenem(new line)
 meniju. Izvoz videa ne bo mogoč dokrer ne nastavite(new line)

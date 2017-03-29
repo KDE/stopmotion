@@ -1038,9 +1038,9 @@ Detta kan ställas in i inställningsmenyn.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="912"/>
         <source>Cannot find any registered encoder to be used for
-video export. This can be setted in the preferences
+video export. This can be set in the preferences
 menu. Export to video will not be possible until you
-have setted an encoder to use. Do you want to set it now?</source>
+have set an encoder to use. Do you want to set it now?</source>
         <translation>Kan inte hitta någon registrerad kodare för att
 exportera video. Detta kan ställas ni i inställningar
 menyn. Det kommer inte att gå att  exportera till
