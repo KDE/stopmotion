@@ -7,8 +7,6 @@ Uploaders: Mahyuddin Susanto <udienz@ubuntu.com>,
 Build-Depends: debhelper (>= 10),
 	pkg-config,
 	libqt4-dev,
-	libsdl-image1.2-dev,
-	libsdl1.2-dev,
 	libtar-dev,
 	libvorbis-dev,
 	libxml2-dev
