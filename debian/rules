@@ -4,6 +4,6 @@ export QT_SELECT = 4
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 %:
-	dh $@ --parallel
+	dh $@
 
 override_dh_auto_test:
