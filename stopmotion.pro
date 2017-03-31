@@ -210,7 +210,7 @@ INCLUDEPATH += . \
     src/domain \
     src/domain/animation \
     src/presentation
-LIBS += -ltar -lvorbisfile -lX11
+LIBS += -ltar -lvorbisfile
 
 QM_FILES = $$TRANSLATIONS
 QM_FILES~= s:^translations/:build/:g
