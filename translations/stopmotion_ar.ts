@@ -341,7 +341,7 @@
     </message>
     <message>
         <location filename="../src/application/externalcommand.cpp" line="118"/>
-        <source>Successfull!</source>
+        <source>Successful!</source>
         <translation>تمّت العملية بنجاح!</translation>
     </message>
 </context>
@@ -924,9 +924,9 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="912"/>
         <source>Cannot find any registered encoder to be used for
-video export. This can be setted in the preferences
+video export. This can be set in the preferences
 menu. Export to video will not be possible until you
-have setted an encoder to use. Do you want to set it now?</source>
+have set an encoder to use. Do you want to set it now?</source>
         <translation>تعذّر إيجاد أي مرمّز لاستخدامه لتصدير الفيديو.
 يمكن ذبط ذلك في قائمة التفضيلات. تصدير فيديو
 لن يكون ممكنا حتى تعيين مرمّز .

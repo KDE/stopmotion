@@ -109,7 +109,7 @@
         </message>
         <message>
             <source>Camera &amp;on</source>
-            <translation>开启相机(&amp;O)</translation>
+            <translation>打开相机(&amp;O)</translation>
         </message>
     </context>
     <context>
@@ -120,7 +120,7 @@
         </message>
         <message>
             <source>You can select from the auto-detected devices below or add devices yourself. It is not recommended to use devices which is not auto-detected, but feel free to do it if you are an advanced user.</source>
-            <translation>您可以从下列自动识别的设备选取，或是自行加入设备。并不建议使用未被自动识别到的设备，但是如果您是高级使用者就尽管去做。</translation>
+            <translation>您可以从下列自动识别的设备选取，或是自行添加设备。并不建议使用未被自动识别到的设备，但是如果您是高级使用者就尽管去做。</translation>
         </message>
         <message>
             <source>The selected device is recognized as &lt;b&gt;$VIDEODEVICE&lt;/b&gt; under Video Import.</source>
@@ -136,7 +136,7 @@
         </message>
         <message>
             <source>&amp;Add</source>
-            <translation>加入(&amp;A)</translation>
+            <translation>添加(&amp;A)</translation>
         </message>
         <message>
             <source>&amp;Remove</source>
@@ -148,7 +148,7 @@
         </message>
         <message>
             <source>Video device settings</source>
-            <translation>视频设备设置值</translation>
+            <translation>视频设备设置</translation>
         </message>
         <message>
             <source>Video Device ($VIDEODEVICE): </source>
@@ -179,7 +179,7 @@
         </message>
         <message>
             <source>&amp;Add</source>
-            <translation>加入(&amp;A)</translation>
+            <translation>添加(&amp;A)</translation>
         </message>
         <message>
             <source>&amp;Remove</source>
@@ -191,7 +191,7 @@
         </message>
         <message>
             <source>Encoder settings</source>
-            <translation>编码器设置值</translation>
+            <translation>编码器设置</translation>
         </message>
         <message>
             <source>Do you want to be asked for an output file everytime you choose to export?</source>
@@ -269,7 +269,7 @@
             <translation>失败！</translation>
         </message>
         <message>
-            <source>Successfull!</source>
+            <source>Successful!</source>
             <translation>成功！</translation>
         </message>
     </context>
@@ -298,7 +298,7 @@
         <name>FramePreferencesMenu</name>
         <message>
             <source>Add &amp;sound</source>
-            <translation>加入声音(&amp;S)</translation>
+            <translation>添加声音(&amp;S)</translation>
         </message>
         <message>
             <source>&amp;Remove Sound</source>
@@ -314,7 +314,7 @@
         </message>
         <message>
             <source>&lt;h4&gt;Add sound&lt;/h4&gt; &lt;p&gt;With this button you can &lt;em&gt;add sounds&lt;/em&gt; to the selected frame.&lt;/p&gt; &lt;p&gt;The sound will begin playing when this frame is shown and play until it is done.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;加入声音&lt;/h4&gt;&lt;p&gt;利用这个按钮您可以&lt;em&gt;加入声音&lt;/em&gt;到所选的图片。&lt;/p&gt;&lt;p&gt;此图片显示时，声音将开始播放直到完成。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;添加声音&lt;/h4&gt;&lt;p&gt;利用这个按钮您可以&lt;em&gt;添加声音&lt;/em&gt;到所选的图片。&lt;/p&gt;&lt;p&gt;此图片显示时，声音将开始播放直到完成。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Remove sound&lt;/h4&gt; &lt;p&gt;With this button you can &lt;em&gt;remove&lt;/em&gt; the selected sound from this frame.&lt;/p&gt;</source>
@@ -322,7 +322,7 @@
         </message>
         <message>
             <source>&lt;h4&gt;Change name&lt;/h4&gt; &lt;p&gt;With this button you can change the name of the selected sound. &lt;BR&gt;The name of the sound has no other effect than making it easier work with the animation.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;重命名&lt;/h4&gt;&lt;p&gt;利用这个按钮您可以变更所选声音的名称。&lt;BR&gt;声音的名称除了让动画比较容易制作之外，不具有其他效果。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;重命名&lt;/h4&gt;&lt;p&gt;利用这个按钮您可以变更所选声音的名称。&lt;BR&gt;声音的名称除了让动画比较容易制作之外，没有其他效果。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This lists shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
@@ -341,13 +341,13 @@ to grab from an invalid device. Please check
 your grabber settings in the preferences menu.</source>
             <translation>抓取失败。如果您尝试从无效的
 设备抓取，就有可能会发生。请检查
-您在偏好设置选单中的抓取器设置值。</translation>
+您在偏好设置菜单中的抓取器设置。</translation>
         </message>
         <message>
             <source>You have to define an image grabber to use.
 This can be set in the preferences menu.</source>
             <translation>您必须定义想要使用的图像抓取器。
-这可以在偏好设置选单中设置。</translation>
+这可以在偏好设置菜单中设置。</translation>
         </message>
         <message>
             <source>Pre poll command does not exists</source>
@@ -359,7 +359,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>No video device selected in the preferences menu.</source>
-            <translation>在偏好设置选单中没有所选的视频设备。</translation>
+            <translation>在偏好设置菜单中没有所选的视频设备。</translation>
         </message>
     </context>
     <context>
@@ -370,7 +370,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&amp;Open File</source>
-            <translation>开启文件(&amp;O)</translation>
+            <translation>打开文件(&amp;O)</translation>
         </message>
         <message>
             <source>&amp;Print</source>
@@ -445,7 +445,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&amp;Add</source>
-            <translation>加入(&amp;A)</translation>
+            <translation>添加(&amp;A)</translation>
         </message>
         <message>
             <source>&amp;Remove</source>
@@ -457,7 +457,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>Import device settings</source>
-            <translation>导入设备设置值</translation>
+            <translation>导入设备设置</translation>
         </message>
         <message>
             <source>Pre-poll command</source>
@@ -535,11 +535,11 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&amp;New</source>
-            <translation>新增(&amp;N)</translation>
+            <translation>新建(&amp;N)</translation>
         </message>
         <message>
             <source>&amp;Open</source>
-            <translation>开启(&amp;O)</translation>
+            <translation>打开(&amp;O)</translation>
         </message>
         <message>
             <source>&amp;Save</source>
@@ -547,15 +547,15 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>Save &amp;As</source>
-            <translation>另存新文件(&amp;A)</translation>
+            <translation>另存为...(&amp;A)</translation>
         </message>
         <message>
             <source>Add &amp;Frames</source>
-            <translation>加入图片(&amp;F)</translation>
+            <translation>添加图片(&amp;F)</translation>
         </message>
         <message>
             <source>&amp;Quit</source>
-            <translation>离开(&amp;Q)</translation>
+            <translation>退出(&amp;Q)</translation>
         </message>
         <message>
             <source>&amp;File</source>
@@ -607,11 +607,11 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&lt;h4&gt;Frame preferences menu&lt;/h4&gt; &lt;p&gt;In this menu you can set preferences for the selected frame/frames, such as &lt;b&gt;subtitles&lt;/b&gt;, &lt;b&gt;sound effects&lt;/b&gt;, etc.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;图片偏好设置选单&lt;/h4&gt;&lt;p&gt;在此选单中您可以设置用于所选图片的偏好內容，像是&lt;b&gt;子标题&lt;/b&gt;、&lt;b&gt;声音效果&lt;/b&gt;…等等。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;图片偏好设置菜单&lt;/h4&gt;&lt;p&gt;在此菜单中您可以设置用于所选图片的偏好內容，像是&lt;b&gt;子标题&lt;/b&gt;、&lt;b&gt;声音效果&lt;/b&gt;…等等。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>Add sound</source>
-            <translation>加入声音</translation>
+            <translation>添加声音</translation>
         </message>
         <message>
             <source>Remove Sound</source>
@@ -675,7 +675,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&lt;h4&gt;Open&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Opens&lt;/em&gt; a Stopmotion project file.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;开启&lt;/h4&gt;&lt;p&gt;&lt;em&gt;开启&lt;/em&gt;一个 Stopmotion 工程文件。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;打开&lt;/h4&gt;&lt;p&gt;&lt;em&gt;打开&lt;/em&gt;一个 Stopmotion 工程文件。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Undo&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Undoes&lt;/em&gt; your last operation. You can press undo several time to undo earlier operations.&lt;/p&gt;</source>
@@ -711,11 +711,11 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&lt;h4&gt;Tool menu&lt;/h4&gt; &lt;p&gt;This is the tool menu where most of the buttons and widgets you will need when working on stop motion animations are located.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;工具选单&lt;/h4&gt;&lt;p&gt;这是包含大部分所需按钮和窗口元件的工具选单位置，操作定格动画时将会需要它。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;工具菜单&lt;/h4&gt;&lt;p&gt;这是包含大部分所需按钮和窗口元件的工具菜单位置，操作定格动画时将会需要它。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>Add &amp;sound</source>
-            <translation>加入声音(&amp;S)</translation>
+            <translation>添加声音(&amp;S)</translation>
         </message>
         <message>
             <source>&lt;h4&gt;FrameView&lt;/h4&gt;&lt;p&gt; In this area you can see the selected frame. You can also play animations in this window by pressing the &lt;b&gt;Play&lt;/b&gt; button.&lt;/p&gt;</source>
@@ -727,7 +727,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&lt;h4&gt;Quit&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Quits&lt;/em&gt; the program.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;离开&lt;/h4&gt;&lt;p&gt;&lt;em&gt;离开&lt;/em&gt;程序.&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;退出&lt;/h4&gt;&lt;p&gt;&lt;em&gt;退出&lt;/em&gt;程序.&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Go to frame&lt;/h4&gt; &lt;p&gt;This will bring up a popup-menu at the bottom where you can choose a frame you want to &lt;em&gt;go to&lt;/em&gt;.&lt;/p&gt;</source>
@@ -755,7 +755,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&amp;Settings</source>
-            <translation>设置值(&amp;S)</translation>
+            <translation>设置(&amp;S)</translation>
         </message>
         <message>
             <source>Disable sound</source>
@@ -771,7 +771,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&lt;h4&gt;New&lt;/h4&gt; &lt;p&gt;Creates a &lt;em&gt;new&lt;/em&gt; project.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;新增&lt;/h4&gt;&lt;p&gt;建立&lt;em&gt;新的&lt;/em&gt;工程。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;新建&lt;/h4&gt;&lt;p&gt;建立&lt;em&gt;新的&lt;/em&gt;工程。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
@@ -779,7 +779,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&lt;h4&gt;Save As&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;另存新文件&lt;/h4&gt;&lt;p&gt;&lt;em&gt;保存&lt;/em&gt;目前动画为 Stopmotion 工程文件。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;另存为...&lt;/h4&gt;&lt;p&gt;&lt;em&gt;保存&lt;/em&gt;目前动画为 Stopmotion 工程文件。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Video&lt;/h4&gt; &lt;p&gt;Exports the current project as &lt;em&gt;video&lt;/em&gt;.&lt;/p&gt;You will be given a wizard to guide you.</source>
@@ -799,7 +799,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>Open &amp;Recent</source>
-            <translation>开启最近文件(&amp;R)</translation>
+            <translation>打开最近文件(&amp;R)</translation>
         </message>
         <message>
             <source>New project</source>
@@ -807,7 +807,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>Open project</source>
-            <translation>开启工程</translation>
+            <translation>打开工程</translation>
         </message>
         <message>
             <source>Save project</source>
@@ -819,7 +819,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>Quit</source>
-            <translation>离开</translation>
+            <translation>退出</translation>
         </message>
         <message>
             <source>Undo</source>
@@ -847,7 +847,7 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will opens a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;配置 Stopmotion&lt;/h4&gt;&lt;p&gt;这将开启一个窗口，您可以将 Stopmotion 与各种输入和输出设备&lt;em&gt;配置&lt;/em&gt;。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;配置 Stopmotion&lt;/h4&gt;&lt;p&gt;这将打开一个窗口，您可以将 Stopmotion 与各种输入和输出设备&lt;em&gt;配置&lt;/em&gt;。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>Configure Stopmotion</source>
@@ -867,11 +867,11 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>Cannot find any registered encoder to be used for
-video export. This can be setted in the preferences
+video export. This can be set in the preferences
 menu. Export to video will not be possible until you
-have setted an encoder to use. Do you want to set it now?</source>
+have set an encoder to use. Do you want to set it now?</source>
             <translation>无法找到任何已注册的编码器以用于
-视频导出。这可以在偏好选单中设置。
+视频导出。这可以在偏好菜单中设置。
 直到您已经设置要用的编码器之前，
 将不可能导出为视频。您要现在设置它吗？</translation>
         </message>
@@ -883,7 +883,7 @@ have setted an encoder to use. Do you want to set it now?</source>
             <source>The registered encoder is not valid. Do you want
 to check your settings in the preferences menu?</source>
             <translation>已注册的编码器无效。您想要检查
-您在偏好设置选单中的设置值吗？</translation>
+您在偏好设置菜单中的设置吗？</translation>
         </message>
         <message>
             <source>Export to file</source>
@@ -919,7 +919,7 @@ to check your settings in the preferences menu?</source>
         </message>
         <message>
             <source>Save As</source>
-            <translation>另存新文件</translation>
+            <translation>另存为...</translation>
         </message>
     </context>
     <context>
@@ -937,11 +937,11 @@ to check your settings in the preferences menu?</source>
         <name>PreferencesMenu</name>
         <message>
             <source>&lt;p&gt;Below you can set which program/process stopmotion should use for grabing images from the webcam, and displaying video.&lt;br&gt; &lt;br&gt; You can also add new programs, just make sure the image is saved with the path and filename &lt;b&gt;.stopmotion/capturedfile.png&lt;/b&gt; &lt;/p&gt;</source>
-            <translation>&lt;p&gt;以下您可以设置 stopmotion 从网络摄像头抓取图像，以及显示视频时应该使用的程序。&lt;br&gt;&lt;br&gt;您也可以加入新的程序，只要确知图像的保存路径和档名为&lt;b&gt;.stopmotion/capturedfile.png&lt;/b&gt;&lt;/p&gt;</translation>
+            <translation>&lt;p&gt;以下您可以设置 stopmotion 从网络摄像头抓取图像，以及显示视频时应该使用的程序。&lt;br&gt;&lt;br&gt;您也可以加入新的程序，只要确认图像的保存路径和文件名为&lt;b&gt;.stopmotion/capturedfile.png&lt;/b&gt;&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&amp;Add</source>
-            <translation>加入(&amp;A)</translation>
+            <translation>添加(&amp;A)</translation>
         </message>
         <message>
             <source>Video &amp;Import</source>
@@ -965,7 +965,7 @@ to check your settings in the preferences menu?</source>
         </message>
         <message>
             <source>&lt;p&gt;Below you can set which program/process stopmotion should use for grabbing images from the webcam, and displaying video.&lt;br&gt; &lt;br&gt; You can also add new programs, just make sure the command line is written with file path being &lt;b&gt;&amp;lt;DEFAULTPATH&amp;gt;&lt;/b&gt;&lt;/p&gt;</source>
-            <translation>&lt;p&gt;以下您可以设置 stopmotion 从网络摄像头抓取图像，以及显示视频时应该使用的程序。&lt;br&gt;&lt;br&gt;您也可以加入新的程序，只要确知命令行的写入路径为&lt;b&gt;&amp;lt; DEFAULTPATH &amp;gt;&lt;/b&gt;&lt;/p&gt;</translation>
+            <translation>&lt;p&gt;以下您可以设置 stopmotion 从网络摄像头抓取图像，以及显示视频时应该使用的程序。&lt;br&gt;&lt;br&gt;您也可以加入新的程序，只要确认命令行的写入路径为&lt;b&gt;&amp;lt; DEFAULTPATH &amp;gt;&lt;/b&gt;&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&amp;Remove</source>
@@ -973,7 +973,7 @@ to check your settings in the preferences menu?</source>
         </message>
         <message>
             <source>Apply</source>
-            <translation>套用</translation>
+            <translation>应用</translation>
         </message>
         <message>
             <source>Close</source>
@@ -981,7 +981,7 @@ to check your settings in the preferences menu?</source>
         </message>
         <message>
             <source>Preferences Menu</source>
-            <translation>偏好设置选单</translation>
+            <translation>偏好设置菜单</translation>
         </message>
         <message>
             <source>Video &amp;Device</source>
@@ -1016,7 +1016,7 @@ to check your settings in the preferences menu?</source>
         </message>
         <message>
             <source>Starts vgrabbj as a deamon. Pretty fast.</source>
-            <translation>启动 vgrabbj 为守护程序。相当快速。</translation>
+            <translation>启动 vgrabbj 为守护程序。相当快。</translation>
         </message>
         <message>
             <source>Question</source>
@@ -1042,7 +1042,7 @@ to check your settings in the preferences menu?</source>
             <source>A newer version of the preferences file with few more default
 values exists. Do you want to use this one? (Your old preferences
  will be saved in ~/.stopmotion/preferences.xml.OLD)</source>
-            <translation>存在比较新版本的偏好设置文件与多一点
+            <translation>存在更新版本的偏好设置文件与更多
 预设值。您要使用这一个吗？(您旧的偏好设置将会
 保存在 ~/.stopmotion/preferences.xml.OLD 中)</translation>
         </message>
@@ -1105,11 +1105,11 @@ values exists. Do you want to use this one? (Your old preferences
         <name>ToolsMenu</name>
         <message>
             <source>&amp;Add Frames</source>
-            <translation>加入图片(&amp;A)</translation>
+            <translation>添加图片(&amp;A)</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Add Frames&lt;/h4&gt; &lt;p&gt;Click on this button to &lt;em&gt;add&lt;/em&gt; frames to the animation.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;加入图片&lt;/h4&gt;&lt;p&gt;按一下这个按钮以&lt;em&gt;加入&lt;/em&gt;图片到动画。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;添加图片&lt;/h4&gt;&lt;p&gt;按一下这个按钮以&lt;em&gt;添加&lt;/em&gt;图片到动画。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&amp;Remove Selection</source>
@@ -1121,11 +1121,11 @@ values exists. Do you want to use this one? (Your old preferences
         </message>
         <message>
             <source>New &amp;Scene</source>
-            <translation>新增场景(&amp;S)</translation>
+            <translation>新建场景(&amp;S)</translation>
         </message>
         <message>
             <source>&lt;h4&gt;New Scene&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;create&lt;/em&gt; a new &lt;em&gt;scene&lt;/em&gt; to the animation.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;新增场景&lt;/h4&gt;&lt;p&gt;按一下这个按钮以&lt;em&gt;建立&lt;/em&gt;新的动画&lt;em&gt;场景&lt;/em&gt;。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;新建场景&lt;/h4&gt;&lt;p&gt;按一下这个按钮以&lt;em&gt;建立&lt;/em&gt;新的动画&lt;em&gt;场景&lt;/em&gt;。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>Re&amp;move Scene</source>
@@ -1133,11 +1133,11 @@ values exists. Do you want to use this one? (Your old preferences
         </message>
         <message>
             <source>Camera &amp;on</source>
-            <translation>开启相机(&amp;O)</translation>
+            <translation>打开相机(&amp;O)</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Toggle camera on/off&lt;/h4&gt; &lt;p&gt;Click this button to toggle the camera on and off&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;切换相机开/关&lt;/h4&gt;&lt;p&gt;按一下这个按钮以切换相机的开启和关闭&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;切换相机开/关&lt;/h4&gt;&lt;p&gt;按一下这个按钮以切换相机的打开和关闭&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&amp;Capture Frame</source>
@@ -1177,7 +1177,7 @@ values exists. Do you want to use this one? (Your old preferences
         </message>
         <message>
             <source>&lt;h4&gt;Add Frames (CTRL+F)&lt;/h4&gt; &lt;p&gt;Click on this button to &lt;em&gt;add&lt;/em&gt; frames to the animation.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;加入图片 (Ctrl+F)&lt;/h4&gt;&lt;p&gt;按一下这个按钮以&lt;em&gt;加入&lt;/em&gt;图片到动画。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;添加图片 (Ctrl+F)&lt;/h4&gt;&lt;p&gt;按一下这个按钮以&lt;em&gt;添加&lt;/em&gt;图片到动画。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Remove Selection (Delete)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;remove&lt;/em&gt; the selected frames from the animation.&lt;/p&gt;</source>
@@ -1185,7 +1185,7 @@ values exists. Do you want to use this one? (Your old preferences
         </message>
         <message>
             <source>&lt;h4&gt;New Scene (CTRL+E)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;create&lt;/em&gt; a new &lt;em&gt;scene&lt;/em&gt; to the animation.&lt;/p&gt;</source>
-            <translation>&lt;h4&gt;新增场景 (Ctrl+E)&lt;/h4&gt;&lt;p&gt;按一下这个按钮以&lt;em&gt;建立&lt;/em&gt;新的动画&lt;em&gt;场景&lt;/em&gt;。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;新建场景 (Ctrl+E)&lt;/h4&gt;&lt;p&gt;按一下这个按钮以&lt;em&gt;建立&lt;/em&gt;新的动画&lt;em&gt;场景&lt;/em&gt;。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Remove Scene (SHIFT+Delete)&lt;/h4&gt; &lt;p&gt;Click this button to &lt;em&gt;remove&lt;/em&gt; the selected scene from the animation.&lt;/p&gt;</source>
@@ -1193,7 +1193,7 @@ values exists. Do you want to use this one? (Your old preferences
         </message>
         <message>
             <source>&lt;h4&gt;Toggle camera on/off (C)&lt;/h4&gt; &lt;p&gt;Click this button to toggle the camera on and off&lt;/p&gt; </source>
-            <translation>&lt;h4&gt;切换相机开/关 (C)&lt;/h4&gt;&lt;p&gt;按一下这个按钮以切换相机的开启和关闭。&lt;/p&gt;</translation>
+            <translation>&lt;h4&gt;切换相机开/关 (C)&lt;/h4&gt;&lt;p&gt;按一下这个按钮以切换相机的打开和关闭。&lt;/p&gt;</translation>
         </message>
         <message>
             <source>&lt;h4&gt;Capture Frame (Space)&lt;/h4&gt; &lt;p&gt;Click on this button to &lt;em&gt;capture&lt;/em&gt; a frame from the camera an put it in the animation&lt;/p&gt; &lt;p&gt; This can also be done by pressing the &lt;b&gt;Space key&lt;/b&gt;&lt;/p&gt;</source>
@@ -1240,7 +1240,7 @@ values exists. Do you want to use this one? (Your old preferences
 as a deamon. Go to the preferences menu (CTRL+P) to switch 
 to running the image grabbing as a deamon.</source>
             <translation>目前播放控制只在以抓取器做为
-守护程序执行时才有作用。前往偏好设置选单 (Ctrl+P) 
+守护程序执行时才有作用。前往偏好设置菜单 (Ctrl+P) 
 以切换图像抓取做为守护程序执行。</translation>
         </message>
         <message>

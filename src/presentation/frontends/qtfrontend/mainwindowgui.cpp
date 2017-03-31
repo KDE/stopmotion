@@ -910,9 +910,9 @@ void MainWindowGUI::exportToVideo()
 		int ret = QMessageBox::warning(this,
 			tr("Warning"),
 			tr("Cannot find any registered encoder to be used for\n"
-			   "video export. This can be setted in the preferences\n"
+			   "video export. This can be set in the preferences\n"
 			   "menu. Export to video will not be possible until you\n"
-			   "have setted an encoder to use. Do you want to set it now?"),
+			   "have set an encoder to use. Do you want to set it now?"),
 			tr("&Yes"), tr("&No"), // button 0, button 1, ...
 			QString::null, 0, 1 );
 		if (ret == 0) {
