@@ -269,7 +269,7 @@
             <translation>失败！</translation>
         </message>
         <message>
-            <source>Successfull!</source>
+            <source>Successful!</source>
             <translation>成功！</translation>
         </message>
     </context>
@@ -867,9 +867,9 @@ This can be set in the preferences menu.</source>
         </message>
         <message>
             <source>Cannot find any registered encoder to be used for
-video export. This can be setted in the preferences
+video export. This can be set in the preferences
 menu. Export to video will not be possible until you
-have setted an encoder to use. Do you want to set it now?</source>
+have set an encoder to use. Do you want to set it now?</source>
             <translation>无法找到任何已注册的编码器以用于
 视频导出。这可以在偏好菜单中设置。
 直到您已经设置要用的编码器之前，

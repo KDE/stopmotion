@@ -233,7 +233,7 @@ void NonGUIFrontend::getAbsolutePath(std::string& out, const char *path) {
 
 
 int NonGUIFrontend::checkFiles(const char *directory) {
-	int numSuccessFull = 0;
+	int numSuccessful = 0;
 	DIR *dp = opendir(directory);
 
 	if (dp) {
@@ -248,7 +248,7 @@ int NonGUIFrontend::checkFiles(const char *directory) {
 			stat(p.c_str(), &st);
 			// is a regular file, not a directory
 			if ( S_ISREG(st.st_mode) != 0) {
-				++numSuccessFull;
+				++numSuccessful;
 			}
 		}
 		closedir(dp);
@@ -257,7 +257,7 @@ int NonGUIFrontend::checkFiles(const char *directory) {
 		fprintf (stderr, "Couldn't open directory: %s; %s\n",directory, strerror (errno));
 	}
 
-	return numSuccessFull;
+	return numSuccessful;
 }
 
 

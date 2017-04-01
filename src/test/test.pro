@@ -103,7 +103,7 @@ QMAKE_CLEAN += oomteststub.o oomtestutil.so
 PRE_TARGETDEPS = oomteststub.o
 LIBS += oomteststub.o -ldl \
 	$$system(xml2-config --libs) \
-	-ltar -lvorbisfile -lX11
+	-ltar -lvorbisfile
 DESTDIR=.
 release:OBJECTS_DIR=build/release
 release:TARGET = test

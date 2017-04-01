@@ -43,23 +43,24 @@ bool callSystem(const char* task, const char* commandLine,
 		return false;
 	}
 	int code = WEXITSTATUS(r);
-	if (code == 0) {
-		Logger::get().logDebug("Task '%s' returned code 0: %s", task,
+	if (code == 0 || code == 256) {
+		// vgrabberj in daemon mode uses return code 256
+		Logger::get().logDebug("Task '%s' returned code %d: %s", task, code,
 				commandLine);
 		return true;
 	}
 	if (code == 1) {
 		if (warn == doWarn)
-			Logger::get().logWarning("Task '%s' returned code 1: %s", task,
+			Logger::get().logWarning("Task '%s' returned code %d: %s", task, code,
 					commandLine);
 		else
-			Logger::get().logDebug("Task '%s' returned code 1: %s", task,
+			Logger::get().logDebug("Task '%s' returned code %d: %s", task, code,
 					commandLine);
 		return true;
 	}
 	Logger::get().logFatal(
 		"Task '%s' returned code %d: %s",
-				task, r, commandLine);
+				task, code, commandLine);
 	return false;
 }
 

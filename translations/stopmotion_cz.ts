@@ -349,7 +349,7 @@
     </message>
     <message>
         <location line="+3"/>
-        <source>Successfull!</source>
+        <source>Successful!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1019,9 +1019,9 @@ chcete používat.</translation>
     <message>
         <location line="-51"/>
         <source>Cannot find any registered encoder to be used for
-video export. This can be setted in the preferences
+video export. This can be set in the preferences
 menu. Export to video will not be possible until you
-have setted an encoder to use. Do you want to set it now?</source>
+have set an encoder to use. Do you want to set it now?</source>
         <translation>Nemůžu najít žádný enkodér pro export videa. Můžete ho
 nastavit v menu &quot;Nastavení&quot;. Dokud tam žádný nenastavíte,
 nebude export videa možný. Chcete ho nyní nastavit?</translation>

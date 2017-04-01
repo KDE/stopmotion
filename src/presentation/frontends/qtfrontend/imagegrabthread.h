@@ -53,7 +53,7 @@ public:
 	void run();
 	
 	/**
-	 * Checks if last grabbing was successfull.
+	 * Checks if last grabbing was successful.
 	 * @return true if last grabbing was success, false otherwise
 	 */
 	bool wasGrabbingSuccess();

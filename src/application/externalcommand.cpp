@@ -115,7 +115,7 @@ void ExternalCommand::displayExitStatus(int exitCode, QProcess::ExitStatus)
 		QMessageBox::warning(this, tr("Result"), tr("Failed!"));
 	}
 	else {                                                     
-		QMessageBox::information(this, tr("Result"), tr("Successfull!"));
+		QMessageBox::information(this, tr("Result"), tr("Successful!"));
 	}
 	
 	lineEdit->setEnabled(false);
