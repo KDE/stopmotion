@@ -28,6 +28,7 @@
 #include "src/domain/undo/commandlogger.h"
 #include "src/domain/undo/filelogger.h"
 #include "src/domain/undo/random.h"
+#include "src/foundation/stringwriter.h"
 
 #include <sstream>
 #include <stdio.h>
@@ -291,6 +292,15 @@ FILE* fileOpen(const char* path, const char* mode) {
 		if (err == 0 || err == ENOMEM) {
 			throw std::bad_alloc();
 		}
+		StringWriter sw;
+		sw.writeIdentifier("fopen failed for file");
+		sw.writeString(path);
+		sw.writeIdentifier("with error code");
+		sw.writeInteger(err);
+		sw.writeChar('(');
+		sw.writeIdentifier(strerror(err));
+		sw.writeChar(')');
+		QWARN(sw.result());
 	}
 	return fh;
 }

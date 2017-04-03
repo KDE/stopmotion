@@ -28,17 +28,30 @@
 #include <new>
 #include <cerrno>
 
+class FileCloser {
+	FILE* h;
+public:
+	FileCloser(FILE* fh) : h(fh) {
+	}
+	FILE* release() {
+		FILE* r = h;
+		h = 0;
+		return r;
+	}
+	~FileCloser() {
+		if (h) {
+			fclose(h);
+		}
+	}
+};
+
 OggVorbis::OggVorbis() {
 	oggFile  = NULL;
 }
 
 
 OggVorbis::~OggVorbis() {
-	if (oggFile != NULL) {
-		ov_clear(oggFile);
-		free(oggFile);
-		oggFile = NULL;
-	}
+	close();
 }
 
 
@@ -47,12 +60,9 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 
 	// Opens the file and tests for vorbis-ness
 	FILE *f = fopen(file.path(), "r");
+	FileCloser fcloser(f);
 	if (f) {
-		if (oggFile != NULL) {
-			free(oggFile);
-			oggFile = NULL;
-		}
-
+		close();
 		oggFile = (OggVorbis_File*)malloc( sizeof(OggVorbis_File) );
 		if (oggFile == NULL) {
 			throw std::bad_alloc();
@@ -60,16 +70,16 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 
 		if ( ov_test(f, oggFile, NULL, 0) < 0 ) {
 			Logger::get().logDebug("Not a valid oggfile");
-			fclose(f);
 			free(oggFile);
 			oggFile = NULL;
 			throw InvalidAudioFormatException();
 		}
-
-		// This also closes the file stream (f)
-		ov_clear(oggFile);
-		free(oggFile);
-		oggFile = NULL;
+		// For some reason, ov_test does not necessarily take
+		// ownership of our file handle. We must only release
+		// ownership if oggFile has taken it.
+		if (oggFile->datasource == f)
+			fcloser.release();
+		close();
 		this->filename.swap(file);
 	}
 	else {
@@ -86,16 +96,18 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 int OggVorbis::open()
 {
 	FILE *f = fopen(filename.path(), "r");
+	FileCloser fcloser(f);
 	if (f) {
+		close();
 		oggFile = (OggVorbis_File*)malloc( sizeof(OggVorbis_File) );
 		if (oggFile == NULL) {
 			// logFatal terminates the application
 			Logger::get().logFatal("Cannot allocate, out of memory!");
 		}
 		if ( ov_open(f, oggFile, NULL, 0) == 0 ) {
+			fcloser.release();
 			return 0;
 		}
-		fclose(f);
 		free(oggFile);
 		oggFile = NULL;
 	}
