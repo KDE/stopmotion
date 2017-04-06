@@ -1,3 +1,13 @@
+stopmotion (0.8.2-1) unstable; urgency=medium
+
+  * New upstream release
+    - remove dependency on SDL
+    - file README now README.md
+  * bump to debhelper 10
+  * add recommendation of uvccapture
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Thu, 06 Apr 2017 11:58:53 +0100
+
 stopmotion (0.8.1-1) unstable; urgency=medium
 
   * New upstream release
