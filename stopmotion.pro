@@ -1,3 +1,4 @@
+QT += widgets
 CONFIG += debug_and_release
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
