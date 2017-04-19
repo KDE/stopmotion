@@ -418,10 +418,10 @@ void FrameView::nextPlayBack() {
 			playbackModeFrame = firstFrame;
 		} else {
 			++playbackModeFrame;
-			if (activeFrame < playbackModeFrame) {
-				// negative number means that the camera output should be shown
-				playbackModeFrame = -1;
-			}
+		}
+		if (activeFrame < playbackModeFrame) {
+			// negative number means that the camera output should be shown
+			playbackModeFrame = -1;
 		}
 		update();
 		return;
