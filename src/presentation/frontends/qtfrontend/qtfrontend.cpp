@@ -39,26 +39,6 @@
 #include <stdio.h>
 #include <assert.h>
 
-class GenericLocalizedError : public LocalizedError {
-	QString qm;
-	const char* am;
-public:
-	GenericLocalizedError(const QString& qStringMessage, const char* asciiMessage)
-			: qm(qStringMessage), am(asciiMessage) {
-	}
-	~GenericLocalizedError() throw() {
-	}
-	const QString& message() const throw() {
-		return qm;
-	}
-	bool isCritical() const throw() {
-		return true;
-	}
-	const char* what() const throw() {
-		return am;
-	}
-};
-
 QtFrontend::QtFrontend(int &argc, char **argv)
 {
 	stApp = new QApplication(argc, argv);
@@ -183,30 +163,6 @@ void QtFrontend::processEvents() {
 void QtFrontend::updateProgressBar() {
     int p = progressBar->value();
     progressBar->setValue(++p);
-}
-
-
-void QtFrontend::reportError(const char *message, ErrorType type)
-{
-	if (type == warning) {
-		QMessageBox::warning(mw, tr("Warning"), message, QMessageBox::Ok,
-				QMessageBox::NoButton, QMessageBox::NoButton);
-	}
-	else {
-		QMessageBox::critical(mw, tr("Fatal"), message, QMessageBox::Ok,
-				QMessageBox::NoButton, QMessageBox::NoButton);
-	}
-}
-
-
-void QtFrontend::reportLocalizedError(const LocalizedError& e) {
-	if (e.isCritical()) {
-		QMessageBox::critical(mw, tr("Fatal"), e.message(), QMessageBox::Ok,
-				QMessageBox::NoButton, QMessageBox::NoButton);
-	} else {
-		QMessageBox::warning(mw, tr("Warning"), e.message(), QMessageBox::Ok,
-				QMessageBox::NoButton, QMessageBox::NoButton);
-	}
 }
 
 
@@ -363,16 +319,66 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	//-------------------------------------------------------------------------
 }
 
-void QtFrontend::fatalError(Error) {
-	throw GenericLocalizedError(
-			tr("Stopmotion cannot be started; it seems like it is already running."),
-			"Failed to get exclusive lock on command.log. Perhaps Stopmotion is already running.");
+void QtFrontend::handleException(UiException& e) {
+	bool unhandled = false;
+	switch (e.error()) {
+	case UiException::IsWarning:
+		switch (e.warning()) {
+		case UiException::unsupportedImageType:
+			QMessageBox::warning(0, tr("Unsupported image file type"),
+					tr("Only JPeg image files can be added to the animation"));
+			return;
+		case UiException::invalidAudioFormat:
+			QMessageBox::warning(0, tr("The selected audio file could not be loaded"),
+					tr("Perhaps it is corrupt."));
+			return;
+		case UiException::couldNotOpenFile:
+			QMessageBox::warning(0,
+					tr("Cannot open the selected file for reading"),
+					tr("The file %1 could not be opened").arg(e.string()));
+			return;
+		case UiException::failedToCopyFilesToWorkspace:
+			QMessageBox::warning(0,
+					tr("Could not copy file to workspace"),
+					tr("Failed to copy the following files to the workspace (~/.stopmotion): %1").arg(e.string()));
+			return;
+		case UiException::failedToInitializeAudioDriver:
+			QMessageBox::warning(0,
+					tr("Failed to initialize audio driver"),
+					tr("Sound will not work until this is corrected"));
+			break;
+		default:
+			unhandled = true;
+			break;
+		}
+		break;
+	case UiException::failedToGetExclusiveLock:
+		QMessageBox::critical(0,
+				tr("Stopmotion cannot be started."),
+				tr("Failed to get exclusive lock on command.log. Perhaps Stopmotion is already running."));
+		break;
+	case UiException::ArbitraryError:
+		QMessageBox::critical(0, tr("Fatal"), e.what());
+		break;
+	default:
+		unhandled = true;
+		break;
+	}
+	if (unhandled) {
+		QMessageBox::critical(0,
+				tr("Stopmotion threw and exception it could not handle."),
+				tr("Please raise a bug report."));
+	}
+	throw CriticalError();
 }
 
-void QtFrontend::updateOldPreferences(PreferencesTool *prefs)
-{
-	// Replace all occurences of '(DEFAULTPATH)' with '$IMAGEFILE'  (version 0.3 and 0.4)
-	// Replace all occurences of '/dev/xxx' with $VIDEODEVICE (version < 0.7)
+void QtFrontend::reportWarning(const char *message) {
+	QMessageBox::warning(0, tr("Warning"), message);
+}
+
+void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
+	// Replace all occurrences of '(DEFAULTPATH)' with '$IMAGEFILE'  (version 0.3 and 0.4)
+	// Replace all occurrences of '/dev/xxx' with $VIDEODEVICE (version < 0.7)
 	int numImports = prefs->getPreference("numberofimports", 1);
 	for (int i = 0; i < numImports; ++i) {
 		Preference startPref(QString("importstartdeamon%1")

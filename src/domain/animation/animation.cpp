@@ -21,6 +21,7 @@
 #include "animation.h"
 
 #include "src/foundation/logger.h"
+#include "src/foundation/uiexception.h"
 #include "src/technical/audio/ossdriver.h"
 #include "src/technical/video/videofactory.h"
 #include "src/technical/projectserializer.h"
@@ -112,11 +113,16 @@ void Animation::addFrames(int scene, int frame,
 		try {
 			params.addFrame(frameNames.get());
 			++added;
-		} catch (CopyFailedException&) {
-			isError = true;
-			error += "Cannot read file ";
-			error += frameNames.get();
-			error += "\n";
+		} catch (UiException& e) {
+			if (e.warning() != UiException::failedToCopyFilesToWorkspace)
+				throw;
+			if (!isError) {
+				error = frameNames.get();
+				isError = true;
+			} else {
+				error += ", ";
+				error += frameNames.get();
+			}
 		}
 		if (frontend->isOperationAborted()) {
 			return;
@@ -131,7 +137,7 @@ void Animation::addFrames(int scene, int frame,
 	if (showingProgress)
 		frontend->hideProgress();
 	if (isError)
-		frontend->reportError(error.c_str(), Frontend::warning);
+		throw UiException(UiException::failedToCopyFilesToWorkspace, error.c_str());
 }
 
 
@@ -158,9 +164,10 @@ void Animation::moveFrames(int32_t fromScene, int32_t fromFrame,
 }
 
 
-int Animation::addSound(int32_t scene, int32_t frameNumber,
+void Animation::addSound(int32_t scene, int32_t frameNumber,
 		const char *soundFile) {
-	TemporaryWorkspaceFile soundFileWs(soundFile);
+	TemporaryWorkspaceFile soundFileWs(soundFile,
+			WorkspaceFileType::sound());
 	std::auto_ptr<Sound> sound(new Sound());
 	std::stringstream ss;
 	std::stringstream::pos_type zeroOffset = ss.tellp();
@@ -172,26 +179,10 @@ int Animation::addSound(int32_t scene, int32_t frameNumber,
 	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
 	int32_t index = soundCount(scene, frameNumber);
-	try {
-		executor->execute(Commands::addSound, scene, frameNumber,
-				index, soundFileWs.basename(), soundName);
-	} catch (CouldNotOpenFileException&) {
-		frontend->reportError(
-				"Cannot open the selected audio file for reading.\n"
-				"Check that you have the right permissions set.\n"
-				"The animation will run without this sound if you\n"
-				"choose to play.", Frontend::warning);
-		return -1;
-	} catch (InvalidAudioFormatException&) {
-		frontend->reportError(
-				"The selected audio file is not a recognized\n"
-				"audio format. The animation will run without\n"
-				"this sound if you choose to play.", Frontend::warning);
-		return -2;
-	}
+	executor->execute(Commands::addSound, scene, frameNumber,
+			index, soundFileWs.basename(), soundName);
 	soundFileWs.retainFile();
 	WorkspaceFile::nextSoundNumber();
-	return 0;
 }
 
 
@@ -330,14 +321,15 @@ bool Animation::isUnsavedChanges() {
 
 void Animation::setImagePath(int32_t sceneNumber, int32_t frameNumber,
 		const char* newImagePath) {
-	TemporaryWorkspaceFile twf(newImagePath);
+	TemporaryWorkspaceFile twf(newImagePath,WorkspaceFileType::image());
 	executor->execute(Commands::setImage, sceneNumber, frameNumber, twf.basename());
 	twf.retainFile();
 }
 
 void Animation::duplicateImage(int32_t sceneNumber, int32_t frameNumber) {
 	const char* currentPath = getImagePath(sceneNumber, frameNumber);
-	TemporaryWorkspaceFile twf(currentPath, TemporaryWorkspaceFile::forceCopy);
+	TemporaryWorkspaceFile twf(currentPath, WorkspaceFileType::image(),
+			TemporaryWorkspaceFile::forceCopy);
 	executor->execute(Commands::setImage, sceneNumber, frameNumber, twf.basename());
 	twf.retainFile();
 }
@@ -388,11 +380,9 @@ void Animation::moveScene(int32_t sceneNumber, int32_t movePosition) {
 bool Animation::initAudioDevice() {
 	isAudioDriverInitialized = audioDriver->initialize();
 	if (!isAudioDriverInitialized && 0 < scenes->soundCount()) {
-		frontend->reportError(
-					"Cannot play sound. Check that you have the right\n"
-					"permissions and other programs do not block\n"
-					"the audio device. Audio will be disabled until you\n"
-					"have fixed the problem.", Frontend::warning);
+		UiException e(UiException::failedToInitializeAudioDriver);
+		// don't want to throw here because we aren't in an exception handler
+		frontend->handleException(e);
 	}
 	return isAudioDriverInitialized;
 }
@@ -438,7 +428,13 @@ void Animation::clearHistory() {
 
 void Animation::resync(std::exception& e) {
 	if (frontend)
-		frontend->reportError(e.what(), Frontend::critical);
+		frontend->reportWarning(e.what());
+	scenes->resync();
+}
+
+void Animation::resync(UiException& e) {
+	if (frontend)
+		frontend->handleException(e);
 	scenes->resync();
 }
 

@@ -23,6 +23,7 @@
 #include "src/config.h"
 #include "src/domain/undo/executor.h"
 #include "src/technical/stringiterator.h"
+#include "src/foundation/uiexception.h"
 
 #include <vector>
 #include <libxml/tree.h>
@@ -92,6 +93,10 @@ public:
 	 * Attempts to re-synch the UI after an error.
 	 */
 	void resync(std::exception& e);
+	/**
+	 * Attempts to re-synch the UI after a non-critical error.
+	 */
+	void resync(UiException& e);
 
 	/**
 	 * Inserts new frames into the animation model.
@@ -154,11 +159,8 @@ public:
 	 * @param scene The scene containing the frame to add the sound to.
 	 * @param frameNumber The number of the frame to add the sound to.
 	 * @param filename The path to the file with the sound
-	 * @return zero on success, less than zero on failure;
-	 * -1 = file is not readable
-	 * -2 = not a valid audio file
 	 */
-	int addSound(int32_t scene, int32_t frameNumber, const char *filename);
+	void addSound(int32_t scene, int32_t frameNumber, const char *filename);
 
 	/**
 	 * Removes the sound with index soundNumber from the frame with index
@@ -244,12 +246,6 @@ public:
 	 * @return the number of scenes in the animation.
 	 */
 	int sceneCount() const;
-
-	/**
-	  * Plays the frame with number frameNumber.
-	  * @param frameNumber the number of the frame to play.
-	  */
-	//void playFrame(int frameNumber);
 
 	void clearHistory();
 

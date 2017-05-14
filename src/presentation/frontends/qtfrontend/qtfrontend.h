@@ -31,7 +31,6 @@ class QProgressDialog;
 class QProgressBar;
 class QLabel;
 class QTimer;
-class LocalizedError;
 
 /**
  * Frontend for using the program through a GUI developed with the QT library.
@@ -68,11 +67,10 @@ public:
 	void setProgressInfo(const char *infoText);
 	bool isOperationAborted();
 	void processEvents();
-	void reportError(const char *message, ErrorType type);
-	void reportLocalizedError(const LocalizedError&);
 	int askQuestion(Question  question);
 	int runExternalCommand(const char *command);
-	void fatalError(Error);
+	void handleException(UiException&);
+	void reportWarning(const char *message);
 
 	/**
 	 * Set the Undo and Redo actions to be enabled or disabled according to the

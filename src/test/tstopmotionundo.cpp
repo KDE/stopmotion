@@ -192,7 +192,7 @@ public:
 	}
 	void reportError(const char *, ErrorType) {
 	}
-	void fatalError(Error) {
+	void reportWarning(Warning) {
 	}
 };
 

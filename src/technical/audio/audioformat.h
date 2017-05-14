@@ -22,18 +22,6 @@
 
 #include <exception>
 
-class CouldNotOpenFileException : public std::exception {
-public:
-	CouldNotOpenFileException();
-    const char* what() const throw();
-};
-
-class InvalidAudioFormatException : public std::exception {
-public:
-	InvalidAudioFormatException();
-    const char* what() const throw();
-};
-
 /**
  * Interface to be used by the implemented audio formats. They
  * will be responsible for decoding from their own format to raw PCM.

@@ -20,6 +20,7 @@
 #include "oggvorbis.h"
 
 #include "src/foundation/logger.h"
+#include "src/foundation/uiexception.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -72,7 +73,7 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 			Logger::get().logDebug("Not a valid oggfile");
 			free(oggFile);
 			oggFile = NULL;
-			throw InvalidAudioFormatException();
+			throw UiException(UiException::invalidAudioFormat);
 		}
 		// For some reason, ov_test does not necessarily take
 		// ownership of our file handle. We must only release
@@ -88,7 +89,7 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 			throw std::bad_alloc();
 		}
 		Logger::get().logDebug("Cannot open file '%s' for reading", file.path());
-		throw CouldNotOpenFileException();
+		throw UiException(UiException::couldNotOpenFile);
 	}
 }
 

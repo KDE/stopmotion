@@ -5,6 +5,7 @@ HEADERS += src/domain/undo/filelogger.h \
     src/domain/filenamevisitor.h \
     src/domain/observernotifier.h \
     src/foundation/logger.h \
+    src/foundation/uiexception.h \
     src/foundation/stringwriter.h \
     src/presentation/observer.h \
     src/domain/animation/animation.h \
@@ -125,6 +126,7 @@ SOURCES += src/config.cpp \
     src/domain/domainfacade.cpp \
     src/domain/observernotifier.cpp \
     src/foundation/logger.cpp \
+    src/foundation/uiexception.cpp \
     src/foundation/stringwriter.cpp \
     src/domain/animation/animation.cpp \
     src/domain/animation/animationimpl.cpp \
@@ -188,6 +190,7 @@ SOURCES += src/config.cpp \
     src/application/externalcommandwithtemporarydirectory.cpp \
     src/presentation/frontends/qtfrontend/aboutdialog.cpp \
     src/presentation/frontends/qtfrontend/devicetab.cpp \
+    src/presentation/frontends/frontend.cpp \
     src/domain/undo/command.cpp \
     src/domain/undo/undoredoobserver.cpp \
     src/domain/undo/commandlogger.cpp \
