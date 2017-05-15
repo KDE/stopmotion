@@ -68,6 +68,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/animation/animationimpl.cpp \
     ../domain/animation/scenevector.cpp \
     ../domain/animation/workspacefile.cpp \
+    ../domain/observernotifier.cpp \
     ../technical/audio/oggvorbis.cpp \
     ../technical/audio/audioformat.cpp \
     ../technical/util.cpp \
@@ -76,7 +77,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../technical/video/videoencoder.cpp \
     ../technical/audio/ossdriver.cpp \
     ../technical/projectserializer.cpp \
-    ../domain/observernotifier.cpp \
+    ../presentation/frontends/frontend.cpp \
     ../application/externalcommandwithtemporarydirectory.cpp \
     ../application/externalcommand.cpp \
     ../foundation/stringwriter.cpp \

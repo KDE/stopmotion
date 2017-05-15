@@ -190,9 +190,9 @@ public:
 	int runExternalCommand(const char *) {
 		return 0;
 	}
-	void reportError(const char *, ErrorType) {
+	void reportWarning(const char *) {
 	}
-	void reportWarning(Warning) {
+	void handleException(UiException&) {
 	}
 };
 
