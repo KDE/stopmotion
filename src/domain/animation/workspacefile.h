@@ -196,7 +196,10 @@ public:
 	 * @note The file is not kept open by this class.
 	 * @param filename The full path to the file.
 	 * @param type The type of file to be copied.
-	 * @throws CopyFailedException if the copy failed.
+	 * @throws UiException with code failedToCopyFilesToWorkspace if
+	 * the copy failed.
+	 * @throws UiException with code unsupportedImageType if an image
+	 * type that is not supported is passed.
 	 */
 	TemporaryWorkspaceFile(const char* filename, const WorkspaceFileType& type);
 	/**
@@ -206,7 +209,10 @@ public:
 	 * @note The file is not kept open by this class.
 	 * @param filename The full path to the file. Ownership is not passed.
 	 * @param type The type of file to be copied.
-	 * @throws CopyFailedException if the copy failed.
+	 * @throws UiException with code failedToCopyFilesToWorkspace if
+	 * the copy failed.
+	 * @throws UiException with code unsupportedImageType if an image
+	 * type that is not supported is passed.
 	 */
 	TemporaryWorkspaceFile(const char* filename, const WorkspaceFileType& type,
 			ForceCopy);

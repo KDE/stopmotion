@@ -43,7 +43,9 @@ HEADERS += texecutor.h \
     oomtestutil.h \
     testundo.h \
     testhome.h \
+    fakefiles.h \
     hash.h \
+    tworkspace.h \
     tstopmotionundo.h
 SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/undo/command.cpp \
@@ -89,7 +91,9 @@ SOURCES += \
     tcache.cpp \
     testundo.cpp \
     testhome.cpp \
+    fakefiles.cpp \
     hash.cpp \
+    tworkspace.cpp \
     tstopmotionundo.cpp
 FORMS += 
 RESOURCES += 

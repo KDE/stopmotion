@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2017 by Linuxstopmotion contributors;                   *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,27 +18,38 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QtTest/QtTest>
+#ifndef FAKEFILES_H_
+#define FAKEFILES_H_
 
-#include "texecutor.h"
-#include "tcache.h"
-#include "tstopmotionundo.h"
-#include "tworkspace.h"
+#include "oomtestutil.h"
 
-int main(int argc, char *argv[]) {
-	QCoreApplication app(argc, argv);
-	int overall = 0;
-	TestCommandFactory t1;
-	overall = QTest::qExec(&t1, argc, argv);
-	TestCache t2;
-	overall += QTest::qExec(&t2, argc, argv);
-	TestStopmotionUndo t3;
-	overall += QTest::qExec(&t3, argc, argv);
-	TestWorkspace t4;
-	overall += QTest::qExec(&t4, argc, argv);
-	if (overall == 0)
-		printf("Success!\n");
-	else
-		printf("Failed: %d\n", overall);
-	return overall;
-}
+class RealOggEmptyJpg : public MockableFileSystem {
+	MockableFileSystem* delegate;
+	FILE* fakeJpg;
+	FILE* fakePng;
+	int fakeReads;
+public:
+	RealOggEmptyJpg();
+	~RealOggEmptyJpg();
+	bool hasExtension(const char* filename, const char* extension);
+	bool isSound(const char* filename);
+	bool isJpg(const char* filename);
+	bool isPng(const char* filename);
+	void setDelegate(MockableFileSystem* mfs);
+	FILE* fopen(const char* filename, const char* mode);
+	FILE* freopen(const char* filename, const char* mode, FILE* fh);
+	int fclose(FILE* fh);
+	int fflush(FILE* fh);
+	size_t fread(void *out, size_t blockSize, size_t blockCount, FILE *fh);
+	size_t fwrite (const void *in, size_t blockSize, size_t blockCount, FILE *fh);
+	int access (const char *name, int type);
+	int ferror(FILE*);
+	int unlink(const char *name);
+	int ov_test(FILE *, OggVorbis_File *, const char *, long);
+	int ov_clear(OggVorbis_File *);
+	int ov_open(FILE *,OggVorbis_File *,const char *, long);
+	long ov_read(OggVorbis_File *,char *,int, int, int, int, int *);
+	char *getenv(const char *name);
+};
+
+#endif

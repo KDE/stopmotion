@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2017 by Linuxstopmotion contributors;                   *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,27 +18,25 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QtTest/QtTest>
+#ifndef TWORKSPACE_H_
+#define TWORKSPACE_H_
 
-#include "texecutor.h"
-#include "tcache.h"
-#include "tstopmotionundo.h"
-#include "tworkspace.h"
+#include <QObject>
 
-int main(int argc, char *argv[]) {
-	QCoreApplication app(argc, argv);
-	int overall = 0;
-	TestCommandFactory t1;
-	overall = QTest::qExec(&t1, argc, argv);
-	TestCache t2;
-	overall += QTest::qExec(&t2, argc, argv);
-	TestStopmotionUndo t3;
-	overall += QTest::qExec(&t3, argc, argv);
-	TestWorkspace t4;
-	overall += QTest::qExec(&t4, argc, argv);
-	if (overall == 0)
-		printf("Success!\n");
-	else
-		printf("Failed: %d\n", overall);
-	return overall;
-}
+class RealOggEmptyJpg;
+class TestHome;
+
+class TestWorkspace : public QObject {
+	Q_OBJECT
+
+	TestHome* testEnvFs;
+	RealOggEmptyJpg* mfs;
+public:
+	TestWorkspace();
+	~TestWorkspace();
+private slots:
+	void jpgsCanBeCopiedIntoWorkspace();
+	void nonJpgImagesCannotBeCopied();
+};
+
+#endif
