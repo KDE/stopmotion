@@ -1,3 +1,11 @@
+stopmotion (0.8.3-1) unstable; urgency=medium
+
+  * New upstream release
+    - repair testing issue (closes: #800059)
+    - don't bail on vgrabbj exit code 256 (closes: #782885)
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Tue, 27 Jun 2017 13:08:09 +0100
+
 stopmotion (0.8.2-1) unstable; urgency=medium
 
   * New upstream release
