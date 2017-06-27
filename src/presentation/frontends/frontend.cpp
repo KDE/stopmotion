@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2017 by Linuxstopmotion contributors;                   *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,7 +18,17 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "audioformat.h"
+#include "frontend.h"
 
-AudioFormat::~AudioFormat() {
+Frontend::~Frontend() {
+}
+
+Frontend::CriticalError::CriticalError() {
+}
+
+Frontend::CriticalError::~CriticalError() throw () {
+}
+
+const char* Frontend::CriticalError::what() const throw () {
+	return "Critical error. Program stopped.";
 }

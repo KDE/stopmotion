@@ -36,13 +36,16 @@ HEADERS += ../domain/undo/filelogger.h \
     ../application/externalcommandwithtemporarydirectory.h \
     ../application/externalcommand.h \
     ../foundation/stringwriter.h \
+    ../foundation/uiexception.h \
     ../foundation/logger.h
 HEADERS += texecutor.h \
 	tcache.h \
     oomtestutil.h \
     testundo.h \
     testhome.h \
+    fakefiles.h \
     hash.h \
+    tworkspace.h \
     tstopmotionundo.h
 SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/undo/command.cpp \
@@ -67,6 +70,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/animation/animationimpl.cpp \
     ../domain/animation/scenevector.cpp \
     ../domain/animation/workspacefile.cpp \
+    ../domain/observernotifier.cpp \
     ../technical/audio/oggvorbis.cpp \
     ../technical/audio/audioformat.cpp \
     ../technical/util.cpp \
@@ -75,10 +79,11 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../technical/video/videoencoder.cpp \
     ../technical/audio/ossdriver.cpp \
     ../technical/projectserializer.cpp \
-    ../domain/observernotifier.cpp \
+    ../presentation/frontends/frontend.cpp \
     ../application/externalcommandwithtemporarydirectory.cpp \
     ../application/externalcommand.cpp \
     ../foundation/stringwriter.cpp \
+    ../foundation/uiexception.cpp \
     ../foundation/logger.cpp
 SOURCES += \
     tmain.cpp \
@@ -86,7 +91,9 @@ SOURCES += \
     tcache.cpp \
     testundo.cpp \
     testhome.cpp \
+    fakefiles.cpp \
     hash.cpp \
+    tworkspace.cpp \
     tstopmotionundo.cpp
 FORMS += 
 RESOURCES += 

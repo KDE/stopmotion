@@ -23,6 +23,7 @@
 #include "texecutor.h"
 #include "tcache.h"
 #include "tstopmotionundo.h"
+#include "tworkspace.h"
 
 int main(int argc, char *argv[]) {
 	QCoreApplication app(argc, argv);
@@ -33,6 +34,8 @@ int main(int argc, char *argv[]) {
 	overall += QTest::qExec(&t2, argc, argv);
 	TestStopmotionUndo t3;
 	overall += QTest::qExec(&t3, argc, argv);
+	TestWorkspace t4;
+	overall += QTest::qExec(&t4, argc, argv);
 	if (overall == 0)
 		printf("Success!\n");
 	else

@@ -46,13 +46,6 @@ public:
 	const char* what() const throw();
 };
 
-class LocalizedError : public std::exception {
-public:
-	virtual ~LocalizedError() throw() = 0;
-	virtual const QString& message() const throw() = 0;
-	virtual bool isCritical() const throw() = 0;
-};
-
 class Util {
 public:
 	/**

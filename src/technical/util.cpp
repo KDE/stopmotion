@@ -298,6 +298,3 @@ void Util::ensurePathExists(const char* path) {
 		throw DirectoryCreationException(path);
 	}
 }
-
-LocalizedError::~LocalizedError() throw() {
-}

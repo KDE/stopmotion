@@ -261,13 +261,15 @@ int NonGUIFrontend::checkFiles(const char *directory) {
 }
 
 
-void NonGUIFrontend::reportError( const char *message, ErrorType type ) {
-	if (type == warning) {
-		printf("Warning: %s\n", message);
-	}
-	else {
-		printf("Critical: %s\n", message);
-	}
+void NonGUIFrontend::handleException(UiException& e) {
+	printf("%s\n", e.what());
+	if (e.warning() == UiException::IsError)
+		throw CriticalError();
+}
+
+
+void NonGUIFrontend::reportWarning(const char *message) {
+	printf("Warning: %s\n", message);
 }
 
 
@@ -278,9 +280,4 @@ int NonGUIFrontend::askQuestion(Question) {
 
 int NonGUIFrontend::runExternalCommand(const char *) {
 	return 1;
-}
-
-void NonGUIFrontend::fatalError(Error) {
-	printf("Could not get exclusive lock. This error shouldn't happen in the non-gui front end :-(");
-	exit(2);
 }

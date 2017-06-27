@@ -78,7 +78,7 @@ CommandAddFactory::Parameters::~Parameters() {
 const char* CommandAddFactory::Parameters::addFrame(const char* filename) {
 	assert (twfCount != frameCount);
 	TemporaryWorkspaceFile* p = twfs + twfCount;
-	new (p) TemporaryWorkspaceFile(filename);
+	new (p) TemporaryWorkspaceFile(filename, WorkspaceFileType::image());
 	++twfCount;
 	return p->path();
 }

@@ -21,6 +21,7 @@
 #include "workspacefile.h"
 
 #include "src/technical/util.h"
+#include "src/foundation/uiexception.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -89,6 +90,64 @@ void getFreshFilename(char*& path, const char*& namePart,
 	namePart = path + indexOfName;
 }
 
+char upper(char c) {
+	return 'a' <= c && c <= 'z'? c - ('a' - 'A') : c;
+}
+
+/** ASCII case-insensitive string compare. */
+bool asciiEqualI(const char* a, const char* b) {
+	for (; *a != '\0' && *b != '\0'; ++a, ++b) {
+		char ca = upper(*a);
+		char cb = upper(*b);
+		if (ca != cb)
+			return false;
+	}
+	return true;
+}
+
+}
+
+WorkspaceFileType::~WorkspaceFileType() {
+}
+
+class ImageFileType : public WorkspaceFileType {
+public:
+	static ImageFileType* instance;
+	const char* preferredExtension(const char*) const {
+		return ".jpg";
+	}
+	bool isType(const char* path) const {
+		const char* extension = strrchr(path,'.');
+		return extension &&
+				(asciiEqualI(extension, ".jpg") || asciiEqualI(extension, ".jpeg"));
+	}
+};
+
+class SoundFileType : public WorkspaceFileType {
+public:
+	static SoundFileType* instance;
+	const char* preferredExtension(const char*) const {
+		return ".ogg";
+	}
+	bool isType(const char* path) const {
+		const char* extension = strrchr(path,'.');
+		return extension && asciiEqualI(extension, ".ogg");
+	}
+};
+
+ImageFileType* ImageFileType::instance;
+SoundFileType* SoundFileType::instance;
+
+const WorkspaceFileType& WorkspaceFileType::image() {
+	if (!ImageFileType::instance)
+		ImageFileType::instance = new ImageFileType();
+	return *ImageFileType::instance;
+}
+
+const WorkspaceFileType& WorkspaceFileType::sound() {
+	if (!SoundFileType::instance)
+		SoundFileType::instance = new SoundFileType();
+	return *SoundFileType::instance;
 }
 
 /**
@@ -96,13 +155,13 @@ void getFreshFilename(char*& path, const char*& namePart,
  * @param basename The name of the file.
  * @param inFrames True for a sound or image file.
  */
-void WorkspaceFile::setFilename(const char* basename, bool inFrames = false) {
+void WorkspaceFile::setFilename(const char* basename, bool inFrames) {
 	namePart = 0;
 	delete[] fullPath;
 	fullPath = 0;
 	std::stringstream p;
 	if (p.fail())
-		throw CopyFailedException();
+		throw UiException(UiException::failedToCopyFilesToWorkspace);
 	if (inFrames) {
 		p << workspacePathFrames;
 	} else {
@@ -112,11 +171,11 @@ void WorkspaceFile::setFilename(const char* basename, bool inFrames = false) {
 	p << basename;
 	int size = p.tellp();
 	if (p.fail())
-		throw CopyFailedException();
+		throw UiException(UiException::failedToCopyFilesToWorkspace);
 	fullPath = new char[size + 1];
 	p.read(fullPath, size);
 	if (p.fail())
-		throw CopyFailedException();
+		throw UiException(UiException::failedToCopyFilesToWorkspace);
 	fullPath[size] = '\0';
 	namePart = fullPath + indexOfName;
 }
@@ -237,17 +296,21 @@ void WorkspaceFile::swap(WorkspaceFile& w) {
 	namePart = t0;
 }
 
-void TemporaryWorkspaceFile::copyToWorkspace(const char* filename) {
-	const char* extension = strrchr(filename,'.');
-	getFreshFilename(fullPath, namePart, extension);
+void TemporaryWorkspaceFile::copyToWorkspace(const char* filename,
+		const WorkspaceFileType& type) {
+	if (!type.isType(filename)) {
+		throw UiException(UiException::unsupportedImageType);
+	}
+	getFreshFilename(fullPath, namePart, type.preferredExtension(filename));
 	toBeDeleted = false;
 	if (!Util::copyFile(fullPath, filename)) {
-		throw CopyFailedException();
+		throw UiException(UiException::failedToCopyFilesToWorkspace);
 	}
 	toBeDeleted = true;
 }
 
-TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename)
+TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename,
+		const WorkspaceFileType& type)
 		: fullPath(0), namePart(0), toBeDeleted(false) {
 	// not a totally foolproof test...
 	if (strstr(filename, "/.stopmotion/frames/") != NULL) {
@@ -257,14 +320,14 @@ TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename)
 		strncpy(fullPath, filename, size);
 		namePart = strrchr(fullPath,'/') + 1;
 	} else {
-		copyToWorkspace(filename);
+		copyToWorkspace(filename, type);
 	}
 }
 
 TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename,
-		ForceCopy)
+		const WorkspaceFileType& type, ForceCopy)
 		: fullPath(0), namePart(0), toBeDeleted(false) {
-	copyToWorkspace(filename);
+	copyToWorkspace(filename, type);
 }
 
 TemporaryWorkspaceFile::~TemporaryWorkspaceFile() {
@@ -274,13 +337,6 @@ TemporaryWorkspaceFile::~TemporaryWorkspaceFile() {
 	delete[] fullPath;
 	fullPath = 0;
 	namePart = 0;
-}
-
-CopyFailedException::CopyFailedException() {
-}
-
-const char* CopyFailedException::what() const throw() {
-	return "Failed to copy file to workspace directory (~/.stopmotion).";
 }
 
 ExportDirectory::ExportDirectory() : p(0) {

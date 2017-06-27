@@ -17,10 +17,30 @@ You need the following packages installed to compile:
 - vorbisfile (`libvorbis-dev`)
 - `pkg-config`
 
-Then you can type the following to build:
+For example, in Ubuntu or Debian you would open a terminal and type:
 
-    qmake
+    sudo apt install build-essential gdb libqt4-dev qt4-dev-tools libtar-dev libxml2-dev libvorbis-dev pkg-config git vgrabbj uvccapture
+
+In OpenSuSE you first type:
+
+    sudo zypper install -t pattern devel_qt4
+    sudo zypper install git libvorbis-devel libxml2-devel
+
+Then open your browser and visit `https://rpm.pbone.net` and find both
+`libtar`, `libtar1` and `libtar-devel` for the correct OS version, each
+with the exact same version. Then install them like this (changing the
+filenames as appropriate):
+
+    sudo rpm -i ~/Downloads/libtar1-1.2.20-2.8.x86_64.rpm ~/Downloads/libtar-1.2.20-2.8.x86_64.rpm ~/Downloads/libtar-devel-1.2.20-2.8.x86_64.rpm
+
+Once the dependencies are installed you can navigate to the source
+code directory and type the following to build Stopmotion:
+
+    qmake -qt=4
     sudo make install
+
+If `qmake -qt=4` does not work, you can just use `qmake`.
+
 
 WHO CAN USE IT
 --------------
