@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -130,7 +130,6 @@ void ToolsMenu::setupUi() {
 	ui->speedChooser->setMinimum(1);
 	ui->speedChooser->setMaximum(30);
 	ui->speedChooser->setValue(1);
-	ui->speedChooser->setFocusPolicy( Qt::NoFocus );
 	ui->speedChooser->setValue(PreferencesTool::get()->getPreference("fps", 10));
 	connect( ui->speedChooser, SIGNAL(valueChanged(int)), runAnimationHandler, SLOT(setSpeed(int)));
 	connect( ui->speedChooser, SIGNAL( valueChanged(int) ), cameraHandler, SLOT(setPlaybackSpeed(int)) );
@@ -413,8 +412,8 @@ void ToolsMenu::changeViewingMode(int index) {
 		}
 	} else {
 		QMessageBox::warning(this, tr("Notice"), tr(
-				"Playback only currently works when running the grabber \n"
-				"as a daemon. Go to the preferences menu (CTRL+P) to switch \n"
+				"Playback only currently works when running the grabber "
+				"as a daemon. Go to the preferences menu (CTRL+P) to switch "
 				"to running the image grabbing as a daemon."),
 				QMessageBox::Ok,
 				QMessageBox::NoButton,

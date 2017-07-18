@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2016 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -436,7 +436,7 @@ bool FrameView::setViewMode(ImageMode mode) {
 	if (mode == this->mode)
 		return true;
 	if (!grabber)
-		return false;
+		return true;
 	if (mode == imageModePlayback) {
 		if ( grabber->isGrabberProcess() ) {
 			playbackTimer.start(1000/playbackSpeed);
