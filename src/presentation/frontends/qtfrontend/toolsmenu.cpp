@@ -133,6 +133,7 @@ void ToolsMenu::setupUi() {
 	ui->speedChooser->setValue(PreferencesTool::get()->getPreference("fps", 10));
 	connect( ui->speedChooser, SIGNAL(valueChanged(int)), runAnimationHandler, SLOT(setSpeed(int)));
 	connect( ui->speedChooser, SIGNAL( valueChanged(int) ), cameraHandler, SLOT(setPlaybackSpeed(int)) );
+	connect( ui->speedChooser, SIGNAL(editingFinished()), frameBar, SLOT(setFocus()) );
 
 	ui->playButton->setIcon( QPixmap(playicon));
 	ui->playButton->setFocusPolicy( Qt::NoFocus );
