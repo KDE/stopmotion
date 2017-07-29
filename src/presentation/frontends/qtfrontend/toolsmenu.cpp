@@ -80,27 +80,24 @@ ToolsMenu::~ToolsMenu() {
 }
 
 void ToolsMenu::setupUi() {
+	setFocusPolicy(Qt::ClickFocus);
+
 	ui->addFramesButton->setIcon( QPixmap(addframeicon) );
-	ui->addFramesButton->setFocusPolicy( Qt::NoFocus );
 	connect(ui->addFramesButton, SIGNAL(clicked()), modelHandler, SLOT(chooseFrame()));
 
 	ui->removeFramesButton->setIcon( QPixmap(removeframeicon) );
-	ui->removeFramesButton->setFocusPolicy( Qt::NoFocus );
 	connect(ui->removeFramesButton, SIGNAL(clicked()), modelHandler, SLOT(removeFrames()));
 
 	runAnimationHandler->setRemoveFramesButton(ui->removeFramesButton);
 	modelHandler->setRemoveFramesButton(ui->removeFramesButton);
 
 	ui->addSceneButton->setIcon( QPixmap(newscene) );
-	ui->addSceneButton->setFocusPolicy( Qt::NoFocus );
 	connect(ui->addSceneButton, SIGNAL(clicked()), modelHandler, SLOT(newScene()));
 
 	ui->removeSceneButton->setIcon( QPixmap(removescene) );
-	ui->removeSceneButton->setFocusPolicy( Qt::NoFocus );
 	connect(ui->removeSceneButton, SIGNAL(clicked()), modelHandler, SLOT(removeScene()));
 
 	ui->cameraButton->setIcon( QPixmap(cameraon) );
-	ui->cameraButton->setFocusPolicy( Qt::NoFocus );
 	cameraHandler->setCameraButton(ui->cameraButton);
 	connect( ui->cameraButton, SIGNAL(clicked()), cameraHandler, SLOT(toggleCamera()) );
 
@@ -108,13 +105,10 @@ void ToolsMenu::setupUi() {
 	connect( cameraHandler, SIGNAL(cameraStateChanged(bool)), this, SLOT(activateCaptureGroup(bool)) );
 
 	ui->captureButton->setIcon(  QPixmap(captureicon) );
-	ui->captureButton->setFocusPolicy( Qt::NoFocus );
 	connect(ui->captureButton, SIGNAL(clicked()), cameraHandler, SLOT(captureFrame()));
 
-	ui->viewChooseCombo->setFocusPolicy( Qt::NoFocus );
 	connect(ui->viewChooseCombo, SIGNAL(activated (int)),this, SLOT(changeViewingMode(int)));
 
-	ui->unitChooseCombo->setFocusPolicy( Qt::NoFocus );
 	ui->unitChooseCombo->setEnabled(false);
 	connect(ui->unitChooseCombo, SIGNAL(activated (int)),this, SLOT(changeUnitMode(int)));
 
@@ -123,7 +117,6 @@ void ToolsMenu::setupUi() {
 	ui->mixSlider->setPageStep(1);
 	ui->mixSlider->setValue(2);
 	ui->mixSlider->setTickPosition(QSlider::TicksBelow);
-	ui->mixSlider->setFocusPolicy( Qt::NoFocus );
 	connect( ui->mixSlider, SIGNAL(valueChanged(int)), cameraHandler, SLOT(setMixCount(int)) );
 	connect( ui->mixSlider, SIGNAL(valueChanged(int)), this, SLOT(updateSliderValue(int)) );
 
@@ -136,58 +129,49 @@ void ToolsMenu::setupUi() {
 	connect( ui->speedChooser, SIGNAL(editingFinished()), frameBar, SLOT(setFocus()) );
 
 	ui->playButton->setIcon( QPixmap(playicon));
-	ui->playButton->setFocusPolicy( Qt::NoFocus );
 
 	runAnimationHandler->setPlayButton(ui->playButton);
 	connect(ui->playButton, SIGNAL(clicked()), runAnimationHandler, SLOT(runAnimation()));
 	ui->playButton->setEnabled(false);
 
 	ui->nextFrameButton->setIcon( QPixmap(fastforwardicon) );
-	ui->nextFrameButton->setFocusPolicy( Qt::NoFocus );
 	ui->nextFrameButton->setAutoRepeat(true);
 	connect( ui->nextFrameButton, SIGNAL(clicked()),
 			frameBar, SLOT(selectNextFrame()) );
 	ui->nextFrameButton->setEnabled(false);
 
 	ui->previousFrameButton->setIcon( QIcon(QPixmap(rewindicon)) );
-	ui->previousFrameButton->setFocusPolicy( Qt::NoFocus );
 	ui->previousFrameButton->setAutoRepeat(true);
 	connect( ui->previousFrameButton, SIGNAL(clicked()),
 			frameBar, SLOT(selectPreviousFrame()) );
 	ui->previousFrameButton->setEnabled(false);
 
 	ui->toEndButton->setIcon( QIcon(QPixmap(steptoendicon)) );
-	ui->toEndButton->setFocusPolicy( Qt::NoFocus );
 	connect( ui->toEndButton, SIGNAL(clicked()),
 			frameBar, SLOT(selectNextScene()) );
 	ui->toEndButton->setEnabled(false);
 
 	ui->toBeginningButton->setIcon( QIcon(QPixmap(steptobeginningicon)) );
-	ui->toBeginningButton->setFocusPolicy( Qt::NoFocus );
 	connect( ui->toBeginningButton, SIGNAL(clicked()),
 			frameBar, SLOT(selectPreviousScene()) );
 	ui->toBeginningButton->setEnabled(false);
 
 	ui->stopButton->setIcon( QIcon(QPixmap(stopicon)) );
-	ui->stopButton->setFocusPolicy( Qt::NoFocus );
 	connect( ui->stopButton, SIGNAL(clicked()), runAnimationHandler, SLOT(stopAnimation()));
 	ui->stopButton->setEnabled(false);
 
 	ui->pauseButton->setIcon( QIcon(QPixmap(pauseicon)) );
-	ui->pauseButton->setFocusPolicy( Qt::NoFocus );
 	ui->pauseButton->setEnabled(false);
 	runAnimationHandler->setPauseButton(ui->pauseButton);
 	connect(ui->pauseButton, SIGNAL(clicked()), runAnimationHandler, SLOT(pauseAnimation()));
 
 	ui->loopButton->setIcon( QIcon(QPixmap(loopicon)) );
-	ui->loopButton->setFocusPolicy( Qt::NoFocus );
 	runAnimationHandler->setLoopButton(ui->loopButton);
 	connect( ui->loopButton, SIGNAL(clicked()), runAnimationHandler, SLOT(toggleLooping()) );
 	ui->loopButton->setEnabled(false);
 
 	//Launcher for the Gimp.
 	ui->launchGimp->setIcon(QIcon(QPixmap(gimpicon)));
-	ui->launchGimp->setFocusPolicy(Qt::NoFocus);
 	connect(ui->launchGimp, SIGNAL(clicked()), modelHandler, SLOT(editCurrentFrame()));
 }
 
