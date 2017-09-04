@@ -61,7 +61,7 @@ void DomainFacade::setMostRecentProject() {
 	const char *first = DomainFacade::getFacade()->getProjectFile();
 	PreferencesTool *prefs = PreferencesTool::get();
 	if (first) {
-		prefs->setPreference("projectFile", first, false);
+		prefs->setPreference("projectFile", first);
 	} else {
 		prefs->removePreference("projectFile");
 	}
@@ -69,14 +69,18 @@ void DomainFacade::setMostRecentProject() {
 		Preference prefsFirst("mostRecent");
 		if (!prefsFirst.equals(first)) {
 			Preference second("secondMostRecent");
-			prefs->setPreference("mostRecent", first, false);
-			prefs->setPreference("secondMostRecent", prefsFirst.get(), false);
+			prefs->setPreference("mostRecent", first);
+			prefs->setPreference("secondMostRecent", prefsFirst.get());
 			if (!second.equals(first)) {
-				prefs->setPreference("thirdMostRecent", second.get(), false);
+				prefs->setPreference("thirdMostRecent", second.get());
 			}
 		}
 	}
-	prefs->flushPreferences();
+	try {
+		prefs->flush();
+	} catch (UiException& ex) {
+		DomainFacade::getFacade()->getFrontend()->handleException(ex);
+	}
 }
 
 DomainFacade::DomainFacade() {

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -140,8 +140,7 @@ void DeviceTab::makeGUI()
 }
 
 
-void DeviceTab::initialize()
-{
+void DeviceTab::initialize() {
 	Logger::get().logDebug("Initializing video device settings");
 	PreferencesTool *pref = PreferencesTool::get();
 
@@ -226,14 +225,10 @@ void DeviceTab::initialize()
 	}
 	if (0 <= newActive)
 		deviceTable->setCurrentCell(newActive, 0);
-
-	this->apply();
-	pref->flushPreferences();
 }
 
 
-void DeviceTab::apply()
-{
+void DeviceTab::apply() {
 	PreferencesTool *prefs = PreferencesTool::get();
 
 	// Remove old preferences
@@ -249,20 +244,19 @@ void DeviceTab::apply()
 	// Set new preferences
 	numDevices = deviceTable->rowCount();
 	if (numDevices > 0) {
-		prefs->setPreference("numDevices", numDevices, true);
-		prefs->setPreference("activeVideoDevice", deviceTable->currentRow(), true);
+		prefs->setPreference("numDevices", numDevices);
+		prefs->setPreference("activeVideoDevice", deviceTable->currentRow());
 		for (int i = 0; i < numDevices; ++i) {
 			prefs->setPreference(QString("deviceName%1").arg(i).toUtf8().constData(),
-					deviceTable->item(i, 0)->text().toUtf8().constData(), true);
+					deviceTable->item(i, 0)->text().toUtf8().constData());
 			prefs->setPreference(QString("deviceDescription%1").arg(i).toUtf8().constData(),
-					deviceTable->item(i, 1)->text().toUtf8().constData(), true);
+					deviceTable->item(i, 1)->text().toUtf8().constData());
 			prefs->setPreference(QString("device%1").arg(i).toUtf8().constData(),
-					deviceStrings[i].toUtf8().constData(), true);
+					deviceStrings[i].toUtf8().constData());
 		}
-	}
-	else {
-		prefs->setPreference("numDevices", -1, true);
-		prefs->setPreference("activeVideoDevice", -1, true);
+	} else {
+		prefs->setPreference("numDevices", -1);
+		prefs->setPreference("activeVideoDevice", -1);
 	}
 }
 

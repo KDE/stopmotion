@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -46,7 +46,7 @@ public:
 	/**
 	 * Retrieves the value associated with the key passed in the constructor.
 	 * If there was no such value, the pointer passed as the default value in
-	 * the contsructor is returned. Otherwise, null is returned.
+	 * the constructor is returned. Otherwise, null is returned.
 	 * @return The associated value (which becomes invalid after this object
 	 * goes out of scope), the default value (which is not a copy), or null.
 	 * Ownership is not returned.
@@ -64,145 +64,150 @@ public:
 /**
  * A xml based tool for adding, changing and removing of
  * various preferences. Everything is saved to a xml organized file
- * and can be readed by the tool for later usage.
- * 
+ * and can be read by the tool for later usage.
+ *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class PreferencesTool
-{
+class PreferencesTool {
 public:
 	/**
 	 * Retrieves the instance of the PreferencesTool class.
 	 * @return the PreferencesTool singleton instance.
 	 */
 	static PreferencesTool* get();
-	
+
 	/**
-	 * Sets the file to store preferences in.
+	 * Loads preferences from the file.
 	 * @param filePath the path to the file where the preferences are
 	 * stored.
-	 * @param version the version of the program
-	 * @return true if file exists. false if the file doesn't exists
-	 * and the preferencesTool makes it.
+	 * @return true if the file is loaded correctly, otherwise false.
 	 */
-	bool setPreferencesFile(const char* filePath, const char* version);
-	
+	bool load(const char* filePath);
+
+	/**
+	 * Sets the preferences all to default values.
+	 * @param version The version number to write into the preferences.
+	 * @param filePath The path to save the preferences to when flushed.
+	 */
+	void setDefaultPreferences(const char* version);
+
+	/**
+	 * Checks if the version matches the string given.
+	 * @param version The version to check.
+	 * @return true if the version matches the version parameter, false if it does not.
+	 */
+	bool isVersion(const char* version);
+
 	/**
 	 * Sets the version of the preference file.
 	 * @param version the version number of the preference file
 	 */
  	void setVersion(const char *version);
-	
+
 	/**
 	 * Returns the version number of the preference file or 0 if
-	 * there are no version tag.
+	 * there is no version tag.
 	 * @return the version number of the preference file or 0 if
-	 * there are no version tag.
+	 * there is no version tag.
 	 */
  	const char* getOldVersion();
-	
+
 	/**
 	 * Adds a string preference.
 	 * @param key the key for retrieving the preference.
 	 * @param attribute the attribute for the preference.
-	 * @param flushLater true if you don't want the preferencesTool to flush
-	 * the preferences to disk at once. This is given for to allow 
-	 * optimalization when several preferences ar saved at the same time.
-	 * flushPreferences() should be called at once after the preferences are
-	 * set to store them to disk.
-	 * @return true if the preference was succesfully saved. If flushLater is
-	 * set to true this function will return true automaticaly.
+	 * flushPreferences() should be called at once after the all preferences
+	 * are set to store them to disk.
 	 */
-	bool setPreference(const char* key, const char* attribute, bool flushLater = false);
-	
+	void setPreference(const char* key, const char* attribute);
+
 	/**
 	 * Adds an int preference.
 	 * @param key the key for retrieving the preference.
 	 * @param attribute the attribute for the preference.
-	 * @param flushLater true if you don't want the preferencesTool to flush
-	 * the preferences to disk at once. This is given for to allow 
-	 * optimalization when several preferences ar saved at the same time.
-	 * flushPreferences() should be called at once after the preferences are
-	 * set to store them to disk.
-	 * @return true if the preference was succesfully saved. If flushLater is
-	 * set to true this function will return true automaticaly.
+	 * flushPreferences() should be called at once after the all preferences
+	 * are set to store them to disk.
 	 */
-	bool setPreference(const char* key, const int attribute, bool flushLater = false);
-	
+	void setPreference(const char* key, const int attribute);
+
 	/**
 	 * Retrieves a string preference.
 	 * @param key the key of the preference to retrieve.
 	 * @return the attribute for the given key or null if the key wasn't found.
 	 */
 	const char* getPreference(const char* key);
-	
+
 	/**
 	 * Retrieves an int preference.
 	 * @param key the key of the preference to retrieve.
 	 * @param defaultValue a default value for preferences which aren't set
 	 * by the user yet.
-	 * @return the attribute for the given key or "defaultValue" if the key 
+	 * @return the attribute for the given key or "defaultValue" if the key
 	 * wasn't found.
 	 */
 	int getPreference(const char* key, const int defaultValue);
-	
+
 	/**
-	 * Removes the preference with the key "key". (Which, in practice, means 
+	 * Removes the preference with the key "key". (Which, in practice, means
 	 * setting it to default).
 	 * @param key the key of the preference to remove.
 	 */
 	void removePreference(const char* key);
-	
+
+	/**
+	 * Sets the path that the preferences will be saved to.
+	 * @param path The path to save to.
+	 * @param wantSave true if the preferences should be saved to this file at
+	 * the earliest opportunity. Should be true if the path set is different to
+	 * the path loaded from.
+	 */
+	void setSavePath(const char* path, bool wantSave);
+
 	/**
 	 * Flushes the preferences to the file specified with setPreferencesFile(..).
-	 * @return true if the preferences were succesfully saved.
+	 * @throw UiException if there is an error.
 	 */
-	bool flushPreferences();
-	
-	
+	void flush();
+
+
 protected:
 	/**
-	 * Protected constructor to deny external instanciation of the singleton.
+	 * Protected constructor to deny external instantiation of the singleton.
 	 */
 	PreferencesTool();
-	
+
 	/**
 	 * Cleans up after the preferencestool.
 	 */
 	~PreferencesTool();
-	
+
 private:
-	/**The singleton instance of this class.*/
+	/** The singleton instance of this class.*/
 	static PreferencesTool *preferencesTool;
-	
+
 	xmlDocPtr doc;
-	xmlDtdPtr dtd; 
+	xmlDtdPtr dtd;
 	xmlNodePtr rootNode;
 	xmlNodePtr preferences;
 	xmlNodePtr versionNode;
-	
+	bool dirty;
+
 	char *preferencesFile;
 	char *oldVersion;
-	
+
 	/**
 	 * Retrieves the node with key "key".
 	 * @param key the key of the node to retrieve.
 	 * @return the node with the given key.
 	 */
 	xmlNodePtr findNode(const char* key);
-	
+
 	/**
-	 * Checks if the file at filePath exists.
-	 * @return true if the file exist.
-	 */
-	bool fileExists(const char* filePath);
-	
-	/**
-	 * Checks if the preferencestool has been initialized and exits with an error
+	 * Checks if the preferences tool has been initialized and exits with an error
 	 * if it hasn't.
 	 */
 	void checkInitialized();
-	
+
 	/**
 	 * Cleans the xml tree.
 	 */

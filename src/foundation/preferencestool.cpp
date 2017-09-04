@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,7 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #include "preferencestool.h"
+#include "logger.h"
+#include "uiexception.h"
 
 #include <string.h>
 #include <sys/types.h>
@@ -34,123 +37,111 @@ PreferencesTool* PreferencesTool::preferencesTool = 0;
 
 PreferencesTool::PreferencesTool() :
 		doc(0), dtd(0), rootNode(0), preferences(0), versionNode(0),
-		preferencesFile(0), oldVersion(0) {
+		dirty(false), preferencesFile(0), oldVersion(0) {
 	LIBXML_TEST_VERSION;
 }
 
 
 PreferencesTool::~PreferencesTool() {
 	cleanTree();
-	
 	delete[] preferencesFile;
-	preferencesFile = NULL;
-
-	delete [] oldVersion;
-	oldVersion = NULL;
+	delete[] oldVersion;
 }
 
 
 PreferencesTool* PreferencesTool::get() {
-	//Lazy initialization
 	if (preferencesTool == NULL) {
 		preferencesTool = new PreferencesTool();
 	}
 	return preferencesTool;
 }
 
+void PreferencesTool::setSavePath(const char* s, bool wantSave) {
+	unsigned long length = strlen(s) + 1;
+	preferencesFile = new char[length];
+	strncpy(preferencesFile, s, length);
+	if (wantSave)
+		dirty= true;
+}
 
-bool PreferencesTool::setPreferencesFile( const char *filePath, const char *version ) {
+bool PreferencesTool::load(const char* filePath) {
 	xmlNode *node        = NULL;
  	char* currentVersion = NULL;
 	
-	if (preferencesFile != NULL) {
+	if (preferencesFile) {
 		delete [] preferencesFile;
 		preferencesFile = NULL;
 	}
 	
-	if (doc != NULL) {
+	if (doc) {
 		cleanTree();
 	}
-	
-	//Deepcopies the path
-	preferencesFile = new char[strlen(filePath)+1];
-	strcpy(preferencesFile, filePath);
+	dirty = false;
 
-	if ( fileExists(filePath) ) {
-		//Parse the xml file as an xml tree
-		doc = xmlReadFile(filePath, NULL, 0);
-		if (doc == NULL) {
-			printf("Could not parse the preferences file");
-		}
+	doc = xmlReadFile(filePath, NULL, 0);
+	if (!doc)
+		return false;
 
-		rootNode = xmlDocGetRootElement(doc);
+	rootNode = xmlDocGetRootElement(doc);
+	if (!doc)
+		return false;
 
-		node = rootNode->children;
-		for (; node; node = node->next) {
-			if (node->type == XML_ELEMENT_NODE) {
-				if (xmlStrEqual(node->name, BAD_CAST "version")) {
-					versionNode = node;
-				}
+	node = rootNode->children;
+	for (; node; node = node->next) {
+		if (node->type == XML_ELEMENT_NODE) {
+			if (xmlStrEqual(node->name, BAD_CAST "version")) {
+				versionNode = node;
 			}
 		}
-		currentVersion = (char*)xmlGetProp(versionNode, BAD_CAST "version");
-
-		//There are no version in the file
-		if (currentVersion == NULL) {
-			cleanTree();
-		}
-		else {
-			//The version in the file is wrong
-			if (strcmp(currentVersion, version) != 0) {
-				oldVersion = new char[strlen(currentVersion)+1];
-				strcpy(oldVersion, currentVersion);
-				cleanTree();
+		if (node->type == XML_ELEMENT_NODE) {
+			if (xmlStrEqual(node->name, BAD_CAST "preferences")) {
+				preferences = node;
 			}
-			xmlFree((xmlChar*)currentVersion);
 		}
 	}
-
-	if (rootNode != NULL) {
-		node = rootNode->children;
-		for (; node; node = node->next) {
-			if (node->type == XML_ELEMENT_NODE) {
-				if (xmlStrEqual(node->name, BAD_CAST "preferences")) {
-					preferences = node;
-				}
-			}
-		}
-		
-		if (preferences == NULL) {
-			printf("Error while parsing preferences file");
-		}
-		return true;
-	}
-	//If there are no file, no version or if the version is wrong a new preferences 
-	//file are made.
-	else {
-		//Create the xml tree
-		doc = xmlNewDoc(BAD_CAST "1.0");
-		dtd = xmlCreateIntSubset(doc, BAD_CAST "root", NULL, BAD_CAST filePath);
-		
-		rootNode = xmlNewNode(NULL, BAD_CAST "root");
-		xmlNewProp(rootNode, BAD_CAST "xml:lang", BAD_CAST "en");
-		xmlNewProp(rootNode, BAD_CAST "title", BAD_CAST "Preferences");
-		xmlDocSetRootElement(doc, rootNode);
-		
-		versionNode = xmlNewChild(rootNode, NULL, BAD_CAST "version", NULL);
-		xmlNewProp(versionNode, BAD_CAST "version", BAD_CAST version);
-		preferences = xmlNewChild(rootNode, NULL, BAD_CAST "preferences", NULL);
-		flushPreferences();
-		
+	if (!preferences || !versionNode) {
+		Logger::get().logWarning("Error while parsing preferences file");
 		return false;
 	}
+	currentVersion = (char*)xmlGetProp(versionNode, BAD_CAST "version");
+	oldVersion = new char[strlen(currentVersion)+1];
+	strcpy(oldVersion, currentVersion);
+	xmlFree((xmlChar*)currentVersion);
+
+	return true;
 }
 
+void PreferencesTool::setDefaultPreferences(const char* version) {
+	delete[] preferencesFile;
+	preferencesFile = 0;
+	dirty = true;
+
+	doc = xmlNewDoc(BAD_CAST "1.0");
+	dtd = xmlCreateIntSubset(doc, BAD_CAST "root", NULL, NULL);
+
+	rootNode = xmlNewNode(NULL, BAD_CAST "root");
+	xmlNewProp(rootNode, BAD_CAST "xml:lang", BAD_CAST "en");
+	xmlNewProp(rootNode, BAD_CAST "title", BAD_CAST "Preferences");
+	xmlDocSetRootElement(doc, rootNode);
+
+	versionNode = xmlNewChild(rootNode, NULL, BAD_CAST "version", NULL);
+	xmlNewProp(versionNode, BAD_CAST "version", BAD_CAST version);
+	preferences = xmlNewChild(rootNode, NULL, BAD_CAST "preferences", NULL);
+}
+
+bool PreferencesTool::isVersion(const char* version) {
+	if (!version) {
+		return !oldVersion;
+	} else if (!oldVersion) {
+		return false;
+	}
+	return (strcmp(oldVersion, version) == 0);
+}
 
 void PreferencesTool::setVersion(const char* version) {
 	checkInitialized();
 	xmlSetProp(versionNode, BAD_CAST "version", BAD_CAST version);
-	flushPreferences();
+	dirty = true;
 }
 
 
@@ -159,7 +150,7 @@ const char* PreferencesTool::getOldVersion() {
 }
 
 
-bool PreferencesTool::setPreference(const char* key, const char* attribute, bool flushLater ) {
+void PreferencesTool::setPreference(const char* key, const char* attribute) {
 	checkInitialized();
 	xmlNodePtr node = NULL;
 	node = findNode(key);
@@ -168,33 +159,21 @@ bool PreferencesTool::setPreference(const char* key, const char* attribute, bool
 		node = xmlNewChild(preferences, NULL, BAD_CAST "pref", NULL);
 		xmlNewProp(node, BAD_CAST "key", BAD_CAST key);
 		xmlNewProp(node, BAD_CAST "attribute", BAD_CAST attribute);
+		dirty = true;
+	} else {
+		const char* currentValue = (const char*) xmlGetProp(node, BAD_CAST "attribute");
+		if (strcmp(currentValue, attribute) != 0) {
+			xmlSetProp(node, BAD_CAST "attribute", BAD_CAST attribute);
+			dirty = true;
+		}
 	}
-	else {
-		xmlSetProp(node, BAD_CAST "attribute", BAD_CAST attribute);
-	}
-	
-	return (!flushLater) ? flushPreferences() : true;
 }
 
 
-bool PreferencesTool::setPreference(const char * key, const int attribute, bool flushLater) {
-	checkInitialized();
-	xmlNodePtr node = NULL;
-	node = findNode(key);
-	
+void PreferencesTool::setPreference(const char* key, const int attribute) {
 	char tmp[11] = {0};
 	snprintf(tmp, 11, "%d", attribute);
-	
-	if (node == NULL) {
-		node = xmlNewChild(preferences, NULL, BAD_CAST "pref", NULL);
-		xmlNewProp(node, BAD_CAST "key", BAD_CAST key);
-		xmlNewProp(node, BAD_CAST "attribute", BAD_CAST tmp);
-	}
-	else {
-		xmlSetProp(node, BAD_CAST "attribute", BAD_CAST tmp);
-	}
-	
-	return (!flushLater) ? flushPreferences() : true;
+	setPreference(key, tmp);
 }
 
 
@@ -205,7 +184,7 @@ const char* PreferencesTool::getPreference(const char* key) {
 }
 
 
-int PreferencesTool::getPreference(const char * key, const int defaultValue) {
+int PreferencesTool::getPreference(const char* key, const int defaultValue) {
 	checkInitialized();
 	xmlNode *node = findNode(key);
 	if (!node) {
@@ -218,25 +197,26 @@ int PreferencesTool::getPreference(const char * key, const int defaultValue) {
 }
 
 
-void PreferencesTool::removePreference( const char * key ) {
+void PreferencesTool::removePreference(const char* key) {
 	checkInitialized();
 	xmlNode *node = findNode(key);
 	if (node != NULL) {
 		xmlUnlinkNode(node);
 		xmlFreeNode(node);
-		flushPreferences();
+		dirty = true;
 	}
 }
 
 
-// looks after a locked, writeable file
+// looks after a locked, writable file
 class WriteableFile {
 	FILE* f;
 public:
 	WriteableFile() : f(0) {
 	}
 	~WriteableFile() {
-		fclose(f);
+		if (f)
+			fclose(f);
 	}
 	bool open(const char* filename) {
 		f = fopen(filename, "w");
@@ -250,13 +230,16 @@ public:
 	}
 };
 
-bool PreferencesTool::flushPreferences() {
-	WriteableFile prefs;
-	if (!prefs.open(preferencesFile))
-		return false;
-	if (xmlDocFormatDump(prefs.file(), doc, 1) == -1)
-		return false;
-	return true;
+void PreferencesTool::flush() {
+	if (dirty) {
+		WriteableFile prefs;
+		if (!prefs.open(preferencesFile)
+				|| xmlDocFormatDump(prefs.file(), doc, 1) == -1) {
+			throw UiException(UiException::failedToWriteToPreferencesFile,
+					preferencesFile);
+		}
+		dirty = false;
+	}
 }
 
 
@@ -277,17 +260,9 @@ xmlNodePtr PreferencesTool::findNode(const char * key) {
 }
 
 
-bool PreferencesTool::fileExists(const char * filePath) {
-	if (access(filePath, R_OK) == -1) {
-		return false;
-	}
-	return true;
-}
-
-
 void PreferencesTool::checkInitialized() {
 	if (doc == NULL) {
-		printf(	"A preferencesfile has to be specified before "
+		Logger::get().logFatal("A preferencesfile has to be specified before "
 				"using the PreferencesTool.");
 		exit(1);
 	}

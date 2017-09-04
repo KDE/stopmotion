@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -89,6 +89,7 @@ private:
 	QProgressBar *progressBar;
 	QLabel *infoText;
 	QTimer *timer;
+	static const char* VERSION;
 
 	void initializePreferences();
 	void setDefaultPreferences(PreferencesTool *prefs);

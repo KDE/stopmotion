@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -20,8 +20,10 @@
 #include "src/application/runanimationhandler.h"
 
 #include "src/foundation/preferencestool.h"
+#include "src/foundation/uiexception.h"
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/selection.h"
+#include "src/presentation/frontends/frontend.h"
 
 #include <qpushbutton.h>
 #include <qtimer.h>
@@ -173,9 +175,13 @@ void RunAnimationHandler::setSpeed(int fps) {
 	if ( timer->isActive() ) {
 		timer->setInterval(1000/this->fps);
 	}
-
-	//Adding the fps to the preferencestool.
-	PreferencesTool::get()->setPreference("fps", fps);
+	PreferencesTool* preferences = PreferencesTool::get();
+	preferences->setPreference("fps", fps);
+	try {
+		preferences->flush();
+	} catch (UiException& ex) {
+		DomainFacade::getFacade()->getFrontend()->handleException(ex);
+	}
 }
 
 

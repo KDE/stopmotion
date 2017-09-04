@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -25,6 +25,7 @@
 #include "src/foundation/logger.h"
 #include "src/technical/util.h"
 #include "src/domain/animation/workspacefile.h"
+#include "src/domain/domainfacade.h"
 
 #include <QProgressDialog>
 #include <QProgressBar>
@@ -37,7 +38,10 @@
 #include <unistd.h>
 #include <sstream>
 #include <stdio.h>
+#include <errno.h>
 #include <assert.h>
+
+const char* QtFrontend::VERSION = "0.8";
 
 QtFrontend::QtFrontend(int &argc, char **argv)
 {
@@ -49,6 +53,11 @@ QtFrontend::QtFrontend(int &argc, char **argv)
 	// Need to call this here to get the locale for the language
 	// which is used by the translator created in mainWindowGUI
 	initializePreferences();
+	try {
+		PreferencesTool::get()->flush();
+	} catch (UiException& ex) {
+		DomainFacade::getFacade()->getFrontend()->handleException(ex);
+	}
 
 	mw = new MainWindowGUI(stApp);
 	mw->setWindowTitle("Stopmotion");
@@ -165,9 +174,41 @@ void QtFrontend::updateProgressBar() {
     progressBar->setValue(++p);
 }
 
+long fileSize(const char* filePath) {
+	FILE* fh = fopen(filePath, "r");
+	if (!fh)
+		return -1;
+	long result = -1;
+	if (0 == fseek(fh, 0, SEEK_END)) {
+		result = ftell(fh);
+	}
+	fclose(fh);
+	return result;
+}
 
-void QtFrontend::initializePreferences()
-{
+bool initializePreferencesFrom(const char* filePath) {
+	PreferencesTool *prefs = PreferencesTool::get();
+	if (prefs->load(filePath))
+		return true;
+	// Has to check this before calling setPreferencesFile(...) because
+	// the function creates the file if it doesn't exist.
+	if(access(filePath, R_OK) == 0) {
+		// Preferences file exists, so it must be malformed.
+		// We will not worry about files that are too small to be interesting.
+		long size = fileSize(filePath);
+		if (size < 0 || 15 < size) {
+			// File big enough to be interestingly malformed, so we will tell the user to fix it.
+			throw UiException::preferencesFileMalformed;
+		}
+	} else if (errno == ENOENT) {
+		// File does not exist. Perhaps the next one will.
+		return false;
+	}
+	// File is unreadable for some other reason.
+	throw UiException::preferencesFileUnreadable;
+}
+
+void QtFrontend::initializePreferences() {
 	Logger::get().logDebug("Loading preferencestool");
 
 	PreferencesTool *prefs = PreferencesTool::get();
@@ -176,39 +217,25 @@ void QtFrontend::initializePreferences()
 
 	WorkspaceFile::ensureStopmotionDirectoriesExist();
 
-	// Has to check this before calling setPreferencesFile(...) because
-	// the function creates the file if it doesn't exist.
-	int prefsFileExists = access(preferencesFile.path(), R_OK);
-	if (prefsFileExists != -1) {
-		Util::copyFile(oldPrefsFile.path(), preferencesFile.path());
+	if (!prefs->load(preferencesFile.path())) {
+		if (!prefs->load(oldPrefsFile.path())) {
+			prefs->setDefaultPreferences(VERSION);
+		}
 	}
-
-	// If file doesn't exist or has wrong version number
-	if ( !prefs->setPreferencesFile(preferencesFile.path(), "0.8") ) {
-		// File doesn't exist
-		if (prefsFileExists == -1) {
+	bool dirty = false;
+	if (!prefs->isVersion(VERSION)) {
+		int useNewPrefsFile = askQuestion(Frontend::useNewerPreferences);
+		if (useNewPrefsFile == 0) {
+			// Create new default preferences
 			setDefaultPreferences(prefs);
+		} else {
+			// Use and update old preferences
+			prefs->setVersion(VERSION);
+			updateOldPreferences(prefs);
 		}
-		// Has wrong version number
-		else {
-			int useNewPrefsFile = askQuestion(Frontend::useNewerPreferences);
-			// Use new preferences
-			if (useNewPrefsFile == 0) { // 0 = yes
-				setDefaultPreferences(prefs);
-			}
-			// Use old preferences
-			else {
-				rename(oldPrefsFile.path(), preferencesFile.path());
-				prefs->setPreferencesFile(preferencesFile.path(), prefs->getOldVersion());
-
-				// Update version
-				prefs->setVersion("0.8");
-
-				// Do necessary updates on the old prefs file:
-				updateOldPreferences(prefs);
-			}
-		}
+		dirty = true;
 	}
+	prefs->setSavePath(preferencesFile.path(), dirty);
 }
 
 
@@ -316,7 +343,6 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("startEncoder4",
 			"ffmpeg -y -framerate $FRAMERATE -i \"$IMAGEPATH/%06d.jpg\" -codec:v mpeg4 -b:v 6k \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder4", "");
-	//-------------------------------------------------------------------------
 }
 
 void QtFrontend::handleException(UiException& e) {
@@ -347,6 +373,11 @@ void QtFrontend::handleException(UiException& e) {
 					tr("Failed to initialize audio driver"),
 					tr("Sound will not work until this is corrected"));
 			break;
+		case UiException::failedToWriteToPreferencesFile:
+			QMessageBox::warning(0,
+					tr("Failed to write preferences"),
+					tr("Could not write preferences to file: %1").arg(e.string()));
+			break;
 		default:
 			unhandled = true;
 			break;
@@ -356,6 +387,16 @@ void QtFrontend::handleException(UiException& e) {
 		QMessageBox::critical(0,
 				tr("Stopmotion cannot be started."),
 				tr("Failed to get exclusive lock on command.log. Perhaps Stopmotion is already running."));
+		break;
+	case UiException::preferencesFileUnreadable:
+		QMessageBox::critical(0,
+				tr("Preferences file cannot be read"),
+				tr("Preferences file %1 is unreadable. Please correct this and try again.").arg(e.string()));
+		break;
+	case UiException::preferencesFileMalformed:
+		QMessageBox::critical(0,
+				tr("Preferences file cannot be read"),
+				tr("Preferences file %1 is not a valid XML preferences file. Please correct this or delete the file and try again.").arg(e.string()));
 		break;
 	case UiException::ArbitraryError:
 		QMessageBox::critical(0, tr("Fatal"), e.what());
@@ -368,8 +409,8 @@ void QtFrontend::handleException(UiException& e) {
 		QMessageBox::critical(0,
 				tr("Stopmotion threw and exception it could not handle."),
 				tr("Please raise a bug report."));
+		throw CriticalError();
 	}
-	throw CriticalError();
 }
 
 void QtFrontend::reportWarning(const char *message) {
