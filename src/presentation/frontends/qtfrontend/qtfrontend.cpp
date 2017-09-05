@@ -186,28 +186,6 @@ long fileSize(const char* filePath) {
 	return result;
 }
 
-bool initializePreferencesFrom(const char* filePath) {
-	PreferencesTool *prefs = PreferencesTool::get();
-	if (prefs->load(filePath))
-		return true;
-	// Has to check this before calling setPreferencesFile(...) because
-	// the function creates the file if it doesn't exist.
-	if(access(filePath, R_OK) == 0) {
-		// Preferences file exists, so it must be malformed.
-		// We will not worry about files that are too small to be interesting.
-		long size = fileSize(filePath);
-		if (size < 0 || 15 < size) {
-			// File big enough to be interestingly malformed, so we will tell the user to fix it.
-			throw UiException::preferencesFileMalformed;
-		}
-	} else if (errno == ENOENT) {
-		// File does not exist. Perhaps the next one will.
-		return false;
-	}
-	// File is unreadable for some other reason.
-	throw UiException::preferencesFileUnreadable;
-}
-
 void QtFrontend::initializePreferences() {
 	Logger::get().logDebug("Loading preferencestool");
 
