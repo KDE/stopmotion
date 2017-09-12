@@ -67,7 +67,7 @@ public:
 	void setProgressInfo(const char *infoText);
 	bool isOperationAborted();
 	void processEvents();
-	int askQuestion(Question  question);
+	bool askQuestion(Question question);
 	int runExternalCommand(const char *command);
 	void handleException(UiException&);
 	void reportWarning(const char *message);
@@ -94,6 +94,7 @@ private:
 	void initializePreferences();
 	void setDefaultPreferences(PreferencesTool *prefs);
 	void updateOldPreferences(PreferencesTool *prefs);
+	bool loadPreferencesFrom(PreferencesTool* prefs, const char* path);
 };
 
 #endif

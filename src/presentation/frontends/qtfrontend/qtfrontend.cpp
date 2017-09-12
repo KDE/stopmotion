@@ -186,6 +186,26 @@ long fileSize(const char* filePath) {
 	return result;
 }
 
+bool QtFrontend::loadPreferencesFrom(PreferencesTool* prefs, const char* path) {
+	if (prefs->load(path))
+		return true;
+	if (0 == access(path, R_OK)) {
+		// file exists and is readable
+		if (fileSize(path) < 40) {
+			// not worth keeping a file this small
+			return false;
+		}
+		int ret = QMessageBox::question(0,
+				tr("Lose corrupt file"),
+				tr("The file %1 seems to be corrupt, it's contents will be lost if you continue. Do you want to continue?").arg(path),
+				QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
+		if (ret == QMessageBox::No)
+			throw CriticalError();
+		return false;
+	}
+	throw UiException(UiException::couldNotOpenFile, path);
+}
+
 void QtFrontend::initializePreferences() {
 	Logger::get().logDebug("Loading preferencestool");
 
@@ -195,15 +215,25 @@ void QtFrontend::initializePreferences() {
 
 	WorkspaceFile::ensureStopmotionDirectoriesExist();
 
-	if (!prefs->load(preferencesFile.path())) {
-		if (!prefs->load(oldPrefsFile.path())) {
+	bool dirty = false;
+	bool oldIsDirty = true;
+	if (!loadPreferencesFrom(prefs, preferencesFile.path())) {
+		dirty = true;
+		Logger::get().logWarning("Did not load new prefs");
+		if (loadPreferencesFrom(prefs, oldPrefsFile.path())) {
+			oldIsDirty = false;
+		} else {
+			Logger::get().logWarning("Did not load old prefs");
 			prefs->setDefaultPreferences(VERSION);
+			setDefaultPreferences(prefs);
 		}
 	}
-	bool dirty = false;
 	if (!prefs->isVersion(VERSION)) {
-		int useNewPrefsFile = askQuestion(Frontend::useNewerPreferences);
-		if (useNewPrefsFile == 0) {
+		bool useNewPrefsFile = askQuestion(Frontend::useNewerPreferences);
+		if (useNewPrefsFile) {
+			// copy to old
+			prefs->setSavePath(preferencesFile.path(), oldIsDirty);
+			prefs->flush();
 			// Create new default preferences
 			setDefaultPreferences(prefs);
 		} else {
@@ -214,6 +244,7 @@ void QtFrontend::initializePreferences() {
 		dirty = true;
 	}
 	prefs->setSavePath(preferencesFile.path(), dirty);
+	prefs->flush();
 }
 
 
@@ -429,7 +460,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 }
 
 
-int QtFrontend::askQuestion(Question question) {
+bool QtFrontend::askQuestion(Question question) {
 	QString text;
 	switch (question) {
 	case useNewerPreferences:
@@ -442,7 +473,7 @@ int QtFrontend::askQuestion(Question question) {
 	int ret = QMessageBox::question(0,
 			tr("Question"), text,
 			QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
-	return ret == QMessageBox::Yes? 0 : 1;
+	return ret == QMessageBox::Yes;
 }
 
 

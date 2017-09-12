@@ -94,9 +94,9 @@ public:
 	/**
 	 * Abstract function for asking the user a yes/no question.
 	 * @param question The question to ask
-	 * @return 0 if the user answer yes, 1 if no
+	 * @return true if the user answer yes, false if no
 	 */
-	virtual int askQuestion(Question question) = 0;
+	virtual bool askQuestion(Question question) = 0;
 
 	virtual int runExternalCommand(const char *command) = 0;
 

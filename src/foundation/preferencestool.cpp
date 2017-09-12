@@ -35,9 +35,24 @@ using namespace std;
 PreferencesTool* PreferencesTool::preferencesTool = 0;
 
 
+class XmlProp {
+	xmlChar* p;
+public:
+	XmlProp(const _xmlNode* node, const char* name) : p(0) {
+		p = xmlGetProp(node, BAD_CAST name);
+	}
+	~XmlProp() {
+		xmlFree(p);
+	}
+	const char* value() const {
+		return reinterpret_cast<char*>(p);
+	}
+};
+
+
 PreferencesTool::PreferencesTool() :
 		doc(0), dtd(0), rootNode(0), preferences(0), versionNode(0),
-		dirty(false), preferencesFile(0), oldVersion(0) {
+		dirty(false), preferencesFile(0) {
 	LIBXML_TEST_VERSION;
 }
 
@@ -45,7 +60,6 @@ PreferencesTool::PreferencesTool() :
 PreferencesTool::~PreferencesTool() {
 	cleanTree();
 	delete[] preferencesFile;
-	delete[] oldVersion;
 }
 
 
@@ -61,13 +75,10 @@ void PreferencesTool::setSavePath(const char* s, bool wantSave) {
 	preferencesFile = new char[length];
 	strncpy(preferencesFile, s, length);
 	if (wantSave)
-		dirty= true;
+		dirty = true;
 }
 
 bool PreferencesTool::load(const char* filePath) {
-	xmlNode *node        = NULL;
- 	char* currentVersion = NULL;
-	
 	if (preferencesFile) {
 		delete [] preferencesFile;
 		preferencesFile = NULL;
@@ -86,7 +97,7 @@ bool PreferencesTool::load(const char* filePath) {
 	if (!doc)
 		return false;
 
-	node = rootNode->children;
+	xmlNode* node = rootNode->children;
 	for (; node; node = node->next) {
 		if (node->type == XML_ELEMENT_NODE) {
 			if (xmlStrEqual(node->name, BAD_CAST "version")) {
@@ -103,11 +114,6 @@ bool PreferencesTool::load(const char* filePath) {
 		Logger::get().logWarning("Error while parsing preferences file");
 		return false;
 	}
-	currentVersion = (char*)xmlGetProp(versionNode, BAD_CAST "version");
-	oldVersion = new char[strlen(currentVersion)+1];
-	strcpy(oldVersion, currentVersion);
-	xmlFree((xmlChar*)currentVersion);
-
 	return true;
 }
 
@@ -130,23 +136,16 @@ void PreferencesTool::setDefaultPreferences(const char* version) {
 }
 
 bool PreferencesTool::isVersion(const char* version) {
-	if (!version) {
-		return !oldVersion;
-	} else if (!oldVersion) {
-		return false;
-	}
-	return (strcmp(oldVersion, version) == 0);
+	XmlProp v(versionNode, "version");
+	const char* versionLoaded = v.value();
+	return versionLoaded && strcmp(versionLoaded, version) == 0;
 }
+
 
 void PreferencesTool::setVersion(const char* version) {
 	checkInitialized();
 	xmlSetProp(versionNode, BAD_CAST "version", BAD_CAST version);
 	dirty = true;
-}
-
-
-const char* PreferencesTool::getOldVersion() {
-	return oldVersion;
 }
 
 

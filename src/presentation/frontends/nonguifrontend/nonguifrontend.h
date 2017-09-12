@@ -60,7 +60,7 @@ public:
 	 * This function is actually not needed in this frontend.
 	 */
 	void processEvents();
-	int askQuestion(Question question);
+	bool askQuestion(Question question);
 	int runExternalCommand(const char *command);
 	void reportWarning(const char *message);
 	void handleException(UiException&);

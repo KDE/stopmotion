@@ -273,8 +273,8 @@ void NonGUIFrontend::reportWarning(const char *message) {
 }
 
 
-int NonGUIFrontend::askQuestion(Question) {
-	return 1;
+bool NonGUIFrontend::askQuestion(Question) {
+	return false;
 }
 
 

@@ -105,14 +105,6 @@ public:
  	void setVersion(const char *version);
 
 	/**
-	 * Returns the version number of the preference file or 0 if
-	 * there is no version tag.
-	 * @return the version number of the preference file or 0 if
-	 * there is no version tag.
-	 */
- 	const char* getOldVersion();
-
-	/**
 	 * Adds a string preference.
 	 * @param key the key for retrieving the preference.
 	 * @param attribute the attribute for the preference.
@@ -193,7 +185,6 @@ private:
 	bool dirty;
 
 	char *preferencesFile;
-	char *oldVersion;
 
 	/**
 	 * Retrieves the node with key "key".
