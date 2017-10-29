@@ -67,7 +67,6 @@
 using namespace std;
 using namespace Qt;
 
-
 MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	: stApp(stApp), centerWidget(0), centerWidgetLayout(0), bottomWidget(0),
 	  bottomWidgetLayout(0), workArea(0), workAreaLayout(0),
@@ -95,10 +94,12 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 
 	frameBar = new FrameBar;
 	centerWidgetLayout->addWidget(frameBar);
+}
 
+
+void MainWindowGUI::ConstructUI() {
 	createHandlers(stApp);
 	createAccelerators();
-
 	bottomWidget = new QWidget;
 	bottomWidget->setObjectName("BottomWidget");
 	centerWidgetLayout->addWidget(bottomWidget);
@@ -106,7 +107,6 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	bottomWidgetLayout->setSpacing(0);
 	bottomWidgetLayout->setMargin(0);
 	makePreferencesMenu(bottomWidgetLayout);
-
 	//Initializes and sets up the workarea consisting of the toolsmenu and the frameview.
 	workArea = new QWidget;
 	workArea->setObjectName("WorkArea");
@@ -119,56 +119,38 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	makeToolsMenu(workAreaLayout);
 	makeViews(workAreaLayout);
 	workArea->setLayout(workAreaLayout);
-	connect(runAnimationHandler, SIGNAL(playFrame(int,int)),
-			frameView, SLOT(updatePlayFrame(int,int)));
-	connect(frameBar, SIGNAL(newActiveFrame(int,int)),
-			runAnimationHandler, SLOT(stopAnimation()));
-
+	connect(runAnimationHandler, SIGNAL(playFrame(int,int)), frameView,
+			SLOT(updatePlayFrame(int,int)));
+	connect(frameBar, SIGNAL(newActiveFrame(int,int)), runAnimationHandler,
+			SLOT(stopAnimation()));
 	makeGotoMenu(centerWidgetLayout);
 	centerWidget->setLayout(centerWidgetLayout);
 	setCentralWidget(centerWidget);
-
 	makeStatusBar();
-
 	//Initializes and sets up the menu system.
 	createActions();
 	createMenus();
-
 	//These slots will activate/deactivate menu options based on the changes in the model.
-	connect( frameBar, SIGNAL(modelSizeChanged(int)),
-			this, SLOT(modelSizeChanged(int)));
-	connect( frameBar, SIGNAL(newActiveFrame(int, int)),
-			this, SLOT(updateNewActiveFrame(int, int)));
+	connect(frameBar, SIGNAL(modelSizeChanged(int)), this,
+			SLOT(modelSizeChanged(int)));
+	connect(frameBar, SIGNAL(newActiveFrame(int, int)), this,
+			SLOT(updateNewActiveFrame(int, int)));
 	// update paste menu item depending on what's on the clipboard
-	connect(QApplication::clipboard(), SIGNAL(dataChanged()),
-			this, SLOT(updatePasteEnabled()));
-
+	connect(QApplication::clipboard(), SIGNAL(dataChanged()), this,
+			SLOT(updatePasteEnabled()));
 	setupDirectoryMonitoring();
-
 	//Mainwindow preferences.
-	setWindowIcon( QPixmap(windowicon) );
+	setWindowIcon(QPixmap(windowicon));
 	setContentsMargins(5, 0, 5, 0);
 	setAcceptDrops(true);
-
 	statusBar()->showMessage(tr("Ready to rumble ;-)"), 2000);
 	statusBar()->setSizeGripEnabled(false);
 
-	//Sets all the text in the program.
 	retranslateStrings();
 
 	DomainFacade* facade = DomainFacade::getFacade();
 	setTitle(facade->canUndo());
 	facade->setUndoRedoObserver(this);
-
-	/* Add another logo here
-	QLabel *l = new QLabel(this);
-	l->setMaximumSize(150, menuBar()->height() - 5);
-	l->setMinimumSize(150, menuBar()->height() - 5);
-	l->setScaledContents(true);
-	l->setPixmap(stopmotion_logo);
-	l->move(this->width()-150, 0);
-	l->show();
-	*/
 }
 
 

@@ -71,11 +71,12 @@ public:
 	 * on runtime.
 	 */
 	MainWindowGUI(QApplication *stApp);
+	~MainWindowGUI();
 
 	/**
-	 * Cleans up after the mainwindowgui.
+	 * Finish constructing the UI. The preferences must be loaded before calling this.
 	 */
-	~MainWindowGUI();
+	void ConstructUI();
 
 	/**
 	 * Overloaded mouse listener. Closes the embedded menues when the user

@@ -43,25 +43,25 @@
 
 const char* QtFrontend::VERSION = "0.8";
 
-QtFrontend::QtFrontend(int &argc, char **argv)
-{
+QtFrontend::QtFrontend(int &argc, char **argv) {
 	stApp = new QApplication(argc, argv);
+
 #if QT_VERSION == 0x040400
-        stApp->setAttribute(Qt::AA_NativeWindows);
+	stApp->setAttribute(Qt::AA_NativeWindows);
 #endif
 
-	// Need to call this here to get the locale for the language
-	// which is used by the translator created in mainWindowGUI
-	initializePreferences();
+	mw = new MainWindowGUI(stApp);
+	mw->setWindowTitle("Stopmotion");
+	mw->showMaximized();
+
 	try {
+		initializePreferences();
 		PreferencesTool::get()->flush();
 	} catch (UiException& ex) {
 		DomainFacade::getFacade()->getFrontend()->handleException(ex);
 	}
 
-	mw = new MainWindowGUI(stApp);
-	mw->setWindowTitle("Stopmotion");
-	mw->showMaximized();
+	mw->ConstructUI();
 
 	progressDialog = 0;
 	progressBar = 0;
@@ -70,8 +70,7 @@ QtFrontend::QtFrontend(int &argc, char **argv)
 }
 
 
-QtFrontend::~QtFrontend()
-{
+QtFrontend::~QtFrontend() {
 	delete mw;
 	mw = 0;
 	delete stApp;
@@ -79,8 +78,7 @@ QtFrontend::~QtFrontend()
 }
 
 
-int QtFrontend::run(int, char **)
-{
+int QtFrontend::run(int, char **) {
 	stApp->connect( stApp, SIGNAL(lastWindowClosed()), stApp, SLOT(quit()) );
 	return stApp->exec();
 }
@@ -201,9 +199,8 @@ bool QtFrontend::loadPreferencesFrom(PreferencesTool* prefs, const char* path) {
 				QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
 		if (ret == QMessageBox::No)
 			throw CriticalError();
-		return false;
 	}
-	throw UiException(UiException::couldNotOpenFile, path);
+	return false;
 }
 
 void QtFrontend::initializePreferences() {
@@ -248,8 +245,7 @@ void QtFrontend::initializePreferences() {
 }
 
 
-void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
-{
+void QtFrontend::setDefaultPreferences(PreferencesTool *prefs) {
 	assert(prefs != NULL);
 	Logger::get().logDebug("Setting default preferences");
 
@@ -477,8 +473,7 @@ bool QtFrontend::askQuestion(Question question) {
 }
 
 
-int QtFrontend::runExternalCommand(const char *command)
-{
+int QtFrontend::runExternalCommand(const char *command) {
 	ExternalCommand *ec = new ExternalCommand;
 	ec->show();
 	ec->run( QString::fromLocal8Bit(command) );
