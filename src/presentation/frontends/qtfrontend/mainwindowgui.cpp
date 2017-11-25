@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -56,7 +56,13 @@
 #include "graphics/icons/videoexport.xpm"
 #include "graphics/icons/languages.xpm"
 
-#include <QtGui>
+#include <QShortcut>
+#include <QPixmap>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QMimeData>
+#include <QWhatsThis>
+#include <QDesktopWidget>
 #include <QFileSystemWatcher>
 #include <QClipboard>
 
@@ -254,40 +260,40 @@ void MainWindowGUI::createActions()
 {
 	//File menu
 	newAct = new QAction(this);
-	newAct->setIcon(QIcon(filenewicon));
+	newAct->setIcon(QPixmap(filenewicon));
 	newAct->setShortcut(ControlModifier+Key_N);
 	connect(newAct, SIGNAL(triggered()), this, SLOT(newProject()));
 
 	openAct = new QAction(this);
-	openAct->setIcon(QIcon(fileopenicon));
+	openAct->setIcon(QPixmap(fileopenicon));
 	openAct->setShortcut(ControlModifier+Key_O);
 	connect(openAct, SIGNAL(triggered()), this, SLOT(openProject()));
 
 	mostRecentAct = new QAction(this);
-	mostRecentAct->setIcon(QIcon(windowicon));
+	mostRecentAct->setIcon(QPixmap(windowicon));
 	connect(mostRecentAct, SIGNAL(triggered()), this, SLOT(openMostRecent()));
 
 	secondMostRecentAct = new QAction(this);
-	secondMostRecentAct->setIcon(QIcon(windowicon));
+	secondMostRecentAct->setIcon(QPixmap(windowicon));
 	connect(secondMostRecentAct, SIGNAL(triggered()), this, SLOT(openSecondMostRecent()));
 
 	thirdMostRecentAct = new QAction(this);
-	thirdMostRecentAct->setIcon(QIcon(windowicon));
+	thirdMostRecentAct->setIcon(QPixmap(windowicon));
 	connect(thirdMostRecentAct, SIGNAL(triggered()), this, SLOT(openThirdMostRecent()));
 
 	saveAct = new QAction(this);
-	saveAct->setIcon(QIcon(filesaveasicon));
+	saveAct->setIcon(QPixmap(filesaveasicon));
 	saveAct->setShortcut(ControlModifier+Key_S);
 	connect(saveAct, SIGNAL(triggered()), this, SLOT(saveProject()));
 
 	saveAsAct = new QAction(this);
-	saveAsAct->setIcon(QIcon(filesaveicon));
+	saveAsAct->setIcon(QPixmap(filesaveicon));
 	saveAsAct->setShortcut(ControlModifier+ShiftModifier+Key_S);
 	connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveProjectAs()));
 
 	videoAct = new QAction(this);
 	videoAct->setShortcut(ControlModifier+ALT+Key_V);
-	videoAct->setIcon(QIcon(videoexport));
+	videoAct->setIcon(QPixmap(videoexport));
 	connect(videoAct, SIGNAL(triggered()), this, SLOT(exportToVideo()));
 
 	cinerellaAct = new QAction(this);
@@ -296,33 +302,33 @@ void MainWindowGUI::createActions()
 	connect(cinerellaAct, SIGNAL(triggered()), this, SLOT(exportToCinerella()));
 
 	quitAct = new QAction(this);
-	quitAct->setIcon(QIcon(quiticon));
+	quitAct->setIcon(QPixmap(quiticon));
 	quitAct->setShortcut(ControlModifier+Key_Q);
 	connect(quitAct, SIGNAL(triggered()), stApp, SLOT(quit()));
 
 	//Edit menu
 	undoAct = new QAction(this);
-	undoAct->setIcon(QIcon(undoicon));
+	undoAct->setIcon(QPixmap(undoicon));
 	undoAct->setShortcut(ControlModifier+Key_Z);
 	connect(undoAct, SIGNAL(triggered()), editMenuHandler, SLOT(undo()));
 
 	redoAct = new QAction(this);
-	redoAct->setIcon(QIcon(redoicon));
+	redoAct->setIcon(QPixmap(redoicon));
 	redoAct->setShortcut(ControlModifier+ShiftModifier+Key_Z);
 	connect(redoAct, SIGNAL(triggered()), editMenuHandler, SLOT(redo()));
 
 	cutAct = new QAction(this);
-	cutAct->setIcon(QIcon(cuticon));
+	cutAct->setIcon(QPixmap(cuticon));
 	cutAct->setShortcut(ControlModifier+Key_X);
 	connect(cutAct, SIGNAL(triggered()), editMenuHandler, SLOT(cut()));
 
 	copyAct = new QAction(this);
-	copyAct->setIcon(QIcon(copyicon));
+	copyAct->setIcon(QPixmap(copyicon));
 	copyAct->setShortcut(ControlModifier+Key_C);
 	connect(copyAct, SIGNAL(triggered()), editMenuHandler, SLOT(copy()));
 
 	pasteAct = new QAction(this);
-	pasteAct->setIcon(QIcon(pasteicon));
+	pasteAct->setIcon(QPixmap(pasteicon));
 	pasteAct->setShortcut(ControlModifier+Key_V);
 	connect(pasteAct, SIGNAL(triggered()), editMenuHandler, SLOT(paste()));
 
@@ -331,13 +337,13 @@ void MainWindowGUI::createActions()
 	connect(gotoFrameAct, SIGNAL(triggered()), gotoMenuWidget, SLOT(show()));
 
 	configureAct = new QAction(this);
-	configureAct->setIcon(QIcon(configureicon));
+	configureAct->setIcon(QPixmap(configureicon));
 	configureAct->setShortcut(ControlModifier+Key_P);
 	connect(configureAct, SIGNAL(triggered()), this, SLOT(showPreferencesMenu()));
 
 	//Help menu
 	whatsthisAct = new QAction(this);
-	whatsthisAct->setIcon(QIcon(whatsthisicon));
+	whatsthisAct->setIcon(QPixmap(whatsthisicon));
 	whatsthisAct->setShortcut(ShiftModifier+Key_F1);
 	connect(whatsthisAct, SIGNAL(triggered()), this, SLOT(whatsThis()));
 
@@ -346,7 +352,7 @@ void MainWindowGUI::createActions()
 	connect(helpAct, SIGNAL(triggered()), this, SLOT(showHelpDialog()));
 
 	aboutAct = new QAction(this);
-	aboutAct->setIcon(QIcon(windowicon));
+	aboutAct->setIcon(QPixmap(windowicon));
 	connect(aboutAct, SIGNAL(triggered()), this, SLOT(showAboutDialog()));
 }
 
@@ -538,7 +544,7 @@ void MainWindowGUI::retranslateStrings()
 
 	settingsMenu->clear();
 	settingsMenu->setTitle(tr("&Settings"));
-	languagesMenu->setIcon(QIcon(languages));
+	languagesMenu->setIcon(QPixmap(languages));
 	settingsMenu->addMenu(languagesMenu);
 	settingsMenu->addAction(configureAct);
 

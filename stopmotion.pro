@@ -302,6 +302,9 @@ INSTALLS += target translations icon desktop \
 
 QMAKE_STRIP=:
 
+# qmake does not add these itself, it seems
+QMAKE_CLEAN += ui_helpbrowser.h ui_toolsmenu.h
+
 # Build translations
 QMAKE_EXTRA_COMPILERS += lrelease
 lrelease.input    = TRANSLATIONS

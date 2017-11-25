@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,8 +22,10 @@
 #include "licence.h"
 #include "graphics/stopmotion_logo.xpm"
 
-#include <QtGui>
-
+#include <QLabel>
+#include <QPushButton>
+#include <QTextEdit>
+#include <QVBoxLayout>
 
 AboutDialog::AboutDialog(QWidget *parent)
 	: QDialog(parent)
@@ -33,7 +35,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 	QWidget *widget = new QWidget;
 	QVBoxLayout *layout = new QVBoxLayout;
 	QLabel *label = new QLabel;
-	label->setPixmap(stopmotion_logo);
+	label->setPixmap(QPixmap(stopmotion_logo));
 	label->setScaledContents(true);
 	layout->addWidget(label);
 	layout->addWidget( new QLabel(
