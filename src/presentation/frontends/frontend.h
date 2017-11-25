@@ -20,6 +20,8 @@
 #ifndef FRONTEND_H
 #define FRONTEND_H
 
+#include "src/foundation/uiexception.h"
+
 /**
  * The frontend interface to be used by the implemented frontend.
  *
@@ -37,14 +39,8 @@ public:
 	enum Question {
 		useNewerPreferences
 	};
-	enum Error {
-		failedToGetExclusiveLock
-	};
-	enum ErrorType {
-		warning,
-		critical
-	};
-	virtual ~Frontend() {}
+
+	virtual ~Frontend();
 	
 	/**
 	 * Abstract function for starting the application through the frontend.
@@ -84,28 +80,32 @@ public:
 	 * operations which aren't running in separate processes or threads.
 	 */
 	virtual void processEvents() = 0;
-	
+
 	/**
-	 * Abstract function for reporting an error to the user. It has two categories
-	 * of errors; warning and critical.
-	 * @param message the error message to display to the user
-	 * @param type warning or critical
+	 * Displays an error to the user. This sort of error does not crash the program.
 	 */
-	virtual void reportError(const char *message, ErrorType type) = 0;
-	
+	virtual void reportWarning(const char *message) = 0;
+
+	/**
+	 * Displays an error to the user, ending the program if it is serious enough.
+	 */
+	virtual void handleException(UiException&) = 0;
+
 	/**
 	 * Abstract function for asking the user a yes/no question.
 	 * @param question The question to ask
-	 * @return 0 if the user answer yes, 1 if no
+	 * @return true if the user answer yes, false if no
 	 */
-	virtual int askQuestion(Question question) = 0;
-
-	/**
-	 * Abstract function for throwing a fatal error and exiting the program
-	 */
-	virtual void fatalError(Error) = 0;
+	virtual bool askQuestion(Question question) = 0;
 
 	virtual int runExternalCommand(const char *command) = 0;
+
+	class CriticalError : public std::exception {
+	public:
+		CriticalError();
+		~CriticalError() throw();
+		const char* what() const throw();
+	};
 };
 
 #endif

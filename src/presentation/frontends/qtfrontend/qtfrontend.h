@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -31,7 +31,6 @@ class QProgressDialog;
 class QProgressBar;
 class QLabel;
 class QTimer;
-class LocalizedError;
 
 /**
  * Frontend for using the program through a GUI developed with the QT library.
@@ -68,11 +67,10 @@ public:
 	void setProgressInfo(const char *infoText);
 	bool isOperationAborted();
 	void processEvents();
-	void reportError(const char *message, ErrorType type);
-	void reportLocalizedError(const LocalizedError&);
-	int askQuestion(Question  question);
+	bool askQuestion(Question question);
 	int runExternalCommand(const char *command);
-	void fatalError(Error);
+	void handleException(UiException&);
+	void reportWarning(const char *message);
 
 	/**
 	 * Set the Undo and Redo actions to be enabled or disabled according to the
@@ -91,10 +89,12 @@ private:
 	QProgressBar *progressBar;
 	QLabel *infoText;
 	QTimer *timer;
+	static const char* VERSION;
 
 	void initializePreferences();
 	void setDefaultPreferences(PreferencesTool *prefs);
 	void updateOldPreferences(PreferencesTool *prefs);
+	bool loadPreferencesFrom(PreferencesTool* prefs, const char* path);
 };
 
 #endif

@@ -136,9 +136,8 @@ public:
 	 * will be added.
 	 * @param frameNumber the number of the frame to add the sound to
 	 * @param filename the path to the file with the sound
-	 * @return zero on success, less than zero on failure
 	 */
-	int addSound(int sceneNumber, int frameNumber, const char* filename);
+	void addSound(int sceneNumber, int frameNumber, const char* filename);
 
 	/**
 	 * Removes the sound with index soundNumber from the frame with index

@@ -23,7 +23,7 @@
 #include "src/config.h"
 #include "src/presentation/frontends/frontend.h"
 #include "src/domain/domainfacade.h"
-
+#include "src/foundation/uiexception.h"
 
 /**
  * Frontend for using the program through command line options.
@@ -60,10 +60,10 @@ public:
 	 * This function is actually not needed in this frontend.
 	 */
 	void processEvents();
-	void reportError(const char *message, ErrorType type);
-	int askQuestion(Question question);
+	bool askQuestion(Question question);
 	int runExternalCommand(const char *command);
-	void fatalError(Error);
+	void reportWarning(const char *message);
+	void handleException(UiException&);
 	
 private:
 	DomainFacade *facadePtr;

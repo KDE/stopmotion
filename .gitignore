@@ -1,6 +1,7 @@
 *.o
 *.so
 /moc_*.cpp
+/ui_*.h
 /Makefile
 /stopmotion
 /translations/stopmotion_*.qm

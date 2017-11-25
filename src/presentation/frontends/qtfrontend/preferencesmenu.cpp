@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,7 +19,10 @@
  ***************************************************************************/
 #include "preferencesmenu.h"
 
+#include "src/domain/domainfacade.h"
 #include "src/foundation/preferencestool.h"
+#include "src/foundation/uiexception.h"
+#include "src/presentation/frontends/frontend.h"
 #include "flexiblelineedit.h"
 #include "importtab.h"
 #include "exporttab.h"
@@ -98,7 +101,11 @@ void PreferencesMenu::apply()
 	videoDeviceTab->apply();
 	importVideoTab->apply();
 	exportVideoTab->apply();
-	PreferencesTool::get()->flushPreferences();
+	try {
+		PreferencesTool::get()->flush();
+	} catch (UiException& ex) {
+		DomainFacade::getFacade()->getFrontend()->handleException(ex);
+	}
 }
 
 

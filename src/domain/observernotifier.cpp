@@ -50,7 +50,7 @@ void ObserverNotifier::doOp(ObservableOperation& oo) {
 		} catch (std::exception& e) {
 			try {
 				if (frontend)
-					frontend->reportError(e.what(), Frontend::warning);
+					frontend->reportWarning(e.what());
 			} catch (...) {
 			}
 			for (observers_t::iterator i = observers.begin();

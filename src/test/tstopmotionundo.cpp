@@ -22,6 +22,7 @@
 
 #include "testundo.h"
 #include "testhome.h"
+#include "fakefiles.h"
 #include "oomtestutil.h"
 #include "hash.h"
 #include "src/domain/undo/addallcommands.h"
@@ -44,108 +45,6 @@
 #include <vector>
 #include <string>
 #include <unistd.h>
-
-class RealOggEmptyJpg : public MockableFileSystem {
-	MockableFileSystem* delegate;
-	FILE* fake;
-	int fakeReads;
-public:
-	RealOggEmptyJpg() : delegate(0), fake(reinterpret_cast<FILE*>(1)),
-			fakeReads(0) {
-	}
-	~RealOggEmptyJpg() {
-	}
-	bool hasExtension(const char* filename, const char* extension) {
-		const char* dot = strrchr(filename, '.');
-		return dot && strcmp(dot, extension) == 0;
-	}
-	bool isSound(const char* filename) {
-		return hasExtension(filename, ".ogg");
-	}
-	bool isImage(const char* filename) {
-		return hasExtension(filename, ".jpg");
-	}
-	void setDelegate(MockableFileSystem* mfs) {
-		delegate = mfs;
-	}
-	FILE* fopen(const char* filename, const char* mode) {
-		if (isImage(filename)) {
-			fakeReads = 0;
-			return fake;
-		} else if (isSound(filename)) {
-			if (strstr(mode, "w") == 0)
-				return delegate->fopen("resources/click.ogg", mode);
-			return fake;
-		}
-		return delegate->fopen(filename, mode);
-	}
-	FILE* freopen(const char* filename, const char* mode, FILE* fh) {
-		if (fh == fake) {
-			if (filename)
-				return fopen(filename, mode);
-			fakeReads = 0;
-			return fake;
-		}
-		return delegate->freopen(filename, mode, fh);
-	}
-	int fclose(FILE* fh) {
-		if (fh == fake)
-			return 0;
-		return delegate->fclose(fh);
-	}
-	int fflush(FILE* fh) {
-		if (fh == fake)
-			return 0;
-		return delegate->fflush(fh);
-	}
-	size_t fread (void *out, size_t blockSize,
-			     size_t blockCount, FILE *fh) {
-		if (fh == fake) {
-			if (0 < fakeReads)
-				return 0;
-			++fakeReads;
-			return blockCount;
-		}
-		return delegate->fread(out, blockSize, blockCount, fh);
-	}
-	size_t fwrite (const void *in, size_t blockSize,
-			      size_t blockCount, FILE *fh) {
-		if (fh == fake)
-			return blockCount;
-		return delegate->fwrite(in, blockSize, blockCount, fh);
-	}
-	int access (const char *name, int /*type*/) {
-		// always assume files within the workspace do not exist
-		// (as access is only called to find empty slots to use in the
-		// workspace) but files requested outside of the workspace exist
-		return strstr(name, ".stopmotion/")? -1 : 0;
-	}
-	int ferror(FILE*) {
-		return 0;
-	}
-	int unlink(const char *name) {
-		static const char tmpPrefix[] = "/tmp/";
-		// really delete any files in /tmp
-		if (0 == strncmp(name, tmpPrefix, sizeof(tmpPrefix) - 1))
-			delegate->unlink(name);
-		return 0;
-	}
-	int ov_test(FILE *, OggVorbis_File *, const char *, long) {
-		return 0;
-	}
-	int ov_clear(OggVorbis_File *) {
-		return 0;
-	}
-	int ov_open(FILE *,OggVorbis_File *,const char *, long) {
-		return 0;
-	}
-	long ov_read(OggVorbis_File *,char *,int, int, int, int, int *) {
-		return 0;
-	}
-	char *getenv(const char *name) {
-		return delegate->getenv(name);
-	}
-};
 
 void getHashes(std::vector<Hash>& out, const char* filenameTemplate) {
 	std::string filenameStr(filenameTemplate);
@@ -184,15 +83,15 @@ public:
 	}
 	void reportError(const char *, int) {
 	}
-	int askQuestion(Question) {
+	bool askQuestion(Question) {
 		return true;
 	}
 	int runExternalCommand(const char *) {
 		return 0;
 	}
-	void reportError(const char *, ErrorType) {
+	void reportWarning(const char *) {
 	}
-	void fatalError(Error) {
+	void handleException(UiException&) {
 	}
 };
 
@@ -209,6 +108,10 @@ TestStopmotionUndo::TestStopmotionUndo() : anim(0), mockFrontend(0),
 TestStopmotionUndo::~TestStopmotionUndo() {
 	wrapFileSystem(0);
 	delete mockFrontend;
+	delete testEnvFs;
+	delete mfs;
+	delete ex;
+	delete sv;
 }
 
 class SceneVectorTestHelper : public ModelTestHelper {

@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,10 +20,11 @@
 #include "domainfacade.h"
 
 #include "animation/animation.h"
+#include "animation/workspacefile.h"
 #include "src/foundation/logger.h"
-#include "src/presentation/frontends/frontend.h"
-#include "src/domain/animation/workspacefile.h"
 #include "src/foundation/preferencestool.h"
+#include "src/foundation/uiexception.h"
+#include "src/presentation/frontends/frontend.h"
 
 #include <sys/file.h>
 
@@ -32,19 +33,23 @@ DomainFacade* DomainFacade::domainFacade = 0;
 const char* DomainFacade::getImagePath(int scene, int frame) {
 	try {
 		return animationModel->getImagePath(scene, frame);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
 		animationModel->resync(e);
-		return 0;
+	} catch (std::exception& e) {
+		animationModel->resync(e);
 	}
+	return 0;
 }
 
 int DomainFacade::soundCount(int scene, int frame) const {
 	try {
 		return animationModel->soundCount(scene, frame);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
 		animationModel->resync(e);
-		return 0;
+	} catch (std::exception& e) {
+		animationModel->resync(e);
 	}
+	return 0;
 }
 
 bool DomainFacade::loadProject(const char* datFilename,
@@ -56,7 +61,7 @@ void DomainFacade::setMostRecentProject() {
 	const char *first = DomainFacade::getFacade()->getProjectFile();
 	PreferencesTool *prefs = PreferencesTool::get();
 	if (first) {
-		prefs->setPreference("projectFile", first, false);
+		prefs->setPreference("projectFile", first);
 	} else {
 		prefs->removePreference("projectFile");
 	}
@@ -64,14 +69,18 @@ void DomainFacade::setMostRecentProject() {
 		Preference prefsFirst("mostRecent");
 		if (!prefsFirst.equals(first)) {
 			Preference second("secondMostRecent");
-			prefs->setPreference("mostRecent", first, false);
-			prefs->setPreference("secondMostRecent", prefsFirst.get(), false);
+			prefs->setPreference("mostRecent", first);
+			prefs->setPreference("secondMostRecent", prefsFirst.get());
 			if (!second.equals(first)) {
-				prefs->setPreference("thirdMostRecent", second.get(), false);
+				prefs->setPreference("thirdMostRecent", second.get());
 			}
 		}
 	}
-	prefs->flushPreferences();
+	try {
+		prefs->flush();
+	} catch (UiException& ex) {
+		DomainFacade::getFacade()->getFrontend()->handleException(ex);
+	}
 }
 
 DomainFacade::DomainFacade() {
@@ -119,7 +128,9 @@ void DomainFacade::addFrames(int scene, int frame,
 	try {
 		Logger::get().logDebug("Adding frames in the domainfacade");
 		animationModel->addFrames(scene, frame, frameNames);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
+		animationModel->resync(e);
+	} catch (std::exception& e) {
 		animationModel->resync(e);
 	}
 }
@@ -129,7 +140,9 @@ void DomainFacade::removeFrames(int scene, int frame, int count) {
 	try {
 		Logger::get().logDebug("Removing frames in the domainfacade");
 		animationModel->removeFrames(scene, frame, count);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
+		animationModel->resync(e);
+	} catch (std::exception& e) {
 		animationModel->resync(e);
 	}
 }
@@ -140,19 +153,22 @@ void DomainFacade::moveFrames(int fromScene, int fromFrame,
 	try {
 		animationModel->moveFrames(fromScene, fromFrame, count,
 				toScene, toFrame);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
+		animationModel->resync(e);
+	} catch (std::exception& e) {
 		animationModel->resync(e);
 	}
 }
 
 
-int DomainFacade::addSound(int scene, int frame, const char *filename) {
+void DomainFacade::addSound(int scene, int frame, const char *filename) {
 	try {
 		Logger::get().logDebug("Adding sound in domainfacade");
-		return animationModel->addSound(scene, frame, filename);
-	} catch(std::exception& e) {
+		animationModel->addSound(scene, frame, filename);
+	} catch (UiException& e) {
 		animationModel->resync(e);
-		return -3;
+	} catch (std::exception& e) {
+		animationModel->resync(e);
 	}
 }
 
@@ -161,7 +177,9 @@ void DomainFacade::removeSound(int sceneNumber, int frameNumber,
 		int soundNumber) {
 	try {
 		animationModel->removeSound(sceneNumber, frameNumber, soundNumber);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
+		animationModel->resync(e);
+	} catch (std::exception& e) {
 		animationModel->resync(e);
 	}
 }
@@ -172,7 +190,9 @@ void DomainFacade::setSoundName(int sceneNumber, int frameNumber,
 	try {
 		animationModel->setSoundName(sceneNumber, frameNumber, soundNumber,
 				soundName);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
+		animationModel->resync(e);
+	} catch (std::exception& e) {
 		animationModel->resync(e);
 	}
 }
@@ -208,10 +228,12 @@ int DomainFacade::getModelSize() const {
 int DomainFacade::getSceneSize(int sceneNumber) const {
 	try {
 		return animationModel->frameCount(sceneNumber);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
 		animationModel->resync(e);
-		return 0;
+	} catch (std::exception& e) {
+		animationModel->resync(e);
 	}
+	return 0;
 }
 
 
@@ -223,10 +245,12 @@ int DomainFacade::getNumberOfScenes() const {
 int DomainFacade::getNumberOfSounds(int scene, int frame) const {
 	try {
 		return animationModel->soundCount(scene, frame);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
 		animationModel->resync(e);
-		return 0;
+	} catch (std::exception& e) {
+		animationModel->resync(e);
 	}
+	return 0;
 }
 
 
@@ -253,7 +277,9 @@ void DomainFacade::clearHistory() {
 void DomainFacade::newScene(int index) {
 	try {
 		animationModel->newScene(index);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
+		animationModel->resync(e);
+	} catch (std::exception& e) {
 		animationModel->resync(e);
 	}
 }
@@ -262,7 +288,9 @@ void DomainFacade::newScene(int index) {
 void DomainFacade::removeScene(int sceneNumber) {
 	try {
 		animationModel->removeScene(sceneNumber);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
+		animationModel->resync(e);
+	} catch (std::exception& e) {
 		animationModel->resync(e);
 	}
 }
@@ -271,7 +299,9 @@ void DomainFacade::removeScene(int sceneNumber) {
 void DomainFacade::moveScene(int sceneNumber, int movePosition) {
 	try {
 		animationModel->moveScene(sceneNumber, movePosition);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
+		animationModel->resync(e);
+	} catch (std::exception& e) {
 		animationModel->resync(e);
 	}
 }
@@ -306,10 +336,12 @@ const char* DomainFacade::getSoundName(int sceneNumber, int frameNumber,
 	try {
 		return animationModel->getSoundName(sceneNumber, frameNumber,
 				soundNumber);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
 		animationModel->resync(e);
-		return 0;
+	} catch (std::exception& e) {
+		animationModel->resync(e);
 	}
+	return 0;
 }
 
 void DomainFacade::duplicateImage(int scene, int frame) {
@@ -323,7 +355,7 @@ void DomainFacade::initializeCommandLoggerFile() {
 		throw FailedToInitializeCommandLogger();
 	if (flock(fileno(log), LOCK_EX | LOCK_NB)) {
 		fclose(log);
-		getFrontend()->fatalError(Frontend::failedToGetExclusiveLock);
+		throw (UiException(UiException::failedToGetExclusiveLock));
 	}
 	animationModel->setCommandLoggerFile(log);
 }
@@ -334,7 +366,10 @@ bool DomainFacade::replayCommandLog(const char* filename) {
 		return false;
 	try {
 		animationModel->replayCommandLog(log);
-	} catch(std::exception& e) {
+	} catch (UiException& e) {
+		animationModel->resync(e);
+		return false;
+	} catch (std::exception& e) {
 		Logger::get().logFatal("Recovery failed: %s", e.what());
 		fclose(log);
 		return false;

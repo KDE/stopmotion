@@ -39,6 +39,7 @@
 #include <libgen.h>
 #include <errno.h>
 #include <exception>
+#include <iostream>
 
 class CouldNotInitializeRecoveryFiles : public std::exception {
 	int error;
@@ -118,7 +119,7 @@ int main(int argc, char **argv) {
 			facadePtr->registerFrontend(&nonGUIFrontend);
 			ret = nonGUIFrontend.run(argc, argv);
 		} catch (std::exception& e) {
-			nonGUIFrontend.reportError(e.what(), Frontend::critical);
+			std::cerr << e.what();
 		}
 	}
 	else {
@@ -135,10 +136,11 @@ int main(int argc, char **argv) {
 				facadePtr->setMostRecentProject();
 			}
 			ret = qtFrontend.run(argc, argv);
-		} catch (LocalizedError& e) {
-			qtFrontend.reportLocalizedError(e);
+		} catch (UiException& e) {
+			qtFrontend.handleException(e);
 		} catch (std::exception& e) {
-			qtFrontend.reportError(e.what(), Frontend::critical);
+			UiException uie(UiException::ArbitraryError, e.what());
+			qtFrontend.handleException(uie);
 		}
 #endif
 	}

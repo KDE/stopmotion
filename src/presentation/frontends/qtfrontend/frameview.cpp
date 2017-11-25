@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2016 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -272,7 +272,7 @@ bool FrameView::on() {
 	Preference prepoll(QString("importprepoll%1")
 			.arg(activeCmd).toLatin1().constData(), "");
 	Preference startDaemon(QString("importstartdaemon%1")
-			.arg(activeCmd).toLatin1().constData());
+			.arg(activeCmd).toLatin1().constData(), "");
 	Preference stopDaemon(QString("importstopdaemon%1")
 			.arg(activeCmd).toLatin1().constData(), "");
 
@@ -418,10 +418,10 @@ void FrameView::nextPlayBack() {
 			playbackModeFrame = firstFrame;
 		} else {
 			++playbackModeFrame;
-			if (activeFrame < playbackModeFrame) {
-				// negative number means that the camera output should be shown
-				playbackModeFrame = -1;
-			}
+		}
+		if (activeFrame < playbackModeFrame) {
+			// negative number means that the camera output should be shown
+			playbackModeFrame = -1;
 		}
 		update();
 		return;
@@ -436,7 +436,7 @@ bool FrameView::setViewMode(ImageMode mode) {
 	if (mode == this->mode)
 		return true;
 	if (!grabber)
-		return false;
+		return true;
 	if (mode == imageModePlayback) {
 		if ( grabber->isGrabberProcess() ) {
 			playbackTimer.start(1000/playbackSpeed);

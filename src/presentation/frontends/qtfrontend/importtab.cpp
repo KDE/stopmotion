@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -179,8 +179,7 @@ void ImportTab::initializeImportValues()
 }
 
 
-void ImportTab::apply()
-{
+void ImportTab::apply() {
 	PreferencesTool *prefs = PreferencesTool::get();
 
 	// Remove old preferences
@@ -197,24 +196,23 @@ void ImportTab::apply()
 
 	numImports = deviceSelectionTable->rowCount();
 	if (numImports > 0) {
-		prefs->setPreference("numberofimports", numImports, true);
-		prefs->setPreference("activedevice", deviceSelectionTable->currentRow(), true);
+		prefs->setPreference("numberofimports", numImports);
+		prefs->setPreference("activedevice", deviceSelectionTable->currentRow());
 		for (int i = 0; i < numImports; ++i) {
 			prefs->setPreference(QString("importname%1").arg(i).toLatin1().constData(),
-					deviceSelectionTable->item(i, 0)->text().toLatin1().constData(), true);
+					deviceSelectionTable->item(i, 0)->text().toLatin1().constData());
 			prefs->setPreference(QString("importdescription%1").arg(i).toLatin1().constData(),
-					deviceSelectionTable->item(i, 1)->text().toLatin1().constData(), true);
+					deviceSelectionTable->item(i, 1)->text().toLatin1().constData());
 			prefs->setPreference(QString("importprepoll%1").arg(i).toLatin1().constData(),
-					prePollStrings[i].toLatin1().constData(), true);
+					prePollStrings[i].toLatin1().constData());
 			prefs->setPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(),
-					startDaemonStrings[i].toLatin1().constData(), true);
+					startDaemonStrings[i].toLatin1().constData());
 			prefs->setPreference(QString("importstopdaemon%1").arg(i).toLatin1().constData(),
-					stopDaemonStrings[i].toLatin1().constData(), true);
+					stopDaemonStrings[i].toLatin1().constData());
 		}
-	}
-	else {
-		prefs->setPreference("numberofimports", -1, true);
-		prefs->setPreference("activedevice", -1, true);
+	} else {
+		prefs->setPreference("numberofimports", -1);
+		prefs->setPreference("activedevice", -1);
 	}
 }
 

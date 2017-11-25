@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2017 by Linuxstopmotion contributors;                   *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,7 +18,25 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "audioformat.h"
+#ifndef TWORKSPACE_H_
+#define TWORKSPACE_H_
 
-AudioFormat::~AudioFormat() {
-}
+#include <QObject>
+
+class RealOggEmptyJpg;
+class TestHome;
+
+class TestWorkspace : public QObject {
+	Q_OBJECT
+
+	TestHome* testEnvFs;
+	RealOggEmptyJpg* mfs;
+public:
+	TestWorkspace();
+	~TestWorkspace();
+private slots:
+	void jpgsCanBeCopiedIntoWorkspace();
+	void nonJpgImagesCannotBeCopied();
+};
+
+#endif

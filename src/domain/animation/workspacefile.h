@@ -22,15 +22,8 @@
 #define WORKSPACEFILE_H_
 
 #include <stdint.h>
-#include <exception>
 
 class TemporaryWorkspaceFile;
-
-class CopyFailedException : public std::exception {
-public:
-	CopyFailedException();
-	const char* what() const throw();
-};
 
 /**
  * Represents the filename of a file in the workspace (~/.stopmotion/).
@@ -42,7 +35,7 @@ public:
 class WorkspaceFile {
 	char* fullPath;
 	const char* namePart;
-	void setFilename(const char* basename, bool inFrames);
+	void setFilename(const char* basename, bool inFrames = false);
 public:
 	enum NewModelFile { newModelFile };
 	enum CurrentModelFile { currentModelFile };
@@ -143,6 +136,37 @@ public:
 };
 
 /**
+ * Represents a type of file that can be copied into the workspace.
+ */
+class WorkspaceFileType {
+public:
+	virtual ~WorkspaceFileType() = 0;
+	/**
+	 * Returns the preferred file name extension, including any dot.
+	 * @param path The original file path.
+	 * @return The extension, ownership is not returned.
+	 */
+	virtual const char* preferredExtension(const char* path) const = 0;
+	/**
+	 * Determines if the argument is (probably?) this type of file.
+	 * @param path The file path.
+	 * @return true if and only if this is a file that might be used
+	 * for this sort of file.
+	 */
+	virtual bool isType(const char* path) const = 0;
+	/**
+	 * Returns a representation of image files.
+	 * @return The type, ownership is not returned.
+	 */
+	static const WorkspaceFileType& image();
+	/**
+	 * Returns a representation of sound files.
+	 * @return The type, ownership is not returned.
+	 */
+	static const WorkspaceFileType& sound();
+};
+
+/**
  * Represents the filename of a newly-created file in the workspace
  * (~/.stopmotion/). This file will be deleted upon destruction unless it
  * has been assigned to a @ref WorkspaceFile beforehand.
@@ -159,7 +183,7 @@ class TemporaryWorkspaceFile {
 	/**
 	 * @throws CopyFailedException if the copy failed.
 	 */
-	void copyToWorkspace(const char* filename);
+	void copyToWorkspace(const char* filename, const WorkspaceFileType& type);
 public:
 	enum ForceCopy {
 		forceCopy
@@ -167,23 +191,31 @@ public:
 	/**
 	 * Copy file with path @a filename into the workspace directory
 	 * ({@c ~/.stopmotion}) unless it is already in this directory.
-	 * A freshly-copied file will be deleted on destruction unless a
-	 * @ref WorkspaceFile is constructed from it beforehand.
+	 * A freshly-copied file will be deleted on destruction unless
+	 * @p retainFile has been called.
 	 * @note The file is not kept open by this class.
 	 * @param filename The full path to the file.
-	 * @throws CopyFailedException if the copy failed.
+	 * @param type The type of file to be copied.
+	 * @throws UiException with code failedToCopyFilesToWorkspace if
+	 * the copy failed.
+	 * @throws UiException with code unsupportedImageType if an image
+	 * type that is not supported is passed.
 	 */
-	TemporaryWorkspaceFile(const char* filename);
+	TemporaryWorkspaceFile(const char* filename, const WorkspaceFileType& type);
 	/**
 	 * Copy file with path @a filename into the workspace directory,
 	 * even if it is already in this directory. The file will be deleted on
-	 * destruction unless it has been assigned to a @ref WorkspaceFile
-	 * beforehand.
+	 * destruction unless @p retainFile has been called.
 	 * @note The file is not kept open by this class.
 	 * @param filename The full path to the file. Ownership is not passed.
-	 * @throws CopyFailedException if the copy failed.
+	 * @param type The type of file to be copied.
+	 * @throws UiException with code failedToCopyFilesToWorkspace if
+	 * the copy failed.
+	 * @throws UiException with code unsupportedImageType if an image
+	 * type that is not supported is passed.
 	 */
-	TemporaryWorkspaceFile(const char* filename, ForceCopy);
+	TemporaryWorkspaceFile(const char* filename, const WorkspaceFileType& type,
+			ForceCopy);
 	~TemporaryWorkspaceFile();
 	/**
 	 * Prevents the file from being deleted on destruction.
