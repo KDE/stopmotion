@@ -302,7 +302,7 @@ INSTALLS += target translations icon desktop \
 
 QMAKE_STRIP=:
 
-# qmake does not add these itself, it seems
+# remove old Qt4 generated files, if present for any reason
 QMAKE_CLEAN += ui_helpbrowser.h ui_toolsmenu.h
 
 # Build translations
