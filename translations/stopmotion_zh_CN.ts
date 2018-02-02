@@ -194,7 +194,7 @@
             <translation>编码器设置</translation>
         </message>
         <message>
-            <source>Do you want to be asked for an output file everytime you choose to export?</source>
+            <source>Do you want to be asked for an output file every time you choose to export?</source>
             <translation>您想要每次选择导出时，都向您询问输出文件名称吗？</translation>
         </message>
         <message>
@@ -1200,7 +1200,7 @@ values exists. Do you want to use this one? (Your old preferences
             <translation>&lt;h4&gt;抓取图片 (空格)&lt;/h4&gt;&lt;p&gt;按一下这个按钮以从相机&lt;em&gt;抓取&lt;/em&gt;图片，并将它置于动画之中&lt;/p&gt;&lt;p&gt;这也可以藉由按下&lt;b&gt;空格键&lt;/b&gt;&lt;/p&gt;来完成</translation>
         </message>
         <message>
-            <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
+            <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, thereby making a smoother stop motion animation!&lt;/p&gt;</source>
             <translation>&lt;h4&gt;图像数量&lt;/h4&gt;&lt;p&gt;藉由变更滑动杆中的值，您可以指定在动画中从后算起有多少图像，它们应该于相机顶部混合，或者如果您位于播放控制模式：有多少图像将要播放。&lt;/p&gt;&lt;p&gt;藉由混合前一个图像到相机上，您可以更容易看到下一个镜头与其他镜头是如何关联，以便制作比较平滑的定格动画 !&lt;/p&gt;</translation>
         </message>
         <message>
