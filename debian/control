@@ -4,13 +4,13 @@ Priority: optional
 Maintainer: Barak A. Pearlmutter <bap@debian.org>
 Uploaders: Mahyuddin Susanto <udienz@ubuntu.com>,
 	   Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>
-Build-Depends: debhelper (>= 10),
+Build-Depends: debhelper (>= 11),
 	pkg-config,
 	libqt4-dev,
 	libtar-dev,
 	libvorbis-dev,
 	libxml2-dev
-Standards-Version: 3.9.8
+Standards-Version: 4.1.3
 Homepage: http://linuxstopmotion.sourceforge.net
 Vcs-Git: git://anonscm.debian.org/collab-maint/stopmotion.git
 Vcs-Browser: https://anonscm.debian.org/gitweb/?p=collab-maint/stopmotion.git
