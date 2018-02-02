@@ -241,7 +241,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="104"/>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="390"/>
-        <source>Do you want to be asked for an output file everytime you choose to export?</source>
+        <source>Do you want to be asked for an output file every time you choose to export?</source>
         <translation>¿Desea que se le pregunte por el archivo de salida cada vez que exporte?</translation>
     </message>
     <message>
@@ -1288,7 +1288,7 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="290"/>
-        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, thereby making a smoother stop motion animation!&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Cantidad de imágenes&lt;/h4&gt; &lt;p&gt;Al cambiar este valor en la barra deslizadora se puede especificar cuántas imágenes anteriores de la animación se mezclan sobre la imagen que da la cámara, o si se encuentra en el modo de previsualización: cuántas imágenes reproducir.&lt;/p&gt; &lt;p&gt;Al mezclar las imágenes anteriores con la imagen de la cámara se ve fácilmente la relación que hay entre ellas, haciendo posible lograr movimientos más suaves&lt;/p&gt;</translation>
     </message>
     <message>

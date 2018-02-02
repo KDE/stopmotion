@@ -276,7 +276,7 @@ void ToolsMenu::retranslateStrings() {
 			"backwards in the animation which should be mixed on top of the camera or "
 			"if you are in playback mode: how many images to play. </p> "
 			"<p>By mixing the previous image(s) onto the camera you can more easily see "
-			"how the next shot will be in relation to the other, therby making a smoother "
+			"how the next shot will be in relation to the other, thereby making a smoother "
 			"stop motion animation!</p>");
 	ui->mixSliderCaption->setWhatsThis(infoText );
 	ui->mixSlider->setWhatsThis(infoText);

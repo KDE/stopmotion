@@ -241,7 +241,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="104"/>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="390"/>
-        <source>Do you want to be asked for an output file everytime you choose to export?</source>
+        <source>Do you want to be asked for an output file every time you choose to export?</source>
         <translation>أتريد تعيين ملف الإخراج قبل كل تصدير؟</translation>
     </message>
     <message>
@@ -1309,7 +1309,7 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="290"/>
-        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, thereby making a smoother stop motion animation!&lt;/p&gt;</source>
         <translation>عدد الصور&lt;h4&gt;&lt;p&gt;بتغيير قيمة هذا المنزلق يمكنك تعيين عدد الصور رجوعا في التحريك التي ينبغي مزجها مع الكامرا أو إن كنت في طور العرض فإنه يعيّن عدد الصور التي تُعرض.&lt;/p&gt;&lt;p&gt;بمزج الصور السابقة بما يظهر في الكامرا يمكنك بيسر مشاهدة ما ستبدو عليه اللقطة التالية بالنسبة إلى سابقتها و بذلك تصنع تحريكا أسلس!&lt;/p&gt;</translation>
     </message>
     <message>
