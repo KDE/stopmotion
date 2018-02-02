@@ -1,0 +1,4 @@
+version=4
+opts="mode=git, pgpmode=none" \
+ git://git.code.sf.net/p/linuxstopmotion/code \
+ refs/tags/v?([\d\.]+) debian uupdate
