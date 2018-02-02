@@ -1286,7 +1286,7 @@ Möchten Sie diese nutzen? (Ihre alten Einstellungen werden in  ~/.stopmotion/pr
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="290"/>
-        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, thereby making a smoother stop motion animation!&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Anzahl der Bilder&lt;/h4&gt; &lt;p&gt;Mit diesem Regler können Sie einstellen, wieviele Vorgänger-Bilder der Animation im Kamerabild eingeblendet werden sollten. Im playback-Modus: wie viele Bilder abgespielt werden. &lt;/p&gt; &lt;p&gt;Dadurch können Sie besser sehen, wie das nächste Bild im Verhältnis zu den vorhergehenden Bildern sein wird. Dies ermöglicht gleichmässige Bewegungsabläufe.&lt;/p&gt;</translation>
     </message>
     <message>

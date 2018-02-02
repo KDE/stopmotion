@@ -1593,7 +1593,7 @@ lagret som ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, thereby making a smoother stop motion animation!&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Antall bilder&lt;/h4&gt;&lt;p&gt;Her kan du sette hvor mange tidligere bilder som skal brukes i den gitte modusen (enten playback eller miks).&lt;/p&gt;</translation>
     </message>
     <message>

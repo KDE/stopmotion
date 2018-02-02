@@ -1419,7 +1419,7 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <location line="+8"/>
-        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, thereby making a smoother stop motion animation!&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Počet obrázků&lt;/h4&gt; &lt;p&gt;Změnou hodnoty můžete nastavit kolik obrázků (směrem zpět) v animaci má být přidáno na kameru nebo kolik se jich má přehrát (při přehrávání)&lt;/p&gt; &lt;p&gt;Přidání obrázku (nebo obrázků) na kameru můžete snadněji vidět vztah dalšího rámu k ostatním a vytvořit tak plynulejší animaci!&lt;/p&gt;</translation>
     </message>
     <message>

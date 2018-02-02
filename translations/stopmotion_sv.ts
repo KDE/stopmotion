@@ -1454,7 +1454,7 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="290"/>
-        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, thereby making a smoother stop motion animation!&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Antal bilder&lt;/h4&gt; &lt;p&gt;Genom att ändra värdet i den här barometern kan du specificera hur många bilder bakåt i animationen som ska mixas med kameran eller om du är i uppspelningsläge: hur många bilder som ska spelas.&lt;/p&gt; &lt;p&gt;Genom att mixa tidigare bilder med kameran kan du enklare se hur nästa bild kommer att bli i relation till de andra, därmed skapa en finare animation!&lt;/p&gt;</translation>
     </message>
     <message>

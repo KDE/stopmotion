@@ -1308,7 +1308,7 @@ values exists. Do you want to use this one? (Your old preferences
         <translation>&lt;h4&gt;擷取圖框 (空格)&lt;/h4&gt;&lt;p&gt;按一下這個按鈕以從相機&lt;em&gt;擷取&lt;/em&gt;圖框，並將它置於動畫之中&lt;/p&gt;&lt;p&gt;這也可以藉由按下&lt;b&gt;空格鍵&lt;/b&gt;&lt;/p&gt;來完成</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, thereby making a smoother stop motion animation!&lt;/p&gt;</source>
         <translation>&lt;h4&gt;圖像數量&lt;/h4&gt;&lt;p&gt;藉由變更滑動桿中的值，您可以指定在動畫中從後算起有多少圖像，它們應該於相機頂部混合，或者如果您位於播放控制模式：有多少圖像將要播放。&lt;/p&gt;&lt;p&gt;藉由混合前一個圖像到相機上，您可以更容易看到下一個鏡頭與其他鏡頭是如何關聯，以便製作較平滑的定格動畫 !&lt;/p&gt;</translation>
     </message>
     <message>

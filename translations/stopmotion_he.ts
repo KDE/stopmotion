@@ -1294,7 +1294,7 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="290"/>
-        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, thereby making a smoother stop motion animation!&lt;/p&gt;</source>
         <translation>&lt;h4&gt;מספר התמונות&lt;/h4&gt; &lt;p&gt;על ידי שינוי ערך זה בסרגל הגלילה תוכל להגדיר כמה תמונות לחזור אחורה בהנפשה להצגה על גבי הצילום מהמצלמה או שאם אתה במצב נגינה: כמה תמונות להציג.&lt;/p&gt; &lt;p&gt;על ידי ערבול התמונה/ות הקודמת/ות אל תוך תצוגת המצלמה תוכל בקלות יתרה לראות כיצד תצא התמונה הבאה ביחס לאחרות, ובך ליצור הנפשת עצר חלקה יותר!&lt;/p&gt;</translation>
     </message>
     <message>

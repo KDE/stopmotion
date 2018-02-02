@@ -1419,7 +1419,7 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location line="+8"/>
-        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, therby making a smoother stop motion animation!&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Number of images&lt;/h4&gt; &lt;p&gt;By changing the value in this slidebar you can specify how many images backwards in the animation which should be mixed on top of the camera or if you are in playback mode: how many images to play. &lt;/p&gt; &lt;p&gt;By mixing the previous image(s) onto the camera you can more easily see how the next shot will be in relation to the other, thereby making a smoother stop motion animation!&lt;/p&gt;</source>
         <translation type="unfinished">&lt;h4&gt;Število slik&lt;/h4&gt; &lt;p&gt;S spreminjanjem te vrednosti določite koliko slik nazaj v animaciji naj bo vidnih preko slike iz kamere in če ste v predvajalnem načinu; koliko sličic naj se predvaja. &lt;/p&gt; &lt;p&gt;Z gledanjem prejšnjih slik preko slike iz kamere lažje vidite kakšna bo naslednja sličica v odnosu na prejšnjo in s tem naredite gibanje v animaciji bolj gladko.&lt;/p&gt;</translation>
     </message>
     <message>
