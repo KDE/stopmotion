@@ -6,7 +6,7 @@ Uploaders: Mahyuddin Susanto <udienz@ubuntu.com>,
 	   Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>
 Build-Depends: debhelper (>= 11),
 	pkg-config,
-	libqt4-dev,
+	qtbase5-dev,
 	libtar-dev,
 	libvorbis-dev,
 	libxml2-dev
