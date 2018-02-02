@@ -1,3 +1,4 @@
+QT += widgets
 CONFIG += debug_and_release
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
@@ -300,6 +301,9 @@ INSTALLS += target translations icon desktop \
 	docgraphics docicons docscreens htmldoc
 
 QMAKE_STRIP=:
+
+# qmake does not add these itself, it seems
+QMAKE_CLEAN += ui_helpbrowser.h ui_toolsmenu.h
 
 # Build translations
 QMAKE_EXTRA_COMPILERS += lrelease

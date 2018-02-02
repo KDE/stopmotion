@@ -27,12 +27,13 @@
 #include "src/domain/animation/workspacefile.h"
 #include "src/domain/domainfacade.h"
 
-#include <QProgressDialog>
-#include <QProgressBar>
-#include <QTimer>
 #include <QApplication>
 #include <QLabel>
-#include <QtGui>
+#include <QMessageBox>
+#include <QProgressDialog>
+#include <QProgressBar>
+#include <QStatusBar>
+#include <QTimer>
 
 #include <cstring>
 #include <unistd.h>

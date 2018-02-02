@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2016 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -25,17 +25,17 @@
 #include "src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h"
 #include "framepreferencesmenu.h"
 
-#include <QImage>
+#include <QDebug>
+#include <QDragEnterEvent>
+#include <QDropEvent>
 #include <QFrame>
 #include <QImage>
-#include <QDragEnterEvent>
-#include <QResizeEvent>
-#include <QDropEvent>
-#include <QVBoxLayout>
-#include <QPixmap>
-#include <QScrollBar>
 #include <QImageReader>
-#include <QDebug>
+#include <QMimeData>
+#include <QPixmap>
+#include <QResizeEvent>
+#include <QScrollBar>
+#include <QVBoxLayout>
 
 #include <algorithm>
 

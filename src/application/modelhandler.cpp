@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -25,13 +25,14 @@
 #include "src/technical/stringiterator.h"
 
 #include <QChar>
-#include <QProcess>
-#include <QStatusBar>
 #include <QFileDialog>
-#include <QPushButton>
-#include <QStringList>
-#include <QString>
 #include <QMessageBox>
+#include <QMimeData>
+#include <QProcess>
+#include <QPushButton>
+#include <QStatusBar>
+#include <QString>
+#include <QStringList>
 
 
 ModelHandler::ModelHandler ( QObject *parent, QStatusBar *sb, FrameBar *frameBar,
@@ -70,7 +71,7 @@ void ModelHandler::chooseFrame() {
 			<< "CompuServe Graph. Interch. Format (*.gif *.GIF)"
 			<< "Interleaved Bitmap (*.lbm *.iff *.LBM *.IFF)"
 			<< "All files (*)";
-	fileDialog->setFilters(filters);
+	fileDialog->setNameFilters(filters);
 	fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
 	fileDialog->setFileMode(QFileDialog::ExistingFiles);
 

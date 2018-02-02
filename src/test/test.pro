@@ -1,6 +1,6 @@
 TEMPLATE = app
-QT += core
-CONFIG += qtestlib debug
+QT += core testlib widgets
+CONFIG += debug
 HEADERS += ../domain/undo/filelogger.h \
     ../domain/undo/command.h \
     ../domain/undo/commandlogger.h \

@@ -24,7 +24,6 @@
 #include "src/presentation/frontends/qtfrontend/imagegrabthread.h"
 #include "src/presentation/frontends/qtfrontend/qtfrontend.h"
 
-#include <QX11Info>
 #include <QMessageBox>
 #include <QApplication>
 #include <QPainter>

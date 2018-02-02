@@ -11,7 +11,7 @@ INSTALLATION
 You need the following packages installed to compile:
 - make and gcc (`build-essential`)
 - `gdb`
-- Qt4 (`libqt4-dev` and `qt4-dev-tools`)
+- Qt5 (`qtbase5-dev` and `qttools5-dev-tools`)
 - tar (`libtar-dev`)
 - XML2 (`libxml2-dev`)
 - vorbisfile (`libvorbis-dev`)
@@ -19,11 +19,11 @@ You need the following packages installed to compile:
 
 For example, in Ubuntu or Debian you would open a terminal and type:
 
-    sudo apt install build-essential gdb libqt4-dev qt4-dev-tools libtar-dev libxml2-dev libvorbis-dev pkg-config git vgrabbj uvccapture
+    sudo apt install build-essential gdb qtbase5-dev qttest5-dev-tools libtar-dev libxml2-dev libvorbis-dev pkg-config git vgrabbj uvccapture
 
 In OpenSuSE you first type:
 
-    sudo zypper install -t pattern devel_qt4
+    sudo zypper install -t pattern devel_qt5
     sudo zypper install git libvorbis-devel libxml2-devel
 
 Then open your browser and visit `https://rpm.pbone.net` and find both
@@ -36,10 +36,10 @@ filenames as appropriate):
 Once the dependencies are installed you can navigate to the source
 code directory and type the following to build Stopmotion:
 
-    qmake -qt=4
+    qmake -qt=5
     sudo make install
 
-If `qmake -qt=4` does not work, you can just use `qmake`.
+If `qmake -qt=5` does not work, you can just use `qmake`.
 
 
 WHO CAN USE IT

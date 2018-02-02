@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -26,17 +26,18 @@
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h"
 
-#include <QPainter>
-#include <QImage>
 #include <QApplication>
-#include <QStringList>
-#include <QPixmap>
+#include <QDropEvent>
+#include <QIcon>
+#include <QImage>
+#include <QList>
+#include <QMimeData>
 #include <QMouseEvent>
 #include <QPaintEvent>
-#include <QDropEvent>
+#include <QPainter>
+#include <QPixmap>
 #include <QPushButton>
-#include <QIcon>
-#include <QList>
+#include <QStringList>
 #include <QUrl>
 
 
