@@ -25,7 +25,7 @@ stopmotion (0.8.1-1) unstable; urgency=medium
   * force use of qt4
   * bump policy version
   * use https for packaging repo
-  
+
  -- Barak A. Pearlmutter <bap@debian.org>  Tue, 26 Jul 2016 09:13:44 +0200
 
 stopmotion (0.8.0-5) unstable; urgency=medium
@@ -202,7 +202,7 @@ stopmotion (0.6.1-1) unstable; urgency=low
     - Fixed a Qt 4.4.0 specific issue related to non-native windows.
   * not handling nostrip build option (policy 10.1) (Closes: #438071)
   * does not start (Closes: #413252)
-  * Updated debian/menu to reflect the new menu policy (Apps -> Applications). 
+  * Updated debian/menu to reflect the new menu policy (Apps -> Applications).
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Fri, 09 May 2008 17:05:33 +0200
 
@@ -248,7 +248,7 @@ stopmotion (0.5.4-1) unstable; urgency=low
   * stopmotion fails to start (Closes: #387768)
   * stopmotion missing on the K menu (under multimedia) (Closes:
     #397286)
-  * Missing packages in debian/control's Suggests: (Closes: #376921) 
+  * Missing packages in debian/control's Suggests: (Closes: #376921)
   * Upload sponsored by Petter Reinholdtsen.
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>  Thu,  4 Jan 2007 23:05:22 +0100
@@ -292,7 +292,7 @@ stopmotion (0.5.1-1) unstable; urgency=low
 stopmotion (0.5.0-1) unstable; urgency=low
 
   * Ported to Qt4
-  * Added: 
+  * Added:
     - Support for getting output from stdout in a custom widget as well as
       typing input to stdin
     - Experimental import option for dvgrab in the preferences menu
@@ -413,23 +413,23 @@ stopmotion (0.3pre.0-1) unstable; urgency=low
  -- Bjoern Erik Nilsen <bjoern.nilsen@hig.no>  Thu, 28 Apr 2005 13:59:51 +0200
 
 stopmotion (0.pre3.4-2) unstable; urgency=low
-  
+
   * Removed some local dependencies in the debian/rules file
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@hig.no>  Tue, 26 Apr 2005 18:34:57 +0200
 
 stopmotion (0.pre3.4-1) unstable; urgency=low
-  
-  * Fixed a bug when removing scenes 
+
+  * Fixed a bug when removing scenes
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@hig.no>  Tue, 25 Apr 2005 17:12:36 +0200
- 
+
 stopmotion (0.pre3.3-1) unstable; urgency=low
 
   * Fixed a bug when copying files to the tmp directory
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@hig.no>  Sun, 24 Apr 2005 05:26:52 +0200
- 
+
 stopmotion (0.pre3.2-1) unstable; urgency=low
 
   * A brand new recovery mode and the ability to open the most
@@ -440,7 +440,7 @@ stopmotion (0.pre3.2-1) unstable; urgency=low
 stopmotion (0.pre3.1-1) unstable; urgency=low
 
   * Corrected the .desktop file so the program is showing in the desktop menu
-  
+
  -- Bjoern Erik Nilsen <bjoern.nilsen@hig.no>  Sat, 23 Apr 2005 16:16:19 +0200
 
 stopmotion (0.pre3.0-1) unstable; urgency=low
@@ -475,4 +475,3 @@ stopmotion (0.0.1-1) unstable; urgency=low
   * Initial Release
 
  -- Bjoern Erik Nilsen <bjoern.nilsen@hig.no>  Thu, 10 Feb 2005 19:19:46 +0100
-  
