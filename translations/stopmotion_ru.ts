@@ -241,7 +241,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="104"/>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="390"/>
-        <source>Do you want to be asked for an output file everytime you choose to export?</source>
+        <source>Do you want to be asked for an output file every time you choose to export?</source>
         <translation>Запрашивать имя файла каждый раз, когда вы будете экспортировать?</translation>
     </message>
     <message>

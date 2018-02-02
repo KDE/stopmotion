@@ -249,7 +249,7 @@
     <message>
         <location line="+10"/>
         <location line="+286"/>
-        <source>Do you want to be asked for an output file everytime you choose to export?</source>
+        <source>Do you want to be asked for an output file every time you choose to export?</source>
         <translation type="unfinished">Želite biti vprašani o izhodni datoteki vsakič, ko se odločite za izvažanje?</translation>
     </message>
     <message>

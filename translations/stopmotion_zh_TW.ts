@@ -210,7 +210,7 @@
         <translation>編碼器設定值</translation>
     </message>
     <message>
-        <source>Do you want to be asked for an output file everytime you choose to export?</source>
+        <source>Do you want to be asked for an output file every time you choose to export?</source>
         <translation>您想要每次選擇匯出時，都向您詢問輸出檔案名稱嗎？</translation>
     </message>
     <message>

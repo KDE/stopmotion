@@ -261,7 +261,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="104"/>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="390"/>
-        <source>Do you want to be asked for an output file everytime you choose to export?</source>
+        <source>Do you want to be asked for an output file every time you choose to export?</source>
         <translation>Deseja que lhe seja pedido o ficheiro de saída cada vêz que exporta?</translation>
     </message>
     <message>

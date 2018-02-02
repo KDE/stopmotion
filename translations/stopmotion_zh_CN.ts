@@ -194,7 +194,7 @@
             <translation>编码器设置</translation>
         </message>
         <message>
-            <source>Do you want to be asked for an output file everytime you choose to export?</source>
+            <source>Do you want to be asked for an output file every time you choose to export?</source>
             <translation>您想要每次选择导出时，都向您询问输出文件名称吗？</translation>
         </message>
         <message>

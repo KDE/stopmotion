@@ -268,7 +268,7 @@
     <message>
         <location line="+10"/>
         <location line="+286"/>
-        <source>Do you want to be asked for an output file everytime you choose to export?</source>
+        <source>Do you want to be asked for an output file every time you choose to export?</source>
         <translation>Ønsker du å angi videofil hver gang du eksporterer?</translation>
     </message>
     <message>
