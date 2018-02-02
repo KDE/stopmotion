@@ -1,3 +1,10 @@
+stopmotion (0.8.4-2) unstable; urgency=medium
+
+  * Merge upstream port to Qt5 (closes: #875194)
+  * Adjust build scripts to use Qt5
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Fri, 02 Feb 2018 11:13:12 +0000
+
 stopmotion (0.8.4-1) unstable; urgency=medium
 
   * New upstream release
