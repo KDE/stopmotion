@@ -93,12 +93,21 @@ const char* UiException::what() const throw () {
 			return out;
 		case failedToInitializeAudioDriver:
 			return "Failed To Initialize Audio Driver";
+		case failedToWriteToPreferencesFile:
+			out = formatError("Preferences file could not be written to: %s", stringParam);
+			return out;
 		default:
 			break;
 		}
 		break;
 	case failedToGetExclusiveLock:
 		return "Failed to get an exclusive lock on command.log. Perhaps Stopmotion is already running.";
+	case preferencesFileUnreadable:
+		out = formatError("Preferences file cannot be read: %s", stringParam);
+		return out;
+	case preferencesFileMalformed:
+		out = formatError("Preferences file is malformed: %s", stringParam);
+		return out;
 	case ArbitraryError:
 		return stringParam;
 	default:

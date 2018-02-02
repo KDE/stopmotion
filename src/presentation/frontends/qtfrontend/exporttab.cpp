@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -205,8 +205,7 @@ void ExportTab::resizeEvent(QResizeEvent *event)
 }
 
 
-void ExportTab::apply()
-{
+void ExportTab::apply() {
 	PreferencesTool *prefs = PreferencesTool::get();
 
 	// Remove old preferences
@@ -224,26 +223,24 @@ void ExportTab::apply()
 	// Set new preferences
 	numEncoders = encoderTable->rowCount();
 	if (numEncoders > 0) {
-		prefs->setPreference("numEncoders", numEncoders, true);
-		prefs->setPreference("activeEncoder", encoderTable->currentRow(), true);
+		prefs->setPreference("numEncoders", numEncoders);
+		prefs->setPreference("activeEncoder", encoderTable->currentRow());
 		for (int i = 0; i < numEncoders; ++i) {
 			prefs->setPreference(QString("encoderName%1").arg(i).toLatin1().constData(),
-					encoderTable->item(i, 0)->text().toLatin1().constData(), true);
+					encoderTable->item(i, 0)->text().toLatin1().constData());
 			prefs->setPreference(QString("encoderDescription%1").arg(i).toLatin1().constData(),
-					encoderTable->item(i, 1)->text().toLatin1().constData(), true);
+					encoderTable->item(i, 1)->text().toLatin1().constData());
 			prefs->setPreference(QString("startEncoder%1").arg(i).toLatin1().constData(),
-					startEncoderStrings[i].toLatin1().constData(), true);
+					startEncoderStrings[i].toLatin1().constData());
 			prefs->setPreference(QString("stopEncoder%1").arg(i).toLatin1().constData(),
-					stopEncoderStrings[i].toLatin1().constData(), true);
+					stopEncoderStrings[i].toLatin1().constData());
 			prefs->setPreference(QString("outputFile%1").arg(i).toLatin1().constData(),
-					outputFiles[i].toLatin1().constData(), true);
+					outputFiles[i].toLatin1().constData());
 		}
+	} else {
+		prefs->setPreference("numEncoders", -1);
+		prefs->setPreference("activeEncoder", -1);
 	}
-	else {
-		prefs->setPreference("numEncoders", -1, true);
-		prefs->setPreference("activeEncoder", -1, true);
-	}
-
 }
 
 

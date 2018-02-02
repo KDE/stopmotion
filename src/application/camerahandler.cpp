@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2016 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -136,17 +136,23 @@ void CameraHandler::setMixCount(int mixCount)
 {
 	frameView->setMixCount(mixCount);
 	
+	PreferencesTool* preferences = PreferencesTool::get();
 	switch( frameView->getViewMode() ) {
 		case 0: 
 		{
-			PreferencesTool::get()->setPreference("mixcount", mixCount);
+			preferences->setPreference("mixcount", mixCount);
 			break;
 		}
 		case 2:
 		{
-			PreferencesTool::get()->setPreference("playbackcount", mixCount);
+			preferences->setPreference("playbackcount", mixCount);
 			break;
 		}
+	}
+	try {
+		preferences->flush();
+	} catch (UiException& ex) {
+		DomainFacade::getFacade()->getFrontend()->handleException(ex);
 	}
 }
 

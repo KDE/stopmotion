@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -25,6 +25,7 @@
 #include "src/foundation/logger.h"
 #include "src/technical/util.h"
 #include "src/domain/animation/workspacefile.h"
+#include "src/domain/domainfacade.h"
 
 #include <QProgressDialog>
 #include <QProgressBar>
@@ -37,22 +38,30 @@
 #include <unistd.h>
 #include <sstream>
 #include <stdio.h>
+#include <errno.h>
 #include <assert.h>
 
-QtFrontend::QtFrontend(int &argc, char **argv)
-{
-	stApp = new QApplication(argc, argv);
-#if QT_VERSION == 0x040400
-        stApp->setAttribute(Qt::AA_NativeWindows);
-#endif
+const char* QtFrontend::VERSION = "0.8";
 
-	// Need to call this here to get the locale for the language
-	// which is used by the translator created in mainWindowGUI
-	initializePreferences();
+QtFrontend::QtFrontend(int &argc, char **argv) {
+	stApp = new QApplication(argc, argv);
+
+#if QT_VERSION == 0x040400
+	stApp->setAttribute(Qt::AA_NativeWindows);
+#endif
 
 	mw = new MainWindowGUI(stApp);
 	mw->setWindowTitle("Stopmotion");
 	mw->showMaximized();
+
+	try {
+		initializePreferences();
+		PreferencesTool::get()->flush();
+	} catch (UiException& ex) {
+		DomainFacade::getFacade()->getFrontend()->handleException(ex);
+	}
+
+	mw->ConstructUI();
 
 	progressDialog = 0;
 	progressBar = 0;
@@ -61,8 +70,7 @@ QtFrontend::QtFrontend(int &argc, char **argv)
 }
 
 
-QtFrontend::~QtFrontend()
-{
+QtFrontend::~QtFrontend() {
 	delete mw;
 	mw = 0;
 	delete stApp;
@@ -70,8 +78,7 @@ QtFrontend::~QtFrontend()
 }
 
 
-int QtFrontend::run(int, char **)
-{
+int QtFrontend::run(int, char **) {
 	stApp->connect( stApp, SIGNAL(lastWindowClosed()), stApp, SLOT(quit()) );
 	return stApp->exec();
 }
@@ -165,9 +172,38 @@ void QtFrontend::updateProgressBar() {
     progressBar->setValue(++p);
 }
 
+long fileSize(const char* filePath) {
+	FILE* fh = fopen(filePath, "r");
+	if (!fh)
+		return -1;
+	long result = -1;
+	if (0 == fseek(fh, 0, SEEK_END)) {
+		result = ftell(fh);
+	}
+	fclose(fh);
+	return result;
+}
 
-void QtFrontend::initializePreferences()
-{
+bool QtFrontend::loadPreferencesFrom(PreferencesTool* prefs, const char* path) {
+	if (prefs->load(path))
+		return true;
+	if (0 == access(path, R_OK)) {
+		// file exists and is readable
+		if (fileSize(path) < 40) {
+			// not worth keeping a file this small
+			return false;
+		}
+		int ret = QMessageBox::question(0,
+				tr("Lose corrupt file"),
+				tr("The file %1 seems to be corrupt, it's contents will be lost if you continue. Do you want to continue?").arg(path),
+				QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
+		if (ret == QMessageBox::No)
+			throw CriticalError();
+	}
+	return false;
+}
+
+void QtFrontend::initializePreferences() {
 	Logger::get().logDebug("Loading preferencestool");
 
 	PreferencesTool *prefs = PreferencesTool::get();
@@ -176,44 +212,40 @@ void QtFrontend::initializePreferences()
 
 	WorkspaceFile::ensureStopmotionDirectoriesExist();
 
-	// Has to check this before calling setPreferencesFile(...) because
-	// the function creates the file if it doesn't exist.
-	int prefsFileExists = access(preferencesFile.path(), R_OK);
-	if (prefsFileExists != -1) {
-		Util::copyFile(oldPrefsFile.path(), preferencesFile.path());
-	}
-
-	// If file doesn't exist or has wrong version number
-	if ( !prefs->setPreferencesFile(preferencesFile.path(), "0.8") ) {
-		// File doesn't exist
-		if (prefsFileExists == -1) {
+	bool dirty = false;
+	bool oldIsDirty = true;
+	if (!loadPreferencesFrom(prefs, preferencesFile.path())) {
+		dirty = true;
+		Logger::get().logWarning("Did not load new prefs");
+		if (loadPreferencesFrom(prefs, oldPrefsFile.path())) {
+			oldIsDirty = false;
+		} else {
+			Logger::get().logWarning("Did not load old prefs");
+			prefs->setDefaultPreferences(VERSION);
 			setDefaultPreferences(prefs);
 		}
-		// Has wrong version number
-		else {
-			int useNewPrefsFile = askQuestion(Frontend::useNewerPreferences);
-			// Use new preferences
-			if (useNewPrefsFile == 0) { // 0 = yes
-				setDefaultPreferences(prefs);
-			}
-			// Use old preferences
-			else {
-				rename(oldPrefsFile.path(), preferencesFile.path());
-				prefs->setPreferencesFile(preferencesFile.path(), prefs->getOldVersion());
-
-				// Update version
-				prefs->setVersion("0.8");
-
-				// Do necessary updates on the old prefs file:
-				updateOldPreferences(prefs);
-			}
-		}
 	}
+	if (!prefs->isVersion(VERSION)) {
+		bool useNewPrefsFile = askQuestion(Frontend::useNewerPreferences);
+		if (useNewPrefsFile) {
+			// copy to old
+			prefs->setSavePath(preferencesFile.path(), oldIsDirty);
+			prefs->flush();
+			// Create new default preferences
+			setDefaultPreferences(prefs);
+		} else {
+			// Use and update old preferences
+			prefs->setVersion(VERSION);
+			updateOldPreferences(prefs);
+		}
+		dirty = true;
+	}
+	prefs->setSavePath(preferencesFile.path(), dirty);
+	prefs->flush();
 }
 
 
-void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
-{
+void QtFrontend::setDefaultPreferences(PreferencesTool *prefs) {
 	assert(prefs != NULL);
 	Logger::get().logDebug("Setting default preferences");
 
@@ -316,7 +348,6 @@ void QtFrontend::setDefaultPreferences(PreferencesTool *prefs)
 	prefs->setPreference("startEncoder4",
 			"ffmpeg -y -framerate $FRAMERATE -i \"$IMAGEPATH/%06d.jpg\" -codec:v mpeg4 -b:v 6k \"$VIDEOFILE\"");
 	prefs->setPreference("stopEncoder4", "");
-	//-------------------------------------------------------------------------
 }
 
 void QtFrontend::handleException(UiException& e) {
@@ -347,6 +378,11 @@ void QtFrontend::handleException(UiException& e) {
 					tr("Failed to initialize audio driver"),
 					tr("Sound will not work until this is corrected"));
 			break;
+		case UiException::failedToWriteToPreferencesFile:
+			QMessageBox::warning(0,
+					tr("Failed to write preferences"),
+					tr("Could not write preferences to file: %1").arg(e.string()));
+			break;
 		default:
 			unhandled = true;
 			break;
@@ -356,6 +392,16 @@ void QtFrontend::handleException(UiException& e) {
 		QMessageBox::critical(0,
 				tr("Stopmotion cannot be started."),
 				tr("Failed to get exclusive lock on command.log. Perhaps Stopmotion is already running."));
+		break;
+	case UiException::preferencesFileUnreadable:
+		QMessageBox::critical(0,
+				tr("Preferences file cannot be read"),
+				tr("Preferences file %1 is unreadable. Please correct this and try again.").arg(e.string()));
+		break;
+	case UiException::preferencesFileMalformed:
+		QMessageBox::critical(0,
+				tr("Preferences file cannot be read"),
+				tr("Preferences file %1 is not a valid XML preferences file. Please correct this or delete the file and try again.").arg(e.string()));
 		break;
 	case UiException::ArbitraryError:
 		QMessageBox::critical(0, tr("Fatal"), e.what());
@@ -368,8 +414,8 @@ void QtFrontend::handleException(UiException& e) {
 		QMessageBox::critical(0,
 				tr("Stopmotion threw and exception it could not handle."),
 				tr("Please raise a bug report."));
+		throw CriticalError();
 	}
-	throw CriticalError();
 }
 
 void QtFrontend::reportWarning(const char *message) {
@@ -410,7 +456,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 }
 
 
-int QtFrontend::askQuestion(Question question) {
+bool QtFrontend::askQuestion(Question question) {
 	QString text;
 	switch (question) {
 	case useNewerPreferences:
@@ -423,12 +469,11 @@ int QtFrontend::askQuestion(Question question) {
 	int ret = QMessageBox::question(0,
 			tr("Question"), text,
 			QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
-	return ret == QMessageBox::Yes? 0 : 1;
+	return ret == QMessageBox::Yes;
 }
 
 
-int QtFrontend::runExternalCommand(const char *command)
-{
+int QtFrontend::runExternalCommand(const char *command) {
 	ExternalCommand *ec = new ExternalCommand;
 	ec->show();
 	ec->run( QString::fromLocal8Bit(command) );

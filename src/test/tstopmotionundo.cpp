@@ -83,7 +83,7 @@ public:
 	}
 	void reportError(const char *, int) {
 	}
-	int askQuestion(Question) {
+	bool askQuestion(Question) {
 		return true;
 	}
 	int runExternalCommand(const char *) {

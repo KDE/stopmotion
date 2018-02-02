@@ -34,6 +34,10 @@ public:
 		IsWarning,
 		/** Could not get exclusive lock on the command.log file. */
 		failedToGetExclusiveLock,
+		/** Preferences file cannot be read. */
+		preferencesFileUnreadable,
+		/** Preferences file cannot be loaded as XML. */
+		preferencesFileMalformed,
 		/** Error where the parameter is the entirety of the message. */
 		ArbitraryError
 	};
@@ -50,7 +54,9 @@ public:
 		/** Sound or image could not be copied to ~/.stopmotion/images */
 		failedToCopyFilesToWorkspace,
 		/** Audio driver could not be initialized */
-		failedToInitializeAudioDriver
+		failedToInitializeAudioDriver,
+		/** Failed to write to preferences file */
+		failedToWriteToPreferencesFile
 	};
 	explicit UiException(Warning);
 	UiException(Warning, const char* param);

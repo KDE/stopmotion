@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005-2014 by Linuxstopmotion contributors;              *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -67,7 +67,7 @@ public:
 	void setProgressInfo(const char *infoText);
 	bool isOperationAborted();
 	void processEvents();
-	int askQuestion(Question  question);
+	bool askQuestion(Question question);
 	int runExternalCommand(const char *command);
 	void handleException(UiException&);
 	void reportWarning(const char *message);
@@ -89,10 +89,12 @@ private:
 	QProgressBar *progressBar;
 	QLabel *infoText;
 	QTimer *timer;
+	static const char* VERSION;
 
 	void initializePreferences();
 	void setDefaultPreferences(PreferencesTool *prefs);
 	void updateOldPreferences(PreferencesTool *prefs);
+	bool loadPreferencesFrom(PreferencesTool* prefs, const char* path);
 };
 
 #endif
