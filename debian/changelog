@@ -1,3 +1,15 @@
+stopmotion (0.8.4-1) unstable; urgency=medium
+
+  * New upstream release
+  * debian/watch uscan support file for upstream repo and tags
+  * Configure git-buildpackage
+  * Bump to debhelper 11
+  * Bump policy version
+  * merge minor spelling correction
+  * address minor lintian nitpicks
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Fri, 02 Feb 2018 10:57:38 +0000
+
 stopmotion (0.8.3-1) unstable; urgency=medium
 
   * New upstream release
