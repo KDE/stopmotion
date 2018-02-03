@@ -101,7 +101,7 @@ void ExportTab::makeGUI()
 	connect( closeButton, SIGNAL(clicked()),this, SLOT(closeSettings()) );
 
 	askForOutput = new QLabel(
-			tr("Do you want to be asked for an output file everytime you choose to export?"));
+			tr("Do you want to be asked for an output file every time you choose to export?"));
 
 	yesButton = new QRadioButton(tr("Yes"));
 	yesButton->setChecked(true);
@@ -384,7 +384,7 @@ void ExportTab::retranslateStrings()
 	editButton->setText( tr("&Edit") );
 
 	askForOutput->setText(
-			tr("Do you want to be asked for an output file everytime you choose to export?"));
+			tr("Do you want to be asked for an output file every time you choose to export?"));
 
 	yesButton->setText(tr("Yes"));
 	noButton->setText(tr("No"));

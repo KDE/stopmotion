@@ -228,7 +228,7 @@ DISTFILES += src/config.cpp.in \
     stopmotion.1 \
     configure \
     AUTHORS \
-    README \
+    README.md \
     COPYING \
     $$system(ls -1 manual/*.html) \
     $$system(ls -1 manual/graphic/*.png) \
