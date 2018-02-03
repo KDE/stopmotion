@@ -1,19 +1,48 @@
-This package was debianized by Bjoern Erik Nilsen <bjoern.nilsen@hig.no> on
-Mon,  13 Mar 2005 05:06:15 +0100.
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: linuxstopmotion
+Source:
+    Earliest sources downloaded from
+     http://developer.skolelinux.no/info/studentgrupper/2005-hig-stopmotion
+    Current upstream development repository is
+     https://git.code.sf.net/p/linuxstopmotion/code
+    There is a fork used for upstreaming debian patches at
+     https://git.code.sf.net/u/bpearlmutter/linuxstopmotion
 
-It was downloaded from: http://developer.skolelinux.no/info/studentgrupper/2005-hig-stopmotion
+Files: *
+Copyright:
+    2005-2016, Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
+    2005-2018, see list of Contributors in ../AUTHORS
+License: GPL-2+
 
-After a reboot, upstream development is available at
- https://git.code.sf.net/p/linuxstopmotion/code
-and there is a fork used for pushing debian patches upstream at
- https://git.code.sf.net/u/bpearlmutter/linuxstopmotion
+Files: translations/*
+Copyright:
+    2005-2018, see list of Translators in ../AUTHORS
+License: GPL-2+
 
-Upstream Authors: Bjoern Erik Nilsen <bjoern.nilsen@hig.no> and 
-                  Fredrik Berg Kjoelstad <fredrik.kjoelstad@hig.no>
+Files: debian/*
+Copyright:
+    2005-2018, Bjoern Erik Nilsen <bjoern.nilsen@hig.no> and Barak A. Pearlmutter <bap@debian.org>
+License: GPL-2+
 
-This software is copyright (c) 2005 by Bjoern Erik Nilsen and Fredrik Berg Kjoelstad.
+Files: graphics/stopmotion_logo.xpm
+Copyright:
+    2008, Gorazd Bizjak <gorazd@zapstudio.net>
+License: GPL-2+
 
-You are free to distribute this software under the terms of
-the GNU General Public License.
-On Debian systems, the complete text of the GNU General Public
-License can be found in the file `/usr/share/common-licenses/GPL'.
+License: GPL-2+
+ This package is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this package; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+ .
+ On Debian systems, the complete text of the GNU General
+ Public License version 2 can be found in "/usr/share/common-licenses/GPL-2".
