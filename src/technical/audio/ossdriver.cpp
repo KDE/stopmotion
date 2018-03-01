@@ -116,7 +116,7 @@ bool OSSDriver::initialize()
 	fcntl(audioFD, F_SETFL,0);
 	
 	// Storing the request and its argument
-	long unsigned int initValues[2][4] = 
+	long unsigned int initValues[][4] =
 	{ 
 		{SNDCTL_DSP_RESET, SNDCTL_DSP_SETFMT, SOUND_PCM_WRITE_CHANNELS, SOUND_PCM_WRITE_RATE},
 		{1, AFMT_S16_LE, 2, 44100} 
