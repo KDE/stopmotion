@@ -1,3 +1,13 @@
+stopmotion (0.8.4-3) unstable; urgency=medium
+
+  * track upstream mods
+  * swizzle packaging repo to salsa
+  * bump policy, no changes required
+  * modernize debian/copyright
+  * secure debian/watch URL
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Mon, 02 Jul 2018 08:14:59 +0100
+
 stopmotion (0.8.4-2) unstable; urgency=medium
 
   * Merge upstream port to Qt5 (closes: #875194)
