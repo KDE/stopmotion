@@ -23,7 +23,6 @@
 #include "src/domain/animation/animationimpl.h"
 #include "src/domain/animation/sound.h"
 #include "src/domain/filenamevisitor.h"
-#include "src/technical/audio/audioformat.h"
 
 #include <assert.h>
 #include <memory>
@@ -53,7 +52,7 @@ Command* CommandAddSound::execute() {
 };
 
 void CommandAddSound::accept(FileNameVisitor& v) const {
-	v.visitSound(snd->getAudio()->getSoundPath());
+	v.visitSound(snd->getSoundPath());
 }
 
 CommandAddSoundFactory::CommandAddSoundFactory(AnimationImpl& model) : sv(model) {

@@ -26,6 +26,7 @@
 #include <string>
 
 class AudioFormat;
+class AudioDriver;
 class WorkspaceFile;
 
 class Sound {
@@ -55,9 +56,10 @@ public:
 	 * @param n The name to set.
 	 */
 	void setName(std::string& n);
-	AudioFormat* getAudio();
-	const AudioFormat* getAudio() const;
 	const char* getName() const;
+	const char* getSoundPath() const;
+	const char* getBasename() const;
+	void addToDriver(AudioDriver& ad) const;
 };
 
 #endif

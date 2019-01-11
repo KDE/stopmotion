@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2017 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,55 +17,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef OGGVORBIS_H
-#define OGGVORBIS_H
 
-#include "audioformat.h"
+#ifndef QTAUDIODRIVER_H
+#define QTAUDIODRIVER_H
 
-#include <vorbis/vorbisfile.h>
-#include "src/domain/animation/workspacefile.h"
+#include "audiodriver.h"
 
-/**
- * Class for decoding of oggvorbis data to raw PCM data.
- *
- * @author Bjoern Erik Nilsen & Fredrik B. Kjoelstad
- */
-class OggVorbis : public AudioFormat {
+class QtAudioDriver : public AudioDriver {
+	class Impl;
+	Impl* impl;
 public:
-
-	OggVorbis();
-	~OggVorbis();
-
-	/**
-	 * Function for registering the given filename to  be an ogg file. This
-	 * function checks that the file can be opened and that it is a valid
-	 * ogg file.
-	 * @param file the filename to register
-	 */
-	void setFilename(WorkspaceFile& file);
-
-	int open();
-	int close();
-	int fillBuffer(char *audioBuffer, int numBytes);
-	int add16bit(int16_t* audioBuffer, int count);
-	const char* getSoundPath() const;
-	const char* getBasename() const;
-
-private:
-	/** The ogg representation of the file registered in this class. */
-	OggVorbis_File *oggFile;
-
-	/** The filename registred in this class. Hopefully a valid ogg file. */
-	WorkspaceFile filename;
-	enum {
-		littleEndian = 0,
-		bigEndian = 1,
-		wordsAreUnsigned = 0,
-		wordsAreSigned = 1,
-		wordsAre8Bit = 1,
-		wordsAre16Bit = 2,
-		wordsAre32Bit = 4
-	};
+	QtAudioDriver();
+	~QtAudioDriver();
+	void play();
+	void playInThread();
+	void addAudioFile(AudioFormat *audioFile);
+	bool initialize();
+	void shutdown();
 };
 
 #endif

@@ -80,10 +80,9 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 		// ownership if oggFile has taken it.
 		if (oggFile->datasource == f)
 			fcloser.release();
-		close();
+		//close();
 		this->filename.swap(file);
-	}
-	else {
+	} else {
 		int err = errno;
 		if (err == ENOMEM) {
 			throw std::bad_alloc();
@@ -94,8 +93,7 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 }
 
 
-int OggVorbis::open()
-{
+int OggVorbis::open() {
 	FILE *f = fopen(filename.path(), "r");
 	FileCloser fcloser(f);
 	if (f) {
@@ -116,8 +114,7 @@ int OggVorbis::open()
 }
 
 
-int OggVorbis::close()
-{
+int OggVorbis::close() {
 	if (oggFile) {
 		ov_clear(oggFile);
 		free(oggFile);
@@ -128,15 +125,41 @@ int OggVorbis::close()
 }
 
 
-int OggVorbis::fillBuffer(char *audioBuffer, int numBytes)
-{
+int OggVorbis::fillBuffer(char *audioBuffer, int numBytes) {
 	assert(audioBuffer != NULL);
 	if (oggFile) {
-		int crap;
-		int ret = ov_read(oggFile, audioBuffer, numBytes, 0, 2, 1, &crap);
+		int dummy;
+		int ret = ov_read(oggFile, audioBuffer, numBytes,
+				littleEndian, wordsAre16Bit, wordsAreSigned, &dummy);
+		if (ret < 0) {
+			Logger logger = Logger::get();
+			switch (ret) {
+			case OV_HOLE:
+				logger.logWarning("Hole in the vorbis audio data");
+				break;
+			case OV_EBADLINK:
+				logger.logWarning("Invalid link or stream section in vorbis audio data");
+				break;
+			case OV_EINVAL:
+				logger.logWarning("Corrupt initial headers for vorbis audio data");
+				break;
+			default:
+				logger.logWarning("Unknown error in vorbis audio data");
+				break;
+			}
+			return 0;
+		}
 		return ret;
 	}
 	return 0;
+}
+
+
+int OggVorbis::add16bit(int16_t* audioBuffer, int count) {
+	assert(audioBuffer);
+	if (!oggFile)
+		return 0;
+	//...
 }
 
 

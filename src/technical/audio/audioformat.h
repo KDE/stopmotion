@@ -21,6 +21,7 @@
 #define AUDIOFORMAT_H
 
 #include <exception>
+#include <sys/types.h>
 
 /**
  * Interface to be used by the implemented audio formats. They
@@ -53,6 +54,16 @@ public:
 	 * @return number of bytes written to buffer
 	 */
 	virtual int fillBuffer(char *audioBuffer, int numBytes) = 0;
+
+	/**
+	 * Adds PCM data to the buffer.
+	 * @param audioBuffer The start of the buffer to be added to
+	 * @param count The number of values to be added to
+	 * @return Number of values actually written. This must be
+	 * no more than count and non-negative, and can only be 0
+	 * if the sound is exhausted.
+	 */
+	virtual int add16bit(int16_t* audioBuffer, int count) = 0;
 
 	/**
 	 * Abstract function for retrieving the sound path.

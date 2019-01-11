@@ -140,7 +140,7 @@ const char* Frame::getSoundName(int soundNumber) const {
 void Frame::playSounds(AudioDriver *driver) const {
 	SoundVector::const_iterator i = sounds.begin();
 	for (; i != sounds.end(); ++i) {
-		driver->addAudioFile((*i)->getAudio());
+		(*i)->addToDriver(*driver);
 	}
 	if (i != sounds.begin())
 		driver->playInThread();
@@ -155,6 +155,6 @@ void Frame::accept(FileNameVisitor& v) const {
 	for(SoundVector::const_iterator i = sounds.begin();
 			i != sounds.end();
 			++i) {
-		v.visitSound((*i)->getAudio()->getSoundPath());
+		v.visitSound((*i)->getSoundPath());
 	}
 }

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2005-2017 by Linuxstopmotion contributors;              *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,6 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #ifndef AUDIODRIVER_H
 #define AUDIODRIVER_H
 
@@ -43,14 +44,14 @@ public:
 	virtual void play() = 0;
 	
 	/**
-	 * Abstract function for playing PCM data. It works excactly like the play
+	 * Abstract function for playing PCM data. It works exactly like the play
 	 * function except that it plays in a separate thread.
 	 */
 	virtual void playInThread() = 0;
 	
 	/**
 	 * Abstract function for adding a audio file which later on can be played
-	 * with the play or playInThread functions.
+	 * with the play or playInThread functions. Ownership is not passed.
 	 * @param audioFile the audio file to be played
 	 */
 	virtual void addAudioFile(AudioFormat *audioFile) = 0;

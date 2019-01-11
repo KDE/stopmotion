@@ -11,7 +11,7 @@ INSTALLATION
 You need the following packages installed to compile:
 - make and gcc (`build-essential`)
 - `gdb`
-- Qt5 (`qtbase5-dev` and `qttools5-dev-tools`)
+- Qt5 (`qtbase5-dev`, `qttools5-dev-tools`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
 - tar (`libtar-dev`)
 - XML2 (`libxml2-dev`)
 - vorbisfile (`libvorbis-dev`)

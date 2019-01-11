@@ -22,6 +22,7 @@
 
 #include "src/technical/audio/audioformat.h"
 #include "src/technical/audio/oggvorbis.h"
+#include "src/technical/audio/audiodriver.h"
 
 #include <assert.h>
 #include <string.h>
@@ -58,14 +59,18 @@ void Sound::setName(std::string& n) {
 	strncpy(a, n.c_str(), size);
 }
 
-AudioFormat* Sound::getAudio() {
-	return af;
-}
-
-const AudioFormat* Sound::getAudio() const {
-	return af;
-}
-
 const char* Sound::getName() const {
 	return name;
+}
+
+const char* Sound::getSoundPath() const {
+	return af->getSoundPath();
+}
+
+const char* Sound::getBasename() const {
+	return af->getBasename();
+}
+
+void Sound::addToDriver(AudioDriver& ad) const {
+	ad.addAudioFile(af);
 }

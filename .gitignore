@@ -26,3 +26,5 @@
 .project
 # Coverity intermediate files
 /cov-int
+.vscode
+.qmake.stash
