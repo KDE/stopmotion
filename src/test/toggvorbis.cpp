@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2014 by Linuxstopmotion contributors;                   *
- *   see the AUTHORS file for details.                                     *
+ *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
+ *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,42 +17,52 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include "../technical/audio/oggvorbis.h"
 
-#ifndef TESTHOME_H_
-#define TESTHOME_H_
+// A mock OggVorbis implementation that does nothing.
 
-#include "oomtestutil.h"
+OggVorbis::OggVorbis() {
+	oggFile = NULL;
+}
 
-struct OggVorbis_File;
 
-/**
- * A filesystem/environment wrapper that makes only one change to the wrapped
- * filesystem/environment: it creates a temporary directory and pretends that
- * the HOME environment variable points to it.
- * @par
- * This is very useful for tests that exercise real Stopmotion functionality
- * (that assumes the presence of HOME) because some automatic test runners do
- * not have HOME set.
- */
-class TestHome : public MockableFileSystem {
-	MockableFileSystem* delegate;
-	char* fakeHome;
-public:
-	TestHome();
-	~TestHome();
-	void setDelegate(MockableFileSystem* mfs);
-	FILE* fopen(const char* filename, const char* mode);
-	FILE* freopen(const char* filename, const char* mode, FILE* fh);
-	int fclose(FILE* fh);
-	int fflush(FILE* fh);
-	size_t fread (void *out, size_t blockSize,
-			     size_t blockCount, FILE *fh);
-	size_t fwrite (const void *in, size_t blockSize,
-			      size_t blockCount, FILE *fh);
-	int access (const char *name, int type);
-	int ferror(FILE* fh);
-	int unlink(const char *name);
-	char *getenv(const char *name);
-};
+OggVorbis::~OggVorbis() {
+	close();
+}
 
-#endif
+
+void OggVorbis::setFilename(WorkspaceFile& file) {
+	filename = file;
+}
+
+
+int OggVorbis::open() {
+}
+
+
+void OggVorbis::reset() {
+}
+
+
+int OggVorbis::close() {
+}
+
+
+int OggVorbis::fillBuffer(char *audioBuffer, int numBytes) {
+	return numBytes;
+}
+
+
+int OggVorbis::add16bit(int16_t* audioBuffer, int count) {
+	return count;
+}
+
+
+const char* OggVorbis::getSoundPath() const {
+	return filename.path();
+}
+
+const char* OggVorbis::getBasename() const {
+	return filename.basename();
+}
+

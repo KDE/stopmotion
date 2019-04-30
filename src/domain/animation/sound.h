@@ -46,7 +46,8 @@ public:
 	void open(WorkspaceFile& file);
 	/**
 	 * Sets or resets the (human-readable) name of this sound.
-	 * @param name The new name or NULL for no name. Ownership is passed.
+	 * @param name The new name or NULL for no name. Name passed must have been
+	 * allocated with new[]. Ownership is passed.
 	 * @return The old name or NULL for no name. Ownership is returned.
 	 */
 	const char* setName(const char* name);

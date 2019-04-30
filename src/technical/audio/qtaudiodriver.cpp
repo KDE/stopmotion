@@ -58,6 +58,7 @@ public:
 		delete output;
 	}
 	void addSound(AudioFormat* a) {
+		a->reset();
 		sounds.push_back(a);
 		Logger::get().logDebug("Added sound");
 		output->stateChanged(QAudio::ActiveState);
@@ -76,7 +77,7 @@ public:
 			if (mixSound(*s, reinterpret_cast<int16_t*>(data), len))
 				++s;
 			else
-				sounds.erase(s);
+				s = sounds.erase(s);
 		}
 		if (len == 0) {
 			output->stateChanged(QAudio::IdleState);

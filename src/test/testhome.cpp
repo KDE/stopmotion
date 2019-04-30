@@ -66,17 +66,17 @@ int TestHome::fflush(FILE* fh) {
 	return delegate->fflush(fh);
 }
 
-size_t TestHome::fread (void *out, size_t blockSize,
-		     size_t blockCount, FILE *fh) {
+size_t TestHome::fread(void *out, size_t blockSize,
+		size_t blockCount, FILE *fh) {
 	return delegate->fread(out, blockSize, blockCount, fh);
 }
 
-size_t TestHome::fwrite (const void *in, size_t blockSize,
-		      size_t blockCount, FILE *fh) {
+size_t TestHome::fwrite(const void *in, size_t blockSize,
+		size_t blockCount, FILE *fh) {
 	return delegate->fwrite(in, blockSize, blockCount, fh);
 }
 
-int TestHome::access (const char *name, int type) {
+int TestHome::access(const char *name, int type) {
 	return delegate->access(name, type);
 }
 
@@ -86,24 +86,6 @@ int TestHome::ferror(FILE* fh) {
 
 int TestHome::unlink(const char *name) {
 	return delegate->unlink(name);
-}
-
-int TestHome::ov_test(FILE *f, OggVorbis_File *vf, const char *initial, long ibytes) {
-	return delegate->ov_test(f, vf, initial, ibytes);
-}
-
-int TestHome::ov_clear(OggVorbis_File *vf) {
-	return delegate->ov_clear(vf);
-}
-
-int TestHome::ov_open(FILE *f, OggVorbis_File *vf, const char *initial, long ibytes) {
-	return delegate->ov_open(f, vf, initial, ibytes);
-}
-
-long TestHome::ov_read(OggVorbis_File *vf,char *buffer, int length, int bigendianp,
-		int word, int sgned, int *bitstream) {
-	return delegate->ov_read(vf, buffer, length, bigendianp, word, sgned,
-			bitstream);
 }
 
 char *TestHome::getenv(const char *name) {

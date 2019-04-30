@@ -33,7 +33,7 @@ Sound::Sound() : af(0), name(0) {
 
 Sound::~Sound() {
 	delete af;
-	delete name;
+	delete[] name;
 }
 
 /**
@@ -42,7 +42,9 @@ Sound::~Sound() {
 void Sound::open(WorkspaceFile& file) {
 	std::auto_ptr<OggVorbis> a(new OggVorbis());
 	a->setFilename(file);
+	delete af;
 	af = a.release();
+	af->open();
 }
 
 const char* Sound::setName(const char* n) {

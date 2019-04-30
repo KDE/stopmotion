@@ -28,3 +28,7 @@
 /cov-int
 .vscode
 .qmake.stash
+# gtags output
+GTAGS
+GRTAGS
+GPATH

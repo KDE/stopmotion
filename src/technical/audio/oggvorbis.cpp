@@ -47,7 +47,7 @@ public:
 };
 
 OggVorbis::OggVorbis() {
-	oggFile  = NULL;
+	oggFile = NULL;
 }
 
 
@@ -80,7 +80,6 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 		// ownership if oggFile has taken it.
 		if (oggFile->datasource == f)
 			fcloser.release();
-		//close();
 		this->filename.swap(file);
 	} else {
 		int err = errno;
@@ -111,6 +110,11 @@ int OggVorbis::open() {
 		oggFile = NULL;
 	}
 	return -1;
+}
+
+
+void OggVorbis::reset() {
+	ov_raw_seek(oggFile, 0);
 }
 
 

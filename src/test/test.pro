@@ -1,5 +1,5 @@
 TEMPLATE = app
-QT += core testlib widgets
+QT += core testlib widgets multimedia
 CONFIG += debug
 HEADERS += ../domain/undo/filelogger.h \
     ../domain/undo/command.h \
@@ -30,7 +30,7 @@ HEADERS += ../domain/undo/filelogger.h \
     ../technical/stringiterator.h \
     ../technical/video/videofactory.h \
     ../technical/video/videoencoder.h \
-    ../technical/audio/ossdriver.h \
+    ../technical/audio/qtaudiodriver.h \
     ../technical/projectserializer.h \
     ../domain/observernotifier.h \
     ../application/externalcommandwithtemporarydirectory.h \
@@ -71,13 +71,12 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/animation/scenevector.cpp \
     ../domain/animation/workspacefile.cpp \
     ../domain/observernotifier.cpp \
-    ../technical/audio/oggvorbis.cpp \
     ../technical/audio/audioformat.cpp \
     ../technical/util.cpp \
     ../technical/stringiterator.cpp \
     ../technical/video/videofactory.cpp \
     ../technical/video/videoencoder.cpp \
-    ../technical/audio/ossdriver.cpp \
+    ../technical/audio/qtaudiodriver.cpp \
     ../technical/projectserializer.cpp \
     ../presentation/frontends/frontend.cpp \
     ../application/externalcommandwithtemporarydirectory.cpp \
@@ -87,6 +86,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../foundation/logger.cpp
 SOURCES += \
     tmain.cpp \
+    toggvorbis.cpp \
     texecutor.cpp \
     tcache.cpp \
     testundo.cpp \
@@ -95,8 +95,8 @@ SOURCES += \
     hash.cpp \
     tworkspace.cpp \
     tstopmotionundo.cpp
-FORMS += 
-RESOURCES += 
+FORMS +=
+RESOURCES +=
 INCLUDEPATH += ../.. \
     $$system(xml2-config --cflags | sed -e 's/-I//g')
 oomteststub.target = oomteststub.o

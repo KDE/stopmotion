@@ -19,4 +19,4 @@ $(SLIB): oomtestutil.cpp
 # -ldl. Object files do not allow us to specify dependencies, so using -ldl
 # here does not help.
 $(STUB): oomteststub.cpp oomtestutil.h
-	g++ -D_GNU_SOURCE -g -c -o $@ $<
+	g++ -D_GNU_SOURCE -g -fPIC -c -o $@ $<

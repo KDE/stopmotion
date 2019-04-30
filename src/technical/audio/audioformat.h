@@ -47,6 +47,11 @@ public:
 	virtual int close() = 0;
 
 	/**
+	 * Abstract function for resetting to the beginning of the sound.
+	 */
+	virtual void reset() = 0;
+
+	/**
 	 * Abstract function for filling the buffer with raw PCM data. It
 	 * fills the buffer with up to 'numBytes' bytes.
 	 * @param audioBuffer the buffer to be filled

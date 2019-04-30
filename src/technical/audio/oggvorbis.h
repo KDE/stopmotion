@@ -46,6 +46,7 @@ public:
 
 	int open();
 	int close();
+	void reset();
 	int fillBuffer(char *audioBuffer, int numBytes);
 	int add16bit(int16_t* audioBuffer, int count);
 	const char* getSoundPath() const;

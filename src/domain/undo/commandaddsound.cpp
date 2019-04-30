@@ -72,7 +72,7 @@ Command* CommandAddSoundFactory::create(Parameters& ps) {
 	int32_t fr = ps.getInteger(0, frameCount - 1);
 	int32_t index = ps.getInteger(0, sv.soundCount(sc, fr));
 	std::string filename;
-	ps.getString(filename, "?*.ogg");
+	ps.getString(filename, "?*.test-sound");
 	std::string humanName;
 	ps.getString(humanName, "sound ?*");
 	std::auto_ptr<Sound> sound(new Sound());
