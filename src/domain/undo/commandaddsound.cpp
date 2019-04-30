@@ -43,7 +43,7 @@ void CommandAddSound::setSound(Sound* sound) {
 }
 
 Command* CommandAddSound::execute() {
-	std::auto_ptr<CommandRemoveSound>
+	std::unique_ptr<CommandRemoveSound>
 			inv(new CommandRemoveSound(sv, sc, fr, index));
 	sv.addSound(sc, fr, index, snd);
 	snd = 0;
@@ -75,9 +75,9 @@ Command* CommandAddSoundFactory::create(Parameters& ps) {
 	ps.getString(filename, "?*.test-sound");
 	std::string humanName;
 	ps.getString(humanName, "sound ?*");
-	std::auto_ptr<Sound> sound(new Sound());
+	std::unique_ptr<Sound> sound(new Sound());
 	sound->setName(humanName);
-	std::auto_ptr<CommandAddSound> r(new CommandAddSound(sv, sc, fr, index));
+	std::unique_ptr<CommandAddSound> r(new CommandAddSound(sv, sc, fr, index));
 	Sound* soundCopy = sound.get();
 	r->setSound(sound.release());
 	WorkspaceFile wf(filename.c_str());

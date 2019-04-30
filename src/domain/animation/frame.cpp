@@ -68,7 +68,7 @@ const char* Frame::getBasename() const {
 int Frame::newSound(WorkspaceFile& file) {
 	Logger::get().logDebug("Adding sound in frame");
 	preallocateSounds(1);
-	std::auto_ptr<Sound> sound(new Sound());
+	std::unique_ptr<Sound> sound(new Sound());
 	std::stringstream ss;
 	std::stringstream::pos_type zeroOff = ss.tellp();
 	ss << "Sound" << WorkspaceFile::getSoundNumber();

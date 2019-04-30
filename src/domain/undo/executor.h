@@ -147,7 +147,7 @@ public:
 	 * passed here with @a constructive set to @c true.
 	 */
 	virtual void addCommand(const char* name,
-			std::auto_ptr<CommandFactory>factory,
+			std::unique_ptr<CommandFactory>factory,
 			bool constructive = false) = 0;
 	/**
 	 * Sets the logger to be used to record commands executed.

@@ -39,7 +39,7 @@ void CommandAddScene::setScene(Scene* s) {
 }
 
 Command* CommandAddScene::execute() {
-	std::auto_ptr<UndoRemoveScene> inv(new UndoRemoveScene(sv, index));
+	std::unique_ptr<UndoRemoveScene> inv(new UndoRemoveScene(sv, index));
 	sv.addScene(index, sc);
 	sc = 0;
 	delete this;
@@ -54,7 +54,7 @@ CommandAddSceneFactory::~CommandAddSceneFactory() {
 
 Command* CommandAddSceneFactory::create(Parameters& ps) {
 	int32_t index = ps.getInteger(0, sv.sceneCount());
-	std::auto_ptr<Scene> sc(new Scene());
+	std::unique_ptr<Scene> sc(new Scene());
 	CommandAddScene* r = new CommandAddScene(sv, index);
 	r->setScene(sc.release());
 	return r;

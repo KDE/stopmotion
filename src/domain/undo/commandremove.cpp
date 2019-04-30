@@ -33,7 +33,7 @@ CommandRemove::~CommandRemove() {
 }
 
 Command* CommandRemove::execute() {
-	std::auto_ptr<CommandAdd> inv(new CommandAdd(sv, sc, fr, frameCount));
+	std::unique_ptr<CommandAdd> inv(new CommandAdd(sv, sc, fr, frameCount));
 	std::vector<Frame*> removed;
 	sv.removeFrames(sc, fr, frameCount, removed);
 	for (std::vector<Frame*>::iterator i = removed.begin();

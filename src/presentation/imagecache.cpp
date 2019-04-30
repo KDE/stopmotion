@@ -31,7 +31,7 @@ struct SurfaceLoader {
 };
 
 SurfaceLoader::value_t* SurfaceLoader::load(const char* path) {
-	std::auto_ptr<QPixmap> p(new QPixmap);
+	std::unique_ptr<QPixmap> p(new QPixmap);
 	if (p->load(path)) {
 		return p.release();
 	}

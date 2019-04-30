@@ -45,7 +45,7 @@ void CommandAdd::addFrame(Frame* frame) {
 }
 
 Command* CommandAdd::execute() {
-	std::auto_ptr<CommandRemove> inverse(
+	std::unique_ptr<CommandRemove> inverse(
 			new CommandRemove(sv, scene, frame, frames.size()));
 	sv.addFrames(scene, frame, frames);
 	// ownership has been passed, so we must forget the frames

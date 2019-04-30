@@ -64,13 +64,13 @@ const char* FailedToInitializeCommandLogger::what() const throw () {
 Animation::Animation()
 		: scenes(0), executor(0), logger(0), serializer(0), audioDriver(0),
 		  isAudioDriverInitialized(false), frontend(0) {
-	std::auto_ptr<SceneVector> scs(new SceneVector);
-	std::auto_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));
+	std::unique_ptr<SceneVector> scs(new SceneVector);
+	std::unique_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));
 	scs.release();
-	std::auto_ptr<ProjectSerializer> szer(new ProjectSerializer);
-	std::auto_ptr<AudioDriver> ad(new QtAudioDriver());
-	std::auto_ptr<Executor> ex(makeAnimationCommandExecutor(*on));
-	std::auto_ptr<FileCommandLogger> lgr(new FileCommandLogger);
+	std::unique_ptr<ProjectSerializer> szer(new ProjectSerializer);
+	std::unique_ptr<AudioDriver> ad(new QtAudioDriver());
+	std::unique_ptr<Executor> ex(makeAnimationCommandExecutor(*on));
+	std::unique_ptr<FileCommandLogger> lgr(new FileCommandLogger);
 	ex->setCommandLogger(lgr->getLogger());
 	scenes = on.release();
 	serializer = szer.release();
@@ -169,7 +169,7 @@ void Animation::addSound(int32_t scene, int32_t frameNumber,
 		const char *soundFile) {
 	TemporaryWorkspaceFile soundFileWs(soundFile,
 			WorkspaceFileType::sound());
-	std::auto_ptr<Sound> sound(new Sound());
+	std::unique_ptr<Sound> sound(new Sound());
 	std::stringstream ss;
 	std::stringstream::pos_type zeroOffset = ss.tellp();
 	ss << "Sound " << WorkspaceFile::getSoundNumber();

@@ -46,28 +46,24 @@ const char* Commands::addScene = "new-scene";
 const char* Commands::removeScene = "delete-scene";
 const char* Commands::moveScene = "move-scene";
 
+template<typename COMMAND_FACTORY> void addCommand(Executor& ex, AnimationImpl& model,
+		const char* name, bool constructive) {
+	std::unique_ptr<CommandFactory> c(new COMMAND_FACTORY(model));
+	ex.addCommand(name, std::move(c), constructive);
+}
+
 Executor* makeAnimationCommandExecutor(AnimationImpl& model) {
-	std::auto_ptr<Executor> ex(makeExecutor());
-	std::auto_ptr<CommandFactory> add(new CommandAddFactory(model));
-	ex->addCommand(Commands::addFrames, add, true);
-	std::auto_ptr<CommandFactory> remove(new CommandRemoveFactory(model));
-	ex->addCommand(Commands::removeFrames, remove, false);
-	std::auto_ptr<CommandFactory> move(new CommandMoveFactory(model));
-	ex->addCommand(Commands::moveFrames, move, false);
-	std::auto_ptr<CommandFactory> setImage(new CommandSetImageFactory(model));
-	ex->addCommand(Commands::setImage, setImage, false);
-	std::auto_ptr<CommandFactory> addSound(new CommandAddSoundFactory(model));
-	ex->addCommand(Commands::addSound, addSound, true);
-	std::auto_ptr<CommandFactory> removeSound(new UndoRemoveSoundFactory(model));
-	ex->addCommand(Commands::removeSound, removeSound, true);
-	std::auto_ptr<CommandFactory> renameSound(new CommandRenameSoundFactory(model));
-	ex->addCommand(Commands::renameSound, renameSound, false);
-	std::auto_ptr<CommandFactory> addScene(new CommandAddSceneFactory(model));
-	ex->addCommand(Commands::addScene, addScene, true);
-	std::auto_ptr<CommandFactory> removeScene(new UndoRemoveSceneFactory(model));
-	ex->addCommand(Commands::removeScene, removeScene, false);
-	std::auto_ptr<CommandFactory> moveScene(new CommandMoveSceneFactory(model));
-	ex->addCommand(Commands::moveScene, moveScene, false);
+	std::unique_ptr<Executor> ex(makeExecutor());
+	addCommand<CommandAddFactory>(*ex, model, Commands::addFrames, true);
+	addCommand<CommandRemoveFactory>(*ex, model, Commands::removeFrames, false);
+	addCommand<CommandMoveFactory>(*ex, model, Commands::moveFrames, false);
+	addCommand<CommandSetImageFactory>(*ex, model, Commands::setImage, false);
+	addCommand<CommandAddSoundFactory>(*ex, model, Commands::addSound, true);
+	addCommand<UndoRemoveSoundFactory>(*ex, model, Commands::removeSound, false);
+	addCommand<CommandRenameSoundFactory>(*ex, model, Commands::renameSound, false);
+	addCommand<CommandAddSceneFactory>(*ex, model, Commands::addScene, true);
+	addCommand<UndoRemoveSceneFactory>(*ex, model, Commands::removeScene, false);
+	addCommand<CommandMoveSceneFactory>(*ex, model, Commands::moveScene, false);
 	return ex.release();
 }
 

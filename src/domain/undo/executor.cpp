@@ -636,7 +636,7 @@ public:
 		logger = log;
 	}
 	void addCommand(const char* name,
-			std::auto_ptr<CommandFactory> factory, bool constructive) {
+			std::unique_ptr<CommandFactory> factory, bool constructive) {
 		std::string n(name);
 		std::pair<std::string, CommandFactory*> p(n, factory.get());
 		if (constructive)

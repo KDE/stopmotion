@@ -34,7 +34,7 @@ CommandRemoveSound::~CommandRemoveSound() {
 }
 
 Command* CommandRemoveSound::execute() {
-	std::auto_ptr<CommandAddSound> inv(
+	std::unique_ptr<CommandAddSound> inv(
 			new CommandAddSound(sv, sc, fr, index));
 	Sound* s = sv.removeSound(sc, fr, index);
 	inv->setSound(s);

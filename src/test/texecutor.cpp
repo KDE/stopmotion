@@ -168,12 +168,12 @@ TestCommandFactory::TestCommandFactory()
 	ce = makeExecutor();
 	ce->setCommandLogger(cl);
 	cl->SetExecutor(ce);
-	std::auto_ptr<CommandFactory> et(
+	std::unique_ptr<CommandFactory> et(
 			new EmptyTestCommandFactory("et", executionOutput));
-	std::auto_ptr<CommandFactory> sec(
+	std::unique_ptr<CommandFactory> sec(
 			new EmptyTestCommandFactory("sec", executionOutput));
-	ce->addCommand("et", et);
-	ce->addCommand("sec", sec);
+	ce->addCommand("et", std::move(et));
+	ce->addCommand("sec", std::move(sec));
 }
 
 TestCommandFactory::~TestCommandFactory() {
@@ -309,8 +309,8 @@ public:
 Command* AddCharFactory::AddChar::execute() {
 	if (p < 0 || static_cast<int32_t>(m->length()) < p)
 		throw TestException("AddCharFactory parameters out-of-range");
-	// insert might throw, so use an auto_ptr to avoid leaks.
-	std::auto_ptr<Command> inv(new DelCharFactory::DelChar(*m, p));
+	// insert might throw, so use an unique_ptr to avoid leaks.
+	std::unique_ptr<Command> inv(new DelCharFactory::DelChar(*m, p));
 	std::string::iterator i = m->begin();
 	i += p;
 	m->insert(i, c);
@@ -356,10 +356,10 @@ class AddDelTestBed {
 	std::string finalString;
 	std::string originalString;
 	std::string expected;
-	std::auto_ptr<CommandFactory> af;
-	std::auto_ptr<CommandFactory> df;
-	std::auto_ptr<FileCommandLogger> logger;
-	std::auto_ptr<Executor> ex;
+	std::unique_ptr<CommandFactory> af;
+	std::unique_ptr<CommandFactory> df;
+	std::unique_ptr<FileCommandLogger> logger;
+	std::unique_ptr<Executor> ex;
 	FILE* logFile;
 	StringModelTestHelper helper;
 public:
@@ -371,8 +371,8 @@ public:
 			logFile(0),
 			helper(finalString) {
 		ex->setCommandLogger(logger->getLogger());
-		ex->addCommand("add", af, true);
-		ex->addCommand("del", df);
+		ex->addCommand("add", std::move(af), true);
+		ex->addCommand("del", std::move(df));
 		lineBuffer[lineBufferSize - 1] = '\0';
 	}
 	void init(const char* initialString) {

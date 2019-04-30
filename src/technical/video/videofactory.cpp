@@ -93,7 +93,7 @@ std::string integerToString(int n) {
 const char* VideoFactory::createVideoFile(VideoEncoder *encoder,
 		int playbackSpeed) {
 	std::string startCommand = encoder->getStartCommand();
-	std::auto_ptr<ExternalCommandWithTemporaryDirectory> ec(
+	std::unique_ptr<ExternalCommandWithTemporaryDirectory> ec(
 			new ExternalCommandWithTemporaryDirectory());
 	const char* tmpDir = ec->getTemporaryDirectoryPath();
 	if ( !startCommand.empty() ) {

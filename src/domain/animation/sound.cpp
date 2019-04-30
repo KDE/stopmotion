@@ -40,7 +40,7 @@ Sound::~Sound() {
  *@todo check audio type (ogg, mp3, wav ...)
  */
 void Sound::open(WorkspaceFile& file) {
-	std::auto_ptr<OggVorbis> a(new OggVorbis());
+	std::unique_ptr<OggVorbis> a(new OggVorbis());
 	a->setFilename(file);
 	delete af;
 	af = a.release();
