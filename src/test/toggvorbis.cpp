@@ -37,6 +37,7 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 
 
 int OggVorbis::open() {
+	return 0;
 }
 
 
@@ -45,15 +46,16 @@ void OggVorbis::reset() {
 
 
 int OggVorbis::close() {
+	return 0;
 }
 
 
-int OggVorbis::fillBuffer(char *audioBuffer, int numBytes) {
+int OggVorbis::fillBuffer(char*, int numBytes) {
 	return numBytes;
 }
 
 
-int OggVorbis::add16bit(int16_t* audioBuffer, int count) {
+int OggVorbis::add16bit(int16_t*, int count) {
 	return count;
 }
 
