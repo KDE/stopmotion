@@ -1211,8 +1211,8 @@ values exists. Do you want to use this one? (Your old preferences
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>أصوات (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>أصوات (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="70"/>
@@ -1354,14 +1354,14 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="415"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a deamon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a deamon.</source>
         <translation type="obsolete">حاليا يعمل العرض و حسب أثناء تشغيل اللاقط في طور الجنيّ. يمكنك تشغيل لاقط الصور في طور الجنيّ من قائمة التفضيلات (CTRL+P)</translation>
     </message>

@@ -1356,8 +1356,8 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>Ljud (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>Ljud (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="70"/>
@@ -1499,14 +1499,14 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="415"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a deamon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a deamon.</source>
         <translation type="obsolete">Uppspelning fungerar för tillfället bara när hämtaren körs
 som bakgrundsprocess. Gå till inställningsmenyn (CTRL+P) för att

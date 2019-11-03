@@ -1118,7 +1118,7 @@ menu. Export to video will not be possible until you
 have set an encoder to use. Do you want to set it now?</source>
         <translation>Ingen registrerte enkodere for eksport til video. Dette
 kan settes i preferansemenyen. Eksport til video vil ikke
-være mulig før du har satt en gyldig enkoder. 
+være mulig før du har satt en gyldig enkoder.
 Ønsker du å sette dette nå?</translation>
     </message>
     <message>
@@ -1446,8 +1446,8 @@ lagret som ~/.stopmotion/preferences.xml.OLD)</translation>
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="+44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>Lyder (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>Lyder (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -1638,11 +1638,11 @@ lagret som ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location line="+0"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
-        <translation>Playback fungerer kun når du gjører bildefangst-programmet som 
-en nisse. Gå til preferansemenyen (CTRL+P ) for å sette at 
+        <translation>Playback fungerer kun når du gjører bildefangst-programmet som
+en nisse. Gå til preferansemenyen (CTRL+P ) for å sette at
 programmet skal kjøres som en nisse.</translation>
     </message>
     <message>

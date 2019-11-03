@@ -86,7 +86,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../foundation/logger.cpp
 SOURCES += \
     tmain.cpp \
-    toggvorbis.cpp \
+    taudiodecoder.cpp \
     texecutor.cpp \
     tcache.cpp \
     testundo.cpp \

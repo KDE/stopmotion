@@ -1326,8 +1326,8 @@ values exists. Do you want to use this one? (Your old preferences
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="+44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>Zvuky (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>Zvuky (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -1469,8 +1469,8 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <location line="+0"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation>Přehrávání nyní funguje pouze když grabber běží jako démon.
 Toho můžete docílit v menu &quot;Nastavení&quot;.</translation>

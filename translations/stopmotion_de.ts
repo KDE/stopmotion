@@ -1188,8 +1188,8 @@ Möchten Sie diese nutzen? (Ihre alten Einstellungen werden in  ~/.stopmotion/pr
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>Töne (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>Töne (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="70"/>
@@ -1331,8 +1331,8 @@ Möchten Sie diese nutzen? (Ihre alten Einstellungen werden in  ~/.stopmotion/pr
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="415"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation>Der Playback-Modus funktioniert nur, wenn der Grabber als Hintergrundprozess
 läuft. Bitte ändern Sie dies im Einstellungs-Menü.</translation>

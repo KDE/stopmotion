@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2017 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2019 by Linuxstopmotion contributors;                   *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -27,23 +27,32 @@
 #include <QAudioOutput>
 
 #include <memory>
+#include <cstring>
 #include <vector>
+
+void QtAudioDriver::getAudioFormat(QAudioFormat& audioFormat) {
+		audioFormat.setSampleRate(44100);
+		audioFormat.setCodec("audio/x-raw");
+		audioFormat.setChannelCount(2);
+		audioFormat.setByteOrder(QAudioFormat::LittleEndian);
+		audioFormat.setSampleType(QAudioFormat::UnSignedInt);
+		audioFormat.setSampleSize(16);
+}
 
 class QtAudioDriver::Impl : public QIODevice {
 	static const int buffer_size = 4096;
+	// number of bytes required before we start playing a sound
+	static const int buffer_ahead = 4096;
 	typedef int16_t sample_t;
 	QAudioFormat audioFormat;
 	QAudioOutput* output;
+	std::list<AudioFormat*> pendingSounds;
 	std::list<AudioFormat*> sounds;
 	std::vector<sample_t> buffer;
 public:
 	Impl() : output(0), buffer(buffer_size) {
 		QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
-		audioFormat.setSampleRate(44100);
-		audioFormat.setChannelCount(2);
-		audioFormat.setByteOrder(QAudioFormat::LittleEndian);
-		audioFormat.setSampleType(QAudioFormat::UnSignedInt);
-		audioFormat.setSampleSize(16);
+		getAudioFormat(audioFormat);
 		QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
 		if (!info.isFormatSupported(audioFormat)) {
 			// Trying to find out what Qt thinks it CAN do!...
@@ -59,35 +68,65 @@ public:
 	}
 	void addSound(AudioFormat* a) {
 		a->reset();
-		sounds.push_back(a);
+		pendingSounds.push_back(a);
 		Logger::get().logDebug("Added sound");
 		output->stateChanged(QAudio::ActiveState);
 	}
-    qint64 readData(char *data, qint64 maxlen) {
+  qint64 readData(char *data, qint64 maxlen) {
+		// get the smallest number of bytes from all sounds playing
+		qint64 bytesToGet = maxlen;
+		bool anythingPlaying = false;
 		std::list<AudioFormat*>::iterator s = sounds.begin();
-		int len = 0;
-		for (; s != sounds.end(); ++s) {
-			len = (*s)->fillBuffer(data, maxlen);
-			if (len != 0)
-				break;
-			sounds.pop_front();
-			s = sounds.begin();
-		}
 		while (s != sounds.end()) {
-			if (mixSound(*s, reinterpret_cast<int16_t*>(data), len))
-				++s;
-			else
-				s = sounds.erase(s);
+			qint64 available = (*s)->bytesAvailable();
+			if (0 < available) {
+				anythingPlaying = true;
+				if (available < bytesToGet) {
+					bytesToGet = available;
+				}
+			}
+			++s;
 		}
-		if (len == 0) {
+		s = pendingSounds.begin();
+		while (s != pendingSounds.end()) {
+			qint64 available = (*s)->bytesAvailable();
+			if (buffer_ahead <= available) {
+				// *s is now playable
+				sounds.push_back(*s);
+				s = pendingSounds.erase(s);
+				anythingPlaying = true;
+				if (available < bytesToGet) {
+					bytesToGet = available;
+				}
+			} else {
+				++s;
+			}
+		}
+		if (!anythingPlaying) {
+			std::fill(data, data + maxlen, '\0');
+			return maxlen;
+		}
+		s = sounds.begin();
+		std::list<AudioFormat*> remainingSounds;
+		int len = (*s)->fillBuffer(data, bytesToGet);
+		if (len) {
+			remainingSounds.push_back(*s);
+		}
+		++s;
+		for (; s != sounds.end(); ++s) {
+			len = mixSound(*s, reinterpret_cast<sample_t*>(data), bytesToGet);
+			if (len) {
+				remainingSounds.push_back(*s);
+			}
+		}
+		remainingSounds.swap(sounds);
+		if (sounds.empty() && pendingSounds.empty()) {
 			output->stateChanged(QAudio::IdleState);
 			Logger::get().logDebug("out of sound");
-			return 0;
 		}
-		Logger::get().logDebug("Sent data %d", len);
-		return len;
+		return bytesToGet;
 	}
-    qint64 writeData(const char *, qint64) {
+  qint64 writeData(const char *, qint64) {
 		return 0;
 	}
 	void play() {
@@ -97,23 +136,15 @@ public:
 		output->stop();
 	}
 private:
-	// returns false if s is exhausted after the call
-	bool mixSound(AudioFormat* s, sample_t* out, unsigned long length) {
+	qint64 mixSound(AudioFormat* s, sample_t* out, qint64 bytes) {
+		const qint64 maxbytes = buffer_size * sizeof(sample_t);
 		char* buf = reinterpret_cast<char*>(&*buffer.begin());
-		while (0 < length) {
-			int len2 = s->fillBuffer(buf,
-				std::min(length, buffer_size * sizeof(sample_t)));
-			if (len2 == 0) {
-				return false;
-			}
-			length -= len2;
-			int samples = len2 / sizeof(sample_t);
-			for (int i = 0; i != samples; ++i) {
-				*out += buf[i];
-				++out;
-			}
+		int len = s->fillBuffer(buf, std::min(bytes, maxbytes));
+		int samples = len / sizeof(sample_t);
+		for (int i = 0; i != samples; ++i) {
+			out[i] += buf[i];
 		}
-		return true;
+		return len;
 	}
 };
 

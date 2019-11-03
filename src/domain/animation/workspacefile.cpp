@@ -126,13 +126,17 @@ public:
 class SoundFileType : public WorkspaceFileType {
 public:
 	static SoundFileType* instance;
-	const char* preferredExtension(const char*) const {
-		return ".ogg";
+	const char* preferredExtension(const char* fn) const {
+		const char* extension = strrchr(fn, '.');
+		// just return the actual extension for now
+		return extension? extension : "";
 	}
 	bool isType(const char* path) const {
 		const char* extension = strrchr(path,'.');
 		return extension &&
 			(asciiEqualI(extension, ".ogg")
+			|| asciiEqualI(extension, ".mp3")
+			|| asciiEqualI(extension, ".wav")
 			|| asciiEqualI(extension, ".test-sound"));
 	}
 };

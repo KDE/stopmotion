@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2019 by Linuxstopmotion contributors;                   *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,60 +18,34 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "sound.h"
+#ifndef QTDECODER_H
+#define QTDECODER_H
 
-#include "src/technical/audio/audioformat.h"
-#include "src/technical/audio/qtdecoder.h"
-#include "src/technical/audio/audiodriver.h"
+#include "audioformat.h"
 
-#include <assert.h>
-#include <string.h>
-#include <memory>
+#include "src/domain/animation/workspacefile.h"
 
-Sound::Sound() : af(0), name(0) {
-}
+#include <QAudioDecoder>
 
-Sound::~Sound() {
-	delete af;
-	delete[] name;
-}
+class QtAudioDecoder : public QObject, public AudioFormat {
+	Q_OBJECT
+  WorkspaceFile file;
+  QAudioDecoder* decoder;
+	class Buffer;
+	Buffer* buffer;
+public:
+  QtAudioDecoder(WorkspaceFile& f);
+  ~QtAudioDecoder();
+	int open();
+	int close();
+	void reset();
+	int fillBuffer(char *audioBuffer, int numBytes);
+	const char* getSoundPath() const;
+	const char* getBasename() const;
+	int bytesAvailable() const;
+public slots:
+	void decodedData();
+	void decoderStateChanged(QAudioDecoder::State);
+};
 
-/**
- *@todo check audio type (ogg, mp3, wav ...)
- */
-void Sound::open(WorkspaceFile& file) {
-	std::unique_ptr<QtAudioDecoder> a(new QtAudioDecoder(file));
-	delete af;
-	af = a.release();
-	af->open();
-}
-
-const char* Sound::setName(const char* n) {
-	const char* r = name;
-	name = n;
-	return r;
-}
-
-void Sound::setName(std::string& n) {
-	assert(!name);
-	int size = n.size() + 1;
-	char* a = new char[size];
-	name = a;
-	strncpy(a, n.c_str(), size);
-}
-
-const char* Sound::getName() const {
-	return name;
-}
-
-const char* Sound::getSoundPath() const {
-	return af->getSoundPath();
-}
-
-const char* Sound::getBasename() const {
-	return af->getBasename();
-}
-
-void Sound::addToDriver(AudioDriver& ad) const {
-	ad.addAudioFile(af);
-}
+#endif

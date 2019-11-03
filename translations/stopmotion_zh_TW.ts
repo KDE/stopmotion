@@ -1193,8 +1193,8 @@ values exists. Do you want to use this one? (Your old preferences
 <context>
     <name>SoundHandler</name>
     <message>
-        <source>Sounds (*.ogg)</source>
-        <translation>聲音 (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>聲音 (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <source>Sound name</source>
@@ -1344,11 +1344,11 @@ values exists. Do you want to use this one? (Your old preferences
         <translation>通知</translation>
     </message>
     <message>
-        <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a deamon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a deamon.</source>
         <translation type="obsolete">目前播放控制只在以抓取器做為
-守護程式執行時才有作用。前往偏好設定選單 (Ctrl+P) 
+守護程式執行時才有作用。前往偏好設定選單 (Ctrl+P)
 以切換圖像抓取做為守護程式執行。</translation>
     </message>
     <message>
@@ -1384,8 +1384,8 @@ to running the image grabbing as a deamon.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -41,7 +41,7 @@ void SoundHandler::setSoundsList(QListWidget *soundsList) {
 
 void SoundHandler::addSound() {
 	QString file = QFileDialog::
-		getOpenFileName(0, tr("Choose sound file"), QString(homeDir), tr("Sounds (*.ogg)") );
+		getOpenFileName(0, tr("Choose sound file"), QString(homeDir), tr("Sounds (*.mp3 *.wav *.ogg)") );
 	if ( !file.isNull() ) {
 		DomainFacade *facade = DomainFacade::getFacade();
 		int activeScene = frameBar->getActiveScene();

@@ -1326,8 +1326,8 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="+44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation type="unfinished">Zvoki (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation type="unfinished">Zvoki (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -1469,8 +1469,8 @@ bodo shranjene v ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location line="+0"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation type="unfinished">Prodvajanje trenutno deluje le ko je  (new line)
 as a daemon. Go to the preferences menu (CTRL+P) to switch (new line)

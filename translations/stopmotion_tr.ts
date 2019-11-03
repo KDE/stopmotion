@@ -1192,8 +1192,8 @@ yeni bir kopyası bulundu. Bunu kullanmak ister misiniz?
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>Sesler (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>Sesler (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="70"/>
@@ -1335,8 +1335,8 @@ yeni bir kopyası bulundu. Bunu kullanmak ister misiniz?
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="415"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation>Şu anda, oynatma özeliği sadece yakalayıcıyı servis olarak
 çalıştırdığınızda kullanabilirsiniz. Seçenekler menüsüne (CTRL-P)

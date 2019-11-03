@@ -17,52 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "../technical/audio/oggvorbis.h"
+#include "../technical/audio/qtdecoder.h"
 
-// A mock OggVorbis implementation that does nothing.
+// A mock audio decoder implementation that does nothing.
 
-OggVorbis::OggVorbis() {
-	oggFile = NULL;
+QtAudioDecoder::QtAudioDecoder(WorkspaceFile& f) {
+	file.swap(f);
 }
 
-
-OggVorbis::~OggVorbis() {
+QtAudioDecoder::~QtAudioDecoder() {
 	close();
 }
 
-
-void OggVorbis::setFilename(WorkspaceFile& file) {
-	filename = file;
+int QtAudioDecoder::open() {
 }
 
-
-int OggVorbis::open() {
+void QtAudioDecoder::reset() {
 }
 
-
-void OggVorbis::reset() {
+int QtAudioDecoder::close() {
 }
 
-
-int OggVorbis::close() {
-}
-
-
-int OggVorbis::fillBuffer(char *audioBuffer, int numBytes) {
+int QtAudioDecoder::fillBuffer(char *audioBuffer, int numBytes) {
 	return numBytes;
 }
 
-
-int OggVorbis::add16bit(int16_t* audioBuffer, int count) {
-	return count;
+const char* QtAudioDecoder::getSoundPath() const {
+	return file.path();
 }
 
-
-const char* OggVorbis::getSoundPath() const {
-	return filename.path();
-}
-
-const char* OggVorbis::getBasename() const {
-	return filename.basename();
+const char* QtAudioDecoder::getBasename() const {
+	return file.basename();
 }
 

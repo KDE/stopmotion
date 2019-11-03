@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2017 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2019 by Linuxstopmotion contributors;                   *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -23,10 +23,13 @@
 
 #include "audiodriver.h"
 
+class QAudioFormat;
+
 class QtAudioDriver : public AudioDriver {
 	class Impl;
 	Impl* impl;
 public:
+	static void getAudioFormat(QAudioFormat& audioFormat);
 	QtAudioDriver();
 	~QtAudioDriver();
 	void play();

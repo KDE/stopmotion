@@ -1198,8 +1198,8 @@ será guardado em ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>Sons (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>Sons (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="70"/>
@@ -1353,8 +1353,8 @@ será guardado em ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="415"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation>A leitura funciona por enquanto sómente quando o gravador
 funciona como demónio. Vá ao menu preferências (CTRL+P)

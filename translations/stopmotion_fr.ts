@@ -437,8 +437,8 @@
         <source>Grabbing failed. This may happen if you try
 to grab from an invalid device. Please check
 your grabber settings in the preferences menu.</source>
-        <translation>La capture a échoué. Ceci peut arriver si vous essayez de capturer 
-à partir d&apos;un périphérique non valide. Veuillez vérifier les 
+        <translation>La capture a échoué. Ceci peut arriver si vous essayez de capturer
+à partir d&apos;un périphérique non valide. Veuillez vérifier les
 paramètres de capture dans la fenêtre de préférences.</translation>
     </message>
     <message>
@@ -1025,8 +1025,8 @@ video export. This can be set in the preferences
 menu. Export to video will not be possible until you
 have set an encoder to use. Do you want to set it now?</source>
         <translation>Aucun encodeur n&apos;est sélectionné pour l&apos;export vidéo. Ceci peut
-être paramétré dans la fenêtre de préférences. L&apos;export vidéo 
-ne sera pas possible tant que vous n&apos;aurez pas choisi un 
+être paramétré dans la fenêtre de préférences. L&apos;export vidéo
+ne sera pas possible tant que vous n&apos;aurez pas choisi un
 encodeur. Voulez-vous le faire tout de suite ?</translation>
     </message>
     <message>
@@ -1038,7 +1038,7 @@ encodeur. Voulez-vous le faire tout de suite ?</translation>
         <location line="+16"/>
         <source>The registered encoder is not valid. Do you want
 to check your settings in the preferences menu?</source>
-        <translation>L&apos;encodeur enregistré n&apos;est pas valide. Voulez-vous vérifier 
+        <translation>L&apos;encodeur enregistré n&apos;est pas valide. Voulez-vous vérifier
 vos paramètres dans la fenêtre de préférences ?</translation>
     </message>
     <message>
@@ -1322,8 +1322,8 @@ Voulez-vous utiliser ce fichier ? ( Votre précédent fichier de préférences
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="+44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>Sons (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>Sons (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location line="+26"/>
@@ -1465,8 +1465,8 @@ Voulez-vous utiliser ce fichier ? ( Votre précédent fichier de préférences
     </message>
     <message>
         <location line="+0"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation type="unfinished"></translation>
     </message>

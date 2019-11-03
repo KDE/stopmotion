@@ -423,7 +423,7 @@
 to grab from an invalid device. Please check
 your grabber settings in the preferences menu.</source>
         <translation>La captura ha fallado. Esto pudo haber sucedido si Ud. intentó
-capturar desde un dispositivo inválido. Por favor chequee los ajustes 
+capturar desde un dispositivo inválido. Por favor chequee los ajustes
 del capturador en el menú de preferencias.</translation>
     </message>
     <message>
@@ -1190,8 +1190,8 @@ values exists. Do you want to use this one? (Your old preferences
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>Sonidos (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>Sonidos (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="70"/>
@@ -1333,8 +1333,8 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="415"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation>Actualmente, la previsualización sólo está disponible mientras
 se emplea el capturador como un demonio. Vaya al

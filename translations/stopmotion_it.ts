@@ -1196,8 +1196,8 @@ Vuoi usarla? (Le vecchie preferenze saranno salvate in ~/.stopmotion/preferences
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>Suoni (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>Suoni (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="70"/>
@@ -1339,10 +1339,10 @@ Vuoi usarla? (Le vecchie preferenze saranno salvate in ~/.stopmotion/preferences
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="415"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
-        <translation>Playback funziona attualmente solo quando la cattura è 
+        <translation>Playback funziona attualmente solo quando la cattura è
 impostata come demone. Vai al menu delle preferenze (CTRL+P)
 per selezionare la cattura come demone.</translation>
     </message>

@@ -159,14 +159,6 @@ int OggVorbis::fillBuffer(char *audioBuffer, int numBytes) {
 }
 
 
-int OggVorbis::add16bit(int16_t* audioBuffer, int count) {
-	assert(audioBuffer);
-	if (!oggFile)
-		return 0;
-	//...
-}
-
-
 const char* OggVorbis::getSoundPath() const {
 	return filename.path();
 }

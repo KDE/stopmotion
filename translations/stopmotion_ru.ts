@@ -423,8 +423,8 @@
 to grab from an invalid device. Please check
 your grabber settings in the preferences menu.</source>
         <translation>Захват кадра не удался. Такое может случиться,
-если для захвата используется неправильное 
-устройство. Пожалуйста, проверьте параметры 
+если для захвата используется неправильное
+устройство. Пожалуйста, проверьте параметры
 устройства захвата в меню настроек.</translation>
     </message>
     <message>
@@ -942,7 +942,7 @@ have set an encoder to use. Do you want to set it now?</source>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="964"/>
         <source>The registered encoder is not valid. Do you want
 to check your settings in the preferences menu?</source>
-        <translation>Кодировщик настроен некорректно. 
+        <translation>Кодировщик настроен некорректно.
 Хотите проверить его параметры?</translation>
     </message>
     <message>
@@ -1165,7 +1165,7 @@ to check your settings in the preferences menu?</source>
         <source>A newer version of the preferences file with few more default
 values exists. Do you want to use this one? (Your old preferences
  will be saved in ~/.stopmotion/preferences.xml.OLD)</source>
-        <translation>Существует более новая версия файла конфигурации с несколькими новыми значениями по умолчанию. 
+        <translation>Существует более новая версия файла конфигурации с несколькими новыми значениями по умолчанию.
 Хотите его использовать? (Ваш старый файл конфигурации будет сохранён с именем ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
@@ -1217,8 +1217,8 @@ values exists. Do you want to use this one? (Your old preferences
     <name>SoundHandler</name>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="44"/>
-        <source>Sounds (*.ogg)</source>
-        <translation>Файлы звука (*.ogg)</translation>
+        <source>Sounds (*.mp3 *.wav *.ogg)</source>
+        <translation>Файлы звука (*.mp3 *.wav *.ogg)</translation>
     </message>
     <message>
         <location filename="../src/application/soundhandler.cpp" line="70"/>
@@ -1360,18 +1360,18 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="415"/>
-        <source>Playback only currently works when running the grabber 
-as a daemon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a daemon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a daemon.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
+        <source>Playback only currently works when running the grabber
+as a deamon. Go to the preferences menu (CTRL+P) to switch
 to running the image grabbing as a deamon.</source>
-        <translation type="obsolete">Сейчас режим воспроизведения работает только в случае, 
-если кадры захватываются при помощи процесса. 
-Перейдите в меню настроек (CTRL+P), чтобы сконфигурировать 
+        <translation type="obsolete">Сейчас режим воспроизведения работает только в случае,
+если кадры захватываются при помощи процесса.
+Перейдите в меню настроек (CTRL+P), чтобы сконфигурировать
 захват кадров при помощи процесса.</translation>
     </message>
     <message>
