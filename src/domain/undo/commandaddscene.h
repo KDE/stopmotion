@@ -47,7 +47,7 @@ class CommandAddSceneFactory : public CommandFactory {
 public:
 	CommandAddSceneFactory(AnimationImpl& model);
 	~CommandAddSceneFactory();
-	Command* create(Parameters& ps);
+	Command* create(Parameters& ps, ErrorHandler& e);
 };
 
 #endif

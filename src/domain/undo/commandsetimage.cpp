@@ -42,7 +42,7 @@ CommandSetImageFactory::CommandSetImageFactory(AnimationImpl& model) : sv(model)
 CommandSetImageFactory::~CommandSetImageFactory() {
 }
 
-Command* CommandSetImageFactory::create(Parameters& ps) {
+Command* CommandSetImageFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;

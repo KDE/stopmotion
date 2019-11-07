@@ -47,7 +47,7 @@ class CommandAddSoundFactory : public CommandFactory {
 public:
 	CommandAddSoundFactory(AnimationImpl& model);
 	~CommandAddSoundFactory();
-	Command* create(Parameters& ps);
+	Command* create(Parameters& ps, ErrorHandler& e);
 };
 
 #endif

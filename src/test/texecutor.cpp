@@ -35,6 +35,7 @@
 #include "src/domain/undo/commandlogger.h"
 #include "src/domain/undo/filelogger.h"
 #include "src/domain/undo/random.h"
+#include "src/domain/animation/errorhandler.h"
 
 #include "testundo.h"
 #include "oomtestutil.h"
@@ -94,7 +95,7 @@ public:
 	};
 	~EmptyTestCommandFactory() {
 	}
-	Command* create(Parameters& ps) {
+	Command* create(Parameters& ps, ErrorHandler&) {
 		EtCommand* e = new EtCommand(name, output);
 		e->i1 = ps.getInteger(-RAND_MAX/2, RAND_MAX/2);
 		ps.getString(e->s1, 0);
@@ -146,7 +147,7 @@ public:
 			// Some tests are not logging; don't try to execute "!"
 			if (!command.empty()) {
 				command.append(1, '!');
-				ex->executeFromLog(command.c_str());
+				ex->executeFromLog(command.c_str(), *ErrorHandler::getThrower());
 			}
 		}
 	}
@@ -228,7 +229,7 @@ void TestCommandFactory::emptyCommandReplayerThrows() {
 
 void TestCommandFactory::canParseFromLog() {
 	executionOutput.clear();
-	ce->executeFromLog("et -5 \"hello world!\" 412345!");
+	ce->executeFromLog("et -5 \"hello world!\" 412345!", *ErrorHandler::getThrower());
 	QCOMPARE(executionOutput.begin()->c_str(),
 			"et,i:-5,s:hello world!,i:412345");
 }
@@ -275,7 +276,7 @@ public:
 	};
 	AddCharFactory(std::string* m) : model(m) {
 	}
-	Command* create(Parameters& ps) {
+	Command* create(Parameters& ps, ErrorHandler&) {
 		int32_t i = ps.getInteger(0, sizeof(alphanumeric) - 1);
 		int32_t character = alphanumeric[i];
 		int32_t position = ps.getInteger(0, model->length());
@@ -297,7 +298,7 @@ public:
 	};
 	DelCharFactory(std::string* m) : model(m) {
 	}
-	Command* create(Parameters& ps) {
+	Command* create(Parameters& ps, ErrorHandler&) {
 		int32_t len = model->length();
 		if (len == 0)
 			return 0;

@@ -39,9 +39,9 @@ Sound::~Sound() {
 /**
  *@todo check audio type (ogg, mp3, wav ...)
  */
-void Sound::open(WorkspaceFile& file) {
+void Sound::open(WorkspaceFile& file, ErrorHandler& e) {
 	std::unique_ptr<OggVorbis> a(new OggVorbis());
-	a->setFilename(file);
+	a->setFilename(file, e);
 	delete af;
 	af = a.release();
 	af->open();

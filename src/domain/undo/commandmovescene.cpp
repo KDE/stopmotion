@@ -47,7 +47,7 @@ CommandMoveSceneFactory::CommandMoveSceneFactory(AnimationImpl& model) : sv(mode
 CommandMoveSceneFactory::~CommandMoveSceneFactory() {
 }
 
-Command* CommandMoveSceneFactory::create(Parameters& ps) {
+Command* CommandMoveSceneFactory::create(Parameters& ps, ErrorHandler&) {
 	int max = sv.sceneCount() - 1;
 	if (max < 0)
 		return 0;

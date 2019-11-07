@@ -70,6 +70,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/animation/animationimpl.cpp \
     ../domain/animation/scenevector.cpp \
     ../domain/animation/workspacefile.cpp \
+    ../domain/animation/errorhandler.cpp \
     ../domain/observernotifier.cpp \
     ../technical/audio/audioformat.cpp \
     ../technical/util.cpp \

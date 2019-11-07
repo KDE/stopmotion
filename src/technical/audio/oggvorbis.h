@@ -24,6 +24,7 @@
 
 #include <vorbis/vorbisfile.h>
 #include "src/domain/animation/workspacefile.h"
+#include "src/domain/animation/errorhandler.h"
 
 /**
  * Class for decoding of oggvorbis data to raw PCM data.
@@ -32,7 +33,6 @@
  */
 class OggVorbis : public AudioFormat {
 public:
-
 	OggVorbis();
 	~OggVorbis();
 
@@ -42,7 +42,7 @@ public:
 	 * ogg file.
 	 * @param file the filename to register
 	 */
-	void setFilename(WorkspaceFile& file);
+	void setFilename(WorkspaceFile& file, ErrorHandler& e);
 
 	int open();
 	int close();

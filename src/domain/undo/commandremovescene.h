@@ -39,7 +39,7 @@ class UndoRemoveSceneFactory : public CommandFactory {
 public:
 	UndoRemoveSceneFactory(AnimationImpl& model);
 	~UndoRemoveSceneFactory();
-	Command* create(Parameters& ps);
+	Command* create(Parameters& ps, ErrorHandler& e);
 };
 
 #endif

@@ -134,6 +134,7 @@ SOURCES += src/config.cpp \
     src/domain/animation/frame.cpp \
     src/domain/animation/sound.cpp \
     src/domain/animation/scenevector.cpp \
+    src/domain/animation/errorhandler.cpp \
     src/presentation/imagecache.cpp \
     src/presentation/frontends/nonguifrontend/nonguifrontend.cpp \
     src/presentation/frontends/qtfrontend/mainwindowgui.cpp \

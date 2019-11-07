@@ -49,7 +49,7 @@ UndoRemoveSoundFactory::UndoRemoveSoundFactory(AnimationImpl& model)
 UndoRemoveSoundFactory::~UndoRemoveSoundFactory() {
 }
 
-Command* UndoRemoveSoundFactory::create(Parameters& ps) {
+Command* UndoRemoveSoundFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;

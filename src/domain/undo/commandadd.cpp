@@ -115,7 +115,7 @@ CommandAddFactory::CommandAddFactory(AnimationImpl& model) : sv(model) {
 CommandAddFactory::~CommandAddFactory() {
 }
 
-Command* CommandAddFactory::create(::Parameters& ps) {
+Command* CommandAddFactory::create(::Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;

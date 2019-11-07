@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2008 by Bjoern Erik Nilsen & Fredrik Berg Kjoelstad*
- *   bjoern.nilsen@bjoernen.com & fredrikbk@hotmail.com                    *
+ *   Copyright (C) 2019 by Linuxstopmotion contributors;                   *
+ *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,54 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "../technical/audio/oggvorbis.h"
+#ifndef ERRORHANDLER_H_
+#define ERRORHANDLER_H_
 
-// A mock OggVorbis implementation that does nothing.
+#include "src/foundation/uiexception.h"
 
-OggVorbis::OggVorbis() {
-	oggFile = NULL;
-}
+class ErrorHandler {
+protected:
+  virtual ~ErrorHandler() = 0;
+public:
+  virtual void error(UiException) = 0;
+  /**
+   * Returns an ErrorHandler that just throws any exception it gets
+   * immediately.
+   * @return The error handler; ownership is not returned.
+   */
+	static ErrorHandler* getThrower();
+};
 
-
-OggVorbis::~OggVorbis() {
-	close();
-}
-
-
-void OggVorbis::setFilename(WorkspaceFile& file, ErrorHandler&) {
-	filename = file;
-}
-
-
-int OggVorbis::open() {
-	return 0;
-}
-
-
-void OggVorbis::reset() {
-}
-
-
-int OggVorbis::close() {
-	return 0;
-}
-
-
-int OggVorbis::fillBuffer(char*, int numBytes) {
-	return numBytes;
-}
-
-
-int OggVorbis::add16bit(int16_t*, int count) {
-	return count;
-}
-
-
-const char* OggVorbis::getSoundPath() const {
-	return filename.path();
-}
-
-const char* OggVorbis::getBasename() const {
-	return filename.basename();
-}
-
+#endif

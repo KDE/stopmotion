@@ -21,13 +21,13 @@
 
 #include "src/technical/audio/audiodriver.h"
 #include "src/domain/filenamevisitor.h"
+#include "src/domain/animation/errorhandler.h"
 #include "src/config.h"
 #include "sound.h"
 
 #include <string.h>
 #include <sstream>
 #include <memory>
-
 
 class SoundOutOfRangeException : public std::exception {
 public:
@@ -78,7 +78,7 @@ int Frame::newSound(WorkspaceFile& file) {
 	strncpy(soundName, cs.c_str(), size);
 	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
-	sound->open(file);
+	sound->open(file, *ErrorHandler::getThrower());
 	WorkspaceFile::nextSoundNumber();
 	sounds.push_back(sound.release());
 

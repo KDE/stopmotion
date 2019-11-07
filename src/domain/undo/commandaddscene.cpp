@@ -52,7 +52,7 @@ CommandAddSceneFactory::CommandAddSceneFactory(AnimationImpl& model) : sv(model)
 CommandAddSceneFactory::~CommandAddSceneFactory() {
 }
 
-Command* CommandAddSceneFactory::create(Parameters& ps) {
+Command* CommandAddSceneFactory::create(Parameters& ps, ErrorHandler&) {
 	int32_t index = ps.getInteger(0, sv.sceneCount());
 	std::unique_ptr<Scene> sc(new Scene());
 	CommandAddScene* r = new CommandAddScene(sv, index);

@@ -32,6 +32,7 @@
 #include "frame.h"
 #include "animationimpl.h"
 #include "src/domain/observernotifier.h"
+#include "src/domain/animation/errorhandler.h"
 #include "src/presentation/observer.h"
 
 #include "src/domain/undo/commandadd.h"
@@ -52,6 +53,28 @@ namespace {
 bool ensureUnlinked(const char* path) {
 	return 0 == unlink(path) || errno == ENOENT;
 }
+
+class ErrorCapture : public ErrorHandler {
+	UiException* exception;
+public:
+	ErrorCapture() : exception(0) {
+	}
+	~ErrorCapture() {
+		delete exception;
+	}
+  void error(UiException e) {
+		// We will only bother recording the first exception we come across.
+		// Better is clearly possible.
+		if (!exception) {
+			exception = new UiException(e);
+		}
+	}
+	void throwException() {
+		if (exception) {
+			throw *exception;
+		}
+	}
+};
 }
 
 FailedToInitializeCommandLogger::FailedToInitializeCommandLogger() {
@@ -482,10 +505,11 @@ void Animation::replayCommandLog(FILE* file) {
 			frontend->showProgress(Frontend::restoringProject, length - startPos);
 		}
 	}
+	ErrorCapture handler;
 	GetLine lineIterator(file);
 	int r = 0;
 	while (0 < (r = lineIterator.next())) {
-		executor->executeFromLog(lineIterator.get());
+		executor->executeFromLog(lineIterator.get(), handler);
 		if (0 < length) {
 			long pos = ftell(file) - startPos;
 			frontend->updateProgress(pos);
@@ -495,6 +519,7 @@ void Animation::replayCommandLog(FILE* file) {
 		frontend->hideProgress();
 	if (r < 0)
 		throw FileException("replayCommandLog", errno);
+	handler.throwException();
 }
 
 bool Animation::canUndo() {

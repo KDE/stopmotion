@@ -55,7 +55,7 @@ class CommandAddFactory : public CommandFactory {
 public:
 	CommandAddFactory(AnimationImpl& model);
 	~CommandAddFactory();
-	Command* create(::Parameters& ps);
+	Command* create(::Parameters& ps, ErrorHandler& e);
 	class Parameters : public ::Parameters {
 		int32_t sc;
 		int32_t fr;

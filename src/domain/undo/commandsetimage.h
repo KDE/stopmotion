@@ -44,7 +44,7 @@ class CommandSetImageFactory : public CommandFactory {
 public:
 	CommandSetImageFactory(AnimationImpl& model);
 	~CommandSetImageFactory();
-	Command* create(Parameters& ps);
+	Command* create(Parameters& ps, ErrorHandler& e);
 };
 
 #endif

@@ -29,8 +29,7 @@
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
-class AudioFormat
-{
+class AudioFormat {
 public:
 	virtual ~AudioFormat();
 

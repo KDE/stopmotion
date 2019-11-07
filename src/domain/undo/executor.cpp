@@ -25,6 +25,7 @@
 #include "random.h"
 #include "commandlogger.h"
 #include "src/foundation/stringwriter.h"
+#include "src/domain/animation/errorhandler.h"
 
 #include <map>
 #include <vector>
@@ -522,7 +523,7 @@ public:
 		VaListParameters vpsd(args);
 		try {
 			WriterParametersWrapper vps(vpsd, name);
-			Command* c = f->create(vps);
+			Command* c = f->create(vps, *ErrorHandler::getThrower());
 			if (c) {
 				vps.writeCommand(logger);
 				history.execute(*c);
@@ -540,14 +541,14 @@ public:
 	void execute(const char* name, Parameters& params) {
 		WriterParametersWrapper pw(params, name);
 		CommandFactory* f = Factory(name);
-		Command* c = f->create(pw);
+		Command* c = f->create(pw, *ErrorHandler::getThrower());
 		if (c) {
 			pw.writeCommand(logger);
 			history.execute(*c);
 			logger->commit();
 		}
 	}
-	bool executeFromLog(const char* line) {
+	bool executeFromLog(const char* line, ErrorHandler& e) {
 		StringReader reader;
 		reader.setBuffer(line);
 		std::string id;
@@ -560,7 +561,7 @@ public:
 			const char* commandName = id.c_str();
 			CommandFactory* f = Factory(commandName);
 			StringReaderParameters sps(reader);
-			Command* c = f->create(sps);
+			Command* c = f->create(sps, e);
 			// It is an error if a command executed from a log is invalid.
 			// This would mean that the log has become out-of-sync with the
 			// model.
@@ -600,7 +601,7 @@ public:
 			RandomParameters rpsd(rng);
 			const char* commandName = name.c_str();
 			WriterParametersWrapper rps(rpsd, commandName);
-			Command* c = factories[name]->create(rps);
+			Command* c = factories[name]->create(rps, *ErrorHandler::getThrower());
 			if (c) {
 				if (logger)
 					rps.writeCommand(logger);
@@ -622,7 +623,7 @@ public:
 			std::string& name(constructiveCommands[r]);
 			RandomParameters rpsd(rng);
 			WriterParametersWrapper rps(rpsd, name.c_str());
-			Command* c = factories[name]->create(rps);
+			Command* c = factories[name]->create(rps, *ErrorHandler::getThrower());
 			if (c) {
 				if (logger)
 					rps.writeCommand(logger);

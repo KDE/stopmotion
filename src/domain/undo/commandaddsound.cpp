@@ -61,7 +61,7 @@ CommandAddSoundFactory::CommandAddSoundFactory(AnimationImpl& model) : sv(model)
 CommandAddSoundFactory::~CommandAddSoundFactory() {
 }
 
-Command* CommandAddSoundFactory::create(Parameters& ps) {
+Command* CommandAddSoundFactory::create(Parameters& ps, ErrorHandler& e) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;
@@ -81,6 +81,6 @@ Command* CommandAddSoundFactory::create(Parameters& ps) {
 	Sound* soundCopy = sound.get();
 	r->setSound(sound.release());
 	WorkspaceFile wf(filename.c_str());
-	soundCopy->open(wf);
+	soundCopy->open(wf, e);
 	return r.release();
 }
