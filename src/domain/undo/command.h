@@ -28,6 +28,7 @@ class CommandList;
 class FileNameVisitor;
 class CommandLogger;
 class UndoRedoObserver;
+class ErrorHandler;
 
 /**
  * Base class of all command classes, objects of which are manipulated by the
@@ -106,11 +107,12 @@ public:
 	/**
 	 * Creates a command from the Parameters given in ps.
 	 * @param The source of parameters to use, ownership is not passed.
+	 * @param e An error handler that collects errors that would have been thrown.
 	 * @return The command created, ownership is returned. @c NULL is returned
 	 * if no such command can be created at the moment (for example a delete
 	 * when the model is empty).
 	 */
-	virtual Command* create(Parameters& ps) = 0;
+	virtual Command* create(Parameters& ps, ErrorHandler& e) = 0;
 };
 
 /**

@@ -49,7 +49,7 @@ class CommandRemoveFactory : public CommandFactory {
 public:
 	CommandRemoveFactory(AnimationImpl& model);
 	~CommandRemoveFactory();
-	Command* create(Parameters& ps);
+	Command* create(Parameters& ps, ErrorHandler& e);
 };
 
 #endif

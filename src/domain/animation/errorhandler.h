@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2019 by Linuxstopmotion contributors;                   *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,37 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef COMMANDADDSCENE_H
-#define COMMANDADDSCENE_H
+#ifndef ERRORHANDLER_H_
+#define ERRORHANDLER_H_
 
-#include "command.h"
+#include "src/foundation/uiexception.h"
 
-class AnimationImpl;
-class Scene;
-
-class CommandAddScene : public Command {
-	AnimationImpl& sv;
-	int32_t index;
-	Scene* sc;
+class ErrorHandler {
+protected:
+  virtual ~ErrorHandler() = 0;
 public:
-	/**
-	 * @param scene Ownership is passed.
-	 */
-	CommandAddScene(AnimationImpl& model, int32_t sceneNumber);
-	~CommandAddScene();
-	void setScene(Scene* s);
-	Command* execute();
-};
-
-/**
- * This factory can only create empty scenes.
- */
-class CommandAddSceneFactory : public CommandFactory {
-	AnimationImpl& sv;
-public:
-	CommandAddSceneFactory(AnimationImpl& model);
-	~CommandAddSceneFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+  virtual void error(UiException) = 0;
+  /**
+   * Returns an ErrorHandler that just throws any exception it gets
+   * immediately.
+   * @return The error handler; ownership is not returned.
+   */
+	static ErrorHandler* getThrower();
 };
 
 #endif

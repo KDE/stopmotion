@@ -108,7 +108,7 @@ public:
 	 * @throws MalformedLineException if the line is neither empty nor starts
 	 * with a command name.
 	 */
-	virtual bool executeFromLog(const char* line) = 0;
+	virtual bool executeFromLog(const char* line, ErrorHandler& e) = 0;
 	/**
 	 * Executes a random set of commands. Used for testing.
 	 * @param rng The random number generator.

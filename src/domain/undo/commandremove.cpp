@@ -51,7 +51,7 @@ CommandRemoveFactory::CommandRemoveFactory(AnimationImpl& model)
 CommandRemoveFactory::~CommandRemoveFactory() {
 }
 
-Command* CommandRemoveFactory::create(Parameters& ps) {
+Command* CommandRemoveFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;

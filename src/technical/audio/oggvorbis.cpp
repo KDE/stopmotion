@@ -56,7 +56,7 @@ OggVorbis::~OggVorbis() {
 }
 
 
-void OggVorbis::setFilename(WorkspaceFile& file) {
+void OggVorbis::setFilename(WorkspaceFile& file, ErrorHandler& e) {
 	assert(file.path() != NULL);
 
 	// Opens the file and tests for vorbis-ness
@@ -73,7 +73,8 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 			Logger::get().logDebug("Not a valid oggfile");
 			free(oggFile);
 			oggFile = NULL;
-			throw UiException(UiException::invalidAudioFormat);
+			e.error( UiException(UiException::invalidAudioFormat) );
+			return;
 		}
 		// For some reason, ov_test does not necessarily take
 		// ownership of our file handle. We must only release
@@ -87,7 +88,7 @@ void OggVorbis::setFilename(WorkspaceFile& file) {
 			throw std::bad_alloc();
 		}
 		Logger::get().logDebug("Cannot open file '%s' for reading", file.path());
-		throw UiException(UiException::couldNotOpenFile);
+		e.error( UiException(UiException::couldNotOpenFile) );
 	}
 }
 
@@ -99,8 +100,7 @@ int OggVorbis::open() {
 		close();
 		oggFile = (OggVorbis_File*)malloc( sizeof(OggVorbis_File) );
 		if (oggFile == NULL) {
-			// logFatal terminates the application
-			Logger::get().logFatal("Cannot allocate, out of memory!");
+			throw std::bad_alloc();
 		}
 		if ( ov_open(f, oggFile, NULL, 0) == 0 ) {
 			fcloser.release();
@@ -114,7 +114,9 @@ int OggVorbis::open() {
 
 
 void OggVorbis::reset() {
-	ov_raw_seek(oggFile, 0);
+	if (oggFile) {
+		ov_raw_seek(oggFile, 0);
+	}
 }
 
 
@@ -157,7 +159,6 @@ int OggVorbis::fillBuffer(char *audioBuffer, int numBytes) {
 	}
 	return 0;
 }
-
 
 const char* OggVorbis::getSoundPath() const {
 	return filename.path();

@@ -31,6 +31,7 @@ HEADERS += ../domain/undo/filelogger.h \
     ../technical/video/videofactory.h \
     ../technical/video/videoencoder.h \
     ../technical/audio/qtaudiodriver.h \
+    ../technical/audio/qtdecoder.h \
     ../technical/projectserializer.h \
     ../domain/observernotifier.h \
     ../application/externalcommandwithtemporarydirectory.h \
@@ -70,6 +71,7 @@ SOURCES += ../domain/undo/filelogger.cpp \
     ../domain/animation/animationimpl.cpp \
     ../domain/animation/scenevector.cpp \
     ../domain/animation/workspacefile.cpp \
+    ../domain/animation/errorhandler.cpp \
     ../domain/observernotifier.cpp \
     ../technical/audio/audioformat.cpp \
     ../technical/util.cpp \

@@ -53,7 +53,7 @@ CommandRenameSoundFactory::CommandRenameSoundFactory(AnimationImpl& model) :sv(m
 CommandRenameSoundFactory::~CommandRenameSoundFactory() {
 }
 
-Command* CommandRenameSoundFactory::create(Parameters& ps) {
+Command* CommandRenameSoundFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;

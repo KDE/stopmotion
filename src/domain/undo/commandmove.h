@@ -44,7 +44,7 @@ class CommandMoveFactory : public CommandFactory {
 public:
 	CommandMoveFactory(AnimationImpl& model);
 	~CommandMoveFactory();
-	Command* create(Parameters& ps);
+	Command* create(Parameters& ps, ErrorHandler& e);
 };
 
 #endif

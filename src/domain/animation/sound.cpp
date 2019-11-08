@@ -39,7 +39,7 @@ Sound::~Sound() {
 /**
  *@todo check audio type (ogg, mp3, wav ...)
  */
-void Sound::open(WorkspaceFile& file) {
+void Sound::open(WorkspaceFile& file, ErrorHandler&) {
 	std::unique_ptr<QtAudioDecoder> a(new QtAudioDecoder(file));
 	delete af;
 	af = a.release();

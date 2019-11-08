@@ -30,15 +30,21 @@ QtAudioDecoder::~QtAudioDecoder() {
 }
 
 int QtAudioDecoder::open() {
+	return 0;
 }
 
 void QtAudioDecoder::reset() {
 }
 
 int QtAudioDecoder::close() {
+	return 0;
 }
 
-int QtAudioDecoder::fillBuffer(char *audioBuffer, int numBytes) {
+int QtAudioDecoder::bytesAvailable() const {
+	return 256;
+}
+
+int QtAudioDecoder::fillBuffer(char *, int numBytes) {
 	return numBytes;
 }
 
@@ -50,3 +56,8 @@ const char* QtAudioDecoder::getBasename() const {
 	return file.basename();
 }
 
+void QtAudioDecoder::decodedData() {
+}
+
+void QtAudioDecoder::decoderStateChanged(QAudioDecoder::State) {
+}

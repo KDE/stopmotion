@@ -45,7 +45,7 @@ UndoRemoveSceneFactory::UndoRemoveSceneFactory(AnimationImpl& model)
 UndoRemoveSceneFactory::~UndoRemoveSceneFactory() {
 }
 
-Command* UndoRemoveSceneFactory::create(Parameters& ps) {
+Command* UndoRemoveSceneFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;

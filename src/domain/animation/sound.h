@@ -28,6 +28,7 @@
 class AudioFormat;
 class AudioDriver;
 class WorkspaceFile;
+class ErrorHandler;
 
 class Sound {
 	AudioFormat* af;
@@ -43,7 +44,7 @@ public:
 	 * @param file The filename to open. Ownership is not passed.
 	 * @todo We need a way of mocking this for testing.
 	 */
-	void open(WorkspaceFile& file);
+	void open(WorkspaceFile& file, ErrorHandler& e);
 	/**
 	 * Sets or resets the (human-readable) name of this sound.
 	 * @param name The new name or NULL for no name. Name passed must have been

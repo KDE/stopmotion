@@ -52,7 +52,7 @@ class CommandRenameSoundFactory : public CommandFactory {
 public:
 	CommandRenameSoundFactory(AnimationImpl& model);
 	~CommandRenameSoundFactory();
-	Command* create(Parameters& ps);
+	Command* create(Parameters& ps, ErrorHandler& e);
 };
 
 #endif
