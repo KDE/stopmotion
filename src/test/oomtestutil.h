@@ -45,15 +45,6 @@ public:
 	virtual int access (const char *name, int type) = 0;
 	virtual int ferror(FILE*) = 0;
 	virtual int unlink(const char *name) = 0;
-	// unfortunately, ov_test segfaults if memory allocation fails. Until this
-	// is fixed, we need to mock ov_test
-	virtual int ov_test(FILE *f, OggVorbis_File *vf, const char *initial,
-			long ibytes) = 0;
-	virtual int ov_clear(OggVorbis_File *vf) = 0;
-	virtual int ov_open(FILE *f,OggVorbis_File *vf,const char *initial,
-			long ibytes) = 0;
-	virtual long ov_read(OggVorbis_File *vf,char *buffer,int length,
-	                    int bigendianp,int word,int sgned,int *bitstream) = 0;
 	virtual char* getenv(const char *name) = 0;
 };
 

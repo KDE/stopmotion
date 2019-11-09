@@ -22,6 +22,7 @@
 
 #include "src/technical/audio/audioformat.h"
 #include "src/technical/audio/oggvorbis.h"
+#include "src/technical/audio/audiodriver.h"
 
 #include <assert.h>
 #include <string.h>
@@ -32,16 +33,18 @@ Sound::Sound() : af(0), name(0) {
 
 Sound::~Sound() {
 	delete af;
-	delete name;
+	delete[] name;
 }
 
 /**
  *@todo check audio type (ogg, mp3, wav ...)
  */
-void Sound::open(WorkspaceFile& file) {
-	std::auto_ptr<OggVorbis> a(new OggVorbis());
-	a->setFilename(file);
+void Sound::open(WorkspaceFile& file, ErrorHandler& e) {
+	std::unique_ptr<OggVorbis> a(new OggVorbis());
+	a->setFilename(file, e);
+	delete af;
 	af = a.release();
+	af->open();
 }
 
 const char* Sound::setName(const char* n) {
@@ -58,14 +61,18 @@ void Sound::setName(std::string& n) {
 	strncpy(a, n.c_str(), size);
 }
 
-AudioFormat* Sound::getAudio() {
-	return af;
-}
-
-const AudioFormat* Sound::getAudio() const {
-	return af;
-}
-
 const char* Sound::getName() const {
 	return name;
+}
+
+const char* Sound::getSoundPath() const {
+	return af->getSoundPath();
+}
+
+const char* Sound::getBasename() const {
+	return af->getBasename();
+}
+
+void Sound::addToDriver(AudioDriver& ad) const {
+	ad.addAudioFile(af);
 }

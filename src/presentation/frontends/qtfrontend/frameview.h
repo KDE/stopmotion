@@ -60,16 +60,6 @@ public:
 	*/
 	~FrameView();
 
-	/**
-	 * Sets the view to 4:3 format.
-	 */
-	void setWidescreenRatio();
-
-	/**
-	 * Sets the view to 16:9 format.
-	 */
-	void setNormalRatio();
-
 	void initCompleted();
 
 	/**
@@ -169,7 +159,6 @@ private:
 	/** Is the frame view showing the camera output? */
 	bool isPlayingVideo;
 
-	int widthConst, heightConst;
 	ImageMode mode;
 	int playbackSpeed;
 	int activeScene;

@@ -53,7 +53,7 @@ CommandRenameSoundFactory::CommandRenameSoundFactory(AnimationImpl& model) :sv(m
 CommandRenameSoundFactory::~CommandRenameSoundFactory() {
 }
 
-Command* CommandRenameSoundFactory::create(Parameters& ps) {
+Command* CommandRenameSoundFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;
@@ -66,7 +66,7 @@ Command* CommandRenameSoundFactory::create(Parameters& ps) {
 	if (soundCount == 0)
 		return 0;
 	int32_t index = ps.getInteger(0, soundCount - 1);
-	std::auto_ptr<CommandRenameSound> r(new CommandRenameSound(sv, sc, fr, index, 0));
+	std::unique_ptr<CommandRenameSound> r(new CommandRenameSound(sv, sc, fr, index, 0));
 	std::string name;
 	ps.getString(name, "sound ?*");
 	r->setName(name.c_str());

@@ -86,8 +86,6 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 	facade = DomainFacade::getFacade();
 
 	isPlayingVideo = false;
-	widthConst  = 4;
-	heightConst = 3;
 	mode = imageModeMix;
 	this->playbackSpeed = PreferencesTool::get()->getPreference("fps",
 			playbackSpeed);
@@ -99,9 +97,10 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 	connect(&grabTimer, SIGNAL(timeout()), this, SLOT(redraw()));
 	connect(&playbackTimer, SIGNAL(timeout()),this, SLOT(nextPlayBack()));
 
-	setNormalRatio();
+	setMinimumSize(400, 300);
 	setAttribute(Qt::WA_NoSystemBackground);
 	setObjectName(name);
+	update();
 
 	Logger::get().logDebug("FrameView is attached to the model and the model to FrameView");
 }
@@ -114,23 +113,6 @@ FrameView::~FrameView() {
 	}
 	delete grabber;
 	grabber = 0;
-}
-
-
-void FrameView::setWidescreenRatio() {
-	widthConst  = 16;
-	heightConst = 9;
-	float minWidth = 300 * (16 / 9);
-	this->setMinimumSize( (int)minWidth, 300);
-	this->update();
-}
-
-
-void FrameView::setNormalRatio() {
-	widthConst  = 4;
-	heightConst = 3;
-	this->setMinimumSize(400, 300);
-	this->update();
 }
 
 

@@ -42,7 +42,7 @@ class UndoRemoveSoundFactory : public CommandFactory {
 public:
 	UndoRemoveSoundFactory(AnimationImpl& model);
 	~UndoRemoveSoundFactory();
-	Command* create(Parameters& ps);
+	Command* create(Parameters& ps, ErrorHandler& e);
 };
 
 #endif

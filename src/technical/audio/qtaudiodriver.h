@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2013 by Linuxstopmotion contributors;                   *
+ *   Copyright (C) 2017 by Linuxstopmotion contributors;                   *
  *   see the AUTHORS file for details.                                     *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -17,37 +17,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef COMMANDADDSCENE_H
-#define COMMANDADDSCENE_H
 
-#include "command.h"
+#ifndef QTAUDIODRIVER_H
+#define QTAUDIODRIVER_H
 
-class AnimationImpl;
-class Scene;
+#include "audiodriver.h"
 
-class CommandAddScene : public Command {
-	AnimationImpl& sv;
-	int32_t index;
-	Scene* sc;
+class QtAudioDriver : public AudioDriver {
+	class Impl;
+	Impl* impl;
 public:
-	/**
-	 * @param scene Ownership is passed.
-	 */
-	CommandAddScene(AnimationImpl& model, int32_t sceneNumber);
-	~CommandAddScene();
-	void setScene(Scene* s);
-	Command* execute();
-};
-
-/**
- * This factory can only create empty scenes.
- */
-class CommandAddSceneFactory : public CommandFactory {
-	AnimationImpl& sv;
-public:
-	CommandAddSceneFactory(AnimationImpl& model);
-	~CommandAddSceneFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+	QtAudioDriver();
+	~QtAudioDriver();
+	void play();
+	void playInThread();
+	void addAudioFile(AudioFormat *audioFile);
+	bool initialize();
+	void shutdown();
 };
 
 #endif

@@ -34,7 +34,7 @@ CommandRemoveSound::~CommandRemoveSound() {
 }
 
 Command* CommandRemoveSound::execute() {
-	std::auto_ptr<CommandAddSound> inv(
+	std::unique_ptr<CommandAddSound> inv(
 			new CommandAddSound(sv, sc, fr, index));
 	Sound* s = sv.removeSound(sc, fr, index);
 	inv->setSound(s);
@@ -49,7 +49,7 @@ UndoRemoveSoundFactory::UndoRemoveSoundFactory(AnimationImpl& model)
 UndoRemoveSoundFactory::~UndoRemoveSoundFactory() {
 }
 
-Command* UndoRemoveSoundFactory::create(Parameters& ps) {
+Command* UndoRemoveSoundFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;

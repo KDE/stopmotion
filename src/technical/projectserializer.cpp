@@ -27,7 +27,6 @@
 #include "src/domain/animation/sound.h"
 #include "src/domain/animation/animationimpl.h"
 #include "src/domain/animation/workspacefile.h"
-#include "src/technical/audio/audioformat.h"
 #include "src/technical/util.h"
 
 #include <cstring>
@@ -347,8 +346,8 @@ void writeSto(const char* filename, const char* xmlProjectFile,
 			sto.addImage(frame->getImagePath(), frame->getBasename());
 			int soundCount = frame->soundCount();
 			for (int k = 0; k != soundCount; ++k) {
-				const AudioFormat* audio = frame->getSound(k)->getAudio();
-				sto.addSound(audio->getSoundPath(), audio->getBasename());
+				const Sound* sound = frame->getSound(k);
+				sto.addSound(sound->getSoundPath(), sound->getBasename());
 			}
 		}
 	}
@@ -401,7 +400,7 @@ void ProjectSerializer::setAttributes(xmlNodePtr rootNode,
 		const AnimationImpl& anim, Frontend *frontend) {
 	xmlNodePtr node = NULL;
 	const Frame *frame = NULL;
-	const AudioFormat *sound = NULL;
+	const Sound *sound = NULL;
 
 	xmlNodePtr scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
 
@@ -428,7 +427,7 @@ void ProjectSerializer::setAttributes(xmlNodePtr rootNode,
 				xmlNodePtr sounds = xmlNewChild(node, NULL, BAD_CAST "sounds",
 						NULL);
 				for (int k = 0; k < numSounds; ++k) {
-					sound = frame->getSound(k)->getAudio();
+					sound = frame->getSound(k);
 					filename = sound->getBasename();
 					node = xmlNewChild(sounds, NULL, BAD_CAST "audio", NULL);
 					xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);

@@ -23,7 +23,6 @@
 #include "src/domain/animation/animationimpl.h"
 #include "src/domain/animation/sound.h"
 #include "src/domain/filenamevisitor.h"
-#include "src/technical/audio/audioformat.h"
 
 #include <assert.h>
 #include <memory>
@@ -44,7 +43,7 @@ void CommandAddSound::setSound(Sound* sound) {
 }
 
 Command* CommandAddSound::execute() {
-	std::auto_ptr<CommandRemoveSound>
+	std::unique_ptr<CommandRemoveSound>
 			inv(new CommandRemoveSound(sv, sc, fr, index));
 	sv.addSound(sc, fr, index, snd);
 	snd = 0;
@@ -53,7 +52,7 @@ Command* CommandAddSound::execute() {
 };
 
 void CommandAddSound::accept(FileNameVisitor& v) const {
-	v.visitSound(snd->getAudio()->getSoundPath());
+	v.visitSound(snd->getSoundPath());
 }
 
 CommandAddSoundFactory::CommandAddSoundFactory(AnimationImpl& model) : sv(model) {
@@ -62,7 +61,7 @@ CommandAddSoundFactory::CommandAddSoundFactory(AnimationImpl& model) : sv(model)
 CommandAddSoundFactory::~CommandAddSoundFactory() {
 }
 
-Command* CommandAddSoundFactory::create(Parameters& ps) {
+Command* CommandAddSoundFactory::create(Parameters& ps, ErrorHandler& e) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;
@@ -73,15 +72,15 @@ Command* CommandAddSoundFactory::create(Parameters& ps) {
 	int32_t fr = ps.getInteger(0, frameCount - 1);
 	int32_t index = ps.getInteger(0, sv.soundCount(sc, fr));
 	std::string filename;
-	ps.getString(filename, "?*.ogg");
+	ps.getString(filename, "?*.test-sound");
 	std::string humanName;
 	ps.getString(humanName, "sound ?*");
-	std::auto_ptr<Sound> sound(new Sound());
+	std::unique_ptr<Sound> sound(new Sound());
 	sound->setName(humanName);
-	std::auto_ptr<CommandAddSound> r(new CommandAddSound(sv, sc, fr, index));
+	std::unique_ptr<CommandAddSound> r(new CommandAddSound(sv, sc, fr, index));
 	Sound* soundCopy = sound.get();
 	r->setSound(sound.release());
 	WorkspaceFile wf(filename.c_str());
-	soundCopy->open(wf);
+	soundCopy->open(wf, e);
 	return r.release();
 }

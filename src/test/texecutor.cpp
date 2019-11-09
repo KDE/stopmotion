@@ -35,6 +35,7 @@
 #include "src/domain/undo/commandlogger.h"
 #include "src/domain/undo/filelogger.h"
 #include "src/domain/undo/random.h"
+#include "src/domain/animation/errorhandler.h"
 
 #include "testundo.h"
 #include "oomtestutil.h"
@@ -94,7 +95,7 @@ public:
 	};
 	~EmptyTestCommandFactory() {
 	}
-	Command* create(Parameters& ps) {
+	Command* create(Parameters& ps, ErrorHandler&) {
 		EtCommand* e = new EtCommand(name, output);
 		e->i1 = ps.getInteger(-RAND_MAX/2, RAND_MAX/2);
 		ps.getString(e->s1, 0);
@@ -146,7 +147,7 @@ public:
 			// Some tests are not logging; don't try to execute "!"
 			if (!command.empty()) {
 				command.append(1, '!');
-				ex->executeFromLog(command.c_str());
+				ex->executeFromLog(command.c_str(), *ErrorHandler::getThrower());
 			}
 		}
 	}
@@ -168,12 +169,12 @@ TestCommandFactory::TestCommandFactory()
 	ce = makeExecutor();
 	ce->setCommandLogger(cl);
 	cl->SetExecutor(ce);
-	std::auto_ptr<CommandFactory> et(
+	std::unique_ptr<CommandFactory> et(
 			new EmptyTestCommandFactory("et", executionOutput));
-	std::auto_ptr<CommandFactory> sec(
+	std::unique_ptr<CommandFactory> sec(
 			new EmptyTestCommandFactory("sec", executionOutput));
-	ce->addCommand("et", et);
-	ce->addCommand("sec", sec);
+	ce->addCommand("et", std::move(et));
+	ce->addCommand("sec", std::move(sec));
 }
 
 TestCommandFactory::~TestCommandFactory() {
@@ -228,7 +229,7 @@ void TestCommandFactory::emptyCommandReplayerThrows() {
 
 void TestCommandFactory::canParseFromLog() {
 	executionOutput.clear();
-	ce->executeFromLog("et -5 \"hello world!\" 412345!");
+	ce->executeFromLog("et -5 \"hello world!\" 412345!", *ErrorHandler::getThrower());
 	QCOMPARE(executionOutput.begin()->c_str(),
 			"et,i:-5,s:hello world!,i:412345");
 }
@@ -275,7 +276,7 @@ public:
 	};
 	AddCharFactory(std::string* m) : model(m) {
 	}
-	Command* create(Parameters& ps) {
+	Command* create(Parameters& ps, ErrorHandler&) {
 		int32_t i = ps.getInteger(0, sizeof(alphanumeric) - 1);
 		int32_t character = alphanumeric[i];
 		int32_t position = ps.getInteger(0, model->length());
@@ -297,7 +298,7 @@ public:
 	};
 	DelCharFactory(std::string* m) : model(m) {
 	}
-	Command* create(Parameters& ps) {
+	Command* create(Parameters& ps, ErrorHandler&) {
 		int32_t len = model->length();
 		if (len == 0)
 			return 0;
@@ -309,8 +310,8 @@ public:
 Command* AddCharFactory::AddChar::execute() {
 	if (p < 0 || static_cast<int32_t>(m->length()) < p)
 		throw TestException("AddCharFactory parameters out-of-range");
-	// insert might throw, so use an auto_ptr to avoid leaks.
-	std::auto_ptr<Command> inv(new DelCharFactory::DelChar(*m, p));
+	// insert might throw, so use an unique_ptr to avoid leaks.
+	std::unique_ptr<Command> inv(new DelCharFactory::DelChar(*m, p));
 	std::string::iterator i = m->begin();
 	i += p;
 	m->insert(i, c);
@@ -356,10 +357,10 @@ class AddDelTestBed {
 	std::string finalString;
 	std::string originalString;
 	std::string expected;
-	std::auto_ptr<CommandFactory> af;
-	std::auto_ptr<CommandFactory> df;
-	std::auto_ptr<FileCommandLogger> logger;
-	std::auto_ptr<Executor> ex;
+	std::unique_ptr<CommandFactory> af;
+	std::unique_ptr<CommandFactory> df;
+	std::unique_ptr<FileCommandLogger> logger;
+	std::unique_ptr<Executor> ex;
 	FILE* logFile;
 	StringModelTestHelper helper;
 public:
@@ -371,8 +372,8 @@ public:
 			logFile(0),
 			helper(finalString) {
 		ex->setCommandLogger(logger->getLogger());
-		ex->addCommand("add", af, true);
-		ex->addCommand("del", df);
+		ex->addCommand("add", std::move(af), true);
+		ex->addCommand("del", std::move(df));
 		lineBuffer[lineBufferSize - 1] = '\0';
 	}
 	void init(const char* initialString) {

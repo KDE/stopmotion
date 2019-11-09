@@ -131,7 +131,9 @@ public:
 	}
 	bool isType(const char* path) const {
 		const char* extension = strrchr(path,'.');
-		return extension && asciiEqualI(extension, ".ogg");
+		return extension &&
+			(asciiEqualI(extension, ".ogg")
+			|| asciiEqualI(extension, ".test-sound"));
 	}
 };
 

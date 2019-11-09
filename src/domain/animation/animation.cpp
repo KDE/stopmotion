@@ -22,7 +22,7 @@
 
 #include "src/foundation/logger.h"
 #include "src/foundation/uiexception.h"
-#include "src/technical/audio/ossdriver.h"
+#include "src/technical/audio/qtaudiodriver.h"
 #include "src/technical/video/videofactory.h"
 #include "src/technical/projectserializer.h"
 #include "workspacefile.h"
@@ -32,6 +32,7 @@
 #include "frame.h"
 #include "animationimpl.h"
 #include "src/domain/observernotifier.h"
+#include "src/domain/animation/errorhandler.h"
 #include "src/presentation/observer.h"
 
 #include "src/domain/undo/commandadd.h"
@@ -42,6 +43,7 @@
 
 #include <string.h>
 #include <errno.h>
+#include <unistd.h>
 #include <vector>
 #include <iostream>
 #include <sstream>
@@ -51,6 +53,28 @@ namespace {
 bool ensureUnlinked(const char* path) {
 	return 0 == unlink(path) || errno == ENOENT;
 }
+
+class ErrorCapture : public ErrorHandler {
+	UiException* exception;
+public:
+	ErrorCapture() : exception(0) {
+	}
+	~ErrorCapture() {
+		delete exception;
+	}
+  void error(UiException e) {
+		// We will only bother recording the first exception we come across.
+		// Better is clearly possible.
+		if (!exception) {
+			exception = new UiException(e);
+		}
+	}
+	void throwException() {
+		if (exception) {
+			throw *exception;
+		}
+	}
+};
 }
 
 FailedToInitializeCommandLogger::FailedToInitializeCommandLogger() {
@@ -63,13 +87,13 @@ const char* FailedToInitializeCommandLogger::what() const throw () {
 Animation::Animation()
 		: scenes(0), executor(0), logger(0), serializer(0), audioDriver(0),
 		  isAudioDriverInitialized(false), frontend(0) {
-	std::auto_ptr<SceneVector> scs(new SceneVector);
-	std::auto_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));
+	std::unique_ptr<SceneVector> scs(new SceneVector);
+	std::unique_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));
 	scs.release();
-	std::auto_ptr<ProjectSerializer> szer(new ProjectSerializer);
-	std::auto_ptr<OSSDriver> ad(new OSSDriver("/dev/dsp"));
-	std::auto_ptr<Executor> ex(makeAnimationCommandExecutor(*on));
-	std::auto_ptr<FileCommandLogger> lgr(new FileCommandLogger);
+	std::unique_ptr<ProjectSerializer> szer(new ProjectSerializer);
+	std::unique_ptr<AudioDriver> ad(new QtAudioDriver());
+	std::unique_ptr<Executor> ex(makeAnimationCommandExecutor(*on));
+	std::unique_ptr<FileCommandLogger> lgr(new FileCommandLogger);
 	ex->setCommandLogger(lgr->getLogger());
 	scenes = on.release();
 	serializer = szer.release();
@@ -168,7 +192,7 @@ void Animation::addSound(int32_t scene, int32_t frameNumber,
 		const char *soundFile) {
 	TemporaryWorkspaceFile soundFileWs(soundFile,
 			WorkspaceFileType::sound());
-	std::auto_ptr<Sound> sound(new Sound());
+	std::unique_ptr<Sound> sound(new Sound());
 	std::stringstream ss;
 	std::stringstream::pos_type zeroOffset = ss.tellp();
 	ss << "Sound " << WorkspaceFile::getSoundNumber();
@@ -439,8 +463,7 @@ void Animation::resync(UiException& e) {
 }
 
 const char* Animation::getSoundPath(int scene, int frame, int sound) const {
-	return scenes->getScene(scene)->getSound(frame, sound)->getAudio()
-			->getSoundPath();
+	return scenes->getScene(scene)->getSound(frame, sound)->getSoundPath();
 }
 
 int Animation::soundCount() const {
@@ -482,10 +505,11 @@ void Animation::replayCommandLog(FILE* file) {
 			frontend->showProgress(Frontend::restoringProject, length - startPos);
 		}
 	}
+	ErrorCapture handler;
 	GetLine lineIterator(file);
 	int r = 0;
 	while (0 < (r = lineIterator.next())) {
-		executor->executeFromLog(lineIterator.get());
+		executor->executeFromLog(lineIterator.get(), handler);
 		if (0 < length) {
 			long pos = ftell(file) - startPos;
 			frontend->updateProgress(pos);
@@ -495,6 +519,7 @@ void Animation::replayCommandLog(FILE* file) {
 		frontend->hideProgress();
 	if (r < 0)
 		throw FileException("replayCommandLog", errno);
+	handler.throwException();
 }
 
 bool Animation::canUndo() {

@@ -17,56 +17,54 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef OGGVORBIS_H
-#define OGGVORBIS_H
+#include "../technical/audio/oggvorbis.h"
 
-#include "audioformat.h"
+// A mock OggVorbis implementation that does nothing.
 
-#include <vorbis/vorbisfile.h>
-#include "src/domain/animation/workspacefile.h"
-#include "src/domain/animation/errorhandler.h"
+OggVorbis::OggVorbis() {
+	oggFile = NULL;
+}
 
-/**
- * Class for decoding of oggvorbis data to raw PCM data.
- *
- * @author Bjoern Erik Nilsen & Fredrik B. Kjoelstad
- */
-class OggVorbis : public AudioFormat {
-public:
-	OggVorbis();
-	~OggVorbis();
 
-	/**
-	 * Function for registering the given filename to  be an ogg file. This
-	 * function checks that the file can be opened and that it is a valid
-	 * ogg file.
-	 * @param file the filename to register
-	 */
-	void setFilename(WorkspaceFile& file, ErrorHandler& e);
+OggVorbis::~OggVorbis() {
+	close();
+}
 
-	int open();
-	int close();
-	void reset();
-	int fillBuffer(char *audioBuffer, int numBytes);
-	int add16bit(int16_t* audioBuffer, int count);
-	const char* getSoundPath() const;
-	const char* getBasename() const;
 
-private:
-	/** The ogg representation of the file registered in this class. */
-	OggVorbis_File *oggFile;
+void OggVorbis::setFilename(WorkspaceFile& file, ErrorHandler&) {
+	filename = file;
+}
 
-	/** The filename registred in this class. Hopefully a valid ogg file. */
-	WorkspaceFile filename;
-	enum {
-		littleEndian = 0,
-		bigEndian = 1,
-		wordsAreUnsigned = 0,
-		wordsAreSigned = 1,
-		wordsAre8Bit = 1,
-		wordsAre16Bit = 2,
-		wordsAre32Bit = 4
-	};
-};
 
-#endif
+int OggVorbis::open() {
+	return 0;
+}
+
+
+void OggVorbis::reset() {
+}
+
+
+int OggVorbis::close() {
+	return 0;
+}
+
+
+int OggVorbis::fillBuffer(char*, int numBytes) {
+	return numBytes;
+}
+
+
+int OggVorbis::add16bit(int16_t*, int count) {
+	return count;
+}
+
+
+const char* OggVorbis::getSoundPath() const {
+	return filename.path();
+}
+
+const char* OggVorbis::getBasename() const {
+	return filename.basename();
+}
+

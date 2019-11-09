@@ -127,7 +127,7 @@ const char* Util::endOfArgument(const char* in) {
 		end
 	} state = normal;
 	/* transition[state][charClass] */
-	static const State transition[][5] = {
+	static const State transition[5][5] = {
 			{ normal, backslash, squote, dquote, end }, // normal
 			{ normal, normal, normal, normal, normal }, // backslash
 			{ squote, squote, normal, squote, squote }, // squote

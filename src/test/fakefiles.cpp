@@ -37,7 +37,7 @@ bool RealOggEmptyJpg::hasExtension(const char* filename, const char* extension) 
 }
 
 bool RealOggEmptyJpg::isSound(const char* filename) {
-	return hasExtension(filename, ".ogg");
+	return hasExtension(filename, ".test-sound");
 }
 
 bool RealOggEmptyJpg::isJpg(const char* filename) {
@@ -63,7 +63,7 @@ FILE* RealOggEmptyJpg::fopen(const char* filename, const char* mode) {
 		return fakePng;
 	} else if (isSound(filename)) {
 		if (strstr(mode, "w") == 0)
-			return delegate->fopen("resources/click.ogg", mode);
+			return delegate->fopen("resources/click.test-sound", mode);
 		return fakePng;
 	}
 	return delegate->fopen(filename, mode);
@@ -141,6 +141,10 @@ int RealOggEmptyJpg::ov_open(FILE *,OggVorbis_File *,const char *, long) {
 }
 
 long RealOggEmptyJpg::ov_read(OggVorbis_File *,char *,int, int, int, int, int *) {
+	return 0;
+}
+
+int ov_raw_seek(OggVorbis_File *,long) {
 	return 0;
 }
 

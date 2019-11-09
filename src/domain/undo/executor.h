@@ -108,7 +108,7 @@ public:
 	 * @throws MalformedLineException if the line is neither empty nor starts
 	 * with a command name.
 	 */
-	virtual bool executeFromLog(const char* line) = 0;
+	virtual bool executeFromLog(const char* line, ErrorHandler& e) = 0;
 	/**
 	 * Executes a random set of commands. Used for testing.
 	 * @param rng The random number generator.
@@ -147,7 +147,7 @@ public:
 	 * passed here with @a constructive set to @c true.
 	 */
 	virtual void addCommand(const char* name,
-			std::auto_ptr<CommandFactory>factory,
+			std::unique_ptr<CommandFactory>factory,
 			bool constructive = false) = 0;
 	/**
 	 * Sets the logger to be used to record commands executed.

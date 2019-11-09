@@ -60,7 +60,7 @@ CommandMoveFactory::CommandMoveFactory(AnimationImpl& model) : sv(model) {
 CommandMoveFactory::~CommandMoveFactory() {
 }
 
-Command* CommandMoveFactory::create(Parameters& ps) {
+Command* CommandMoveFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;

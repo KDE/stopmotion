@@ -1,4 +1,4 @@
-QT += widgets
+QT += widgets multimedia
 CONFIG += debug_and_release
 HEADERS += src/domain/undo/filelogger.h \
     src/config.h \
@@ -85,8 +85,8 @@ HEADERS += src/domain/undo/filelogger.h \
     src/presentation/frontends/qtfrontend/licence.h \
     src/technical/audio/audiodriver.h \
     src/technical/audio/audioformat.h \
-    src/technical/audio/ossdriver.h \
     src/technical/audio/oggvorbis.h \
+    src/technical/audio/qtaudiodriver.h \
     src/technical/grabber/imagegrabber.h \
     src/technical/grabber/commandlinegrabber.h \
     src/presentation/frontends/selection.h \
@@ -134,6 +134,7 @@ SOURCES += src/config.cpp \
     src/domain/animation/frame.cpp \
     src/domain/animation/sound.cpp \
     src/domain/animation/scenevector.cpp \
+    src/domain/animation/errorhandler.cpp \
     src/presentation/imagecache.cpp \
     src/presentation/frontends/nonguifrontend/nonguifrontend.cpp \
     src/presentation/frontends/qtfrontend/mainwindowgui.cpp \
@@ -161,9 +162,9 @@ SOURCES += src/config.cpp \
     src/application/editmenuhandler.cpp \
     src/domain/animation/scene.cpp \
     src/technical/projectserializer.cpp \
-    src/technical/audio/ossdriver.cpp \
     src/technical/audio/oggvorbis.cpp \
     src/technical/audio/audioformat.cpp \
+    src/technical/audio/qtaudiodriver.cpp \
     src/technical/grabber/imagegrabber.cpp \
     src/technical/grabber/commandlinegrabber.cpp \
     src/presentation/frontends/qtfrontend/imagegrabthread.cpp \

@@ -52,11 +52,6 @@ public:
 	int access (const char *name, int type);
 	int ferror(FILE* fh);
 	int unlink(const char *name);
-	int ov_test(FILE *f, OggVorbis_File *vf, const char *initial, long ibytes);
-	int ov_clear(OggVorbis_File *vf);
-	int ov_open(FILE *f, OggVorbis_File *vf, const char *initial, long ibytes);
-	long ov_read(OggVorbis_File *vf,char *buffer, int length, int bigendianp,
-			int word, int sgned, int *bitstream);
 	char *getenv(const char *name);
 };
 

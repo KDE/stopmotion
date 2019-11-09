@@ -45,7 +45,7 @@ void CommandAdd::addFrame(Frame* frame) {
 }
 
 Command* CommandAdd::execute() {
-	std::auto_ptr<CommandRemove> inverse(
+	std::unique_ptr<CommandRemove> inverse(
 			new CommandRemove(sv, scene, frame, frames.size()));
 	sv.addFrames(scene, frame, frames);
 	// ownership has been passed, so we must forget the frames
@@ -115,7 +115,7 @@ CommandAddFactory::CommandAddFactory(AnimationImpl& model) : sv(model) {
 CommandAddFactory::~CommandAddFactory() {
 }
 
-Command* CommandAddFactory::create(::Parameters& ps) {
+Command* CommandAddFactory::create(::Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;

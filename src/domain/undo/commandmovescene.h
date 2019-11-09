@@ -40,7 +40,7 @@ class CommandMoveSceneFactory : public CommandFactory {
 public:
 	CommandMoveSceneFactory(AnimationImpl& model);
 	~CommandMoveSceneFactory();
-	Command* create(Parameters& ps);
+	Command* create(Parameters& ps, ErrorHandler& e);
 };
 
 #endif

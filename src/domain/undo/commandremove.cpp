@@ -33,7 +33,7 @@ CommandRemove::~CommandRemove() {
 }
 
 Command* CommandRemove::execute() {
-	std::auto_ptr<CommandAdd> inv(new CommandAdd(sv, sc, fr, frameCount));
+	std::unique_ptr<CommandAdd> inv(new CommandAdd(sv, sc, fr, frameCount));
 	std::vector<Frame*> removed;
 	sv.removeFrames(sc, fr, frameCount, removed);
 	for (std::vector<Frame*>::iterator i = removed.begin();
@@ -51,7 +51,7 @@ CommandRemoveFactory::CommandRemoveFactory(AnimationImpl& model)
 CommandRemoveFactory::~CommandRemoveFactory() {
 }
 
-Command* CommandRemoveFactory::create(Parameters& ps) {
+Command* CommandRemoveFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
 		return 0;

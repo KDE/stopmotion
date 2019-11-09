@@ -28,6 +28,7 @@
 #include "src/domain/undo/commandlogger.h"
 #include "src/domain/undo/filelogger.h"
 #include "src/domain/undo/random.h"
+#include "src/domain/animation/errorhandler.h"
 #include "src/foundation/stringwriter.h"
 
 #include <sstream>
@@ -528,7 +529,7 @@ public:
 		fh = fileOpen(logFName, "r");
 		assert(fh);
 		while (fgets(lineBuffer, lineBufferSize, fh)) {
-			e.executeFromLog(lineBuffer);
+			e.executeFromLog(lineBuffer, *ErrorHandler::getThrower());
 			replayed[whichLog].append(lineBuffer);
 		}
 	}

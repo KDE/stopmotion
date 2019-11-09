@@ -21,13 +21,13 @@
 
 #include "src/technical/audio/audiodriver.h"
 #include "src/domain/filenamevisitor.h"
+#include "src/domain/animation/errorhandler.h"
 #include "src/config.h"
 #include "sound.h"
 
 #include <string.h>
 #include <sstream>
 #include <memory>
-
 
 class SoundOutOfRangeException : public std::exception {
 public:
@@ -68,7 +68,7 @@ const char* Frame::getBasename() const {
 int Frame::newSound(WorkspaceFile& file) {
 	Logger::get().logDebug("Adding sound in frame");
 	preallocateSounds(1);
-	std::auto_ptr<Sound> sound(new Sound());
+	std::unique_ptr<Sound> sound(new Sound());
 	std::stringstream ss;
 	std::stringstream::pos_type zeroOff = ss.tellp();
 	ss << "Sound" << WorkspaceFile::getSoundNumber();
@@ -78,7 +78,7 @@ int Frame::newSound(WorkspaceFile& file) {
 	strncpy(soundName, cs.c_str(), size);
 	const char* oldName = sound->setName(soundName);
 	assert(oldName == NULL);
-	sound->open(file);
+	sound->open(file, *ErrorHandler::getThrower());
 	WorkspaceFile::nextSoundNumber();
 	sounds.push_back(sound.release());
 
@@ -140,7 +140,7 @@ const char* Frame::getSoundName(int soundNumber) const {
 void Frame::playSounds(AudioDriver *driver) const {
 	SoundVector::const_iterator i = sounds.begin();
 	for (; i != sounds.end(); ++i) {
-		driver->addAudioFile((*i)->getAudio());
+		(*i)->addToDriver(*driver);
 	}
 	if (i != sounds.begin())
 		driver->playInThread();
@@ -155,6 +155,6 @@ void Frame::accept(FileNameVisitor& v) const {
 	for(SoundVector::const_iterator i = sounds.begin();
 			i != sounds.end();
 			++i) {
-		v.visitSound((*i)->getAudio()->getSoundPath());
+		v.visitSound((*i)->getSoundPath());
 	}
 }

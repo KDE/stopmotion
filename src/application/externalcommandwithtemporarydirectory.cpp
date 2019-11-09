@@ -82,7 +82,7 @@ public:
 ExternalCommandWithTemporaryDirectory
 		::ExternalCommandWithTemporaryDirectory(
 		QWidget* parent) :ec(0), td(0) {
-	std::auto_ptr<TemporaryDirectory> ttd(new TemporaryDirectory);
+	std::unique_ptr<TemporaryDirectory> ttd(new TemporaryDirectory);
 	ec = new ExternalCommand(parent);
 	td = ttd.release();
 }
