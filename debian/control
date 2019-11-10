@@ -4,13 +4,13 @@ Priority: optional
 Maintainer: Barak A. Pearlmutter <bap@debian.org>
 Uploaders: Mahyuddin Susanto <udienz@ubuntu.com>,
 	   Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>
-Build-Depends: debhelper (>= 11),
+Build-Depends: debhelper-compat (= 12),
 	pkg-config,
 	qtbase5-dev, qttools5-dev-tools,
 	libtar-dev,
 	libvorbis-dev,
 	libxml2-dev
-Standards-Version: 4.1.4
+Standards-Version: 4.4.1
 Homepage: http://linuxstopmotion.sourceforge.net
 Vcs-Git: https://salsa.debian.org/debian/stopmotion.git
 Vcs-Browser: https://salsa.debian.org/debian/stopmotion
