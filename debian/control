@@ -7,6 +7,7 @@ Uploaders: Mahyuddin Susanto <udienz@ubuntu.com>,
 Build-Depends: debhelper-compat (= 12),
 	pkg-config,
 	qtbase5-dev, qttools5-dev-tools,
+	qtmultimedia5-dev,
 	libtar-dev,
 	libvorbis-dev,
 	libxml2-dev
