@@ -56,6 +56,12 @@ public:
 	virtual int bytesAvailable() const = 0;
 
 	/**
+	 * Has the file been exhausted completely by calls to fillBuffer?
+	 * @param true if and only if the file is completely read.
+	 */
+	virtual bool isFinished() const = 0;
+
+	/**
 	 * Abstract function for filling the buffer with raw PCM data. It
 	 * fills the buffer with up to 'numBytes' bytes.
 	 * @param audioBuffer the buffer to be filled

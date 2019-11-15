@@ -43,6 +43,7 @@ public:
 	const char* getSoundPath() const;
 	const char* getBasename() const;
 	int bytesAvailable() const;
+	bool isFinished() const;
 public slots:
 	void decodedData();
 	void decoderStateChanged(QAudioDecoder::State);

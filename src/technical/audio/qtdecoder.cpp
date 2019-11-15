@@ -21,12 +21,18 @@
 #include "qtdecoder.h"
 
 #include "qtaudiodriver.h"
+#include "src/foundation/logger.h"
 
 #include <QAudioDecoder>
 #include <QMutex>
 
 #include <algorithm>
 #include <memory>
+
+namespace {
+// how much data to grab buffer before allowing any to leave
+const long INITIAL_BUFFER = 64 * 1024;
+}
 
 class QtAudioDecoder::Buffer {
   QByteArray bytes;
@@ -36,9 +42,9 @@ class QtAudioDecoder::Buffer {
 public:
   Buffer() : position(0), finished(false) {
   }
-  int size() {
+  int remaining() {
     QMutexLocker lock(&mutex);
-    return bytes.length();
+    return bytes.size() - position;
   }
   void clear() {
     QMutexLocker lock(&mutex);
@@ -54,17 +60,20 @@ public:
     QMutexLocker lock(&mutex);
     finished = true;
   }
+  // True when no more data will be received
+  bool isFinished() {
+    QMutexLocker lock(&mutex);
+    return finished;
+  }
   int getData(char* data, int maxCount) {
     QMutexLocker lock(&mutex);
-    if (finished)
-      return 0;
     int size = bytes.size();
-    size -= position;
-    if (size == 0) {
+    if ((position == 0 && size < INITIAL_BUFFER) || size == position) {
       // we will have data, but not yet, so stick in a load of zeroes
       std::fill(data, data + maxCount, '\0');
       return maxCount;
     }
+    size -= position;
     int count = std::min(size, maxCount);
     const char* from = bytes.constData() + position;
     std::copy(from, from + count, data);
@@ -127,11 +136,16 @@ const char* QtAudioDecoder::getBasename() const {
 }
 
 int QtAudioDecoder::bytesAvailable() const {
-  return buffer->size();
+  return buffer->remaining();
+}
+
+bool QtAudioDecoder::isFinished() const {
+  return buffer->isFinished();
 }
 
 void QtAudioDecoder::decodedData() {
   QAudioBuffer ab = decoder->read();
+  Logger::get().logDebug("Reading decoded data: %d", ab.byteCount());
   buffer->append(ab.constData<char>(), ab.byteCount());
 }
 
