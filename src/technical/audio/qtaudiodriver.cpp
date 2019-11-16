@@ -30,20 +30,37 @@
 #include <cstring>
 #include <vector>
 
-void QtAudioDriver::getAudioFormat(QAudioFormat& audioFormat) {
-		audioFormat.setSampleRate(44100);
-		audioFormat.setCodec("audio/x-raw");
-		audioFormat.setChannelCount(2);
-		audioFormat.setByteOrder(QAudioFormat::LittleEndian);
-		audioFormat.setSampleType(QAudioFormat::UnSignedInt);
-		audioFormat.setSampleSize(16);
+template<typename T> struct audio_traits {};
+template<> struct audio_traits<short> {
+	static constexpr QAudioFormat::Endian endian = QAudioFormat::LittleEndian;
+	static constexpr QAudioFormat::SampleType type = QAudioFormat::SignedInt;
+	static constexpr int size = 16;
+	static short add(short x, short y) { return x + y; }
+};
+
+template<> struct audio_traits<unsigned short> {
+	static constexpr QAudioFormat::Endian endian = QAudioFormat::LittleEndian;
+	static constexpr QAudioFormat::SampleType type = QAudioFormat::UnSignedInt;
+	static constexpr int size = 16;
+	static unsigned short add(unsigned short x, unsigned short y) { return x + y + 0x8000; }
+};
+
+template<> struct audio_traits<float> {
+	static constexpr QAudioFormat::Endian endian = QAudioFormat::LittleEndian;
+	static constexpr QAudioFormat::SampleType type = QAudioFormat::Float;
+	static constexpr int size = 32;
+	static float add(float x, float y) { return x + y; }
+};
+
+namespace {
+// float also seems to work
+typedef int16_t sample_t;
 }
 
 class QtAudioDriver::Impl : public QIODevice {
 	static const int buffer_size = 4096;
 	// number of bytes required before we start playing a sound
 	static const int buffer_ahead = 4096;
-	typedef int16_t sample_t;
 	QAudioFormat audioFormat;
 	QAudioOutput* output;
 	std::list<AudioFormat*> pendingSounds;
@@ -162,11 +179,20 @@ private:
 		int len = s->fillBuffer(buf, std::min(bytes, maxbytes));
 		int samples = len / sizeof(sample_t);
 		for (int i = 0; i != samples; ++i) {
-			out[i] += buf[i];
+			out[i] = audio_traits<sample_t>::add(out[i], buf[i]);
 		}
 		return len;
 	}
 };
+
+void QtAudioDriver::getAudioFormat(QAudioFormat& audioFormat) {
+		audioFormat.setSampleRate(44100);
+		audioFormat.setCodec("audio/x-raw");
+		audioFormat.setChannelCount(2);
+		audioFormat.setByteOrder(audio_traits<sample_t>::endian);
+		audioFormat.setSampleType(audio_traits<sample_t>::type);
+		audioFormat.setSampleSize(audio_traits<sample_t>::size);
+}
 
 QtAudioDriver::QtAudioDriver() : impl(0) {
 	impl = new Impl();
