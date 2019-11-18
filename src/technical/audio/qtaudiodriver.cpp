@@ -86,7 +86,6 @@ public:
 	void addSound(AudioFormat* a) {
 		a->reset();
 		pendingSounds.push_back(a);
-		Logger::get().logDebug("Added sound");
 		output->stateChanged(QAudio::ActiveState);
 	}
 	void cueReadySounds() {
@@ -130,22 +129,14 @@ public:
 			return maxlen;
 		}
 		s = sounds.begin();
-		int len = (*s)->fillBuffer(data, bytesToGet);
-		if (len < bytesToGet) {
-			Logger::get().logWarning("fillBuffer returned less than bytesAvailable %d < %d", len, (int)bytesToGet);
-		}
+		(*s)->fillBuffer(data, bytesToGet);
 		++s;
 		for (; s != sounds.end(); ++s) {
-			len = mixSound(*s, reinterpret_cast<sample_t*>(data), bytesToGet);
-			if (len < bytesToGet) {
-				Logger::get().logWarning("fillBuffer returned less than bytesAvailable");
-			}
+			mixSound(*s, reinterpret_cast<sample_t*>(data), bytesToGet);
 		}
 		if (sounds.empty() && pendingSounds.empty()) {
 			output->stateChanged(QAudio::IdleState);
-			Logger::get().logDebug("out of sound");
 		}
-		Logger::get().logDebug("chunk: %d",bytesToGet);
 		return bytesToGet;
 	}
   qint64 readData(char *data, qint64 maxlen) {
@@ -153,7 +144,6 @@ public:
 		qint64 remaining = maxlen;
 		while (0 < remaining) {
 			if (sounds.empty()) {
-				Logger::get().logDebug("Need to fill buffer with zeroes");
 				std::fill(data, data + remaining, '\0');
 				return maxlen;
 			}

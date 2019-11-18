@@ -42,6 +42,10 @@ class QtAudioDecoder::Buffer {
 public:
   Buffer() : position(0), finished(false) {
   }
+  void reset() {
+    QMutexLocker lock(&mutex);
+    position = 0;
+  }
   int remaining() {
     QMutexLocker lock(&mutex);
     return bytes.size() - position;
@@ -119,8 +123,7 @@ int QtAudioDecoder::close() {
 }
 
 void QtAudioDecoder::reset() {
-  decoder->stop();
-  open();
+  buffer->reset();
 }
 
 int QtAudioDecoder::fillBuffer(char *audioBuffer, int numBytes) {
@@ -145,7 +148,6 @@ bool QtAudioDecoder::isFinished() const {
 
 void QtAudioDecoder::decodedData() {
   QAudioBuffer ab = decoder->read();
-  Logger::get().logDebug("Reading decoded data: %d", ab.byteCount());
   buffer->append(ab.constData<char>(), ab.byteCount());
 }
 
