@@ -102,7 +102,7 @@ private:
 		char* buf = reinterpret_cast<char*>(&*buffer.begin());
 		while (0 < length) {
 			int len2 = s->fillBuffer(buf,
-				std::min(length, buffer_size * sizeof(sample_t)));
+				std::min(length, (unsigned long)buffer_size * sizeof(sample_t)));
 			if (len2 == 0) {
 				return false;
 			}

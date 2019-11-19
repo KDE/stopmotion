@@ -574,7 +574,7 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 	FileCommandLogger fileLogger;
 	static const char tmpDirTemplate[] = "/tmp/lsmXXXXXX";
 	char tmpDirName[sizeof(tmpDirTemplate)];
-	strncpy(tmpDirName, tmpDirTemplate, sizeof(tmpDirTemplate));
+	strncpy(tmpDirName, tmpDirTemplate, sizeof(tmpDirName));
 	mkdtemp(tmpDirName);
 	std::string tmpFileName(tmpDirName);
 	tmpFileName += "/command.log";
