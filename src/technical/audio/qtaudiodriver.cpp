@@ -164,7 +164,7 @@ public:
 	}
 private:
 	qint64 mixSound(AudioFormat* s, sample_t* out, qint64 bytes) {
-		const qint64 maxbytes = buffer_size * sizeof(sample_t);
+		const qint64 maxbytes = static_cast<qint64>(buffer_size) * sizeof(sample_t);
 		char* buf = reinterpret_cast<char*>(&*buffer.begin());
 		int len = s->fillBuffer(buf, std::min(bytes, maxbytes));
 		int samples = len / sizeof(sample_t);
