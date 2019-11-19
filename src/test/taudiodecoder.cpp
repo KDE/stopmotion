@@ -48,6 +48,10 @@ int QtAudioDecoder::fillBuffer(char *, int numBytes) {
 	return numBytes;
 }
 
+bool QtAudioDecoder::isFinished() const {
+	return true;
+}
+
 const char* QtAudioDecoder::getSoundPath() const {
 	return file.path();
 }
