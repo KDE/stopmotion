@@ -1,3 +1,9 @@
+stopmotion (0.8.5-2) unstable; urgency=medium
+
+  * hack around integer size mismatch to std::min() on 32-bit systems
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Tue, 19 Nov 2019 15:45:05 +0000
+
 stopmotion (0.8.5-1) unstable; urgency=medium
 
   * new upstream release
