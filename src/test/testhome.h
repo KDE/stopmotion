@@ -23,8 +23,6 @@
 
 #include "oomtestutil.h"
 
-struct OggVorbis_File;
-
 /**
  * A filesystem/environment wrapper that makes only one change to the wrapped
  * filesystem/environment: it creates a temporary directory and pretends that

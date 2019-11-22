@@ -25,7 +25,6 @@ HEADERS += ../domain/undo/filelogger.h \
     ../domain/animation/animationimpl.h \
     ../domain/animation/scenevector.h \
     ../domain/animation/workspacefile.h \
-    ../technical/audio/oggvorbis.h \
     ../technical/util.h \
     ../technical/stringiterator.h \
     ../technical/video/videofactory.h \
@@ -112,7 +111,7 @@ QMAKE_CLEAN += oomteststub.o oomtestutil.so
 PRE_TARGETDEPS = oomteststub.o
 LIBS += oomteststub.o -ldl \
 	$$system(xml2-config --libs) \
-	-ltar -lvorbisfile
+	-ltar
 DESTDIR=.
 release:OBJECTS_DIR=build/release
 release:TARGET = test

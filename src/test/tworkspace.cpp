@@ -30,7 +30,7 @@
 
 TestWorkspace::TestWorkspace() : testEnvFs(0), mfs(0) {
 	testEnvFs = new TestHome();
-	mfs = new RealOggEmptyJpg();
+	mfs = new EmptyJpg();
 }
 
 TestWorkspace::~TestWorkspace() {

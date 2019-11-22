@@ -23,14 +23,14 @@
 
 #include <QObject>
 
-class RealOggEmptyJpg;
+class EmptyJpg;
 class TestHome;
 
 class TestWorkspace : public QObject {
 	Q_OBJECT
 
 	TestHome* testEnvFs;
-	RealOggEmptyJpg* mfs;
+	EmptyJpg* mfs;
 public:
 	TestWorkspace();
 	~TestWorkspace();

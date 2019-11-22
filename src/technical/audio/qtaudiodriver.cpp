@@ -160,6 +160,8 @@ public:
 		output->start(this);
 	}
 	void stop() {
+		sounds.clear();
+		pendingSounds.clear();
 		output->stop();
 	}
 private:

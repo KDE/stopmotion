@@ -26,7 +26,7 @@
 class Animation;
 class Executor;
 class SceneVector;
-class RealOggEmptyJpg;
+class EmptyJpg;
 class TestHome;
 class AnimTester;
 class MockFrontend;
@@ -37,7 +37,7 @@ class TestStopmotionUndo : public QObject {
 	MockFrontend* mockFrontend;
 	SceneVector* sv;
 	Executor* ex;
-	RealOggEmptyJpg* mfs;
+	EmptyJpg* mfs;
 	TestHome* testEnvFs;
 	AnimTester* animTester;
 	void setUpAnim();

@@ -99,7 +99,7 @@ TestStopmotionUndo::TestStopmotionUndo() : anim(0), mockFrontend(0),
 		sv(0), ex(0), mfs(0), animTester(0) {
 	sv = new SceneVector();
 	ex = makeAnimationCommandExecutor(*sv);
-	mfs = new RealOggEmptyJpg();
+	mfs = new EmptyJpg();
 	testEnvFs = new TestHome();
 	mockFrontend = new MockFrontend();
 	loadOomTestUtil();

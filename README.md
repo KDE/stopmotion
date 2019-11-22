@@ -14,17 +14,16 @@ You need the following packages installed to compile:
 - Qt5 (`qtbase5-dev`, `qttools5-dev-tools`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
 - tar (`libtar-dev`)
 - XML2 (`libxml2-dev`)
-- vorbisfile (`libvorbis-dev`)
 - `pkg-config`
 
 For example, in Ubuntu or Debian you would open a terminal and type:
 
-    sudo apt install build-essential gdb qtbase5-dev qttest5-dev-tools libtar-dev libxml2-dev libvorbis-dev pkg-config git vgrabbj uvccapture
+    sudo apt install build-essential gdb qtbase5-dev qttest5-dev-tools libtar-dev libxml2-dev pkg-config git vgrabbj uvccapture
 
 In OpenSuSE you first type:
 
     sudo zypper install -t pattern devel_qt5
-    sudo zypper install git libvorbis-devel libxml2-devel
+    sudo zypper install git libxml2-devel
 
 Then open your browser and visit `https://rpm.pbone.net` and find both
 `libtar`, `libtar1` and `libtar-devel` for the correct OS version, each
