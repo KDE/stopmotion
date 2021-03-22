@@ -99,7 +99,7 @@ SOURCES += \
 FORMS +=
 RESOURCES +=
 INCLUDEPATH += ../.. \
-    $$system(xml2-config --cflags | sed -e 's/-I//g')
+    $$system(pkg-config libxml-2.0 --cflags | sed -e 's/-I//g')
 oomteststub.target = oomteststub.o
 oomteststub.commands = make -f oomtestutil.mak oomteststub.o
 oomteststub.depends = oomteststub.cpp oomtestutil.h
@@ -110,7 +110,7 @@ QMAKE_EXTRA_TARGETS += oomtestutil oomteststub test
 QMAKE_CLEAN += oomteststub.o oomtestutil.so
 PRE_TARGETDEPS = oomteststub.o
 LIBS += oomteststub.o -ldl \
-	$$system(xml2-config --libs) \
+	$$system(pkg-config libxml-2.0 --libs) \
 	-ltar -lvorbisfile
 DESTDIR=.
 release:OBJECTS_DIR=build/release
