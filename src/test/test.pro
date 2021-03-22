@@ -99,7 +99,8 @@ SOURCES += \
 FORMS +=
 RESOURCES +=
 INCLUDEPATH += ../.. \
-    $$system(pkg-config libxml-2.0 --cflags | sed -e 's/-I//g')
+    $$system(pkg-config libxml-2.0 --cflags | sed -e 's/-I//g') \
+    $$system(pkg-config vorbisfile --cflags | sed -e 's/-I//g' )
 oomteststub.target = oomteststub.o
 oomteststub.commands = make -f oomtestutil.mak oomteststub.o
 oomteststub.depends = oomteststub.cpp oomtestutil.h
@@ -111,7 +112,7 @@ QMAKE_CLEAN += oomteststub.o oomtestutil.so
 PRE_TARGETDEPS = oomteststub.o
 LIBS += oomteststub.o -ldl \
 	$$system(pkg-config libxml-2.0 --libs) \
-	-ltar -lvorbisfile
+	-ltar $$system(pkg-config vorbisfile --libs)
 DESTDIR=.
 release:OBJECTS_DIR=build/release
 release:TARGET = test
