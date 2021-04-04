@@ -7,7 +7,10 @@ project(linux-stopmotion
   VERSION 0.8.6
   LANGUAGES CXX)
 
-# set Qt project options
+# set project options required by Qt
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -44,7 +47,34 @@ find_library(VORBISFILE_LIBRARY_PATH
 include(FeatureSummary)
 feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND)
 
-# the following commands should be in src/ but the includes start with src/
+###
+# handle translation files
+###
+qt5_add_translation(QM_FILES
+  translations/stopmotion_ar.ts
+  translations/stopmotion_br.ts
+  translations/stopmotion_cz.ts
+  translations/stopmotion_de.ts
+  translations/stopmotion_dk.ts
+  translations/stopmotion_es.ts
+  translations/stopmotion_kl.ts
+  translations/stopmotion_no_nb.ts
+  translations/stopmotion_no_nn.ts
+  translations/stopmotion_no_se.ts
+  translations/stopmotion_pt.ts
+  translations/stopmotion_ru.ts
+  translations/stopmotion_fi.ts
+  translations/stopmotion_fr.ts
+  translations/stopmotion_gr.ts
+  translations/stopmotion_he.ts
+  translations/stopmotion_it.ts
+  translations/stopmotion_sl.ts
+  translations/stopmotion_sv.ts
+  translations/stopmotion_tr.ts
+  translations/stopmotion_zh_CN.ts
+  translations/stopmotion_zh_TW.ts
+  )
+configure_file(translations/translations.qrc ${CMAKE_BINARY_DIR} COPYONLY)
 
 ###
 # create executable and link libraries
@@ -127,6 +157,8 @@ add_executable(stopmotion
   src/domain/undo/executor.cpp
   src/domain/undo/addallcommands.cpp
   src/domain/undo/random.cpp
+  ${CMAKE_BINARY_DIR}/translations.qrc
+  ${QM_FILES}
   )
 
 # link to Qt libraries
