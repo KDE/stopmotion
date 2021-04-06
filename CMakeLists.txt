@@ -22,7 +22,10 @@ set(CMAKE_AUTOUIC ON)
 # Qt
 find_package(Qt5 5.11
   COMPONENTS Widgets Multimedia LinguistTools
-  )
+  REQUIRED)
+# only needed for testing
+find_package(Qt5 5.11
+  COMPONENTS Test)
 
 # LibXml2
 find_package(LibXml2
@@ -36,7 +39,7 @@ find_library(TAR_LIBRARY_PATH
   NAMES tar
   REQUIRED)
 
-# libVorbis
+# libVorbisFile
 find_file(VORBISFILE_INCLUDE_PATH
   NAMES "vorbis/vorbisfile.h"
   REQUIRED)
@@ -44,9 +47,15 @@ find_library(VORBISFILE_LIBRARY_PATH
   NAMES vorbisfile
   REQUIRED)
 
+# libdl, only needed for testing
+find_library(DL_LIBRARY_PATH
+  NAMES dl
+  )
+
 include(FeatureSummary)
 feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND)
 
+add_subdirectory(src)
 ###
 # handle translation files
 ###
