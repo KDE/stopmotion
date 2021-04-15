@@ -838,7 +838,7 @@ Detta kan ställas in i inställningsmenyn.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="736"/>
-        <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the numberof the currently selected frame&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the number of the currently selected frame&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Bildruta nummer&lt;/h4&gt;&lt;p&gt;Här visas den valda bildrutans nummer&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1001,7 +1001,7 @@ Detta kan ställas in i inställningsmenyn.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="696"/>
-        <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will opens a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will open a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Konfigurera Stopmotion&lt;/h4&gt; &lt;p&gt;Öppnar ett fönster där du kan &lt;em&gt;konfigurera&lt;/em&gt; Stopmotion med olika in- och utgångsenheter.&lt;/p&gt;</translation>
     </message>
     <message>

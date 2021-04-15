@@ -906,7 +906,7 @@ To lahko storite v nastavitvenem meniju.</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will opens a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will open a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
         <translation type="unfinished">&lt;h4&gt;Nastavi Stopmotion&lt;/h4&gt; &lt;p&gt;Odplo se vam bo okno v katerem lahko &lt;em&gt;nastavite&lt;/em&gt; Stopmotion z različnimi vhodnimi in izhodnimi napravami.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -946,7 +946,7 @@ To lahko storite v nastavitvenem meniju.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the numberof the currently selected frame&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the number of the currently selected frame&lt;/p&gt;</source>
         <translation type="unfinished">&lt;h4&gt;Številka sličice&lt;/h4&gt;&lt;p&gt;Tu lahko vidite na kateri sličici se trenutno nahajate.&lt;/p&gt;</translation>
     </message>
     <message>

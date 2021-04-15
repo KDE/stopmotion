@@ -735,7 +735,7 @@ This can be set in the preferences menu.</source>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="736"/>
-        <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the numberof the currently selected frame&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the number of the currently selected frame&lt;/p&gt;</source>
         <translation>&lt;h4&gt;מספר השקופית&lt;/h4&gt;&lt;p&gt;אזור זה מציג את מספר השקופית הנוכחית שנבחרה.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -874,7 +874,7 @@ This can be set in the preferences menu.</source>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="696"/>
-        <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will opens a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will open a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;הגדרת Stopmotion&lt;/h4&gt; &lt;p&gt;פעולה זו תפתח חלון בו תוכל &lt;em&gt;להגדיר&lt;/em&gt; את Stopmotion עם התקני פלט וקלט שונים.&lt;/p&gt;</translation>
     </message>
     <message>

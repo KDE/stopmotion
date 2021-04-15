@@ -825,7 +825,7 @@ Ceci peut être fait dans la fenêtre de préférences.</translation>
     </message>
     <message>
         <location line="+212"/>
-        <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the numberof the currently selected frame&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the number of the currently selected frame&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Numéro d&apos;image&lt;/h4&gt;&lt;p&gt;Cette zone affiche le numéro de l&apos;image actuellement sélectionnée&lt;/p&gt;</translation>
     </message>
     <message>
@@ -984,7 +984,7 @@ Ceci peut être fait dans la fenêtre de préférences.</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will opens a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will open a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Configurer Stopmotion&lt;/h4&gt; &lt;p&gt;Ceci ouvre une fenêtre où vous pouvez &lt;em&gt;configurer&lt;/em&gt; Stopmotion ainsi que les périphériques d&apos;entrée et de sortie.&lt;/p&gt;</translation>
     </message>
     <message>

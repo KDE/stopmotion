@@ -682,7 +682,7 @@ void MainWindowGUI::retranslateHelpText()
 
 	infoText =
 			tr("<h4>Configure Stopmotion</h4> "
-			"<p>This will opens a window where you can <em>configure</em> "
+			"<p>This will open a window where you can <em>configure</em> "
 			"Stopmotion with various input and output devices.</p>");
 	configureAct->setWhatsThis(infoText);
 	infoText =
@@ -721,7 +721,7 @@ void MainWindowGUI::retranslateHelpText()
 
 	//Other widgets
 	infoText =
-			tr("<h4>Frame number</h4><p>This area displays the number"
+			tr("<h4>Frame number</h4><p>This area displays the number "
 			"of the currently selected frame</p>");
 	numberDisplay->setToolTip(infoText );
 	numberDisplay->setWhatsThis(infoText );

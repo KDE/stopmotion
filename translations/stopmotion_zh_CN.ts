@@ -638,7 +638,7 @@ This can be set in the preferences menu.</source>
             <translation>图片编号：0</translation>
         </message>
         <message>
-            <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the numberof the currently selected frame&lt;/p&gt;</source>
+            <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the number of the currently selected frame&lt;/p&gt;</source>
             <translation>&lt;h4&gt;图片编号&lt;/h4&gt;&lt;p&gt;此区域显示目前所选图片的编号&lt;/p&gt;</translation>
         </message>
         <message>
@@ -846,7 +846,7 @@ This can be set in the preferences menu.</source>
             <translation>前往图片</translation>
         </message>
         <message>
-            <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will opens a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
+            <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will open a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
             <translation>&lt;h4&gt;配置 Stopmotion&lt;/h4&gt;&lt;p&gt;这将打开一个窗口，您可以将 Stopmotion 与各种输入和输出设备&lt;em&gt;配置&lt;/em&gt;。&lt;/p&gt;</translation>
         </message>
         <message>

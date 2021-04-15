@@ -670,7 +670,7 @@ This can be set in the preferences menu.</source>
         <translation type="obsolete">圖框編號：0</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the numberof the currently selected frame&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Frame number&lt;/h4&gt;&lt;p&gt;This area displays the number of the currently selected frame&lt;/p&gt;</source>
         <translation>&lt;h4&gt;圖框編號&lt;/h4&gt;&lt;p&gt;此區域顯示目前所選圖框的編號&lt;/p&gt;</translation>
     </message>
     <message>
@@ -878,7 +878,7 @@ This can be set in the preferences menu.</source>
         <translation>前往圖框</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will opens a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Configure Stopmotion&lt;/h4&gt; &lt;p&gt;This will open a window where you can &lt;em&gt;configure&lt;/em&gt; Stopmotion with various input and output devices.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;配置 Stopmotion&lt;/h4&gt;&lt;p&gt;這將開啟一個視窗，您可以將 Stopmotion 與各種輸入和輸出裝置&lt;em&gt;配置&lt;/em&gt;。&lt;/p&gt;</translation>
     </message>
     <message>
