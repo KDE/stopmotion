@@ -141,7 +141,7 @@ void FramePreferencesMenu::retranslateStrings()
 	
 	infoText = 
 			tr("<h4>Sounds</h4> "
-			"<p>This lists shows all the sounds connected to this frame.</p>"
+			"<p>This list shows all the sounds connected to this frame.</p>"
 			"<p>The sounds will begin playing when this frame is shown and play "
 			"until they are done.</p>");
 	soundsLabel->setToolTip(infoText);

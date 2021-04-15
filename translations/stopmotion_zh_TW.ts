@@ -345,7 +345,7 @@
         <translation>&lt;h4&gt;變更名稱&lt;/h4&gt;&lt;p&gt;利用這個按鈕您可以變更所選聲音的名稱。&lt;BR&gt;聲音的名稱除了讓動畫較容易製作之外，不具有其他效果。&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This lists shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This list shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;所有聲音&lt;/h4&gt;&lt;p&gt;這份清單顯示所有連接到此圖框的聲音。&lt;/p&gt;&lt;p&gt;此圖框顯示時，聲音將開始播放直到完成。&lt;/p&gt;</translation>
     </message>
 </context>
@@ -1336,7 +1336,7 @@ values exists. Do you want to use this one? (Your old preferences
         <translation>&lt;h4&gt;下一場景 (O)&lt;/h4&gt;</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinetly.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinitely.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;循環動畫 (Ctrl+L)&lt;/h4&gt;&lt;p&gt;利用這個按鈕您可以設定是否您想要播放動畫到結束，或者是永久循環。&lt;/p&gt;</translation>
     </message>
     <message>

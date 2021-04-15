@@ -400,7 +400,7 @@
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="143"/>
-        <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This lists shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This list shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1308,7 +1308,7 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="330"/>
-        <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinetly.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinitely.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

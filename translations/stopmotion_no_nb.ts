@@ -438,7 +438,7 @@
     </message>
     <message>
         <location line="+8"/>
-        <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This lists shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This list shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Lyder&lt;/h4&gt;&lt;p&gt;Denne listen viser alle lydene som er tilknyttet dette bildet.&lt;/p&gt;&lt;p&gt;Lydene vil starte å spille når bildet vises, og spiller inntil de er ferdige.&lt;/p&gt;</translation>
     </message>
 </context>
@@ -1628,7 +1628,7 @@ lagret som ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinetly.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinitely.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Spill av kontinuerlig (begynn på starten igjen når animasjonen er ferdig, CTRL+L)&lt;/h4&gt;&lt;p&gt;Her kan du velge om du ønsker å spille av animasjonen kontinuerlig, eller om den skal stoppe når den er ferdig.&lt;/p&gt;</translation>
     </message>
     <message>

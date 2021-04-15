@@ -413,7 +413,7 @@ void QtFrontend::handleException(UiException& e) {
 	}
 	if (unhandled) {
 		QMessageBox::critical(0,
-				tr("Stopmotion threw and exception it could not handle."),
+				tr("Stopmotion threw an exception it could not handle."),
 				tr("Please raise a bug report."));
 		throw CriticalError();
 	}

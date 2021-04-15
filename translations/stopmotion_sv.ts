@@ -415,7 +415,7 @@
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="143"/>
-        <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This lists shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This list shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Ljud&lt;/h4&gt; &lt;p&gt;Den här listan visar alla ljud med kopplingar till den här bildrutan.&lt;/p&gt;&lt;p&gt;Ljuden kommer att börja spelas när den här bildrutan visas och spelas tills de är färdiga.&lt;/p&gt;</translation>
     </message>
 </context>
@@ -1489,7 +1489,7 @@ kommer sparas i ~/.stopmotion/preferences.xml.OLD)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="330"/>
-        <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinetly.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinitely.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Loopa animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;Med denna kanpp kan du ställa in om du vill att animationen ska spelas till slutet eller loopas i oändlighet.&lt;/p&gt;</translation>
     </message>
     <message>

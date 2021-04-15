@@ -312,7 +312,7 @@ void ToolsMenu::retranslateStrings() {
 
 	infoText =
 			tr("<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether "
-			"you want the animation to play to the end, or to loop indefinetly.</p>");
+			"you want the animation to play to the end, or to loop indefinitely.</p>");
 	ui->loopButton->setToolTip(infoText);
 }
 

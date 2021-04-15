@@ -400,7 +400,7 @@
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp" line="143"/>
-        <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This lists shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Sounds&lt;/h4&gt; &lt;p&gt;This list shows all the sounds connected to this frame.&lt;/p&gt;&lt;p&gt;The sounds will begin playing when this frame is shown and play until they are done.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Suoni&lt;/h4&gt; &lt;p&gt;Questa lista mostra tutti i suoni connessi con il frame attuale.&lt;/p&gt;&lt;p&gt;Questi suoni saranno riprodotti quando il frame è mostrato e continueranno fino al completamento.&lt;/p&gt;</translation>
     </message>
 </context>
@@ -1329,7 +1329,7 @@ Vuoi usarla? (Le vecchie preferenze saranno salvate in ~/.stopmotion/preferences
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="330"/>
-        <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinetly.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Loop animation (CTRL+L)&lt;/h4&gt; &lt;p&gt;With this button you can set whether you want the animation to play to the end, or to loop indefinitely.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Loop dell&apos;animazione (CTRL+L)&lt;/h4&gt; &lt;p&gt;Con questo pulsante puoi indicare se desideri che l&apos;animazione venga riprodotta fino alla fine, oppure indefinitamente.&lt;/p&gt;</translation>
     </message>
     <message>
