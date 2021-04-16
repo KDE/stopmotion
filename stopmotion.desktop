@@ -1,10 +1,25 @@
 [Desktop Entry]
 Name=Stopmotion
+Name[es]=Stopmotion
+Name[nl]=Stopmotion
+Name[sv]=Stopmotion
+Name[uk]=Stopmotion
+Name[x-test]=xxStopmotionxx
 Icon=stopmotion
 Comment=Program to create stop-motion animations
+Comment[es]=Programa para crear animaciones fotograma a fotograma
+Comment[nl]=Programma om animaties met stop-motion aan te maken
+Comment[sv]=Program för att skapa animeringar med enbildstagning
+Comment[uk]=Програма для створення покадрових анімацій
+Comment[x-test]=xxProgram to create stop-motion animationsxx
 Exec=stopmotion %f
 Terminal=false
 Type=Application
 Categories=AudioVideo;Video;AudioVideoEditing;KDE;Qt;
 Keywords=Animation;Stop Motion Animation;Stop Frame Animation;
+Keywords[es]=Animación;Animación fotograma a fotograma;Animación en volumen;Animación foto a foto;Animación cuadro por cuadro;Parada de imagen;Stop motion;
+Keywords[nl]=Animatie;Animatie met stop motion;Frame-animatie stoppen;
+Keywords[sv]=Animering;Enbildstagning;Enbildsanimering;
+Keywords[uk]=Animation;Stop Motion Animation;Stop Frame Animation;анімація;покадрова;кадри;мультфільм;
+Keywords[x-test]=xxAnimationxx;xxStop Motion Animationxx;xxStop Frame Animationxx;
 MimeType=application/x-stopmotion;
