@@ -1,6 +1,7 @@
 [Desktop Entry]
 Name=Stopmotion
 Name[ca]=Stopmotion
+Name[ca@valencia]=Stopmotion
 Name[cs]=Stopmotion
 Name[de]=Stopmotion
 Name[es]=Stopmotion
@@ -16,6 +17,7 @@ Name[x-test]=xxStopmotionxx
 Icon=stopmotion
 Comment=Program to create stop-motion animations
 Comment[ca]=Programa per a crear animacions stop-motion
+Comment[ca@valencia]=Programa per a crear animacions stop-motion
 Comment[de]=Programm um Animationen mit der Filmtechnik Stop-Motion zu erstellen
 Comment[es]=Programa para crear animaciones fotograma a fotograma
 Comment[fr]=Programme pour la création d'animations en image par image
@@ -33,6 +35,7 @@ Type=Application
 Categories=AudioVideo;Video;AudioVideoEditing;KDE;Qt;
 Keywords=Animation;Stop Motion Animation;Stop Frame Animation;
 Keywords[ca]=Animació;Animació stop motion;Animació Stop Frame;
+Keywords[ca@valencia]=Animació;Animació stop motion;Animació Stop Frame;
 Keywords[de]=Animation;Stop Motion Animation;Stop Frame Animation;Stop-Motion;Trickfilm;Stopptrick;
 Keywords[es]=Animación;Animación fotograma a fotograma;Animación en volumen;Animación foto a foto;Animación cuadro por cuadro;Parada de imagen;Stop motion;
 Keywords[fr]=Animation ; Animation image par image ; Animation par séquence
