@@ -9,37 +9,33 @@ INSTALLATION
 ------------
 
 You need the following packages installed to compile:
-- make and gcc (`build-essential`)
-- `gdb`
-- Qt5 (`qtbase5-dev`, `qttools5-dev-tools`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
-- tar (`libtar-dev`)
-- XML2 (`libxml2-dev`)
+- C++ compiler (g++ or Clang)
+- CMake
+- pkg-config
+- Qt5 >= 5.11 (development modules base, multimedia) (`qtbase5-dev`, `qttools5-dev-tools`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
+- libtar (`libtar-dev`)
+- libXML2 (`libxml2-dev`)
 - vorbisfile (`libvorbis-dev`)
-- `pkg-config`
 
 For example, in Ubuntu or Debian you would open a terminal and type:
 
     sudo apt install build-essential gdb qtbase5-dev qttest5-dev-tools libtar-dev libxml2-dev libvorbis-dev pkg-config git vgrabbj uvccapture
 
-In OpenSuSE you first type:
+In openSUSE you type:
 
-    sudo zypper install -t pattern devel_qt5
-    sudo zypper install git libvorbis-devel libxml2-devel
-
-Then open your browser and visit `https://rpm.pbone.net` and find both
-`libtar`, `libtar1` and `libtar-devel` for the correct OS version, each
-with the exact same version. Then install them like this (changing the
-filenames as appropriate):
-
-    sudo rpm -i ~/Downloads/libtar1-1.2.20-2.8.x86_64.rpm ~/Downloads/libtar-1.2.20-2.8.x86_64.rpm ~/Downloads/libtar-devel-1.2.20-2.8.x86_64.rpm
+    sudo zypper install cmake g++ libQt5Core-devel libQt5Multimedia5 libtar-devel libvorbisfile-devel libxml2-devel
 
 Once the dependencies are installed you can navigate to the source
 code directory and type the following to build Stopmotion:
 
-    qmake -qt=5
-    sudo make install
+    mkdir build-cmake
+    cd build-cmake
+    cmake ..
+    cmake --build .
 
-If `qmake -qt=5` does not work, you can just use `qmake`.
+If you want to install, make sure the user has sufficient rights (or switch to su)
+
+    cmake --install .
 
 
 WHO CAN USE IT
@@ -59,6 +55,8 @@ Your help is very much appreciated.
 
 DEVELOPMENT
 -----------
+
+Attention, this section is outdated and does not reflect the changes by the switch to CMake.
 
 After qmake, the following make targets are available:
 
