@@ -198,3 +198,18 @@ target_include_directories(stopmotion
   src/presentation/frontends/nonguifrontend
   src/presentation/frontends/qtfrontend
   )
+
+###
+# handle installation
+###
+install(TARGETS stopmotion
+  RUNTIME
+  DESTINATION ${CMAKE_INSTALL_BINDIR}/stopmotion)
+install(FILES stopmotion.desktop
+  TYPE DATA
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
+install(FILES graphics/stopmotion.svg
+  TYPE DATA
+  DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
+install(FILES stopmotion.1
+  TYPE MAN)
