@@ -59,7 +59,7 @@ public:
 	 *             0: Image mixing/onion skinning
 	 *             1: Image differentiating
 	 *             2: Playback
-	 * @return true if the change was succesfull
+	 * @return true if the change was successful
 	 */
 	bool setViewMode(int mode);
 	
@@ -74,7 +74,7 @@ public slots:
 	void captureFrame();
 	
 	/**
-	 * Slot to recieve a message when the videoView are finished seting up the
+	 * Slot to receive a message when the videoView are finished setting up the
 	 * camera.
 	 */
 	void switchToVideoView();

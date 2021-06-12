@@ -31,7 +31,7 @@ class QStatusBar;
 
 /**
  * Handles the running of the animation as a sequence of pictures. This is implemented
- * as a timer trigger, to to make it easyer to time the fps and, more importantly, to
+ * as a timer trigger, to to make it easier to time the fps and, more importantly, to
  * avoid threads.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
@@ -110,7 +110,7 @@ public slots:
 	void pauseAnimation();
 
 	/**
-	 * Sets the speed of the animation in frames per seccond
+	 * Sets the speed of the animation in frames per second
 	 * @param fps the number of frames per second the animation will run at.
 	 */
 	void setSpeed(int fps);

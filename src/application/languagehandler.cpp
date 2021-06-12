@@ -108,8 +108,8 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 			"Example: English = Deutsch (Deutsch is \"German\" "
 			"in German)");
 
-		// Checks that the mimimum requirement for accepting a string is covered.
-		// The mimimum requirement is that the menu option string (English) is translated.
+		// Checks that the minimum requirement for accepting a string is covered.
+		// The minimum requirement is that the menu option string (English) is translated.
 		if (language != "") {
 			langAct = languagesMenu->addAction(QString("&%1 %2").arg(num++).arg(language));
 			langAct->setCheckable(true);

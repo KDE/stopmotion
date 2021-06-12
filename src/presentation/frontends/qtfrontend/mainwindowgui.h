@@ -86,7 +86,7 @@ public:
 	void mousePressEvent ( QMouseEvent * e );
 
 	/**
-	 * Overloaded event listener which recieves information when a keyboard key is
+	 * Overloaded event listener which receives information when a keyboard key is
 	 * pressed.
 	 * @param k information about the key event.
 	 */
@@ -239,7 +239,7 @@ private:
 	void dropEvent(QDropEvent *event);
 
 	/**
-	 * Overloaded event listener which recieves information when a keyboard key is
+	 * Overloaded event listener which receives information when a keyboard key is
 	 * released
 	 * @param k information about the key event.
 	 */
@@ -340,7 +340,7 @@ private slots:
 	void showPreferencesMenu();
 
 	/**
-	 * Exports the current project to a video file choosen by the user. It uses the
+	 * Exports the current project to a video file chosen by the user. It uses the
 	 * registered video encoder -- if registered -- to export.
 	 */
 	void exportToVideo();

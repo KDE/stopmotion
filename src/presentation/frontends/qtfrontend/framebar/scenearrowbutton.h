@@ -60,20 +60,20 @@ protected:
 	virtual void paintEvent ( QPaintEvent *p);
 	
 	/**
-	 * Overloaded event function to recieve mouserelease-events.
+	 * Overloaded event function to receive mouserelease-events.
 	 * @param e information about the mouserelease-event.
 	 */
 	void mouseReleaseEvent( QMouseEvent * e );
 	
 	/**
-	 * Overloaded event function for recieving information when the mouse
+	 * Overloaded event function for receiving information when the mouse
 	 * enter the widget
 	 * @param e information about the event
 	 */
 	void enterEvent ( QEvent * e);
 	
 	/**
-	 * Overloaded event function for recieving information when the mouse
+	 * Overloaded event function for receiving information when the mouse
 	 * leaves the widget
 	 * @param e information about the event
 	 */

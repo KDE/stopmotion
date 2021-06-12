@@ -51,7 +51,7 @@ public:
 	* @param parent the parent widget.
 	* @param name the name of this widget.
 	* @param playbackSpeed which speed the playback has to be played in if
-	* the playback mode is choosen
+	* the playback mode is chosen
 	*/
 	FrameView(QWidget *parent=0, const char *name=0, int playbackSpeed = 10);
 
@@ -68,7 +68,7 @@ public:
 	 *             0: Image mixing/onion skinning\n
 	 *             1: Image differentiating\n
 	 *             2: Playback\n
-	 * @return true if the mode was succesfully changed
+	 * @return true if the mode was successfully changed
 	 */
 	bool setViewMode(ImageMode mode);
 

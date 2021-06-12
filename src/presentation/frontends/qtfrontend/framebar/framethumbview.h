@@ -47,25 +47,25 @@ public:
 	~FrameThumbView();
 	
 	/**
-	 * Overloaded event function to recieve mousepress-events.
+	 * Overloaded event function to receive mousepress-events.
 	 * @param e information about the mousepress-event.
 	 */
 	void mousePressEvent( QMouseEvent * e );
 	
 	/**
-	 * Overloaded event function to recieve mouserelease-events.
+	 * Overloaded event function to receive mouserelease-events.
 	 * @param e information about the mouserelease-event.
 	 */
 	void mouseReleaseEvent( QMouseEvent * e );
 	
 	/**
-	 * Overloaded event function to recieve mouseMoveEvents.
+	 * Overloaded event function to receive mouseMoveEvents.
 	 * @param me information about the mouseMoveEvent. 
 	 */
 	void mouseMoveEvent(QMouseEvent *me);
 	
 	/**
-	 * Overloaded event function to recieve events when the user double clicks
+	 * Overloaded event function to receive events when the user double clicks
 	 * in the thumbview. Double clicks here cause the preferences menu for this
 	 * frame to be shown.
 	 * @param e information about the mouseDoubleClickEvent.

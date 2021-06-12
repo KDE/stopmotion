@@ -63,7 +63,7 @@ public slots:
 signals:
 	/**
 	 * Emits this signal when pressing enter.
-	 * @param frameNumber the choosen frame number in this spinbox
+	 * @param frameNumber the chosen frame number in this spinbox
 	 */
 	void spinBoxTriggered(int frameNumber);
 	

@@ -124,9 +124,9 @@ SRC="screenshots/config_menu_import.png"></P
 >
 		</P
 ><P
->&#13;			Image importing in Stopmotion works by continously asking an external program
+>&#13;			Image importing in Stopmotion works by continuously asking an external program
 			to grab a picture from the camera and place it in the .stopmotion directory.
-			Stopmotion then displays this picture, and when this is done continously you 
+			Stopmotion then displays this picture, and when this is done continuously you 
 			get live video.
 		</P
 ><P
@@ -160,17 +160,17 @@ CLASS="accel"
 			of the prepoll field is a command which is run before importing a picture. If the 
 			import program is running in the foreground this will typically be the command line 
 			for grabbing the picture. Note that you have to write (DEFAULTPATH) in the command 
-			line on the place you otherwise would have speciefied the path to the file where 
+			line on the place you otherwise would have specified the path to the file where 
 			the image should be stord. Stopmotion will replace this tag with the correct path 
 			and file name.
 		</P
 ><P
 >&#13;			If the program you use for importing the pictures is running as a background/daemon
-			process you have to specify command lines for starting and stoping the daemon.
+			process you have to specify command lines for starting and stopping the daemon.
 			Again you should use the $importpath tag instead of the path to the file (se above).
 			Prepoll could still be used but is not required. One potential use for the prepoll
 			command when the grab program is running as a daemon process is to specify a command
-			line which performes a operation such as scaling or rotating the picture. This
+			line which performs a operation such as scaling or rotating the picture. This
 			command will be called on the pictures every time before importing them meaning
 			the live video will be displayed with the effect.
 		</P

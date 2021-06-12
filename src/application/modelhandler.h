@@ -55,7 +55,7 @@ public:
 	~ModelHandler();
 
 	/**
-	 * Function for seting the button used for removing frames. This button is
+	 * Function for setting the button used for removing frames. This button is
 	 * needed for checking if it is enabled when attempting to remove frames with
 	 * the delete key.
 	 * @param removeFramesButton the button used for removing frames.
@@ -70,7 +70,7 @@ public slots:
 	void chooseFrame();
 
 	/**
-	 *Adds the file fileName to the animation throught the use of
+	 *Adds the file fileName to the animation through the use of
 	 *addFrames(QStringList).
 	 *@param fileName the file to be added to the animation.
 	 */

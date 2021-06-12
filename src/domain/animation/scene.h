@@ -74,7 +74,7 @@ public:
 	/**
 	 * Removes frames from the animation.
 	 * @param frame The index from which to begin removing.
-	 * @param cound The number of frames to remove.
+	 * @param count The number of frames to remove.
 	 * @param [out] out The removed frames.
 	 */
 	void removeFrames(int frame, int count,

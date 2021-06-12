@@ -76,19 +76,19 @@ protected:
 	virtual void paintEvent ( QPaintEvent *p );
 
 	/**
-	 * Overloaded event function to recieve mousepress-events.
+	 * Overloaded event function to receive mousepress-events.
 	 * @param e information about the mousepress-event.
 	 */
 	void mousePressEvent( QMouseEvent * e );
 
 	/**
-	 * Overloaded event function to recieve mouserelease events.
+	 * Overloaded event function to receive mouserelease events.
 	 * @param e information about the event.
 	 */
 	void mouseReleaseEvent( QMouseEvent * e );
 
 	/**
-	 * Overloaded event function to recieve mouseMoveEvents in the scenethumbview.
+	 * Overloaded event function to receive mouseMoveEvents in the scenethumbview.
 	 * Used for moving scenes.
 	 * @param me information about the mouseMoveEvent.
 	 */

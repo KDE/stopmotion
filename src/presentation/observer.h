@@ -35,7 +35,7 @@ using namespace std;
  * animationmodel.
  *
  * The observer is implemented with strong use of the push model. Although this
- * decreases the flexibility we gain alot in efficiency which is more
+ * decreases the flexibility we gain a lot in efficiency which is more
  * important to us.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad

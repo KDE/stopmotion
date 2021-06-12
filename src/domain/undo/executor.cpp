@@ -401,7 +401,7 @@ class WriterParametersWrapper : public Parameters {
 	StringWriter writer;
 public:
 	/**
-	 * Construct a Parametes wrapper around another Parameters. Provides the
+	 * Construct a Parameters wrapper around another Parameters. Provides the
 	 * same parameters as this delegate, but writes out the command as it goes.
 	 * @param p The delegate.
 	 * @param name The name of the command (to write to the logger).

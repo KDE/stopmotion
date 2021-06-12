@@ -56,7 +56,7 @@ private:
 	/** The ogg representation of the file registered in this class. */
 	OggVorbis_File *oggFile;
 
-	/** The filename registred in this class. Hopefully a valid ogg file. */
+	/** The filename registered in this class. Hopefully a valid ogg file. */
 	WorkspaceFile filename;
 	enum {
 		littleEndian = 0,

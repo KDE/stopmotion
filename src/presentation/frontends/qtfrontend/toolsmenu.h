@@ -88,7 +88,7 @@ private:
 
 	/**
 	 * Creates connections, adds icons to the buttons and sets
-	 * different properities.
+	 * different properties.
 	 */
 	void setupUi();
 

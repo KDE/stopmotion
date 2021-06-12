@@ -205,7 +205,7 @@ void NonGUIFrontend::addFrames(const char *directory) {
 
 
 void NonGUIFrontend::save(const char *directory) {
-	// returns a absoulte path which is allocated with new[]
+	// returns a absolute path which is allocated with new[]
 	std::string dir;
 	getAbsolutePath(dir, directory);
 	facadePtr->saveProject(dir.c_str());
