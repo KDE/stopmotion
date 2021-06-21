@@ -1,7 +1,7 @@
 ###
 # general project setup
 ###
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.14)
 
 project(linux-stopmotion
   VERSION 0.8.6
@@ -14,6 +14,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
+
+enable_testing()
 
 ###
 # find external dependencies
@@ -206,10 +208,8 @@ install(TARGETS stopmotion
   RUNTIME
   DESTINATION ${CMAKE_INSTALL_BINDIR}/stopmotion)
 install(FILES stopmotion.desktop
-  TYPE DATA
   DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
 install(FILES graphics/stopmotion.svg
-  TYPE DATA
   DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
 install(FILES stopmotion.1
   TYPE MAN)

@@ -100,7 +100,17 @@ target_link_libraries(test-stopmotion
   ${DL_LIBRARY_PATH}
   )
 
-  target_include_directories(test-stopmotion
-    PUBLIC
-    ${CMAKE_SOURCE_DIR})
+target_include_directories(test-stopmotion
+  PUBLIC
+  ${CMAKE_SOURCE_DIR})
+
+# add test executable to CTest suite
+add_test(
+  NAME test-stopmotion
+  COMMAND test-stopmotion)
+
+# link files required for test
+file(CREATE_LINK ${CMAKE_CURRENT_SOURCE_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
+     COPY_ON_ERROR SYMBOLIC)
+
 endif()
