@@ -1,0 +1,69 @@
+# Debian 11 (bullseye) with GCC 10
+deb11-gcc10-qmake:
+  image: debian:11
+  before_script:
+    - apt-get update
+    - apt-get -y install
+        build-essential pkg-config
+        qtbase5-dev qtmultimedia5-dev qttools5-dev-tools
+        libtar-dev libxml2-dev
+        libvorbis-dev vgrabbj uvccapture
+  script:
+    - qmake -qt=5
+    - make
+
+# Debian 12 (bookworm) with Clang 14
+deb12-clang14-qmake:
+  image: debian:bookworm
+  before_script:
+    - apt-get update
+    - apt-get -y install
+        build-essential pkg-config
+        qtbase5-dev qtmultimedia5-dev qttools5-dev-tools
+        libtar-dev libxml2-dev
+        libvorbis-dev vgrabbj uvccapture
+  script:
+    - qmake -qt=5
+    - make
+
+# Ubuntu 22.04 (jammy) with GCC 11
+ubuntu2204-gcc11-qmake:
+  image: ubuntu:22.04
+  before_script:
+    - apt-get update
+    # work around interactive question when installing tzdata
+    - DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
+    - apt-get -y install
+        build-essential pkg-config
+        qtbase5-dev qtmultimedia5-dev qttools5-dev-tools
+        libtar-dev libxml2-dev
+        libvorbis-dev vgrabbj uvccapture
+  script:
+    - qmake -qt=5
+    - make
+
+# openSuse Tumbleweed with Clang 14
+opensusetumbleweed-clang14-qmake:
+  image: opensuse/tumbleweed
+  before_script:
+    - zypper refresh
+    - zypper install -y
+        clang pkg-config
+        libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
+        libtar-devel libxml2-devel libvorbis-devel
+  script:
+    - qmake-qt5
+    - make
+
+# openSuse Leap with GCC 11
+opensuseleap15.4-gcc11-qmake:
+  image: opensuse/leap:15.4
+  before_script:
+    - zypper refresh
+    - zypper install -y
+        clang pkg-config
+        libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
+        libtar-devel libxml2-devel libvorbis-devel
+  script:
+    - qmake-qt5
+    - make
