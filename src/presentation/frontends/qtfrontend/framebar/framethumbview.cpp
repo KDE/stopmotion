@@ -154,8 +154,7 @@ void FrameThumbView::startDrag() {
 	drag->setMimeData(mimeData);
 	drag->setPixmap(*pixmap());
 
-	//Qt::DropAction dropAction = drag->start(Qt::CopyAction | Qt::MoveAction);
-	drag->start(Qt::MoveAction);
+	drag->exec(Qt::MoveAction);
 }
 
 

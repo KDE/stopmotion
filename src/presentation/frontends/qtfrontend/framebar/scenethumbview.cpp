@@ -139,8 +139,7 @@ void SceneThumbView::startDrag() {
 	drag->setMimeData(mimeData);
 	drag->setPixmap(centerIcon);
 
-	//Qt::DropAction dropAction = drag->start(Qt::CopyAction | Qt::MoveAction);
-	drag->start(Qt::MoveAction);
+	drag->exec(Qt::MoveAction);
 }
 
 
