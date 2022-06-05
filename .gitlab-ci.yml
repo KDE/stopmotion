@@ -44,13 +44,13 @@ ubuntu2204-gcc11-qmake:
     - make
     - make test
 
-# openSuse Tumbleweed with Clang 14
-opensusetumbleweed-clang14-qmake:
+# openSuse Tumbleweed with GCC 12
+opensusetumbleweed-gcc12-qmake:
   image: opensuse/tumbleweed
   before_script:
     - zypper refresh
     - zypper install -y
-        clang pkg-config
+        gcc pkg-config
         libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
         libtar-devel libxml2-devel libvorbis-devel
   script:
@@ -58,13 +58,13 @@ opensusetumbleweed-clang14-qmake:
     - make
     - make test
 
-# openSuse Leap with GCC 11
-opensuseleap15.4-gcc11-qmake:
+# openSuse Leap with Clang 13
+opensuseleap15.4-clang13-qmake:
   image: opensuse/leap:15.4
   before_script:
     - zypper refresh
     - zypper install -y
-        clang pkg-config
+        clang13 pkg-config
         libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
         libtar-devel libxml2-devel libvorbis-devel
   script:
