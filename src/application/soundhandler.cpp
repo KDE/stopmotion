@@ -69,7 +69,7 @@ void SoundHandler::setSoundName()
 		bool ok = false;
 		QString text = QInputDialog::getText(0, tr("Sound name"),
 				tr("Enter the name of the sound:"),
-				QLineEdit::Normal,QString::null, &ok);
+				QLineEdit::Normal,QString(), &ok);
 		if ( ok && !text.isEmpty() ) {
 			int scene = frameBar->getActiveScene();
 			int frame = frameBar->getActiveFrame();

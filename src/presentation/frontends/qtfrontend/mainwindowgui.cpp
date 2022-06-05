@@ -902,7 +902,7 @@ void MainWindowGUI::exportToVideo()
 			   "menu. Export to video will not be possible until you\n"
 			   "have set an encoder to use. Do you want to set it now?"),
 			tr("&Yes"), tr("&No"), // button 0, button 1, ...
-			QString::null, 0, 1 );
+			QString(), 0, 1 );
 		if (ret == 0) {
 			showPreferencesMenu();
 		}
@@ -952,7 +952,7 @@ void MainWindowGUI::exportToVideo()
 					tr("The registered encoder is not valid. Do you want\n"
 					"to check your settings in the preferences menu?"),
 					tr("&Yes"), tr("&No"), // button 0, button 1, ...
-					QString::null, 0, 1 );
+					QString(), 0, 1 );
 			if (ret == 0) {
 				showPreferencesMenu();
 			}
