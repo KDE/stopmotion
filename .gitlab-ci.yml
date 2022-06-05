@@ -25,6 +25,7 @@ deb12-clang14-qmake:
   script:
     - qmake -qt=5
     - make
+    - make test
 
 # Ubuntu 22.04 (jammy) with GCC 11
 ubuntu2204-gcc11-qmake:
@@ -41,6 +42,7 @@ ubuntu2204-gcc11-qmake:
   script:
     - qmake -qt=5
     - make
+    - make test
 
 # openSuse Tumbleweed with Clang 14
 opensusetumbleweed-clang14-qmake:
@@ -54,6 +56,7 @@ opensusetumbleweed-clang14-qmake:
   script:
     - qmake-qt5
     - make
+    - make test
 
 # openSuse Leap with GCC 11
 opensuseleap15.4-gcc11-qmake:
@@ -67,3 +70,4 @@ opensuseleap15.4-gcc11-qmake:
   script:
     - qmake-qt5
     - make
+    - make test
