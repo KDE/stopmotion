@@ -140,11 +140,11 @@ void ImportTab::makeGUI()
 	QGridLayout *grabberPrefsLayout = new QGridLayout;
 	grabberPrefsLayout->addWidget(closeChangeBoxButton, 0, 2, Qt::AlignLeading);
 	grabberPrefsLayout->addWidget(prePollLabel, 0, 0, Qt::AlignTrailing);
-	grabberPrefsLayout->addWidget(prePollEdit, 0, 1, 0);
+	grabberPrefsLayout->addWidget(prePollEdit, 0, 1);
 	grabberPrefsLayout->addWidget(startDaemonLabel, 1, 0, Qt::AlignLeading);
-	grabberPrefsLayout->addWidget(startDaemonEdit, 1, 1, 1, 2, 0);
+	grabberPrefsLayout->addWidget(startDaemonEdit, 1, 1, 1, 2);
 	grabberPrefsLayout->addWidget(stopDaemonLabel, 2, 0, Qt::AlignLeading);
-	grabberPrefsLayout->addWidget(stopDaemonEdit, 2, 1, 1, 2, 0);
+	grabberPrefsLayout->addWidget(stopDaemonEdit, 2, 1, 1, 2);
 	grabberPrefsLayout->setColumnStretch(1, 1);
 	grabberPreferences->setLayout(grabberPrefsLayout);
 }
