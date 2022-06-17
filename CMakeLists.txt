@@ -3,7 +3,7 @@
 ###
 cmake_minimum_required(VERSION 3.14)
 
-project(linux-stopmotion
+project(stopmotion
   VERSION 0.8.6
   LANGUAGES CXX)
 
@@ -58,34 +58,13 @@ include(FeatureSummary)
 feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND)
 
 add_subdirectory(src)
+add_subdirectory(translations)
+
 ###
 # handle translation files
 ###
-qt5_add_translation(QM_FILES
-  translations/stopmotion_ar.ts
-  translations/stopmotion_br.ts
-  translations/stopmotion_cz.ts
-  translations/stopmotion_de.ts
-  translations/stopmotion_dk.ts
-  translations/stopmotion_es.ts
-  translations/stopmotion_kl.ts
-  translations/stopmotion_no_nb.ts
-  translations/stopmotion_no_nn.ts
-  translations/stopmotion_no_se.ts
-  translations/stopmotion_pt.ts
-  translations/stopmotion_ru.ts
-  translations/stopmotion_fi.ts
-  translations/stopmotion_fr.ts
-  translations/stopmotion_gr.ts
-  translations/stopmotion_he.ts
-  translations/stopmotion_it.ts
-  translations/stopmotion_sl.ts
-  translations/stopmotion_sv.ts
-  translations/stopmotion_tr.ts
-  translations/stopmotion_zh_CN.ts
-  translations/stopmotion_zh_TW.ts
-  )
-configure_file(translations/translations.qrc ${CMAKE_BINARY_DIR} COPYONLY)
+file(GLOB TS_FILES "translations/stopmotion_*.ts")
+qt5_add_translation(QM_FILES "${TS_FILES}")
 
 ###
 # create executable and link libraries
@@ -168,7 +147,7 @@ add_executable(stopmotion
   src/domain/undo/executor.cpp
   src/domain/undo/addallcommands.cpp
   src/domain/undo/random.cpp
-  ${CMAKE_BINARY_DIR}/translations.qrc
+  translations.qrc
   ${QM_FILES}
   )
 
@@ -204,12 +183,24 @@ target_include_directories(stopmotion
 ###
 # handle installation
 ###
+include(GNUInstallDirs)
+
 install(TARGETS stopmotion
   RUNTIME
-  DESTINATION ${CMAKE_INSTALL_BINDIR}/stopmotion)
+  DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
 install(FILES stopmotion.desktop
-  DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
-install(FILES graphics/stopmotion.svg
-  DESTINATION ${CMAKE_INSTALL_DATADIR}/icons)
+  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/applications)
+install(FILES
+  graphics/stopmotion.png
+  graphics/stopmotion.svg
+  graphics/stopmotion.xpm
+  graphics/stopmotion_logo.xpm
+  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/pixmaps)
+install(DIRECTORY graphics/icons
+  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR})
+install(FILES ${QM_FILES}
+  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/stopmotion/translations)
 install(FILES stopmotion.1
-  TYPE MAN)
+  DESTINATION ${CMAKE_INSTALL_FULL_MANDIR}/man1)
+install(DIRECTORY manual
+  DESTINATION ${CMAKE_INSTALL_FULL_DOCDIR})
