@@ -21,7 +21,6 @@
 #include "videofactory.h"
 
 #include "src/domain/animation/animationimpl.h"
-#include "src/presentation/frontends/frontend.h"
 #include "src/technical/util.h"
 #include "src/technical/video/videoencoder.h"
 #include "src/domain/filenamevisitor.h"
@@ -42,8 +41,8 @@
 
 using namespace std;
 
-VideoFactory::VideoFactory(const AnimationImpl *animation, Frontend *frontend)
-		: anim(animation), frontend(frontend) {
+VideoFactory::VideoFactory(const AnimationImpl *animation)
+		: anim(animation) {
 }
 
 
