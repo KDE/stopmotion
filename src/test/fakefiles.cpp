@@ -22,6 +22,10 @@
 
 #include <string.h>
 
+#include "src/test/oomtestutil.h"
+
+struct OggVorbis_File;
+
 RealOggEmptyJpg::RealOggEmptyJpg() : delegate(0),
 		fakeJpg(reinterpret_cast<FILE*>(1)),
 		fakePng(reinterpret_cast<FILE*>(2)),

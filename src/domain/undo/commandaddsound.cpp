@@ -19,13 +19,19 @@
  ***************************************************************************/
 
 #include "commandaddsound.h"
-#include "commandremovesound.h"
-#include "src/domain/animation/animationimpl.h"
-#include "src/domain/animation/sound.h"
-#include "src/domain/filenamevisitor.h"
 
 #include <assert.h>
 #include <memory>
+#include <string>
+
+#include "commandremovesound.h"
+#include "src/domain/animation/animationimpl.h"
+#include "src/domain/animation/sound.h"
+#include "src/domain/animation/workspacefile.h"
+#include "src/domain/filenamevisitor.h"
+#include "src/domain/undo/command.h"
+
+class ErrorHandler;
 
 CommandAddSound::CommandAddSound(AnimationImpl& model, int32_t scene, int32_t frame,
 		int32_t soundNumber)

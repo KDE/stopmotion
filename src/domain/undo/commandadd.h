@@ -22,8 +22,12 @@
 
 #include "command.h"
 
+#include <stdint.h>
+#include <string>
 #include <vector>
 
+class ErrorHandler;
+class FileNameVisitor;
 class Frame;
 class AnimationImpl;
 class TemporaryWorkspaceFile;

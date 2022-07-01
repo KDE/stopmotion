@@ -23,8 +23,11 @@
 
 #include "command.h"
 
+#include <stdint.h>
+
 class AnimationImpl;
-class Frame;
+class ErrorHandler;
+class FileNameVisitor;
 class Sound;
 
 class CommandAddSound : public Command {

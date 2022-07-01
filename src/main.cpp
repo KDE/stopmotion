@@ -27,16 +27,13 @@
 #include "presentation/frontends/nonguifrontend/nonguifrontend.h"
 #include "src/foundation/preferencestool.h"
 #include "src/domain/animation/workspacefile.h"
+#include "uiexception.h"
 
 #include <unistd.h>
-#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
-#include <sys/types.h>
 #include <stddef.h>
-#include <dirent.h>
-#include <stdio.h>
-#include <libgen.h>
 #include <errno.h>
 #include <exception>
 #include <iostream>

@@ -20,7 +20,8 @@
 
 #include "addallcommands.h"
 
-#include "src/domain/undo/executor.h"
+#include <memory>
+#include <utility>
 
 #include "commandadd.h"
 #include "commandremove.h"
@@ -32,6 +33,9 @@
 #include "commandremovescene.h"
 #include "commandmovescene.h"
 #include "commandsetimage.h"
+#include "src/domain/undo/command.h"
+#include "src/domain/undo/executor.h"
+
 
 class AnimationImpl;
 

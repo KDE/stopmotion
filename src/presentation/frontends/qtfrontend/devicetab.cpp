@@ -17,13 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "src/presentation/frontends/qtfrontend/devicetab.h"
+#include "devicetab.h"
 
+#include <algorithm>
+#include <memory>
+#include <string>
+
+#include "flexiblelineedit.h"
 #include "graphics/icons/close.xpm"
 #include "src/domain/domainfacade.h"
-#include "src/presentation/frontends/qtfrontend/flexiblelineedit.h"
 #include "src/foundation/preferencestool.h"
 #include "src/foundation/logger.h"
+#include "src/technical/util.h"
 
 #include <QHeaderView>
 #include <QTableWidget>

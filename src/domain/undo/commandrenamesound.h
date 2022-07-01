@@ -21,9 +21,12 @@
 #ifndef COMMANDRENAMESOUND_H_
 #define COMMANDRENAMESOUND_H_
 
+#include <stdint.h>
+
 #include "command.h"
 
 class AnimationImpl;
+class ErrorHandler;
 
 class CommandRenameSound : public Command {
 	AnimationImpl& sv;

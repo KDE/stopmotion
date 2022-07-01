@@ -25,9 +25,9 @@
 
 #include <src/technical/util.h>
 #include <unistd.h>
-#include <cstddef>
 #include <cstdlib>
 #include <cstring>
+#include <exception>
 #include <string>
 #include <memory>
 

@@ -19,15 +19,19 @@
  ***************************************************************************/
 #include "oggvorbis.h"
 
+#include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cerrno>
+#include <new>
+
+#include <vorbis/codec.h>
+
+#include "errorhandler.h"
+#include "workspacefile.h"
 #include "src/foundation/logger.h"
 #include "src/foundation/uiexception.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
-#include <new>
-#include <cerrno>
 
 class FileCloser {
 	FILE* h;

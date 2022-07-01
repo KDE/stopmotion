@@ -20,10 +20,8 @@
 
 #include "testundo.h"
 
+#include "hash.h"
 #include "oomtestutil.h"
-
-#include "tstopmotionundo.h" // this will be moved.
-
 #include "src/domain/undo/executor.h"
 #include "src/domain/undo/commandlogger.h"
 #include "src/domain/undo/filelogger.h"
@@ -31,13 +29,18 @@
 #include "src/domain/animation/errorhandler.h"
 #include "src/foundation/stringwriter.h"
 
+#include <stdlib.h>
+#include <string.h>
 #include <sstream>
 #include <stdio.h>
 #include <cerrno>
+#include <exception>
 #include <assert.h>
 #include <unistd.h>
 
 #include <QtTest/QtTest>
+
+
 
 class StringLoggerWrapper: public CommandLogger {
 	CommandLogger* delegate;

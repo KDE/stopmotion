@@ -19,8 +19,12 @@
  ***************************************************************************/
 #include "helpwindow.h"
 
+#include <QTextBrowser>
+#include <QUrl>
+
 #include "src/config.h"
 
+class QWidget;
 
 HelpWindow::HelpWindow(QWidget *parent)
 	: QMainWindow(parent)

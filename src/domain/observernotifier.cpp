@@ -19,11 +19,18 @@
  ***************************************************************************/
 
 #include "observernotifier.h"
+#include "animation/animationimpl.h"
+#include "animation/frame.h"
+#include "animation/workspacefile.h"
 #include "src/presentation/observer.h"
 #include "src/presentation/frontends/frontend.h"
 #include "src/foundation/logger.h"
 
-#include <memory>
+#include <exception>
+
+class FileNameVisitor;
+class Scene;
+class Sound;
 
 class ObservableOperation {
 public:

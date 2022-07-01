@@ -23,7 +23,6 @@
 
 #include <string>
 #include <stdint.h>
-#include <string.h>
 
 class StringWriter {
 	bool startOfLine;

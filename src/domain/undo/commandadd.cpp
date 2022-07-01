@@ -18,15 +18,20 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "commandadd.h"
-#include "commandremove.h"
 
+#include <assert.h>
+#include <stdlib.h>
+#include <new>
+#include <memory>
+
+#include "commandremove.h"
 #include "src/domain/animation/animationimpl.h"
 #include "src/domain/animation/frame.h"
 #include "src/domain/animation/workspacefile.h"
+#include "src/domain/undo/command.h"
 
-#include <malloc.h>
-#include <assert.h>
-#include <memory>
+class ErrorHandler;
+class FileNameVisitor;
 
 CommandAdd::CommandAdd(AnimationImpl& model, int toScene, int toFrame, int count)
 		: sv(model), scene(toScene), frame(toFrame) {

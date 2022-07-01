@@ -18,9 +18,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "logger.h"
-#include "qapplication.h"
 
+#include <stdarg.h>
 #include <qdebug.h>
+#include <qstring.h>
+#include <QtCore/qglobal.h>
 
 Logger Logger::get() {
 	return logger;

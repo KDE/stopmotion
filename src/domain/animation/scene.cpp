@@ -19,12 +19,12 @@
  ***************************************************************************/
 
 #include "scene.h"
+
+#include "frame.h"
 #include "src/domain/filenamevisitor.h"
 
-#include <sstream>
-#include <cstring>
-#include <unistd.h>
-
+class Sound;
+class WorkspaceFile;
 
 FrameOutOfRangeException::FrameOutOfRangeException() {
 }

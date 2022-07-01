@@ -20,17 +20,17 @@
 #ifndef FRAMEVIEW_H
 #define FRAMEVIEW_H
 
-#include "src/presentation/imagecache.h"
-#include "src/domain/animation/workspacefile.h"
-
-#include <QWidget>
+#include <QObject>
 #include <QTimer>
+#include <QWidget>
+
+#include "src/domain/animation/workspacefile.h"
+#include "src/presentation/imagecache.h"
 
 class ImageGrabThread;
 class QResizeEvent;
 class QPaintEvent;
 class QPixmap;
-class ImageGrabThread;
 class ImageGrabber;
 class DomainFacade;
 

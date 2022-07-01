@@ -20,6 +20,8 @@
 
 #include "stringwriter.h"
 
+#include <string.h>
+
 StringWriter::StringWriter() : startOfLine(true) {
 }
 

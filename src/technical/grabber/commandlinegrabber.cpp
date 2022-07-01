@@ -17,15 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "src/technical/grabber/commandlinegrabber.h"
-#include "src/technical/util.h"
+#include "commandlinegrabber.h"
 
 #include <cstdlib>
-#include <sstream>
-#include <sys/types.h>
-#include <signal.h>
-#include <iostream>
 #include <cstring>
+
+#include "imagegrabber.h"
+#include "logger.h"
+#include "src/technical/util.h"
 
 enum WarnIfExitOne { noWarn, doWarn };
 

@@ -19,11 +19,16 @@
  ***************************************************************************/
 
 #include "commandrenamesound.h"
-#include "src/domain/animation/animationimpl.h"
-#include "src/domain/animation/scene.h"
 
-#include <memory>
 #include <string.h>
+#include <memory>
+#include <string>
+
+#include "src/domain/animation/animationimpl.h"
+#include "src/domain/animation/frame.h"
+#include "src/domain/animation/scene.h"
+#include "src/domain/undo/command.h"
+
 
 CommandRenameSound::CommandRenameSound(AnimationImpl& model, int32_t scene,
 		int32_t frame, int32_t soundNumber, const char* newName)

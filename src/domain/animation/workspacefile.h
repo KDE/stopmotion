@@ -23,8 +23,6 @@
 
 #include <stdint.h>
 
-class TemporaryWorkspaceFile;
-
 /**
  * Represents the filename of a file in the workspace (~/.stopmotion/).
  * The file is not held open, nor is it deleted on destruction.

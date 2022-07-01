@@ -19,6 +19,10 @@
  ***************************************************************************/
 #include "src/presentation/frontends/qtfrontend/exporttab.h"
 
+#include <stdlib.h>
+#include <algorithm>
+#include <memory>
+
 #include "graphics/icons/close.xpm"
 #include "flexiblelineedit.h"
 #include "src/foundation/preferencestool.h"

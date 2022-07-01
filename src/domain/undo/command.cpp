@@ -23,7 +23,6 @@
 #include "undoredoobserver.h"
 
 #include <list>
-#include <memory>
 #include <stdint.h>
 
 // help out Eclipse's C++ parsing

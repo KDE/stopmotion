@@ -23,6 +23,10 @@
 
 #include "oomtestutil.h"
 
+#include <stdio.h>
+
+struct OggVorbis_File;
+
 class RealOggEmptyJpg : public MockableFileSystem {
 	MockableFileSystem* delegate;
 	FILE* fakeJpg;

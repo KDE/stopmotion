@@ -19,7 +19,11 @@
  ***************************************************************************/
 
 #include "commandmovescene.h"
+
+#include "command.h"
 #include "src/domain/animation/animationimpl.h"
+
+class ErrorHandler;
 
 CommandMoveScene::CommandMoveScene(AnimationImpl& model, int sceneNumber,
 		int movePosition) : sv(model), from(sceneNumber), to(movePosition) {

@@ -20,8 +20,6 @@
 
 #include <dlfcn.h>
 #include <assert.h>
-#include <cerrno>
-#include <new>
 
 #include "oomtestutil.h"
 

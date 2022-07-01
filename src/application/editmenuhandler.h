@@ -22,10 +22,9 @@
 
 #include <QObject>
 
-class MenuFrame;
 class FrameBar;
-class ModelHandler;
 class QStatusBar;
+class QWidget;
 
 /**
  * This class handles request related to the editmenu (undo, redo, copy, cut, etc)

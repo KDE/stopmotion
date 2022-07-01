@@ -21,11 +21,8 @@
 #ifndef EXECUTOR_H_
 #define EXECUTOR_H_
 
-#include <stdint.h>
+#include <exception>
 #include <memory>
-#include <string>
-
-#include "command.h"
 
 /**
  * Thrown if a command factory attempts to read a parameter from the log files
@@ -54,10 +51,12 @@ public:
 	const char* what() const throw();
 };
 
-class CommandReplayerImpl;
-class CommandAndDescriptionFactory;
+class CommandFactory;
 class CommandLogger;
+class ErrorHandler;
+class Parameters;
 class RandomSource;
+class UndoRedoObserver;
 
 /**
  * Thrown if @ref CommandFactory::Execute is called with a name for which no

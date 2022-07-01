@@ -20,13 +20,12 @@
 #ifndef THUMBVIEW_H
 #define THUMBVIEW_H
 
-#include "framebar.h"
-
 #include <QLabel>
 
 class FrameBar;
 
 class QDropEvent;
+class QWidget;
 
 /**
  * This abstract class represents the thumbviews in the framebar. It has

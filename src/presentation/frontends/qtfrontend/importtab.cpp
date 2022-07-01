@@ -20,13 +20,17 @@
 #include "importtab.h"
 
 #include "flexiblelineedit.h"
+#include "preferencestool.h"
 #include "graphics/icons/close.xpm"
 
+#include <algorithm>
+#include <memory>
 #include <QLayout>
 #include <QLabel>
 #include <QGridLayout>
 #include <QHeaderView>
 
+class QResizeEvent;
 
 ImportTab::ImportTab( QWidget *parent ) : QWidget(parent)
 {

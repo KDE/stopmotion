@@ -20,13 +20,16 @@
 
 #include "qtaudiodriver.h"
 #include "src/foundation/logger.h"
+#include "src/technical/audio/audioformat.h"
 
 #include <QAudioFormat>
 #include <QAudioDeviceInfo>
 #include <QIODevice>
 #include <QAudioOutput>
 
-#include <memory>
+#include <stdint.h>
+#include <algorithm>
+#include <list>
 #include <vector>
 
 class QtAudioDriver::Impl : public QIODevice {

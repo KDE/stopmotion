@@ -19,7 +19,11 @@
  ***************************************************************************/
 
 #include "commandmove.h"
+
 #include "src/domain/animation/animationimpl.h"
+#include "src/domain/undo/command.h"
+
+class ErrorHandler;
 
 CommandMove::CommandMove(AnimationImpl& model, int fromScene, int fromFrame, int count,
 		int toScene, int toFrame)

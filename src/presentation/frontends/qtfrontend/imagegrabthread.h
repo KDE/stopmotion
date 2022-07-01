@@ -20,13 +20,10 @@
 #ifndef IMAGEGRABTHREAD_H
 #define IMAGEGRABTHREAD_H
 
-#include "src/presentation/frontends/qtfrontend/frameview.h"
-#include "src/technical/grabber/imagegrabber.h"
-
-#include <qthread.h>
-
+#include <QThread>
 
 class FrameView;
+class ImageGrabber;
 
 /**
  * Thread used for polling an external program to update the camera. Only

@@ -19,15 +19,16 @@
  ***************************************************************************/
 #include "src/application/runanimationhandler.h"
 
+#include <algorithm>
+#include <QPushButton>
+#include <QTimer>
+#include <QStatusBar>
+
 #include "src/foundation/preferencestool.h"
 #include "src/foundation/uiexception.h"
 #include "src/domain/domainfacade.h"
 #include "src/presentation/frontends/selection.h"
 #include "src/presentation/frontends/frontend.h"
-
-#include <qpushbutton.h>
-#include <qtimer.h>
-#include <qstatusbar.h>
 
 RunAnimationHandler::RunAnimationHandler(QObject *parent, QStatusBar *sb,
 		Selection *sel, const char *name )

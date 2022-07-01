@@ -23,7 +23,10 @@
 
 #include "command.h"
 
+#include <stdint.h>
+
 class AnimationImpl;
+class ErrorHandler;
 
 class CommandMove : public Command {
 	AnimationImpl& sv;

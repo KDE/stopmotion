@@ -19,16 +19,18 @@
  ***************************************************************************/
 #include "preferencesmenu.h"
 
+#include <QPushButton>
+#include <QTabWidget>
+#include <QVBoxLayout>
+#include <QWidget>
+
+#include "devicetab.h"
+#include "exporttab.h"
+#include "importtab.h"
 #include "src/domain/domainfacade.h"
 #include "src/foundation/preferencestool.h"
 #include "src/foundation/uiexception.h"
 #include "src/presentation/frontends/frontend.h"
-#include "flexiblelineedit.h"
-#include "importtab.h"
-#include "exporttab.h"
-#include "devicetab.h"
-
-#include <QVBoxLayout>
 
 
 PreferencesMenu::PreferencesMenu(QWidget *parent) 

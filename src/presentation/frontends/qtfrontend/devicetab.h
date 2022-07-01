@@ -20,14 +20,18 @@
 #ifndef DEVICETAB_H
 #define DEVICETAB_H
 
-#include <QWidget>
+#include <qobjectdefs.h>
+#include <qstring.h>
+#include <qwidget.h>
+#include <vector>
 
 class QTableWidget;
 class QLineEdit;
 class QPushButton;
 class QLabel;
-class QGridLayout;
 class QGroupBox;
+class QObject;
+class QResizeEvent;
 class QTextEdit;
 class QTableWidgetItem;
 

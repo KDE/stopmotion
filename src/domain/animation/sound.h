@@ -21,8 +21,6 @@
 #ifndef SOUND_H_
 #define SOUND_H_
 
-#include "workspacefile.h"
-
 #include <string>
 
 class AudioFormat;

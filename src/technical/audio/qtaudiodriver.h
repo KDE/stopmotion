@@ -23,6 +23,8 @@
 
 #include "audiodriver.h"
 
+class AudioFormat;
+
 class QtAudioDriver : public AudioDriver {
 	class Impl;
 	Impl* impl;

@@ -19,9 +19,11 @@
  ***************************************************************************/
 
 #include "scenevector.h"
+
+#include <exception>
+
 #include "scene.h"
 #include "frame.h"
-#include "src/presentation/observer.h"
 
 class SceneOutOfRangeException : public std::exception {
 public:

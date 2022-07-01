@@ -24,8 +24,6 @@
 #include <string>
 #include <vector>
 
-class QString;
-
 struct GrabberDevice {
 	std::string device;
 	std::string name;

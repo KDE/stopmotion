@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "mainwindowgui.h"
 
+#include "logger.h"
 #include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 #include "src/presentation/frontends/qtfrontend/frameview.h"
 #include "src/presentation/frontends/qtfrontend/flexiblespinbox.h"
@@ -30,7 +31,6 @@
 #include "src/application/soundhandler.h"
 #include "src/presentation/frontends/qtfrontend/framepreferencesmenu.h"
 #include "src/presentation/frontends/qtfrontend/preferencesmenu.h"
-#include "src/presentation/frontends/qtfrontend/toolsmenu.h"
 #include "src/domain/domainfacade.h"
 #include "src/foundation/preferencestool.h"
 #include "src/technical/video/videoencoder.h"
@@ -66,9 +66,12 @@
 #include <QFileSystemWatcher>
 #include <QClipboard>
 
-#include <cstdlib>
+#include <assert.h>
+#include <string.h>
 #include <unistd.h>
+#include <cstdlib>
 #include <sstream>
+#include <string>
 
 using namespace std;
 using namespace Qt;

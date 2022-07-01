@@ -34,7 +34,6 @@ class EditMenuHandler;
 class RunAnimationHandler;
 class ModelHandler;
 class SoundHandler;
-class MenuFrame;
 class FramePreferencesMenu;
 class PreferencesMenu;
 class ToolsMenu;

@@ -18,20 +18,24 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "src/foundation/preferencestool.h"
-#include "src/technical/grabber/commandlinegrabber.h"
-#include "src/domain/domainfacade.h"
-#include "src/presentation/frontends/qtfrontend/imagegrabthread.h"
-#include "src/presentation/frontends/qtfrontend/qtfrontend.h"
+#include "frameview.h"
 
-#include <QMessageBox>
+#include <algorithm>
+#include <cstring>
+
 #include <QApplication>
+#include <QMessageBox>
 #include <QPainter>
 
-#include <cstdio>
-#include <stdlib.h>
-#include <cstring>
-#include <sstream>
+#include "imagecache.h"
+#include "logger.h"
+#include "frontends/frontend.h"
+#include "workspacefile.h"
+#include "technical/grabber/imagegrabber.h"
+#include "src/domain/domainfacade.h"
+#include "src/foundation/preferencestool.h"
+#include "src/presentation/frontends/qtfrontend/imagegrabthread.h"
+#include "src/technical/grabber/commandlinegrabber.h"
 
 enum { IMAGE_CACHE_SIZE = 10 };
 

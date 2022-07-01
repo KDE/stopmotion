@@ -20,6 +20,10 @@
 #ifndef HELPWINDOW_H
 #define HELPWINDOW_H
 
+#include <QMainWindow>
+#include <QObject>
+#include <QString>
+
 #include "ui_helpbrowser.h"
 
 

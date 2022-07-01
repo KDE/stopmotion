@@ -22,12 +22,18 @@
 #include "src/technical/audio/audiodriver.h"
 #include "src/domain/filenamevisitor.h"
 #include "src/domain/animation/errorhandler.h"
+#include "src/domain/animation/workspacefile.h"
+#include "src/foundation/logger.h"
 #include "src/config.h"
 #include "sound.h"
 
+#include <assert.h>
 #include <string.h>
-#include <sstream>
 #include <memory>
+#include <exception>
+#include <sstream>
+#include <string>
+
 
 class SoundOutOfRangeException : public std::exception {
 public:

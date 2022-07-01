@@ -31,6 +31,7 @@ class QProgressDialog;
 class QProgressBar;
 class QLabel;
 class QTimer;
+class UiException;
 
 /**
  * Frontend for using the program through a GUI developed with the QT library.

@@ -25,6 +25,7 @@
 #include "src/domain/animation/workspacefile.h"
 
 class AnimationImpl;
+class ErrorHandler;
 
 class CommandSetImage : public Command {
 	friend class CommandDuplicateImage;
