@@ -56,34 +56,18 @@ Your help is very much appreciated.
 DEVELOPMENT
 -----------
 
-Attention, this section is outdated and does not reflect the changes by the switch to CMake.
+After `cmake`, the following make targets are available:
 
-After qmake, the following make targets are available:
-
-- `make`: build a release version of the project, called stopmotion
-- `make debug`: build a debug version of the project, called stopmotion-d
-- `make all`: both debug and release versions
-- `make test`: build and run the unit tests
+- `make`: build the project, the resulting executable is called `stopmotion`
+- `make test-stopmotion`: build unit tests
+- `make test`: run the unit tests
 - `make clean`: remove all build products
 - `make install`: install stopmotion
-- `make uninstall`: remove installation
 
-To install in a specific location:
+To install in a specific location `<specific/location>`:
 
-    qmake PREFIX=/specific/location HTML_PATH=/docs/go/here TRANSLATIONS_PATH=/translations/go/here
+    cmake -DCMAKE_INSTALL_PREFIX=<specific/location> <path/to/source/dir>
     sudo make install
-
-The defines are optional. `PREFIX` defaults to `/usr/local`.
-`HTML_PATH` defaults to `${PREFIX}/share/doc/stopmotion/html`.
-`TRANSLATIONS_PATH` defaults to `${PREFIX}/share/doc/stopmotion/translations`.
-
-To put the files somewhere before copying them for installation (after `qmake`):
-
-    make INSTALL_ROOT=/somewhere/writeable install
-    cp -fr /somewhere/writeable/* /
-
-`PREFIX` is where the files will ultimately end up. `make install` will put them in
-`$(INSTALL_ROOT)$(PREFIX)`
 
 Please see `src/domain/undo/README.md` for some notes on Stopmotion's
 architecture.

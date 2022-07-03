@@ -10,6 +10,7 @@
 /Makefile.Release
 /stopmotion.pro.user
 /build/
+/build-cmake
 /divx2pass.log
 /src/test/build/
 /src/test/test

@@ -1,3 +1,6 @@
+# print deprecation warning
+message("qmake support is deprecated and will be removed after Linux Stopmotion 0.8.6. Use CMake instead.")
+
 QT += widgets multimedia
 CONFIG += debug_and_release
 HEADERS += src/domain/undo/filelogger.h \
