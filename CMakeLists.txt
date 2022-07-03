@@ -57,6 +57,14 @@ find_library(DL_LIBRARY_PATH
 include(FeatureSummary)
 feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND)
 
+# if given, pass path to translations and html path
+if(${TRANSLATIONS_PATH})
+  add_compile_definitions(TRANSLATIONS_PATH=${TRANSLATIONS_PATH})
+endif()
+if(${HTML_PATH})
+  add_compile_definitions(HTML_PATH=${HTML_PATH})
+endif()
+
 add_subdirectory(src)
 add_subdirectory(translations)
 

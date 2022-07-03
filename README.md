@@ -64,10 +64,12 @@ After `cmake`, the following make targets are available:
 - `make clean`: remove all build products
 - `make install`: install stopmotion
 
-To install in a specific location `<specific/location>`:
+You can tell CMake to install in a specific location:
 
     cmake -DCMAKE_INSTALL_PREFIX=<specific/location> <path/to/source/dir>
-    sudo make install
+
+You can also specify the path to the translation and HTML documentation path
+by setting `-DTRANSLATION_PATH=` and `-DHTML_PATH=`.
 
 Please see `src/domain/undo/README.md` for some notes on Stopmotion's
 architecture.
