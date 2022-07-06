@@ -12,7 +12,7 @@ You need the following packages installed to compile:
 - C++ compiler (g++ or Clang)
 - CMake
 - pkg-config
-- Qt5 >= 5.11 (development modules base, multimedia) (`qtbase5-dev`, `qttools5-dev-tools`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
+- Qt5 >= 5.11 (development modules base, multimedia) (`qtbase5-dev`, `qttools5-dev-tools`, `qttools5-dev`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
 - libtar (`libtar-dev`)
 - libXML2 (`libxml2-dev`)
 - vorbisfile (`libvorbis-dev`)
