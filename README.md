@@ -19,7 +19,7 @@ You need the following packages installed to compile:
 
 For example, in Ubuntu or Debian you would open a terminal and type:
 
-    sudo apt install build-essential gdb qtbase5-dev qttest5-dev-tools libtar-dev libxml2-dev libvorbis-dev pkg-config git vgrabbj uvccapture
+    sudo apt install build-essential gdb qtbase5-dev qttools5-dev qttest5-dev-tools libtar-dev libxml2-dev libvorbis-dev pkg-config git vgrabbj uvccapture
 
 In openSUSE you type:
 
