@@ -53,8 +53,7 @@ opensusetumbleweed-gcc12-qmake:
   image: opensuse/tumbleweed
   before_script:
     - zypper refresh
-    - zypper install -y --oldpackage
-        libz1-1.2.11-19.7
+    - zypper install -y
         gcc pkgconf-pkg-config
         libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
         libtar-devel libxml2-devel libvorbis-devel
