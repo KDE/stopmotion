@@ -20,18 +20,15 @@
 #ifndef DOMAINFACADE_H
 #define DOMAINFACADE_H
 
-#include "src/technical/util.h"
-
 #include <vector>
-#include <exception>
 
 class Animation;
 class Observer;
 class Frontend;
-class Frame;
 class VideoEncoder;
 class StringIterator;
 class UndoRedoObserver;
+struct GrabberDevice;
 
 /**
  * Singleton facade for the domain level. All requests into the domain layer

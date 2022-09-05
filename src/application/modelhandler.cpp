@@ -17,13 +17,17 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "src/application/modelhandler.h"
+#include "modelhandler.h"
 
+#include "logger.h"
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 #include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 #include "src/domain/domainfacade.h"
 #include "src/technical/stringiterator.h"
+#include "src/technical/util.h"
 
+#include <stddef.h>
+#include <string>
 #include <QChar>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -33,7 +37,6 @@
 #include <QStatusBar>
 #include <QString>
 #include <QStringList>
-
 
 ModelHandler::ModelHandler ( QObject *parent, QStatusBar *sb, FrameBar *frameBar,
 		QString* lastVisitedDir, const char *name )

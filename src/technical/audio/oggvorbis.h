@@ -20,11 +20,14 @@
 #ifndef OGGVORBIS_H
 #define OGGVORBIS_H
 
-#include "audioformat.h"
+#include <stdint.h>
 
 #include <vorbis/vorbisfile.h>
+
+#include "audioformat.h"
 #include "src/domain/animation/workspacefile.h"
-#include "src/domain/animation/errorhandler.h"
+
+class ErrorHandler;
 
 /**
  * Class for decoding of oggvorbis data to raw PCM data.

@@ -17,13 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "src/application/editmenuhandler.h"
+#include "editmenuhandler.h"
 
 #include "src/domain/domainfacade.h"
-#include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
-#include "src/presentation/frontends/qtfrontend/menuframe.h"
 #include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
-#include "modelhandler.h"
 
 #include <QApplication>
 #include <QClipboard>

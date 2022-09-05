@@ -26,11 +26,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/stat.h>
+#include <string.h>
 #include <sstream>
-#include <memory>
-#include <memory.h>
-#include <dirent.h>
+#include <string>
 
 namespace {
 

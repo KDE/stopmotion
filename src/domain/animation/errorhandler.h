@@ -20,7 +20,7 @@
 #ifndef ERRORHANDLER_H_
 #define ERRORHANDLER_H_
 
-#include "src/foundation/uiexception.h"
+class UiException;
 
 class ErrorHandler {
 protected:

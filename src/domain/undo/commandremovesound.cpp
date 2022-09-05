@@ -19,11 +19,16 @@
  ***************************************************************************/
 
 #include "commandremovesound.h"
+
+#include <memory>
+
 #include "commandaddsound.h"
 #include "src/domain/animation/frame.h"
 #include "src/domain/animation/scene.h"
 #include "src/domain/animation/animationimpl.h"
-#include <memory>
+#include "src/domain/undo/command.h"
+
+class Sound;
 
 CommandRemoveSound::CommandRemoveSound(AnimationImpl& model, int32_t scene,
 		int32_t frame, int32_t soundNumber)

@@ -20,7 +20,9 @@
 #ifndef FRONTEND_H
 #define FRONTEND_H
 
-#include "src/foundation/uiexception.h"
+#include <exception>
+
+class UiException;
 
 /**
  * The frontend interface to be used by the implemented frontend.

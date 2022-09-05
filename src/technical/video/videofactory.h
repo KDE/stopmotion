@@ -21,7 +21,6 @@
 #ifndef VIDEOFACTORY_H
 #define VIDEOFACTORY_H
 
-class Frontend;
 class VideoEncoder;
 class AnimationImpl;
 
@@ -35,9 +34,8 @@ public:
 	/**
 	 * Objects of this class make a video file.
 	 * @param animation The animation to be turned into a video
-	 * @param frontend The frontend to display information to
 	 */
-	VideoFactory(const AnimationImpl *animation, Frontend *frontend);
+	VideoFactory(const AnimationImpl *animation);
 	~VideoFactory();
 
 	/**
@@ -53,7 +51,6 @@ public:
 
 private:
 	const AnimationImpl *anim;
-	Frontend *frontend;
 };
 
 #endif

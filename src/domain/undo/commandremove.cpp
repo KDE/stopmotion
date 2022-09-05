@@ -19,10 +19,17 @@
  ***************************************************************************/
 
 #include "commandremove.h"
-#include "commandadd.h"
-#include "src/domain/animation/scenevector.h"
 
+#include <stdint.h>
 #include <memory>
+#include <vector>
+
+#include "commandadd.h"
+#include "src/domain/animation/animationimpl.h"
+#include "src/domain/undo/command.h"
+
+class ErrorHandler;
+class Frame;
 
 CommandRemove::CommandRemove(AnimationImpl& model,
 		int scene, int fromFrame, int count)

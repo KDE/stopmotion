@@ -23,7 +23,6 @@
 #include <ext/stdio_filebuf.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
@@ -31,11 +30,10 @@
 #include <fcntl.h>
 #include <string.h>
 #include <cassert>
-#include <istream>
+#include <fstream>
 #include <ftw.h>
 #include <glob.h>
 #include <linux/videodev2.h>
-#include <sstream>
 #include <new>
 
 using namespace std;

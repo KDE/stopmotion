@@ -21,15 +21,16 @@
 #define ANIMATION_H
 
 #include "src/config.h"
-#include "src/domain/undo/executor.h"
-#include "src/technical/stringiterator.h"
-#include "src/foundation/uiexception.h"
 
+#include <stdint.h>
+#include <stdio.h>
+#include <exception>
 #include <vector>
-#include <libxml/tree.h>
+
 
 using namespace std;
 
+class Executor;
 class FileNameVisitor;
 class Frontend;
 class Observer;
@@ -39,6 +40,9 @@ class ProjectSerializer;
 class AudioDriver;
 class FileCommandLogger;
 class Scene;
+class StringIterator;
+class UiException;
+class UndoRedoObserver;
 
 class FailedToInitializeCommandLogger : public std::exception {
 public:

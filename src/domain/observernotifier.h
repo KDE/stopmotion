@@ -28,6 +28,12 @@ class Observer;
 class Frontend;
 class ObservableOperation;
 class AudioDriver;
+class FileNameVisitor;
+class Frame;
+class Scene;
+class Sound;
+class WorkspaceFile;
+
 
 class ObserverNotifier : public AnimationImpl {
 	AnimationImpl* del;

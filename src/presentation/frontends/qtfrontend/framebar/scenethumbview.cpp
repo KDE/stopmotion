@@ -20,11 +20,14 @@
 
 #include "scenethumbview.h"
 
+#include "logger.h"
 #include "thumbdragger.h"
 #include "filenamesfromurlsiterator.h"
+#include "framebar.h"
+#include "scenearrowbutton.h"
+#include "thumbview.h"
 #include "graphics/icons/clapper.xpm"
 #include "src/domain/domainfacade.h"
-#include "src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h"
 
 #include <QApplication>
 #include <QDropEvent>
@@ -40,6 +43,7 @@
 #include <QStringList>
 #include <QUrl>
 
+class QWidget;
 
 SceneThumbView::SceneThumbView(FrameBar *frameBar, QWidget *parent, int number,
 		const char * name)

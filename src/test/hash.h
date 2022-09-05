@@ -25,8 +25,6 @@
 #include <stdio.h>
 #include <string>
 
-class Executor;
-
 /**
  * Very simple hashing function by Professor Daniel J Bernstein.
  * @par

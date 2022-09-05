@@ -21,9 +21,12 @@
 #ifndef COMMANDREMOVESOUND_H_
 #define COMMANDREMOVESOUND_H_
 
+#include <stdint.h>
+
 #include "command.h"
 
 class AnimationImpl;
+class ErrorHandler;
 
 class CommandRemoveSound : public Command {
 	AnimationImpl& sv;

@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "menuframe.h"
 
-#include "mainwindowgui.h"
+#include <stddef.h>
 
 #include <QMouseEvent>
 

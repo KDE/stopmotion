@@ -26,6 +26,8 @@
 #include <string.h>
 #include <string>
 
+#include "src/test/oomtestutil.h"
+
 TestHome::TestHome() : delegate(0), fakeHome(0) {
 	std::string tmpdir("/tmp/t_home_lsmXXXXXX");
 	tmpdir.c_str(); // ensure trailing null is present

@@ -17,18 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "src/application/languagehandler.h"
+#include "languagehandler.h"
 
+#include "logger.h"
 #include "src/foundation/preferencestool.h"
 #include "src/config.h"
 
+#include <assert.h>
+#include <QDebug>
 #include <QDir>
 #include <QTranslator>
 #include <QLocale>
 #include <QLatin1String>
 
 
-#include <QDebug>
 LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const char *name) 
 		: QObject(parent), languagesMenu(0) {
 	qmPath = QString(stopmotion::translationsDirectory);

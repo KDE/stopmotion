@@ -23,6 +23,7 @@
 
 #include "src/technical/stringiterator.h"
 
+#include <string>
 #include <QList>
 
 class QUrl;

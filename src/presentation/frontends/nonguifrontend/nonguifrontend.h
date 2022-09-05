@@ -20,10 +20,13 @@
 #ifndef NONGUI_H
 #define NONGUI_H
 
+#include <string>
+
 #include "src/config.h"
 #include "src/presentation/frontends/frontend.h"
-#include "src/domain/domainfacade.h"
-#include "src/foundation/uiexception.h"
+
+class DomainFacade;
+class UiException;
 
 /**
  * Frontend for using the program through command line options.

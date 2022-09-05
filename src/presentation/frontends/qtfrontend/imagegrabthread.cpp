@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "imagegrabthread.h"
 
-#include <iostream>
+#include "technical/grabber/imagegrabber.h"
 
 
 ImageGrabThread::ImageGrabThread(FrameView *frameView, ImageGrabber *grabber)

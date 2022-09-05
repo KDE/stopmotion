@@ -24,6 +24,7 @@
 #include "command.h"
 
 class AnimationImpl;
+class ErrorHandler;
 
 class CommandRemove : public Command {
 	AnimationImpl& sv;

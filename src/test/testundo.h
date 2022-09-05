@@ -23,7 +23,7 @@
 
 #include "hash.h"
 
-#include <iosfwd>
+#include <string>
 
 class Executor;
 

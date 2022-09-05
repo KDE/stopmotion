@@ -20,8 +20,7 @@
 #ifndef AUDIOFORMAT_H
 #define AUDIOFORMAT_H
 
-#include <exception>
-#include <sys/types.h>
+#include <stdint.h>
 
 /**
  * Interface to be used by the implemented audio formats. They

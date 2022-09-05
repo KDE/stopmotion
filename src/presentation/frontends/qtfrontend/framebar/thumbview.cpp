@@ -19,11 +19,7 @@
  ***************************************************************************/
 #include "thumbview.h"
 
-#include "src/domain/domainfacade.h"
-#include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
-
-#include <QDropEvent>
-
+class QWidget;
 
 ThumbView::ThumbView(FrameBar *frameBar, QWidget *parent, int number,
 		const char *name)

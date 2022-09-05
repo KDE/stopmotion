@@ -29,22 +29,23 @@
 #include "src/domain/undo/executor.h"
 #include "src/domain/animation/animation.h"
 #include "src/domain/animation/scenevector.h"
-#include "src/domain/animation/scene.h"
-#include "src/domain/animation/frame.h"
-#include "src/domain/animation/sound.h"
+#include "src/domain/animation/workspacefile.h"
 #include "src/domain/filenamevisitor.h"
-#include "src/technical/audio/audioformat.h"
 #include "src/presentation/frontends/frontend.h"
 #include "src/technical/stringiterator.h"
 #include "src/foundation/stringwriter.h"
 
 #include <QtTest/QtTest>
 
-#include <stdlib.h>
-#include <error.h>
+
+#include <algorithm>
 #include <vector>
 #include <string>
+#include <stdio.h>
+#include <string.h>
 #include <unistd.h>
+
+class UiException;
 
 void getHashes(std::vector<Hash>& out, const char* filenameTemplate) {
 	std::string filenameStr(filenameTemplate);

@@ -19,9 +19,15 @@
  ***************************************************************************/
 
 #include "commandsetimage.h"
+
+#include <stdint.h>
+#include <string>
+
 #include "src/domain/animation/animationimpl.h"
 #include "src/domain/animation/workspacefile.h"
-#include "src/domain/animation/scene.h"
+#include "src/domain/undo/command.h"
+
+class ErrorHandler;
 
 CommandSetImage::CommandSetImage(AnimationImpl& model, int32_t scene,
 		int32_t frame, WorkspaceFile& w)

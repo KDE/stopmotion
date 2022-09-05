@@ -26,7 +26,6 @@
 
 class CommandList;
 class FileNameVisitor;
-class CommandLogger;
 class UndoRedoObserver;
 class ErrorHandler;
 

@@ -23,6 +23,7 @@
 
 #include <libxml/tree.h>
 
+#include <exception>
 #include <vector>
 
 class AnimationImpl;

@@ -19,10 +19,14 @@
  ***************************************************************************/
 
 #include "commandremovescene.h"
+
+#include "command.h"
 #include "commandaddscene.h"
 #include "src/domain/animation/animationimpl.h"
 
 #include <memory>
+
+class ErrorHandler;
 
 UndoRemoveScene::UndoRemoveScene(AnimationImpl& model, int32_t sceneNumber)
 		: sv(model), sc(sceneNumber) {

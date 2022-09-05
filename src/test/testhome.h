@@ -21,9 +21,9 @@
 #ifndef TESTHOME_H_
 #define TESTHOME_H_
 
-#include "oomtestutil.h"
+#include <stdio.h>
 
-struct OggVorbis_File;
+#include "oomtestutil.h"
 
 /**
  * A filesystem/environment wrapper that makes only one change to the wrapped

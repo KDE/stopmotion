@@ -21,6 +21,7 @@
 
 #include <QtTest/QtTest>
 
+#include <string.h>
 #include <memory>
 #include <limits>
 #include <stdint.h>
@@ -29,17 +30,19 @@
 #include <sstream>
 #include <exception>
 #include <assert.h>
+#include <utility>
 
 #include "src/domain/undo/executor.h"
 #include "src/domain/undo/command.h"
 #include "src/domain/undo/commandlogger.h"
 #include "src/domain/undo/filelogger.h"
-#include "src/domain/undo/random.h"
 #include "src/domain/animation/errorhandler.h"
 
+#include "hash.h"
 #include "testundo.h"
 #include "oomtestutil.h"
-#include "testhome.h"
+
+
 
 static const int32_t no_num = std::numeric_limits<int32_t>::min();
 

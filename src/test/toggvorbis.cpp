@@ -19,6 +19,13 @@
  ***************************************************************************/
 #include "../technical/audio/oggvorbis.h"
 
+#include <stddef.h>
+#include <stdint.h>
+
+#include "src/domain/animation/workspacefile.h"
+
+class ErrorHandler;
+
 // A mock OggVorbis implementation that does nothing.
 
 OggVorbis::OggVorbis() {

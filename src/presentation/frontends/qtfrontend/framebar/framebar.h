@@ -27,7 +27,6 @@
 
 #include <vector>
 
-class Frame;
 class ThumbView;
 class FramePreferencesMenu;
 
@@ -35,7 +34,9 @@ class QWidget;
 class QDragEnterEvent;
 class QDragMoveEvent;
 class QDropEvent;
+class QObject;
 class QResizeEvent;
+class QTimer;
 
 /**
  * The framebar widget for viewing the animation model.

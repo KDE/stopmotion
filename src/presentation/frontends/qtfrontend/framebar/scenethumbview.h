@@ -23,11 +23,13 @@
 #include "src/presentation/frontends/qtfrontend/framebar/thumbview.h"
 
 class SceneArrowButton;
+class FrameBar;
 
+class QObject;
+class QWidget;
 class QMouseEvent;
 class QPaintEvent;
 class QDropEvent;
-class QPixmap;
 
 /**
  * Custom widget representing a scene in the framebar.

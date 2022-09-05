@@ -19,11 +19,16 @@
  ***************************************************************************/
 
 #include "commandaddscene.h"
+
+#include <assert.h>
+#include <memory>
+
 #include "commandremovescene.h"
 #include "src/domain/animation/scene.h"
 #include "src/domain/animation/animationimpl.h"
+#include "src/domain/undo/command.h"
 
-#include <memory>
+class ErrorHandler;
 
 CommandAddScene::CommandAddScene(AnimationImpl& model, int32_t sn)
 		: sv(model), index(sn), sc(0) {

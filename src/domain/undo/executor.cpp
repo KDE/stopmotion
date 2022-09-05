@@ -33,11 +33,14 @@
 #include <memory>
 
 #include <stdint.h>
+#include <string.h>
 
 // help out Eclipse's C++ parsing
 #ifndef INT32_MAX
 #define INT32_MAX 0x7FFFFFFF
 #endif
+
+class UndoRedoObserver;
 
 /**
  * Reads a space-separated list of strings and numbers. Strings are quoted,

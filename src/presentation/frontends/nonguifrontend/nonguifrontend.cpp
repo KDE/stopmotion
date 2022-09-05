@@ -19,14 +19,15 @@
  ***************************************************************************/
 #include "nonguifrontend.h"
 
+#include "domainfacade.h"
+#include "frontends/frontend.h"
+#include "uiexception.h"
 #include "src/technical/stringiterator.h"
 
 #include <stdio.h>
-#include <unistd.h>
 #include <getopt.h>
 #include <stdlib.h>
 #include <dirent.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 #include <string>

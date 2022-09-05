@@ -24,8 +24,6 @@
 // sadly, can't simply forward-declare FILE
 #include <stdio.h>
 
-struct OggVorbis_File;
-
 /**
  * Interface class for mock file systems, and the facade for the real file
  * system.

@@ -20,11 +20,16 @@
 #ifndef FRAMETHUMBVIEW_H
 #define FRAMETHUMBVIEW_H
 
-#include "src/presentation/frontends/qtfrontend/framebar/thumbview.h"
+#include <QPoint>
+#include <QString>
 
+#include "thumbview.h"
+
+class FrameBar;
 class QMouseEvent;
 class QDropEvent;
 class QPaintEvent;
+class QWidget;
 
 /**
  * Widget representing a frame in the animation.

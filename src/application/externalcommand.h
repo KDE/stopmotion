@@ -34,7 +34,7 @@
 
 class ExternalCommand : public QWidget
 {
-	Q_OBJECT;
+	Q_OBJECT
 public:
 	ExternalCommand(QWidget *parent = 0);
 	void run(const QString &command);

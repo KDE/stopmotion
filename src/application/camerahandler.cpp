@@ -17,20 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "src/application/camerahandler.h"
+#include "camerahandler.h"
 
-#include "src/domain/domainfacade.h"
-#include "src/foundation/preferencestool.h"
-#include "src/foundation/logger.h"
+#include <QTimer>
+#include <QPushButton>
+#include <QPixmap>
+
+#include "modelhandler.h"
+#include "workspacefile.h"
+#include "frontends/frontend.h"
 #include "graphics/icons/cameraoff.xpm"
 #include "graphics/icons/cameraon.xpm"
-#include "src/application/modelhandler.h"
+#include "src/domain/domainfacade.h"
+#include "src/foundation/logger.h"
+#include "src/foundation/preferencestool.h"
+#include "src/foundation/uiexception.h"
 #include "src/presentation/frontends/qtfrontend/frameview.h"
-#include "src/presentation/frontends/qtfrontend/qtfrontend.h"
-
-#include <QPushButton>
-
-#include <vector>
 
 
 CameraHandler::CameraHandler ( QObject *parent, QStatusBar *sb, 

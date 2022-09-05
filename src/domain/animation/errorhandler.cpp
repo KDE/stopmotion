@@ -20,6 +20,8 @@
 
 #include "errorhandler.h"
 
+#include "src/foundation/uiexception.h"
+
 namespace {
 class ThrowingErrorHandler : public ErrorHandler {
 public:

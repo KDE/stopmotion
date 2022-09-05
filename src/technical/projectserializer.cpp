@@ -27,16 +27,20 @@
 #include "src/domain/animation/sound.h"
 #include "src/domain/animation/animationimpl.h"
 #include "src/domain/animation/workspacefile.h"
-#include "src/technical/util.h"
+#include "src/presentation/frontends/frontend.h"
 
-#include <cstring>
-#include <unistd.h>
+#include <libxml/tree.h>
+
+#include <assert.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <libtar.h>
+#include <cstring>
 #include <errno.h>
+#include <iosfwd>
+#include <map>
 #include <string>
 #include <set>
-#include <exception>
 
 // for older libtars
 #define UNCONST(s) const_cast<char*>(s)

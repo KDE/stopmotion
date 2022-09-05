@@ -21,12 +21,14 @@
 #define SCENE_H
 
 #include "src/config.h"
-#include "frame.h"
-#include "src/presentation/frontends/frontend.h"
 
 #include <exception>
+#include <vector>
 
 class FileNameVisitor;
+class Frame;
+class Sound;
+class WorkspaceFile;
 
 class FrameOutOfRangeException : public std::exception {
 public:

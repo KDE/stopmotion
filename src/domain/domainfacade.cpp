@@ -25,8 +25,11 @@
 #include "src/foundation/preferencestool.h"
 #include "src/foundation/uiexception.h"
 #include "src/presentation/frontends/frontend.h"
+#include "technical/util.h"
 
+#include <stdio.h>
 #include <sys/file.h>
+#include <exception>
 
 DomainFacade* DomainFacade::domainFacade = 0;
 

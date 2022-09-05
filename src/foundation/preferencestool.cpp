@@ -23,11 +23,12 @@
 #include "uiexception.h"
 
 #include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 #include <sys/file.h>
+
+#include <libxml/parser.h>
 
 using namespace std;
 

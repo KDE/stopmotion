@@ -20,8 +20,6 @@
 #ifndef IMPORTTAB_H
 #define IMPORTTAB_H
 
-#include "src/foundation/preferencestool.h"
-
 #include <QTableWidget>
 #include <QLineEdit>
 #include <QPushButton>

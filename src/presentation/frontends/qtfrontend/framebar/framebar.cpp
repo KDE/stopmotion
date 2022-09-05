@@ -17,13 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
+#include "framebar.h"
 
-#include "src/domain/domainfacade.h"
-#include "src/presentation/frontends/qtfrontend/framebar/framethumbview.h"
-#include "src/presentation/frontends/qtfrontend/framebar/scenethumbview.h"
-#include "src/presentation/frontends/qtfrontend/framebar/scenearrowbutton.h"
 #include "framepreferencesmenu.h"
+#include "framethumbview.h"
+#include "logger.h"
+#include "scenethumbview.h"
+#include "thumbview.h"
+#include "src/domain/domainfacade.h"
 
 #include <QDebug>
 #include <QDragEnterEvent>
@@ -35,6 +36,7 @@
 #include <QPixmap>
 #include <QResizeEvent>
 #include <QScrollBar>
+#include <QTimer>
 #include <QVBoxLayout>
 
 #include <algorithm>

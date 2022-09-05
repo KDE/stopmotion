@@ -30,24 +30,28 @@
 #include "sound.h"
 #include "scene.h"
 #include "frame.h"
-#include "animationimpl.h"
 #include "src/domain/observernotifier.h"
 #include "src/domain/animation/errorhandler.h"
-#include "src/presentation/observer.h"
-
 #include "src/domain/undo/commandadd.h"
-#include "src/domain/undo/command.h"
 #include "src/domain/undo/executor.h"
 #include "src/domain/undo/addallcommands.h"
 #include "src/domain/undo/filelogger.h"
+#include "src/presentation/frontends/frontend.h"
+#include "src/technical/audio/audiodriver.h"
+#include "src/technical/stringiterator.h"
 
+#include <assert.h>
+#include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include <unistd.h>
 #include <vector>
-#include <iostream>
 #include <sstream>
+#include <string>
 #include <memory>
+
+
+class UndoRedoObserver;
 
 namespace {
 bool ensureUnlinked(const char* path) {
@@ -419,7 +423,7 @@ void Animation::shutdownAudioDevice() {
 
 
 bool Animation::exportToVideo(VideoEncoder * encoder, int playbackSpeed) {
-	VideoFactory factory(scenes, frontend);
+	VideoFactory factory(scenes);
 	frontend->showProgress(Frontend::exporting, 0);
 	if (factory.createVideoFile(encoder, playbackSpeed) != NULL) {
 		frontend->hideProgress();

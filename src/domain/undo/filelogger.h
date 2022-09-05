@@ -21,12 +21,10 @@
 #ifndef FILELOGGER_H_
 #define FILELOGGER_H_
 
-#include "command.h"
-
-#include <iosfwd>
+#include <stdio.h>
+#include <exception>
 
 class FileCommandLoggerImpl;
-class CommandReplayer;
 class CommandLogger;
 
 class LoggerWriteFailedException : public std::exception {
