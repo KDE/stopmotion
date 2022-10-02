@@ -1,0 +1,1625 @@
+# Yuri Chornoivan <yurchor@ukr.net>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"PO-Revision-Date: 2021-04-18 08:23+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Qt-Contexts: true\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.12.0\n"
+
+#: src/application/externalcommand.cpp:46
+msgctxt "ExternalCommand|"
+msgid "Input to program:"
+msgstr "Вхідні дані для програми:"
+
+#: src/application/externalcommand.cpp:56
+msgctxt "ExternalCommand|"
+msgid "Submit"
+msgstr "Надіслати"
+
+#: src/application/externalcommand.cpp:62
+msgctxt "ExternalCommand|"
+msgid "Close"
+msgstr "Закрити"
+
+#: src/application/externalcommand.cpp:75
+msgctxt "ExternalCommand|"
+msgid "Output from external command"
+msgstr "Виведення зовнішньої програми"
+
+#: src/application/externalcommand.cpp:123
+#: src/application/externalcommand.cpp:126
+msgctxt "ExternalCommand|"
+msgid "Result"
+msgstr "Результат"
+
+#: src/application/externalcommand.cpp:123
+msgctxt "ExternalCommand|"
+msgid "Failed!"
+msgstr "Помилка!"
+
+#: src/application/externalcommand.cpp:126
+msgctxt "ExternalCommand|"
+msgid "Successful!"
+msgstr "Успішно виконано!"
+
+#: src/application/languagehandler.cpp:89
+msgctxt "LanguageHandler|"
+msgid "English"
+msgstr "англійська"
+
+#: src/application/languagehandler.cpp:91
+msgctxt "LanguageHandler|"
+msgid "&Translation"
+msgstr "П&ереклад"
+
+#: src/application/languagehandler.cpp:107
+msgctxt ""
+"LanguageHandler|This should be translated to the name of the language you "
+"are translating to, in that language. Example: English = Deutsch (Deutsch is "
+"\"German\" in German)"
+msgid "English"
+msgstr "українська"
+
+#: src/application/modelhandler.cpp:62
+msgctxt "ModelHandler|"
+msgid "Choose frames to add"
+msgstr "Виберіть кадри для додавання"
+
+#: src/application/modelhandler.cpp:183
+msgctxt "ModelHandler|"
+msgid "Removed the selected frame"
+msgstr "Вилучено позначений кадр"
+
+#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:231
+#: src/application/modelhandler.cpp:248
+msgctxt "ModelHandler|"
+msgid "Warning"
+msgstr "Попередження"
+
+#: src/application/modelhandler.cpp:221
+msgctxt "ModelHandler|"
+msgid "You do not have Gimp installed on your system"
+msgstr "У вашій системі не встановлено Gimp"
+
+#: src/application/modelhandler.cpp:232
+msgctxt "ModelHandler|"
+msgid "There is no active frame to open"
+msgstr "Немає активного кадру для відкриття"
+
+#: src/application/modelhandler.cpp:249
+msgctxt "ModelHandler|"
+msgid "Failed to start Gimp!"
+msgstr "Не вдалося запустити Gimp!"
+
+#: src/application/runanimationhandler.cpp:93
+msgctxt "RunAnimationHandler|"
+msgid "Running animation"
+msgstr "Анімування"
+
+#: src/application/soundhandler.cpp:44
+msgctxt "SoundHandler|"
+msgid "Choose sound file"
+msgstr "Виберіть звуковий файл"
+
+#: src/application/soundhandler.cpp:44
+msgctxt "SoundHandler|"
+msgid "Sounds (*.ogg)"
+msgstr "звуки (*.ogg)"
+
+#: src/application/soundhandler.cpp:70
+msgctxt "SoundHandler|"
+msgid "Sound name"
+msgstr "Назва звуку"
+
+#: src/application/soundhandler.cpp:71
+msgctxt "SoundHandler|"
+msgid "Enter the name of the sound:"
+msgstr "Введіть назву звуку:"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:42
+msgctxt "AboutDialog|"
+msgid "This is the Stopmotion application for creating stop motion animations."
+msgstr "Це програма Stopmotion для створення покадрових анімацій."
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:47
+msgctxt "AboutDialog|"
+msgid "&About"
+msgstr "Пр&о програму"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:50
+msgctxt "AboutDialog|"
+msgid "Main developers"
+msgstr "Основні розробники"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:54
+msgctxt "AboutDialog|"
+msgid "Contributors"
+msgstr "Учасники розробки"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:64
+msgctxt "AboutDialog|"
+msgid "A&uthors"
+msgstr "А&втори"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:68
+msgctxt "AboutDialog|"
+msgid "Translation"
+msgstr "Переклад"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:69
+msgctxt "AboutDialog|"
+msgid "Czech"
+msgstr "чеська"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:70
+msgctxt "AboutDialog|"
+msgid "Slovenian"
+msgstr "словенська"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:71
+msgctxt "AboutDialog|"
+msgid "French"
+msgstr "французька"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:72
+msgctxt "AboutDialog|"
+msgid "German"
+msgstr "німецька"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:74
+msgctxt "AboutDialog|"
+msgid "Portuguese"
+msgstr "португальська"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:76
+msgctxt "AboutDialog|"
+msgid "Spanish"
+msgstr "іспанська"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:77
+msgctxt "AboutDialog|"
+msgid "Swedish"
+msgstr "шведська"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:79
+msgctxt "AboutDialog|"
+msgid "Turkish"
+msgstr "турецька"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:80
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:81
+msgctxt "AboutDialog|"
+msgid "Italian"
+msgstr "італійська"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:82
+msgctxt "AboutDialog|"
+msgid "Traditional Chinese"
+msgstr "традиційна китайська"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:83
+msgctxt "AboutDialog|"
+msgid "Arabic"
+msgstr "арабська"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:84
+msgctxt "AboutDialog|"
+msgid "Russian"
+msgstr "російська"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:85
+msgctxt "AboutDialog|"
+msgid "Hebrew"
+msgstr "іврит"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:87
+msgctxt "AboutDialog|"
+msgid "Logo"
+msgstr "Логотип"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:89
+msgctxt "AboutDialog|"
+msgid "Coordinating"
+msgstr "Координування"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:93
+msgctxt "AboutDialog|"
+msgid "Testing"
+msgstr "Тестування"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:105
+msgctxt "AboutDialog|"
+msgid "&Thanks To"
+msgstr "&Подяки"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:110
+msgctxt "AboutDialog|"
+msgid "&Licence Agreement"
+msgstr "&Ліцензійна угода"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:112
+msgctxt "AboutDialog|"
+msgid "OK"
+msgstr "Гаразд"
+
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:125
+msgctxt "AboutDialog|"
+msgid "About"
+msgstr "Про програму"
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:69
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:356
+msgctxt "DeviceTab|"
+msgid ""
+"Below you can set which device Stopmotion should use for grabbing images and "
+"displaying video."
+msgstr ""
+"Нижче ви можете встановити, який пристрій Stopmotion має використовувати для "
+"захоплення зображень та показу відео."
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:71
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:358
+msgctxt "DeviceTab|"
+msgid ""
+"You can select from the auto-detected devices below or add devices yourself. "
+"It is not recommended to use devices which is not auto-detected, but feel "
+"free to do it if you are an advanced user."
+msgstr ""
+"Нижче ви можете вибрати один із автоматично виявлених пристроїв або додати "
+"пристрої власноруч. Не рекомендуємо користуватися пристроями, які не було "
+"виявлено автоматично, але ви можете їх використовувати, якщо ви є "
+"досвідченим користувачем."
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:74
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:361
+msgctxt "DeviceTab|"
+msgid ""
+"The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
+msgstr ""
+"Вибраний пристрій розпізнано як <b>$VIDEODEVICE</b> на вкладці «Імпортування "
+"відео»."
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:80
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:365
+msgctxt "DeviceTab|"
+msgid "Name"
+msgstr "Назва"
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:80
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:365
+msgctxt "DeviceTab|"
+msgid "Description"
+msgstr "Опис"
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:94
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:368
+msgctxt "DeviceTab|"
+msgid "&Add"
+msgstr "&Додати"
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:98
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:369
+msgctxt "DeviceTab|"
+msgid "&Remove"
+msgstr "Ви&лучити"
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:101
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:370
+msgctxt "DeviceTab|"
+msgid "&Edit"
+msgstr "З&міни"
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:105
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:373
+msgctxt "DeviceTab|"
+msgid "Video device settings"
+msgstr "Параметри відеопристрою"
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:114
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:374
+msgctxt "DeviceTab|"
+msgid "Video Device ($VIDEODEVICE): "
+msgstr "Відеопристрій ($VIDEODEVICE): "
+
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:161
+msgctxt "DeviceTab|"
+msgid "device"
+msgstr "пристрій"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:87
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:386
+msgctxt "ExportTab|"
+msgid "&Add"
+msgstr "Дод&ати"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:91
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:387
+msgctxt "ExportTab|"
+msgid "&Remove"
+msgstr "Ви&лучити"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:94
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:388
+msgctxt "ExportTab|"
+msgid "&Edit"
+msgstr "З&міни"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:98
+msgctxt "ExportTab|"
+msgid "Encoder settings"
+msgstr "Параметри кодування"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:108
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:391
+msgctxt "ExportTab|"
+msgid ""
+"Do you want to be asked for an output file every time you choose to export?"
+msgstr ""
+"Хочете, щоб програма питала про файл для виведення кожного разу, коли ви "
+"експортуватимете дані?"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:110
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:393
+msgctxt "ExportTab|"
+msgid "Yes"
+msgstr "Так"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:115
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:394
+msgctxt "ExportTab|"
+msgid "No"
+msgstr "Ні"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:120
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:395
+msgctxt "ExportTab|"
+msgid "Set default output file:"
+msgstr "Встановити типовий файл виведення:"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:126
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:396
+msgctxt "ExportTab|"
+msgid "Browse"
+msgstr "Вибрати"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:131
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:397
+msgctxt "ExportTab|"
+msgid "Start encoder:"
+msgstr "Запуск кодувальника:"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:136
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:398
+msgctxt "ExportTab|"
+msgid "Stop encoder:"
+msgstr "Зупинення кодувальника:"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:362
+msgctxt "ExportTab|"
+msgid "Choose output file"
+msgstr "Виберіть файл для виведення"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:372
+msgctxt "ExportTab|"
+msgid ""
+"Below you can set which program/process Stopmotion should use for encoding "
+"the currently active project to a video file."
+msgstr ""
+"Нижче ви можете встановити, яку програму або процес Stopmotion має "
+"використовувати для кодування поточного активного проєкту до відеофайла."
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:374
+msgctxt "ExportTab|"
+msgid ""
+"You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
+"the image path and the video file, respectively."
+msgstr ""
+"Вам слід завжди використовувати <b>$IMAGEPATH</b> і <b>$VIDEOFILE</b> для "
+"представлення шляху до зображення та відеофайла, відповідно."
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:376
+msgctxt "ExportTab|"
+msgid ""
+"You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
+"in the project."
+msgstr ""
+"Ви можете скористатися <b>$FRAMERATE</b> для представлення поточної "
+"використаної у проєкті частоти кадрів."
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:378
+msgctxt "ExportTab|"
+msgid "Example with mencoder (jpeg images to mpeg4 video):"
+msgstr "Приклад для mencoder (зображення jpeg у відео mpeg4):"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
+msgctxt "ExportTab|"
+msgid "Name"
+msgstr "Назва"
+
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
+msgctxt "ExportTab|"
+msgid "Description"
+msgstr "Опис"
+
+#: src/presentation/frontends/qtfrontend/framebar/framebar.cpp:196
+msgctxt "FrameBar|"
+msgid "Frame number: "
+msgstr "Кількість кадрів:"
+
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:114
+msgctxt "FramePreferencesMenu|"
+msgid "Add &sound"
+msgstr "Додати з&вук"
+
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:115
+msgctxt "FramePreferencesMenu|"
+msgid "&Remove Sound"
+msgstr "Ви&лучити звук"
+
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:116
+msgctxt "FramePreferencesMenu|"
+msgid "Change name"
+msgstr "Змінити назву"
+
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:117
+msgctxt "FramePreferencesMenu|"
+msgid "Sounds:"
+msgstr "Звуки:"
+
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:120
+msgctxt "FramePreferencesMenu|"
+msgid ""
+"<h4>Add sound</h4> <p>With this button you can <em>add sounds</em> to the "
+"selected frame.</p> <p>The sound will begin playing when this frame is shown "
+"and play until it is done.</p>"
+msgstr ""
+"<h4>Додати звук</h4> <p>За допомогою цієї кнопки ви можете <em>додати звуки</"
+"em> до вибраного кадру.</p> <p>Відтворення звуку розпочнеться, коли буде "
+"показано цей кадр, і завершиться, коли показ кадру буде завершено.</p>"
+
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:128
+msgctxt "FramePreferencesMenu|"
+msgid ""
+"<h4>Remove sound</h4> <p>With this button you can <em>remove</em> the "
+"selected sound from this frame.</p>"
+msgstr ""
+"<h4>Вилучити звук</h4> <p>За допомогою цієї кнопки можна <em>вилучити</em> "
+"вибраний звук з цього кадру.</p>"
+
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:135
+msgctxt "FramePreferencesMenu|"
+msgid ""
+"<h4>Change name</h4> <p>With this button you can change the name of the "
+"selected sound. <BR>The name of the sound has no other effect than making it "
+"easier work with the animation.</p>"
+msgstr ""
+"<h4>Змінити назву</h4> <p>За допомогою цієї кнопки ви можете змінити назву "
+"вибраного звуку. <BR>Назва звукового файла не впливатиме ні на що, окрім "
+"спрощення роботи з анімацією.</p>"
+
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:143
+msgctxt "FramePreferencesMenu|"
+msgid ""
+"<h4>Sounds</h4> <p>This list shows all the sounds connected to this frame.</"
+"p><p>The sounds will begin playing when this frame is shown and play until "
+"they are done.</p>"
+msgstr ""
+"<h4>Звуки</h4> <p>У цьому списку показано усі звуки, які пов'язано з цим "
+"кадром.</p><p>Відтворення звуків розпочнеться при показі цього кадру і "
+"завершиться із завершенням відтворення кадру.</p>"
+
+#: src/presentation/frontends/qtfrontend/frameview.cpp:275
+#: src/presentation/frontends/qtfrontend/frameview.cpp:289
+#: src/presentation/frontends/qtfrontend/frameview.cpp:302
+#: src/presentation/frontends/qtfrontend/frameview.cpp:327
+#: src/presentation/frontends/qtfrontend/frameview.cpp:345
+#: src/presentation/frontends/qtfrontend/frameview.cpp:357
+msgctxt "FrameView|"
+msgid "Warning"
+msgstr "Попередження"
+
+#: src/presentation/frontends/qtfrontend/frameview.cpp:275
+msgctxt "FrameView|"
+msgid "No video device selected in the preferences menu."
+msgstr "У меню налаштувань не вибрано відеопристрій."
+
+#: src/presentation/frontends/qtfrontend/frameview.cpp:289
+msgctxt "FrameView|"
+msgid "Pre poll command does not exists"
+msgstr "Команди до опитування не існує"
+
+#: src/presentation/frontends/qtfrontend/frameview.cpp:302
+msgctxt "FrameView|"
+msgid "You do not have the given grabber installed on your system"
+msgstr "У вашій системі не встановлено вказаного засобу захоплення кадрів"
+
+#: src/presentation/frontends/qtfrontend/frameview.cpp:327
+#: src/presentation/frontends/qtfrontend/frameview.cpp:345
+msgctxt "FrameView|"
+msgid ""
+"Grabbing failed. This may happen if you try\n"
+"to grab from an invalid device. Please check\n"
+"your grabber settings in the preferences menu."
+msgstr ""
+"Не вдалося захопити зображення. Це може трапитися, якщо\n"
+"ви спробуєте захопити зображення з некоректного пристрою.\n"
+"Будь ласка, виправте параметри засобу захоплення у налаштуваннях."
+
+#: src/presentation/frontends/qtfrontend/frameview.cpp:357
+msgctxt "FrameView|"
+msgid ""
+"You have to define an image grabber to use.\n"
+"This can be set in the preferences menu."
+msgstr ""
+"Вам слід визначити засіб захоплення зображень, яким слід скористатися.\n"
+"Цей засіб можна вказати у меню налаштувань."
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:63
+#: src/presentation/frontends/qtfrontend/importtab.cpp:317
+msgctxt "ImportTab|"
+msgid ""
+"Below you can set which program/process Stopmotion should use for grabbing "
+"images from the selected device."
+msgstr ""
+"Нижче ви можете встановити, яку програму або процес Stopmotion має "
+"використовувати для захоплення зображень та показу відео."
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:65
+#: src/presentation/frontends/qtfrontend/importtab.cpp:319
+msgctxt "ImportTab|"
+msgid ""
+"You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
+"the video device and the image file, respectively."
+msgstr ""
+"Вам слід користуватися <b>$VIDEODEVICE</b> і <b>$IMAGEFILE</b> для "
+"представлення відеопристрою та файла зображення, відповідно."
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:71
+#: src/presentation/frontends/qtfrontend/importtab.cpp:323
+msgctxt "ImportTab|"
+msgid "Name"
+msgstr "Назва"
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:71
+#: src/presentation/frontends/qtfrontend/importtab.cpp:323
+msgctxt "ImportTab|"
+msgid "Description"
+msgstr "Опис"
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:87
+#: src/presentation/frontends/qtfrontend/importtab.cpp:326
+msgctxt "ImportTab|"
+msgid "&Add"
+msgstr "Дод&ати"
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:91
+#: src/presentation/frontends/qtfrontend/importtab.cpp:327
+msgctxt "ImportTab|"
+msgid "&Remove"
+msgstr "Ви&лучити"
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:94
+#: src/presentation/frontends/qtfrontend/importtab.cpp:328
+msgctxt "ImportTab|"
+msgid "&Edit"
+msgstr "З&міни"
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:98
+#: src/presentation/frontends/qtfrontend/importtab.cpp:330
+msgctxt "ImportTab|"
+msgid "Import device settings"
+msgstr "Імпортувати параметри пристрою"
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:107
+#: src/presentation/frontends/qtfrontend/importtab.cpp:331
+msgctxt "ImportTab|"
+msgid "Pre-poll command"
+msgstr "Команда до опитування"
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:114
+#: src/presentation/frontends/qtfrontend/importtab.cpp:332
+msgctxt "ImportTab|"
+msgid "Start daemon"
+msgstr "Запустити фонову службу"
+
+#: src/presentation/frontends/qtfrontend/importtab.cpp:121
+#: src/presentation/frontends/qtfrontend/importtab.cpp:333
+msgctxt "ImportTab|"
+msgid "Stop daemon"
+msgstr "Зупинити фонову службу"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:155
+msgctxt "MainWindowGUI|"
+msgid "Ready to rumble ;-)"
+msgstr "Готові до роботи ;-)"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:365
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:525
+msgctxt "MainWindowGUI|"
+msgid "&File"
+msgstr "&Файл"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:366
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:538
+msgctxt "MainWindowGUI|"
+msgid "&Export"
+msgstr "&Експорт"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:367
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1139
+msgctxt "MainWindowGUI|"
+msgid "Open &Recent"
+msgstr "Відкрити &недавні"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:369
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:554
+msgctxt "MainWindowGUI|"
+msgid "&Edit"
+msgstr "З&міни"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:386
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:549
+msgctxt "MainWindowGUI|"
+msgid "&Settings"
+msgstr "П&араметри"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:389
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:556
+msgctxt "MainWindowGUI|"
+msgid "&Help"
+msgstr "&Довідка"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
+msgctxt "MainWindowGUI|"
+msgid "&New"
+msgstr "С&творити"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
+msgctxt "MainWindowGUI|"
+msgid "&Open"
+msgstr "&Відкрити"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
+msgctxt "MainWindowGUI|"
+msgid "&Save"
+msgstr "&Зберегти"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
+msgctxt "MainWindowGUI|"
+msgid "Save &As"
+msgstr "Зберегти &як"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
+msgctxt "MainWindowGUI|"
+msgid "Video"
+msgstr "Відео"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
+msgctxt "MainWindowGUI|"
+msgid "Cinelerra"
+msgstr "Cinelerra"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
+msgctxt "MainWindowGUI|"
+msgid "&Quit"
+msgstr "Ви&йти"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
+msgctxt "MainWindowGUI|"
+msgid "&Undo"
+msgstr "&Вернути"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
+msgctxt "MainWindowGUI|"
+msgid "Re&do"
+msgstr "П&овторити"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
+msgctxt "MainWindowGUI|"
+msgid "Cu&t"
+msgstr "Виріза&ти"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:504
+msgctxt "MainWindowGUI|"
+msgid "&Copy"
+msgstr "&Копіювати"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
+msgctxt "MainWindowGUI|"
+msgid "&Paste"
+msgstr "&Вставити"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
+msgctxt "MainWindowGUI|"
+msgid "&Go to frame"
+msgstr "Пере&йти до кадру"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
+msgctxt "MainWindowGUI|"
+msgid "&Configure Stopmotion"
+msgstr "&Налаштувати Stopmotion"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:508
+msgctxt "MainWindowGUI|"
+msgid "What's &This"
+msgstr "&Що це"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:510
+msgctxt "MainWindowGUI|"
+msgid "&About"
+msgstr "Пр&о програму"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:513
+msgctxt "MainWindowGUI|"
+msgid "Frame number: "
+msgstr "Номер кадру:"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:515
+msgctxt "MainWindowGUI|"
+msgid "Go to frame:"
+msgstr "Перейти до кадру:"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:572
+msgctxt "MainWindowGUI|"
+msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
+msgstr "<h4>Створити</h4> <p>Створює <em>новий</em> проєкт.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:577
+msgctxt "MainWindowGUI|"
+msgid "New project"
+msgstr "Створити проєкт"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:581
+msgctxt "MainWindowGUI|"
+msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
+msgstr "<h4>Відкрити</h4> <p><em>Відкриває</em> файл проєкту Stopmotion.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:585
+msgctxt "MainWindowGUI|"
+msgid "Open project"
+msgstr "Відкрити проєкт"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:589
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Save</h4> <p><em>Saves</em> the current animation as a Stopmotion "
+"project file. <BR>If this project has been saved before it will "
+"automatically be saved to the previously selected file.</p>"
+msgstr ""
+"<h4>Зберегти</h4> <p><em>Зберігає</em> поточну анімацію як файл проєкту "
+"Stopmotion. <BR>Якщо цей проєкт було збережено раніше, його дані у раніше "
+"вибраному файлі буде автоматично оновлено.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:595
+msgctxt "MainWindowGUI|"
+msgid "Save project"
+msgstr "Зберегти проєкт"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:599
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
+"project file.</p>"
+msgstr ""
+"<h4>Зберегти як</h4> <p><em>Зберігає</em> поточну анімацію як файл проєкту "
+"Stopmotion.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:604
+msgctxt "MainWindowGUI|"
+msgid "Save project As"
+msgstr "Збереження проєкту із новою назвою"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:608
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
+"be given a wizard to guide you."
+msgstr ""
+"<h4>Відео</h4> <p>Експортує поточний проєкт як <em>відео</em>.</p>Програма "
+"відкриє вікно допоміжного майстра із настановами."
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:615
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
+"project.</p>You will be given a wizard to guide you."
+msgstr ""
+"<h4>Cinerella</h4> <p>Експортує поточну анімацію як проєкт <em>Cinerella</"
+"em>.</p>Вам буде показано вікно програми-майстра із настановами."
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:622
+msgctxt "MainWindowGUI|"
+msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
+msgstr "<h4>Вийти</h4> <p><em>Завершує</em> роботу програми.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:626
+msgctxt "MainWindowGUI|"
+msgid "Quit"
+msgstr "Вийти"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:632
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
+"several time to undo earlier operations.</p>"
+msgstr ""
+"<h4>Вернути</h4> <p><em>Скасовує</em> останню дію. Ви можете вибирати пункт "
+"повернення декілька разів, щоб скасувати попередні дії.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:637
+msgctxt "MainWindowGUI|"
+msgid "Undo"
+msgstr "Скасувати"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:641
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
+"several times to redo several operations.</p>"
+msgstr ""
+"<h4>Повторити</h4> <p><em>Повторює</em> останню скасовану дію. Вибирати дію "
+"зі скасовування можна декілька разів, щоб повторно виконати декілька дій.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:646
+msgctxt "MainWindowGUI|"
+msgid "Redo"
+msgstr "Повторити"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:650
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
+"adds them to the clipboard so that you can paste them in somewhere else.</p>"
+msgstr ""
+"<h4>Вирізати</h4> <p><em>Вирізає</em> позначені кадри з анімації і додає їх "
+"до буфера обміну даними, щоб ви могли вставити їх в іншому місці.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:655
+msgctxt "MainWindowGUI|"
+msgid "Cut"
+msgstr "Вирізати"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:659
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
+"can then paste them in another place.</p>"
+msgstr ""
+"<h4>Копіювати</h4> <p><em>Копіює</em> позначені кадри до буфера обміну "
+"даними. Згодом ви можете вставити ці кадри в іншому місці.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:664
+msgctxt "MainWindowGUI|"
+msgid "Copy"
+msgstr "Копіювати"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:668
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Paste</h4> <p><em>Pastes</em> the frames which are currently in the "
+"clipboard into the selected location.</p> <p>You can copy/cut images from "
+"another programs and then use this option to paste them into this animation."
+"</p>"
+msgstr ""
+"<h4>Вставити</h4> <p><em>Вставляє</em> кадри з буфера обміну даними до "
+"вибраного місця.</p> <p>Ви можете скопіювати або вирізати зображення з інших "
+"програм, а потім скористатися цим пунктом для вставляння їх до анімації.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:674
+msgctxt "MainWindowGUI|"
+msgid "Paste"
+msgstr "Вставити"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:678
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
+"you can choose a frame you want to <em>go to</em>.</p>"
+msgstr ""
+"<h4>Перейти до кадру</h4> <p>Використання цієї дії відкриє контекстне меню у "
+"нижній частині, за допомогою якого ви можете вибрати кадр, до якого ви "
+"можете <em>перейти</em>.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:683
+msgctxt "MainWindowGUI|"
+msgid "Go to frame"
+msgstr "Перейти до кадру"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:687
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
+"<em>configure</em> Stopmotion with various input and output devices.</p>"
+msgstr ""
+"<h4>Налаштувати Stopmotion</h4> <p>Відкриває вікно, у якому ви можете "
+"<em>налаштувати</em> роботу Stopmotion із різноманітними пристроями вхідних "
+"і вихідних даних.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:692
+msgctxt "MainWindowGUI|"
+msgid "Configure Stopmotion"
+msgstr "Налаштування Stopmotion"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:698
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
+"can be used to bring up helpful information like this.</p>"
+msgstr ""
+"<h4>Що це</h4> <p>Перемикає вказівник миші у режим «Що це?». Таким "
+"вказівником можна скористатися для отримання допоміжних відомостей, подібних "
+"до цих.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:703
+msgctxt "MainWindowGUI|"
+msgid "What's This"
+msgstr "Що це?"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:707
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
+"manual</p>"
+msgstr ""
+"<h4>Довідка</h4> <p>Ця кнопка відкриває діалогове вікно із підручником "
+"Stopmotion.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:711
+msgctxt "MainWindowGUI|"
+msgid "Help"
+msgstr "Довідка"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:715
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>About</h4> <p>This will display a small information box where you can "
+"read general information as well as the names of the developers behind this "
+"excellent piece of software.</p>"
+msgstr ""
+"<h4>Про програму</h4> <p>Відкриє невеличку інформаційну панель, на якій ви "
+"зможете прочитати загальні відомості, а також імена розробників, які "
+"попрацювали над цією чудовою частиною програмного забезпечення.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:721
+msgctxt "MainWindowGUI|"
+msgid "About"
+msgstr "Про програму"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:727
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Frame number</h4><p>This area displays the number of the currently "
+"selected frame</p>"
+msgstr ""
+"<h4>Номер кадру</h4><p>У цій області буде показано номер поточного "
+"позначеного кадру.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:734
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
+"also play animations in this window by pressing the <b>Play</b> button.</p>"
+msgstr ""
+"<h4>Перегляд кадрів</h4><p>У цій області ви бачитимете позначений кадр. Ви "
+"також зможете запускати анімації натисканням кнопки <b>Відтворити</b>.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:741
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
+"program will jump to the specified frame</p> "
+msgstr ""
+"<h4>Меню переходу до кадру</h4> <p>Тут ви можете вказати номер кадру, і "
+"програма перейде до вказаного вами кадру.</p> "
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:747
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Frame preferences menu</h4> <p>In this menu you can set preferences for "
+"the selected frame/frames, such as <b>subtitles</b>, <b>sound effects</b>, "
+"etc.</p>"
+msgstr ""
+"<h4>Меню налаштувань кадру</h4> <p>За допомогою цього меню ви можете "
+"встановити налаштування для позначеного кадру або позначених кадрів, зокрема "
+"вказати <b>субтитри</b>, <b>звукові ефекти</b> тощо.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:754
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
+"widgets you will need when working on stop motion animations are located.</p>"
+msgstr ""
+"<h4>Меню інструментів</h4> <p>Це меню інструментів із найкориснішими "
+"кнопками і віджетами, які знадобляться вам для роботи із покадровими "
+"анімаціями.</p>"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:760
+msgctxt "MainWindowGUI|"
+msgid ""
+"<h4>FrameBar</h4> <p>In this area you can see the frames and scenes in the "
+"animations and build the animation by moving the them around.</p><p>You can "
+"switch to the next and the previous frame using the <b>arrow buttons</b> or "
+"<b>x</b> and <b>z</b></p> "
+msgstr ""
+"<h4>Панель кадрів</h4> <p>У цій області буде показано кадри і сцени у "
+"анімаціях. Тут ви можете будувати анімації пересуванням кадрів і сцен.</"
+"p><p>Ви можете перемикатися на наступний або попередній кадр за допомогою "
+"<b>кнопок зі стрілками</b> або клавіш <b>x</b> та <b>z</b></p> "
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
+msgctxt "MainWindowGUI|"
+msgid "Unsaved changes"
+msgstr "Незбережені зміни"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
+msgctxt "MainWindowGUI|"
+msgid "There are unsaved changes. Do you want to save?"
+msgstr "Виявлено незбережені зміни. Хочете їх зберегти?"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
+msgctxt "MainWindowGUI|"
+msgid "Do&n't save"
+msgstr "&Не зберігати"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
+msgctxt "MainWindowGUI|"
+msgid "Abort"
+msgstr "Перервати"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:807
+msgctxt "MainWindowGUI|"
+msgid "Choose project file"
+msgstr "Виберіть файл проєкту"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:875
+msgctxt "MainWindowGUI|"
+msgid "Save As"
+msgstr "Зберегти як"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:902
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
+msgctxt "MainWindowGUI|"
+msgid "Warning"
+msgstr "Попередження"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:903
+msgctxt "MainWindowGUI|"
+msgid ""
+"Cannot find any registered encoder to be used for\n"
+"video export. This can be set in the preferences\n"
+"menu. Export to video will not be possible until you\n"
+"have set an encoder to use. Do you want to set it now?"
+msgstr ""
+"Не вдалося знайти жодного зареєстрованого кодувальника для\n"
+"експортування відео. Кодувальник можна встановити у налаштуваннях.\n"
+"Експортування відео буде неможливим, аж доки ви не встановите\n"
+"кодувальника, яким слід скористатися. Хочете встановити його зараз?"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:907
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:957
+msgctxt "MainWindowGUI|"
+msgid "&Yes"
+msgstr "&Так"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:907
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:957
+msgctxt "MainWindowGUI|"
+msgid "&No"
+msgstr "&Ні"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
+msgctxt "MainWindowGUI|"
+msgid "Export to video file"
+msgstr "Експортувати до відеофайла"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:955
+msgctxt "MainWindowGUI|"
+msgid ""
+"The registered encoder is not valid. Do you want\n"
+"to check your settings in the preferences menu?"
+msgstr ""
+"Зареєстрований кодувальник є некоректним. Хочете перевірити його\n"
+"параметри у налаштуваннях?"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:971
+msgctxt "MainWindowGUI|"
+msgid "Export to file"
+msgstr "Експортувати до файла"
+
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:44
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:123
+msgctxt "PreferencesMenu|"
+msgid "Apply"
+msgstr "Застосувати"
+
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:48
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:124
+msgctxt "PreferencesMenu|"
+msgid "Close"
+msgstr "Закрити"
+
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:62
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:125
+msgctxt "PreferencesMenu|"
+msgid "Preferences Menu"
+msgstr "Меню налаштувань"
+
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:78
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:128
+msgctxt "PreferencesMenu|"
+msgid "Video &Import"
+msgstr "&Імпортувати відео"
+
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:87
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:129
+msgctxt "PreferencesMenu|"
+msgid "Video &Export"
+msgstr "&Експортувати відео"
+
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:96
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:127
+msgctxt "PreferencesMenu|"
+msgid "Video &Device"
+msgstr "Відеоп&ристрій"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:89
+msgctxt "QtFrontend|"
+msgid "Please wait..."
+msgstr "Будь ласка, зачекайте…"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
+msgctxt "QtFrontend|"
+msgid "Connecting camera..."
+msgstr "З'єднуємо камеру…"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:95
+msgctxt "QtFrontend|"
+msgid "Importing frames from disk"
+msgstr "Імпортування кадрів з диска"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:98
+msgctxt "QtFrontend|"
+msgid "Exporting..."
+msgstr "Експортування…"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:101
+msgctxt "QtFrontend|"
+msgid "Restoring project..."
+msgstr "Відновлення проєкту…"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:104
+msgctxt "QtFrontend|"
+msgid "Saving scenes to disk..."
+msgstr "Збереження сцен на диск…"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:108
+msgctxt "QtFrontend|"
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:198
+msgctxt "QtFrontend|"
+msgid "Lose corrupt file"
+msgstr "Втрата пошкодженого файла"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:199
+#, qt-format
+msgctxt "QtFrontend|"
+msgid ""
+"The file %1 seems to be corrupt, it's contents will be lost if you continue. "
+"Do you want to continue?"
+msgstr ""
+"Файл %1, здається, пошкоджено, його вміст буде втрачено, якщо ви продовжите "
+"виконання дії. Хочете виконати дію?"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:258
+msgctxt "QtFrontend|"
+msgid "vgrabbj"
+msgstr "vgrabbj"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:260
+msgctxt "QtFrontend|"
+msgid "The simplest setting. Fairly slow"
+msgstr "Найпростіший варіант. Доволі повільно."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:267
+msgctxt "QtFrontend|"
+msgid "vgrabbj VGA daemon"
+msgstr "Фонова служба VGA vgrabbj"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:269
+msgctxt "QtFrontend|"
+msgid "Starts vgrabbj as a daemon. Pretty fast."
+msgstr "Запускає vgrabbj як фонову службу. Доволі швидко."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:277
+msgctxt "QtFrontend|"
+msgid "uvccapture"
+msgstr "uvccapture"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:279
+msgctxt "QtFrontend|"
+msgid "Grabbing from V4L2 devices"
+msgstr "Захоплення з пристроїв V4L2"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:286
+msgctxt "QtFrontend|"
+msgid "videodog singleshot"
+msgstr "одноразовий videodog"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:288
+msgctxt "QtFrontend|"
+msgid "Videodog."
+msgstr "Videodog."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:295
+msgctxt "QtFrontend|"
+msgid "dvgrab"
+msgstr "dvgrab"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:297
+msgctxt "QtFrontend|"
+msgid "Grabbing from DV-cam."
+msgstr "Захоплення з DV-камери."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:313
+msgctxt "QtFrontend|"
+msgid "Exports from jpeg images to mpeg1 video"
+msgstr "Експортує зображення jpeg до відео mpeg1"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:322
+msgctxt "QtFrontend|"
+msgid "Exports from jpeg images to mpeg2 video"
+msgstr "Експортує зображення jpeg до відео mpeg2"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:331
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:340
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
+msgctxt "QtFrontend|"
+msgid "Exports from jpeg images to mpeg4 video"
+msgstr "Експортує зображення jpeg до відео mpeg4"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:360
+msgctxt "QtFrontend|"
+msgid "Unsupported image file type"
+msgstr "Непідтримуваний тип файлів зображень"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:361
+msgctxt "QtFrontend|"
+msgid "Only JPeg image files can be added to the animation"
+msgstr "До анімації можна додавати лише файли зображень JPEG"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
+msgctxt "QtFrontend|"
+msgid "The selected audio file could not be loaded"
+msgstr "Не вдалося завантажити вибраний файл звукових даних"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:365
+msgctxt "QtFrontend|"
+msgid "Perhaps it is corrupt."
+msgstr "Можливо, його пошкоджено."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
+msgctxt "QtFrontend|"
+msgid "Cannot open the selected file for reading"
+msgstr "Не вдалося відкрити вибраний файл для читання"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:370
+#, qt-format
+msgctxt "QtFrontend|"
+msgid "The file %1 could not be opened"
+msgstr "Не вдалося відкрити файл %1."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:374
+msgctxt "QtFrontend|"
+msgid "Could not copy file to workspace"
+msgstr "Не вдалося скопіювати файли до робочого простору"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:375
+#, qt-format
+msgctxt "QtFrontend|"
+msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
+msgstr ""
+"Не вдалося скопіювати такі файли до робочого простору (~/.stopmotion): %1"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
+msgctxt "QtFrontend|"
+msgid "Failed to initialize audio driver"
+msgstr "Не вдалося ініціалізувати звуковий драйвер"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:380
+msgctxt "QtFrontend|"
+msgid "Sound will not work until this is corrected"
+msgstr "Звук не працюватиме, доки це не буде виправлено"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
+msgctxt "QtFrontend|"
+msgid "Failed to write preferences"
+msgstr "Не вдалося записати налаштування"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:385
+#, qt-format
+msgctxt "QtFrontend|"
+msgid "Could not write preferences to file: %1"
+msgstr "Не вдалося записати налаштування до файла: %1"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:394
+msgctxt "QtFrontend|"
+msgid "Stopmotion cannot be started."
+msgstr "Не вдалося запустити Stopmotion."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:395
+msgctxt "QtFrontend|"
+msgid ""
+"Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
+"running."
+msgstr ""
+"Не вдалося отримати виключне блокування для файла command.log. Ймовірно, "
+"Stopmotion вже запущено."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:399
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:404
+msgctxt "QtFrontend|"
+msgid "Preferences file cannot be read"
+msgstr "Не вдалося прочитати файл налаштувань"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
+#, qt-format
+msgctxt "QtFrontend|"
+msgid "Preferences file %1 is unreadable. Please correct this and try again."
+msgstr ""
+"Файл налаштувань %1 є непридатним до читання. Будь ласка, виправте права "
+"доступу і повторіть спробу."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:405
+#, qt-format
+msgctxt "QtFrontend|"
+msgid ""
+"Preferences file %1 is not a valid XML preferences file. Please correct this "
+"or delete the file and try again."
+msgstr ""
+"Файл налаштувань %1 не є коректним файлом налаштувань у форматі XML. Будь "
+"ласка, виправте його або вилучіть файл і повторіть спробу."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:408
+msgctxt "QtFrontend|"
+msgid "Fatal"
+msgstr "Критична помилка"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:416
+msgctxt "QtFrontend|"
+msgid "Stopmotion threw an exception it could not handle."
+msgstr "Stopmotion видано виключення, яке програма не здатна обробити."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:417
+msgctxt "QtFrontend|"
+msgid "Please raise a bug report."
+msgstr "Будь ласка, створіть повідомлення про ваду."
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:423
+msgctxt "QtFrontend|"
+msgid "Warning"
+msgstr "Попередження"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:464
+msgctxt "QtFrontend|"
+msgid ""
+"A newer version of the preferences file with few more default\n"
+"values exists. Do you want to use this one? (Your old preferences\n"
+" will be saved in ~/.stopmotion/preferences.xml.OLD)"
+msgstr ""
+"Існує новіша версія файла налаштувань із декількома додатковими\n"
+"типовими значеннями. Хочете скористатися цією версією (ваші\n"
+" старі налаштування буде збережено до ~/.stopmotion/preferences.xml.OLD)"
+
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:471
+msgctxt "QtFrontend|"
+msgid "Question"
+msgstr "Питання"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:207
+msgctxt "ToolsMenu|"
+msgid "FPS chooser"
+msgstr "Вибір частоти кадрів"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:208
+msgctxt "ToolsMenu|"
+msgid "Number of images:"
+msgstr "Кількість зображень:"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:211
+msgctxt "ToolsMenu|"
+msgid "Mix"
+msgstr "Змішування"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:212
+msgctxt "ToolsMenu|"
+msgid "Diff"
+msgstr "Різниця"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:213
+msgctxt "ToolsMenu|"
+msgid "Playback"
+msgstr "Відтворення"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:214
+msgctxt "ToolsMenu|"
+msgid "Auto"
+msgstr "Авто"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:218
+msgctxt "ToolsMenu|"
+msgid "Per second"
+msgstr "За секунду"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:219
+msgctxt "ToolsMenu|"
+msgid "Per minute"
+msgstr "За хвилину"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:220
+msgctxt "ToolsMenu|"
+msgid "Per hour"
+msgstr "За годину"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:225
+msgctxt "ToolsMenu|"
+msgid ""
+"<h4>Add Frames (CTRL+F)</h4> <p>Click on this button to <em>add</em> frames "
+"to the animation.</p>"
+msgstr ""
+"<h4>Додати кадри (Ctrl+F)</h4> <p>Натисніть цю кнопку, щоб <em>додати</em> "
+"до анімації кадри.</p>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:232
+msgctxt "ToolsMenu|"
+msgid ""
+"<h4>Remove Selection (Delete)</h4> <p>Click this button to <em>remove</em> "
+"the selected frames from the animation.</p>"
+msgstr ""
+"<h4>Вилучити позначене (Delete)</h4> <p>Натисніть цю кнопку, щоб "
+"<em>вилучити</em> позначені кадри з анімації.</p>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:239
+msgctxt "ToolsMenu|"
+msgid ""
+"<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
+"<em>scene</em> to the animation.</p>"
+msgstr ""
+"<h4>Створити сцену (Ctrl+E)</h4> <p>Натисніть цю кнопку, щоб <em>створити</"
+"em> в анімації <em>сцену</em>.</p>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
+msgctxt "ToolsMenu|"
+msgid ""
+"<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</em> "
+"the selected scene from the animation.</p>"
+msgstr ""
+"<h4>Вилучити сцену (Shift+Delete)</h4> <p>Натисніть цю кнопку, щоб "
+"<em>вилучити</em> позначену сцену з анімації.</p>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:253
+msgctxt "ToolsMenu|"
+msgid ""
+"<h4>Toggle camera on/off (C)</h4> <p>Click this button to toggle the camera "
+"on and off</p> "
+msgstr ""
+"<h4>Увімкнути/Вимкнути камеру (C)</h4> <p>Натисніть цю кнопку, щоб увімкнути "
+"або вимкнути камеру.</p> "
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:259
+msgctxt "ToolsMenu|"
+msgid ""
+"<h4>Launch Gimp</h4> <p>Click this button to open the active frame in Gimp</"
+"p> <p>Note that you can also drag images from the frame bar and drop them on "
+"Gimp</p>"
+msgstr ""
+"<h4>Запустити Gimp</h4> <p>Натисніть цю кнопку, щоб відкрити активний кадр у "
+"Gimp</p> <p>Зауважте, що ви також можете перетягнути зображення з панелі "
+"кадрів і скинути його до вікна Gimp.</p>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:266
+msgctxt "ToolsMenu|"
+msgid ""
+"<h4>Capture Frame (Space)</h4> <p>Click on this button to <em>capture</em> a "
+"frame from the camera an put it in the animation</p> <p> This can also be "
+"done by pressing the <b>Space key</b></p>"
+msgstr ""
+"<h4>Захопити кадр (Пробіл)</h4> <p>Натисніть цю кнопку, щоб <em>захопити</"
+"em> кадр з камери і розташувати його в анімації.</p> <p>Зробити це можна "
+"натисканням клавіші <b>Пробіл</b>.</p>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:274
+msgctxt "ToolsMenu|"
+msgid ""
+"<h4>Number of images</h4> <p>By changing the value in this slidebar you can "
+"specify how many images backwards in the animation which should be mixed on "
+"top of the camera or if you are in playback mode: how many images to play. </"
+"p> <p>By mixing the previous image(s) onto the camera you can more easily "
+"see how the next shot will be in relation to the other, thereby making a "
+"smoother stop motion animation!</p>"
+msgstr ""
+"<h4>Кількість зображень</h4> <p>Зміною цього значення на бічній панелі ви "
+"можете вказати, скільки кадрів до початку анімації має бути розміщено над "
+"камерою або, якщо ви перебуваєте у режимі відтворення, скільки зображень "
+"слід відтворити.</p> <p>Мікшуванням попередніх зображень до камери ви можете "
+"спростити порівняння наступного кадру із попередніми, створивши плавнішу "
+"покадрову анімацію!</p>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:285
+msgctxt "ToolsMenu|"
+msgid ""
+"<h4>FPS chooser</h4> <p>By changing the value in this chooser you set which "
+"speed the animation in the <b>FrameView</b> should run at.</p> <p>To start "
+"an animation press the <b>Run Animation</b> button.</p>"
+msgstr ""
+"<h4>Засіб вибору частоти кадрів</h4> <p>Змінивши значення цього параметра, "
+"ви можете встановити швидкість, з якою відтворюватиметься анімація на "
+"<b>Панелі кадрів</b>.</p> <p>Щоб запустити анімацію, натисніть кнопку "
+"<b>Запустити анімацію</b>.</p>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:295
+msgctxt "ToolsMenu|"
+msgid "<h4>Play animation (K, P)</h4>"
+msgstr "<h4>Відтворити анімацію (K, P)</h4>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:298
+msgctxt "ToolsMenu|"
+msgid "<h4>Stop animation (K, P)</h4>"
+msgstr "<h4>Зупинити анімацію (K, P)</h4>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:301
+msgctxt "ToolsMenu|"
+msgid "<h4>Previous frame (J, Left)</h4>"
+msgstr "<h4>Попередній кадр (J, ←)</h4>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:304
+msgctxt "ToolsMenu|"
+msgid "<h4>Next frame (L, Right)</h4>"
+msgstr "<h4>Наступний кадр (L, →)</h4>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:307
+msgctxt "ToolsMenu|"
+msgid "<h4>Previous scene (I)</h4>"
+msgstr "<h4>Попередня сцена (I)</h4>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:310
+msgctxt "ToolsMenu|"
+msgid "<h4>Next scene (O)</h4>"
+msgstr "<h4>Наступна сцена (O)</h4>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:314
+msgctxt "ToolsMenu|"
+msgid ""
+"<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether you "
+"want the animation to play to the end, or to loop indefinitely.</p>"
+msgstr ""
+"<h4>Зациклити анімацію (Ctrl+L)</h4> <p>За допомогою цієї кнопки ви можете "
+"встановити, хочете ви, щоб анімація відтворилася до кінця, чи нескінченно "
+"зациклити її відтворення.</p>"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
+msgctxt "ToolsMenu|"
+msgid "Notice"
+msgstr "Зауваження"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
+msgctxt "ToolsMenu|"
+msgid ""
+"Playback only currently works when running the grabber as a daemon. Go to "
+"the preferences menu (CTRL+P) to switch to running the image grabbing as a "
+"daemon."
+msgstr ""
+"У поточній версії відтворення працює, лише якщо засіб захоплення зображень "
+"запущено як фонову службу. Перейдіть до налаштувань (Ctrl+P), що перемкнути "
+"засіб захоплення у режим фонової служби."
