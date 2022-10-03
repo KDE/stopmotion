@@ -743,7 +743,7 @@ msgstr "&Copia"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
 msgctxt "MainWindowGUI|"
 msgid "&Paste"
-msgstr "&Apega"
+msgstr "A&pega"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
 msgctxt "MainWindowGUI|"
@@ -934,8 +934,8 @@ msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
 "you can choose a frame you want to <em>go to</em>.</p>"
 msgstr ""
-"<h4>Ves al fotograma</h4> <p>Obrirà un menú emergent a la part inferior a on "
-"podreu triar un fotograma al que vulgueu <em>anar-hi</em>.</p>"
+"<h4>Ves al fotograma</h4> <p>Açò obrirà un menú emergent a la part inferior "
+"a on podreu triar un fotograma al que vulgueu <em>anar-hi</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:683
 msgctxt "MainWindowGUI|"
@@ -948,7 +948,7 @@ msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
 "<em>configure</em> Stopmotion with various input and output devices.</p>"
 msgstr ""
-"<h4>Configura Stopmotion</h4> <p>Obrirà una finestra a on es pot "
+"<h4>Configura Stopmotion</h4> <p>Açò obrirà una finestra a on es pot "
 "<em>configurar</em> Stopmotion amb diversos dispositius d'entrada i eixida.</"
 "p>"
 
@@ -963,8 +963,8 @@ msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
 "can be used to bring up helpful information like this.</p>"
 msgstr ""
-"<h4>Què és açò</h4> <p>Activarà un cursor del ratolí «WhatsThis» que es pot "
-"utilitzar per a obrir informació útil com esta.</p>"
+"<h4>Què és açò</h4> <p>Açò activarà un cursor del ratolí «WhatsThis» que es "
+"pot utilitzar per a obrir informació útil com esta.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:703
 msgctxt "MainWindowGUI|"
@@ -991,9 +991,9 @@ msgid ""
 "read general information as well as the names of the developers behind this "
 "excellent piece of software.</p>"
 msgstr ""
-"<h4>Quant a</h4> <p>Mostrarà un rètol informatiu xicotet a on es pot llegir "
-"informació general així com els noms dels desenvolupadors que hi ha darrere "
-"d'esta peça excel·lent de programari.</p>"
+"<h4>Quant a</h4> <p>Açò mostrarà un rètol informatiu xicotet a on es pot "
+"llegir informació general així com els noms dels desenvolupadors que hi ha "
+"darrere d'esta peça excel·lent de programari.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:721
 msgctxt "MainWindowGUI|"
