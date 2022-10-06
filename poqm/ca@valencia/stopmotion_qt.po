@@ -309,7 +309,7 @@ msgstr "Descripció"
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:368
 msgctxt "DeviceTab|"
 msgid "&Add"
-msgstr "&Afig"
+msgstr "Afi&g"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:98
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:369
@@ -344,7 +344,7 @@ msgstr "dispositiu"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:386
 msgctxt "ExportTab|"
 msgid "&Add"
-msgstr "&Afig"
+msgstr "Afi&g"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:91
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:387
@@ -604,7 +604,7 @@ msgstr "Descripció"
 #: src/presentation/frontends/qtfrontend/importtab.cpp:326
 msgctxt "ImportTab|"
 msgid "&Add"
-msgstr "&Afig"
+msgstr "Afi&g"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:91
 #: src/presentation/frontends/qtfrontend/importtab.cpp:327
@@ -651,7 +651,7 @@ msgstr "Preparat per a començar ;-)"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:525
 msgctxt "MainWindowGUI|"
 msgid "&File"
-msgstr "&Fitxer"
+msgstr "Fi&txer"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:366
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:538
@@ -675,7 +675,7 @@ msgstr "&Edita"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:549
 msgctxt "MainWindowGUI|"
 msgid "&Settings"
-msgstr "&Configuració"
+msgstr "Con&figuració"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:389
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
@@ -692,7 +692,7 @@ msgstr "&Nou"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
 msgctxt "MainWindowGUI|"
 msgid "&Open"
-msgstr "&Obri"
+msgstr "O&bri"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
@@ -703,7 +703,7 @@ msgstr "Guar&da"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
 msgctxt "MainWindowGUI|"
 msgid "Save &As"
-msgstr "Guar&da com a"
+msgstr "Anomena i gu&arda"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
 msgctxt "MainWindowGUI|"
