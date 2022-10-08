@@ -1,62 +1,63 @@
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: stopmotion_qt\n"
-"PO-Revision-Date: 2021-04-18 01:19+0000\n"
-"Last-Translator: transxx.py program <null@kde.org>\n"
-"Language-Team: KDE Test Language <kde-i18n-doc@kde.org>\n"
-"Language: x-test\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: \n"
+"Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Qt-Contexts: true\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: src/application/externalcommand.cpp:46
 msgctxt "ExternalCommand|"
 msgid "Input to program:"
-msgstr "xxInput to program:xx"
+msgstr ""
 
 #: src/application/externalcommand.cpp:56
 msgctxt "ExternalCommand|"
 msgid "Submit"
-msgstr "xxSubmitxx"
+msgstr "გადაცემა"
 
 #: src/application/externalcommand.cpp:62
 msgctxt "ExternalCommand|"
 msgid "Close"
-msgstr "xxClosexx"
+msgstr "დაკეტვა"
 
 #: src/application/externalcommand.cpp:75
 msgctxt "ExternalCommand|"
 msgid "Output from external command"
-msgstr "xxOutput from external commandxx"
+msgstr ""
 
 #: src/application/externalcommand.cpp:123
 #: src/application/externalcommand.cpp:126
 msgctxt "ExternalCommand|"
 msgid "Result"
-msgstr "xxResultxx"
+msgstr "შედეგი"
 
 #: src/application/externalcommand.cpp:123
 msgctxt "ExternalCommand|"
 msgid "Failed!"
-msgstr "xxFailed!xx"
+msgstr ""
 
 #: src/application/externalcommand.cpp:126
 msgctxt "ExternalCommand|"
 msgid "Successful!"
-msgstr "xxSuccessful!xx"
+msgstr ""
 
 #: src/application/languagehandler.cpp:89
 msgctxt "LanguageHandler|"
 msgid "English"
-msgstr "xxEnglishxx"
+msgstr "ინგლისური"
 
 #: src/application/languagehandler.cpp:91
 msgctxt "LanguageHandler|"
 msgid "&Translation"
-msgstr "xx&Translationxx"
+msgstr "&თარგმანი"
 
 #: src/application/languagehandler.cpp:107
 msgctxt ""
@@ -64,195 +65,194 @@ msgctxt ""
 "are translating to, in that language. Example: English = Deutsch (Deutsch is "
 "\"German\" in German)"
 msgid "English"
-msgstr "xxEnglishxx"
+msgstr "ინგლისური"
 
 #: src/application/modelhandler.cpp:62
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
-msgstr "xxChoose frames to addxx"
+msgstr ""
 
 #: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
-msgstr "xxRemoved the selected framexx"
+msgstr ""
 
 #: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:231
 #: src/application/modelhandler.cpp:248
 msgctxt "ModelHandler|"
 msgid "Warning"
-msgstr "xxWarningxx"
+msgstr "გაფრთხილება"
 
 #: src/application/modelhandler.cpp:221
 msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
-msgstr "xxYou do not have Gimp installed on your systemxx"
+msgstr ""
 
 #: src/application/modelhandler.cpp:232
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
-msgstr "xxThere is no active frame to openxx"
+msgstr ""
 
 #: src/application/modelhandler.cpp:249
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
-msgstr "xxFailed to start Gimp!xx"
+msgstr "GIMP-ის გაშვების შეცდომა!"
 
 #: src/application/runanimationhandler.cpp:93
 msgctxt "RunAnimationHandler|"
 msgid "Running animation"
-msgstr "xxRunning animationxx"
+msgstr ""
 
 #: src/application/soundhandler.cpp:44
 msgctxt "SoundHandler|"
 msgid "Choose sound file"
-msgstr "xxChoose sound filexx"
+msgstr "აირჩიეთ ხმის ფაილი"
 
 #: src/application/soundhandler.cpp:44
 msgctxt "SoundHandler|"
 msgid "Sounds (*.ogg)"
-msgstr "xxSounds (*.ogg)xx"
+msgstr "ხმა (*.ogg)"
 
 #: src/application/soundhandler.cpp:70
 msgctxt "SoundHandler|"
 msgid "Sound name"
-msgstr "xxSound namexx"
+msgstr "ხმის სახელი"
 
 #: src/application/soundhandler.cpp:71
 msgctxt "SoundHandler|"
 msgid "Enter the name of the sound:"
-msgstr "xxEnter the name of the sound:xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:42
 msgctxt "AboutDialog|"
 msgid "This is the Stopmotion application for creating stop motion animations."
 msgstr ""
-"xxThis is the Stopmotion application for creating stop motion animations.xx"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:47
 msgctxt "AboutDialog|"
 msgid "&About"
-msgstr "xx&Aboutxx"
+msgstr "შ&ესახებ"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:50
 msgctxt "AboutDialog|"
 msgid "Main developers"
-msgstr "xxMain developersxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:54
 msgctxt "AboutDialog|"
 msgid "Contributors"
-msgstr "xxContributorsxx"
+msgstr "შემომწირავები"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:64
 msgctxt "AboutDialog|"
 msgid "A&uthors"
-msgstr "xxA&uthorsxx"
+msgstr "&ავტორები"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:68
 msgctxt "AboutDialog|"
 msgid "Translation"
-msgstr "xxTranslationxx"
+msgstr "თარგმანი"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:69
 msgctxt "AboutDialog|"
 msgid "Czech"
-msgstr "xxCzechxx"
+msgstr "ჩეხური"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:70
 msgctxt "AboutDialog|"
 msgid "Slovenian"
-msgstr "xxSlovenianxx"
+msgstr "სლოვენიური"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:71
 msgctxt "AboutDialog|"
 msgid "French"
-msgstr "xxFrenchxx"
+msgstr "ფრანგული"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:72
 msgctxt "AboutDialog|"
 msgid "German"
-msgstr "xxGermanxx"
+msgstr "გერმანული"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:74
 msgctxt "AboutDialog|"
 msgid "Portuguese"
-msgstr "xxPortuguesexx"
+msgstr "პორტუგალიური"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:76
 msgctxt "AboutDialog|"
 msgid "Spanish"
-msgstr "xxSpanishxx"
+msgstr "ესპანური"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:77
 msgctxt "AboutDialog|"
 msgid "Swedish"
-msgstr "xxSwedishxx"
+msgstr "შვედური"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:79
 msgctxt "AboutDialog|"
 msgid "Turkish"
-msgstr "xxTurkishxx"
+msgstr "თურქული"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:80
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:81
 msgctxt "AboutDialog|"
 msgid "Italian"
-msgstr "xxItalianxx"
+msgstr "იტალიური"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:82
 msgctxt "AboutDialog|"
 msgid "Traditional Chinese"
-msgstr "xxTraditional Chinesexx"
+msgstr "ტრადიციული ჩინური"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:83
 msgctxt "AboutDialog|"
 msgid "Arabic"
-msgstr "xxArabicxx"
+msgstr "არაბული"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:84
 msgctxt "AboutDialog|"
 msgid "Russian"
-msgstr "xxRussianxx"
+msgstr "რუსული"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:85
 msgctxt "AboutDialog|"
 msgid "Hebrew"
-msgstr "xxHebrewxx"
+msgstr "ივრითი"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:87
 msgctxt "AboutDialog|"
 msgid "Logo"
-msgstr "xxLogoxx"
+msgstr "ლოგო"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:89
 msgctxt "AboutDialog|"
 msgid "Coordinating"
-msgstr "xxCoordinatingxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:93
 msgctxt "AboutDialog|"
 msgid "Testing"
-msgstr "xxTestingxx"
+msgstr "ტესტირება"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:105
 msgctxt "AboutDialog|"
 msgid "&Thanks To"
-msgstr "xx&Thanks Toxx"
+msgstr "&მადლობა"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:110
 msgctxt "AboutDialog|"
 msgid "&Licence Agreement"
-msgstr "xx&Licence Agreementxx"
+msgstr "&სალიცენზიო შეთანხმება"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:112
 msgctxt "AboutDialog|"
 msgid "OK"
-msgstr "xxOKxx"
+msgstr "დიახ"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:125
 msgctxt "AboutDialog|"
 msgid "About"
-msgstr "xxAboutxx"
+msgstr "შესახებ"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:69
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:356
@@ -261,8 +261,6 @@ msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
 "displaying video."
 msgstr ""
-"xxBelow you can set which device Stopmotion should use for grabbing images "
-"and displaying video.xx"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:71
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:358
@@ -272,9 +270,6 @@ msgid ""
 "It is not recommended to use devices which is not auto-detected, but feel "
 "free to do it if you are an advanced user."
 msgstr ""
-"xxYou can select from the auto-detected devices below or add devices "
-"yourself. It is not recommended to use devices which is not auto-detected, "
-"but feel free to do it if you are an advanced user.xx"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:74
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:361
@@ -282,78 +277,76 @@ msgctxt "DeviceTab|"
 msgid ""
 "The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
 msgstr ""
-"xxThe selected device is recognized as <b>$VIDEODEVICE</b> under Video "
-"Import.xx"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:80
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:365
 msgctxt "DeviceTab|"
 msgid "Name"
-msgstr "xxNamexx"
+msgstr "სახელი"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:80
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:365
 msgctxt "DeviceTab|"
 msgid "Description"
-msgstr "xxDescriptionxx"
+msgstr "აღწერა"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:94
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:368
 msgctxt "DeviceTab|"
 msgid "&Add"
-msgstr "xx&Addxx"
+msgstr "&დამატება"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:98
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:369
 msgctxt "DeviceTab|"
 msgid "&Remove"
-msgstr "xx&Removexx"
+msgstr "&წაშლა"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:101
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:370
 msgctxt "DeviceTab|"
 msgid "&Edit"
-msgstr "xx&Editxx"
+msgstr "&ჩასწორება"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:105
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:373
 msgctxt "DeviceTab|"
 msgid "Video device settings"
-msgstr "xxVideo device settingsxx"
+msgstr "ვიდეო მოწყობილობის მორგება"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:114
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:374
 msgctxt "DeviceTab|"
 msgid "Video Device ($VIDEODEVICE): "
-msgstr "xxVideo Device ($VIDEODEVICE): xx"
+msgstr "ვიდეო მოწყობილობა ($VIDEODEVICE): "
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:161
 msgctxt "DeviceTab|"
 msgid "device"
-msgstr "xxdevicexx"
+msgstr "მოწყობილობა"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:87
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:386
 msgctxt "ExportTab|"
 msgid "&Add"
-msgstr "xx&Addxx"
+msgstr "&დამატება"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:91
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:387
 msgctxt "ExportTab|"
 msgid "&Remove"
-msgstr "xx&Removexx"
+msgstr "&წაშლა"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:94
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:388
 msgctxt "ExportTab|"
 msgid "&Edit"
-msgstr "xx&Editxx"
+msgstr "&ჩასწორება"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:98
 msgctxt "ExportTab|"
 msgid "Encoder settings"
-msgstr "xxEncoder settingsxx"
+msgstr "ენკოდერის მორგება"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:108
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:391
@@ -361,49 +354,47 @@ msgctxt "ExportTab|"
 msgid ""
 "Do you want to be asked for an output file every time you choose to export?"
 msgstr ""
-"xxDo you want to be asked for an output file every time you choose to export?"
-"xx"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:110
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:393
 msgctxt "ExportTab|"
 msgid "Yes"
-msgstr "xxYesxx"
+msgstr "დიახ"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:115
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:394
 msgctxt "ExportTab|"
 msgid "No"
-msgstr "xxNoxx"
+msgstr "არა"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:120
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:395
 msgctxt "ExportTab|"
 msgid "Set default output file:"
-msgstr "xxSet default output file:xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:126
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:396
 msgctxt "ExportTab|"
 msgid "Browse"
-msgstr "xxBrowsexx"
+msgstr "დათვალიერება"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:131
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:397
 msgctxt "ExportTab|"
 msgid "Start encoder:"
-msgstr "xxStart encoder:xx"
+msgstr "ენკოდერის გაშვება:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:136
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:398
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
-msgstr "xxStop encoder:xx"
+msgstr "ენკოდერის გაჩერება:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:362
 msgctxt "ExportTab|"
 msgid "Choose output file"
-msgstr "xxChoose output filexx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:372
 msgctxt "ExportTab|"
@@ -411,8 +402,6 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
 "the currently active project to a video file."
 msgstr ""
-"xxBelow you can set which program/process Stopmotion should use for encoding "
-"the currently active project to a video file.xx"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:374
 msgctxt "ExportTab|"
@@ -420,8 +409,6 @@ msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
 "the image path and the video file, respectively."
 msgstr ""
-"xxYou should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
-"the image path and the video file, respectively.xx"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:376
 msgctxt "ExportTab|"
@@ -429,48 +416,46 @@ msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
 "in the project."
 msgstr ""
-"xxYou can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
-"in the project.xx"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:378
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
-msgstr "xxExample with mencoder (jpeg images to mpeg4 video):xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:383
 msgctxt "ExportTab|"
 msgid "Name"
-msgstr "xxNamexx"
+msgstr "სახელი"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:383
 msgctxt "ExportTab|"
 msgid "Description"
-msgstr "xxDescriptionxx"
+msgstr "აღწერა"
 
 #: src/presentation/frontends/qtfrontend/framebar/framebar.cpp:196
 msgctxt "FrameBar|"
 msgid "Frame number: "
-msgstr "xxFrame number: xx"
+msgstr "კადრის ნომერი: "
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:114
 msgctxt "FramePreferencesMenu|"
 msgid "Add &sound"
-msgstr "xxAdd &soundxx"
+msgstr "&ხმის დამატება"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:115
 msgctxt "FramePreferencesMenu|"
 msgid "&Remove Sound"
-msgstr "xx&Remove Soundxx"
+msgstr "&ხმის მოცილება"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:116
 msgctxt "FramePreferencesMenu|"
 msgid "Change name"
-msgstr "xxChange namexx"
+msgstr "სახელის შეცვლა"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:117
 msgctxt "FramePreferencesMenu|"
 msgid "Sounds:"
-msgstr "xxSounds:xx"
+msgstr "ხმები:"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:120
 msgctxt "FramePreferencesMenu|"
@@ -479,9 +464,6 @@ msgid ""
 "selected frame.</p> <p>The sound will begin playing when this frame is shown "
 "and play until it is done.</p>"
 msgstr ""
-"xx<h4>Add sound</h4> <p>With this button you can <em>add sounds</em> to the "
-"selected frame.</p> <p>The sound will begin playing when this frame is shown "
-"and play until it is done.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:128
 msgctxt "FramePreferencesMenu|"
@@ -489,8 +471,6 @@ msgid ""
 "<h4>Remove sound</h4> <p>With this button you can <em>remove</em> the "
 "selected sound from this frame.</p>"
 msgstr ""
-"xx<h4>Remove sound</h4> <p>With this button you can <em>remove</em> the "
-"selected sound from this frame.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:135
 msgctxt "FramePreferencesMenu|"
@@ -499,9 +479,6 @@ msgid ""
 "selected sound. <BR>The name of the sound has no other effect than making it "
 "easier work with the animation.</p>"
 msgstr ""
-"xx<h4>Change name</h4> <p>With this button you can change the name of the "
-"selected sound. <BR>The name of the sound has no other effect than making it "
-"easier work with the animation.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:143
 msgctxt "FramePreferencesMenu|"
@@ -510,9 +487,6 @@ msgid ""
 "p><p>The sounds will begin playing when this frame is shown and play until "
 "they are done.</p>"
 msgstr ""
-"xx<h4>Sounds</h4> <p>This list shows all the sounds connected to this frame."
-"</p><p>The sounds will begin playing when this frame is shown and play until "
-"they are done.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 #: src/presentation/frontends/qtfrontend/frameview.cpp:289
@@ -522,22 +496,22 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/frameview.cpp:357
 msgctxt "FrameView|"
 msgid "Warning"
-msgstr "xxWarningxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
-msgstr "xxNo video device selected in the preferences menu.xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:289
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
-msgstr "xxPre poll command does not existsxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:302
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
-msgstr "xxYou do not have the given grabber installed on your systemxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:327
 #: src/presentation/frontends/qtfrontend/frameview.cpp:345
@@ -547,9 +521,6 @@ msgid ""
 "to grab from an invalid device. Please check\n"
 "your grabber settings in the preferences menu."
 msgstr ""
-"xxGrabbing failed. This may happen if you try\n"
-"to grab from an invalid device. Please check\n"
-"your grabber settings in the preferences menu.xx"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:357
 msgctxt "FrameView|"
@@ -557,8 +528,6 @@ msgid ""
 "You have to define an image grabber to use.\n"
 "This can be set in the preferences menu."
 msgstr ""
-"xxYou have to define an image grabber to use.\n"
-"This can be set in the preferences menu.xx"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:63
 #: src/presentation/frontends/qtfrontend/importtab.cpp:317
@@ -567,8 +536,6 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
 "images from the selected device."
 msgstr ""
-"xxBelow you can set which program/process Stopmotion should use for grabbing "
-"images from the selected device.xx"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:65
 #: src/presentation/frontends/qtfrontend/importtab.cpp:319
@@ -577,215 +544,213 @@ msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 "the video device and the image file, respectively."
 msgstr ""
-"xxYou should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to "
-"represent the video device and the image file, respectively.xx"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:71
 #: src/presentation/frontends/qtfrontend/importtab.cpp:323
 msgctxt "ImportTab|"
 msgid "Name"
-msgstr "xxNamexx"
+msgstr "სახელი"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:71
 #: src/presentation/frontends/qtfrontend/importtab.cpp:323
 msgctxt "ImportTab|"
 msgid "Description"
-msgstr "xxDescriptionxx"
+msgstr "აღწერა"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:87
 #: src/presentation/frontends/qtfrontend/importtab.cpp:326
 msgctxt "ImportTab|"
 msgid "&Add"
-msgstr "xx&Addxx"
+msgstr "&დამატება"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:91
 #: src/presentation/frontends/qtfrontend/importtab.cpp:327
 msgctxt "ImportTab|"
 msgid "&Remove"
-msgstr "xx&Removexx"
+msgstr "&წაშლა"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:94
 #: src/presentation/frontends/qtfrontend/importtab.cpp:328
 msgctxt "ImportTab|"
 msgid "&Edit"
-msgstr "xx&Editxx"
+msgstr "&ჩასწორება"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:98
 #: src/presentation/frontends/qtfrontend/importtab.cpp:330
 msgctxt "ImportTab|"
 msgid "Import device settings"
-msgstr "xxImport device settingsxx"
+msgstr "მოწყობილობის პარამეტრების შემოტანა"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:107
 #: src/presentation/frontends/qtfrontend/importtab.cpp:331
 msgctxt "ImportTab|"
 msgid "Pre-poll command"
-msgstr "xxPre-poll commandxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:114
 #: src/presentation/frontends/qtfrontend/importtab.cpp:332
 msgctxt "ImportTab|"
 msgid "Start daemon"
-msgstr "xxStart daemonxx"
+msgstr "დემონის გაშვება"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:121
 #: src/presentation/frontends/qtfrontend/importtab.cpp:333
 msgctxt "ImportTab|"
 msgid "Stop daemon"
-msgstr "xxStop daemonxx"
+msgstr "დემონის გაჩერება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:155
 msgctxt "MainWindowGUI|"
 msgid "Ready to rumble ;-)"
-msgstr "xxReady to rumble ;-)xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:365
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:525
 msgctxt "MainWindowGUI|"
 msgid "&File"
-msgstr "xx&Filexx"
+msgstr "&ფაილი"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:366
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:538
 msgctxt "MainWindowGUI|"
 msgid "&Export"
-msgstr "xx&Exportxx"
+msgstr "&გატანა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:367
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1139
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
-msgstr "xxOpen &Recentxx"
+msgstr "ბოლოს გახსნილი ფაილების გახსნა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:369
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:554
 msgctxt "MainWindowGUI|"
 msgid "&Edit"
-msgstr "xx&Editxx"
+msgstr "&ჩასწორება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:386
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:549
 msgctxt "MainWindowGUI|"
 msgid "&Settings"
-msgstr "xx&Settingsxx"
+msgstr "&პარამეტრები"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:389
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:556
 msgctxt "MainWindowGUI|"
 msgid "&Help"
-msgstr "xx&Helpxx"
+msgstr "&დახმარება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
 msgctxt "MainWindowGUI|"
 msgid "&New"
-msgstr "xx&Newxx"
+msgstr "&ახალი"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
 msgctxt "MainWindowGUI|"
 msgid "&Open"
-msgstr "xx&Openxx"
+msgstr "&გახსნა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
 msgctxt "MainWindowGUI|"
 msgid "&Save"
-msgstr "xx&Savexx"
+msgstr "&შენახვა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
 msgctxt "MainWindowGUI|"
 msgid "Save &As"
-msgstr "xxSave &Asxx"
+msgstr "შენახვა როგორც"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
 msgctxt "MainWindowGUI|"
 msgid "Video"
-msgstr "xxVideoxx"
+msgstr "ვიდეო"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
-msgstr "xxCinelerraxx"
+msgstr "Cinelerra"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
 msgctxt "MainWindowGUI|"
 msgid "&Quit"
-msgstr "xx&Quitxx"
+msgstr "&გასვლა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
 msgctxt "MainWindowGUI|"
 msgid "&Undo"
-msgstr "xx&Undoxx"
+msgstr "&დაბრუნება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
 msgctxt "MainWindowGUI|"
 msgid "Re&do"
-msgstr "xxRe&doxx"
+msgstr "&გამეორება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
 msgctxt "MainWindowGUI|"
 msgid "Cu&t"
-msgstr "xxCu&txx"
+msgstr "ამ&ოჭრა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:504
 msgctxt "MainWindowGUI|"
 msgid "&Copy"
-msgstr "xx&Copyxx"
+msgstr "&კოპირება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
 msgctxt "MainWindowGUI|"
 msgid "&Paste"
-msgstr "xx&Pastexx"
+msgstr "&ჩასმა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
-msgstr "xx&Go to framexx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
-msgstr "xx&Configure Stopmotionxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:508
 msgctxt "MainWindowGUI|"
 msgid "What's &This"
-msgstr "xxWhat's &Thisxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:510
 msgctxt "MainWindowGUI|"
 msgid "&About"
-msgstr "xx&Aboutxx"
+msgstr "შ&ესახებ"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:513
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
-msgstr "xxFrame number: xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:515
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
-msgstr "xxGo to frame:xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:572
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
-msgstr "xx<h4>New</h4> <p>Creates a <em>new</em> project.</p>xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:577
 msgctxt "MainWindowGUI|"
 msgid "New project"
-msgstr "xxNew projectxx"
+msgstr "ახალი პროექტი"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:581
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
-msgstr "xx<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:585
 msgctxt "MainWindowGUI|"
 msgid "Open project"
-msgstr "xxOpen projectxx"
+msgstr "პროექტის გახსნა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:589
 msgctxt "MainWindowGUI|"
@@ -794,14 +759,11 @@ msgid ""
 "project file. <BR>If this project has been saved before it will "
 "automatically be saved to the previously selected file.</p>"
 msgstr ""
-"xx<h4>Save</h4> <p><em>Saves</em> the current animation as a Stopmotion "
-"project file. <BR>If this project has been saved before it will "
-"automatically be saved to the previously selected file.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:595
 msgctxt "MainWindowGUI|"
 msgid "Save project"
-msgstr "xxSave projectxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:599
 msgctxt "MainWindowGUI|"
@@ -809,13 +771,11 @@ msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
 "project file.</p>"
 msgstr ""
-"xx<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
-"project file.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:604
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
-msgstr "xxSave project Asxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:608
 msgctxt "MainWindowGUI|"
@@ -823,8 +783,6 @@ msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
 "be given a wizard to guide you."
 msgstr ""
-"xx<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You "
-"will be given a wizard to guide you.xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:615
 msgctxt "MainWindowGUI|"
@@ -832,18 +790,16 @@ msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
 "project.</p>You will be given a wizard to guide you."
 msgstr ""
-"xx<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</"
-"em> project.</p>You will be given a wizard to guide you.xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:622
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
-msgstr "xx<h4>Quit</h4> <p><em>Quits</em> the program.</p>xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:626
 msgctxt "MainWindowGUI|"
 msgid "Quit"
-msgstr "xxQuitxx"
+msgstr "დატოვება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:632
 msgctxt "MainWindowGUI|"
@@ -851,13 +807,11 @@ msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
 "several time to undo earlier operations.</p>"
 msgstr ""
-"xx<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
-"several time to undo earlier operations.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:637
 msgctxt "MainWindowGUI|"
 msgid "Undo"
-msgstr "xxUndoxx"
+msgstr "დაბრუნება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:641
 msgctxt "MainWindowGUI|"
@@ -865,13 +819,11 @@ msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
 "several times to redo several operations.</p>"
 msgstr ""
-"xx<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
-"several times to redo several operations.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:646
 msgctxt "MainWindowGUI|"
 msgid "Redo"
-msgstr "xxRedoxx"
+msgstr "ბრძანების აღდგენა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:650
 msgctxt "MainWindowGUI|"
@@ -879,14 +831,11 @@ msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
 "adds them to the clipboard so that you can paste them in somewhere else.</p>"
 msgstr ""
-"xx<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
-"adds them to the clipboard so that you can paste them in somewhere else.</"
-"p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:655
 msgctxt "MainWindowGUI|"
 msgid "Cut"
-msgstr "xxCutxx"
+msgstr "ამოჭრა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:659
 msgctxt "MainWindowGUI|"
@@ -894,13 +843,11 @@ msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
 "can then paste them in another place.</p>"
 msgstr ""
-"xx<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
-"can then paste them in another place.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:664
 msgctxt "MainWindowGUI|"
 msgid "Copy"
-msgstr "xxCopyxx"
+msgstr "კოპირება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:668
 msgctxt "MainWindowGUI|"
@@ -910,15 +857,11 @@ msgid ""
 "another programs and then use this option to paste them into this animation."
 "</p>"
 msgstr ""
-"xx<h4>Paste</h4> <p><em>Pastes</em> the frames which are currently in the "
-"clipboard into the selected location.</p> <p>You can copy/cut images from "
-"another programs and then use this option to paste them into this animation."
-"</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:674
 msgctxt "MainWindowGUI|"
 msgid "Paste"
-msgstr "xxPastexx"
+msgstr "ჩასმა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:678
 msgctxt "MainWindowGUI|"
@@ -926,13 +869,11 @@ msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
 "you can choose a frame you want to <em>go to</em>.</p>"
 msgstr ""
-"xx<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom "
-"where you can choose a frame you want to <em>go to</em>.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:683
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
-msgstr "xxGo to framexx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:687
 msgctxt "MainWindowGUI|"
@@ -940,13 +881,11 @@ msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
 "<em>configure</em> Stopmotion with various input and output devices.</p>"
 msgstr ""
-"xx<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
-"<em>configure</em> Stopmotion with various input and output devices.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:692
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
-msgstr "xxConfigure Stopmotionxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:698
 msgctxt "MainWindowGUI|"
@@ -954,13 +893,11 @@ msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
 "can be used to bring up helpful information like this.</p>"
 msgstr ""
-"xx<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
-"can be used to bring up helpful information like this.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:703
 msgctxt "MainWindowGUI|"
 msgid "What's This"
-msgstr "xxWhat's Thisxx"
+msgstr "რა არის ეს"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:707
 msgctxt "MainWindowGUI|"
@@ -968,13 +905,11 @@ msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
 "manual</p>"
 msgstr ""
-"xx<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
-"manual</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:711
 msgctxt "MainWindowGUI|"
 msgid "Help"
-msgstr "xxHelpxx"
+msgstr "დახმარება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:715
 msgctxt "MainWindowGUI|"
@@ -983,14 +918,11 @@ msgid ""
 "read general information as well as the names of the developers behind this "
 "excellent piece of software.</p>"
 msgstr ""
-"xx<h4>About</h4> <p>This will display a small information box where you can "
-"read general information as well as the names of the developers behind this "
-"excellent piece of software.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:721
 msgctxt "MainWindowGUI|"
 msgid "About"
-msgstr "xxAboutxx"
+msgstr "შესახებ"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:727
 msgctxt "MainWindowGUI|"
@@ -998,8 +930,6 @@ msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
 "selected frame</p>"
 msgstr ""
-"xx<h4>Frame number</h4><p>This area displays the number of the currently "
-"selected frame</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:734
 msgctxt "MainWindowGUI|"
@@ -1007,8 +937,6 @@ msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
 "also play animations in this window by pressing the <b>Play</b> button.</p>"
 msgstr ""
-"xx<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
-"also play animations in this window by pressing the <b>Play</b> button.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:741
 msgctxt "MainWindowGUI|"
@@ -1016,8 +944,6 @@ msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
 "program will jump to the specified frame</p> "
 msgstr ""
-"xx<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
-"program will jump to the specified frame</p> xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:747
 msgctxt "MainWindowGUI|"
@@ -1026,9 +952,6 @@ msgid ""
 "the selected frame/frames, such as <b>subtitles</b>, <b>sound effects</b>, "
 "etc.</p>"
 msgstr ""
-"xx<h4>Frame preferences menu</h4> <p>In this menu you can set preferences "
-"for the selected frame/frames, such as <b>subtitles</b>, <b>sound effects</"
-"b>, etc.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:754
 msgctxt "MainWindowGUI|"
@@ -1036,9 +959,6 @@ msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
 "widgets you will need when working on stop motion animations are located.</p>"
 msgstr ""
-"xx<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
-"widgets you will need when working on stop motion animations are located.</"
-"p>xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:760
 msgctxt "MainWindowGUI|"
@@ -1048,46 +968,42 @@ msgid ""
 "switch to the next and the previous frame using the <b>arrow buttons</b> or "
 "<b>x</b> and <b>z</b></p> "
 msgstr ""
-"xx<h4>FrameBar</h4> <p>In this area you can see the frames and scenes in the "
-"animations and build the animation by moving the them around.</p><p>You can "
-"switch to the next and the previous frame using the <b>arrow buttons</b> or "
-"<b>x</b> and <b>z</b></p> xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
-msgstr "xxUnsaved changesxx"
+msgstr "შეუნახავი ცვლილებები"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
-msgstr "xxThere are unsaved changes. Do you want to save?xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
 msgctxt "MainWindowGUI|"
 msgid "Do&n't save"
-msgstr "xxDo&n't savexx"
+msgstr "არ შეინახო"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
 msgctxt "MainWindowGUI|"
 msgid "Abort"
-msgstr "xxAbortxx"
+msgstr "შეწყვეტა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:807
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
-msgstr "xxChoose project filexx"
+msgstr "არჩიეთ პროექტის ფაილი"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:875
 msgctxt "MainWindowGUI|"
 msgid "Save As"
-msgstr "xxSave Asxx"
+msgstr "შენახვა როგორც"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:902
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
 msgctxt "MainWindowGUI|"
 msgid "Warning"
-msgstr "xxWarningxx"
+msgstr "გაფრთხილება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:903
 msgctxt "MainWindowGUI|"
@@ -1097,27 +1013,23 @@ msgid ""
 "menu. Export to video will not be possible until you\n"
 "have set an encoder to use. Do you want to set it now?"
 msgstr ""
-"xxCannot find any registered encoder to be used for\n"
-"video export. This can be set in the preferences\n"
-"menu. Export to video will not be possible until you\n"
-"have set an encoder to use. Do you want to set it now?xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:907
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:957
 msgctxt "MainWindowGUI|"
 msgid "&Yes"
-msgstr "xx&Yesxx"
+msgstr "&დიახ"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:907
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:957
 msgctxt "MainWindowGUI|"
 msgid "&No"
-msgstr "xx&Noxx"
+msgstr "&არა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
-msgstr "xxExport to video filexx"
+msgstr "ვიდეო ფაილში გატანა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:955
 msgctxt "MainWindowGUI|"
@@ -1125,89 +1037,87 @@ msgid ""
 "The registered encoder is not valid. Do you want\n"
 "to check your settings in the preferences menu?"
 msgstr ""
-"xxThe registered encoder is not valid. Do you want\n"
-"to check your settings in the preferences menu?xx"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:971
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
-msgstr "xxExport to filexx"
+msgstr "ფაილში გატანა"
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:44
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:123
 msgctxt "PreferencesMenu|"
 msgid "Apply"
-msgstr "xxApplyxx"
+msgstr "გამოყენება"
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:48
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:124
 msgctxt "PreferencesMenu|"
 msgid "Close"
-msgstr "xxClosexx"
+msgstr "დაკეტვა"
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:62
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:125
 msgctxt "PreferencesMenu|"
 msgid "Preferences Menu"
-msgstr "xxPreferences Menuxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:78
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:128
 msgctxt "PreferencesMenu|"
 msgid "Video &Import"
-msgstr "xxVideo &Importxx"
+msgstr "ვიდეოს &შემოტანა"
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:87
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:129
 msgctxt "PreferencesMenu|"
 msgid "Video &Export"
-msgstr "xxVideo &Exportxx"
+msgstr "ვიდეოს &გატანა"
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:96
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:127
 msgctxt "PreferencesMenu|"
 msgid "Video &Device"
-msgstr "xxVideo &Devicexx"
+msgstr "ვიდეო &მოწყობილობა"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:89
 msgctxt "QtFrontend|"
 msgid "Please wait..."
-msgstr "xxPlease wait...xx"
+msgstr "გთხოვთ, მოითმინოთ..."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
-msgstr "xxConnecting camera...xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:95
 msgctxt "QtFrontend|"
 msgid "Importing frames from disk"
-msgstr "xxImporting frames from diskxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:98
 msgctxt "QtFrontend|"
 msgid "Exporting..."
-msgstr "xxExporting...xx"
+msgstr "გატანა…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:101
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
-msgstr "xxRestoring project...xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:104
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
-msgstr "xxSaving scenes to disk...xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:108
 msgctxt "QtFrontend|"
 msgid "Cancel"
-msgstr "xxCancelxx"
+msgstr "გაუქმება"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:198
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
-msgstr "xxLose corrupt filexx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:199
 #, qt-format
@@ -1216,144 +1126,141 @@ msgid ""
 "The file %1 seems to be corrupt, it's contents will be lost if you continue. "
 "Do you want to continue?"
 msgstr ""
-"xxThe file %1 seems to be corrupt, it's contents will be lost if you "
-"continue. Do you want to continue?xx"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:258
 msgctxt "QtFrontend|"
 msgid "vgrabbj"
-msgstr "xxvgrabbjxx"
+msgstr "vgrabbj"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:260
 msgctxt "QtFrontend|"
 msgid "The simplest setting. Fairly slow"
-msgstr "xxThe simplest setting. Fairly slowxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:267
 msgctxt "QtFrontend|"
 msgid "vgrabbj VGA daemon"
-msgstr "xxvgrabbj VGA daemonxx"
+msgstr "vgrabbj VGA დემონი"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:269
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
-msgstr "xxStarts vgrabbj as a daemon. Pretty fast.xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:277
 msgctxt "QtFrontend|"
 msgid "uvccapture"
-msgstr "xxuvccapturexx"
+msgstr "uvccapture"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:279
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
-msgstr "xxGrabbing from V4L2 devicesxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:286
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
-msgstr "xxvideodog singleshotxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:288
 msgctxt "QtFrontend|"
 msgid "Videodog."
-msgstr "xxVideodog.xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:295
 msgctxt "QtFrontend|"
 msgid "dvgrab"
-msgstr "xxdvgrabxx"
+msgstr "dvgrab"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:297
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
-msgstr "xxGrabbing from DV-cam.xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:313
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
-msgstr "xxExports from jpeg images to mpeg1 videoxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:322
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
-msgstr "xxExports from jpeg images to mpeg2 videoxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:331
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:340
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
-msgstr "xxExports from jpeg images to mpeg4 videoxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:360
 msgctxt "QtFrontend|"
 msgid "Unsupported image file type"
-msgstr "xxUnsupported image file typexx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:361
 msgctxt "QtFrontend|"
 msgid "Only JPeg image files can be added to the animation"
-msgstr "xxOnly JPeg image files can be added to the animationxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
 msgctxt "QtFrontend|"
 msgid "The selected audio file could not be loaded"
-msgstr "xxThe selected audio file could not be loadedxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:365
 msgctxt "QtFrontend|"
 msgid "Perhaps it is corrupt."
-msgstr "xxPerhaps it is corrupt.xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
-msgstr "xxCannot open the selected file for readingxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:370
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "The file %1 could not be opened"
-msgstr "xxThe file %1 could not be openedxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:374
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
-msgstr "xxCould not copy file to workspacexx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:375
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr ""
-"xxFailed to copy the following files to the workspace (~/.stopmotion): %1xx"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
-msgstr "xxFailed to initialize audio driverxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:380
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
-msgstr "xxSound will not work until this is correctedxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
-msgstr "xxFailed to write preferencesxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:385
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
-msgstr "xxCould not write preferences to file: %1xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:394
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
-msgstr "xxStopmotion cannot be started.xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:395
 msgctxt "QtFrontend|"
@@ -1361,21 +1268,18 @@ msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
 "running."
 msgstr ""
-"xxFailed to get exclusive lock on command.log. Perhaps Stopmotion is already "
-"running.xx"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:399
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:404
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
-msgstr "xxPreferences file cannot be readxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
 msgstr ""
-"xxPreferences file %1 is unreadable. Please correct this and try again.xx"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:405
 #, qt-format
@@ -1384,28 +1288,26 @@ msgid ""
 "Preferences file %1 is not a valid XML preferences file. Please correct this "
 "or delete the file and try again."
 msgstr ""
-"xxPreferences file %1 is not a valid XML preferences file. Please correct "
-"this or delete the file and try again.xx"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:408
 msgctxt "QtFrontend|"
 msgid "Fatal"
-msgstr "xxFatalxx"
+msgstr "ფატალური"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:416
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
-msgstr "xxStopmotion threw an exception it could not handle.xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:417
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
-msgstr "xxPlease raise a bug report.xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:423
 msgctxt "QtFrontend|"
 msgid "Warning"
-msgstr "xxWarningxx"
+msgstr "გაფრთხილება"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:464
 msgctxt "QtFrontend|"
@@ -1414,59 +1316,56 @@ msgid ""
 "values exists. Do you want to use this one? (Your old preferences\n"
 " will be saved in ~/.stopmotion/preferences.xml.OLD)"
 msgstr ""
-"xxA newer version of the preferences file with few more default\n"
-"values exists. Do you want to use this one? (Your old preferences\n"
-" will be saved in ~/.stopmotion/preferences.xml.OLD)xx"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:471
 msgctxt "QtFrontend|"
 msgid "Question"
-msgstr "xxQuestionxx"
+msgstr "კითხვა"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:207
 msgctxt "ToolsMenu|"
 msgid "FPS chooser"
-msgstr "xxFPS chooserxx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:208
 msgctxt "ToolsMenu|"
 msgid "Number of images:"
-msgstr "xxNumber of images:xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:211
 msgctxt "ToolsMenu|"
 msgid "Mix"
-msgstr "xxMixxx"
+msgstr "მიქსი"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:212
 msgctxt "ToolsMenu|"
 msgid "Diff"
-msgstr "xxDiffxx"
+msgstr "Diff"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:213
 msgctxt "ToolsMenu|"
 msgid "Playback"
-msgstr "xxPlaybackxx"
+msgstr "დაკვრა"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:214
 msgctxt "ToolsMenu|"
 msgid "Auto"
-msgstr "xxAutoxx"
+msgstr "ავტომატური"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:218
 msgctxt "ToolsMenu|"
 msgid "Per second"
-msgstr "xxPer secondxx"
+msgstr "წამში"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:219
 msgctxt "ToolsMenu|"
 msgid "Per minute"
-msgstr "xxPer minutexx"
+msgstr "წუთში"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:220
 msgctxt "ToolsMenu|"
 msgid "Per hour"
-msgstr "xxPer hourxx"
+msgstr "საათში"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:225
 msgctxt "ToolsMenu|"
@@ -1474,8 +1373,6 @@ msgid ""
 "<h4>Add Frames (CTRL+F)</h4> <p>Click on this button to <em>add</em> frames "
 "to the animation.</p>"
 msgstr ""
-"xx<h4>Add Frames (CTRL+F)</h4> <p>Click on this button to <em>add</em> "
-"frames to the animation.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:232
 msgctxt "ToolsMenu|"
@@ -1483,8 +1380,6 @@ msgid ""
 "<h4>Remove Selection (Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected frames from the animation.</p>"
 msgstr ""
-"xx<h4>Remove Selection (Delete)</h4> <p>Click this button to <em>remove</em> "
-"the selected frames from the animation.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:239
 msgctxt "ToolsMenu|"
@@ -1492,8 +1387,6 @@ msgid ""
 "<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
 "<em>scene</em> to the animation.</p>"
 msgstr ""
-"xx<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
-"<em>scene</em> to the animation.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
 msgctxt "ToolsMenu|"
@@ -1501,8 +1394,6 @@ msgid ""
 "<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected scene from the animation.</p>"
 msgstr ""
-"xx<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</"
-"em> the selected scene from the animation.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:253
 msgctxt "ToolsMenu|"
@@ -1510,8 +1401,6 @@ msgid ""
 "<h4>Toggle camera on/off (C)</h4> <p>Click this button to toggle the camera "
 "on and off</p> "
 msgstr ""
-"xx<h4>Toggle camera on/off (C)</h4> <p>Click this button to toggle the "
-"camera on and off</p> xx"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:259
 msgctxt "ToolsMenu|"
@@ -1520,9 +1409,6 @@ msgid ""
 "p> <p>Note that you can also drag images from the frame bar and drop them on "
 "Gimp</p>"
 msgstr ""
-"xx<h4>Launch Gimp</h4> <p>Click this button to open the active frame in "
-"Gimp</p> <p>Note that you can also drag images from the frame bar and drop "
-"them on Gimp</p>xx"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:266
 msgctxt "ToolsMenu|"
@@ -1531,9 +1417,6 @@ msgid ""
 "frame from the camera an put it in the animation</p> <p> This can also be "
 "done by pressing the <b>Space key</b></p>"
 msgstr ""
-"xx<h4>Capture Frame (Space)</h4> <p>Click on this button to <em>capture</em> "
-"a frame from the camera an put it in the animation</p> <p> This can also be "
-"done by pressing the <b>Space key</b></p>xx"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:274
 msgctxt "ToolsMenu|"
@@ -1545,12 +1428,6 @@ msgid ""
 "see how the next shot will be in relation to the other, thereby making a "
 "smoother stop motion animation!</p>"
 msgstr ""
-"xx<h4>Number of images</h4> <p>By changing the value in this slidebar you "
-"can specify how many images backwards in the animation which should be mixed "
-"on top of the camera or if you are in playback mode: how many images to "
-"play. </p> <p>By mixing the previous image(s) onto the camera you can more "
-"easily see how the next shot will be in relation to the other, thereby "
-"making a smoother stop motion animation!</p>xx"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:285
 msgctxt "ToolsMenu|"
@@ -1559,39 +1436,36 @@ msgid ""
 "speed the animation in the <b>FrameView</b> should run at.</p> <p>To start "
 "an animation press the <b>Run Animation</b> button.</p>"
 msgstr ""
-"xx<h4>FPS chooser</h4> <p>By changing the value in this chooser you set "
-"which speed the animation in the <b>FrameView</b> should run at.</p> <p>To "
-"start an animation press the <b>Run Animation</b> button.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:295
 msgctxt "ToolsMenu|"
 msgid "<h4>Play animation (K, P)</h4>"
-msgstr "xx<h4>Play animation (K, P)</h4>xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:298
 msgctxt "ToolsMenu|"
 msgid "<h4>Stop animation (K, P)</h4>"
-msgstr "xx<h4>Stop animation (K, P)</h4>xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:301
 msgctxt "ToolsMenu|"
 msgid "<h4>Previous frame (J, Left)</h4>"
-msgstr "xx<h4>Previous frame (J, Left)</h4>xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:304
 msgctxt "ToolsMenu|"
 msgid "<h4>Next frame (L, Right)</h4>"
-msgstr "xx<h4>Next frame (L, Right)</h4>xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:307
 msgctxt "ToolsMenu|"
 msgid "<h4>Previous scene (I)</h4>"
-msgstr "xx<h4>Previous scene (I)</h4>xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:310
 msgctxt "ToolsMenu|"
 msgid "<h4>Next scene (O)</h4>"
-msgstr "xx<h4>Next scene (O)</h4>xx"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:314
 msgctxt "ToolsMenu|"
@@ -1599,13 +1473,11 @@ msgid ""
 "<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether you "
 "want the animation to play to the end, or to loop indefinitely.</p>"
 msgstr ""
-"xx<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether "
-"you want the animation to play to the end, or to loop indefinitely.</p>xx"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
 msgctxt "ToolsMenu|"
 msgid "Notice"
-msgstr "xxNoticexx"
+msgstr "გაფრთხილება"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
 msgctxt "ToolsMenu|"
@@ -1614,6 +1486,3 @@ msgid ""
 "the preferences menu (CTRL+P) to switch to running the image grabbing as a "
 "daemon."
 msgstr ""
-"xxPlayback only currently works when running the grabber as a daemon. Go to "
-"the preferences menu (CTRL+P) to switch to running the image grabbing as a "
-"daemon.xx"
