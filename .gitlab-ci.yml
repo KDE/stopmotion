@@ -31,9 +31,9 @@ deb12-clang14-qmake:
     - make
     - make test
 
-# Ubuntu 22.04 (jammy) with GCC 11
-ubuntu2204-gcc11-qmake:
-  image: ubuntu:22.04
+# Ubuntu 22.10 (kinetic) with GCC 12
+ubuntu2210-gcc12-qmake:
+  image: ubuntu:22.10
   before_script:
     - apt-get update
     # work around interactive question when installing tzdata
@@ -97,9 +97,9 @@ deb12-clang14-cmake:
     - make test-stopmotion
     - make test
 
-# Ubuntu 22.04 (jammy) with GCC 11
-ubuntu2204-gcc11-cmake:
-  image: ubuntu:22.04
+# Ubuntu 22.10 (kinetic) with GCC 12
+ubuntu2210-gcc12-cmake:
+  image: ubuntu:22.10
   before_script:
     - apt-get update
     # work around interactive question when installing tzdata
