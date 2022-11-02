@@ -1488,7 +1488,7 @@ msgid ""
 "to the animation.</p>"
 msgstr ""
 "<h4>Afig fotogrames (CTRL+F)</h4> <p>Cliqueu en este botó per a <em>afegir</"
-"em> fotogrames en l'animació.</p>"
+"em> fotogrames a l'animació.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:232
 msgctxt "ToolsMenu|"
