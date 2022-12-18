@@ -168,7 +168,7 @@ msgstr "Txec"
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:70
 msgctxt "AboutDialog|"
 msgid "Slovenian"
-msgstr "Eslovè"
+msgstr "Eslové"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:71
 msgctxt "AboutDialog|"
