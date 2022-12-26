@@ -62,13 +62,13 @@ opensusetumbleweed-gcc12-qmake:
     - make
     - make test
 
-# openSuse Leap with Clang 13
-opensuseleap15.4-clang13-qmake:
+# openSuse Leap with Clang 15
+opensuseleap15.4-clang15-qmake:
   image: opensuse/leap:15.4
   before_script:
     - zypper refresh
     - zypper install -y
-        clang13 pkg-config
+        clang pkg-config
         libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
         libtar-devel libxml2-devel libvorbis-devel
   script:
