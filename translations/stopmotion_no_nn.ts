@@ -1214,7 +1214,7 @@ to check your settings in the preferences menu?</source>
 <context>
     <name>PreferencesMenu</name>
     <message>
-        <source>&lt;p&gt;Below you can set which program/process stopmotion should use for grabing images from the webcam, and displaying video.&lt;br&gt; &lt;br&gt; You can also add new programs, just make sure the image is saved with the path and filename &lt;b&gt;.stopmotion/capturedfile.png&lt;/b&gt; &lt;/p&gt;</source>
+        <source>&lt;p&gt;Below you can set which program/process stopmotion should use for grabbing images from the webcam, and displaying video.&lt;br&gt; &lt;br&gt; You can also add new programs, just make sure the image is saved with the path and filename &lt;b&gt;.stopmotion/capturedfile.png&lt;/b&gt; &lt;/p&gt;</source>
         <translation type="obsolete">&lt;p&gt;Nedenfor kan du angi hvilket program/prosess som Stopmotion skal bruke for å ta bilder fra webkameraer, etc. &lt;br&gt;&lt;br&gt;Du kan også legge til nye programmer. Bare sørg for at bildet blir lagret med stien og filnavnet &lt;b&gt;$HOME/.stopmotion/capturedfile.png&lt;/b&gt; &lt;/p&gt;</translation>
     </message>
     <message>

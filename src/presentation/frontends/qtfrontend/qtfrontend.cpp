@@ -428,7 +428,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 	// Replace all occurrences of '/dev/xxx' with $VIDEODEVICE (version < 0.7)
 	int numImports = prefs->getPreference("numberofimports", 1);
 	for (int i = 0; i < numImports; ++i) {
-		Preference startPref(QString("importstartdeamon%1")
+		Preference startPref(QString("importstartdaemon%1")
 				.arg(i).toUtf8().constData(), "");
 		std::string start(startPref.get());
 		int index = start.find("(DEFAULTPATH)");
@@ -439,7 +439,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 		QString s(start.c_str());
 		s.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"),
 				QString("$VIDEODEVICE") );
-		prefs->setPreference( QString("importstartdeamon%1")
+		prefs->setPreference( QString("importstartdaemon%1")
 				.arg(i).toUtf8().constData(), s.toUtf8().constData());
 
 		Preference prepollPref(QString("importprepoll%1")

@@ -507,11 +507,11 @@ This can be set in the preferences menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start deamon</source>
+        <source>Start daemon</source>
         <translation type="obsolete">Запуск процесса</translation>
     </message>
     <message>
-        <source>Stop deamon</source>
+        <source>Stop daemon</source>
         <translation type="obsolete">Остановка процесса</translation>
     </message>
     <message>
@@ -791,7 +791,7 @@ This can be set in the preferences menu.</source>
         <translation>&lt;h4&gt;Новый&lt;/h4&gt; &lt;p&gt;Создаёт &lt;em&gt;новый&lt;/em&gt; проект.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
         <translation type="obsolete">&lt;h4&gt;Сохранить&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Сохраняет&lt;/em&gt;текущую анимацию в виде файла проекта Stopmotion. &lt;BR&gt;Если этот проект уже был однажды сохранён, он будет заново записан в тот же файл.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1078,11 +1078,11 @@ to check your settings in the preferences menu?</source>
         <translation type="obsolete">vgrabbj VGA singleshot</translation>
     </message>
     <message>
-        <source>vgrabbj VGA deamon</source>
-        <translation type="obsolete">vgrabbj VGA deamon</translation>
+        <source>vgrabbj VGA daemon</source>
+        <translation type="obsolete">vgrabbj VGA daemon</translation>
     </message>
     <message>
-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation type="obsolete">Запускает vgrabbj в виде сервиса. Довольно быстро..</translation>
     </message>
     <message>
@@ -1367,8 +1367,8 @@ to running the image grabbing as a daemon.</source>
     </message>
     <message>
         <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch
+to running the image grabbing as a daemon.</source>
         <translation type="obsolete">Сейчас режим воспроизведения работает только в случае, 
 если кадры захватываются при помощи процесса. 
 Перейдите в меню настроек (CTRL+P), чтобы сконфигурировать 

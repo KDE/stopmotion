@@ -593,11 +593,11 @@ Detta kan ställas in i inställningsmenyn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start deamon</source>
+        <source>Start daemon</source>
         <translation type="obsolete">Starta bakgrundsprocess</translation>
     </message>
     <message>
-        <source>Stop deamon</source>
+        <source>Stop daemon</source>
         <translation type="obsolete">Stoppa bakgrundsprocess</translation>
     </message>
     <message>
@@ -905,7 +905,7 @@ Detta kan ställas in i inställningsmenyn.</translation>
         <translation>&lt;h4&gt;Ny&lt;/h&gt; &lt;p&gt;Skapar ett &lt;em&gt;nytt&lt;/em&gt; projekt.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
         <translation type="obsolete">&lt;h4&gt;Spara&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Sparar&lt;/em&gt;animationen som Stopmotionprojektfil. &lt;BR&gt;Om det här projektet har sparats förut kommer det automatiskt sparas till den tidigare valda filen.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1208,11 +1208,11 @@ kontrollera inställningarna i inställngsmenyn?</translation>
         <translation type="obsolete">vgrabbj VGA-enkelbild</translation>
     </message>
     <message>
-        <source>vgrabbj VGA deamon</source>
+        <source>vgrabbj VGA daemon</source>
         <translation type="obsolete">vgrabbj VGA-damon</translation>
     </message>
     <message>
-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation type="obsolete">Startar vgrabbj som bakgrundsprocess. Ganska snabb.</translation>
     </message>
     <message>
@@ -1506,8 +1506,8 @@ to running the image grabbing as a daemon.</source>
     </message>
     <message>
         <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch
+to running the image grabbing as a daemon.</source>
         <translation type="obsolete">Uppspelning fungerar för tillfället bara när hämtaren körs
 som bakgrundsprocess. Gå till inställningsmenyn (CTRL+P) för att
 byta till att köra bildhämtningen som bakgrundsprocess.</translation>

@@ -507,11 +507,11 @@ This can be set in the preferences menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Start deamon</source>
+        <source>Start daemon</source>
         <translation type="obsolete">شغّل الجنيّ</translation>
     </message>
     <message>
-        <source>Stop deamon</source>
+        <source>Stop daemon</source>
         <translation type="obsolete">أوقف الجنيّ</translation>
     </message>
     <message>
@@ -791,7 +791,7 @@ This can be set in the preferences menu.</source>
         <translation>&lt;h4&gt;جديد&lt;/h4&gt; &lt;p&gt;ينشئ مشروعا  &lt;em&gt;جديدا&lt;/em&gt; .&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
+        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
         <translation type="obsolete">&lt;h4&gt;احفظ&lt;/h4&gt; &lt;p&gt;&lt;em&gt;يحفظ&lt;/em&gt; التحريك الحالي كملف مشروع تحريك. &lt;BR&gt;إن كان المشروع قد حُفظ مسبقا فسيتم تحديثه في ذات الملف الذي حفظ فيه مسبقا.&lt;/p&gt;</translation>
     </message>
     <message>
@@ -1077,7 +1077,7 @@ to check your settings in the preferences menu?</source>
         <translation type="obsolete">تشغيل vgrabbj للقطة VGA ,واحدة</translation>
     </message>
     <message>
-        <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
         <translation type="obsolete">يشغّل vgrabbj كجنيّ. سريع للغاية.</translation>
     </message>
     <message>
@@ -1361,8 +1361,8 @@ to running the image grabbing as a daemon.</source>
     </message>
     <message>
         <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch
+to running the image grabbing as a daemon.</source>
         <translation type="obsolete">حاليا يعمل العرض و حسب أثناء تشغيل اللاقط في طور الجنيّ. يمكنك تشغيل لاقط الصور في طور الجنيّ من قائمة التفضيلات (CTRL+P)</translation>
     </message>
     <message>

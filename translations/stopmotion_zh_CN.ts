@@ -464,11 +464,11 @@ This can be set in the preferences menu.</source>
             <translation>轮询前命令</translation>
         </message>
         <message>
-            <source>Start deamon</source>
+            <source>Start daemon</source>
             <translation>开始守护程序</translation>
         </message>
         <message>
-            <source>Stop deamon</source>
+            <source>Stop daemon</source>
             <translation>停止守护程序</translation>
         </message>
         <message>
@@ -774,7 +774,7 @@ This can be set in the preferences menu.</source>
             <translation>&lt;h4&gt;新建&lt;/h4&gt;&lt;p&gt;建立&lt;em&gt;新的&lt;/em&gt;工程。&lt;/p&gt;</translation>
         </message>
         <message>
-            <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automaticly be saved to the previously selected file.&lt;/p&gt;</source>
+            <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
             <translation>&lt;h4&gt;保存&lt;/h4&gt;&lt;p&gt;&lt;em&gt;保存&lt;/em&gt;目前动画为 Stopmotion 工程文件。&lt;BR&gt;如果此工程之前已保存，它将自动保存到之前所选的文件。&lt;/p&gt;</translation>
         </message>
         <message>
@@ -936,7 +936,7 @@ to check your settings in the preferences menu?</source>
     <context>
         <name>PreferencesMenu</name>
         <message>
-            <source>&lt;p&gt;Below you can set which program/process stopmotion should use for grabing images from the webcam, and displaying video.&lt;br&gt; &lt;br&gt; You can also add new programs, just make sure the image is saved with the path and filename &lt;b&gt;.stopmotion/capturedfile.png&lt;/b&gt; &lt;/p&gt;</source>
+            <source>&lt;p&gt;Below you can set which program/process stopmotion should use for grabbing images from the webcam, and displaying video.&lt;br&gt; &lt;br&gt; You can also add new programs, just make sure the image is saved with the path and filename &lt;b&gt;.stopmotion/capturedfile.png&lt;/b&gt; &lt;/p&gt;</source>
             <translation>&lt;p&gt;以下您可以设置 stopmotion 从网络摄像头抓取图像，以及显示视频时应该使用的程序。&lt;br&gt;&lt;br&gt;您也可以加入新的程序，只要确认图像的保存路径和文件名为&lt;b&gt;.stopmotion/capturedfile.png&lt;/b&gt;&lt;/p&gt;</translation>
         </message>
         <message>
@@ -1011,11 +1011,11 @@ to check your settings in the preferences menu?</source>
             <translation>vgrabbj VGA 单次拍照</translation>
         </message>
         <message>
-            <source>vgrabbj VGA deamon</source>
+            <source>vgrabbj VGA daemon</source>
             <translation>vgrabbj VGA 守护程序</translation>
         </message>
         <message>
-            <source>Starts vgrabbj as a deamon. Pretty fast.</source>
+            <source>Starts vgrabbj as a daemon. Pretty fast.</source>
             <translation>启动 vgrabbj 为守护程序。相当快。</translation>
         </message>
         <message>
@@ -1237,8 +1237,8 @@ values exists. Do you want to use this one? (Your old preferences
         </message>
         <message>
             <source>Playback only currently works when running the grabber 
-as a deamon. Go to the preferences menu (CTRL+P) to switch 
-to running the image grabbing as a deamon.</source>
+as a daemon. Go to the preferences menu (CTRL+P) to switch
+to running the image grabbing as a daemon.</source>
             <translation>目前播放控制只在以抓取器做为
 守护程序执行时才有作用。前往偏好设置菜单 (Ctrl+P) 
 以切换图像抓取做为守护程序执行。</translation>
