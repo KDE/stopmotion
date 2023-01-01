@@ -41,33 +41,33 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="77"/>
         <source>Turkish</source>
-        <translation type="unfinished"></translation>
+        <translation>Türkisch</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="78"/>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="79"/>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>Italienisch</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="80"/>
         <source>Traditional Chinese</source>
-        <translation type="unfinished"></translation>
+        <translation>Chinesisch (Langzeichen)</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="81"/>
         <source>Arabic</source>
-        <translation type="unfinished"></translation>
+        <translation>Arabisch</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="82"/>
         <source>Russian</source>
-        <translation type="unfinished"></translation>
+        <translation>Russisch</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="83"/>
         <source>Hebrew</source>
-        <translation type="unfinished"></translation>
+        <translation>Hebräisch</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="85"/>
@@ -112,27 +112,27 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="70"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="72"/>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugisisch</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="74"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Spanisch</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="75"/>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwedisch</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/aboutdialog.cpp" line="52"/>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Beiträge von</translation>
     </message>
 </context>
 <context>
@@ -298,7 +298,7 @@
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="375"/>
         <source>You can use &lt;b&gt;$FRAMERATE&lt;/b&gt; to represent the frame rate currently in use in the project.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie können &lt;b&gt;$FRAMERATE&lt;/b&gt; nutzen, um die im Projekt verwendete Bildfrequenz zu verwenden.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/exporttab.cpp" line="377"/>
@@ -892,12 +892,12 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="784"/>
         <source>Do&amp;n&apos;t save</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht speichern</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="784"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="911"/>
@@ -976,22 +976,22 @@ die Einstellungen überprüfen?</translation>
         <location filename="../src/application/modelhandler.cpp" line="227"/>
         <location filename="../src/application/modelhandler.cpp" line="244"/>
         <source>Warning</source>
-        <translation type="unfinished">Warnung</translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="217"/>
         <source>You do not have Gimp installed on your system</source>
-        <translation type="unfinished"></translation>
+        <translation>Sie haben GIMP nicht installiert</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="228"/>
         <source>There is no active frame to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Es gibt kein aktives Bild zum Öffnen</translation>
     </message>
     <message>
         <location filename="../src/application/modelhandler.cpp" line="245"/>
         <source>Failed to start Gimp!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Starten von GIMP!</translation>
     </message>
 </context>
 <context>
@@ -1079,47 +1079,47 @@ die Einstellungen überprüfen?</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="101"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte warten...</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="104"/>
         <source>Connecting camera...</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbinde mit der Kamera...</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="107"/>
         <source>Importing frames from disk</source>
-        <translation type="unfinished"></translation>
+        <translation>Importieren der Bilder von der Festplatte</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="110"/>
         <source>Exporting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportiere...</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="113"/>
         <source>Restoring project...</source>
-        <translation type="unfinished"></translation>
+        <translation>Stelle Projekt wieder her...</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="116"/>
         <source>Saving scenes to disk...</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere Szenen auf der Festplatte...</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="269"/>
         <source>vgrabbj</source>
-        <translation type="unfinished"></translation>
+        <translation>vgrabbj</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="288"/>
         <source>uvccapture</source>
-        <translation type="unfinished"></translation>
+        <translation>uvccapture</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="290"/>
         <source>Grabbing from V4L2 devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Grabbe von V42L-Gerät</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="324"/>
@@ -1129,7 +1129,7 @@ die Einstellungen überprüfen?</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="368"/>
         <source>Stopmotion cannot be started; it seems like it is already running.</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopmotion kann nicht gestartet werden, vermutlich läuft es bereits.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="411"/>
@@ -1173,7 +1173,7 @@ Möchten Sie diese nutzen? (Ihre alten Einstellungen werden in  ~/.stopmotion/pr
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="308"/>
         <source>Grabbing from DV-cam.</source>
-        <translation type="unfinished"></translation>
+        <translation>Grabbe von DV-Kamera</translation>
     </message>
 </context>
 <context>
@@ -1242,17 +1242,17 @@ Möchten Sie diese nutzen? (Ihre alten Einstellungen werden in  ~/.stopmotion/pr
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="234"/>
         <source>Per second</source>
-        <translation type="unfinished"></translation>
+        <translation>Pro Sekunde</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="235"/>
         <source>Per minute</source>
-        <translation type="unfinished"></translation>
+        <translation>Pro Minute</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="236"/>
         <source>Per hour</source>
-        <translation type="unfinished"></translation>
+        <translation>Pro Stunde</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="241"/>
@@ -1357,7 +1357,7 @@ läuft. Bitte ändern Sie dies im Einstellungs-Menü.</translation>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/toolsmenu.cpp" line="275"/>
         <source>&lt;h4&gt;Launch Gimp&lt;/h4&gt; &lt;p&gt;Click this button to open the active frame in Gimp&lt;/p&gt; &lt;p&gt;Note that you can also drag images from the frame bar and drop them on Gimp&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h4&gt;Starte GIMP&lt;/h4&gt; &lt;p&gt;Aktives Bild in GIMP öffnen&lt;/p&gt; &lt;p&gt;Sie können auch Bilder von der Frame-Leiste per Drag-n-Drop zu GIMP bewegen&lt;/p&gt;</translation>
     </message>
 </context>
 </TS>
