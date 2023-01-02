@@ -1,123 +1,74 @@
-###
-# qmake as build-system
-###
-
 # Debian 11 (bullseye) with GCC 10
-deb11-gcc10-qmake:
+deb11-gcc10:
   image: debian:11
   before_script:
     - apt-get update
     - apt-get -y install
-        build-essential pkg-config
-        qtbase5-dev qtmultimedia5-dev qttools5-dev-tools
+        build-essential pkg-config cmake
+        qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
         libtar-dev libxml2-dev
         libvorbis-dev vgrabbj uvccapture
   script:
-    - qmake -qt=5
+    - mkdir build ; cd build
+    - cmake ..
     - make
+    - make test-stopmotion
+    - make test
 
 # Debian 12 (bookworm) with Clang 14
-deb12-clang14-qmake:
+deb12-clang14:
   image: debian:bookworm
   before_script:
     - apt-get update
     - apt-get -y install
-        build-essential pkg-config
-        qtbase5-dev qtmultimedia5-dev qttools5-dev-tools
+        build-essential pkg-config cmake
+        qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
         libtar-dev libxml2-dev
         libvorbis-dev vgrabbj uvccapture
   script:
-    - qmake -qt=5
+    - mkdir build ; cd build
+    - cmake ..
     - make
+    - make test-stopmotion
     - make test
 
 # Ubuntu 22.10 (kinetic) with GCC 12
-ubuntu2210-gcc12-qmake:
+ubuntu2210-gcc12:
   image: ubuntu:22.10
   before_script:
     - apt-get update
     # work around interactive question when installing tzdata
     - DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
     - apt-get -y install
-        build-essential pkg-config
-        qtbase5-dev qtmultimedia5-dev qttools5-dev-tools
+        build-essential pkg-config cmake
+        qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
         libtar-dev libxml2-dev
         libvorbis-dev vgrabbj uvccapture
   script:
-    - qmake -qt=5
+    - mkdir build ; cd build
+    - cmake ..
     - make
-    - make test
-
-# openSuse Tumbleweed with GCC 12
-opensusetumbleweed-gcc12-qmake:
-  image: opensuse/tumbleweed
-  before_script:
-    - zypper refresh
-    - zypper install -y
-        gcc pkgconf-pkg-config
-        libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
-        libtar-devel libxml2-devel libvorbis-devel
-  script:
-    - qmake-qt5
-    - make
+    - make test-stopmotion
     - make test
 
 # openSuse Leap with Clang 15
-opensuseleap15.4-clang15-qmake:
+opensuseleap15.4-clang15:
   image: opensuse/leap:15.4
   before_script:
     - zypper refresh
     - zypper install -y
-        clang pkg-config
+        clang cmake pkg-config
         libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
         libtar-devel libxml2-devel libvorbis-devel
   script:
-    - qmake-qt5
-    - make
-    - make test
-
-###
-# CMake as build-system
-###
-
-# Debian 12 (bookworm) with Clang 14
-deb12-clang14-cmake:
-  image: debian:bookworm
-  before_script:
-    - apt-get update
-    - apt-get -y install
-        build-essential pkg-config cmake
-        qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
-        libtar-dev libxml2-dev
-        libvorbis-dev vgrabbj uvccapture
-  script:
-    - mkdir build-cmake ; cd build-cmake
-    - cmake ..
-    - make
-    - make test-stopmotion
-    - make test
-
-# Ubuntu 22.10 (kinetic) with GCC 12
-ubuntu2210-gcc12-cmake:
-  image: ubuntu:22.10
-  before_script:
-    - apt-get update
-    # work around interactive question when installing tzdata
-    - DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
-    - apt-get -y install
-        build-essential pkg-config cmake
-        qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
-        libtar-dev libxml2-dev
-        libvorbis-dev vgrabbj uvccapture
-  script:
-    - mkdir build-cmake ; cd build-cmake
+    - mkdir build ; cd build
     - cmake ..
     - make
     - make test-stopmotion
     - make test
 
 # openSuse Tumbleweed with GCC 12
-opensusetumbleweed-gcc12-cmake:
+opensusetumbleweed-gcc12:
   image: opensuse/tumbleweed
   before_script:
     - zypper refresh
@@ -126,7 +77,7 @@ opensusetumbleweed-gcc12-cmake:
         libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
         libtar-devel libxml2-devel libvorbis-devel
   script:
-    - mkdir build-cmake ; cd build-cmake
+    - mkdir build ; cd build
     - cmake ..
     - make
     - make test-stopmotion

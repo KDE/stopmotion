@@ -10,7 +10,6 @@
 /Makefile.Release
 /stopmotion.pro.user
 /build/
-/build-cmake
 /divx2pass.log
 /src/test/build/
 /src/test/test
@@ -28,7 +27,6 @@
 # Coverity intermediate files
 /cov-int
 .vscode
-.qmake.stash
 # gtags output
 GTAGS
 GRTAGS
