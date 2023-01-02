@@ -4,10 +4,8 @@
 <context>
     <name>@default</name>
     <message>
-        <source>You do not have the necessary permissions to run Stopmotion.
-</source>
-        <translation type="obsolete">您沒有運行 Stopmotion 所必要的權限。
-</translation>
+        <source>You do not have the necessary permissions to run Stopmotion.</source>
+        <translation type="obsolete">您沒有運行 Stopmotion 所必要的權限。</translation>
     </message>
 </context>
 <context>
@@ -485,11 +483,11 @@ This can be set in the preferences menu.</source>
     </message>
     <message>
         <source>Start daemon</source>
-        <translation type="obsolete">開始守護程式</translation>
+        <translation>開始守護程式</translation>
     </message>
     <message>
         <source>Stop daemon</source>
-        <translation type="obsolete">停止守護程式</translation>
+        <translation>停止守護程式</translation>
     </message>
     <message>
         <source>Below you can set which program/process Stopmotion should use for grabbing images from the selected device.</source>
@@ -498,14 +496,6 @@ This can be set in the preferences menu.</source>
     <message>
         <source>You should always use &lt;b&gt;$VIDEODEVICE&lt;/b&gt; and &lt;b&gt;$IMAGEFILE&lt;/b&gt; to represent the video device and the image file, respectively.</source>
         <translation>您應該固定使用&lt;b&gt;$VIDEODEVICE&lt;/b&gt; 和 &lt;b&gt;$IMAGEFILE&lt;/b&gt;以分別表述視訊裝置和圖像檔案。</translation>
-    </message>
-    <message>
-        <source>Start daemon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stop daemon</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -807,7 +797,7 @@ This can be set in the preferences menu.</source>
     </message>
     <message>
         <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;h4&gt;儲存&lt;/h4&gt;&lt;p&gt;&lt;em&gt;儲存&lt;/em&gt;目前動畫為 Stopmotion 專案檔。&lt;BR&gt;如果此專案之前已儲存，它將自動儲存到之前所選的檔案。&lt;/p&gt;</translation>
+        <translation>&lt;h4&gt;儲存&lt;/h4&gt;&lt;p&gt;&lt;em&gt;儲存&lt;/em&gt;目前動畫為 Stopmotion 專案檔。&lt;BR&gt;如果此專案之前已儲存，它將自動儲存到之前所選的檔案。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;h4&gt;Save As&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file.&lt;/p&gt;</source>
@@ -954,10 +944,6 @@ to check your settings in the preferences menu?</source>
         <translation>另存新檔</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do&amp;n&apos;t save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1072,11 +1058,11 @@ to check your settings in the preferences menu?</source>
     </message>
     <message>
         <source>vgrabbj VGA daemon</source>
-        <translation type="obsolete">vgrabbj VGA 守護程式</translation>
+        <translation>vgrabbj VGA 守護程式</translation>
     </message>
     <message>
         <source>Starts vgrabbj as a daemon. Pretty fast.</source>
-        <translation type="obsolete">啟動 vgrabbj 為守護程式。相當快速。</translation>
+        <translation>啟動 vgrabbj 為守護程式。相當快速。</translation>
     </message>
     <message>
         <source>Question</source>
@@ -1160,19 +1146,11 @@ values exists. Do you want to use this one? (Your old preferences
     </message>
     <message>
         <source>vgrabbj</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>vgrabbj VGA daemon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
-        <translation type="unfinished"></translation>
+        <translation>vgrabbj</translation>
     </message>
     <message>
         <source>uvccapture</source>
-        <translation type="unfinished"></translation>
+        <translation>uvcapture</translation>
     </message>
     <message>
         <source>Grabbing from V4L2 devices</source>

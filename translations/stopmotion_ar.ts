@@ -498,21 +498,13 @@ This can be set in the preferences menu.</source>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="110"/>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="330"/>
         <source>Start daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>شغّل الجنيّ</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="117"/>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="331"/>
         <source>Stop daemon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start daemon</source>
-        <translation type="obsolete">شغّل الجنيّ</translation>
-    </message>
-    <message>
-        <source>Stop daemon</source>
-        <translation type="obsolete">أوقف الجنيّ</translation>
+        <translation>أوقف الجنيّ</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="59"/>
@@ -791,10 +783,6 @@ This can be set in the preferences menu.</source>
         <translation>&lt;h4&gt;جديد&lt;/h4&gt; &lt;p&gt;ينشئ مشروعا  &lt;em&gt;جديدا&lt;/em&gt; .&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;h4&gt;احفظ&lt;/h4&gt; &lt;p&gt;&lt;em&gt;يحفظ&lt;/em&gt; التحريك الحالي كملف مشروع تحريك. &lt;BR&gt;إن كان المشروع قد حُفظ مسبقا فسيتم تحديثه في ذات الملف الذي حفظ فيه مسبقا.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="608"/>
         <source>&lt;h4&gt;Save As&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;&gt;احفظ باسم&lt;/h4&gt; &lt;p&gt;&lt;em&gt;يحفظ&lt;/em&gt;التحريك الحالي كملف مشروع تحريك جديد.&lt;/p&gt;</translation>
@@ -838,7 +826,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="598"/>
         <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h4&gt;احفظ&lt;/h4&gt; &lt;p&gt;&lt;em&gt;يحفظ&lt;/em&gt; التحريك الحالي كملف مشروع تحريك. &lt;BR&gt;إن كان المشروع قد حُفظ مسبقا فسيتم تحديثه في ذات الملف الذي حفظ فيه مسبقا.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="604"/>
@@ -1077,10 +1065,6 @@ to check your settings in the preferences menu?</source>
         <translation type="obsolete">تشغيل vgrabbj للقطة VGA ,واحدة</translation>
     </message>
     <message>
-        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
-        <translation type="obsolete">يشغّل vgrabbj كجنيّ. سريع للغاية.</translation>
-    </message>
-    <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="418"/>
         <source>Question</source>
         <translation>سؤال</translation>
@@ -1133,7 +1117,7 @@ to check your settings in the preferences menu?</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="280"/>
         <source>Starts vgrabbj as a daemon. Pretty fast.</source>
-        <translation type="unfinished"></translation>
+        <translation>يشغّل vgrabbj كجنيّ. سريع للغاية.</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="288"/>

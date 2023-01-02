@@ -498,21 +498,13 @@ This can be set in the preferences menu.</source>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="110"/>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="330"/>
         <source>Start daemon</source>
-        <translation type="unfinished"></translation>
+        <translation>Запуск процесса</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="117"/>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="331"/>
         <source>Stop daemon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start daemon</source>
-        <translation type="obsolete">Запуск процесса</translation>
-    </message>
-    <message>
-        <source>Stop daemon</source>
-        <translation type="obsolete">Остановка процесса</translation>
+        <translation>Остановка процесса</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/importtab.cpp" line="59"/>
@@ -791,10 +783,6 @@ This can be set in the preferences menu.</source>
         <translation>&lt;h4&gt;Новый&lt;/h4&gt; &lt;p&gt;Создаёт &lt;em&gt;новый&lt;/em&gt; проект.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;h4&gt;Сохранить&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Сохраняет&lt;/em&gt;текущую анимацию в виде файла проекта Stopmotion. &lt;BR&gt;Если этот проект уже был однажды сохранён, он будет заново записан в тот же файл.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="608"/>
         <source>&lt;h4&gt;Save As&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file.&lt;/p&gt;</source>
         <translation>&lt;h4&gt;Сохранить как&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Сохраняет&lt;/em&gt; текущую анимацию в виде файла проекта Stopmotion. Вы можете указать новое имя для файла.&lt;/p&gt;</translation>
@@ -838,7 +826,7 @@ This can be set in the preferences menu.</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="598"/>
         <source>&lt;h4&gt;Save&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Saves&lt;/em&gt; the current animation as a Stopmotion project file. &lt;BR&gt;If this project has been saved before it will automatically be saved to the previously selected file.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;h4&gt;Сохранить&lt;/h4&gt; &lt;p&gt;&lt;em&gt;Сохраняет&lt;/em&gt;текущую анимацию в виде файла проекта Stopmotion. &lt;BR&gt;Если этот проект уже был однажды сохранён, он будет заново записан в тот же файл.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/mainwindowgui.cpp" line="604"/>
@@ -1074,18 +1062,6 @@ to check your settings in the preferences menu?</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <source>vgrabbj VGA singleshot</source>
-        <translation type="obsolete">vgrabbj VGA singleshot</translation>
-    </message>
-    <message>
-        <source>vgrabbj VGA daemon</source>
-        <translation type="obsolete">vgrabbj VGA daemon</translation>
-    </message>
-    <message>
-        <source>Starts vgrabbj as a daemon. Pretty fast.</source>
-        <translation type="obsolete">Запускает vgrabbj в виде сервиса. Довольно быстро..</translation>
-    </message>
-    <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="418"/>
         <source>Question</source>
         <translation>Вопрос</translation>
@@ -1138,7 +1114,7 @@ to check your settings in the preferences menu?</source>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="280"/>
         <source>Starts vgrabbj as a daemon. Pretty fast.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запускает vgrabbj в виде сервиса. Довольно быстро..</translation>
     </message>
     <message>
         <location filename="../src/presentation/frontends/qtfrontend/qtfrontend.cpp" line="288"/>
