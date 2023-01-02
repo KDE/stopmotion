@@ -23,7 +23,7 @@ For example, in Ubuntu or Debian you would open a terminal and type:
 
 In openSUSE you type:
 
-    sudo zypper install cmake g++ libQt5Core-devel libQt5Multimedia5 libtar-devel libvorbisfile-devel libxml2-devel
+    sudo zypper install cmake gcc-c++ libQt5Core-devel libQt5Widgets-devel libQt5Multimedia5 libtar-devel libvorbis-devel libxml2-devel
 
 Once the dependencies are installed you can navigate to the source
 code directory and type the following to build Stopmotion:
