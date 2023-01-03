@@ -21,13 +21,13 @@ deb12-clang14:
   before_script:
     - apt-get update
     - apt-get -y install
-        build-essential pkg-config cmake
+        build-essential pkg-config cmake clang
         qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
         libtar-dev libxml2-dev
         libvorbis-dev vgrabbj uvccapture
   script:
     - mkdir build ; cd build
-    - cmake ..
+    - cmake -DCMAKE_CXX_COMPILER=clang++ ..
     - make
     - make test-stopmotion
     - make test
@@ -62,7 +62,7 @@ opensuseleap15.4-clang15:
         libtar-devel libxml2-devel libvorbis-devel
   script:
     - mkdir build ; cd build
-    - cmake ..
+    - cmake -DCMAKE_CXX_COMPILER=clang++ ..
     - make
     - make test-stopmotion
     - make test
