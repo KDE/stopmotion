@@ -76,41 +76,40 @@ if(EXISTS "${DL_LIBRARY_PATH}" AND "${Qt6Test_FOUND}")
     ../foundation/logger.cpp
     )
 
-set_target_properties(test-stopmotion
-  PROPERTIES
-  EXCLUDE_FROM_ALL true)
+  set_target_properties(test-stopmotion
+    PROPERTIES
+    EXCLUDE_FROM_ALL true)
 
-# link to Qt libraries
-target_link_libraries(test-stopmotion
-  PUBLIC
-  Qt6::Core
-  Qt6::Widgets
-  Qt6::Multimedia
-  Qt6::Test
-  )
-# link to LibXml2
-target_link_libraries(test-stopmotion
-  PUBLIC LibXml2::LibXml2)
-# link to libVorbisFile, libarchive
-target_link_libraries(test-stopmotion
-  PUBLIC
-  oomtestutil oomteststub
-  ${VORBISFILE_LIBRARY_PATH}
-  LibArchive::LibArchive
-  ${DL_LIBRARY_PATH}
-  )
+  # link to Qt libraries
+  target_link_libraries(test-stopmotion
+    PUBLIC
+    Qt6::Core
+    Qt6::Widgets
+    Qt6::Multimedia
+    Qt6::Test
+    )
+  # link to LibXml2
+  target_link_libraries(test-stopmotion
+    PUBLIC LibXml2::LibXml2)
+  # link to libVorbisFile, libtar
+  target_link_libraries(test-stopmotion
+    PUBLIC
+    oomtestutil oomteststub
+    ${VORBISFILE_LIBRARY_PATH}
+    LibArchive::LibArchive
+    ${DL_LIBRARY_PATH}
+    )
 
-target_include_directories(test-stopmotion
-  PUBLIC
-  ${CMAKE_SOURCE_DIR})
+  target_include_directories(test-stopmotion
+    PUBLIC
+    ${CMAKE_SOURCE_DIR})
 
-# add test executable to CTest suite
-add_test(
-  NAME test-stopmotion
-  COMMAND test-stopmotion)
+  # add test executable to CTest suite
+  add_test(
+    NAME test-stopmotion
+    COMMAND test-stopmotion)
 
-# link files required for test
-file(CREATE_LINK ${CMAKE_CURRENT_SOURCE_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
-     COPY_ON_ERROR SYMBOLIC)
-
+  # link files required for test
+  file(CREATE_LINK ${CMAKE_CURRENT_SOURCE_DIR}/resources ${CMAKE_CURRENT_BINARY_DIR}/resources
+      COPY_ON_ERROR SYMBOLIC)
 endif()
