@@ -33,14 +33,14 @@ ExternalCommand::ExternalCommand(QWidget *parent)
 {
     vboxLayout = new QVBoxLayout(this);
     vboxLayout->setSpacing(6);
-    vboxLayout->setMargin(9);
+    vboxLayout->setContentsMargins(9, 9, 9, 9);
     
 	textBrowser = new QTextBrowser(this);
     vboxLayout->addWidget(textBrowser);
 
     hboxLayout = new QHBoxLayout();
     hboxLayout->setSpacing(6);
-    hboxLayout->setMargin(0);
+    hboxLayout->setContentsMargins(0, 0, 0, 0);
     
 	label = new QLabel(this);
     label->setText(tr("Input to program:"));

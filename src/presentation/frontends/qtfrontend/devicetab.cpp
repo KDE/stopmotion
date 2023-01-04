@@ -119,7 +119,7 @@ void DeviceTab::makeGUI()
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(informationText);
 	QVBoxLayout *buttonLayout = new QVBoxLayout;
-	buttonLayout->setMargin(0);
+	buttonLayout->setContentsMargins(0, 0, 0, 0);
 	buttonLayout->setSpacing(2);
 	buttonLayout->addStretch(1);
 	buttonLayout->addWidget(addButton);
@@ -134,7 +134,7 @@ void DeviceTab::makeGUI()
 
 	QVBoxLayout *devicePrefsLayout = new QVBoxLayout;
 	QHBoxLayout *hbLayout = new QHBoxLayout;
-	hbLayout->setMargin(0);
+	hbLayout->setContentsMargins(0, 0, 0, 0);
 	hbLayout->setSpacing(0);
 	hbLayout->addStretch(1);
 	hbLayout->addWidget(closeChangeBoxButton);

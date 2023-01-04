@@ -98,7 +98,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	centerWidget->setObjectName("CenterWidget");
 	centerWidgetLayout = new QVBoxLayout;
 	centerWidgetLayout->setSpacing(5);
-	centerWidgetLayout->setMargin(0);
+	centerWidgetLayout->setContentsMargins(0, 0, 0, 0);
 
 	frameBar = new FrameBar;
 	centerWidgetLayout->addWidget(frameBar);
@@ -113,7 +113,7 @@ void MainWindowGUI::ConstructUI() {
 	centerWidgetLayout->addWidget(bottomWidget);
 	bottomWidgetLayout = new QVBoxLayout;
 	bottomWidgetLayout->setSpacing(0);
-	bottomWidgetLayout->setMargin(0);
+	bottomWidgetLayout->setContentsMargins(0, 0, 0, 0);
 	makePreferencesMenu(bottomWidgetLayout);
 	//Initializes and sets up the workarea consisting of the toolsmenu and the frameview.
 	workArea = new QWidget;
@@ -123,7 +123,7 @@ void MainWindowGUI::ConstructUI() {
 	workAreaLayout = new QHBoxLayout;
 	workAreaLayout->setObjectName("WorkAreaLayout");
 	workAreaLayout->setSpacing(5);
-	workAreaLayout->setMargin(0);
+	workAreaLayout->setContentsMargins(0, 0, 0, 0);
 	makeToolsMenu(workAreaLayout);
 	makeViews(workAreaLayout);
 	workArea->setLayout(workAreaLayout);
@@ -423,7 +423,7 @@ void MainWindowGUI::makeGotoMenu(QVBoxLayout *layout)
 	gotoMenuWidget = new QWidget;
 	gotoMenuWidgetLayout = new QHBoxLayout;
 	gotoMenuWidgetLayout->setSpacing(5);
-	gotoMenuWidgetLayout->setMargin(0);
+	gotoMenuWidgetLayout->setContentsMargins(0, 0, 0, 0);
 
 	gotoFrameLabel = new QLabel;
 
@@ -461,7 +461,7 @@ void MainWindowGUI::makeStatusBar()
 {
 	numberDisplay = new QLabel;
 	numberDisplay->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-	numberDisplay->setMargin(0);
+	numberDisplay->setContentsMargins(0, 0, 0, 0);
 	connect(frameBar, SIGNAL(newActiveFrame(const QString &)), numberDisplay, SLOT(setText(const QString &)));
 	this->statusBar()->addPermanentWidget(numberDisplay);
 }

@@ -141,7 +141,7 @@ void ExportTab::makeGUI()
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(infoText);
 	QVBoxLayout *buttonLayout = new QVBoxLayout;
-	buttonLayout->setMargin(0);
+	buttonLayout->setContentsMargins(0, 0, 0, 0);
 	buttonLayout->setSpacing(2);
 	buttonLayout->addStretch(1);
 	buttonLayout->addWidget(addButton);

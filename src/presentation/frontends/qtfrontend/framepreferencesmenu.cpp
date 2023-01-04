@@ -43,7 +43,7 @@ FramePreferencesMenu::FramePreferencesMenu( QWidget * parent,
 	
 	this->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 	grid = new QGridLayout;
-	grid->setMargin(1);
+	grid->setContentsMargins(1, 1, 1, 1);
 	grid->setSpacing(1);
 	
 	addSoundButton = new QPushButton;
