@@ -1,4 +1,4 @@
-if(EXISTS "${DL_LIBRARY_PATH}" AND "${Qt5Test_FOUND}")
+if(EXISTS "${DL_LIBRARY_PATH}" AND "${Qt6Test_FOUND}")
   add_library(oomtestutil
     SHARED EXCLUDE_FROM_ALL
     oomtestutil.cpp)
@@ -83,10 +83,10 @@ set_target_properties(test-stopmotion
 # link to Qt libraries
 target_link_libraries(test-stopmotion
   PUBLIC
-  Qt5::Core
-  Qt5::Widgets
-  Qt5::Multimedia
-  Qt5::Test
+  Qt6::Core
+  Qt6::Widgets
+  Qt6::Multimedia
+  Qt6::Test
   )
 # link to LibXml2
 target_link_libraries(test-stopmotion
