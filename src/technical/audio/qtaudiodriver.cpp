@@ -33,6 +33,7 @@
 #include <vector>
 
 class QtAudioDriver::Impl : public QIODevice {
+	Q_OBJECT
 	static const int buffer_size = 4096;
 	typedef int16_t sample_t;
 	QAudioFormat audioFormat;
@@ -146,3 +147,5 @@ bool QtAudioDriver::initialize() {
 void QtAudioDriver::shutdown() {
 	impl->stop();
 }
+
+#include "qtaudiodriver.moc"

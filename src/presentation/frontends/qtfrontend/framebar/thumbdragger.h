@@ -26,6 +26,7 @@
 class ThumbView;
 
 class ThumbDragger: public QDrag {
+	Q_OBJECT
 public:
 	virtual ~ThumbDragger();
 	ThumbDragger(ThumbView* source);

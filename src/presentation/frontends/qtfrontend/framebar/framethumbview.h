@@ -37,6 +37,7 @@ class QWidget;
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
 class FrameThumbView : public ThumbView {
+	Q_OBJECT
 public:
 	/**
 	 * Creates and sets up the framethumbview.

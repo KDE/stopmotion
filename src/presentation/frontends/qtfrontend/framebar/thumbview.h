@@ -34,6 +34,7 @@ class QWidget;
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
 class ThumbView : public QLabel {
+	Q_OBJECT
 public:
 
 	/**
