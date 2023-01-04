@@ -48,10 +48,6 @@ const char* QtFrontend::VERSION = "0.8";
 QtFrontend::QtFrontend(int &argc, char **argv) {
 	stApp = new QApplication(argc, argv);
 
-#if QT_VERSION == 0x040400
-	stApp->setAttribute(Qt::AA_NativeWindows);
-#endif
-
 	mw = new MainWindowGUI(stApp);
 	mw->setWindowTitle("Stopmotion");
 	mw->showMaximized();
