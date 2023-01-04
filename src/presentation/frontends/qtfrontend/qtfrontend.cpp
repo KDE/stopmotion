@@ -33,6 +33,7 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QProgressBar>
+#include <QRegularExpression>
 #include <QStatusBar>
 #include <QTimer>
 
@@ -437,7 +438,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 					std::string("$IMAGEFILE"));
 		}
 		QString s(start.c_str());
-		s.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"),
+		s.replace( QRegularExpression("/dev/(v4l/){0,1}video[0-9]{0,1}"),
 				QString("$VIDEODEVICE") );
 		prefs->setPreference( QString("importstartdaemon%1")
 				.arg(i).toUtf8().constData(), s.toUtf8().constData());
@@ -451,7 +452,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 					std::string("$IMAGEFILE"));
 		}
 		QString ss(prepoll.c_str());
-		ss.replace( QRegExp("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
+		ss.replace( QRegularExpression("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
 		prefs->setPreference( QString("importprepoll%1").arg(i).toUtf8().constData(), ss.toUtf8().constData());
 	}
 }
