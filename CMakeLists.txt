@@ -1,14 +1,14 @@
 ###
 # general project setup
 ###
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 
 project(stopmotion
   LANGUAGES CXX)
 set(PROJECT_VERSION 0.9.0-git)
 
 # set project options required by Qt
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_AUTOMOC ON)
@@ -22,11 +22,11 @@ enable_testing()
 ###
 
 # Qt
-find_package(Qt5 5.11
+find_package(Qt6 6.2
   COMPONENTS Widgets Multimedia LinguistTools
   REQUIRED)
 # only needed for testing
-find_package(Qt5 5.11
+find_package(Qt6 6.2
   COMPONENTS Test)
 
 # LibXml2
@@ -72,7 +72,7 @@ add_subdirectory(translations)
 # handle translation files
 ###
 file(GLOB TS_FILES "translations/stopmotion_*.ts")
-qt5_add_translation(QM_FILES "${TS_FILES}")
+qt_add_translation(QM_FILES "${TS_FILES}")
 
 ###
 # create executable and link libraries
@@ -162,9 +162,9 @@ add_executable(stopmotion
 # link to Qt libraries
 target_link_libraries(stopmotion
   PUBLIC
-  Qt5::Core
-  Qt5::Widgets
-  Qt5::Multimedia
+  Qt6::Core
+  Qt6::Widgets
+  Qt6::Multimedia
   )
 # link to LibXml2
 target_link_libraries(stopmotion
