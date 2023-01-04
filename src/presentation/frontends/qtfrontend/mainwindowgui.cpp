@@ -62,7 +62,6 @@
 #include <QMessageBox>
 #include <QMimeData>
 #include <QWhatsThis>
-#include <QDesktopWidget>
 #include <QFileSystemWatcher>
 #include <QClipboard>
 
@@ -1093,13 +1092,8 @@ void MainWindowGUI::showAboutDialog()
 void MainWindowGUI::showHelpDialog()
 {
 	HelpWindow *help = new HelpWindow(this);
-	if ( QApplication::desktop()->width() > 400 && QApplication::desktop()->height() > 500 ) {
-		help->move(40, 40);
-		help->show();
-	}
-	else {
-		help->showMaximized();
-	}
+	help->move(40, 40);
+	help->show();
 }
 
 
