@@ -41,7 +41,7 @@ opensusetumbleweed-gcc14:
     - zypper refresh
     - zypper install -y
         gcc pkg-config cmake
-        libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
+        qt6-gui-devel qt6-widgets-devel qt6-multimedia-devel qt6-linguist-devel
         libtar-devel libxml2-devel libvorbis-devel
   script:
     - mkdir build ; cd build
