@@ -11,12 +11,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Qt-Contexts: true\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: src/application/externalcommand.cpp:46
 msgctxt "ExternalCommand|"
 msgid "Input to program:"
-msgstr ""
+msgstr "პროგრამაში შეტანა:"
 
 #: src/application/externalcommand.cpp:56
 msgctxt "ExternalCommand|"
@@ -31,7 +31,7 @@ msgstr "დაკეტვა"
 #: src/application/externalcommand.cpp:75
 msgctxt "ExternalCommand|"
 msgid "Output from external command"
-msgstr ""
+msgstr "გამოტანა გარე პროგრამაში"
 
 #: src/application/externalcommand.cpp:123
 #: src/application/externalcommand.cpp:126
@@ -42,12 +42,12 @@ msgstr "შედეგი"
 #: src/application/externalcommand.cpp:123
 msgctxt "ExternalCommand|"
 msgid "Failed!"
-msgstr ""
+msgstr "წარუმატებელია!"
 
 #: src/application/externalcommand.cpp:126
 msgctxt "ExternalCommand|"
 msgid "Successful!"
-msgstr ""
+msgstr "წარმატებულია!"
 
 #: src/application/languagehandler.cpp:89
 msgctxt "LanguageHandler|"
@@ -70,12 +70,12 @@ msgstr "ინგლისური"
 #: src/application/modelhandler.cpp:62
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
-msgstr ""
+msgstr "აირჩიეთ დასამატებელი კადრები"
 
 #: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
-msgstr ""
+msgstr "მონიშნული კადი წაშლილია"
 
 #: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:231
 #: src/application/modelhandler.cpp:248
@@ -86,12 +86,12 @@ msgstr "გაფრთხილება"
 #: src/application/modelhandler.cpp:221
 msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
-msgstr ""
+msgstr "Gimp-ი დაყენებული არ გაქვთ"
 
 #: src/application/modelhandler.cpp:232
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
-msgstr ""
+msgstr "გასახსნელი აქტიური კადრი ვერ ვიპოვე"
 
 #: src/application/modelhandler.cpp:249
 msgctxt "ModelHandler|"
@@ -101,7 +101,7 @@ msgstr "GIMP-ის გაშვების შეცდომა!"
 #: src/application/runanimationhandler.cpp:93
 msgctxt "RunAnimationHandler|"
 msgid "Running animation"
-msgstr ""
+msgstr "ანიმაციის გაშვება"
 
 #: src/application/soundhandler.cpp:44
 msgctxt "SoundHandler|"
@@ -121,12 +121,12 @@ msgstr "ხმის სახელი"
 #: src/application/soundhandler.cpp:71
 msgctxt "SoundHandler|"
 msgid "Enter the name of the sound:"
-msgstr ""
+msgstr "შეიყვანეთ ხმის სახელი:"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:42
 msgctxt "AboutDialog|"
 msgid "This is the Stopmotion application for creating stop motion animations."
-msgstr ""
+msgstr "ეს აპლიკაციაა მოძრაობის შეწყვეტის ანიმაციებისთვის."
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:47
 msgctxt "AboutDialog|"
@@ -136,7 +136,7 @@ msgstr "შ&ესახებ"
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:50
 msgctxt "AboutDialog|"
 msgid "Main developers"
-msgstr ""
+msgstr "მთავარი პროგრამისტები"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:54
 msgctxt "AboutDialog|"
@@ -227,7 +227,7 @@ msgstr "ლოგო"
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:89
 msgctxt "AboutDialog|"
 msgid "Coordinating"
-msgstr ""
+msgstr "კოორდინატორები"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:93
 msgctxt "AboutDialog|"
@@ -371,7 +371,7 @@ msgstr "არა"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:395
 msgctxt "ExportTab|"
 msgid "Set default output file:"
-msgstr ""
+msgstr "ნაგულისხმები გამოსატანი ფაილის დაყენება:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:126
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:396
@@ -394,7 +394,7 @@ msgstr "ენკოდერის გაჩერება:"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:362
 msgctxt "ExportTab|"
 msgid "Choose output file"
-msgstr ""
+msgstr "აირჩიეთ გამოსატანი ფაილი"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:372
 msgctxt "ExportTab|"
@@ -496,7 +496,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/frameview.cpp:357
 msgctxt "FrameView|"
 msgid "Warning"
-msgstr ""
+msgstr "გაფრთხილება"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 msgctxt "FrameView|"
@@ -705,17 +705,17 @@ msgstr "&ჩასმა"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
-msgstr ""
+msgstr "&კადრზე გადასვლა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
-msgstr ""
+msgstr "&Stopmotion-ის მორგება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
 msgctxt "MainWindowGUI|"
 msgid "What's &This"
-msgstr ""
+msgstr "რა არის &ეს"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
 msgctxt "MainWindowGUI|"
@@ -725,12 +725,12 @@ msgstr "შ&ესახებ"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:512
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
-msgstr ""
+msgstr "კადრის ნომერი: "
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
-msgstr ""
+msgstr "კადრზე გადასვლა:"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
 msgctxt "MainWindowGUI|"
@@ -763,7 +763,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
 msgctxt "MainWindowGUI|"
 msgid "Save project"
-msgstr ""
+msgstr "პროექტის შენახვა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:598
 msgctxt "MainWindowGUI|"
@@ -775,7 +775,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
-msgstr ""
+msgstr "პროექტის შენახვა, როგორც"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:607
 msgctxt "MainWindowGUI|"
@@ -873,7 +873,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:682
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
-msgstr ""
+msgstr "კადრზე გადასვლა"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
 msgctxt "MainWindowGUI|"
@@ -885,7 +885,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
-msgstr ""
+msgstr "Stopmotion-ის მორგება"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:697
 msgctxt "MainWindowGUI|"
@@ -977,7 +977,7 @@ msgstr "შეუნახავი ცვლილებები"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
-msgstr ""
+msgstr "გსურთ ცვლილებების შენახვა?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
@@ -1059,7 +1059,7 @@ msgstr "დაკეტვა"
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:125
 msgctxt "PreferencesMenu|"
 msgid "Preferences Menu"
-msgstr ""
+msgstr "მორგების მენიუ"
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:78
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:128
@@ -1087,12 +1087,12 @@ msgstr "გთხოვთ, მოითმინოთ..."
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:89
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
-msgstr ""
+msgstr "კამერის მიერთება..."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
 msgctxt "QtFrontend|"
 msgid "Importing frames from disk"
-msgstr ""
+msgstr "დისკიდან კადრების შემოტანა"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:95
 msgctxt "QtFrontend|"
@@ -1102,12 +1102,12 @@ msgstr "გატანა…"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:98
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
-msgstr ""
+msgstr "პროექტის აღდგენა..."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:101
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
-msgstr ""
+msgstr "სცენების დისკზე ჩაწერა..."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:105
 msgctxt "QtFrontend|"
@@ -1117,7 +1117,7 @@ msgstr "გაუქმება"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:195
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
-msgstr ""
+msgstr "დაზიანებული ფაილის დაკარგვა"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:196
 #, qt-format
@@ -1155,7 +1155,7 @@ msgstr "uvccapture"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:276
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
-msgstr ""
+msgstr "V4L2 მოწყობილობებიდან ჩაჭერა"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:283
 msgctxt "QtFrontend|"
@@ -1197,7 +1197,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:357
 msgctxt "QtFrontend|"
 msgid "Unsupported image file type"
-msgstr ""
+msgstr "გამოსახულების ფალის მხარდაუჭერელი ტიპი"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
 msgctxt "QtFrontend|"
@@ -1212,12 +1212,12 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:362
 msgctxt "QtFrontend|"
 msgid "Perhaps it is corrupt."
-msgstr ""
+msgstr "ალბათ დაზიანებულია."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:366
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
-msgstr ""
+msgstr "მონიშნული ფაილის წასაკითხად გახსნის შეცდომა"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:367
 #, qt-format
@@ -1249,7 +1249,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:381
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
-msgstr ""
+msgstr "პარამეტრების ჩაწერის შეცდომა"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:382
 #, qt-format
@@ -1260,7 +1260,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:391
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
-msgstr ""
+msgstr "Stopmotion -ის გაშვების შედომა."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
 msgctxt "QtFrontend|"
@@ -1273,7 +1273,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
-msgstr ""
+msgstr "პარამეტრების ფაილის წაკითხვის შეცდომა"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:397
 #, qt-format
@@ -1330,7 +1330,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:208
 msgctxt "ToolsMenu|"
 msgid "Number of images:"
-msgstr ""
+msgstr "გამოსახულებების რაოდენობა:"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:211
 msgctxt "ToolsMenu|"
@@ -1440,32 +1440,32 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:295
 msgctxt "ToolsMenu|"
 msgid "<h4>Play animation (K, P)</h4>"
-msgstr ""
+msgstr "<h4>ანიმაციის დაკვრა (K, P)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:298
 msgctxt "ToolsMenu|"
 msgid "<h4>Stop animation (K, P)</h4>"
-msgstr ""
+msgstr "<h4>ანიმაციის გაჩერება (K, P)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:301
 msgctxt "ToolsMenu|"
 msgid "<h4>Previous frame (J, Left)</h4>"
-msgstr ""
+msgstr "<h4>წინა კადრი (J, მარცხნივ)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:304
 msgctxt "ToolsMenu|"
 msgid "<h4>Next frame (L, Right)</h4>"
-msgstr ""
+msgstr "<h4>შემდეგი კადრი (L, მარჯვნივ)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:307
 msgctxt "ToolsMenu|"
 msgid "<h4>Previous scene (I)</h4>"
-msgstr ""
+msgstr "<h4>წინა სცენა (I)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:310
 msgctxt "ToolsMenu|"
 msgid "<h4>Next scene (O)</h4>"
-msgstr ""
+msgstr "<h4>შემდეგი სცენა (O)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:314
 msgctxt "ToolsMenu|"
