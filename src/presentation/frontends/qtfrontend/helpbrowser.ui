@@ -198,21 +198,5 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>textBrowser</sender>
-   <signal>highlighted(QString)</signal>
-   <receiver>lineEdit</receiver>
-   <slot>setText(QString)</slot>
-   <hints>
-    <hint type="sourcelabel" >
-     <x>273</x>
-     <y>119</y>
-    </hint>
-    <hint type="destinationlabel" >
-     <x>279</x>
-     <y>59</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
 </ui>
