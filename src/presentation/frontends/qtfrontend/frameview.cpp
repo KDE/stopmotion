@@ -274,9 +274,7 @@ bool FrameView::on() {
 		if (device.isEmpty()) {
 			QMessageBox::warning(this, tr("Warning"), tr(
 				"No video device selected in the preferences menu."),
-				QMessageBox::Ok,
-				Qt::NoButton,
-				Qt::NoButton);
+				QMessageBox::Ok);
 			return false;
 		}
 	}
@@ -288,9 +286,7 @@ bool FrameView::on() {
 	if ( !grabber->setPrePollCommand(pre.toLatin1().constData()) ) {
 		QMessageBox::warning(this, tr("Warning"), tr(
 					"Pre poll command does not exists"),
-					QMessageBox::Ok,
-					Qt::NoButton,
-					Qt::NoButton);
+					QMessageBox::Ok);
 		//return false;
 		isCameraReady = false;
 	}
@@ -301,9 +297,7 @@ bool FrameView::on() {
 			DomainFacade::getFacade()->getFrontend()->hideProgress();
 			QMessageBox::warning(this, tr("Warning"), tr(
 						"You do not have the given grabber installed on your system"),
-						QMessageBox::Ok,
-						Qt::NoButton,
-						Qt::NoButton);
+						QMessageBox::Ok);
 			isCameraReady = false;
 			//return false;
 		}
@@ -328,9 +322,7 @@ bool FrameView::on() {
 					"Grabbing failed. This may happen if you try\n"
 					"to grab from an invalid device. Please check\n"
 					"your grabber settings in the preferences menu."),
-					QMessageBox::Ok,
-					Qt::NoButton,
-					Qt::NoButton);
+					QMessageBox::Ok);
 				return false;
 			}
 		}
@@ -346,9 +338,7 @@ bool FrameView::on() {
 					"Grabbing failed. This may happen if you try\n"
 					"to grab from an invalid device. Please check\n"
 					"your grabber settings in the preferences menu."),
-					QMessageBox::Ok,
-					Qt::NoButton,
-					Qt::NoButton);
+					QMessageBox::Ok);
 				return false;
 			}
 		}
@@ -357,9 +347,7 @@ bool FrameView::on() {
 		QMessageBox::warning(this, tr("Warning"), tr(
 				"You have to define an image grabber to use.\n"
 				"This can be set in the preferences menu."),
-				QMessageBox::Ok,
-				Qt::NoButton,
-				Qt::NoButton);
+				QMessageBox::Ok);
 		return false;
 	}
 	return true;
