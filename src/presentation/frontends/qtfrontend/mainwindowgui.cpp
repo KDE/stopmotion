@@ -769,18 +769,20 @@ void MainWindowGUI::retranslateHelpText()
 MainWindowGUI::SaveDialogResult MainWindowGUI::saveIfNecessary() {
 	bool b = DomainFacade::getFacade()->isUnsavedChanges();
 	if (b) {
-		int save = QMessageBox::question(this, tr("Unsaved changes"),
+		QMessageBox::StandardButton save = QMessageBox::question(
+				this, tr("Unsaved changes"),
 				tr("There are unsaved changes. Do you want to save?"),
-				tr("&Save"), tr("Do&n't save"), tr("Abort"), 0, 2);
-		if (save == 2) {
-			return saveDialogCancel;
-		} else if (save == 0) {
+				QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+		if (save == QMessageBox::Save) {
 			if (saveProject())
 				return saveDialogSave;
 			// User requested a save but cancelled the "Save As" dialog.
 			// This counts as a cancel.
 			return saveDialogCancel;
 		}
+		else if (save == QMessageBox::Cancel)
+			return saveDialogCancel;
+		// else save == QMessageBox::Discard
 	}
 	return saveDialogDiscard;
 }
@@ -897,15 +899,14 @@ void MainWindowGUI::exportToVideo()
 	PreferencesTool *prefs = PreferencesTool::get();
 	int active = prefs->getPreference("activeEncoder", -1);
 	if ( active == -1 ) {
-		int ret = QMessageBox::warning(this,
+		QMessageBox::StandardButton ret = QMessageBox::warning(this,
 			tr("Warning"),
 			tr("Cannot find any registered encoder to be used for\n"
 			   "video export. This can be set in the preferences\n"
 			   "menu. Export to video will not be possible until you\n"
 			   "have set an encoder to use. Do you want to set it now?"),
-			tr("&Yes"), tr("&No"), // button 0, button 1, ...
-			QString(), 0, 1 );
-		if (ret == 0) {
+			QMessageBox::Yes | QMessageBox::No);
+		if (ret == QMessageBox::Yes) {
 			showPreferencesMenu();
 		}
 	}
@@ -949,19 +950,17 @@ void MainWindowGUI::exportToVideo()
 					frameView->getPlaybackSpeed());
 		}
 		else if (!isCanceled){
-			int ret = QMessageBox::warning(this,
+			QMessageBox::StandardButton ret = QMessageBox::warning(this,
 					tr("Warning"),
 					tr("The registered encoder is not valid. Do you want\n"
 					"to check your settings in the preferences menu?"),
-					tr("&Yes"), tr("&No"), // button 0, button 1, ...
-					QString(), 0, 1 );
-			if (ret == 0) {
+					QMessageBox::Yes | QMessageBox::No);
+			if (ret == QMessageBox::Yes) {
 				showPreferencesMenu();
 			}
 		}
 	}
 }
-
 
 void MainWindowGUI::exportToCinerella()
 {

@@ -191,10 +191,10 @@ bool QtFrontend::loadPreferencesFrom(PreferencesTool* prefs, const char* path) {
 			// not worth keeping a file this small
 			return false;
 		}
-		int ret = QMessageBox::question(0,
+		QMessageBox::StandardButton ret = QMessageBox::question(0,
 				tr("Lose corrupt file"),
 				tr("The file %1 seems to be corrupt, it's contents will be lost if you continue. Do you want to continue?").arg(path),
-				QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
+				QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 		if (ret == QMessageBox::No)
 			throw CriticalError();
 	}
@@ -464,9 +464,9 @@ bool QtFrontend::askQuestion(Question question) {
 				"will be saved in ~/.stopmotion/preferences.xml.OLD)");
 		break;
 	}
-	int ret = QMessageBox::question(0,
+	QMessageBox::StandardButton ret = QMessageBox::question(0,
 			tr("Question"), text,
-			QMessageBox::Yes, QMessageBox::No, QMessageBox::NoButton);
+			QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 	return ret == QMessageBox::Yes;
 }
 
