@@ -26,7 +26,6 @@ class FrameBar;
 class QStatusBar;
 class QFileDialog;
 class QPushButton;
-class QStringList;
 class QString;
 
 /**
