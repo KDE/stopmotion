@@ -327,7 +327,7 @@ msgstr "&Edita"
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:373
 msgctxt "DeviceTab|"
 msgid "Video device settings"
-msgstr "Configuració del dispositiu de vídeo"
+msgstr "Configureu el dispositiu de vídeo"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:114
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:374
@@ -361,7 +361,7 @@ msgstr "&Edita"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:98
 msgctxt "ExportTab|"
 msgid "Encoder settings"
-msgstr "Configuració del codificador"
+msgstr "Configureu el codificador"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:108
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:391
