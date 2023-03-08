@@ -1128,7 +1128,7 @@ msgstr "&No"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:938
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
-msgstr "Exporta a un fitxer de vídeo"
+msgstr "Exporta cap a un fitxer de vídeo"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
 msgctxt "MainWindowGUI|"
@@ -1142,7 +1142,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:970
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
-msgstr "Exporta a un fitxer"
+msgstr "Exporta cap a un fitxer"
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:44
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:123
