@@ -1544,7 +1544,7 @@ msgid ""
 "frame from the camera an put it in the animation</p> <p> This can also be "
 "done by pressing the <b>Space key</b></p>"
 msgstr ""
-"<h4>Captura un fotograma (Espai)</h4> <p>Cliqueu en este botó per a "
+"<h4>Captura un fotograma («Espai»)</h4> <p>Cliqueu en este botó per a "
 "<em>capturar</em> un fotograma de la càmera i posar-lo en l'animació</p> <p> "
 "Açò també es pot fer prement la <b>Barra espaiadora</b></p>"
 
