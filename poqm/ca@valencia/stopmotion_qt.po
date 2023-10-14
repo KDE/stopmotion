@@ -748,7 +748,7 @@ msgstr "A&pega"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
-msgstr "&Ves al fotograma"
+msgstr "&Ves fins al fotograma"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
 msgctxt "MainWindowGUI|"
@@ -773,7 +773,7 @@ msgstr "Número de fotograma: "
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
-msgstr "Ves al fotograma:"
+msgstr "Ves fins al fotograma:"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
 msgctxt "MainWindowGUI|"
@@ -934,13 +934,13 @@ msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
 "you can choose a frame you want to <em>go to</em>.</p>"
 msgstr ""
-"<h4>Ves al fotograma</h4> <p>Açò obrirà un menú emergent a la part inferior "
-"a on podreu triar un fotograma al que vulgueu <em>anar-hi</em>.</p>"
+"<h4>Ves fins al fotograma</h4> <p>Açò obrirà un menú emergent a la part "
+"inferior a on podreu triar un fotograma al que vulgueu <em>anar-hi</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:682
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
-msgstr "Ves al fotograma"
+msgstr "Ves fins al fotograma"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
 msgctxt "MainWindowGUI|"
@@ -1025,8 +1025,8 @@ msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
 "program will jump to the specified frame</p> "
 msgstr ""
-"<h4>Ves al menú de fotogrames</h4> <p>Ací es pot especificar un número de "
-"fotograma i el programa saltarà al fotograma especificar</p> "
+"<h4>Ves fins al menú de fotogrames</h4> <p>Ací es pot especificar un número "
+"de fotograma i el programa saltarà al fotograma especificar</p> "
 
 # skip-rule: common-es_s
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
