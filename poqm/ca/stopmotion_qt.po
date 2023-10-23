@@ -4,11 +4,12 @@
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # Josep M. Ferrer <txemaq@gmail.com>, 2021.
+# SPDX-FileCopyrightText: 2023 Antoni Bella Pérez <antonibella5@yahoo.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: stopmotion\n"
-"PO-Revision-Date: 2021-11-04 18:42+0100\n"
-"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
+"PO-Revision-Date: 2023-10-22 22:30+0200\n"
+"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +18,7 @@ msgstr ""
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 20.12.0\n"
+"X-Generator: Lokalize 23.08.1\n"
 
 #: src/application/externalcommand.cpp:46
 msgctxt "ExternalCommand|"
@@ -1026,7 +1027,7 @@ msgid ""
 "program will jump to the specified frame</p> "
 msgstr ""
 "<h4>Ves al menú de fotogrames</h4> <p>Aquí es pot especificar un número de "
-"fotograma i el programa saltarà al fotograma especificar</p> "
+"fotograma i el programa saltarà al fotograma especificat</p> "
 
 # skip-rule: common-es_s
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
@@ -1487,7 +1488,7 @@ msgid ""
 "<h4>Add Frames (CTRL+F)</h4> <p>Click on this button to <em>add</em> frames "
 "to the animation.</p>"
 msgstr ""
-"<h4>Afegeix fotogrames (CTRL+F)</h4> <p>Cliqueu en aquest botó per a "
+"<h4>Afegeix fotogrames (Ctrl+F)</h4> <p>Cliqueu en aquest botó per a "
 "<em>afegir</em> fotogrames a l'animació.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:232
@@ -1505,7 +1506,7 @@ msgid ""
 "<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
 "<em>scene</em> to the animation.</p>"
 msgstr ""
-"<h4>Escena nova (CTRL+E)</h4> <p>Cliqueu aquest botó per a <em>crear</em> "
+"<h4>Escena nova (Ctrl+E)</h4> <p>Cliqueu aquest botó per a <em>crear</em> "
 "una <em>escena</em> nova a l'animació.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
@@ -1514,7 +1515,7 @@ msgid ""
 "<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected scene from the animation.</p>"
 msgstr ""
-"<h4>Elimina una escena (MAJÚS+Supr)</h4> <p>Cliqueu aquest botó per a "
+"<h4>Elimina una escena (Maj+Supr)</h4> <p>Cliqueu aquest botó per a "
 "<em>eliminar</em> l'escena seleccionada de l'animació.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:253
@@ -1614,7 +1615,7 @@ msgid ""
 "<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether you "
 "want the animation to play to the end, or to loop indefinitely.</p>"
 msgstr ""
-"<h4>Animació en bucle (CTRL+L)</h4> <p>Amb aquest botó podeu establir si "
+"<h4>Animació en bucle (Ctrl+L)</h4> <p>Amb aquest botó podeu establir si "
 "voleu que l'animació es reprodueixi fins al final, o faci un bucle sense fi."
 "</p>"
 
@@ -1631,5 +1632,5 @@ msgid ""
 "daemon."
 msgstr ""
 "Només reprodueix els treballs actuals quan la capturadora s'executa com a "
-"dimoni. Aneu al menú preferències (CTRL+P) per canviar a executar la captura "
+"dimoni. Aneu al menú preferències (Ctrl+P) per canviar a executar la captura "
 "d'imatges com a dimoni."
