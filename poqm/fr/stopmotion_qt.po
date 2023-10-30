@@ -1,16 +1,16 @@
-# Xavier Besnard <xavier.besnard@neuf.fr>, 2021.
+# SPDX-FileCopyrightText: 2021, 2023 Xavier Besnard <xavier.besnard@neuf.fr>
 msgid ""
 msgstr ""
 "Project-Id-Version: stopmotion_qt\n"
-"PO-Revision-Date: 2021-12-30 11:42+0100\n"
-"Last-Translator: Xavier Besnard <xavier.besnard@neuf.fr>\n"
-"Language-Team: French <kde-francophone@kde.org>\n"
+"PO-Revision-Date: 2023-10-28 18:33+0200\n"
+"Last-Translator: Xavier BESNARD <xavier.besnard@neuf.fr>\n"
+"Language-Team: fr\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 21.12.0\n"
+"X-Generator: Lokalize 23.08.1\n"
 "X-Qt-Contexts: true\n"
 
 #: src/application/externalcommand.cpp:46
@@ -537,7 +537,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/frameview.cpp:289
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
-msgstr "La commande de préinterrogation n'existe pas."
+msgstr "La commande de pré-interrogation n'existe pas."
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:302
 msgctxt "FrameView|"
@@ -584,7 +584,7 @@ msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 "the video device and the image file, respectively."
 msgstr ""
-"Vous devez toujours utilisé <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b>, "
+"Vous devez toujours utilisé <b>$VIDEODEVICE</b> et <b>$IMAGEFILE</b>, "
 "respectivement, pour référencer le périphérique vidéo et le fichier d'image."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:71
@@ -627,7 +627,7 @@ msgstr "Importer la configuration du périphérique"
 #: src/presentation/frontends/qtfrontend/importtab.cpp:331
 msgctxt "ImportTab|"
 msgid "Pre-poll command"
-msgstr "Commande de préinterrogation"
+msgstr "Commande de pré-interrogation"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:114
 #: src/presentation/frontends/qtfrontend/importtab.cpp:332
@@ -712,7 +712,7 @@ msgstr "Vidéo"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
-msgstr "Cinelerra"
+msgstr "Cinerella"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
 msgctxt "MainWindowGUI|"
@@ -831,7 +831,7 @@ msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
 "be given a wizard to guide you."
 msgstr ""
-"<h4>Video</h4> <p>Exporte le projet courant comme une <em>vidéo</em>.</p>Un "
+"<h4>Vidéo</h4> <p>Exporte le projet courant comme une <em>vidéo</em>.</p>Un "
 "assistant vous sera proposé pour vous guider."
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
@@ -1509,7 +1509,7 @@ msgid ""
 "<em>scene</em> to the animation.</p>"
 msgstr ""
 "<h4>Nouvelle scène (CTRL+E)</h4> <p>Cliquez sur ce bouton pour <em>créer</"
-"em> une nouvelle <em>scéne</em> pour l'animation.</p>"
+"em> une nouvelle <em>scène</em> pour l'animation.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
 msgctxt "ToolsMenu|"
@@ -1612,7 +1612,7 @@ msgstr "<h4>Scène précédente (I)</h4>"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:310
 msgctxt "ToolsMenu|"
 msgid "<h4>Next scene (O)</h4>"
-msgstr "<h4>Scéne suivante (O)</h4>"
+msgstr "<h4>Scène suivante (O)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:314
 msgctxt "ToolsMenu|"
