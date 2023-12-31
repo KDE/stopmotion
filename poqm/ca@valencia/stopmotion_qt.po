@@ -920,7 +920,7 @@ msgid ""
 "</p>"
 msgstr ""
 "<h4>Apega</h4> <p><em>Apega</em> els fotogrames que estan actualment en el "
-"porta-retalls a la ubicació seleccionada.</p> <p>Podeu copiar/retallar "
+"porta-retalls en la ubicació seleccionada.</p> <p>Podeu copiar/retallar "
 "imatges des d'altres programes i després utilitzar esta opció per a apegar-"
 "los en esta animació.</p>"
 
