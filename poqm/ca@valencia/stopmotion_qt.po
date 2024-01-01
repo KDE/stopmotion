@@ -903,8 +903,8 @@ msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
 "can then paste them in another place.</p>"
 msgstr ""
-"<h4>Copia</h4> <p><em>Copia</em> els fotogrames seleccionats al porta-"
-"retalls. Després els podreu apegar en un altre lloc.</p>"
+"<h4>Copia</h4> <p><em>Copia</em> els fotogrames seleccionats a dins del "
+"porta-retalls. Després els podreu apegar en un altre lloc.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:663
 msgctxt "MainWindowGUI|"
