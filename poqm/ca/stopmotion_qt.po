@@ -1,15 +1,15 @@
 # Translation of stopmotion_qt.po to Catalan
-# Copyright (C) 2021-2023 This_file_is_part_of_KDE
+# Copyright (C) 2021-2024 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
-# Josep M. Ferrer <txemaq@gmail.com>, 2021.
 # SPDX-FileCopyrightText: 2023 Antoni Bella Pérez <antonibella5@yahoo.com>
+# Josep M. Ferrer <txemaq@gmail.com>, 2021, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: stopmotion\n"
-"PO-Revision-Date: 2023-10-22 22:30+0200\n"
-"Last-Translator: Antoni Bella Pérez <antonibella5@yahoo.com>\n"
+"PO-Revision-Date: 2024-01-30 14:30+0100\n"
+"Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 23.08.1\n"
+"X-Generator: Lokalize 22.12.3\n"
 
 #: src/application/externalcommand.cpp:46
 msgctxt "ExternalCommand|"
@@ -920,8 +920,8 @@ msgid ""
 msgstr ""
 "<h4>Enganxa</h4> <p><em>Enganxa</em> els fotogrames que estan actualment en "
 "el porta-retalls a la ubicació seleccionada.</p> <p>Podeu copiar/retallar "
-"imatges des d'altres programes i després usar aquesta opció per enganxar-los "
-"en aquesta animació.</p>"
+"imatges des d'altres programes i després usar aquesta opció per a enganxar-"
+"los en aquesta animació.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
 msgctxt "MainWindowGUI|"
@@ -935,7 +935,7 @@ msgid ""
 "you can choose a frame you want to <em>go to</em>.</p>"
 msgstr ""
 "<h4>Ves al fotograma</h4> <p>Això obrirà un menú emergent a la part inferior "
-"a on podreu triar un fotograma al que vulgueu <em>anar-hi</em>.</p>"
+"a on podreu triar un fotograma al qual vulgueu <em>anar-hi</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:682
 msgctxt "MainWindowGUI|"
@@ -1564,7 +1564,7 @@ msgstr ""
 "s'haurien de mesclar per sobre de la càmera o si esteu en mode reproducció: "
 "el nombre d'imatges a reproduir. </p> <p>Mesclant la/es imatge/s anterior/s "
 "en la càmera, es pot veure més fàcilment com serà la propera fotografia en "
-"relació amb les altres, i per tant, fent una animació stop-motion més suau!</"
+"relació amb les altres i, per tant, fent una animació stop-motion més suau!</"
 "p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:285
@@ -1632,5 +1632,5 @@ msgid ""
 "daemon."
 msgstr ""
 "Només reprodueix els treballs actuals quan la capturadora s'executa com a "
-"dimoni. Aneu al menú preferències (Ctrl+P) per canviar a executar la captura "
-"d'imatges com a dimoni."
+"dimoni. Aneu al menú preferències (Ctrl+P) per a canviar l'execució de la "
+"captura d'imatges com a dimoni."
