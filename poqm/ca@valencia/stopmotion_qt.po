@@ -1018,7 +1018,7 @@ msgid ""
 msgstr ""
 "<h4>Vista de fotograma</h4><p> En esta àrea es pot veure el fotograma "
 "seleccionat. També es poden reproduir les animacions en esta finestra "
-"prement el botó <b>Reproducció</b>.</p>"
+"prement el botó <b>Reproduïu</b>.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
 msgctxt "MainWindowGUI|"
@@ -1184,12 +1184,12 @@ msgstr "&Dispositiu de vídeo"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:86
 msgctxt "QtFrontend|"
 msgid "Please wait..."
-msgstr "Espereu un moment..."
+msgstr "Espereu un moment…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:89
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
-msgstr "S'està connectant la càmera..."
+msgstr "S'està connectant la càmera…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
 msgctxt "QtFrontend|"
@@ -1199,17 +1199,17 @@ msgstr "S'estan important fotogrames del disc"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:95
 msgctxt "QtFrontend|"
 msgid "Exporting..."
-msgstr "Exportació..."
+msgstr "Exportació…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:98
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
-msgstr "S'està restaurant el projecte..."
+msgstr "S'està restaurant el projecte…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:101
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
-msgstr "S'estan guardant les escenes en el disc..."
+msgstr "S'estan guardant les escenes en el disc…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:105
 msgctxt "QtFrontend|"
@@ -1460,7 +1460,7 @@ msgstr "Diferència"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:213
 msgctxt "ToolsMenu|"
 msgid "Playback"
-msgstr "Reproducció"
+msgstr "Reproduïu"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:214
 msgctxt "ToolsMenu|"
