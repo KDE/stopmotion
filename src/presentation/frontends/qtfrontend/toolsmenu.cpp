@@ -436,13 +436,13 @@ void ToolsMenu::changeUnitMode(int index) {
 			break;
 	}
 
-	if ( captureTimer->isActive() == false) {
+	if (captureTimer->isActive()) {
+		captureTimer->setInterval(factor / sliderValue);
+	} else {
 		// Grab the first frame manually
 		cameraHandler->captureFrame();
 		// then grab at the given interval
 		captureTimer->start(factor / sliderValue);
-	} else {
-		captureTimer->setInterval(factor / sliderValue);
 	}
 }
 

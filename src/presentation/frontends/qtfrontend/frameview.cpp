@@ -319,7 +319,7 @@ bool FrameView::on() {
 
 	if ( prefs->getPreference("numberofimports", 1) > 0 ) {
 		// If the grabber is running in it's own process we use a timer.
-		if (grabber->isGrabberProcess() == true) {
+		if (grabber->isGrabberProcess()) {
 			if ( grabber->init() ) {
 				grabTimer.start(150);
 			}
@@ -341,7 +341,7 @@ bool FrameView::on() {
 			grabThread->start();
 			grabThread->wait(500);
 
-			if (grabThread->wasGrabbingSuccess() == false) {
+			if (!grabThread->wasGrabbingSuccess()) {
 				QMessageBox::warning(this, tr("Warning"), tr(
 					"Grabbing failed. This may happen if you try\n"
 					"to grab from an invalid device. Please check\n"

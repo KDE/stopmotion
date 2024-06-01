@@ -944,7 +944,7 @@ void MainWindowGUI::exportToVideo()
 			}
 		}
 
-		if ( enc.isValid() && isCanceled == false ) {
+		if (enc.isValid() && !isCanceled) {
 			DomainFacade::getFacade()->exportToVideo(&enc,
 					frameView->getPlaybackSpeed());
 		}

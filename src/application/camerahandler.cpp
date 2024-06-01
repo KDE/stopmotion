@@ -95,12 +95,11 @@ void CameraHandler::cameraOff()
 
 void CameraHandler::toggleCamera()
 {
-	if(isCameraOn == false) {
+	if(isCameraOn) {
+		cameraOff();
+	} else {
 		Logger::get().logDebug("Playing video from webcam");
 		cameraOn();
-	}
-	else {
-		cameraOff();
 	}
 }
 
