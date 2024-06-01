@@ -1,20 +1,3 @@
-# Debian 11 (bullseye) with GCC 10
-deb11-gcc10:
-  image: debian:11
-  before_script:
-    - apt-get update
-    - apt-get -y install
-        build-essential pkg-config cmake
-        qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
-        libtar-dev libxml2-dev
-        libvorbis-dev vgrabbj uvccapture
-  script:
-    - mkdir build ; cd build
-    - cmake ..
-    - make
-    - make test-stopmotion
-    - make test
-
 # Debian 12 (bookworm) with Clang 14
 deb12-clang14:
   image: debian:bookworm
@@ -32,9 +15,9 @@ deb12-clang14:
     - make test-stopmotion
     - make test
 
-# Ubuntu 22.10 (kinetic) with GCC 12
-ubuntu2210-gcc12:
-  image: ubuntu:22.10
+# Ubuntu 24.04 (noble) with GCC 13
+ubuntu2404-gcc13:
+  image: ubuntu:24.04
   before_script:
     - apt-get update
     # work around interactive question when installing tzdata
@@ -51,24 +34,8 @@ ubuntu2210-gcc12:
     - make test-stopmotion
     - make test
 
-# openSuse Leap with Clang 15
-opensuseleap15.4-clang15:
-  image: opensuse/leap:15.4
-  before_script:
-    - zypper refresh
-    - zypper install -y
-        clang cmake pkg-config
-        libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
-        libtar-devel libxml2-devel libvorbis-devel
-  script:
-    - mkdir build ; cd build
-    - cmake -DCMAKE_CXX_COMPILER=clang++ ..
-    - make
-    - make test-stopmotion
-    - make test
-
-# openSuse Tumbleweed with GCC 12
-opensusetumbleweed-gcc12:
+# openSuse Tumbleweed with GCC 14
+opensusetumbleweed-gcc14:
   image: opensuse/tumbleweed
   before_script:
     - zypper refresh
