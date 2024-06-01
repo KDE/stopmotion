@@ -47,14 +47,14 @@ int loadOomTestUtil() {
 	// RTLD_NEXT and RTLD_DEFAULT are only available with the GNU dl library;
 	// standard C dl libraries do not have this functionality.
 	if (!init)
-		init = (init_t*)dlsym(RTLD_DEFAULT, "init");
+		init = reinterpret_cast<init_t*>(dlsym(RTLD_DEFAULT, "init"));
 	if (!smuf)
-		smuf = (setMallocsUntilFailure_t*)dlsym(RTLD_DEFAULT,
-				"realSetMallocsUntilFailure");
+		smuf = reinterpret_cast<setMallocsUntilFailure_t*>(dlsym(RTLD_DEFAULT,
+				"realSetMallocsUntilFailure"));
 	if (!msf)
-		msf = (mallocsSoFar_t*)dlsym(RTLD_DEFAULT, "realMallocsSoFar");
+		msf = reinterpret_cast<mallocsSoFar_t*>(dlsym(RTLD_DEFAULT, "realMallocsSoFar"));
 	if (!wfs)
-		wfs = (wrapFileSystem_t*)dlsym(RTLD_DEFAULT, "realWrapFileSystem");
+		wfs = reinterpret_cast<wrapFileSystem_t*>(dlsym(RTLD_DEFAULT, "realWrapFileSystem"));
 	if (!init || !smuf || !msf || !wfs)
 		return 0;
 	init();

@@ -87,25 +87,25 @@ class RealFileSystem : public MockableFileSystem {
 public:
 	RealFileSystem() : rfopen(0), rfreopen(0), rfclose(0), rfflush(0),
 			rfread(0), rfwrite(0), raccess(0), rferror(0), rgetenv(0) {
-		rfopen = (fopen_t*)dlsym(RTLD_NEXT, "fopen");
+		rfopen = reinterpret_cast<fopen_t*>(dlsym(RTLD_NEXT, "fopen"));
 		assert(rfopen);
-		rfreopen = (freopen_t*)dlsym(RTLD_NEXT, "freopen");
+		rfreopen = reinterpret_cast<freopen_t*>(dlsym(RTLD_NEXT, "freopen"));
 		assert(rfreopen);
-		rfclose = (fclose_t*)dlsym(RTLD_NEXT, "fclose");
+		rfclose = reinterpret_cast<fclose_t*>(dlsym(RTLD_NEXT, "fclose"));
 		assert(rfclose);
-		rfflush = (fflush_t*)dlsym(RTLD_NEXT, "fflush");
+		rfflush = reinterpret_cast<fflush_t*>(dlsym(RTLD_NEXT, "fflush"));
 		assert(rfflush);
-		rfread = (fread_t*)dlsym(RTLD_NEXT, "fread");
+		rfread = reinterpret_cast<fread_t*>(dlsym(RTLD_NEXT, "fread"));
 		assert(rfread);
-		rfwrite = (fwrite_t*)dlsym(RTLD_NEXT, "fwrite");
+		rfwrite = reinterpret_cast<fwrite_t*>(dlsym(RTLD_NEXT, "fwrite"));
 		assert(rfwrite);
-		raccess = (access_t*)dlsym(RTLD_NEXT, "access");
+		raccess = reinterpret_cast<access_t*>(dlsym(RTLD_NEXT, "access"));
 		assert(raccess);
-		rferror = (ferror_t*)dlsym(RTLD_NEXT, "ferror");
+		rferror = reinterpret_cast<ferror_t*>(dlsym(RTLD_NEXT, "ferror"));
 		assert(rferror);
-		runlink = (unlink_t*)dlsym(RTLD_NEXT, "unlink");
+		runlink = reinterpret_cast<unlink_t*>(dlsym(RTLD_NEXT, "unlink"));
 		assert(runlink);
-		rgetenv = (getenv_t*)dlsym(RTLD_NEXT, "getenv");
+		rgetenv = reinterpret_cast<getenv_t*>(dlsym(RTLD_NEXT, "getenv"));
 		assert(rgetenv);
 	}
 	~RealFileSystem() {
@@ -147,7 +147,7 @@ public:
 // Initialization function sets up the pointer to the original malloc function.
 void init() {
 	if (!realMalloc) {
-		realMalloc = (malloc_t*)dlsym(RTLD_NEXT, "malloc");
+		realMalloc = reinterpret_cast<malloc_t*>(dlsym(RTLD_NEXT, "malloc"));
 		assert(realMalloc);
 	}
 	if (!realFs) {
