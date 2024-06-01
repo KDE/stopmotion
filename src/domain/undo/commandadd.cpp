@@ -69,8 +69,8 @@ void CommandAdd::accept(FileNameVisitor& v) const {
 CommandAddFactory::Parameters::Parameters(int scene, int frame, int count)
 		: sc(scene), fr(frame), frameCount(count), twfs(0), twfCount(0),
 		  parameterCount(0) {
-	twfs = (TemporaryWorkspaceFile*) malloc(
-			frameCount * sizeof(TemporaryWorkspaceFile));
+	twfs = static_cast<TemporaryWorkspaceFile*>(malloc(
+			frameCount * sizeof(TemporaryWorkspaceFile)));
 }
 
 CommandAddFactory::Parameters::~Parameters() {

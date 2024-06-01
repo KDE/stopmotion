@@ -68,7 +68,7 @@ void OggVorbis::setFilename(WorkspaceFile& file, ErrorHandler& e) {
 	FileCloser fcloser(f);
 	if (f) {
 		close();
-		oggFile = (OggVorbis_File*)malloc( sizeof(OggVorbis_File) );
+		oggFile = static_cast<OggVorbis_File*>(malloc(sizeof(OggVorbis_File)));
 		if (oggFile == NULL) {
 			throw std::bad_alloc();
 		}
@@ -102,7 +102,7 @@ int OggVorbis::open() {
 	FileCloser fcloser(f);
 	if (f) {
 		close();
-		oggFile = (OggVorbis_File*)malloc( sizeof(OggVorbis_File) );
+		oggFile = static_cast<OggVorbis_File*>(malloc(sizeof(OggVorbis_File)));
 		if (oggFile == NULL) {
 			throw std::bad_alloc();
 		}

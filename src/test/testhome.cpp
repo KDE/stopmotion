@@ -33,7 +33,7 @@ TestHome::TestHome() : delegate(0), fakeHome(0) {
 	tmpdir.c_str(); // ensure trailing null is present
 	if (mkdtemp(&tmpdir[0])) {
 		std::string::size_type bufferSize = tmpdir.length() + 1;
-		fakeHome = (char *) malloc(bufferSize);
+		fakeHome = static_cast<char*>(malloc(bufferSize));
 		if (fakeHome) {
 			strncpy(fakeHome, tmpdir.c_str(), bufferSize);
 		} else {
