@@ -20,7 +20,7 @@
 
 #include <stdio.h>
 #include <QCoreApplication>
-#include <QtTest/QtTest>
+#include <QTest>
 
 #include "texecutor.h"
 #include "tcache.h"

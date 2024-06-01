@@ -35,7 +35,7 @@
 #include "src/technical/stringiterator.h"
 #include "src/foundation/stringwriter.h"
 
-#include <QtTest/QtTest>
+#include <QTest>
 
 
 #include <algorithm>

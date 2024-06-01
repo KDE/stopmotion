@@ -38,7 +38,7 @@
 #include <assert.h>
 #include <unistd.h>
 
-#include <QtTest/QtTest>
+#include <QTest>
 
 
 

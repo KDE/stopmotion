@@ -22,7 +22,7 @@
 
 #include "src/presentation/loadcache.h"
 
-#include <QtTest/QtTest>
+#include <QTest>
 
 namespace {
 	const char* TestPath1 = "1";

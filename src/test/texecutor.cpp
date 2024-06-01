@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "texecutor.h"
 
-#include <QtTest/QtTest>
+#include <QTest>
 
 #include <string.h>
 #include <memory>

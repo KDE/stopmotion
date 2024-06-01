@@ -24,7 +24,7 @@
 #include "src/domain/animation/workspacefile.h"
 #include "src/foundation/uiexception.h"
 
-#include <QtTest/QtTest>
+#include <QTest>
 
 #include "tworkspace.h"
 
