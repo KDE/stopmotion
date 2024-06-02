@@ -689,7 +689,7 @@ void FrameBar::dropEvent(QDropEvent *event) {
 	scrollTimer->stop();
 	scrollDirection = 0;
 
-	int index = (event->pos().x() + -mainWidget->pos().x()) / (FRAME_WIDTH + SPACE);
+	int index = (event->position().toPoint().x() + -mainWidget->pos().x()) / (FRAME_WIDTH + SPACE);
 	if ( index < static_cast<int>(thumbViews.size() ) ) {
 		thumbViews[index]->contentsDropped(event);
 	}
@@ -697,8 +697,8 @@ void FrameBar::dropEvent(QDropEvent *event) {
 
 
 void FrameBar::dragMoveEvent(QDragMoveEvent *event) {
-	int dragPosX = event->pos().x();
-	int dragPosY = event->pos().y();
+	int dragPosX = event->position().toPoint().x();
+	int dragPosY = event->position().toPoint().y();
 
 	if (dragPosX < lowerScrollAreaX || dragPosX > upperScrollAreaX) {
 		if ( !scrollTimer->isActive() ) {
