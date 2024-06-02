@@ -304,7 +304,7 @@ FILE* fileOpen(const char* path, const char* mode) {
 		sw.writeChar('(');
 		sw.writeIdentifier(strerror(err));
 		sw.writeChar(')');
-		QWARN(sw.result());
+		qWarning("%s", sw.result());
 	}
 	return fh;
 }

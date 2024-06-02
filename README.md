@@ -13,9 +13,9 @@ INSTALLATION
 
 You need the following packages installed to compile:
 - C++ compiler (g++ or Clang)
-- CMake
+- CMake >= 3.16
 - pkg-config
-- Qt5 >= 5.11 (development modules base, multimedia) (`qtbase5-dev`, `qttools5-dev-tools`, `qttools5-dev`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
+- Qt6 >= 6.3 (development modules base, multimedia) (`qtbase5-dev`, `qttools5-dev-tools`, `qttools5-dev`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
 - libarchive (`libarchive-dev`)
 - libXML2 (`libxml2-dev`)
 - vorbisfile (`libvorbis-dev`)
