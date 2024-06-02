@@ -22,11 +22,11 @@ enable_testing()
 ###
 
 # Qt
-find_package(Qt6 6.2
+find_package(Qt6 6.3
   COMPONENTS Widgets Multimedia LinguistTools
   REQUIRED)
 # only needed for testing
-find_package(Qt6 6.2
+find_package(Qt6 6.3
   COMPONENTS Test)
 
 # LibXml2
