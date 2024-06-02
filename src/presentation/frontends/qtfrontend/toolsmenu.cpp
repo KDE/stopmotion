@@ -177,7 +177,7 @@ void ToolsMenu::setupUi() {
 
 
 void ToolsMenu::createAccelerators() {
-	loopAccel = new QShortcut(QKeySequence(Qt::ControlModifier + Qt::Key_L), this);
+	loopAccel = new QShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_L), this);
 	connect(loopAccel, SIGNAL(activated()), ui->loopButton, SLOT(toggle()));
 
 	playAccel = new QShortcut(QKeySequence(Qt::Key_K), this);
