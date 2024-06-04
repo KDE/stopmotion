@@ -6,7 +6,7 @@ deb12-clang14:
     - apt-get -y install
         build-essential pkg-config cmake clang
         qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
-        libtar-dev libxml2-dev
+        libarchive-dev libxml2-dev
         libvorbis-dev vgrabbj uvccapture
   script:
     - mkdir build ; cd build
@@ -25,7 +25,7 @@ ubuntu2404-gcc13:
     - apt-get -y install
         build-essential pkg-config cmake
         qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
-        libtar-dev libxml2-dev
+        libarchive-dev libxml2-dev
         libvorbis-dev vgrabbj uvccapture
   script:
     - mkdir build ; cd build
@@ -42,7 +42,7 @@ opensusetumbleweed-gcc14:
     - zypper install -y
         gcc pkg-config cmake
         libQt5Gui-devel libQt5Widgets-devel libqt5-qtmultimedia-devel libqt5-qtbase-common-devel libqt5-linguist-devel
-        libtar-devel libxml2-devel libvorbis-devel
+        libarchive-devel libxml2-devel libvorbis-devel
   script:
     - mkdir build ; cd build
     - cmake ..

@@ -33,12 +33,8 @@ find_package(Qt5 5.11
 find_package(LibXml2
   REQUIRED)
 
-# libtar
-find_file(TAR_INCLUDE_PATH
-  NAMES libtar.h
-  REQUIRED)
-find_library(TAR_LIBRARY_PATH
-  NAMES tar
+# libarchive
+find_package(LibArchive
   REQUIRED)
 
 # libVorbisFile
@@ -169,11 +165,11 @@ target_link_libraries(stopmotion
 # link to LibXml2
 target_link_libraries(stopmotion
   PUBLIC LibXml2::LibXml2)
-# link to libVorbis, libtar
+# link to libVorbis, libarchive
 target_link_libraries(stopmotion
   PUBLIC
   ${VORBISFILE_LIBRARY_PATH}
-  ${TAR_LIBRARY_PATH}
+  LibArchive::LibArchive
   )
 
 target_include_directories(stopmotion

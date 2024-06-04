@@ -13,17 +13,17 @@ You need the following packages installed to compile:
 - CMake
 - pkg-config
 - Qt5 >= 5.11 (development modules base, multimedia) (`qtbase5-dev`, `qttools5-dev-tools`, `qttools5-dev`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
-- libtar (`libtar-dev`)
+- libarchive (`libarchive-dev`)
 - libXML2 (`libxml2-dev`)
 - vorbisfile (`libvorbis-dev`)
 
 For example, in Ubuntu or Debian you would open a terminal and type:
 
-    sudo apt install build-essential gdb qtbase5-dev qttools5-dev qttest5-dev-tools libtar-dev libxml2-dev libvorbis-dev pkg-config git vgrabbj uvccapture
+    sudo apt install build-essential gdb qtbase5-dev qttools5-dev qttest5-dev-tools libarchive-dev libxml2-dev libvorbis-dev pkg-config git vgrabbj uvccapture
 
 In openSUSE you type:
 
-    sudo zypper install cmake gcc-c++ libQt5Core-devel libQt5Widgets-devel libQt5Multimedia5 libtar-devel libvorbis-devel libxml2-devel
+    sudo zypper install cmake gcc-c++ libQt5Core-devel libQt5Widgets-devel libQt5Multimedia5 libarchive-devel libvorbis-devel libxml2-devel
 
 Once the dependencies are installed you can navigate to the source
 code directory and type the following to build Stopmotion:
