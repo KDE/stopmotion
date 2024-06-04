@@ -34,6 +34,8 @@
 #include <assert.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <archive.h>
+#include <archive_entry.h>
 #include <libtar.h>
 #include <cstring>
 #include <errno.h>
@@ -77,36 +79,45 @@ ProjectSerializer::~ProjectSerializer() {
 }
 
 class TarFileRead {
-	TAR* tar;
+	struct archive* tar = archive_read_new();
+	struct archive_entry *entry;
 public:
 	TarFileRead(const char* filename) {
-		if (tar_open(&tar, UNCONST(filename), 0, O_RDONLY, 0, 0 | 0) == -1) {
-			throw ProjectFileReadException("tar_open", errno);
+		if (archive_read_support_format_tar(tar) != ARCHIVE_OK) {
+			throw ProjectFileReadException("archive_read_support_format_tar", errno);
+		}
+		if (archive_read_open_filename(tar, filename, 4096) != ARCHIVE_OK) {
+			throw ProjectFileReadException("archive_read_open_filename", errno);
 		}
 	}
 	~TarFileRead() {
 	}
 	bool next() {
-		int ret = th_read(tar);
-		if (ret == 0)
+		int ret = archive_read_next_header(tar, &entry);
+		if (ret == ARCHIVE_OK || ret == ARCHIVE_RETRY || ret == ARCHIVE_WARN)
 			return true;
-		if (ret < 0)
-			throw ProjectFileReadException("th_read", errno);
+		if (ret == ARCHIVE_FATAL)
+			throw ProjectFileReadException("archive_read_next_header", errno);
 		return false;
 	}
 	const char *regularFileFilename() const {
-		return TH_ISREG(tar)? th_get_pathname(tar) : 0;
+		return archive_entry_filetype(entry) == AE_IFREG ? archive_entry_pathname(entry) : 0;
 	}
 	void extract(std::string& filename) {
 		filename.c_str();
-		if (tar_extract_regfile(tar, &filename[0]) < 0) {
-			throw ProjectFileReadException("th_extract_regfile", errno);
+		int fd = open(&filename[0], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		if (fd < 0)
+			throw ProjectFileReadException("open", errno);
+		if (archive_read_data_into_fd(tar, fd) < 0) {
+			throw ProjectFileReadException("archive_read_data_into_fd", errno);
 		}
 	}
 	void finish() {
-		if (tar_close(tar) < 0)
-			throw ProjectFileReadException("tar_close", errno);
-		tar = 0;
+		if (archive_read_close(tar) != ARCHIVE_OK)
+			throw ProjectFileReadException("archive_read_close", errno);
+		if (archive_read_free(tar) != ARCHIVE_OK)
+			throw ProjectFileReadException("archive_read_finish", errno);
+		tar = NULL;
 	}
 };
 
