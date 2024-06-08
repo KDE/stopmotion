@@ -1,8 +1,11 @@
-Linux Stopmotion
-================
+KDE Stopmotion
+==============
 
 Stopmotion is a program to create stop motion animations.
-See <https://invent.kde.org/multimedia/stopmotion> and <http://linuxstopmotion.org> for more info.
+See <https://invent.kde.org/multimedia/stopmotion> for more information.
+
+Formerly it was known under the name of _Linux Stopmotion_, there is
+still documentation at <http://linuxstopmotion.org>.
 
 
 INSTALLATION
@@ -49,7 +52,7 @@ DO YOU WANT TO CONTRIBUTE?
 Do not hesitate to contact us if you want to contribute with translations,
 graphics, code, +++
 
-The mailing list is at `linuxstopmotion-users-devs@lists.sourceforge.net`
+The mailing list is at `stopmotion@kde.org`
 
 Your help is very much appreciated.
 
