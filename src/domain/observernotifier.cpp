@@ -95,10 +95,10 @@ class AnimationClearer : public ObservableOperation {
 public:
 	AnimationClearer() {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		del.clear();
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		ob.updateClear();
 	}
 };
@@ -118,13 +118,13 @@ class SceneAdder : public ObservableOperation {
 public:
 	SceneAdder(int where, Scene* sc) : n(where), s(sc) {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		if (s)
 			del.addScene(n, s);
 		else
 			del.addScene(n);
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		ob.updateNewScene(n);
 	}
 };
@@ -149,10 +149,10 @@ public:
 	Scene* r;
 	SceneRemover(int from) : sc(from), r(0) {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		r = del.removeScene(sc);
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		ob.updateRemoveScene(sc);
 	}
 };
@@ -169,10 +169,10 @@ class SceneMover : public ObservableOperation {
 public:
 	SceneMover(int from, int to) : f(from), t(to) {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		del.moveScene(f, t);
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		ob.updateMoveScene(f, t);
 	}
 };
@@ -198,12 +198,12 @@ public:
 	FrameAdder(int scene, int where, const std::vector<Frame*>& frames)
 			: sc(scene), n(where), frs(frames) {
 	}
-	~FrameAdder() {
+	~FrameAdder() override {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		del.addFrames(sc, n, frs);
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		int count = frs.size();
 		ob.updateAdd(sc, n, count);
 	}
@@ -234,7 +234,7 @@ public:
 	FrameRemover(int scene, int where)
 			: sc(scene), n(where), r(0) {
 	}
-	~FrameRemover() {
+	~FrameRemover() override {
 		delete r;
 	}
 	Frame* release() {
@@ -242,10 +242,10 @@ public:
 		r = 0;
 		return v;
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		del.removeFrame(sc, n);
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		ob.updateRemove(sc, n, n);
 	}
 };
@@ -265,12 +265,12 @@ public:
 	FramesRemover(int scene, int where, int count, std::vector<Frame*>& out)
 			: sc(scene), fr(where), c(count), r(out) {
 	}
-	~FramesRemover() {
+	~FramesRemover() override {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		del.removeFrames(sc, fr, c, r);
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		ob.updateRemove(sc, fr, fr + c - 1);
 	}
 };
@@ -293,12 +293,12 @@ public:
 			: fromSc(fromScene), fromFr(fromFrame), c(count),
 			  toSc(toScene), toFr(toFrame) {
 	}
-	~FrameMover() {
+	~FrameMover() override {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		del.moveFrames(fromSc, fromFr, c, toSc, toFr);
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		ob.updateMove(fromSc, fromFr, c, toSc, toFr);
 	}
 };
@@ -317,13 +317,13 @@ public:
 	FrameReplacer(int scene, int where, WorkspaceFile& newImage)
 			: sc(scene), fr(where), image(newImage) {
 	}
-	~FrameReplacer() {
+	~FrameReplacer() override {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		if (image.path())
 			del.replaceImage(sc, fr, image);
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		ob.updateAnimationChanged(sc, fr);
 	}
 };
@@ -345,11 +345,11 @@ public:
 	SoundChanger(int scene, int frame)
 			: sc(scene), fr(frame) {
 	}
-	~SoundChanger() {
+	~SoundChanger() override {
 	}
-	void op(AnimationImpl&) {
+	void op(AnimationImpl&) override {
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		ob.updateSoundChanged(sc, fr);
 	}
 	int scene() const {
@@ -367,7 +367,7 @@ public:
 	SoundAdder(int scene, int frame, int soundNumber, Sound* sound)
 			: SoundChanger(scene, frame), sn(soundNumber), s(sound) {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		del.addSound(scene(), frame(), sn, s);
 	}
 };
@@ -386,7 +386,7 @@ public:
 	SoundNamer(int scene, int frame, int soundNumber, const char* name)
 			: SoundChanger(scene, frame), sn(soundNumber), nm(name), r(0) {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		r = del.setSoundName(scene(), frame(), sn, nm);
 	}
 	const char* returnValue() const {
@@ -408,7 +408,7 @@ public:
 	SoundRemover(int scene, int frame, int soundNumber)
 			: SoundChanger(scene, frame), sn(soundNumber), r(0) {
 	}
-	void op(AnimationImpl& del) {
+	void op(AnimationImpl& del) override {
 		r = del.removeSound(scene(), frame(), sn);
 	}
 	Sound* returnValue() const {
@@ -430,9 +430,9 @@ class AnimationResynchronizer : public ObservableOperation {
 public:
 	AnimationResynchronizer() {
 	}
-	void op(AnimationImpl&) {
+	void op(AnimationImpl&) override {
 	}
-	void update(Observer& ob) {
+	void update(Observer& ob) override {
 		ob.resync();
 	}
 };

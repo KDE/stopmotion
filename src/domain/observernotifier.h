@@ -42,7 +42,7 @@ class ObserverNotifier : public AnimationImpl {
 	observers_t observers;
 	void doOp(ObservableOperation& oo);
 public:
-	~ObserverNotifier();
+	~ObserverNotifier() override;
 	/**
 	 * Constructs a wrapper for another {@ref AnimationImpl} that notifies
 	 * observers of changes and reports errors to the user.
@@ -55,37 +55,37 @@ public:
 	void removeObserver(Observer* o);
 	void registerFrontend(Frontend* fe);
 	// derived from AnimationImpl
-	void clear();
-	int sceneCount() const;
+	void clear() override;
+	int sceneCount() const override;
 
-	void addScene(int where, Scene* newScene);
-	void addScene(int where);
-	void preallocateScenes(int count);
-	Scene* removeScene(int from);
-	void moveScene(int from, int to);
-	const Scene* getScene(int which) const;
-	int frameCount(int scene) const;
-	void addFrame(int scene, int where, Frame* frame);
+	void addScene(int where, Scene* newScene) override;
+	void addScene(int where) override;
+	void preallocateScenes(int count) override;
+	Scene* removeScene(int from) override;
+	void moveScene(int from, int to) override;
+	const Scene* getScene(int which) const override;
+	int frameCount(int scene) const override;
+	void addFrame(int scene, int where, Frame* frame) override;
 	void addFrames(int scene, int where,
-			const std::vector<Frame*>& frames);
-	void preallocateFrames(int scene, int count);
-	Frame* removeFrame(int scene, int frame);
+			const std::vector<Frame*>& frames) override;
+	void preallocateFrames(int scene, int count) override;
+	Frame* removeFrame(int scene, int frame) override;
 	void removeFrames(int scene, int frame, int count,
-			std::vector<Frame*>& out);
+			std::vector<Frame*>& out) override;
 	void moveFrames(int fromScene, int fromFrame, int frameCount,
-			int toScene, int toFrame);
+			int toScene, int toFrame) override;
 	void replaceImage(int sceneNumber, int frameNumber,
-			WorkspaceFile& otherImage);
-	int soundCount(int scene, int frame) const;
-	int soundCount() const;
+			WorkspaceFile& otherImage) override;
+	int soundCount(int scene, int frame) const override;
+	int soundCount() const override;
 	void addSound(int scene, int frame, int soundNumber,
-			Sound* sound);
+			Sound* sound) override;
 	const char* setSoundName(int scene, int frame, int soundNumber,
-			const char* soundName);
-	Sound* removeSound(int scene, int frame, int soundNumber);
-	void playSounds(int scene, int frame, AudioDriver* audioDriver) const;
+			const char* soundName) override;
+	Sound* removeSound(int scene, int frame, int soundNumber) override;
+	void playSounds(int scene, int frame, AudioDriver* audioDriver) const override;
 	void resync();
-	void accept(FileNameVisitor& v) const;
+	void accept(FileNameVisitor& v) const override;
 };
 
 #endif /* OBSERVERNOTIFIER_H_ */
