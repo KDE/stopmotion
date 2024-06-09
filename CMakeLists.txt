@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.14)
 
 project(stopmotion
-  VERSION 0.8.6
+  VERSION 0.8.7
   LANGUAGES CXX)
 
 # set project options required by Qt
