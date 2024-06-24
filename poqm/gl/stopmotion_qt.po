@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2024-06-20 09:00+0200\n"
+"PO-Revision-Date: 2024-06-23 13:28+0200\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 24.05.0\n"
+"X-Generator: Lokalize 24.05.1\n"
 "X-Qt-Contexts: true\n"
 
 #: src/application/externalcommand.cpp:46
@@ -1046,6 +1046,10 @@ msgid ""
 "switch to the next and the previous frame using the <b>arrow buttons</b> or "
 "<b>x</b> and <b>z</b></p> "
 msgstr ""
+"<h4>Barra de fotogramas</h4> <p>Nesta zona pode ver os fotogramas e escenas "
+"nas animacións e construír a animación movéndoas.</p><p>Pode cambiar ao "
+"seguinte fotograma ou ao anterior cos <b>botóns de frecha</b> ou con <b>X</"
+"b> e <b>Z</b>.</p> "
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:772
 msgctxt "MainWindowGUI|"
@@ -1055,12 +1059,12 @@ msgstr "Cambios sen gardar"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
-msgstr ""
+msgstr "Hai cambios sen gardar. Quere gardalos?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
 msgid "Do&n't save"
-msgstr ""
+msgstr "&Non gardar"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
@@ -1070,7 +1074,7 @@ msgstr "Interromper"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:806
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
-msgstr ""
+msgstr "Escoller un ficheiro de proxecto"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:874
 msgctxt "MainWindowGUI|"
@@ -1081,7 +1085,7 @@ msgstr "Gardar como"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:953
 msgctxt "MainWindowGUI|"
 msgid "Warning"
-msgstr ""
+msgstr "Aviso"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:902
 msgctxt "MainWindowGUI|"
