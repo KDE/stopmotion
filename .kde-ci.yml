@@ -3,6 +3,7 @@
 
 Dependencies:
 - 'on': ['Linux/Qt5', 'FreeBSD/Qt5']
+  'require':
 
 Options:
   test-before-installing: True
