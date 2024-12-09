@@ -23,9 +23,10 @@
 #include "src/technical/audio/audioformat.h"
 
 #include <QAudioFormat>
-#include <QAudioDeviceInfo>
+#include <QMediaDevices>
 #include <QIODevice>
 #include <QAudioOutput>
+#include <QAudioSink>
 
 #include <stdint.h>
 #include <algorithm>
@@ -37,26 +38,17 @@ class QtAudioDriver::Impl : public QIODevice {
 	static const int buffer_size = 4096;
 	typedef int16_t sample_t;
 	QAudioFormat audioFormat;
-	QAudioOutput* output;
+    QAudioSink* output;
 	std::list<AudioFormat*> sounds;
 	std::vector<sample_t> buffer;
 public:
-	Impl() : output(0), buffer(buffer_size) {
-		QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
+    Impl() : output(0), buffer(buffer_size) {
 		audioFormat.setSampleRate(44100);
-		audioFormat.setChannelCount(2);
-		audioFormat.setByteOrder(QAudioFormat::LittleEndian);
-		audioFormat.setSampleType(QAudioFormat::UnSignedInt);
-		audioFormat.setSampleSize(16);
-		QAudioDeviceInfo info(QAudioDeviceInfo::defaultOutputDevice());
-		if (!info.isFormatSupported(audioFormat)) {
-			// Trying to find out what Qt thinks it CAN do!...
-			info = QAudioDeviceInfo::defaultOutputDevice();
-			audioFormat = info.nearestFormat(audioFormat);
-			// Is this OK?
-		}
-		output = new QAudioOutput(info, audioFormat);
-		setOpenMode(ReadOnly);
+        audioFormat.setChannelCount(2);
+        audioFormat.setSampleFormat(QAudioFormat::Int16);
+        QAudioDevice info=QMediaDevices::defaultAudioOutput();
+        output = new QAudioSink(info, audioFormat);
+        setOpenMode(ReadOnly);
 	}
 	~Impl() {
 		delete output;
