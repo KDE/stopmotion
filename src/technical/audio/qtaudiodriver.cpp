@@ -38,17 +38,17 @@ class QtAudioDriver::Impl : public QIODevice {
 	static const int buffer_size = 4096;
 	typedef int16_t sample_t;
 	QAudioFormat audioFormat;
-    QAudioSink* output;
+	QAudioSink* output;
 	std::list<AudioFormat*> sounds;
 	std::vector<sample_t> buffer;
 public:
     Impl() : output(0), buffer(buffer_size) {
 		audioFormat.setSampleRate(44100);
-        audioFormat.setChannelCount(2);
-        audioFormat.setSampleFormat(QAudioFormat::Int16);
-        QAudioDevice info=QMediaDevices::defaultAudioOutput();
-        output = new QAudioSink(info, audioFormat);
-        setOpenMode(ReadOnly);
+		audioFormat.setChannelCount(2);
+		audioFormat.setSampleFormat(QAudioFormat::Int16);
+		QAudioDevice info=QMediaDevices::defaultAudioOutput();
+		output = new QAudioSink(info, audioFormat);
+		setOpenMode(ReadOnly);
 	}
 	~Impl() {
 		delete output;
