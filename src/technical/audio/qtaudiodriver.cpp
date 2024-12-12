@@ -47,6 +47,9 @@ public:
 		audioFormat.setChannelCount(2);
 		audioFormat.setSampleFormat(QAudioFormat::Int16);
 		QAudioDevice info=QMediaDevices::defaultAudioOutput();
+		if (!info.isFormatSupported(audioFormat)) {
+			audioFormat = info.preferredFormat();
+		}
 		output = new QAudioSink(info, audioFormat);
 		setOpenMode(ReadOnly);
 	}
