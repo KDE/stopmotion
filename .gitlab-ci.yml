@@ -1,39 +1,3 @@
-# Debian 12 (bookworm) with Clang 14
-deb12-clang14:
-  image: debian:bookworm
-  before_script:
-    - apt-get update
-    - apt-get -y install
-        build-essential pkg-config cmake clang
-        qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
-        libarchive-dev libxml2-dev
-        libvorbis-dev vgrabbj uvccapture
-  script:
-    - mkdir build ; cd build
-    - cmake -DCMAKE_CXX_COMPILER=clang++ ..
-    - make
-    - make test-stopmotion
-    - make test
-
-# Ubuntu 24.04 (noble) with GCC 13
-ubuntu2404-gcc13:
-  image: ubuntu:24.04
-  before_script:
-    - apt-get update
-    # work around interactive question when installing tzdata
-    - DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
-    - apt-get -y install
-        build-essential pkg-config cmake
-        qtbase5-dev qtmultimedia5-dev qttools5-dev qttools5-dev-tools
-        libarchive-dev libxml2-dev
-        libvorbis-dev vgrabbj uvccapture
-  script:
-    - mkdir build ; cd build
-    - cmake ..
-    - make
-    - make test-stopmotion
-    - make test
-
 # openSuse Tumbleweed with GCC 14
 opensusetumbleweed-gcc14:
   image: opensuse/tumbleweed
