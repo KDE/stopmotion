@@ -1,6 +1,6 @@
-if(EXISTS "${DL_LIBRARY_PATH}" AND "${Qt6Test_FOUND}")
+if(BUILD_TESTING)
   add_library(oomtestutil
-    SHARED EXCLUDE_FROM_ALL
+    SHARED
     oomtestutil.cpp)
   target_compile_definitions(oomtestutil
     PUBLIC
@@ -13,7 +13,6 @@ if(EXISTS "${DL_LIBRARY_PATH}" AND "${Qt6Test_FOUND}")
     ${DL_LIBRARY_PATH})
 
   add_library(oomteststub
-    EXCLUDE_FROM_ALL
     oomteststub.cpp)
   target_compile_definitions(oomteststub
     PUBLIC
@@ -75,10 +74,6 @@ if(EXISTS "${DL_LIBRARY_PATH}" AND "${Qt6Test_FOUND}")
     ../foundation/uiexception.cpp
     ../foundation/logger.cpp
     )
-
-  set_target_properties(test-stopmotion
-    PROPERTIES
-    EXCLUDE_FROM_ALL true)
 
   # link to Qt libraries
   target_link_libraries(test-stopmotion

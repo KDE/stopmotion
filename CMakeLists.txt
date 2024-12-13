@@ -15,7 +15,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-enable_testing()
+option(BUILD_TESTING "Build the tests" OFF)
 
 ###
 # find external dependencies
@@ -25,9 +25,6 @@ enable_testing()
 find_package(Qt6 6.3
   COMPONENTS Widgets Multimedia LinguistTools
   REQUIRED)
-# only needed for testing
-find_package(Qt6 6.3
-  COMPONENTS Test)
 
 # LibXml2
 find_package(LibXml2
@@ -45,10 +42,16 @@ find_library(VORBISFILE_LIBRARY_PATH
   NAMES vorbisfile
   REQUIRED)
 
-# libdl, only needed for testing
-find_library(DL_LIBRARY_PATH
-  NAMES dl
+if(BUILD_TESTING)
+  enable_testing()
+  find_package(Qt6 6.3 REQUIRED
+    COMPONENTS Test
   )
+  # libdl, only needed for testing
+  find_library(DL_LIBRARY_PATH REQUIRED
+    NAMES dl
+  )
+endif ()
 
 include(FeatureSummary)
 feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND)
