@@ -1,10 +1,7 @@
 # SPDX-FileCopyrightText: None
 # SPDX-License-Identifier: CC0-1.0
 
-Dependencies:
-- 'on': ['Linux/Qt5', 'FreeBSD/Qt5']
-  'require':
-
 Options:
+  cmake-options: '-DBUILD_TESTING=ON'
   test-before-installing: True
-  require-passing-tests-on: ['Linux/Q5', 'FreeBSD/Qt5']
+  require-passing-tests-on: ['Linux']

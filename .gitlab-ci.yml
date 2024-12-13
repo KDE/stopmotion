@@ -1,15 +1,8 @@
-# openSuse Tumbleweed with GCC 14
-opensusetumbleweed-gcc14:
-  image: opensuse/tumbleweed
-  before_script:
-    - zypper refresh
-    - zypper install -y
-        gcc pkg-config cmake
-        qt6-gui-devel qt6-widgets-devel qt6-multimedia-devel qt6-linguist-devel qt6-test-devel
-        libarchive-devel libxml2-devel libvorbis-devel
-  script:
-    - mkdir build ; cd build
-    - cmake ..
-    - make
-    - make test-stopmotion
-    - make test
+# SPDX-FileCopyrightText: None
+# SPDX-License-Identifier: CC0-1.0
+
+include:
+  - project: sysadmin/ci-utilities
+    file:
+      - /gitlab-templates/cppcheck.yml
+      - /gitlab-templates/linux-qt6.yml
