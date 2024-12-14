@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2024-12-08 20:31+0100\n"
+"PO-Revision-Date: 2024-12-13 22:59+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Proxecto Trasno (proxecto@trasno.gal)\n"
 "Language: gl\n"
@@ -948,6 +948,7 @@ msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
 msgstr "Configurar Stopmotion"
 
+# skip-rule: trasno-change_reverse
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:697
 msgctxt "MainWindowGUI|"
 msgid ""
@@ -1028,6 +1029,7 @@ msgstr ""
 "preferencias do fotograma ou fotogramas seleccionados, como <b>subtítulos</"
 "b>, <b>efectos de son</b>, etc.</p>"
 
+# skip-rule: trasno-locate
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:753
 msgctxt "MainWindowGUI|"
 msgid ""
