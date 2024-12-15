@@ -32,8 +32,7 @@ Logger Logger::get() {
 void Logger::logDebug(const char * msg, ...) {
 	va_list ap;
 	va_start(ap, msg);
-	QString qsm;
-	qsm.vasprintf(msg, ap);
+	QString qsm = QString::vasprintf(msg, ap);
 	va_end(ap);
 	QDebug qdebug(QtDebugMsg);
 	qdebug << qsm;

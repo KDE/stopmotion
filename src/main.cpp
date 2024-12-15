@@ -105,12 +105,12 @@ void recover(DomainFacade *facadePtr) {
 
 int main(int argc, char **argv) {
 	int ret = 1;
-
-	DomainFacade *facadePtr = DomainFacade::getFacade();
-
+	DomainFacade *facadePtr;
 	// if program is started with --nonGUI
 	if ( argc > 1 && strcmp(argv[1], "--nonGUI") == 0 ) {
 		NonGUIFrontend nonGUIFrontend(facadePtr);
+		facadePtr = DomainFacade::getFacade();
+
 		try {
 			recover(facadePtr);
 			facadePtr->registerFrontend(&nonGUIFrontend);
@@ -122,6 +122,8 @@ int main(int argc, char **argv) {
 	else {
 #ifdef QTGUI
 		QtFrontend qtFrontend(argc, argv);
+		facadePtr = DomainFacade::getFacade();
+
 		qtFrontend.processEvents();
 		try {
 			facadePtr->registerFrontend(&qtFrontend);
