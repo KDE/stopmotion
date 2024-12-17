@@ -522,11 +522,11 @@ msgstr ""
 "fotograma i es reproduiran fins que finalitzin.</p>"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
-#: src/presentation/frontends/qtfrontend/frameview.cpp:289
-#: src/presentation/frontends/qtfrontend/frameview.cpp:302
-#: src/presentation/frontends/qtfrontend/frameview.cpp:327
-#: src/presentation/frontends/qtfrontend/frameview.cpp:345
-#: src/presentation/frontends/qtfrontend/frameview.cpp:357
+#: src/presentation/frontends/qtfrontend/frameview.cpp:287
+#: src/presentation/frontends/qtfrontend/frameview.cpp:298
+#: src/presentation/frontends/qtfrontend/frameview.cpp:321
+#: src/presentation/frontends/qtfrontend/frameview.cpp:337
+#: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
 msgid "Warning"
 msgstr "Avís"
@@ -537,18 +537,18 @@ msgid "No video device selected in the preferences menu."
 msgstr ""
 "No s'ha seleccionat cap dispositiu de vídeo en el menú de les preferències."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:289
+#: src/presentation/frontends/qtfrontend/frameview.cpp:287
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
 msgstr "No existeix l'ordre de presondeig"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:302
+#: src/presentation/frontends/qtfrontend/frameview.cpp:298
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
 msgstr "La capturadora indicada no està instal·lada en aquest sistema"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:327
-#: src/presentation/frontends/qtfrontend/frameview.cpp:345
+#: src/presentation/frontends/qtfrontend/frameview.cpp:321
+#: src/presentation/frontends/qtfrontend/frameview.cpp:337
 msgctxt "FrameView|"
 msgid ""
 "Grabbing failed. This may happen if you try\n"
@@ -559,7 +559,7 @@ msgstr ""
 "capturar des d'un dispositiu no vàlid. Comproveu\n"
 "la configuració de la capturadora al menú de preferències."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:357
+#: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
 msgid ""
 "You have to define an image grabber to use.\n"
@@ -660,7 +660,7 @@ msgid "&Export"
 msgstr "&Exporta"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:366
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1133
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1132
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr "Obre'n un &recent"
@@ -695,7 +695,6 @@ msgid "&Open"
 msgstr "&Obre"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr "De&sa"
@@ -1064,43 +1063,33 @@ msgstr ""
 "com calgui.</p><p>Es pot canviar al fotograma següent i l'anterior usant els "
 "<b>botons de fletxes</b> o <b>x</b> i <b>z</b></p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:772
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr "Canvis sense desar"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr "Hi ha canvis sense desar. Els voleu desar?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
-msgctxt "MainWindowGUI|"
-msgid "Do&n't save"
-msgstr "&No desis"
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
-msgctxt "MainWindowGUI|"
-msgid "Abort"
-msgstr "Interromp"
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:806
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:808
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr "Trieu un fitxer de projecte"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:874
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:876
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr "Desa com a"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:901
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:953
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:903
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr "Avís"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:902
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:904
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1114,24 +1103,12 @@ msgstr ""
 "vídeo fins que no s'hagi definit l'ús d'un codificador.\n"
 "El voleu definir ara?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:906
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
-msgctxt "MainWindowGUI|"
-msgid "&Yes"
-msgstr "&Sí"
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:906
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
-msgctxt "MainWindowGUI|"
-msgid "&No"
-msgstr "&No"
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:938
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr "Exporta a un fitxer de vídeo"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:955
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
@@ -1140,7 +1117,7 @@ msgstr ""
 "El codificador registrat no és vàlid. Voleu revisar\n"
 "la configuració en el menú de preferències?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:970
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr "Exporta a un fitxer"
@@ -1634,3 +1611,19 @@ msgstr ""
 "Només reprodueix els treballs actuals quan la capturadora s'executa com a "
 "dimoni. Aneu al menú preferències (Ctrl+P) per a canviar l'execució de la "
 "captura d'imatges com a dimoni."
+
+#~ msgctxt "MainWindowGUI|"
+#~ msgid "Do&n't save"
+#~ msgstr "&No desis"
+
+#~ msgctxt "MainWindowGUI|"
+#~ msgid "Abort"
+#~ msgstr "Interromp"
+
+#~ msgctxt "MainWindowGUI|"
+#~ msgid "&Yes"
+#~ msgstr "&Sí"
+
+#~ msgctxt "MainWindowGUI|"
+#~ msgid "&No"
+#~ msgstr "&No"

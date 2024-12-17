@@ -514,11 +514,11 @@ msgstr ""
 "predvajali, dokler se ne bodo končali.</p>"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
-#: src/presentation/frontends/qtfrontend/frameview.cpp:289
-#: src/presentation/frontends/qtfrontend/frameview.cpp:302
-#: src/presentation/frontends/qtfrontend/frameview.cpp:327
-#: src/presentation/frontends/qtfrontend/frameview.cpp:345
-#: src/presentation/frontends/qtfrontend/frameview.cpp:357
+#: src/presentation/frontends/qtfrontend/frameview.cpp:287
+#: src/presentation/frontends/qtfrontend/frameview.cpp:298
+#: src/presentation/frontends/qtfrontend/frameview.cpp:321
+#: src/presentation/frontends/qtfrontend/frameview.cpp:337
+#: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
 msgid "Warning"
 msgstr "Opozorilo"
@@ -528,18 +528,18 @@ msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
 msgstr "V meniju z nastavitvami ni izbrane nobene video naprave."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:289
+#: src/presentation/frontends/qtfrontend/frameview.cpp:287
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
 msgstr "Ukaz pre poll ne obstaja"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:302
+#: src/presentation/frontends/qtfrontend/frameview.cpp:298
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
 msgstr "V vašem sistemu ni nameščenega nobenega zajemalnika zaslona"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:327
-#: src/presentation/frontends/qtfrontend/frameview.cpp:345
+#: src/presentation/frontends/qtfrontend/frameview.cpp:321
+#: src/presentation/frontends/qtfrontend/frameview.cpp:337
 msgctxt "FrameView|"
 msgid ""
 "Grabbing failed. This may happen if you try\n"
@@ -550,7 +550,7 @@ msgstr ""
 "zajemati iz neveljavne naprave. Preverite\n"
 "nastavitve vašega zajema v meniju z nastavitvami."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:357
+#: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
 msgid ""
 "You have to define an image grabber to use.\n"
@@ -651,7 +651,7 @@ msgid "&Export"
 msgstr "Izvozi"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:366
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1133
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1132
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr "Odpri nedavne"
@@ -686,7 +686,6 @@ msgid "&Open"
 msgstr "Odpri"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr "Shrani"
@@ -1050,43 +1049,33 @@ msgstr ""
 "preklopite na naslednji in prejšnjo sličico s <b>puščicami</b> ali tipkami "
 "<b>x</b> in <b>z</b></p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:772
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr "Neshranjene spremembe"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr "Obstajajo neshranjene spremembe. Ali jih želite shraniti?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
-msgctxt "MainWindowGUI|"
-msgid "Do&n't save"
-msgstr "Ne shrani"
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
-msgctxt "MainWindowGUI|"
-msgid "Abort"
-msgstr "Prekliči"
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:806
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:808
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr "Izberi projektno datoteko"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:874
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:876
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr "Shrani kot"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:901
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:953
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:903
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr "Opozorilo"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:902
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:904
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1099,24 +1088,12 @@ msgstr ""
 "preferenc. Izvoz v video ne bo mogoč, dokler ni\n"
 "nastavljen kodirnik za uporabo. Ali ga želite nastaviti zdaj?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:906
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
-msgctxt "MainWindowGUI|"
-msgid "&Yes"
-msgstr "Da"
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:906
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
-msgctxt "MainWindowGUI|"
-msgid "&No"
-msgstr "Ne"
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:938
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr "Izvozi v video datoteko"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:955
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
@@ -1125,7 +1102,7 @@ msgstr ""
 "Registrirani kodirnik ni veljaven. Ali želite\n"
 "preveriti nastavitve v meniju preferenc?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:970
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr "Izvozi v datoteko"
@@ -1614,3 +1591,19 @@ msgid ""
 msgstr ""
 "Predvajanje trenutno deluje le, kadar zajemalnik poganjate kot demon. Pojdi "
 "na meni nastavitev (CTRL+P), da preklopite na zajem slike, kot a demon."
+
+#~ msgctxt "MainWindowGUI|"
+#~ msgid "Do&n't save"
+#~ msgstr "Ne shrani"
+
+#~ msgctxt "MainWindowGUI|"
+#~ msgid "Abort"
+#~ msgstr "Prekliči"
+
+#~ msgctxt "MainWindowGUI|"
+#~ msgid "&Yes"
+#~ msgstr "Da"
+
+#~ msgctxt "MainWindowGUI|"
+#~ msgid "&No"
+#~ msgstr "Ne"

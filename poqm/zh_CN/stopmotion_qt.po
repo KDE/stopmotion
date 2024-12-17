@@ -491,11 +491,11 @@ msgid ""
 msgstr ""
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
-#: src/presentation/frontends/qtfrontend/frameview.cpp:289
-#: src/presentation/frontends/qtfrontend/frameview.cpp:302
-#: src/presentation/frontends/qtfrontend/frameview.cpp:327
-#: src/presentation/frontends/qtfrontend/frameview.cpp:345
-#: src/presentation/frontends/qtfrontend/frameview.cpp:357
+#: src/presentation/frontends/qtfrontend/frameview.cpp:287
+#: src/presentation/frontends/qtfrontend/frameview.cpp:298
+#: src/presentation/frontends/qtfrontend/frameview.cpp:321
+#: src/presentation/frontends/qtfrontend/frameview.cpp:337
+#: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
 msgid "Warning"
 msgstr ""
@@ -505,18 +505,18 @@ msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:289
+#: src/presentation/frontends/qtfrontend/frameview.cpp:287
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:302
+#: src/presentation/frontends/qtfrontend/frameview.cpp:298
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:327
-#: src/presentation/frontends/qtfrontend/frameview.cpp:345
+#: src/presentation/frontends/qtfrontend/frameview.cpp:321
+#: src/presentation/frontends/qtfrontend/frameview.cpp:337
 msgctxt "FrameView|"
 msgid ""
 "Grabbing failed. This may happen if you try\n"
@@ -524,7 +524,7 @@ msgid ""
 "your grabber settings in the preferences menu."
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:357
+#: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
 msgid ""
 "You have to define an image grabber to use.\n"
@@ -619,7 +619,7 @@ msgid "&Export"
 msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:366
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1133
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1132
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr ""
@@ -654,7 +654,6 @@ msgid "&Open"
 msgstr ""
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr ""
@@ -971,43 +970,33 @@ msgid ""
 "<b>x</b> and <b>z</b></p> "
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:772
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
-msgctxt "MainWindowGUI|"
-msgid "Do&n't save"
-msgstr ""
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
-msgctxt "MainWindowGUI|"
-msgid "Abort"
-msgstr ""
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:806
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:808
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:874
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:876
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:901
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:953
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:903
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:902
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:904
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1016,31 +1005,19 @@ msgid ""
 "have set an encoder to use. Do you want to set it now?"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:906
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
-msgctxt "MainWindowGUI|"
-msgid "&Yes"
-msgstr ""
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:906
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
-msgctxt "MainWindowGUI|"
-msgid "&No"
-msgstr ""
-
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:938
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:955
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
 "to check your settings in the preferences menu?"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:970
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr ""
