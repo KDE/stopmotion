@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Qt-Contexts: true\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: src/application/externalcommand.cpp:46
 msgctxt "ExternalCommand|"
@@ -261,6 +261,8 @@ msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
 "displaying video."
 msgstr ""
+"ქვემოთ შეგიძლიათ დააყენოთ, რომელი მოწყობილობა შეუძლია გამოიყენოს Stopmotion-"
+"ს გამოსახულებების ასაღებად და ვიდეოს საჩვენებლად."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:71
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:358
@@ -270,6 +272,10 @@ msgid ""
 "It is not recommended to use devices which is not auto-detected, but feel "
 "free to do it if you are an advanced user."
 msgstr ""
+"შეგიძლიათ აირჩიოთ ავტომატურად დადგენილი მოწყობილობებიდან ქვემოდან, ან "
+"დაამატეთ მოწყობილობები თვითონ. რეკომენდებული არაა, გამოიყენოთ მოწყობილობები, "
+"რომლებიც ავტომატურად არ დადგენილა, მაგრამ უკან თუ დაიხევთ, თუ იცით, რას "
+"აკეთებთ."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:74
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:361
@@ -277,6 +283,8 @@ msgctxt "DeviceTab|"
 msgid ""
 "The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
 msgstr ""
+"მონიშნულ მოწყობილობა აღმოჩენილია, როგორც <b>$VIDEODEVICE</b> ვიდეოს "
+"შემოტანის ქვეშ."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:80
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:365
@@ -353,7 +361,7 @@ msgstr "ენკოდერის მორგება"
 msgctxt "ExportTab|"
 msgid ""
 "Do you want to be asked for an output file every time you choose to export?"
-msgstr ""
+msgstr "გნებავთ, გკითხოთ გამოტანის ფაილის სახელი, რამდენჯერაც გატანას აირჩევთ?"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:110
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:393
@@ -402,6 +410,8 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
 "the currently active project to a video file."
 msgstr ""
+"ქვემოთ შეგიძლიათ, დააყენოთ, რომელ პროგრამა/პროცესი უნდა გამოიყენოს "
+"Stopmotion-მა ამჟამად აქტიური ფაილის ვიდეოკლიპში კოდირებისთვის."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:374
 msgctxt "ExportTab|"
@@ -409,6 +419,8 @@ msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
 "the image path and the video file, respectively."
 msgstr ""
+"გამოსახულების ბილიკის და ვიდეოფაილის წარმოსადგენად, შესაბამისად, ყოველთვის, "
+"<b>$IMAGEPATH</b> და <b>$VIDEOFILE</b> უნდა გამოიყენოთ."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:376
 msgctxt "ExportTab|"
@@ -416,11 +428,13 @@ msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
 "in the project."
 msgstr ""
+"პროექტში ამჟამად გამოყენებული კადრების სიჩქარის წარმოსადგენად, შეგიძლიათ, <b>"
+"$FRAMERATE</b> გამოიყენოთ."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:378
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
-msgstr ""
+msgstr "მაგალითი mencoder-ით (jpeg სურათები mpeg4 ვიდეოში):"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:383
 msgctxt "ExportTab|"
@@ -464,6 +478,9 @@ msgid ""
 "selected frame.</p> <p>The sound will begin playing when this frame is shown "
 "and play until it is done.</p>"
 msgstr ""
+"<h4>ხმის დამატება</h4> <p>ამ ღილაკის მონიშნული კადრისთვის <em>ხმის დამატება</"
+"em> შეგიძლიათ.</p> <p>ხმის დაკვრა დაიწყება, როცა ნაჩვენები იქნება ეს კადრი "
+"და დაუკრავს, სანამ არ დასრულდება.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:128
 msgctxt "FramePreferencesMenu|"
@@ -471,6 +488,8 @@ msgid ""
 "<h4>Remove sound</h4> <p>With this button you can <em>remove</em> the "
 "selected sound from this frame.</p>"
 msgstr ""
+"<h4>ხმის მოცილება</h4> <p>ამ ღილაკით ამ კადრიდან, შეგიძლიათ, მონიშნული ხმა "
+"<em>წაშალოთ</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:135
 msgctxt "FramePreferencesMenu|"
@@ -479,6 +498,9 @@ msgid ""
 "selected sound. <BR>The name of the sound has no other effect than making it "
 "easier work with the animation.</p>"
 msgstr ""
+"<h4>სახელის შეცვლა</h4> <p>ამ ღილაკით მონიშნული ხმის სახელის შეცვლა "
+"შეგიძლიათ. <BR>ხმის სახელს არანაირი ეფექტი გააჩნია იმის გარდა, რომ მისი "
+"პოვნა უფრო ადვილი ხდება.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:143
 msgctxt "FramePreferencesMenu|"
@@ -487,6 +509,9 @@ msgid ""
 "p><p>The sounds will begin playing when this frame is shown and play until "
 "they are done.</p>"
 msgstr ""
+"<h4>ხმები</h4> <p>ეს სია გაჩვენებთ ყველა ხმას, რომელიც ამ კადრთანაა "
+"დაკავშირებული.</p><p>ხმა დაიწყებს დაკვრას, როცა ეს კადრია ნაჩვენები და "
+"დასრულდება მაშინ, როცა ისინი დასრულდება.</p>"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 #: src/presentation/frontends/qtfrontend/frameview.cpp:287
@@ -501,17 +526,17 @@ msgstr "გაფრთხილება"
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
-msgstr ""
+msgstr "მორგების მენიუში ვიდეომოწყობილობა არჩეული არაა."
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:287
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
-msgstr ""
+msgstr "წინასწარი გამოკითხვის ბრძანება არ არსებობს"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:298
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
-msgstr ""
+msgstr "თქვენ არ გაქვთ მითითებული ჩამჭერი დაყენებული თქვენს სისტემაში"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:321
 #: src/presentation/frontends/qtfrontend/frameview.cpp:337
@@ -521,6 +546,9 @@ msgid ""
 "to grab from an invalid device. Please check\n"
 "your grabber settings in the preferences menu."
 msgstr ""
+"ჩაჭერა ჩავარდა. ეს, შეიძლება, მოხდეს, თუ\n"
+"ჩაწერას არასწორი მოწყობილობიდან ეცდებით.\n"
+"შეამოწმეთ თქვენი ჩაჭერის პარამეტრები მორგების მენიუდან."
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
@@ -528,6 +556,8 @@ msgid ""
 "You have to define an image grabber to use.\n"
 "This can be set in the preferences menu."
 msgstr ""
+"გამოსაყენებლად, ჯერ, გამოსახულების ჩაჭერის წყარო უნდა დააყენოთ.\n"
+"მისი დაყენება მორგების მენიუდან შეგიძლიათ."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:63
 #: src/presentation/frontends/qtfrontend/importtab.cpp:317
@@ -536,6 +566,8 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
 "images from the selected device."
 msgstr ""
+"ქვემოთ შეგიძლიათ, დააყენოთ, რომელ პროგრამას/პროცესს გამოიყენებს Stopmtion "
+"მონიშნული მოწყობილობიდან გამოსახულებების ასაღებად."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:65
 #: src/presentation/frontends/qtfrontend/importtab.cpp:319
@@ -544,6 +576,8 @@ msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 "the video device and the image file, respectively."
 msgstr ""
+"ვიდეომოწყობილობაზე და გამოსახულების ფაილზე მიმართვისთვის <b>$VIDEODEVICE</b> "
+"და <b>$IMAGEFILE</b> უნდა გამოიყენოთ."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:71
 #: src/presentation/frontends/qtfrontend/importtab.cpp:323
@@ -585,7 +619,7 @@ msgstr "მოწყობილობის პარამეტრები�
 #: src/presentation/frontends/qtfrontend/importtab.cpp:331
 msgctxt "ImportTab|"
 msgid "Pre-poll command"
-msgstr ""
+msgstr "წინასწარი გამოკითხვის ბრძანება"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:114
 #: src/presentation/frontends/qtfrontend/importtab.cpp:332
@@ -602,7 +636,7 @@ msgstr "დემონის გაჩერება"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:154
 msgctxt "MainWindowGUI|"
 msgid "Ready to rumble ;-)"
-msgstr ""
+msgstr "მზად ვარ ქულისთვის ;-)"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:364
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:524
@@ -734,7 +768,7 @@ msgstr "კადრზე გადასვლა:"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
-msgstr ""
+msgstr "<h4>ახალი</h4> <p>ქმნის <em>ახალ</em> პროექტს.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:576
 msgctxt "MainWindowGUI|"
@@ -744,7 +778,7 @@ msgstr "ახალი პროექტი"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:580
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
-msgstr ""
+msgstr "<h4>გახსნა</h4> <p><em>გახსნის</em> Stopmotion-ის პროექტის ფაილს.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:584
 msgctxt "MainWindowGUI|"
@@ -758,6 +792,9 @@ msgid ""
 "project file. <BR>If this project has been saved before it will "
 "automatically be saved to the previously selected file.</p>"
 msgstr ""
+"<h4>შენახვა</h4> <p><em>შეინახავს</em> მიმდინარე ანიმაციას Stopmotion-ის "
+"პროექტის ფაილში. <BR>თუ ეს პროექტი ადრე შეინახეთ, ის ავტომატურად შეინახება "
+"ადრე არჩეულ ფაილში.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
 msgctxt "MainWindowGUI|"
@@ -770,6 +807,8 @@ msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
 "project file.</p>"
 msgstr ""
+"<h4>შენახვა, როგორც</h4> <p><em>შეინახავს</em> მიმდინარე ანიმაციას "
+"Stopmotion-ის პროექტის ფაილში.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
 msgctxt "MainWindowGUI|"
@@ -782,6 +821,8 @@ msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
 "be given a wizard to guide you."
 msgstr ""
+"<h4>ვიდეო</h4> <p>გაიტანს მიმდინარე პროექტს <em>ვიდეოფაილში</em>.</"
+"p>გაჩვენებთ ოსტატს, რომელიც დაგეხმარებათ."
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
 msgctxt "MainWindowGUI|"
@@ -789,11 +830,13 @@ msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
 "project.</p>You will be given a wizard to guide you."
 msgstr ""
+"<h4>Cinerella</h4> <p>გაიტანს მიმდინარე ანიმაციას <em>Cinerella</em>-ის "
+"პროექტში.</p>გაჩვენებთ ოსტატს, რომელიც დაგეხმარებათ."
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:621
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
-msgstr ""
+msgstr "<h4>გასვლა</h4> <p><em>გავა</em> პროგრამიდან.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
 msgctxt "MainWindowGUI|"
@@ -806,6 +849,8 @@ msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
 "several time to undo earlier operations.</p>"
 msgstr ""
+"<h4>გაუქმება</h4> <p><em>გააუქმებს</em> თქვენს ბოლო ოპერაციას. ეს "
+"რამდენჯერმე შეგიძლიათ, ქნათ, რომ გააუქმოთ უფრო და უფრო ძველი ოპერაცია.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:636
 msgctxt "MainWindowGUI|"
@@ -818,6 +863,9 @@ msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
 "several times to redo several operations.</p>"
 msgstr ""
+"<h4>გამეორება</h4> <p><em>გაიმეორებს</em> თქვენს ბოლო ოპერაციას. მას "
+"რამდენჯერმე შეგიძლიათ, დააჭიროთ, თუ გნებავთ რამდენიმე ოპერაციის გამეორება.</"
+"p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:645
 msgctxt "MainWindowGUI|"
@@ -830,6 +878,8 @@ msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
 "adds them to the clipboard so that you can paste them in somewhere else.</p>"
 msgstr ""
+"<h4>ამოჭრა</h4> <p><em>ამოჭრის</em> მონიშნულ კადრებს ანიმაციიდან და "
+"დაამატებს მას ბუფერს, რომ მისი სადმე სხვაგან ჩასმა შეგეძლოთ.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:654
 msgctxt "MainWindowGUI|"
@@ -842,6 +892,8 @@ msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
 "can then paste them in another place.</p>"
 msgstr ""
+"<h4>კოპირება</h4> <p><em>დააკოპირებს</em> მონიშნულ კადრებს ანიმაციიდან და "
+"დაამატებს მას ბუფერს, რომ მისი სადმე სხვაგან ჩასმა შეგეძლოთ.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:663
 msgctxt "MainWindowGUI|"
@@ -856,6 +908,9 @@ msgid ""
 "another programs and then use this option to paste them into this animation."
 "</p>"
 msgstr ""
+"<h4>ჩასმა</h4> <p><em>ჩასვამს</em> მონიშნულ მდებარეობაზე კადრებს, რომელიც "
+"ამჟამად ბუფერშია.</p> <p>შეგიძლიათ, დააკოპიროთ/ამოჭრათ გამოსახულებები სხვა "
+"პროგრამებიდან და გამოიყენოთ ეს, რომ ისინი ამ ანიმაციაში ჩასვათ.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
 msgctxt "MainWindowGUI|"
@@ -868,6 +923,8 @@ msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
 "you can choose a frame you want to <em>go to</em>.</p>"
 msgstr ""
+"<h4>კადრზე გადასვლა</h4> <p>გაჩვენებთ მხტუნარა მენიუს ქვემო მხარეს, სადაც "
+"შეგეძლებათ აირჩიოთ კადრი, რომელზეც გნებავთ <em>გადასვლა</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:682
 msgctxt "MainWindowGUI|"
@@ -880,6 +937,8 @@ msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
 "<em>configure</em> Stopmotion with various input and output devices.</p>"
 msgstr ""
+"<h4>Stopmotion-ის მორგება</h4> <p>ეს გახსნის ფანჯარას, სადაც Stepmotion-ის "
+"<em>მორგება</em> შეგიძლიათ.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
 msgctxt "MainWindowGUI|"
@@ -892,6 +951,8 @@ msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
 "can be used to bring up helpful information like this.</p>"
 msgstr ""
+"<h4>რა არის ეს</h4> <p>ეს გაჩვენებთ თაგუნას კითხვისნიშნიან კურსორს, რომელიც "
+"შეგიძლიათ, ამის მაგვარი ინფორმაციის სანახავად გამოიყენოთ.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:702
 msgctxt "MainWindowGUI|"
@@ -904,6 +965,8 @@ msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
 "manual</p>"
 msgstr ""
+"<h4>დახმარება</h4> <p>ეს ღილაკი გაჩვენებთ ფანჯარას Stopmotion-ის "
+"სახელმძღვანელოთი</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:710
 msgctxt "MainWindowGUI|"
@@ -917,6 +980,9 @@ msgid ""
 "read general information as well as the names of the developers behind this "
 "excellent piece of software.</p>"
 msgstr ""
+"<h4>შესახებ</h4> <p>ეს გაჩვენებთ მცირე დიალოგს, სადაც შეგიძლიათ, წაიკითხოთ "
+"ზოგადი ინფორმაცია და პროგრამისტების სახელები, რომლებმაც ეს შესანიშნავი "
+"პროგრამა დაწერეს.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:720
 msgctxt "MainWindowGUI|"
@@ -929,6 +995,8 @@ msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
 "selected frame</p>"
 msgstr ""
+"<h4>კადრის ნომერი</h4><p>ეს ადგილი ამჟამად მონიშნული კადრის ნომერს "
+"გაჩვენებთ</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:733
 msgctxt "MainWindowGUI|"
@@ -936,6 +1004,9 @@ msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
 "also play animations in this window by pressing the <b>Play</b> button.</p>"
 msgstr ""
+"<h4>კადრის ხედი</h4><p> ამ ადგილას შეგიძლიათ, მონიშნული კადრი იხილოთ. ასევე "
+"შეგიძლიათ, დაკრათ ანიმაციები ამ ფანჯარაში, თუ <b>დაკვრის</b> ღილაკს დააჭერთ."
+"</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
 msgctxt "MainWindowGUI|"
@@ -943,6 +1014,8 @@ msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
 "program will jump to the specified frame</p> "
 msgstr ""
+"<h4>კადრზე გადასვლის მენიუ</h4> <p>აქ შეგიძლიათ, მიუთითოთ კადრის ნომერი და "
+"პროგრამა მითითებულ კადრზე გადავა</p> "
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
 msgctxt "MainWindowGUI|"
@@ -951,6 +1024,9 @@ msgid ""
 "the selected frame/frames, such as <b>subtitles</b>, <b>sound effects</b>, "
 "etc.</p>"
 msgstr ""
+"<h4>კადრის პარამეტრების მენიუ</h4> <p>ამ მენიუში შეგიძლიათ, დააყენოთ "
+"მონიშნული კადრ(ებ)-ისთვის როგორიცაა <b>სუბტიტრები</b>, <b>ხმოვანი ეფექტები</"
+"b> და ა.შ.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:753
 msgctxt "MainWindowGUI|"
@@ -958,6 +1034,8 @@ msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
 "widgets you will need when working on stop motion animations are located.</p>"
 msgstr ""
+"<h4>ხელსაწყოების მენიუ</h4> <p>ეს ხელსაწყოების მენიუა, სადაც ღილაკებისა და "
+"ვიჯეტების უმრავლესობაა, რომელიც ანიმაციებთან სამუშაოდ დაგჭირდებათ.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:759
 msgctxt "MainWindowGUI|"
@@ -967,6 +1045,10 @@ msgid ""
 "switch to the next and the previous frame using the <b>arrow buttons</b> or "
 "<b>x</b> and <b>z</b></p> "
 msgstr ""
+"<h4>კადრის პანელი</h4> <p>ამ სფეროში შეგიძლიათ იხილოთ ანიმაციის კადრები და "
+"სცენები და ააშენოთ ანიმაცია მათი გადაადგილებით.</p><p>თქვენ შეგიძლიათ "
+"გადახვიდეთ შემდეგ და წინა კადრზე <b>ისრის ღილაკების</b> ან <b>x</b> და <b>z</"
+"b> გამოყენებით</p> "
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
 msgctxt "MainWindowGUI|"
@@ -1002,6 +1084,10 @@ msgid ""
 "menu. Export to video will not be possible until you\n"
 "have set an encoder to use. Do you want to set it now?"
 msgstr ""
+"ვიდეოს გატანისთვის ენკოდერები დარეგისტრირებული არაა.\n"
+"ამის გაკეთება მორგების მენიუდან შეგიძლიათ. ვიდეოში გატანა\n"
+"შეუძლებელი იქნება, სანამ ენკოდერს არ მიუთითებთ.\n"
+"გნებავთ მის დაყენება ახლავე?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
@@ -1014,6 +1100,8 @@ msgid ""
 "The registered encoder is not valid. Do you want\n"
 "to check your settings in the preferences menu?"
 msgstr ""
+"დარეგისტრირებული ენკოდერი არასწორია.\n"
+"გნებავთ, შეამოწმოთ თქვენი პარამეტრები მორგების მენიუში?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
 msgctxt "MainWindowGUI|"
@@ -1103,6 +1191,8 @@ msgid ""
 "The file %1 seems to be corrupt, it's contents will be lost if you continue. "
 "Do you want to continue?"
 msgstr ""
+"როგორც ჩანს, ფაილი %1 დაზიანებულია. თუ გააგრძელებთ, მისი შემცველობა "
+"დაიკარგება. გნებავთ, გააგრძელოთ?"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:255
 msgctxt "QtFrontend|"
@@ -1112,7 +1202,7 @@ msgstr "vgrabbj"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:257
 msgctxt "QtFrontend|"
 msgid "The simplest setting. Fairly slow"
-msgstr ""
+msgstr "უმარტივესი პარამეტრი. საკმაოდ ნელია"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:264
 msgctxt "QtFrontend|"
@@ -1122,7 +1212,7 @@ msgstr "vgrabbj VGA დემონი"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:266
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
-msgstr ""
+msgstr "გაუშვებს vgrabbj-ს ფონში. საკმაოდ სწრაფია."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:274
 msgctxt "QtFrontend|"
@@ -1137,12 +1227,12 @@ msgstr "V4L2 მოწყობილობებიდან ჩაჭერა
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:283
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
-msgstr ""
+msgstr "ერთი კადრი videodog-დან"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:285
 msgctxt "QtFrontend|"
 msgid "Videodog."
-msgstr ""
+msgstr "Videodog."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:292
 msgctxt "QtFrontend|"
@@ -1152,24 +1242,24 @@ msgstr "dvgrab"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:294
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
-msgstr ""
+msgstr "ჩაჭერა DV-კამერიდან."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:310
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
-msgstr ""
+msgstr "გატანა jpeg გამოსახულებებიდან mpeg1 ვიდეოში"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:319
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
-msgstr ""
+msgstr "გატანა jpeg გამოსახულებებიდან mpeg2 ვიდეოში"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:328
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:337
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
-msgstr ""
+msgstr "გატანა jpeg გამოსახულებებიდან mpeg4 ვიდეოში"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:357
 msgctxt "QtFrontend|"
@@ -1179,12 +1269,12 @@ msgstr "გამოსახულების ფალის მხარდ�
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
 msgctxt "QtFrontend|"
 msgid "Only JPeg image files can be added to the animation"
-msgstr ""
+msgstr "ანიმაციას, მხოლოდ, JPeg ფაილები შეგიძლიათ, დაამატოთ"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:361
 msgctxt "QtFrontend|"
 msgid "The selected audio file could not be loaded"
-msgstr ""
+msgstr "მონიშნული აუდიოფაილის ჩატვირთვა შეუძლებელია"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:362
 msgctxt "QtFrontend|"
@@ -1200,28 +1290,29 @@ msgstr "მონიშნული ფაილის წასაკითხ�
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "The file %1 could not be opened"
-msgstr ""
+msgstr "ფაილის %1 გახსნა შეუძლებელია"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:371
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
-msgstr ""
+msgstr "შეუძლებელია ფაილის კოპირება სამუშაო სივრცეში"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:372
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr ""
+"ჩავარდა კოპირება შემდეგი ფაილებისთვის სამუშაო სივრცემდე (~/.stopmotion): %1"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:376
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
-msgstr ""
+msgstr "აუდიოდრაივერის ინიციალიზაცია ჩავარდა"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:377
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
-msgstr ""
+msgstr "ხმა არ იმუშავებთ, სანამ ამას არ გაასწრებთ"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:381
 msgctxt "QtFrontend|"
@@ -1232,7 +1323,7 @@ msgstr "პარამეტრების ჩაწერის შეცდ�
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
-msgstr ""
+msgstr "შეცდომა პარამეტრების ჩაწერისას ფაილში: %1"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:391
 msgctxt "QtFrontend|"
@@ -1245,6 +1336,8 @@ msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
 "running."
 msgstr ""
+"ექსკლუზიური ბლოკის მიღების შეცდომა ფაილზე command.log. Stopmotion, ალბათ, "
+"უკვე გაშვებულია."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:396
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
@@ -1256,7 +1349,7 @@ msgstr "პარამეტრების ფაილის წაკით�
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
-msgstr ""
+msgstr "პარამეტრების ფაილი %1 წაკითხვადი არაა. გაასწორეთ ეს და თავიდან სცადეთ."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:402
 #, qt-format
@@ -1265,6 +1358,8 @@ msgid ""
 "Preferences file %1 is not a valid XML preferences file. Please correct this "
 "or delete the file and try again."
 msgstr ""
+"პარამეტრების ფაილი %1 სწორი XML პარამეტრების ფაილი არაა. გაასწორეთ ეს, ან "
+"წაშალეთ ფაილი და თავიდან სცადეთ."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:405
 msgctxt "QtFrontend|"
@@ -1274,12 +1369,12 @@ msgstr "ფატალური"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:413
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
-msgstr ""
+msgstr "Stopmotion-მა ამოაგდო გამონაკლისი, რომელიც არ იცის, რა არის."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:414
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
-msgstr ""
+msgstr "შეავსეთ ანგარიში შეცდომის გარეშე."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:420
 msgctxt "QtFrontend|"
@@ -1293,6 +1388,9 @@ msgid ""
 "values exists. Do you want to use this one? (Your old preferences\n"
 " will be saved in ~/.stopmotion/preferences.xml.OLD)"
 msgstr ""
+"არსებობს პარამეტრების უფრო ახალი ვერსია რამდენიმე\n"
+"მეტი ნაგულისხმევი მნიშვნელობით. გნებავთ, ეს გამოვიყენო?\n"
+"(თქვენი ძველი პარამეტრები შეინახება ფაილში ~/.stopmotion/preferences.xml.OLD)"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:468
 msgctxt "QtFrontend|"
@@ -1302,7 +1400,7 @@ msgstr "კითხვა"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:207
 msgctxt "ToolsMenu|"
 msgid "FPS chooser"
-msgstr ""
+msgstr "FPS-ის არჩევა"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:208
 msgctxt "ToolsMenu|"
@@ -1350,6 +1448,8 @@ msgid ""
 "<h4>Add Frames (CTRL+F)</h4> <p>Click on this button to <em>add</em> frames "
 "to the animation.</p>"
 msgstr ""
+"<h4>კადრების დამატება (CTRL+F)</h4> <p>დააწკაპუნეთ ამ ღილაკზე ანიმაციისთვის "
+"კადრების <em>დასამატებლად</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:232
 msgctxt "ToolsMenu|"
@@ -1357,6 +1457,8 @@ msgid ""
 "<h4>Remove Selection (Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected frames from the animation.</p>"
 msgstr ""
+"<h4>მონიშნულის მოცილება (Delete)</h4> <p>დააწკაპუნეთ ამ ღილაკზე ანიმაციიდან "
+"მონიშნული კადრების <em>წასაშლელად</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:239
 msgctxt "ToolsMenu|"
@@ -1364,6 +1466,8 @@ msgid ""
 "<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
 "<em>scene</em> to the animation.</p>"
 msgstr ""
+"<h4>ახალი სცენა (CTRL+E)</h4> <p>დააწკაპუნეთ ამ ღილაკზე ანიმაციაში ახალი "
+"<em>სცენის</em> <em>შესაქმნელად</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
 msgctxt "ToolsMenu|"
@@ -1371,6 +1475,8 @@ msgid ""
 "<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected scene from the animation.</p>"
 msgstr ""
+"<h4>სცენის წაშლა (SHIFT+Delete)</h4> <p>დააწკაპუნეთ ამ ღილაკზე ანიმაციიდან "
+"სცენის <em>წასაშლელად</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:253
 msgctxt "ToolsMenu|"
@@ -1378,6 +1484,8 @@ msgid ""
 "<h4>Toggle camera on/off (C)</h4> <p>Click this button to toggle the camera "
 "on and off</p> "
 msgstr ""
+"<h4>კამერის ჩართვა/გამორთვა (C)</h4> <p>დააწკაპუნეთ ამ ღილაკზე კამერის "
+"ჩასართავად ან გამოსართავად</p> "
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:259
 msgctxt "ToolsMenu|"
@@ -1386,6 +1494,9 @@ msgid ""
 "p> <p>Note that you can also drag images from the frame bar and drop them on "
 "Gimp</p>"
 msgstr ""
+"<h4>GIMP-ის გაშვება</h4> <p>დააწკაპუნეთ ამ ღილაკზე, თუ აქტიური კადრი "
+"გნებავთ, GIMP-ში გახსნათ</p> <p>დაიმახსოვრეთ, რომ ასევე შეგიძლიათ, "
+"გადაათრიოთ გამოსახულებები კადრები ზოლიდან და ის GIMP-ზე დააგდოთ.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:266
 msgctxt "ToolsMenu|"
@@ -1394,6 +1505,9 @@ msgid ""
 "frame from the camera an put it in the animation</p> <p> This can also be "
 "done by pressing the <b>Space key</b></p>"
 msgstr ""
+"<h4>კადრის გადაღება (Space)</h4> <p>დააწკაპუნეთ ამ ღილაკზე კამერიდან კადრის "
+"<em>გადასაღებად</em> და მისი ანიმაციაში ჩასასმელად</p> <p> ამის გაკეთება "
+"<b>ჰარე ღილაკზე</b> დაჭერითაც შეგიძლიათ</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:274
 msgctxt "ToolsMenu|"
@@ -1405,6 +1519,12 @@ msgid ""
 "see how the next shot will be in relation to the other, thereby making a "
 "smoother stop motion animation!</p>"
 msgstr ""
+"<h4>სურათების რაოდენობა</h4> <p>ამ სლაიდ ზოლში მნიშვნელობის შეცვლით "
+"შეგიძლიათ, მიუთითოთ, რამდენი სურათი უკან ანიმაციაში, რომელიც უნდა იყოს "
+"შერეული კამერის თავზე, ან თუ დაკვრის რეჟიმში ხართ: რამდენი სურათი უნდა "
+"დაუკრას. </p> <p>წინა გამოსახულების (ებ) ის კამერაზე შერევით შეგიძლიათ უფრო "
+"მარტივად ნახოთ, თუ როგორ იქნება შემდეგი კადრი სხვასთან მიმართებაში, რითაც "
+"უფრო გლუვი გაჩერების მოძრაობის ანიმაციას გააკეთებთ!</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:285
 msgctxt "ToolsMenu|"
@@ -1413,6 +1533,9 @@ msgid ""
 "speed the animation in the <b>FrameView</b> should run at.</p> <p>To start "
 "an animation press the <b>Run Animation</b> button.</p>"
 msgstr ""
+"<h4>FPS-ის არჩევა</h4> <p>აქ მნიშვნელობის შეცვლთ, შეგიძლიათ, დააყენოთ, რა "
+"სიჩქარით მოხდება ანიმაციის დაკვრა <b>კადრის ხედში</b>.</p> <p>ანიმაციის "
+"დასწყებად დააჭირეთ ღილაკს <b>ანიმაციის გაშვება</b>.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:295
 msgctxt "ToolsMenu|"
@@ -1450,6 +1573,8 @@ msgid ""
 "<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether you "
 "want the animation to play to the end, or to loop indefinitely.</p>"
 msgstr ""
+"<h4>ანიმაციის მარყუჟი (CTRL+L)</h4> <p>ამ ღილაკით შეგიძლიათ დააყენოთ, "
+"გნებავთ, ანიმაციამ თავიდან დაიწყოს დაკვრა, როცა დასრულება, თუ გაჩერდეს.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
 msgctxt "ToolsMenu|"
@@ -1463,6 +1588,8 @@ msgid ""
 "the preferences menu (CTRL+P) to switch to running the image grabbing as a "
 "daemon."
 msgstr ""
+"ამჟამად დაკვრა, მხოლოდ, მაშინ მუშაობს, როცა ჩამჭერი დემონადაა გაშვებული. "
+"ჩაშერის პროგრამის დემონად გასაშვებად გადადით მორგების მენიუში (CTRL+P)."
 
 #~ msgctxt "MainWindowGUI|"
 #~ msgid "Do&n't save"
