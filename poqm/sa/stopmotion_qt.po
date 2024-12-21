@@ -1,20 +1,23 @@
 #
+# SPDX-FileCopyrightText: 2024 kali <skkalwar999@gmail.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"PO-Revision-Date: 2024-12-19 20:33+0530\n"
-"Last-Translator: Kali <EMAIL@ADDRESS>\n"
-"Language-Team: Sanskrit\n"
+"Project-Id-Version: stopmotion_qt\n"
+"PO-Revision-Date: 2024-12-20 22:01+0530\n"
+"Last-Translator: kali <skkalwar999@gmail.com>\n"
+"Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
 "Language: sa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+"X-Generator: Lokalize 24.08.2\n"
 
 #: src/application/externalcommand.cpp:46
 msgctxt "ExternalCommand|"
 msgid "Input to program:"
-msgstr "कार्यक्रमाय निवेशः : १."
+msgstr "कार्यक्रमाय निवेशः :"
 
 #: src/application/externalcommand.cpp:56
 msgctxt "ExternalCommand|"
@@ -109,7 +112,7 @@ msgstr "ध्वनिसञ्चिकां चिनोतु"
 #: src/application/soundhandler.cpp:44
 msgctxt "SoundHandler|"
 msgid "Sounds (*.ogg)"
-msgstr "ध्वनयः (*.ogg) ९."
+msgstr "ध्वनयः (*.ogg)"
 
 #: src/application/soundhandler.cpp:70
 msgctxt "SoundHandler|"
@@ -119,7 +122,7 @@ msgstr "ध्वनि नाम"
 #: src/application/soundhandler.cpp:71
 msgctxt "SoundHandler|"
 msgid "Enter the name of the sound:"
-msgstr "शब्दस्य नाम प्रविशतु : १."
+msgstr "शब्दस्य नाम प्रविशतु :"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:42
 msgctxt "AboutDialog|"
@@ -386,13 +389,13 @@ msgstr "ब्राउज़ करें"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:397
 msgctxt "ExportTab|"
 msgid "Start encoder:"
-msgstr "एन्कोडरं आरभत : १."
+msgstr "एन्कोडरं आरभत :"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:136
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:398
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
-msgstr "एन्कोडरं स्थगयन्तु : १."
+msgstr "एन्कोडरं स्थगयन्तु :"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:362
 msgctxt "ExportTab|"
@@ -444,7 +447,7 @@ msgstr "वर्णनम्‌"
 #: src/presentation/frontends/qtfrontend/framebar/framebar.cpp:196
 msgctxt "FrameBar|"
 msgid "Frame number: "
-msgstr "फ्रेम संख्या : १."
+msgstr "फ्रेम संख्या :"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:114
 msgctxt "FramePreferencesMenu|"
@@ -464,7 +467,7 @@ msgstr "नाम परिवर्तयतु"
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:117
 msgctxt "FramePreferencesMenu|"
 msgid "Sounds:"
-msgstr "ध्वनयः : १."
+msgstr "ध्वनयः :"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:120
 msgctxt "FramePreferencesMenu|"
@@ -750,12 +753,12 @@ msgstr "&विषये"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:512
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
-msgstr "फ्रेम संख्या : १."
+msgstr "फ्रेम संख्या :"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
-msgstr "फ्रेमं गच्छन्तु : १."
+msgstr "फ्रेमं गच्छन्तु :"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
 msgctxt "MainWindowGUI|"
@@ -1386,7 +1389,7 @@ msgstr "FPS चयनकर्ता"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:208
 msgctxt "ToolsMenu|"
 msgid "Number of images:"
-msgstr "चित्राणां संख्या : १."
+msgstr "चित्राणां संख्या :"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:211
 msgctxt "ToolsMenu|"
