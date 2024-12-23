@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2024-12-21 20:04+0200\n"
+"PO-Revision-Date: 2024-12-22 06:57+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -536,6 +536,8 @@ msgid ""
 "You have to define an image grabber to use.\n"
 "This can be set in the preferences menu."
 msgstr ""
+"יש להגדיר באיזה לוכד תמונות להשתמש.\n"
+"אפשר להגדיר את זה בתפריט ההעדפות."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:63
 #: src/presentation/frontends/qtfrontend/importtab.cpp:317
@@ -544,6 +546,8 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
 "images from the selected device."
 msgstr ""
+"להלן ניתן להגדיר באיזו תוכנית/תהליך יכול להשתמש סטופמושן לצילום תמונות "
+"מההתקן הנבחר."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:65
 #: src/presentation/frontends/qtfrontend/importtab.cpp:319
@@ -552,6 +556,8 @@ msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 "the video device and the image file, respectively."
 msgstr ""
+"יש תמיד להשתמש ב־<b>$VIDEODEVICE</b> וב־<b>$IMAGEFILE</b> לייצור התקן "
+"הווידאו וקובץ התמונה, בהתאמה."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:71
 #: src/presentation/frontends/qtfrontend/importtab.cpp:323
@@ -879,6 +885,9 @@ msgid ""
 "another programs and then use this option to paste them into this animation."
 "</p>"
 msgstr ""
+"<h4>הדבקה</h4> <p><em>הדבקת</em> התמוניות מלוח הגזירים למקום הנבחר.</p> "
+"<p>אפשר להעתיק/לגזור תמונות מתוכניות אחרות ואז להשתמש באפשרות הזאת כדי "
+"להדביק אותן להנפשה הזאת.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
 msgctxt "MainWindowGUI|"
@@ -905,6 +914,8 @@ msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
 "<em>configure</em> Stopmotion with various input and output devices.</p>"
 msgstr ""
+"<h4>הגדרת סטופמושן</h4> <p>ייפתח חלון בו ניתן <em>להגדיר</em> מגוון התקני "
+"קלט ופלט לסטופמושן.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
 msgctxt "MainWindowGUI|"
@@ -917,6 +928,8 @@ msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
 "can be used to bring up helpful information like this.</p>"
 msgstr ""
+"<h4>מה זה</h4> <p>מספק סמן „מה זה” שניתן להשתמש בו כדי להעלות מידע שימושי "
+"כמו זה למשל.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:702
 msgctxt "MainWindowGUI|"
@@ -970,6 +983,8 @@ msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
 "program will jump to the specified frame</p> "
 msgstr ""
+"<h4>מעבר לתפריט תמוניות</h4> <p>כאן אפשר לבחור מספר תמונית והתוכנית תקפוץ "
+"לתמונית שנבחרה</p> "
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
 msgctxt "MainWindowGUI|"
