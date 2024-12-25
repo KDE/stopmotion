@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2024-12-22 06:57+0200\n"
+"PO-Revision-Date: 2024-12-24 08:04+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -10,8 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
-"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
-"n % 10 == 0) ? 2 : 3));\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 24.12.0\n"
 
 #: src/application/externalcommand.cpp:46
@@ -389,13 +388,13 @@ msgstr "עיון"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:397
 msgctxt "ExportTab|"
 msgid "Start encoder:"
-msgstr ""
+msgstr "הפעלת מקודד:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:136
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:398
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
-msgstr ""
+msgstr "הפסקת מקודד:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:362
 msgctxt "ExportTab|"
@@ -416,6 +415,8 @@ msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
 "the image path and the video file, respectively."
 msgstr ""
+"תמיד צריכים להיות <b>$IMAGEPATH</b> ו־<b>$VIDEOFILE</b> כדי לייצגאת נתיב "
+"התמונה וקובץ הווידאו, בהתאמה."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:376
 msgctxt "ExportTab|"
@@ -473,6 +474,8 @@ msgid ""
 "selected frame.</p> <p>The sound will begin playing when this frame is shown "
 "and play until it is done.</p>"
 msgstr ""
+"<h4>הוספת צליל</h4> <p>עם הכפתור הזה אפשר <em>להוסיף צלילים</em> לתמונית "
+"הנבחרת.</p> <p>הצלילי יתחיל להתנגן עם הופעת התמונה ויושמע עד לסיומו.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:128
 msgctxt "FramePreferencesMenu|"
@@ -480,6 +483,8 @@ msgid ""
 "<h4>Remove sound</h4> <p>With this button you can <em>remove</em> the "
 "selected sound from this frame.</p>"
 msgstr ""
+"<h4>הסרת צליל</h4> <p>עם הכפתור הזה אפשר <em>להסיר</em> את הצליל הנבחר "
+"מהתמונית הזאת.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:135
 msgctxt "FramePreferencesMenu|"
@@ -488,6 +493,8 @@ msgid ""
 "selected sound. <BR>The name of the sound has no other effect than making it "
 "easier work with the animation.</p>"
 msgstr ""
+"<h4>עריכת שם</h4> <p>עם הכפתור הזה אפשר לערוך את שם הצליל הנבחר.<BR>לשם אין "
+"שום משמעות מלבד להקל על עבודה איתו בהנפשה.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:143
 msgctxt "FramePreferencesMenu|"
@@ -496,6 +503,8 @@ msgid ""
 "p><p>The sounds will begin playing when this frame is shown and play until "
 "they are done.</p>"
 msgstr ""
+"<h4>צלילים</h4> <p>הרשימה הזאת מציגה את כל הצלילים שמקושרים לתמונית הזאת.</"
+"p><p>הצלילים יתחילו להתנגן כשהתמונית הזאת מופיעה ויתנגנו עד לסיומם.</p>"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 #: src/presentation/frontends/qtfrontend/frameview.cpp:287
@@ -530,6 +539,9 @@ msgid ""
 "to grab from an invalid device. Please check\n"
 "your grabber settings in the preferences menu."
 msgstr ""
+"הלכידה נכשלה. זה עלול לקרות אם ניסית ללכוד מהתקן\n"
+"שגוי. נא לבדוק שהגדרת הלוכד שלך בתפריט ההעדפות\n"
+"תקינות."
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
@@ -994,6 +1006,8 @@ msgid ""
 "the selected frame/frames, such as <b>subtitles</b>, <b>sound effects</b>, "
 "etc.</p>"
 msgstr ""
+"<h4>תפריט העדפות תמונית</h4> <p>בתפריט הזה אפשר להגדיר העדפות לתמונית."
+"תמוניות הנבחרות, כגון <b>כתוביות</b>, <b>אפקטים קוליים</b>, ועוד.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:753
 msgctxt "MainWindowGUI|"
@@ -1001,6 +1015,8 @@ msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
 "widgets you will need when working on stop motion animations are located.</p>"
 msgstr ""
+"<h4>תפריט כלים</h4> <p>זה תפריט הכלים בו נמצאים רוב הכפתורים והווידג׳טים "
+"שיהיו נחוצים לך בזמן עבודה על הנפשות סטופמושן.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:759
 msgctxt "MainWindowGUI|"
@@ -1045,6 +1061,10 @@ msgid ""
 "menu. Export to video will not be possible until you\n"
 "have set an encoder to use. Do you want to set it now?"
 msgstr ""
+"לא ניתן למצוא מקודד רשום לשימוש לייצוא וידאו.\n"
+"אפשר להגדיר כזה בתפריט ההעדפות. ייצוא לווידאו\n"
+"לא יתאפשר עד להגדרת המקודד לשימוש. להגדיר\n"
+"אותו כעת?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
@@ -1340,6 +1360,9 @@ msgid ""
 "values exists. Do you want to use this one? (Your old preferences\n"
 " will be saved in ~/.stopmotion/preferences.xml.OLD)"
 msgstr ""
+"גרסה חדשה יותר של קובץ ההעדפות קיימת עם עוד כמה ערכי ברירת\n"
+"מחדל. להשתמש בה? (קובץ ההעדפות הישן שלך\n"
+" יישמר תחת ‎~/.stopmotion/preferences.xml.OLD)"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:468
 msgctxt "QtFrontend|"
@@ -1397,6 +1420,8 @@ msgid ""
 "<h4>Add Frames (CTRL+F)</h4> <p>Click on this button to <em>add</em> frames "
 "to the animation.</p>"
 msgstr ""
+"<h4>הוספת תמונות (CTRL+F)</h4> <p>יש ללחוץ על הכפתור הזה כדי <em>להוסיף</em> "
+"תמוניות להנפשה.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:232
 msgctxt "ToolsMenu|"
@@ -1404,6 +1429,8 @@ msgid ""
 "<h4>Remove Selection (Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected frames from the animation.</p>"
 msgstr ""
+"<h4>הסרת הבחירה (Delete)</h4> <p>יש ללחוץ על הכפתור הזה כדי <em>להסיר</em> "
+"את התמוניות הנבחרות מההנפשה.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:239
 msgctxt "ToolsMenu|"
@@ -1411,6 +1438,8 @@ msgid ""
 "<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
 "<em>scene</em> to the animation.</p>"
 msgstr ""
+"<h4>סצנה חדשה (CTRL+E)</h4> <p>יש ללחוץ על הכפתור הזה כדי <em>ליצור</em> "
+"<em>סצנה חדשה</em> בהנפשה.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
 msgctxt "ToolsMenu|"
@@ -1418,6 +1447,8 @@ msgid ""
 "<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected scene from the animation.</p>"
 msgstr ""
+"<h4>הסרת סצנה (SHIFT+Delete)</h4> <p>יש ללחוץ על הכפתור הזה כדי <em>להסיר</"
+"em> את הסצנה הנבחרת מההנפשה.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:253
 msgctxt "ToolsMenu|"
@@ -1425,6 +1456,8 @@ msgid ""
 "<h4>Toggle camera on/off (C)</h4> <p>Click this button to toggle the camera "
 "on and off</p> "
 msgstr ""
+"<h4>הפעלת/כיבוי מצלמה (C)</h4> <p>יש ללחוץ על הכפתור הזה כדי לכבות או להפעיל "
+"מצלמה</p> "
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:259
 msgctxt "ToolsMenu|"
@@ -1433,6 +1466,8 @@ msgid ""
 "p> <p>Note that you can also drag images from the frame bar and drop them on "
 "Gimp</p>"
 msgstr ""
+"<h4>הפעלת Gimp</h4> <p>לחיצה על הכפתור הזה תפתח את התמונית הפעילה ב־Gimp</p> "
+"<p>אפשר גם לגרור תמונות מסרגל התמוניות ישירות ל־Gimp</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:266
 msgctxt "ToolsMenu|"
