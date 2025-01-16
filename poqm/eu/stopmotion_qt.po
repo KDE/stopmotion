@@ -1,14 +1,14 @@
 # Translation for stopmotion_qt.po to Euskara/Basque (eu).
-# Copyright (C) 2021, This file is copyright:
+# Copyright (C) 2021-2025 This file is copyright:
 # This file is distributed under the same license as the original file.
-# KDE euskaratzeko proiektuko arduraduna <xalba@ni.eus>.
+# SPDX-FileCopyrightText: 2025 KDE euskaratzeko proiektuaren arduraduna <xalba@ni.eus>
 #
 # Translators:
-# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2021.
+# Iñigo Salvador Azurmendi <xalba@ni.eus>, 2021, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2021-07-20 00:36+0200\n"
+"PO-Revision-Date: 2025-01-15 06:42+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 21.04.3\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #: src/application/externalcommand.cpp:46
 msgctxt "ExternalCommand|"
 msgid "Input to program:"
-msgstr "Programaren sarrerakoa:"
+msgstr "Programaren sarrera:"
 
 #: src/application/externalcommand.cpp:56
 msgctxt "ExternalCommand|"
@@ -132,7 +132,7 @@ msgstr "Sartu soinuaren izena:"
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:42
 msgctxt "AboutDialog|"
 msgid "This is the Stopmotion application for creating stop motion animations."
-msgstr ""
+msgstr "Stopmotion aplikazioa da hau, stop-motion animazioak sortzeko."
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:47
 msgctxt "AboutDialog|"
@@ -267,6 +267,8 @@ msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
 "displaying video."
 msgstr ""
+"Behean, Stopmotion-ek irudiak harrapatzeko eta bideoa azaltzeko zer gailu "
+"erabili behar duen ezar dezakezu."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:71
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:358
@@ -276,6 +278,10 @@ msgid ""
 "It is not recommended to use devices which is not auto-detected, but feel "
 "free to do it if you are an advanced user."
 msgstr ""
+"Behean automatikoki antzemandako gailuen artetik aukera dezakezu, edo "
+"gailuak zuk zeuk gehi ditzakezu. Ez da gomendatzen automatikoki antzeman ez "
+"den gailurik erabiltzea, baina lasai egin ezazu erabiltzaile aurreratua "
+"bazara."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:74
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:361
@@ -283,6 +289,8 @@ msgctxt "DeviceTab|"
 msgid ""
 "The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
 msgstr ""
+"Hautatutako gailua <b>$VIDEODEVICE</b> gisa ezagutzen da Bideoa Inportatu "
+"atalean."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:80
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:365
@@ -360,6 +368,8 @@ msgctxt "ExportTab|"
 msgid ""
 "Do you want to be asked for an output file every time you choose to export?"
 msgstr ""
+"Esportatzea aukeratzen duzun bakoitzean irteerako fitxategiari buruz "
+"galdetzea nahi duzu?"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:110
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:393
@@ -426,7 +436,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:378
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
-msgstr ""
+msgstr "mencoder-rekin adibidea (jpeg irudiak mpeg4 bideora):"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:383
 msgctxt "ExportTab|"
@@ -507,7 +517,7 @@ msgstr "Abisua"
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
-msgstr ""
+msgstr "Hobespenen menuan ez da bideo-gailurik hautatu."
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:287
 msgctxt "FrameView|"
@@ -517,7 +527,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/frameview.cpp:298
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
-msgstr ""
+msgstr "Emandako harrapatzekoa ez dago zure sisteman instalatuta"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:321
 #: src/presentation/frontends/qtfrontend/frameview.cpp:337
@@ -608,7 +618,7 @@ msgstr "Geldiarazi daimona"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:154
 msgctxt "MainWindowGUI|"
 msgid "Ready to rumble ;-)"
-msgstr ""
+msgstr "Hasteko prest ;-)"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:364
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:524
@@ -675,7 +685,7 @@ msgstr "Bideoa"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
-msgstr ""
+msgstr "Cinelerra"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
 msgctxt "MainWindowGUI|"
@@ -715,7 +725,7 @@ msgstr "&Joan fotogramara"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
-msgstr ""
+msgstr "&Konfiguratu Stopmotion"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
 msgctxt "MainWindowGUI|"
@@ -778,6 +788,8 @@ msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
 "project file.</p>"
 msgstr ""
+"<h4>Gorde Honela</h4> <p>Uneko animazioa Stopmotion proiektu fitxategi gisa "
+"<em>Gordetzen</em> du.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
 msgctxt "MainWindowGUI|"
@@ -797,11 +809,13 @@ msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
 "project.</p>You will be given a wizard to guide you."
 msgstr ""
+"<h4>Cinerella</h4> <p>Uneko animazioa <em>Cinerella</em> proiektu gisa "
+"esportatzen du.</p>Gidatuko zaituen morroi bat emango zaizu."
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:621
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
-msgstr ""
+msgstr "<h4>Irten</h4> <p>Programatik <em>Irtete</em>ko.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
 msgctxt "MainWindowGUI|"
@@ -814,6 +828,8 @@ msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
 "several time to undo earlier operations.</p>"
 msgstr ""
+"<h4>Desegin</h4> <p>Zure azken eragiketa <em>desegiten</em> du. Desegin "
+"hainbat aldiz saka dezakezu aurreragoko eragiketak desegiteko.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:636
 msgctxt "MainWindowGUI|"
@@ -826,6 +842,8 @@ msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
 "several times to redo several operations.</p>"
 msgstr ""
+"<h4>Berregin</h4> <p>Zure azken eragiketa <em>Berregiten</em> du. Berregin "
+"hainbat aldiz saka dezakezu hainbat eragiketa berregiteko.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:645
 msgctxt "MainWindowGUI|"
@@ -838,6 +856,8 @@ msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
 "adds them to the clipboard so that you can paste them in somewhere else.</p>"
 msgstr ""
+"<h4>Ebaki</h4> <p>Hautatutako fotogramak animaziotik <em>Ebakitzen</em> ditu "
+"eta arbelera gehitzen ditu beste nonbait itsas ditzazun.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:654
 msgctxt "MainWindowGUI|"
@@ -850,6 +870,8 @@ msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
 "can then paste them in another place.</p>"
 msgstr ""
+"<h4>Kopiatu</h4> <p>Hautatutako fotogramak arbelera <em>Kopiatzen</em> ditu. "
+"Ondoren beste leku batean itsas ditzakezu.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:663
 msgctxt "MainWindowGUI|"
@@ -864,6 +886,10 @@ msgid ""
 "another programs and then use this option to paste them into this animation."
 "</p>"
 msgstr ""
+"<h4>Itsatsi</h4> <p>Une horretan arbelean dauden fotogramak hautatutako "
+"kokalekuan <em>Itsasten</em> ditu.</p> <p>Beste programa batzuetako irudiak "
+"kopiatu/ebaki ditzakezu eta ondoren aukera hau erabil dezakezu haiek "
+"animazio honetan itsasteko.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
 msgctxt "MainWindowGUI|"
@@ -1102,7 +1128,7 @@ msgstr "Utzi"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:195
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
-msgstr ""
+msgstr "Hondatutako fitxategi galdu"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:196
 #, qt-format
@@ -1111,6 +1137,8 @@ msgid ""
 "The file %1 seems to be corrupt, it's contents will be lost if you continue. "
 "Do you want to continue?"
 msgstr ""
+"%1 fitxategia hondatuta dagoela dirudi, jarraitzen baduzu haren edukia galdu "
+"egingo da. Jarraitu nahi duzu?"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:255
 msgctxt "QtFrontend|"
@@ -1138,20 +1166,19 @@ msgid "uvccapture"
 msgstr "uvccapture"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:276
-#, fuzzy
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
-msgstr "V4L2 gailuetatik "
+msgstr "V4L2 gailuetatik harrapatzea"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:283
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
-msgstr ""
+msgstr "videodog singleshot"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:285
 msgctxt "QtFrontend|"
 msgid "Videodog."
-msgstr ""
+msgstr "Videodog."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:292
 msgctxt "QtFrontend|"
@@ -1161,24 +1188,24 @@ msgstr "dvgrab"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:294
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
-msgstr ""
+msgstr "DV-cam-etik harrapatzen."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:310
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
-msgstr ""
+msgstr "jpeg irudietatik mpeg1 bideora esportatzen du"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:319
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
-msgstr ""
+msgstr "jpeg irudietatik mpeg2 bideora esportatzen du"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:328
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:337
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
-msgstr ""
+msgstr "jpeg irudietatik mpeg4 bideora esportatzen du"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:357
 msgctxt "QtFrontend|"
@@ -1221,11 +1248,12 @@ msgstr "Ezin izan du fitxategia langunera kopiatu"
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr ""
+"Ondoko fitxategiak langunera (~/.stopmotion) kopiatzea huts egin du: %1"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:376
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
-msgstr ""
+msgstr "Audio-gidaria hasieratzea huts egin du"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:377
 msgctxt "QtFrontend|"
@@ -1246,7 +1274,7 @@ msgstr "Ezin izan ditu hobespenak fitxategira kopiatu: %1"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:391
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
-msgstr ""
+msgstr "Stopmotion ezin da abiarazi."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
 msgctxt "QtFrontend|"
@@ -1254,18 +1282,22 @@ msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
 "running."
 msgstr ""
+"«command.log» fitxategiaren giltzatze esklusibo bat lortzea huts egin du. "
+"Agian Stopmotion jada martxan dago."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:396
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
-msgstr ""
+msgstr "Hobespenen fitxategia ezin da irakurri"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:397
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
 msgstr ""
+"Hobespenen %1 fitxategia irakurgaitza da. Mesedez, hori zuzendu eta berriz "
+"saiatu."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:402
 #, qt-format
@@ -1274,21 +1306,23 @@ msgid ""
 "Preferences file %1 is not a valid XML preferences file. Please correct this "
 "or delete the file and try again."
 msgstr ""
+"Hobespenen %1 fitxategia ez da hobespenen XML fitxategi balioduna. Mesedez "
+"hori zuzendu eta fitxategia ezabatu eta berriz saiatu."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:405
 msgctxt "QtFrontend|"
 msgid "Fatal"
-msgstr ""
+msgstr "Larria"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:413
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
-msgstr ""
+msgstr "Stopmotion-ek, maneiatu ezin duen salbuespen bat jaurti du."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:414
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
-msgstr ""
+msgstr "Mesedez, akats txosten bat egin."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:420
 msgctxt "QtFrontend|"
@@ -1319,16 +1353,14 @@ msgid "Number of images:"
 msgstr "Irudi kopurua:"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:211
-#, fuzzy
 msgctxt "ToolsMenu|"
 msgid "Mix"
 msgstr "Nahastea"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:212
-#, fuzzy
 msgctxt "ToolsMenu|"
 msgid "Diff"
-msgstr "Diff"
+msgstr "Diferentzia"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:213
 msgctxt "ToolsMenu|"
@@ -1463,10 +1495,9 @@ msgid ""
 msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
-#, fuzzy
 msgctxt "ToolsMenu|"
 msgid "Notice"
-msgstr "Abisua"
+msgstr "Oharpena"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
 msgctxt "ToolsMenu|"
