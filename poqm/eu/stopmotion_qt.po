@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2025-01-15 06:42+0100\n"
+"PO-Revision-Date: 2025-01-22 20:07+0100\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
 "Language: eu\n"
@@ -418,6 +418,8 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
 "the currently active project to a video file."
 msgstr ""
+"Azpian ezar dezakezu unean aktibo dagoen proiektua bideo-fitxategi batean "
+"kodetzeko Stopmotion-ek zein programa/prozesu erabili behar duen."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:374
 msgctxt "ExportTab|"
@@ -425,6 +427,8 @@ msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
 "the image path and the video file, respectively."
 msgstr ""
+"Beti erabili beharko zenituzke <b>$IMAGEPATH</b> eta <b>$VIDEOFILE</b>, "
+"hurrenez hurren, irudiaren bide-izena eta bideo-fitxategia ordezkatzeko."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:376
 msgctxt "ExportTab|"
@@ -432,6 +436,8 @@ msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
 "in the project."
 msgstr ""
+"<b>$FRAMERATE</b> erabil dezakezu proiektuan erabiltzen den fotograma-emaria "
+"ordezkatzeko."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:378
 msgctxt "ExportTab|"
@@ -480,6 +486,9 @@ msgid ""
 "selected frame.</p> <p>The sound will begin playing when this frame is shown "
 "and play until it is done.</p>"
 msgstr ""
+"<h4>Gehitu soinua</h4> <p>Botoi honekin, hautatutako fotograman <em>soinuak "
+"gehi</em> ditzakezu.</p> <p>Soinua fotograma erakusten denean jotzen hasiko "
+"da eta hura bukatu arte joko du.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:128
 msgctxt "FramePreferencesMenu|"
@@ -487,6 +496,8 @@ msgid ""
 "<h4>Remove sound</h4> <p>With this button you can <em>remove</em> the "
 "selected sound from this frame.</p>"
 msgstr ""
+"<h4>Kendu soinua</h4> <p>Botoi honekin, hautatutako soinua fotograma "
+"honetatik <em>ken</em> dezakezu.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:135
 msgctxt "FramePreferencesMenu|"
@@ -495,6 +506,9 @@ msgid ""
 "selected sound. <BR>The name of the sound has no other effect than making it "
 "easier work with the animation.</p>"
 msgstr ""
+"<h4>Aldatu izena</h4> <p>Botoi honekin, hautatutako soinuaren izena alda "
+"dezakezu. <BR>Soinuaren izenaren eragin bakarra animazioarekin lan egitea "
+"erraztea da.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:143
 msgctxt "FramePreferencesMenu|"
@@ -503,6 +517,9 @@ msgid ""
 "p><p>The sounds will begin playing when this frame is shown and play until "
 "they are done.</p>"
 msgstr ""
+"<h4>Soinuak</h4> <p>Zerrenda honek fotograma honetara konektatutako soinu "
+"guztiak zerrendatzen ditu.</p><p>Soinuak fotograma erakusten denean jotzen "
+"hasiko dira eta hura bukatu arte joko ditu.</p>"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 #: src/presentation/frontends/qtfrontend/frameview.cpp:287
@@ -522,7 +539,7 @@ msgstr "Hobespenen menuan ez da bideo-gailurik hautatu."
 #: src/presentation/frontends/qtfrontend/frameview.cpp:287
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
-msgstr ""
+msgstr "Galdeketa aurreko komandoa ez da existitzen"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:298
 msgctxt "FrameView|"
@@ -537,6 +554,10 @@ msgid ""
 "to grab from an invalid device. Please check\n"
 "your grabber settings in the preferences menu."
 msgstr ""
+"Harrapatzea huts egin du. Hori gerta daiteke\n"
+"balio ez duen gailutik harrapatzen saiatzen bazara.\n"
+"Mesedez, egiaztatu harrapatzekoaren ezarpenak\n"
+"hobespenak menuan."
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
@@ -544,6 +565,8 @@ msgid ""
 "You have to define an image grabber to use.\n"
 "This can be set in the preferences menu."
 msgstr ""
+"Erabili beharreko irudiak harrapatzekoa definitu\n"
+"behar duzu. Hobespenak menuan ezar daiteke."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:63
 #: src/presentation/frontends/qtfrontend/importtab.cpp:317
@@ -552,6 +575,8 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
 "images from the selected device."
 msgstr ""
+"Behean, Stopmotion-ek hautatutako gailutik irudiak harrapatzeko zein "
+"programa/prozesu erabili behar duen ezar dezakezu."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:65
 #: src/presentation/frontends/qtfrontend/importtab.cpp:319
@@ -560,6 +585,8 @@ msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 "the video device and the image file, respectively."
 msgstr ""
+"Beti erabili beharko zenituzke <b>$VIDEODEVICE</b> eta <b>$IMAGEFILE</b>, "
+"hurrenez hurren, irudiaren bideo-gailua eta irudi-fitxategia ordezkatzeko."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:71
 #: src/presentation/frontends/qtfrontend/importtab.cpp:323
@@ -601,7 +628,7 @@ msgstr "Inportatu gailuaren ezarpenak"
 #: src/presentation/frontends/qtfrontend/importtab.cpp:331
 msgctxt "ImportTab|"
 msgid "Pre-poll command"
-msgstr ""
+msgstr "Galdeketa aurreko komandoa"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:114
 #: src/presentation/frontends/qtfrontend/importtab.cpp:332
@@ -776,6 +803,9 @@ msgid ""
 "project file. <BR>If this project has been saved before it will "
 "automatically be saved to the previously selected file.</p>"
 msgstr ""
+"<h4>Gorde</h4> <p>Uneko animazioa Stopmotion proiektu-fitxategi gisa "
+"<em>gordetzen</em> du. <BR>Proiektu hau aurrez gorde bada, aurretik "
+"aukeratutako fitxategian automatikoki gordeko da.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
 msgctxt "MainWindowGUI|"
@@ -802,6 +832,8 @@ msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
 "be given a wizard to guide you."
 msgstr ""
+"<h4>Bideoa</h4> <p>Uneko proiektua <em>bideo</em> gisa esportatzen du.</"
+"p>Gidatuko zaituen morroi bat izango duzu."
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
 msgctxt "MainWindowGUI|"
@@ -902,6 +934,8 @@ msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
 "you can choose a frame you want to <em>go to</em>.</p>"
 msgstr ""
+"<h4>Joan fotogramara</h4> <p>Honek, behealdean, menu gainerakor bat agertuko "
+"du, non <em>joan nahi duzun</em> fotograma bat aukeratu dezakezun.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:682
 msgctxt "MainWindowGUI|"
@@ -914,6 +948,8 @@ msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
 "<em>configure</em> Stopmotion with various input and output devices.</p>"
 msgstr ""
+"<h4>Konfiguratu Stopmotion</h4> <p>Stopmotion hainbat sarrera eta irteera "
+"gailurekin <em>konfiguratzeko</em> leiho bat irekiko du.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
 msgctxt "MainWindowGUI|"
@@ -926,6 +962,8 @@ msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
 "can be used to bring up helpful information like this.</p>"
 msgstr ""
+"<h4>Zer da hau</h4> <p>Honen gisako informazio lagungarria ateratzeko "
+"ZerDaHau sagu-kurtsore bat emango dizu.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:702
 msgctxt "MainWindowGUI|"
@@ -938,6 +976,8 @@ msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
 "manual</p>"
 msgstr ""
+"<h4>Laguntza</h4> <p>Honek Stopmotion-en eskuliburua duen elkarrizketa-"
+"koadro bat aterako du.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:710
 msgctxt "MainWindowGUI|"
@@ -951,6 +991,9 @@ msgid ""
 "read general information as well as the names of the developers behind this "
 "excellent piece of software.</p>"
 msgstr ""
+"<h4>Honi buruz</h4> <p>Informazio-koadro txiki bat azalduko du, informazio "
+"orokorra eta software pieza bikain honen atzean dauden garatzaileen izenak "
+"irakurri ahal izango dituzu.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:720
 msgctxt "MainWindowGUI|"
@@ -963,6 +1006,8 @@ msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
 "selected frame</p>"
 msgstr ""
+"<h4>Fotograma kopurua</h4><p>Azalera honek une horretan hautatutako "
+"fotogramaren zenbakia erakusten du.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:733
 msgctxt "MainWindowGUI|"
@@ -970,6 +1015,9 @@ msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
 "also play animations in this window by pressing the <b>Play</b> button.</p>"
 msgstr ""
+"<h4>Fotograma-ikuspegia</h4><p>Azalera honetan hautatutako fotograma ikus "
+"dezakezu. Leiho honetan <b>Jo</b> botoia sakatuz, animazioak ere jo "
+"ditzakezu.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
 msgctxt "MainWindowGUI|"
@@ -977,6 +1025,8 @@ msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
 "program will jump to the specified frame</p> "
 msgstr ""
+"<h4>Jo fotogramara menua</h4> <p>Hemen fotograma zenbaki bat zehaztu "
+"dezakezu, eta programak zehaztutako fotogramara jauzi egingo du.</p> "
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
 msgctxt "MainWindowGUI|"
@@ -985,6 +1035,9 @@ msgid ""
 "the selected frame/frames, such as <b>subtitles</b>, <b>sound effects</b>, "
 "etc.</p>"
 msgstr ""
+"<h4>Fotograma hobespenen menua</h4> <p>Menu honetan hautatutako fotogramaren/"
+"fotogramen hobespenak ezar ditzakezu, hala nola <b>azpidatziak</b>, <b>soinu "
+"efektuak</b>, etab.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:753
 msgctxt "MainWindowGUI|"
@@ -992,6 +1045,8 @@ msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
 "widgets you will need when working on stop motion animations are located.</p>"
 msgstr ""
+"<h4>Tresna menua</h4> <p>Hau da stopmotion animazioetan lanean ari zarenean "
+"beharko dituzun botoi eta trepeta gehienak kokatuta dauden menua.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:759
 msgctxt "MainWindowGUI|"
@@ -1001,6 +1056,10 @@ msgid ""
 "switch to the next and the previous frame using the <b>arrow buttons</b> or "
 "<b>x</b> and <b>z</b></p> "
 msgstr ""
+"<h4>Fotograma-barra</h4> <p>Azalera honetan animazioko fotogramak eta "
+"eszenak ikus ditzakezu, eta haiek mugituz animazioa eraiki dezakezu.</"
+"p><p>Hurrengo eta aurreko markora alda dezakezu <b>gezi botoiak</b> edo "
+"<b>x</b> eta <b>z</b> erabiliz.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
 msgctxt "MainWindowGUI|"
@@ -1036,6 +1095,11 @@ msgid ""
 "menu. Export to video will not be possible until you\n"
 "have set an encoder to use. Do you want to set it now?"
 msgstr ""
+"Ezin da aurkitu bideoa esportatzeko erabiltzeko\n"
+"erregistratutako kodetzailerik. Hori hobespenak\n"
+"menuan ezar daiteke. Erabili beharreko kodetzaile\n"
+"bat ezarri arte ezingo da bideora esportatu. Orain\n"
+"ezarri nahi duzu?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
@@ -1048,6 +1112,8 @@ msgid ""
 "The registered encoder is not valid. Do you want\n"
 "to check your settings in the preferences menu?"
 msgstr ""
+"Erregistratutako kodetzaileak ez du balio. Hobespenak\n"
+"menuko zure ezarpenak egiaztatu nahi dituzu?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
 msgctxt "MainWindowGUI|"
@@ -1336,6 +1402,10 @@ msgid ""
 "values exists. Do you want to use this one? (Your old preferences\n"
 " will be saved in ~/.stopmotion/preferences.xml.OLD)"
 msgstr ""
+"Hobespenak fitxategiaren bertsio berriago bat existitzen da,\n"
+"balio lehenetsi gutxi batzuk gehiago dituena. Hori erabili nahi\n"
+"duzu? (Zure hobespen zaharrak ~/.stopmotion/preferences.xml.OLD\n"
+"fitxategian gordeko dira)"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:468
 msgctxt "QtFrontend|"
@@ -1393,6 +1463,8 @@ msgid ""
 "<h4>Add Frames (CTRL+F)</h4> <p>Click on this button to <em>add</em> frames "
 "to the animation.</p>"
 msgstr ""
+"<h4>Gehitu fotogramak (Ktrl+F)</h4> <p>Egin klik botoi honetan animazioan "
+"fotogramak <em>gehitzeko</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:232
 msgctxt "ToolsMenu|"
@@ -1400,6 +1472,8 @@ msgid ""
 "<h4>Remove Selection (Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected frames from the animation.</p>"
 msgstr ""
+"<h4>Kendu hautapena (Ezabatu)</h4> <p>Egin klik botoi honetan hautatutako "
+"fotogramak animaziotik <em>kentzeko</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:239
 msgctxt "ToolsMenu|"
@@ -1407,6 +1481,8 @@ msgid ""
 "<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
 "<em>scene</em> to the animation.</p>"
 msgstr ""
+"<h4>Eszena berria (Ktrl+E)</h4> <p>Egin klik botoi honetan animazioan "
+"<em>eszena</em> berri bat <em>sortzeko</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
 msgctxt "ToolsMenu|"
@@ -1414,6 +1490,8 @@ msgid ""
 "<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected scene from the animation.</p>"
 msgstr ""
+"<h4>Kendu eszena (Maius+Ezabatu)</h4> <p>Egin klik botoi honetan, "
+"hautatutako eszena animaziotik <em>kentzeko</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:253
 msgctxt "ToolsMenu|"
@@ -1421,6 +1499,8 @@ msgid ""
 "<h4>Toggle camera on/off (C)</h4> <p>Click this button to toggle the camera "
 "on and off</p> "
 msgstr ""
+"<h4>Txandakatu kamera piztu/itzali (C)</h4> <p>Egin klik botoi honetan, "
+"kamera piztea eta itzaltzea txandakatzeko.</p> "
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:259
 msgctxt "ToolsMenu|"
@@ -1429,6 +1509,9 @@ msgid ""
 "p> <p>Note that you can also drag images from the frame bar and drop them on "
 "Gimp</p>"
 msgstr ""
+"<h4>Abiarazi Gimp</h4> <p>Egin klik botoi honetan fotograma aktiboa Gimp-en "
+"irekitzeko</p> <p>Jakizu fotograma-barrako irudiak arrastatu eta Gimp-en "
+"jaregin ditzakezula.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:266
 msgctxt "ToolsMenu|"
@@ -1506,6 +1589,9 @@ msgid ""
 "the preferences menu (CTRL+P) to switch to running the image grabbing as a "
 "daemon."
 msgstr ""
+"Atzera-jotzea ibiltzeko harrapatzekoa daimon gisa exekutatu behar da. Joan "
+"hobespenak menura (Ktrl + P) irudiak harrapatzekoa daimon gisa exekutatzera "
+"aldatzeko."
 
 #~ msgctxt "MainWindowGUI|"
 #~ msgid "Do&n't save"
