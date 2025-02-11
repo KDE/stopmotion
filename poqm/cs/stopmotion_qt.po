@@ -1463,15 +1463,3 @@ msgid ""
 "the preferences menu (CTRL+P) to switch to running the image grabbing as a "
 "daemon."
 msgstr ""
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "Abort"
-#~ msgstr "Přerušit"
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "&Yes"
-#~ msgstr "&Ano"
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "&No"
-#~ msgstr "&Ne"
