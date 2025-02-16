@@ -1611,19 +1611,3 @@ msgstr ""
 "Només reproduïx els treballs actuals quan la capturadora s'executa com a "
 "dimoni. Aneu fins al menú preferències («Ctrl+P») per a canviar l'execució "
 "de la captura d'imatges com a dimoni."
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "Do&n't save"
-#~ msgstr "&No guardes"
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "Abort"
-#~ msgstr "Interromp"
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "&Yes"
-#~ msgstr "&Sí"
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "&No"
-#~ msgstr "&No"
