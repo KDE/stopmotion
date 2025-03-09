@@ -158,9 +158,7 @@ void Frame::replaceImage(WorkspaceFile& otherImage) {
 
 void Frame::accept(FileNameVisitor& v) const {
 	v.visitImage(imagePath.path());
-	for(SoundVector::const_iterator i = sounds.begin();
-			i != sounds.end();
-			++i) {
-		v.visitSound((*i)->getSoundPath());
+	for(Sound* sound : sounds) {
+		v.visitSound(sound->getSoundPath());
 	}
 }

@@ -180,19 +180,15 @@ int Scene::newSound(int frameNumber, WorkspaceFile& file) {
 
 int Scene::soundCount() const {
 	int s = 0;
-	for (FrameVector::const_iterator i = frames.begin();
-			i != frames.end();
-			++i) {
-		s += (*i)->soundCount();
+	for (const Frame* frame : frames) {
+		s += frame->soundCount();
 	}
 	return s;
 }
 
 void Scene::accept(FileNameVisitor& v) const {
 	v.reportNewScene();
-	for (FrameVector::const_iterator i = frames.begin();
-			i != frames.end();
-			++i) {
-		(*i)->accept(v);
+	for (const Frame* frame : frames) {
+		frame->accept(v);
 	}
 }

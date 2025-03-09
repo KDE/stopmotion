@@ -50,19 +50,17 @@ void ObserverNotifier::doOp(ObservableOperation& oo) {
 	oo.op(*del);
 	// exceptions must not escape from here, or we might lose an object that
 	// is of importance to the undo system.
-	for (observers_t::iterator i = observers.begin();
-			i != observers.end(); ++i) {
+	for (Observer* obs : observers) {
 		try {
-			oo.update(**i);
+			oo.update(*obs);
 		} catch (std::exception& e) {
 			try {
 				if (frontend)
 					frontend->reportWarning(e.what());
 			} catch (...) {
 			}
-			for (observers_t::iterator i = observers.begin();
-					i != observers.end(); ++i) {
-				(*i)->resync();
+			for (Observer* obs2 : observers) {
+				obs2->resync();
 			}
 		}
 	}

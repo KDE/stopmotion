@@ -39,9 +39,8 @@ CommandAdd::CommandAdd(AnimationImpl& model, int toScene, int toFrame, int count
 }
 
 CommandAdd::~CommandAdd() {
-	for (std::vector<Frame*>::iterator i = frames.begin();
-			i != frames.end(); ++i) {
-		delete *i;
+	for (Frame* f : frames) {
+		delete f;
 	}
 }
 
@@ -60,9 +59,8 @@ Command* CommandAdd::execute() {
 }
 
 void CommandAdd::accept(FileNameVisitor& v) const {
-	for (std::vector<Frame*>::const_iterator i = frames.begin();
-			i != frames.end(); ++i) {
-		(*i)->accept(v);
+	for (const Frame* f : frames) {
+		f->accept(v);
 	}
 }
 

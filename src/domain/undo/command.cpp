@@ -65,8 +65,8 @@ public:
 	 * Removes all commands from the list
 	 */
 	void clear() {
-		for (clist::iterator i = cs.begin(); i != cs.end(); ++i) {
-			delete *i;
+		for (Command* com : cs) {
+			delete com;
 		}
 		cs.clear();
 	}
@@ -115,8 +115,8 @@ public:
 	 * list.
 	 */
 	void accept(FileNameVisitor& v) const {
-		for (clist::const_iterator i = cs.begin(); i != cs.end(); ++i) {
-			(*i)->accept(v);
+		for (const Command* com : cs) {
+			com->accept(v);
 		}
 	}
 	/**

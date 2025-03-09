@@ -42,9 +42,8 @@ SceneVector::~SceneVector() {
 }
 
 void SceneVector::clear() {
-	for (std::vector<Scene*>::iterator i = scenes.begin();
-			i != scenes.end(); ++i) {
-		delete *i;
+	for (Scene* scene : scenes) {
+		delete scene;
 	}
 	scenes.clear();
 	totalSoundCount = 0;
@@ -114,9 +113,8 @@ void SceneVector::addFrame(int scene, int where, Frame* frame) {
 void SceneVector::addFrames(int scene, int where,
 		const std::vector<Frame*>& frames) {
 	getMutableScene(scene)->addFrames(where, frames);
-	for (std::vector<Frame*>::const_iterator i = frames.begin();
-			i != frames.end(); ++i) {
-		totalSoundCount += (*i)->soundCount();
+	for (const Frame* frame : frames) {
+		totalSoundCount += frame->soundCount();
 	}
 }
 
@@ -204,10 +202,8 @@ int SceneVector::soundCount() const {
 }
 
 void SceneVector::accept(FileNameVisitor& v) const {
-	for (std::vector<Scene*>::const_iterator i = scenes.begin();
-			i != scenes.end();
-			++i) {
-		(*i)->accept(v);
+	for (const Scene* scene : scenes) {
+		scene->accept(v);
 	}
 }
 
