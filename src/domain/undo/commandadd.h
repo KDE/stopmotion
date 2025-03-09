@@ -39,14 +39,14 @@ public:
 	 * subsequently be called this many times without throwing an exception.
 	 */
 	CommandAdd(AnimationImpl& model, int toScene, int toFrame, int count);
-	~CommandAdd();
+	~CommandAdd() override;
 	/**
 	 * Adds a frame to the add command.
 	 * @param frame Ownership is passed.
 	 */
 	void addFrame(Frame* frame);
-	Command* execute();
-	void accept(FileNameVisitor& v) const;
+	Command* execute() override;
+	void accept(FileNameVisitor& v) const override;
 private:
 	AnimationImpl& sv;
 	std::vector<Frame*> frames;
@@ -58,8 +58,8 @@ class CommandAddFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
 	CommandAddFactory(AnimationImpl& model);
-	~CommandAddFactory();
-	Command* create(::Parameters& ps, ErrorHandler& e);
+	~CommandAddFactory() override;
+	Command* create(::Parameters& ps, ErrorHandler& e) override;
 	class Parameters : public ::Parameters {
 		int32_t sc;
 		int32_t fr;
@@ -69,16 +69,16 @@ public:
 		int32_t parameterCount;
 	public:
 		Parameters(int scene, int frame, int count);
-		~Parameters();
+		~Parameters() override;
 		/**
 		 * Add a frame.
 		 * @filename The filename of the image. Ownership is not passed.
 		 * @return The full path of the workspace file created.
 		 */
 		const char* addFrame(const char* filename);
-		int32_t getInteger(int32_t min, int32_t max);
-		int32_t getHowMany();
-		void getString(std::string& out, const char* pattern);
+		int32_t getInteger(int32_t min, int32_t max) override;
+		int32_t getHowMany() override;
+		void getString(std::string& out, const char* pattern) override;
 		/**
 		 * If this function is not called before destruction, copied files
 		 * held by this function are deleted.

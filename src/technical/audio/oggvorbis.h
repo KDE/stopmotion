@@ -37,7 +37,7 @@ class ErrorHandler;
 class OggVorbis : public AudioFormat {
 public:
 	OggVorbis();
-	~OggVorbis();
+	~OggVorbis() override;
 
 	/**
 	 * Function for registering the given filename to  be an ogg file. This
@@ -47,13 +47,13 @@ public:
 	 */
 	void setFilename(WorkspaceFile& file, ErrorHandler& e);
 
-	int open();
-	int close();
-	void reset();
-	int fillBuffer(char *audioBuffer, int numBytes);
-	int add16bit(int16_t* audioBuffer, int count);
-	const char* getSoundPath() const;
-	const char* getBasename() const;
+	int open() override;
+	int close() override;
+	void reset() override;
+	int fillBuffer(char *audioBuffer, int numBytes) override;
+	int add16bit(int16_t* audioBuffer, int count) override;
+	const char* getSoundPath() const override;
+	const char* getBasename() const override;
 
 private:
 	/** The ogg representation of the file registered in this class. */

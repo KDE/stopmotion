@@ -41,7 +41,7 @@ public:
      * @param facadePtr pointer to the domain facade
      */
     NonGUIFrontend(DomainFacade *facadePtr);
-	virtual ~NonGUIFrontend();
+	virtual ~NonGUIFrontend() override;
 	
 	/**
 	 * The run function for starting the application.
@@ -49,24 +49,24 @@ public:
 	 * @param argv the argv arguments from the environment through main.
 	 * @return the return status on exit
 	 */
-	int run(int argc, char **argv);
+	int run(int argc, char **argv) override;
 	
-	void showProgress(ProgressMessage message, int numOperations);
-	void hideProgress();
-	void updateProgress(int numOperationsDone);
+	void showProgress(ProgressMessage message, int numOperations) override;
+	void hideProgress() override;
+	void updateProgress(int numOperationsDone) override;
 	void setProgressInfo(const char *infoText);
-	bool isOperationAborted();
+	bool isOperationAborted() override;
 	
 	/**
 	 * Function for processing events. This is useful on timeconsuming
 	 * operations which aren't running in separate processes or threads.
 	 * This function is actually not needed in this frontend.
 	 */
-	void processEvents();
-	bool askQuestion(Question question);
-	int runExternalCommand(const char *command);
-	void reportWarning(const char *message);
-	void handleException(UiException&);
+	void processEvents() override;
+	bool askQuestion(Question question) override;
+	int runExternalCommand(const char *command) override;
+	void reportWarning(const char *message) override;
+	void handleException(UiException&) override;
 	
 private:
 	DomainFacade *facadePtr;

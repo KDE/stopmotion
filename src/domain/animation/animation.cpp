@@ -63,10 +63,10 @@ class ErrorCapture : public ErrorHandler {
 public:
 	ErrorCapture() : exception(0) {
 	}
-	~ErrorCapture() {
+	~ErrorCapture() override {
 		delete exception;
 	}
-  void error(UiException e) {
+  void error(UiException e) override {
 		// We will only bother recording the first exception we come across.
 		// Better is clearly possible.
 		if (!exception) {

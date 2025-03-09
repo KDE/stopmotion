@@ -27,9 +27,9 @@ class ThrowingErrorHandler : public ErrorHandler {
 public:
 	ThrowingErrorHandler() {
 	}
-	~ThrowingErrorHandler() {
+	~ThrowingErrorHandler() override {
 	}
-	void error(UiException e) {
+	void error(UiException e) override {
 		throw &e;
 	}
 };

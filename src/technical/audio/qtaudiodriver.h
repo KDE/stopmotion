@@ -30,12 +30,12 @@ class QtAudioDriver : public AudioDriver {
 	Impl* impl;
 public:
 	QtAudioDriver();
-	~QtAudioDriver();
-	void play();
-	void playInThread();
-	void addAudioFile(AudioFormat *audioFile);
-	bool initialize();
-	void shutdown();
+	~QtAudioDriver() override;
+	void play() override;
+	void playInThread() override;
+	void addAudioFile(AudioFormat *audioFile) override;
+	bool initialize() override;
+	void shutdown() override;
 };
 
 #endif
