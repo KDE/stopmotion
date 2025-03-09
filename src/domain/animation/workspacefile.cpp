@@ -111,10 +111,10 @@ WorkspaceFileType::~WorkspaceFileType() {
 class ImageFileType : public WorkspaceFileType {
 public:
 	static ImageFileType* instance;
-	const char* preferredExtension(const char*) const {
+	const char* preferredExtension(const char*) const override {
 		return ".jpg";
 	}
-	bool isType(const char* path) const {
+	bool isType(const char* path) const override {
 		const char* extension = strrchr(path,'.');
 		return extension &&
 				(asciiEqualI(extension, ".jpg") || asciiEqualI(extension, ".jpeg"));
@@ -124,10 +124,10 @@ public:
 class SoundFileType : public WorkspaceFileType {
 public:
 	static SoundFileType* instance;
-	const char* preferredExtension(const char*) const {
+	const char* preferredExtension(const char*) const override {
 		return ".ogg";
 	}
-	bool isType(const char* path) const {
+	bool isType(const char* path) const override {
 		const char* extension = strrchr(path,'.');
 		return extension &&
 			(asciiEqualI(extension, ".ogg")

@@ -237,16 +237,16 @@ public:
 	UniqueVisitor(FileNameVisitor* delegate) :
 			del(delegate) {
 	}
-	~UniqueVisitor() {
+	~UniqueVisitor() override {
 	}
-	void visitImage(const char* path) {
+	void visitImage(const char* path) override {
 		std::string p(path);
 		if (visited.find(p) == visited.end()) {
 			visited.insert(p);
 			del->visitImage(path);
 		}
 	}
-	void visitSound(const char* path) {
+	void visitSound(const char* path) override {
 		std::string p(path);
 		if (visited.find(p) == visited.end()) {
 			visited.insert(p);

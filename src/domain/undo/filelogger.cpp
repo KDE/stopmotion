@@ -37,7 +37,7 @@ public:
 		}
 		fh = 0;
 	}
-	void flush() {
+	void flush() override {
 		if (!fh) {
 			buffer.erase(0, committedUpTo);
 			committedUpTo = 0;
@@ -55,7 +55,7 @@ public:
 	}
 	FileCommandLoggerImpl() : fh(0), committedUpTo(0) {
 	}
-	~FileCommandLoggerImpl() {
+	~FileCommandLoggerImpl() override {
 		close();
 	}
 	void setLogFile(FILE* f) {
@@ -68,20 +68,20 @@ public:
 	void deleteUncommitted() {
 		buffer.resize(committedUpTo);
 	}
-	void writePendingCommand(const char* text) {
+	void writePendingCommand(const char* text) override {
 		deleteUncommitted();
 		buffer.append(text);
 		buffer.append("!\n");
 	}
-	void writePendingUndo() {
+	void writePendingUndo() override {
 		deleteUncommitted();
 		buffer.append("?\n");
 	}
-	void writePendingRedo() {
+	void writePendingRedo() override {
 		deleteUncommitted();
 		buffer.append("!\n");
 	}
-	void commit() {
+	void commit() override {
 		committedUpTo = buffer.length();
 		flush();
 	}

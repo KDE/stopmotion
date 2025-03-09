@@ -376,15 +376,15 @@ class StringReaderParameters : public Parameters {
 public:
 	StringReaderParameters(StringReader& r) : reader(r) {
 	}
-	~StringReaderParameters() {
+	~StringReaderParameters() override {
 	}
-	int32_t getInteger(int32_t, int32_t) {
+	int32_t getInteger(int32_t, int32_t) override {
 		int32_t r;
 		if (StringReader::parseFailed == reader.getInteger(r))
 			throw IncorrectParameterException();
 		return r;
 	}
-	void getString(std::string& out, const char*) {
+	void getString(std::string& out, const char*) override {
 		if (StringReader::parseFailed == reader.getString(out))
 			throw IncorrectParameterException();
 	}
@@ -413,23 +413,23 @@ public:
 			: delegate(p) {
 		writer.writeIdentifier(name);
 	}
-	~WriterParametersWrapper() {
+	~WriterParametersWrapper() override {
 	}
-	int32_t getInteger(int32_t min, int32_t max) {
+	int32_t getInteger(int32_t min, int32_t max) override {
 		int32_t r = delegate.getInteger(min, max);
 		if(r < min || max < r)
 			throw ParametersOutOfRangeException();
 		writer.writeInteger(r);
 		return r;
 	}
-	int32_t getHowMany() {
+	int32_t getHowMany() override {
 		int32_t r = delegate.getHowMany();
 		if (r < 0)
 			throw ParametersOutOfRangeException();
 		writer.writeInteger(r);
 		return r;
 	}
-	void getString(std::string& out, const char* pattern) {
+	void getString(std::string& out, const char* pattern) override {
 		delegate.getString(out, pattern);
 		writer.writeString(out.c_str());
 	}
@@ -456,12 +456,12 @@ public:
 	VaListParameters(va_list& a)
 			: args(a) {
 	}
-	~VaListParameters() {
+	~VaListParameters() override {
 	}
-	int32_t getInteger(int32_t, int32_t) {
+	int32_t getInteger(int32_t, int32_t) override {
 		return va_arg(args, int32_t);
 	}
-	void getString(std::string& out, const char*) {
+	void getString(std::string& out, const char*) override {
 		const char* s = va_arg(args, const char*);
 		out.assign(s);
 	}
@@ -473,13 +473,13 @@ public:
 	RandomParameters(RandomSource& rng)
 			: rs(rng) {
 	}
-	int32_t getInteger(int32_t min, int32_t max) {
+	int32_t getInteger(int32_t min, int32_t max) override {
 		return rs.getUniform(min, max);
 	}
-	int32_t getHowMany() {
+	int32_t getHowMany() override {
 		return 1 + rs.getLogInt(60);
 	}
-	void getString(std::string& out, const char* pattern) {
+	void getString(std::string& out, const char* pattern) override {
 		if (!pattern)
 			pattern = "?*";
 		out.clear();
@@ -513,13 +513,13 @@ class ConcreteExecutor : public Executor {
 public:
 	ConcreteExecutor() : logger(0) {
 	}
-	~ConcreteExecutor() {
+	~ConcreteExecutor() override {
 		for (FactoryMap::iterator i = factories.begin();
 				i != factories.end(); ++i) {
 			delete i->second;
 		}
 	}
-	void execute(const char* name, ...) {
+	void execute(const char* name, ...) override {
 		CommandFactory* f = Factory(name);
 		va_list args;
 		va_start(args, name);
@@ -541,7 +541,7 @@ public:
 		}
 		va_end(args);
 	}
-	void execute(const char* name, Parameters& params) {
+	void execute(const char* name, Parameters& params) override {
 		WriterParametersWrapper pw(params, name);
 		CommandFactory* f = Factory(name);
 		Command* c = f->create(pw, *ErrorHandler::getThrower());
@@ -551,7 +551,7 @@ public:
 			logger->commit();
 		}
 	}
-	bool executeFromLog(const char* line, ErrorHandler& e) {
+	bool executeFromLog(const char* line, ErrorHandler& e) override {
 		StringReader reader;
 		reader.setBuffer(line);
 		std::string id;
@@ -584,7 +584,7 @@ public:
 		throw MalformedLineException();
 	}
 	void executeRandomCommands(int& commandCount, RandomSource& rng,
-			int minCount, int maxCount) {
+			int minCount, int maxCount) override {
 		commandCount = 0;
 		int n = factories.size();
 		if (n == 0)
@@ -615,7 +615,7 @@ public:
 			}
 		}
 	}
-	virtual void executeRandomConstructiveCommands(RandomSource& rng) {
+	virtual void executeRandomConstructiveCommands(RandomSource& rng) override {
 		int n = constructiveCommands.size();
 		if (n == 0)
 			throw UnknownCommandException();
@@ -636,11 +636,11 @@ public:
 			}
 		}
 	}
-	void setCommandLogger(CommandLogger* log) {
+	void setCommandLogger(CommandLogger* log) override {
 		logger = log;
 	}
 	void addCommand(const char* name,
-			std::unique_ptr<CommandFactory> factory, bool constructive) {
+			std::unique_ptr<CommandFactory> factory, bool constructive) override {
 		std::string n(name);
 		std::pair<std::string, CommandFactory*> p(n, factory.get());
 		if (constructive)
@@ -650,13 +650,13 @@ public:
 			constructiveCommands.push_back(n);
 		factory.release();
 	}
-	int commandCount() const {
+	int commandCount() const override {
 		return factories.size();
 	}
-	void clearHistory() {
+	void clearHistory() override {
 		history.clear();
 	}
-	bool undo() {
+	bool undo() override {
 		if (!history.canUndo())
 			return false;
 		if (logger)
@@ -666,7 +666,7 @@ public:
 			logger->commit();
 		return true;
 	}
-	bool redo() {
+	bool redo() override {
 		if (!history.canRedo())
 			return false;
 		if (logger)
@@ -676,13 +676,13 @@ public:
 			logger->commit();
 		return true;
 	}
-	bool canUndo() const {
+	bool canUndo() const override {
 		return history.canUndo();
 	}
-	bool canRedo() const {
+	bool canRedo() const override {
 		return history.canRedo();
 	}
-	void setUndoRedoObserver(UndoRedoObserver* observer) {
+	void setUndoRedoObserver(UndoRedoObserver* observer) override {
 		history.setUndoRedoObserver(observer);
 	}
 };

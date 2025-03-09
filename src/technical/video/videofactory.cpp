@@ -53,9 +53,9 @@ class FileCopier : public FileNameVisitor {
 public:
 	FileCopier(const char* dirPath) : index(0), dir(dirPath) {
 	}
-	~FileCopier() {
+	~FileCopier() override {
 	}
-	void visitImage(const char* p) {
+	void visitImage(const char* p) override {
 		std::ostringstream ss;
 		ss << dir << "/" << std::setw(6) << std::setfill('0') << index;
 		std::string path = ss.str();
@@ -65,7 +65,7 @@ public:
 		Util::linkOrCopyFile(path.c_str(), p);
 		++index;
 	}
-	void visitSound(const char*) {
+	void visitSound(const char*) override {
 	}
 };
 

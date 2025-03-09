@@ -44,30 +44,30 @@ public:
 	 * @param isProcess true if the process is running in daemon mode, false otherwise
 	 */
 	CommandLineGrabber(const char* filePath);
-	~CommandLineGrabber();
-	bool setPrePollCommand(const char *command);
-	bool setStartCommand(const char *command);
-	bool setStopCommand(const char *command);
-	bool isGrabberProcess();
+	~CommandLineGrabber() override;
+	bool setPrePollCommand(const char *command) override;
+	bool setStartCommand(const char *command) override;
+	bool setStopCommand(const char *command) override;
+	bool isGrabberProcess() override;
 	
 	/**
 	 * Starts the grabber if it is marked to be run in daemon mode.
 	 * @return true on success, false otherwise
 	 */
-	bool init();
+	bool init() override;
 	
 	/**
 	 * Grabs one picture from the device.
 	 * @return true on success, false otherwise
 	 */
-	bool grab();
+	bool grab() override;
 	
 	/**
 	 * Shut downs the grabber process either if it is run in daemon
 	 * mode or "single grab" mode.
 	 * @return true on success, false otherwise
 	 */
-	bool tearDown();
+	bool tearDown() override;
 
 private:
 	string prePoll;

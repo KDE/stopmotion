@@ -41,21 +41,21 @@ public:
 	 */
 	CommandRenameSound(AnimationImpl& model, int32_t scene, int32_t frame,
 			int32_t soundNumber, const char* newName);
-	~CommandRenameSound();
+	~CommandRenameSound() override;
 	/**
 	 * Sets the name to be set.
 	 * @param newName Ownership is not passed.
 	 */
 	void setName(const char* newName);
-	Command* execute();
+	Command* execute() override;
 };
 
 class CommandRenameSoundFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
 	CommandRenameSoundFactory(AnimationImpl& model);
-	~CommandRenameSoundFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+	~CommandRenameSoundFactory() override;
+	Command* create(Parameters& ps, ErrorHandler& e) override;
 };
 
 #endif

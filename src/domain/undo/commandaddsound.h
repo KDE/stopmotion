@@ -39,18 +39,18 @@ class CommandAddSound : public Command {
 public:
 	CommandAddSound(AnimationImpl& model, int32_t scene, int32_t frame,
 			int32_t soundNumber);
-	~CommandAddSound();
+	~CommandAddSound() override;
 	void setSound(Sound* sound);
-	Command* execute();
-	void accept(FileNameVisitor& v) const;
+	Command* execute() override;
+	void accept(FileNameVisitor& v) const override;
 };
 
 class CommandAddSoundFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
 	CommandAddSoundFactory(AnimationImpl& model);
-	~CommandAddSoundFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+	~CommandAddSoundFactory() override;
+	Command* create(Parameters& ps, ErrorHandler& e) override;
 };
 
 #endif

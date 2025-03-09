@@ -38,16 +38,16 @@ class CommandMove : public Command {
 public:
 	CommandMove(AnimationImpl& model, int fromScene, int fromFrame, int count,
 			int toScene, int toFrame);
-	~CommandMove();
-	Command* execute();
+	~CommandMove() override;
+	Command* execute() override;
 };
 
 class CommandMoveFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
 	CommandMoveFactory(AnimationImpl& model);
-	~CommandMoveFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+	~CommandMoveFactory() override;
+	Command* create(Parameters& ps, ErrorHandler& e) override;
 };
 
 #endif

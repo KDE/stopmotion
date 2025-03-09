@@ -163,7 +163,7 @@ void Command::accept(FileNameVisitor&) const {
 
 class CommandNull : public Command {
 public:
-	Command* execute() {
+	Command* execute() override {
 		// a null command is its own inverse
 		return this;
 	}

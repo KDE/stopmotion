@@ -36,11 +36,11 @@ class FileNamesFromUrlsIterator : public StringIterator {
 public:
 	FileNamesFromUrlsIterator(QList<QUrl>::Iterator begin,
 			QList<QUrl>::Iterator end);
-	~FileNamesFromUrlsIterator();
-	int count();
-	bool atEnd() const;
-	const char* get() const;
-	void next();
+	~FileNamesFromUrlsIterator() override;
+	int count() override;
+	bool atEnd() const override;
+	const char* get() const override;
+	void next() override;
 };
 
 #endif

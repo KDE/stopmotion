@@ -35,18 +35,18 @@ class EditObserver: public Observer {
 	EditObserver& operator=(const EditObserver&);
 public:
 	EditObserver(QFileSystemWatcher* watcher);
-	~EditObserver();
-	void updateAdd(int scene, int index, int numFrames);
-	void updateRemove(int scene, int fromFrame, int toFrame);
+	~EditObserver() override;
+	void updateAdd(int scene, int index, int numFrames) override;
+	void updateRemove(int scene, int fromFrame, int toFrame) override;
 	void updateMove(int fromScene, int fromFrame, int count,
-			int toScene, int toFrame);
-	void updateClear();
-	void updateNewScene(int index);
-	void updateRemoveScene(int sceneNumber);
-	void updateMoveScene(int sceneNumber, int movePosition);
-	void updateAnimationChanged(int sceneNumber, int frameNumber);
-	void updateSoundChanged(int sceneNumber, int frameNumber);
-	void resync();
+			int toScene, int toFrame) override;
+	void updateClear() override;
+	void updateNewScene(int index) override;
+	void updateRemoveScene(int sceneNumber) override;
+	void updateMoveScene(int sceneNumber, int movePosition) override;
+	void updateAnimationChanged(int sceneNumber, int frameNumber) override;
+	void updateSoundChanged(int sceneNumber, int frameNumber) override;
+	void resync() override;
 };
 
 #endif /* EDITOBSERVER_H_ */

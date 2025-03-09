@@ -36,16 +36,16 @@ class CommandRemoveSound : public Command {
 public:
 	CommandRemoveSound(AnimationImpl& model, int32_t scene, int32_t frame,
 			int32_t soundNumber);
-	~CommandRemoveSound();
-	Command* execute();
+	~CommandRemoveSound() override;
+	Command* execute() override;
 };
 
 class UndoRemoveSoundFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
 	UndoRemoveSoundFactory(AnimationImpl& model);
-	~UndoRemoveSoundFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+	~UndoRemoveSoundFactory() override;
+	Command* create(Parameters& ps, ErrorHandler& e) override;
 };
 
 #endif

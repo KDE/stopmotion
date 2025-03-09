@@ -41,16 +41,16 @@ public:
 	 */
 	CommandRemove(AnimationImpl& model,
 			int scene, int fromFrame, int frameCount);
-	~CommandRemove();
-	Command* execute();
+	~CommandRemove() override;
+	Command* execute() override;
 };
 
 class CommandRemoveFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
 	CommandRemoveFactory(AnimationImpl& model);
-	~CommandRemoveFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+	~CommandRemoveFactory() override;
+	Command* create(Parameters& ps, ErrorHandler& e) override;
 };
 
 #endif

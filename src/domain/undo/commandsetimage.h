@@ -36,16 +36,16 @@ class CommandSetImage : public Command {
 public:
 	CommandSetImage(AnimationImpl& model, int32_t scene, int32_t frame,
 			WorkspaceFile& w);
-	~CommandSetImage();
-	Command* execute();
+	~CommandSetImage() override;
+	Command* execute() override;
 };
 
 class CommandSetImageFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
 	CommandSetImageFactory(AnimationImpl& model);
-	~CommandSetImageFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+	~CommandSetImageFactory() override;
+	Command* create(Parameters& ps, ErrorHandler& e) override;
 };
 
 #endif

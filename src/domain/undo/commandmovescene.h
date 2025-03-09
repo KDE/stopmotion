@@ -34,16 +34,16 @@ class CommandMoveScene : public Command {
 	int32_t to;
 public:
 	CommandMoveScene(AnimationImpl& model, int sceneNumber, int movePosition);
-	~CommandMoveScene();
-	Command* execute();
+	~CommandMoveScene() override;
+	Command* execute() override;
 };
 
 class CommandMoveSceneFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
 	CommandMoveSceneFactory(AnimationImpl& model);
-	~CommandMoveSceneFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+	~CommandMoveSceneFactory() override;
+	Command* create(Parameters& ps, ErrorHandler& e) override;
 };
 
 #endif

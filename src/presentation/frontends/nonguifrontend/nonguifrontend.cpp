@@ -161,11 +161,11 @@ public:
 		dirLen = buffer.size();
 		next();
 	}
-	~DirIterator() {
+	~DirIterator() override {
 		if (dp)
 			closedir(dp);
 	}
-	int count() {
+	int count() override {
 		int c = 0;
 		if (dp) {
 			while (atEnd()) {
@@ -177,13 +177,13 @@ public:
 		}
 		return c;
 	}
-	bool atEnd() const {
+	bool atEnd() const override {
 		return !dp || !ep;
 	}
-	const char* get() const {
+	const char* get() const override {
 		return &buffer[0];
 	}
-	void next() {
+	void next() override {
 		if (dp) {
 			ep = readdir(dp);
 			while (ep && ep->d_type != DT_REG)

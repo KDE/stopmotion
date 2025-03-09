@@ -33,16 +33,16 @@ class UndoRemoveScene : public Command {
 	int32_t sc;
 public:
 	UndoRemoveScene(AnimationImpl& model, int32_t sceneNumber);
-	~UndoRemoveScene();
-	Command* execute();
+	~UndoRemoveScene() override;
+	Command* execute() override;
 };
 
 class UndoRemoveSceneFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
 	UndoRemoveSceneFactory(AnimationImpl& model);
-	~UndoRemoveSceneFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+	~UndoRemoveSceneFactory() override;
+	Command* create(Parameters& ps, ErrorHandler& e) override;
 };
 
 #endif

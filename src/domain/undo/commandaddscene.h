@@ -37,9 +37,9 @@ public:
 	 * @param scene Ownership is passed.
 	 */
 	CommandAddScene(AnimationImpl& model, int32_t sceneNumber);
-	~CommandAddScene();
+	~CommandAddScene() override;
 	void setScene(Scene* s);
-	Command* execute();
+	Command* execute() override;
 };
 
 /**
@@ -49,8 +49,8 @@ class CommandAddSceneFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
 	CommandAddSceneFactory(AnimationImpl& model);
-	~CommandAddSceneFactory();
-	Command* create(Parameters& ps, ErrorHandler& e);
+	~CommandAddSceneFactory() override;
+	Command* create(Parameters& ps, ErrorHandler& e) override;
 };
 
 #endif
