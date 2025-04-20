@@ -29,6 +29,7 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QLatin1String>
+#include <QString>
 
 
 LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const char *name) 
@@ -40,21 +41,21 @@ LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const cha
 	// Get system locale.
 	QString locale = QLocale::system().name().toLower();
 	if (locale == QLatin1String("nb_no"))
-	    locale = u"no_nb"_qs;
+	    locale = QStringLiteral(u"no_nb");
 	else if (locale == QLatin1String("nn_no"))
-	    locale = u"no_nn"_qs;
+	    locale = QStringLiteral(u"no_nn");
 	else if (locale == QLatin1String("se_no"))
-	    locale = u"no_se"_qs;
+	    locale = QStringLiteral(u"no_se");
 	else
 	    locale.truncate(2);
 
 	// Put together a translation file based on the qmPath or keep
 	// it empty if the locale is english.
 	const bool englishLocale = (locale == QLatin1String("en"));
-	const QString prefix = qmPath + u'/' + u"stopmotion_"_qs;
+	const QString prefix = qmPath + u'/' + QStringLiteral(u"stopmotion_");
 	QString translationFile = englishLocale ? QString() : prefix + locale;
 
-	if (!englishLocale && !QFile::exists(translationFile + u".qm"_qs)) {
+	if (!englishLocale && !QFile::exists(translationFile + QStringLiteral(u".qm"))) {
 		// Was not able to find a translation file for the locale, so use the
 		// language saved in the preferences file, or use English as fall-back.
 		const QByteArray localeArray = locale.toLatin1();
@@ -62,7 +63,7 @@ LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const cha
 		Preference languagePref("language", localePtr);
 		if (languagePref.get()) {
 			translationFile = prefix + QLatin1String(languagePref.get());
-			if (!QFile::exists(translationFile + u".qm"_qs))
+			if (!QFile::exists(translationFile + QStringLiteral(u".qm")))
 				translationFile = QString();
 	    } else {
 	    	translationFile = QString();
