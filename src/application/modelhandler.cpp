@@ -218,8 +218,7 @@ int ModelHandler::editCurrentFrame() {
 	std::string gimpCommand;
 	if (!Util::checkCommand(&gimpCommand, "gimp")) {
 		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
-			tr("You do not have Gimp installed on your system"),
-			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
+			tr("You do not have Gimp installed on your system"));
 		return 1;
 	}
 
@@ -229,8 +228,7 @@ int ModelHandler::editCurrentFrame() {
 
 	if (activeScene < 0 || activeFrame < 0) {
 		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
-			tr("There is no active frame to open"),
-			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
+			tr("There is no active frame to open"));
 		return 1;
 	}
 	DomainFacade* facade = DomainFacade::getFacade();
@@ -246,8 +244,7 @@ int ModelHandler::editCurrentFrame() {
 	QProcess process;
 	if (!process.startDetached(QLatin1String(gimpCommand.c_str()), argList)) {
 		QMessageBox::warning(static_cast<MainWindowGUI *>(parent()), tr("Warning"),
-			tr("Failed to start Gimp!"),
-			QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
+			tr("Failed to start Gimp!"));
 		return 1;
 	}
 
