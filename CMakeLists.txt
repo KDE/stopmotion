@@ -8,7 +8,7 @@ project(stopmotion
 set(PROJECT_VERSION 0.9.0-git)
 
 # set project options required by Qt
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_AUTOMOC ON)
