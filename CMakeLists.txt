@@ -22,7 +22,7 @@ option(BUILD_TESTING "Build the tests" OFF)
 ###
 
 # Qt
-find_package(Qt6 6.3
+find_package(Qt6 6.5
   COMPONENTS Widgets Multimedia LinguistTools
   REQUIRED)
 
@@ -44,7 +44,7 @@ find_library(VORBISFILE_LIBRARY_PATH
 
 if(BUILD_TESTING)
   enable_testing()
-  find_package(Qt6 6.3 REQUIRED
+  find_package(Qt6 6.5 REQUIRED
     COMPONENTS Test
   )
   # libdl, only needed for testing
