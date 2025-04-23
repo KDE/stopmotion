@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Lokalize 23.08.5\n"
 "X-Qt-Contexts: true\n"
 
@@ -50,17 +50,17 @@ msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "نجح!"
 
-#: src/application/languagehandler.cpp:89
+#: src/application/languagehandler.cpp:90
 msgctxt "LanguageHandler|"
 msgid "English"
 msgstr "الإنجليزية"
 
-#: src/application/languagehandler.cpp:91
+#: src/application/languagehandler.cpp:92
 msgctxt "LanguageHandler|"
 msgid "&Translation"
 msgstr "ال&ترجمة"
 
-#: src/application/languagehandler.cpp:107
+#: src/application/languagehandler.cpp:108
 msgctxt ""
 "LanguageHandler|This should be translated to the name of the language you "
 "are translating to, in that language. Example: English = Deutsch (Deutsch is "
@@ -78,8 +78,8 @@ msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
 msgstr ""
 
-#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:231
-#: src/application/modelhandler.cpp:248
+#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
+#: src/application/modelhandler.cpp:246
 msgctxt "ModelHandler|"
 msgid "Warning"
 msgstr "تحذير"
@@ -89,12 +89,12 @@ msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
 msgstr ""
 
-#: src/application/modelhandler.cpp:232
+#: src/application/modelhandler.cpp:231
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
 msgstr ""
 
-#: src/application/modelhandler.cpp:249
+#: src/application/modelhandler.cpp:247
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr ""

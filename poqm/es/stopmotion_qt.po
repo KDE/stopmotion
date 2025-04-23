@@ -49,17 +49,17 @@ msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "Éxito"
 
-#: src/application/languagehandler.cpp:89
+#: src/application/languagehandler.cpp:90
 msgctxt "LanguageHandler|"
 msgid "English"
 msgstr "Inglés"
 
-#: src/application/languagehandler.cpp:91
+#: src/application/languagehandler.cpp:92
 msgctxt "LanguageHandler|"
 msgid "&Translation"
 msgstr "&Traducción"
 
-#: src/application/languagehandler.cpp:107
+#: src/application/languagehandler.cpp:108
 msgctxt ""
 "LanguageHandler|This should be translated to the name of the language you "
 "are translating to, in that language. Example: English = Deutsch (Deutsch is "
@@ -77,8 +77,8 @@ msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
 msgstr "Se ha eliminado el fotograma seleccionado"
 
-#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:231
-#: src/application/modelhandler.cpp:248
+#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
+#: src/application/modelhandler.cpp:246
 msgctxt "ModelHandler|"
 msgid "Warning"
 msgstr "Advertencia"
@@ -88,12 +88,12 @@ msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
 msgstr "No tiene Gimp instalado en el sistema"
 
-#: src/application/modelhandler.cpp:232
+#: src/application/modelhandler.cpp:231
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
 msgstr "No existe un fotograma activo a abrir"
 
-#: src/application/modelhandler.cpp:249
+#: src/application/modelhandler.cpp:247
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr "No se ha podido iniciar Gimp."
