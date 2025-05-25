@@ -78,7 +78,7 @@ msgstr "Català"
 #: src/application/modelhandler.cpp:62
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
-msgstr "Escolliu els fotogrames que s'afegiran"
+msgstr "Trieu els fotogrames que s'afegiran"
 
 #: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
@@ -114,7 +114,7 @@ msgstr "Animació en execució"
 #: src/application/soundhandler.cpp:44
 msgctxt "SoundHandler|"
 msgid "Choose sound file"
-msgstr "Escolliu un fitxer de so"
+msgstr "Trieu un fitxer de so"
 
 #: src/application/soundhandler.cpp:44
 msgctxt "SoundHandler|"
@@ -269,7 +269,7 @@ msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
 "displaying video."
 msgstr ""
-"A davall podeu definir el dispositiu que utilitzarà Stopmotion per a "
+"A davall podeu establir el dispositiu que utilitzarà Stopmotion per a "
 "capturar imatges i visualitzar vídeo."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:71
@@ -419,7 +419,7 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
 "the currently active project to a video file."
 msgstr ""
-"A davall podeu definir el programa/procés que utilitzarà Stopmotion per a "
+"A davall podeu establir el programa/procés que utilitzarà Stopmotion per a "
 "codificar el projecte actualment actiu a un fitxer de vídeo."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:374
@@ -576,7 +576,7 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
 "images from the selected device."
 msgstr ""
-"A davall podeu definir el programa/procés que utilitzarà Stopmotion per a "
+"A davall podeu establir el programa/procés que utilitzarà Stopmotion per a "
 "capturar imatges del dispositiu seleccionat."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:65
@@ -1465,7 +1465,7 @@ msgid ""
 "<h4>Add Frames (CTRL+F)</h4> <p>Click on this button to <em>add</em> frames "
 "to the animation.</p>"
 msgstr ""
-"<h4>Afig fotogrames («Ctrl+F»)</h4> <p>Cliqueu en este botó per a "
+"<h4>Afig fotogrames («Ctrl+F»)</h4> <p>Cliqueu damunt d'este botó per a "
 "<em>afegir</em> fotogrames a l'animació.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:232
@@ -1474,8 +1474,8 @@ msgid ""
 "<h4>Remove Selection (Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected frames from the animation.</p>"
 msgstr ""
-"<h4>Elimina la selecció (Suprimix)</h4> <p>Cliqueu este botó per a "
-"<em>eliminar</em> els fotogrames seleccionats de l'animació.</p>"
+"<h4>Elimina la selecció («Suprimix»)</h4> <p>Cliqueu damunt d'este botó per "
+"a <em>eliminar</em> els fotogrames seleccionats de l'animació.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:239
 msgctxt "ToolsMenu|"
@@ -1483,8 +1483,8 @@ msgid ""
 "<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
 "<em>scene</em> to the animation.</p>"
 msgstr ""
-"<h4>Escena nova («Ctrl+E»)</h4> <p>Cliqueu este botó per a <em>crear</em> "
-"una <em>escena</em> nova a l'animació.</p>"
+"<h4>Escena nova («Ctrl+E»)</h4> <p>Cliqueu damunt d'este botó per a "
+"<em>crear</em> una <em>escena</em> nova a l'animació.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
 msgctxt "ToolsMenu|"
@@ -1492,8 +1492,8 @@ msgid ""
 "<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected scene from the animation.</p>"
 msgstr ""
-"<h4>Elimina una escena (Maj+Supr)</h4> <p>Cliqueu este botó per a "
-"<em>eliminar</em> l'escena seleccionada de l'animació.</p>"
+"<h4>Elimina una escena («Majús+Supr»)</h4> <p>Cliqueu damunt d'este botó per "
+"a <em>eliminar</em> l'escena seleccionada de l'animació.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:253
 msgctxt "ToolsMenu|"
@@ -1501,8 +1501,8 @@ msgid ""
 "<h4>Toggle camera on/off (C)</h4> <p>Click this button to toggle the camera "
 "on and off</p> "
 msgstr ""
-"<h4>Canvia la càmera encesa/apagada (C)</h4> <p>Cliqueu este botó per a "
-"canviar la càmera encesa o apagada</p> "
+"<h4>Canvia la càmera encesa/apagada (C)</h4> <p>Cliqueu damunt d'este botó "
+"per a canviar la càmera encesa o apagada</p> "
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:259
 msgctxt "ToolsMenu|"
@@ -1511,9 +1511,9 @@ msgid ""
 "p> <p>Note that you can also drag images from the frame bar and drop them on "
 "Gimp</p>"
 msgstr ""
-"<h4>Inicia Gimp</h4> <p>Cliqueu este botó per a obrir el fotograma actiu en "
-"Gimp</p> <p>Recordeu que també es poden arrossegar imatges des de la barra "
-"de fotogrames i deixar-los anar en Gimp</p>"
+"<h4>Inicia Gimp</h4> <p>Cliqueu damunt d'este botó per a obrir el fotograma "
+"actiu en Gimp</p> <p>Recordeu que també es poden arrossegar imatges des de "
+"la barra de fotogrames i deixar-los anar en Gimp</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:266
 msgctxt "ToolsMenu|"
@@ -1522,7 +1522,7 @@ msgid ""
 "frame from the camera an put it in the animation</p> <p> This can also be "
 "done by pressing the <b>Space key</b></p>"
 msgstr ""
-"<h4>Captura un fotograma («Espai»)</h4> <p>Cliqueu en este botó per a "
+"<h4>Captura un fotograma («Espai»)</h4> <p>Cliqueu damunt d'este botó per a "
 "<em>capturar</em> un fotograma de la càmera i posar-lo en l'animació</p> <p> "
 "Açò també es pot fer prement la <b>Barra espaiadora</b></p>"
 
