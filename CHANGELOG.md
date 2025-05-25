@@ -1,3 +1,10 @@
+0.9.0 (2025-05-25)
+==================
+
+Changes
+* Port to Qt 6 (!25, thanks to Florian Satzger and Mark Penner)
+
+
 0.8.7 (2024-06-09)
 ==================
 

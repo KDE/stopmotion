@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.22)
 
 project(stopmotion
   LANGUAGES CXX)
-set(PROJECT_VERSION 0.9.0-git)
+set(PROJECT_VERSION 0.9.0)
 
 # set project options required by Qt
 set(CMAKE_CXX_STANDARD 20)
