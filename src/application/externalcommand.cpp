@@ -78,13 +78,9 @@ ExternalCommand::ExternalCommand(QWidget *parent)
 
 void ExternalCommand::run(const QString &command)
 {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     QStringList arguments = QProcess::splitCommand(command);
     const QString executalbe = arguments.takeFirst();
     process->start(executalbe, arguments);
-#else
-	process->start(command);
-#endif
 }
 
 

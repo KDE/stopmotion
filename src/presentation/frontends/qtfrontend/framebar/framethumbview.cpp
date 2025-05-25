@@ -156,12 +156,7 @@ void FrameThumbView::startDrag() {
 
 	mimeData->setUrls(urls);
 	drag->setMimeData(mimeData);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
 	drag->setPixmap(pixmap(Qt::ReturnByValue));
-#else
-	drag->setPixmap(*pixmap());
-#endif
-
 	drag->exec(Qt::MoveAction);
 }
 
