@@ -33,18 +33,18 @@ msgctxt "ExternalCommand|"
 msgid "Output from external command"
 msgstr "Output from external command"
 
-#: src/application/externalcommand.cpp:123
-#: src/application/externalcommand.cpp:126
+#: src/application/externalcommand.cpp:119
+#: src/application/externalcommand.cpp:122
 msgctxt "ExternalCommand|"
 msgid "Result"
 msgstr "Result"
 
-#: src/application/externalcommand.cpp:123
+#: src/application/externalcommand.cpp:119
 msgctxt "ExternalCommand|"
 msgid "Failed!"
 msgstr "Failed!"
 
-#: src/application/externalcommand.cpp:126
+#: src/application/externalcommand.cpp:122
 msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "Successful!"

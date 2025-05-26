@@ -39,18 +39,18 @@ msgctxt "ExternalCommand|"
 msgid "Output from external command"
 msgstr "Kanpoko komandoaren irteerakoa"
 
-#: src/application/externalcommand.cpp:123
-#: src/application/externalcommand.cpp:126
+#: src/application/externalcommand.cpp:119
+#: src/application/externalcommand.cpp:122
 msgctxt "ExternalCommand|"
 msgid "Result"
 msgstr "Emaitza"
 
-#: src/application/externalcommand.cpp:123
+#: src/application/externalcommand.cpp:119
 msgctxt "ExternalCommand|"
 msgid "Failed!"
 msgstr "Huts egin du!"
 
-#: src/application/externalcommand.cpp:126
+#: src/application/externalcommand.cpp:122
 msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "Arrakastatsua!"
