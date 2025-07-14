@@ -379,7 +379,7 @@ msgstr "არა"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:395
 msgctxt "ExportTab|"
 msgid "Set default output file:"
-msgstr "ნაგულისხმები გამოსატანი ფაილის დაყენება:"
+msgstr "ნაგულისხმევი გამოსატანი ფაილის დაყენება:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:126
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:396
