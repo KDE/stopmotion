@@ -1,5 +1,6 @@
 [Desktop Entry]
 Name=Stopmotion
+Name[ar]=مُحَرِّك الصور
 Name[ca]=Stopmotion
 Name[ca@valencia]=Stopmotion
 Name[cs]=Stopmotion
@@ -29,6 +30,7 @@ Name[uk]=Stopmotion
 Name[x-test]=xxStopmotionxx
 Icon=stopmotion
 Comment=Program to create stop-motion animations
+Comment[ar]=برنامج لإنشاء رسوم متحركة بتقنية إيقاف الحركة
 Comment[ca]=Programa per a crear animacions stop-motion
 Comment[ca@valencia]=Programa per a crear animacions stop-motion
 Comment[de]=Programm um Animationen mit der Filmtechnik Stop-Motion zu erstellen
@@ -59,6 +61,7 @@ Terminal=false
 Type=Application
 Categories=AudioVideo;Video;AudioVideoEditing;KDE;Qt;
 Keywords=Animation;Stop Motion Animation;Stop Frame Animation;
+Keywords[ar]=رسوم متحركة;رسوم متحركة متوقفة;رسوم متحركة متوقفة الإطار;
 Keywords[ca]=Animació;Animació stop-motion;Animació Stop Frame;
 Keywords[ca@valencia]=Animació;Animació stop-motion;Animació Stop Frame;
 Keywords[de]=Animation;Stop Motion Animation;Stop Frame Animation;Stop-Motion;Trickfilm;Stopptrick;
