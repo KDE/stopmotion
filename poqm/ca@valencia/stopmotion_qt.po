@@ -78,7 +78,7 @@ msgstr "Català"
 #: src/application/modelhandler.cpp:62
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
-msgstr "Trieu els fotogrames que s'afegiran"
+msgstr "Trieu els fotogrames a afegir"
 
 #: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
@@ -411,7 +411,7 @@ msgstr "Parada del codificador:"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:362
 msgctxt "ExportTab|"
 msgid "Choose output file"
-msgstr "Seleccioneu un fitxer d'eixida"
+msgstr "Trieu un fitxer d'eixida"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:372
 msgctxt "ExportTab|"
@@ -1076,7 +1076,7 @@ msgstr "Hi ha canvis sense guardar. Els voleu guardar?"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:808
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
-msgstr "Seleccioneu un fitxer de projecte"
+msgstr "Trieu un fitxer de projecte"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:876
 msgctxt "MainWindowGUI|"
