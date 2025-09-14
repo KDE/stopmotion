@@ -78,7 +78,7 @@ msgstr "Català"
 #: src/application/modelhandler.cpp:62
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
-msgstr "Trieu els fotogrames a afegir"
+msgstr "Trieu els fotogrames que s'afegiran"
 
 #: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
@@ -823,7 +823,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
-msgstr "Guarda el projecte com a"
+msgstr "Anomeneu i guardeu el projecte"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:607
 msgctxt "MainWindowGUI|"
