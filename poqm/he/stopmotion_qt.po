@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
+# SPDX-FileCopyrightText: 2024, 2025 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2024-12-25 09:41+0200\n"
+"PO-Revision-Date: 2025-10-05 12:21+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -12,7 +12,7 @@ msgstr ""
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 24.12.0\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #: src/application/externalcommand.cpp:46
 msgctxt "ExternalCommand|"
@@ -1496,7 +1496,7 @@ msgid ""
 "see how the next shot will be in relation to the other, thereby making a "
 "smoother stop motion animation!</p>"
 msgstr ""
-"<h4>מספר תמונות</h4> <p>על ידי החלפת הערך בסרגל הצד הזה ניתן לציין  כמה "
+"<h4>מספר תמונות</h4> <p>על ידי החלפת הערך בסרגל הצד הזה ניתן לציין כמה "
 "תמונות אחורה בהנפשה תעורבבנה על גבי המצלמה או אם כבר עברת למצב נגינה: כמה "
 "תמונות להריץ. </p> <p>על ידי ערבוב התמונות הקודמות לתוך המצלמה אפשר לראות "
 "יותר בקלות איך תיראה התמונה הבאה ביחס לאחרות, ובכך צילום הסטופמושן הוא חלק "
@@ -1549,7 +1549,7 @@ msgid ""
 "<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether you "
 "want the animation to play to the end, or to loop indefinitely.</p>"
 msgstr ""
-"<h4>הנפשה בלולאה (CTRL+ך)</h4> <p>עם הכפתור הזה אפשר להגדיר האם לנגן  את "
+"<h4>הנפשה בלולאה (CTRL+ך)</h4> <p>עם הכפתור הזה אפשר להגדיר האם לנגן את "
 "ההנפשה עד הסוף, או לחזור עליה שוב ושוב בלולאה לעד.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
