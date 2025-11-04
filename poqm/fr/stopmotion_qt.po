@@ -977,7 +977,7 @@ msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
 "manual</p>"
 msgstr ""
-"<h4>Aide</h4> <p>Ce bouton fera apparaître une boîte de dialogue avec le "
+"<h4>Aide</h4> <p>Ce bouton fera apparaitre une boite de dialogue avec le "
 "manuel de Stopmotion.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:710
@@ -992,7 +992,7 @@ msgid ""
 "read general information as well as the names of the developers behind this "
 "excellent piece of software.</p>"
 msgstr ""
-"<h4>A propos</h4> <p>Ceci affichera une petite boîte d'informations dans "
+"<h4>A propos</h4> <p>Ceci affichera une petite boite d'informations dans "
 "laquelle vous pourrez lire des informations générales, mais aussi, les noms "
 "de développeurs, auteurs de cet excellent logiciel.</p>"
 
