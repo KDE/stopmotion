@@ -1,8 +1,13 @@
-# Eloy Cuadra <ecuadra@eloihr.net>, 2021.
+# Spanish translations for stopmotion_qt.po package.
+# Copyright (C) 2021-2025 This file is copyright:
+# This file is distributed under the same license as the stopmotion package.
+#
+# SPDX-FileCopyrightText: 2021, 2025 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: stopmotion_qt\n"
-"PO-Revision-Date: 2021-04-29 19:13+0200\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"PO-Revision-Date: 2025-12-08 12:01+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -1155,12 +1160,12 @@ msgstr "&Dispositivo de vídeo"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:86
 msgctxt "QtFrontend|"
 msgid "Please wait..."
-msgstr "Por favor, espere..."
+msgstr "Por favor, espere…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:89
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
-msgstr "Conectando la cámara..."
+msgstr "Conectando la cámara…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
 msgctxt "QtFrontend|"
@@ -1170,17 +1175,17 @@ msgstr "Importando fotogramas del disco"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:95
 msgctxt "QtFrontend|"
 msgid "Exporting..."
-msgstr "Exportando..."
+msgstr "Exportando…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:98
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
-msgstr "Restaurando el proyecto..."
+msgstr "Restaurando el proyecto…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:101
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
-msgstr "Guardando escenas en el disco..."
+msgstr "Guardando escenas en el disco…"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:105
 msgctxt "QtFrontend|"
@@ -1603,19 +1608,3 @@ msgstr ""
 "La reproducción solo funciona en la actualidad cuando ejecuta la capturadora "
 "como demonio. Vaya al menú de preferencias (Ctrl+P) para cambiar la "
 "ejecución de la capturadora de imágenes como demonio."
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "Do&n't save"
-#~ msgstr "&No guardar"
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "Abort"
-#~ msgstr "Interrumpir"
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "&Yes"
-#~ msgstr "&Sí"
-
-#~ msgctxt "MainWindowGUI|"
-#~ msgid "&No"
-#~ msgstr "&No"
