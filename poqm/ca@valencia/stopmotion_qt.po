@@ -104,7 +104,7 @@ msgstr "No hi ha cap fotograma actiu per a obrir"
 #: src/application/modelhandler.cpp:247
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
-msgstr "No s'ha pogut iniciar Gimp!"
+msgstr "Ha fallat mentre s'iniciava Gimp!"
 
 #: src/application/runanimationhandler.cpp:93
 msgctxt "RunAnimationHandler|"
@@ -1316,13 +1316,13 @@ msgstr "No s'ha pogut copiar el fitxer a l'espai de treball"
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr ""
-"No s'han pogut copiar els fitxers següents a l'espai de treball (~/."
+"Ha fallat mentre es copiaven els fitxers següents a l'espai de treball (~/."
 "stopmotion): %1"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:376
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
-msgstr "No s'ha pogut restablir el controlador d'àudio"
+msgstr "Ha fallat mentre es restablia el controlador d'àudio"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:377
 msgctxt "QtFrontend|"
@@ -1332,7 +1332,7 @@ msgstr "El so no funcionarà fins que açò es corregisca"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:381
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
-msgstr "No s'han pogut escriure les preferències"
+msgstr "Ha fallat mentre s'escrivien les preferències"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:382
 #, qt-format
@@ -1351,7 +1351,7 @@ msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
 "running."
 msgstr ""
-"No s'ha pogut fer un bloqueig exclusiu sobre «command.log». Potser "
+"Ha fallat mentre es feia un bloqueig exclusiu sobre «command.log». Potser "
 "Stopmotion ja s'està executant."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:396
