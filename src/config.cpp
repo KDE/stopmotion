@@ -1,7 +1,7 @@
 #include "src/config.h"
 
 #ifndef HTML_PATH
-#define HTML_PATH "/usr/local/share/doc/stopmotion/html"
+#define HTML_PATH "/usr/local/share/doc/stopmotion/manual"
 #endif
 
 #ifndef TRANSLATIONS_PATH

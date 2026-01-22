@@ -31,5 +31,5 @@ HelpWindow::HelpWindow(QWidget *parent)
 {
 	ui.setupUi(this);
 	QObject::connect(ui.textBrowser, &QTextBrowser::highlighted, ui.lineEdit, [&](const QUrl &url) { ui.lineEdit->setText(url.path()); });
-	ui.textBrowser->setSource(QUrl( QString(stopmotion::htmlDirectory) + "/index.html" ));
+	ui.textBrowser->setSource(QUrl::fromLocalFile( QString(stopmotion::htmlDirectory) + "/index.html" ));
 }
