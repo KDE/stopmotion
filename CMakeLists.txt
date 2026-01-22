@@ -197,14 +197,10 @@ install(TARGETS stopmotion
   DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
 install(FILES stopmotion.desktop
   DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/applications)
-install(FILES
-  graphics/stopmotion.png
-  graphics/stopmotion.svg
-  graphics/stopmotion.xpm
-  graphics/stopmotion_logo.xpm
-  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/pixmaps)
-install(DIRECTORY graphics/icons
-  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR})
+install(FILES graphics/stopmotion.png
+  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/32x32/apps)
+install(FILES graphics/stopmotion.svg
+  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/scalable/apps)
 install(FILES ${QM_FILES}
   DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/stopmotion/translations)
 install(FILES stopmotion.1
