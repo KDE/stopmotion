@@ -1,8 +1,8 @@
-# Tommi Nieminen <translator@legisign.org>, 2023.
+# SPDX-FileCopyrightText: 2023, 2026 Tommi Nieminen <translator@legisign.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2023-05-08 14:44+0300\n"
+"PO-Revision-Date: 2026-02-04 14:10+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -10,6 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 25.04.0\n"
 "X-Qt-Contexts: true\n"
 
 #: src/application/externalcommand.cpp:46
@@ -20,7 +21,7 @@ msgstr "Syöte ohjelmaan:"
 #: src/application/externalcommand.cpp:56
 msgctxt "ExternalCommand|"
 msgid "Submit"
-msgstr ""
+msgstr "Lähetä"
 
 #: src/application/externalcommand.cpp:62
 msgctxt "ExternalCommand|"
@@ -69,12 +70,12 @@ msgstr "Englanti"
 #: src/application/modelhandler.cpp:62
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
-msgstr ""
+msgstr "Valitse lisättävät kuvat"
 
 #: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
-msgstr ""
+msgstr "Poista valittu kuva"
 
 #: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
 #: src/application/modelhandler.cpp:246
@@ -85,22 +86,22 @@ msgstr "Varoitus"
 #: src/application/modelhandler.cpp:221
 msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
-msgstr ""
+msgstr "Gimpiä ei ole asennettu järjestelmään"
 
 #: src/application/modelhandler.cpp:231
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
-msgstr ""
+msgstr "Avattavaa aktiivista kuvaa ei ole"
 
 #: src/application/modelhandler.cpp:247
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
-msgstr ""
+msgstr "Gimpin käynnistys epäonnistui!"
 
 #: src/application/runanimationhandler.cpp:93
 msgctxt "RunAnimationHandler|"
 msgid "Running animation"
-msgstr ""
+msgstr "Käynnissä oleva animointi"
 
 #: src/application/soundhandler.cpp:44
 msgctxt "SoundHandler|"
@@ -110,22 +111,22 @@ msgstr "Valitse äänitiedosto"
 #: src/application/soundhandler.cpp:44
 msgctxt "SoundHandler|"
 msgid "Sounds (*.ogg)"
-msgstr ""
+msgstr "Äänet (*.ogg)"
 
 #: src/application/soundhandler.cpp:70
 msgctxt "SoundHandler|"
 msgid "Sound name"
-msgstr ""
+msgstr "Äänen nimi"
 
 #: src/application/soundhandler.cpp:71
 msgctxt "SoundHandler|"
 msgid "Enter the name of the sound:"
-msgstr ""
+msgstr "Anna äänen nimi:"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:42
 msgctxt "AboutDialog|"
 msgid "This is the Stopmotion application for creating stop motion animations."
-msgstr ""
+msgstr "Tämä on Stopmotion-sovellus stop motion -animointien tekoon."
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:47
 msgctxt "AboutDialog|"
@@ -135,7 +136,7 @@ msgstr "&Tietoa"
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:50
 msgctxt "AboutDialog|"
 msgid "Main developers"
-msgstr ""
+msgstr "Pääkehittäjät"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:54
 msgctxt "AboutDialog|"
@@ -226,22 +227,22 @@ msgstr "Logo"
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:89
 msgctxt "AboutDialog|"
 msgid "Coordinating"
-msgstr ""
+msgstr "Koordinointi"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:93
 msgctxt "AboutDialog|"
 msgid "Testing"
-msgstr ""
+msgstr "Testaus"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:105
 msgctxt "AboutDialog|"
 msgid "&Thanks To"
-msgstr ""
+msgstr "&Kiitokset"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:110
 msgctxt "AboutDialog|"
 msgid "&Licence Agreement"
-msgstr ""
+msgstr "&Käyttöoikeussopimus"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:112
 msgctxt "AboutDialog|"
@@ -260,6 +261,8 @@ msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
 "displaying video."
 msgstr ""
+"Alla voi asettaa, mitä laitteita Stopmotionin tulisi käyttää kuvien "
+"kaappauksen ja videon näyttämiseen."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:71
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:358
@@ -269,13 +272,16 @@ msgid ""
 "It is not recommended to use devices which is not auto-detected, but feel "
 "free to do it if you are an advanced user."
 msgstr ""
+"Voit valita automaattisesti tunnistetun laitteen alta tai lisätä laitteita "
+"itse. Muiden kuin automaattisesti tunnistettujen laitteiden lisäämistä ei "
+"suositella, mutta kokenut käyttäjä voi vapaasti tehdä niin."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:74
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:361
 msgctxt "DeviceTab|"
 msgid ""
 "The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
-msgstr ""
+msgstr "Valittu laite tunnistetaan videotuonnissa <b>$VIDEODEVICE</b>ksi."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:80
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:365
@@ -382,18 +388,18 @@ msgstr "Selaa"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:397
 msgctxt "ExportTab|"
 msgid "Start encoder:"
-msgstr ""
+msgstr "Käynnistä koodain:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:136
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:398
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
-msgstr ""
+msgstr "Pysäytä koodain:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:362
 msgctxt "ExportTab|"
 msgid "Choose output file"
-msgstr ""
+msgstr "Valitse tulostiedosto"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:372
 msgctxt "ExportTab|"
@@ -401,6 +407,8 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
 "the currently active project to a video file."
 msgstr ""
+"Alla voi asettaa, mitä ohjelmaa tai prosessia Stopmotionin tulisi käyttää "
+"koodaamaan aktiivinen projekti videotiedostoksi."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:374
 msgctxt "ExportTab|"
@@ -408,6 +416,8 @@ msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
 "the image path and the video file, respectively."
 msgstr ""
+"Kuvan sijainti ja videotiedosto tulisi aina osoittaa muuttujilla <b>"
+"$IMAGEPATH</b> ja <b>$VIDEOFILE</b>."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:376
 msgctxt "ExportTab|"
@@ -415,16 +425,17 @@ msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
 "in the project."
 msgstr ""
+"<b>$FRAMERATE</b>llä voi osoittaa projektissa käytettävän kuvanopeuden."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:378
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
-msgstr ""
+msgstr "mencoder-esimerkki (JPEG-kuvat MPEG4-videoksi):"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:383
 msgctxt "ExportTab|"
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:383
 msgctxt "ExportTab|"
@@ -434,22 +445,22 @@ msgstr "Kuvaus"
 #: src/presentation/frontends/qtfrontend/framebar/framebar.cpp:196
 msgctxt "FrameBar|"
 msgid "Frame number: "
-msgstr ""
+msgstr "Kuvan numero: "
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:114
 msgctxt "FramePreferencesMenu|"
 msgid "Add &sound"
-msgstr ""
+msgstr "&Lisää ääni"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:115
 msgctxt "FramePreferencesMenu|"
 msgid "&Remove Sound"
-msgstr ""
+msgstr "P&oista ääni"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:116
 msgctxt "FramePreferencesMenu|"
 msgid "Change name"
-msgstr ""
+msgstr "Muuta nimeä"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:117
 msgctxt "FramePreferencesMenu|"
@@ -510,7 +521,7 @@ msgstr "Varoitus"
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
-msgstr ""
+msgstr "Videolaitetta ei ole valittu asetusvalikosta."
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:287
 msgctxt "FrameView|"
@@ -520,7 +531,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/frameview.cpp:298
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
-msgstr ""
+msgstr "Asetettua kaappausohjelmaa ei ole asennettu järjestelmään"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:321
 #: src/presentation/frontends/qtfrontend/frameview.cpp:337
@@ -530,6 +541,9 @@ msgid ""
 "to grab from an invalid device. Please check\n"
 "your grabber settings in the preferences menu."
 msgstr ""
+"Kaappaus epäonnistui. Näin voi käydä, jos\n"
+"yrittää kaapata väärältä laitteelta. Tarkista\n"
+"kaappausasetukset asetusvalikosta."
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
@@ -537,6 +551,8 @@ msgid ""
 "You have to define an image grabber to use.\n"
 "This can be set in the preferences menu."
 msgstr ""
+"Kuvakaappausohjelma on asetettava.\n"
+"Tämän voi tehdä asetusvalikosta."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:63
 #: src/presentation/frontends/qtfrontend/importtab.cpp:317
@@ -545,6 +561,8 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
 "images from the selected device."
 msgstr ""
+"Alla voi asettaa, mitä ohjelmaa tai prosessia Stopmotionin tulisi käyttää "
+"kaappaamaan kuvia valitulta laitteelta."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:65
 #: src/presentation/frontends/qtfrontend/importtab.cpp:319
@@ -553,12 +571,14 @@ msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 "the video device and the image file, respectively."
 msgstr ""
+"Kuvan sijainti ja videotiedosto tulisi aina osoittaa muuttujilla <b>"
+"$IMAGEPATH</b> ja <b>$VIDEOFILE</b>."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:71
 #: src/presentation/frontends/qtfrontend/importtab.cpp:323
 msgctxt "ImportTab|"
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:71
 #: src/presentation/frontends/qtfrontend/importtab.cpp:323
@@ -570,13 +590,13 @@ msgstr "Kuvaus"
 #: src/presentation/frontends/qtfrontend/importtab.cpp:326
 msgctxt "ImportTab|"
 msgid "&Add"
-msgstr ""
+msgstr "L&isää"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:91
 #: src/presentation/frontends/qtfrontend/importtab.cpp:327
 msgctxt "ImportTab|"
 msgid "&Remove"
-msgstr ""
+msgstr "P&oista"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:94
 #: src/presentation/frontends/qtfrontend/importtab.cpp:328
@@ -588,7 +608,7 @@ msgstr "&Muokkaa"
 #: src/presentation/frontends/qtfrontend/importtab.cpp:330
 msgctxt "ImportTab|"
 msgid "Import device settings"
-msgstr ""
+msgstr "Tuo laiteasetukset"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:107
 #: src/presentation/frontends/qtfrontend/importtab.cpp:331
@@ -600,13 +620,13 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/importtab.cpp:332
 msgctxt "ImportTab|"
 msgid "Start daemon"
-msgstr ""
+msgstr "Käynnistä palvelu"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:121
 #: src/presentation/frontends/qtfrontend/importtab.cpp:333
 msgctxt "ImportTab|"
 msgid "Stop daemon"
-msgstr ""
+msgstr "Pysäytä palvelu"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:154
 msgctxt "MainWindowGUI|"
@@ -753,7 +773,7 @@ msgstr "Uusi projekti"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:580
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
-msgstr ""
+msgstr "<h4>Avaa</h4> <p><em>Avaa</em> Stopmotion-projektitiedoston.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:584
 msgctxt "MainWindowGUI|"
@@ -767,11 +787,14 @@ msgid ""
 "project file. <BR>If this project has been saved before it will "
 "automatically be saved to the previously selected file.</p>"
 msgstr ""
+"<h4>Tallenna</h4> <p><em>Tallentaa</em> nykyisen animaation Stopmotion-"
+"projektitiedostoksi.<br>Jos projekti on tallennettu aikaisemmin, se "
+"automaattisesti tallennetaan aiemmin valittuun tiedostoon.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
 msgctxt "MainWindowGUI|"
 msgid "Save project"
-msgstr ""
+msgstr "Tallenna projekti"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:598
 msgctxt "MainWindowGUI|"
@@ -779,11 +802,13 @@ msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
 "project file.</p>"
 msgstr ""
+"<h4>Tallenna nimellä</h4> <p><em>Tallentaa</em> nykyisen animaation "
+"Stopmotion-projektitiedostoksi.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
-msgstr ""
+msgstr "Tallenna projekti nimellä"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:607
 msgctxt "MainWindowGUI|"
@@ -791,6 +816,8 @@ msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
 "be given a wizard to guide you."
 msgstr ""
+"<h4>Video</h4> <p>Vie nykyisen projektin <em>videoksi</em>.</p>Opastettu "
+"toiminto avustaa."
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
 msgctxt "MainWindowGUI|"
@@ -798,16 +825,18 @@ msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
 "project.</p>You will be given a wizard to guide you."
 msgstr ""
+"<h4>Cinerella</h4> <p>Vie nykyisen animaation <em>Cinerella</em>-projektiksi."
+"</p>Opastettu toiminto avustaa."
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:621
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
-msgstr ""
+msgstr "<h4>Lopeta</h4> <p><em>Lopettaa</em> ohjelman.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
 msgctxt "MainWindowGUI|"
 msgid "Quit"
-msgstr ""
+msgstr "Lopeta"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:631
 msgctxt "MainWindowGUI|"
@@ -815,6 +844,8 @@ msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
 "several time to undo earlier operations.</p>"
 msgstr ""
+"<h4>Kumoa</h4> <p><em>Kumoaa</em> viimeisimmän toimenpiteen. Tätä voi "
+"käyttää toistuvasti kumoamaan aiaempia toimenpiteitä.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:636
 msgctxt "MainWindowGUI|"
@@ -827,6 +858,8 @@ msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
 "several times to redo several operations.</p>"
 msgstr ""
+"<h4>Tee uudelleen</h4> <p><em>Tekee uudelleen</em> viimeisimmän kumotun "
+"toimenpiteen. Tämän voi toistaa.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:645
 msgctxt "MainWindowGUI|"
@@ -839,11 +872,13 @@ msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
 "adds them to the clipboard so that you can paste them in somewhere else.</p>"
 msgstr ""
+"<h4>Leikkaa</h4> <p><em>Leikkaa</em> valitut kuvat animaatiosta "
+"leikepöydälle, mistä ne voi liittää toisaalle.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:654
 msgctxt "MainWindowGUI|"
 msgid "Cut"
-msgstr ""
+msgstr "Leikkaa"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:658
 msgctxt "MainWindowGUI|"
@@ -851,11 +886,13 @@ msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
 "can then paste them in another place.</p>"
 msgstr ""
+"<h4>Kopioi</h4> <p><em>Kopioi</em> valitut kuvat leikepöydälle, mistä ne voi "
+"liittää toisaalle.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:663
 msgctxt "MainWindowGUI|"
 msgid "Copy"
-msgstr ""
+msgstr "Kopioi"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:667
 msgctxt "MainWindowGUI|"
@@ -865,11 +902,14 @@ msgid ""
 "another programs and then use this option to paste them into this animation."
 "</p>"
 msgstr ""
+"<h4>Liitä</h4> <p><em>Liittää</em> leikepöydällä olevat kuvat valittuun "
+"kohtaan.</p> <p>Kuvia voi kopioida tai leikata toisista ohjelmista ja "
+"liittää ne animaatioon tällä toiminnolla.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
 msgctxt "MainWindowGUI|"
 msgid "Paste"
-msgstr ""
+msgstr "Liitä"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:677
 msgctxt "MainWindowGUI|"
@@ -877,11 +917,13 @@ msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
 "you can choose a frame you want to <em>go to</em>.</p>"
 msgstr ""
+"<h4>Siirry kuvaan</h4> <p>Tämä näyttää alalaidassa ponnahdusvalikon, josta "
+"voi valita kuvan, johon <em>siirrytään</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:682
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
-msgstr ""
+msgstr "Siirry kuvaan"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
 msgctxt "MainWindowGUI|"
@@ -889,11 +931,13 @@ msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
 "<em>configure</em> Stopmotion with various input and output devices.</p>"
 msgstr ""
+"<h4>Stopmotionin asetukset</h4> <p>Tämä avaa ikkunan, jossa voi <em>asettaa</"
+"em> Stopmotionin eri syöte- ja tuloslaitteille.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
-msgstr ""
+msgstr "Stopmotionin asetukset"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:697
 msgctxt "MainWindowGUI|"
@@ -901,11 +945,13 @@ msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
 "can be used to bring up helpful information like this.</p>"
 msgstr ""
+"<h4>Mikä tämä on</h4> <p>Tästä saa MikäTämäOn-hiiriosoittimen, joka antaa "
+"nyt näkemäsi kaltaisia hyödyllisiä vinkkejä.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:702
 msgctxt "MainWindowGUI|"
 msgid "What's This"
-msgstr ""
+msgstr "Mikä tämä on"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:706
 msgctxt "MainWindowGUI|"
@@ -913,11 +959,12 @@ msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
 "manual</p>"
 msgstr ""
+"<h4>Ohje</h4> <p>Tällä painikkeella saa näkyviin Stopmotionin käsikirjan.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:710
 msgctxt "MainWindowGUI|"
 msgid "Help"
-msgstr ""
+msgstr "Ohje"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:714
 msgctxt "MainWindowGUI|"
@@ -926,18 +973,21 @@ msgid ""
 "read general information as well as the names of the developers behind this "
 "excellent piece of software.</p>"
 msgstr ""
+"<h4>Tietoa</h4> <p>Tästä saa näkyviin pienen tietoikkunan, josta voi lukea "
+"yleistietoa kuten tämän mahtavan ohjelman takana olevien kehittäjien nimet.</"
+"p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:720
 msgctxt "MainWindowGUI|"
 msgid "About"
-msgstr ""
+msgstr "Tietoa"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:726
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
 "selected frame</p>"
-msgstr ""
+msgstr "<h4>Kuvan numero</h4><p>Tämä alue näyttää valitun kuvan numeron.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:733
 msgctxt "MainWindowGUI|"
@@ -945,6 +995,8 @@ msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
 "also play animations in this window by pressing the <b>Play</b> button.</p>"
 msgstr ""
+"<h4>Kuvanäkymä</h4><p>Valittu kuva näytetään tällä alueella. Ikkunassa voi "
+"myös toistaa animaatioita napsauttamalla <b>Toista</b>-painiketta.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
 msgctxt "MainWindowGUI|"
@@ -952,6 +1004,8 @@ msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
 "program will jump to the specified frame</p> "
 msgstr ""
+"<h4>Siirry kuvavalikkoon</h4> <p>Tässä voi valita kuvan numeron, johon "
+"ohjelma sitten siirtyy.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
 msgctxt "MainWindowGUI|"
@@ -960,6 +1014,8 @@ msgid ""
 "the selected frame/frames, such as <b>subtitles</b>, <b>sound effects</b>, "
 "etc.</p>"
 msgstr ""
+"<h4>Kuva-asetusvalikko</h4> <p>Valittujen kuvien asetukset kuten "
+"<b>tekstityksen</b>, <b>äänitehosteet</b> tms. voi tehdä tästä valikosta.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:753
 msgctxt "MainWindowGUI|"
@@ -967,6 +1023,8 @@ msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
 "widgets you will need when working on stop motion animations are located.</p>"
 msgstr ""
+"<h4>Työkaluvalikko</h4> <p>Stop motion -animointia tehtäessä tarvittavat "
+"painikkeet ja säätimet löytyvät tästä työkaluvalikosta.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:759
 msgctxt "MainWindowGUI|"
@@ -976,6 +1034,9 @@ msgid ""
 "switch to the next and the previous frame using the <b>arrow buttons</b> or "
 "<b>x</b> and <b>z</b></p> "
 msgstr ""
+"<h4>Kuvarivi</h4> <p>Tällä alueella näkyvät kuvat ja kohtaukset ja "
+"rakennetaan animaatio siirtelemällä niitä.</p><p><b>Nuoli-</b> tai <b>x</b>- "
+"ja <b>z</b>-näppäimillä voi siirtyä seuraavaan tai edelliseen kuvaan.</p> "
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
 msgctxt "MainWindowGUI|"
@@ -990,7 +1051,7 @@ msgstr "Muutoksia on tallentamatta. Haluatko tallentaa?"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:808
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
-msgstr ""
+msgstr "Valitse projektitiedosto"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:876
 msgctxt "MainWindowGUI|"
@@ -1011,6 +1072,10 @@ msgid ""
 "menu. Export to video will not be possible until you\n"
 "have set an encoder to use. Do you want to set it now?"
 msgstr ""
+"Videovientiin käytettävää rekisteröityä koodausohjelmaa\n"
+"ei löydy. Sen voi asettaa asetusvalikossa. Videon vienti\n"
+"ei ole mahdollista, ennen koodausohjelma asettamista.\n"
+"Haluatko tehdä sen nyt?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
@@ -1105,7 +1170,7 @@ msgstr "Peru"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:195
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
-msgstr ""
+msgstr "Hukkaa vioittunut tiedosto"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:196
 #, qt-format
@@ -1114,6 +1179,8 @@ msgid ""
 "The file %1 seems to be corrupt, it's contents will be lost if you continue. "
 "Do you want to continue?"
 msgstr ""
+"Tiedosto %1 vaikuttaa vioittuneen: jos jatkat, sen sisältö menetetään. "
+"Haluatko jatkaa?"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:255
 msgctxt "QtFrontend|"
@@ -1128,12 +1195,12 @@ msgstr "Yksinkertaisin asetus. Hitaahko"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:264
 msgctxt "QtFrontend|"
 msgid "vgrabbj VGA daemon"
-msgstr ""
+msgstr "vgrabbj-VGA-palvelu"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:266
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
-msgstr ""
+msgstr "Käynnistää vgrabbj:n palveluksi. Varsin nopea."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:274
 msgctxt "QtFrontend|"
@@ -1148,7 +1215,7 @@ msgstr "Kaappaus V4L2-laitteilta"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:283
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
-msgstr ""
+msgstr "videodog-kertakuva"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:285
 msgctxt "QtFrontend|"
@@ -1163,7 +1230,7 @@ msgstr "dvgrab"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:294
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
-msgstr ""
+msgstr "Kaapataan DV-kameralta."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:310
 msgctxt "QtFrontend|"
@@ -1211,44 +1278,45 @@ msgstr "Valittua tiedostoa ei voitu avata luettavaksi"
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "The file %1 could not be opened"
-msgstr ""
+msgstr "Tiedostoa %1 ei saatu avatuksi"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:371
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
-msgstr ""
+msgstr "Tiedostoa ei voitu kopioida työtilaan"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:372
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr ""
+"Seuraavia tiedostoja ei saatu kopioiduksi työtilaan (~/.stopmotion): %1"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:376
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
-msgstr ""
+msgstr "Ääniajurin valmistelu epäonnistui"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:377
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
-msgstr ""
+msgstr "Ääni ei toimi ennen kuin tämä korjataan"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:381
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
-msgstr ""
+msgstr "Asetuksia ei voitu kirjoittaa"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:382
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
-msgstr ""
+msgstr "Asetuksia ei voitu kirjoittaa tiedostoon: %1"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:391
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
-msgstr ""
+msgstr "Stopmotionia ei voi käynnistää."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
 msgctxt "QtFrontend|"
@@ -1256,18 +1324,19 @@ msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
 "running."
 msgstr ""
+"command.log-tiedostoon ei saatu lukituksi. Stopmotion on ehkä jo käynnissä."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:396
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
-msgstr ""
+msgstr "Asetustiedostoa ei voi lukea"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:397
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
-msgstr ""
+msgstr "Asetustiedostoa %1 ei voi lukea. Korjaa tämä ja yritä uudelleen."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:402
 #, qt-format
@@ -1276,6 +1345,8 @@ msgid ""
 "Preferences file %1 is not a valid XML preferences file. Please correct this "
 "or delete the file and try again."
 msgstr ""
+"Asetustiedosto %1 ei ole kelvollinen XML-asetustiedosto. Korjaa tai poista "
+"tiedosto ja yritä uudelleen."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:405
 msgctxt "QtFrontend|"
@@ -1326,12 +1397,12 @@ msgstr "Kuvien määrä:"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:211
 msgctxt "ToolsMenu|"
 msgid "Mix"
-msgstr ""
+msgstr "Miksaa"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:212
 msgctxt "ToolsMenu|"
 msgid "Diff"
-msgstr ""
+msgstr "Erot"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:213
 msgctxt "ToolsMenu|"
@@ -1373,6 +1444,8 @@ msgid ""
 "<h4>Remove Selection (Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected frames from the animation.</p>"
 msgstr ""
+"<h4>Poista valinta (Del)</h4> <p><em>Poista</em> valitut kuvat animaatiosta "
+"tällä painikkeella.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:239
 msgctxt "ToolsMenu|"
@@ -1380,6 +1453,8 @@ msgid ""
 "<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
 "<em>scene</em> to the animation.</p>"
 msgstr ""
+"<h4>Uusi kohtaus (Ctrl+E)</h4> <p><em>Lisää uusi kohtaus</em> animaatioon "
+"tällä painikkeella.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
 msgctxt "ToolsMenu|"
@@ -1387,6 +1462,8 @@ msgid ""
 "<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected scene from the animation.</p>"
 msgstr ""
+"<h4>Poista kohtaus (Vaihto+Del)</h4> <p><em>Poista</em> valittu kohtaus "
+"animaatiosta tällä painikkeella.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:253
 msgctxt "ToolsMenu|"
@@ -1394,6 +1471,8 @@ msgid ""
 "<h4>Toggle camera on/off (C)</h4> <p>Click this button to toggle the camera "
 "on and off</p> "
 msgstr ""
+"<h4>Ota kamera käyttöön tai poista käytöstä</h4> <p>Tästä painikkeesta "
+"kameran saa käyttöön tai pois käytöstä.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:259
 msgctxt "ToolsMenu|"
@@ -1402,6 +1481,8 @@ msgid ""
 "p> <p>Note that you can also drag images from the frame bar and drop them on "
 "Gimp</p>"
 msgstr ""
+"<h4>Käynnistä Gimp</h4> <p>Avaa aktiivinen kuva Gimpiin tällä painikkeella.</"
+"p> <p>Huomaa, että kuvan voi myös vetää kuvariviltä ja pudottaa Gimpiin.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:266
 msgctxt "ToolsMenu|"
@@ -1410,6 +1491,9 @@ msgid ""
 "frame from the camera an put it in the animation</p> <p> This can also be "
 "done by pressing the <b>Space key</b></p>"
 msgstr ""
+"<h4>Kaappaa kuva (välilyönti)</h4> <p><em>Kaappaa</em> kuva kamerasta "
+"animaatioon tällä painikkeella.</p> <p>Toiminnon saa myös "
+"<b>välilyöntinäppäimestä</b>.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:274
 msgctxt "ToolsMenu|"
@@ -1421,6 +1505,11 @@ msgid ""
 "see how the next shot will be in relation to the other, thereby making a "
 "smoother stop motion animation!</p>"
 msgstr ""
+"<h4>Kuvien määrä</h4> <p>Muuttamalla tämän liukusäätimen arvoa voi "
+"määrittää, montako animaation kuvaa taaksepäin tulisi miksata kamerakuvan "
+"päälle, tai jos ollaan toistotilassa, montako kuvaa toistetaan.</p> "
+"<p>Miksaamalla aiempia kuvia kamerakuvan päälle voi helpommin nähdä "
+"seuraavan otoksen suhteessa muihin, jolloin animoinnista saa sujuvampaa!</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:285
 msgctxt "ToolsMenu|"
@@ -1429,36 +1518,39 @@ msgid ""
 "speed the animation in the <b>FrameView</b> should run at.</p> <p>To start "
 "an animation press the <b>Run Animation</b> button.</p>"
 msgstr ""
+"<h4>Kuvanopeuden valinta</h4> <p>Muuttamalla arvoa tässä säätimessä asettaa "
+"nopeuden, jolla <b>kuvanäkymän</b> tulisi esittää kuvia.</p> <p>Animoinnin "
+"voi käynnistää <b>Suorita animaatio</b> -painikkeella.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:295
 msgctxt "ToolsMenu|"
 msgid "<h4>Play animation (K, P)</h4>"
-msgstr ""
+msgstr "<h4>Toista animaatio (K, P)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:298
 msgctxt "ToolsMenu|"
 msgid "<h4>Stop animation (K, P)</h4>"
-msgstr ""
+msgstr "<h4>Pysäytä animaatio (K, P)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:301
 msgctxt "ToolsMenu|"
 msgid "<h4>Previous frame (J, Left)</h4>"
-msgstr ""
+msgstr "<h4>Edellinen kuva (J, nuoli vasemmalle)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:304
 msgctxt "ToolsMenu|"
 msgid "<h4>Next frame (L, Right)</h4>"
-msgstr ""
+msgstr "<h4>Seuraava kuva (L, nuoli oikealle)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:307
 msgctxt "ToolsMenu|"
 msgid "<h4>Previous scene (I)</h4>"
-msgstr ""
+msgstr "<h4>Edellinen kohtaus (I)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:310
 msgctxt "ToolsMenu|"
 msgid "<h4>Next scene (O)</h4>"
-msgstr ""
+msgstr "<h4>Seuraava kohtaus (O)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:314
 msgctxt "ToolsMenu|"
@@ -1466,6 +1558,9 @@ msgid ""
 "<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether you "
 "want the animation to play to the end, or to loop indefinitely.</p>"
 msgstr ""
+"<h4>Animointisilmukka (Ctrl+L)</h4> <p>Tällä painikkeella voi valita, "
+"näytetäänkö animaatio loppuun vai toistetaanko sitä loputtomana silmukkana.</"
+"p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
 msgctxt "ToolsMenu|"
@@ -1479,6 +1574,8 @@ msgid ""
 "the preferences menu (CTRL+P) to switch to running the image grabbing as a "
 "daemon."
 msgstr ""
+"Toisto toimii toistaiseksi vain, kun kaappausohjelmaa suoritetaan palveluna. "
+"Siirry asetusvalikkoon (Ctrl+P) ja vaihda kuvakaappaus toimimaan palveluna."
 
 #~ msgctxt "MainWindowGUI|"
 #~ msgid "Do&n't save"
