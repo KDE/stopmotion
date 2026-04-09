@@ -12,8 +12,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 20.12.3\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.12.3\n"
 "X-Qt-Contexts: true\n"
 
 #: src/application/externalcommand.cpp:46
@@ -99,7 +99,7 @@ msgstr ""
 #: src/application/modelhandler.cpp:247
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
-msgstr ""
+msgstr "Nepodarilo sa start Gimp!"
 
 #: src/application/runanimationhandler.cpp:93
 msgctxt "RunAnimationHandler|"
@@ -114,12 +114,12 @@ msgstr "Vyberte zvukový súbor"
 #: src/application/soundhandler.cpp:44
 msgctxt "SoundHandler|"
 msgid "Sounds (*.ogg)"
-msgstr ""
+msgstr "Sounds (*.ogg)"
 
 #: src/application/soundhandler.cpp:70
 msgctxt "SoundHandler|"
 msgid "Sound name"
-msgstr ""
+msgstr "Zvuk názov"
 
 #: src/application/soundhandler.cpp:71
 msgctxt "SoundHandler|"
@@ -230,7 +230,7 @@ msgstr "Logo"
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:89
 msgctxt "AboutDialog|"
 msgid "Coordinating"
-msgstr ""
+msgstr "Coordinating"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:93
 msgctxt "AboutDialog|"
@@ -315,7 +315,7 @@ msgstr "&Upraviť"
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:373
 msgctxt "DeviceTab|"
 msgid "Video device settings"
-msgstr ""
+msgstr "Video zariadenie nastavenia"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:114
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:374
@@ -357,6 +357,7 @@ msgctxt "ExportTab|"
 msgid ""
 "Do you want to be asked for an output file every time you choose to export?"
 msgstr ""
+"Naozaj chcete be asked for an output file every time you choose to export?"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:110
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:393
@@ -438,7 +439,7 @@ msgstr "Popis"
 #: src/presentation/frontends/qtfrontend/framebar/framebar.cpp:196
 msgctxt "FrameBar|"
 msgid "Frame number: "
-msgstr ""
+msgstr "Snímka číslo:"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:114
 msgctxt "FramePreferencesMenu|"
@@ -582,7 +583,7 @@ msgstr "&Upraviť"
 #: src/presentation/frontends/qtfrontend/importtab.cpp:330
 msgctxt "ImportTab|"
 msgid "Import device settings"
-msgstr ""
+msgstr "Importovať zariadenie nastavenia"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:107
 #: src/presentation/frontends/qtfrontend/importtab.cpp:331
@@ -672,7 +673,7 @@ msgstr "Video"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
-msgstr ""
+msgstr "Cinelerra"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
 msgctxt "MainWindowGUI|"
@@ -727,7 +728,7 @@ msgstr "&O programe"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:512
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
-msgstr ""
+msgstr "Snímka číslo:"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
 msgctxt "MainWindowGUI|"
@@ -887,7 +888,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
-msgstr ""
+msgstr "Configure Stopmotion"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:697
 msgctxt "MainWindowGUI|"
@@ -1004,7 +1005,7 @@ msgid ""
 "video export. This can be set in the preferences\n"
 "menu. Export to video will not be possible until you\n"
 "have set an encoder to use. Do you want to set it now?"
-msgstr ""
+msgstr "Nie je možné find any registered encoder to be used for"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
@@ -1039,7 +1040,7 @@ msgstr "Zavrieť"
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:125
 msgctxt "PreferencesMenu|"
 msgid "Preferences Menu"
-msgstr ""
+msgstr "Preferences Menu"
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:78
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:128
@@ -1110,7 +1111,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:255
 msgctxt "QtFrontend|"
 msgid "vgrabbj"
-msgstr ""
+msgstr "vgrabbj"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:257
 msgctxt "QtFrontend|"
@@ -1130,7 +1131,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:274
 msgctxt "QtFrontend|"
 msgid "uvccapture"
-msgstr ""
+msgstr "uvccapture"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:276
 msgctxt "QtFrontend|"
@@ -1150,7 +1151,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:292
 msgctxt "QtFrontend|"
 msgid "dvgrab"
-msgstr ""
+msgstr "dvgrab"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:294
 msgctxt "QtFrontend|"
@@ -1197,7 +1198,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:366
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
-msgstr ""
+msgstr "Nie je možné open the selected file for reading"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:367
 #, qt-format
@@ -1208,18 +1209,19 @@ msgstr "Súbor %1 nie je možné otvoriť"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:371
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
-msgstr ""
+msgstr "Nepodarilo sa copy file to workspace"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:372
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr ""
+"Nepodarilo sa copy the following files to the workspace (~/.stopmotion): %1"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:376
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
-msgstr ""
+msgstr "Nepodarilo sa initialize audio driver"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:377
 msgctxt "QtFrontend|"
@@ -1229,13 +1231,13 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:381
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
-msgstr ""
+msgstr "Nepodarilo sa write preferences"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:382
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
-msgstr ""
+msgstr "Nepodarilo sa write preferences to file: %1"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:391
 msgctxt "QtFrontend|"
@@ -1248,6 +1250,8 @@ msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
 "running."
 msgstr ""
+"Nepodarilo sa get exclusive lock on command.log. Perhaps Stopmotion is "
+"already running."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:396
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
@@ -1272,7 +1276,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:405
 msgctxt "QtFrontend|"
 msgid "Fatal"
-msgstr ""
+msgstr "Fatálne"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:413
 msgctxt "QtFrontend|"
@@ -1282,7 +1286,7 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:414
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
-msgstr ""
+msgstr "Prosím, raise a bug report."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:420
 msgctxt "QtFrontend|"
