@@ -19,7 +19,7 @@ msgstr ""
 #: src/application/externalcommand.cpp:46
 msgctxt "ExternalCommand|"
 msgid "Input to program:"
-msgstr ""
+msgstr "Vstup do programu:"
 
 #: src/application/externalcommand.cpp:56
 msgctxt "ExternalCommand|"
@@ -34,7 +34,7 @@ msgstr "Zavrieť"
 #: src/application/externalcommand.cpp:75
 msgctxt "ExternalCommand|"
 msgid "Output from external command"
-msgstr ""
+msgstr "Výstup z externého príkazu"
 
 #: src/application/externalcommand.cpp:119
 #: src/application/externalcommand.cpp:122
@@ -73,12 +73,12 @@ msgstr "Angličtina"
 #: src/application/modelhandler.cpp:62
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
-msgstr ""
+msgstr "Vyberte snímky na pridanie"
 
 #: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
-msgstr ""
+msgstr "Vybraná snímka bola odstránená"
 
 #: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
 #: src/application/modelhandler.cpp:246
@@ -89,12 +89,12 @@ msgstr "Upozornenie"
 #: src/application/modelhandler.cpp:221
 msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
-msgstr ""
+msgstr "Nemáte na svojom systéme nainštalovaný Gimp"
 
 #: src/application/modelhandler.cpp:231
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
-msgstr ""
+msgstr "Nie je žiadna aktívna snímka na otvorenie"
 
 #: src/application/modelhandler.cpp:247
 msgctxt "ModelHandler|"
@@ -104,7 +104,7 @@ msgstr "Nepodarilo sa start Gimp!"
 #: src/application/runanimationhandler.cpp:93
 msgctxt "RunAnimationHandler|"
 msgid "Running animation"
-msgstr ""
+msgstr "Spustená animácia"
 
 #: src/application/soundhandler.cpp:44
 msgctxt "SoundHandler|"
@@ -124,12 +124,12 @@ msgstr "Zvuk názov"
 #: src/application/soundhandler.cpp:71
 msgctxt "SoundHandler|"
 msgid "Enter the name of the sound:"
-msgstr ""
+msgstr "Zadajte názov zvuku:"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:42
 msgctxt "AboutDialog|"
 msgid "This is the Stopmotion application for creating stop motion animations."
-msgstr ""
+msgstr "Toto je aplikácia Stopmotion na vytváranie stop motion animácií."
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:47
 msgctxt "AboutDialog|"
@@ -139,7 +139,7 @@ msgstr "&O programe"
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:50
 msgctxt "AboutDialog|"
 msgid "Main developers"
-msgstr ""
+msgstr "Hlavní vývojári"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:54
 msgctxt "AboutDialog|"
@@ -245,7 +245,7 @@ msgstr "Poďakovanie"
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:110
 msgctxt "AboutDialog|"
 msgid "&Licence Agreement"
-msgstr ""
+msgstr "&Licenčná zmluva"
 
 #: src/presentation/frontends/qtfrontend/aboutdialog.cpp:112
 msgctxt "AboutDialog|"
@@ -264,6 +264,8 @@ msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
 "displaying video."
 msgstr ""
+"Nižšie môžete nastaviť, ktoré zariadenie má Stopmotion používať na "
+"zachytávanie obrázkov a zobrazovanie videa."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:71
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:358
@@ -273,6 +275,9 @@ msgid ""
 "It is not recommended to use devices which is not auto-detected, but feel "
 "free to do it if you are an advanced user."
 msgstr ""
+"Môžete si vybrať z automaticky detegovaných zariadení nižšie alebo pridať "
+"zariadenia ručne. Neodporúča sa používať zariadenia, ktoré sú už automaticky "
+"detegované."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:74
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:361
@@ -280,6 +285,7 @@ msgctxt "DeviceTab|"
 msgid ""
 "The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
 msgstr ""
+"Vybrané zariadenie je rozpoznané ako <b>$VIDEODEVICE</b> v importe videa."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:80
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:365
@@ -321,7 +327,7 @@ msgstr "Video zariadenie nastavenia"
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:374
 msgctxt "DeviceTab|"
 msgid "Video Device ($VIDEODEVICE): "
-msgstr ""
+msgstr "Video zariadenie ($VIDEODEVICE): "
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:161
 msgctxt "DeviceTab|"
@@ -349,7 +355,7 @@ msgstr "&Upraviť"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:98
 msgctxt "ExportTab|"
 msgid "Encoder settings"
-msgstr ""
+msgstr "Nastavenia kodéra"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:108
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:391
@@ -375,7 +381,7 @@ msgstr "Nie"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:395
 msgctxt "ExportTab|"
 msgid "Set default output file:"
-msgstr ""
+msgstr "Nastaviť predvolený výstupný súbor:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:126
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:396
@@ -387,18 +393,18 @@ msgstr "Prehliadať"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:397
 msgctxt "ExportTab|"
 msgid "Start encoder:"
-msgstr ""
+msgstr "Spustiť kodér:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:136
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:398
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
-msgstr ""
+msgstr "Zastaviť kodér:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:362
 msgctxt "ExportTab|"
 msgid "Choose output file"
-msgstr ""
+msgstr "Vybrať výstupný súbor"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:372
 msgctxt "ExportTab|"
@@ -406,6 +412,9 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
 "the currently active project to a video file."
 msgstr ""
+"Nižšie môžete nastaviť, ktorý program/proces má Stopmotion používať na "
+"kódovanie aktuálne aktívneho projektu do video súboru. Ak je nainštalovaný, "
+"odporúča sa mencoder. Na jeho použitie ho musíte skompilovať s podporou jpeg."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:374
 msgctxt "ExportTab|"
@@ -413,6 +422,8 @@ msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
 "the image path and the video file, respectively."
 msgstr ""
+"Vždy by ste mali používať <b>$IMAGEPATH</b> a <b>$VIDEOFILE</b> na označenie "
+"cesty k obrázkom a video súboru. Proces kódovania ich nahradí ich hodnotami."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:376
 msgctxt "ExportTab|"
@@ -420,11 +431,13 @@ msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
 "in the project."
 msgstr ""
+"Môžete použiť <b>$FRAMERATE</b> na označenie snímkovej frekvencie aktuálne "
+"používanej v projekte."
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:378
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
-msgstr ""
+msgstr "Príklad s mencoder (obrázky jpeg do videa mpeg4):"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:383
 msgctxt "ExportTab|"
@@ -444,12 +457,12 @@ msgstr "Snímka číslo:"
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:114
 msgctxt "FramePreferencesMenu|"
 msgid "Add &sound"
-msgstr ""
+msgstr "Pridať &zvuk"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:115
 msgctxt "FramePreferencesMenu|"
 msgid "&Remove Sound"
-msgstr ""
+msgstr "&Odstrániť zvuk"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:116
 msgctxt "FramePreferencesMenu|"
@@ -468,6 +481,9 @@ msgid ""
 "selected frame.</p> <p>The sound will begin playing when this frame is shown "
 "and play until it is done.</p>"
 msgstr ""
+"<h4>Pridať zvuk</h4> <p>Týmto tlačidlom môžete <em>pridať zvuky</em> k "
+"vybranej snímke.</p> <p>Zvuk sa začne prehrávať, keď sa táto snímka zobrazí, "
+"a bude hrať, kým sa nedokončí, alebo kým sa nezačne prehrávať nový zvuk.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:128
 msgctxt "FramePreferencesMenu|"
@@ -475,6 +491,8 @@ msgid ""
 "<h4>Remove sound</h4> <p>With this button you can <em>remove</em> the "
 "selected sound from this frame.</p>"
 msgstr ""
+"<h4>Odstrániť zvuk</h4> <p>Týmto tlačidlom môžete <em>odstrániť</em> vybraný "
+"zvuk z tejto snímky.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:135
 msgctxt "FramePreferencesMenu|"
@@ -483,6 +501,8 @@ msgid ""
 "selected sound. <BR>The name of the sound has no other effect than making it "
 "easier work with the animation.</p>"
 msgstr ""
+"<h4>Zmeniť názov</h4> <p>Týmto tlačidlom môžete zmeniť názov vybraného "
+"zvuku. <BR>Názov musí byť v tejto snímke jedinečný.</p>"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:143
 msgctxt "FramePreferencesMenu|"
@@ -491,6 +511,9 @@ msgid ""
 "p><p>The sounds will begin playing when this frame is shown and play until "
 "they are done.</p>"
 msgstr ""
+"<h4>Zvuky</h4> <p>Tento zoznam zobrazuje všetky zvuky pripojené k tejto "
+"snímke.</p><p>Zvuky sa začnú prehrávať, keď sa táto snímka zobrazí, a budú "
+"hrať, kým sa nedokončia, alebo kým sa nezačne prehrávať nový zvuk.</p>"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 #: src/presentation/frontends/qtfrontend/frameview.cpp:287
@@ -505,17 +528,17 @@ msgstr "Upozornenie"
 #: src/presentation/frontends/qtfrontend/frameview.cpp:275
 msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
-msgstr ""
+msgstr "V ponuke predvolieb nie je vybraté žiadne video zariadenie."
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:287
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
-msgstr ""
+msgstr "Príkaz pred zachytením neexistuje"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:298
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
-msgstr ""
+msgstr "Nemáte na svojom systéme nainštalovaný daný zachytávač"
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:321
 #: src/presentation/frontends/qtfrontend/frameview.cpp:337
@@ -525,6 +548,9 @@ msgid ""
 "to grab from an invalid device. Please check\n"
 "your grabber settings in the preferences menu."
 msgstr ""
+"Zachytávanie zlyhalo. Toto sa môže stať, ak sa pokúsite\n"
+"zachytávať z neplatného zariadenia. Skontrolujte prosím\n"
+"nastavenia zachytávača v ponuke predvolieb."
 
 #: src/presentation/frontends/qtfrontend/frameview.cpp:347
 msgctxt "FrameView|"
@@ -532,6 +558,8 @@ msgid ""
 "You have to define an image grabber to use.\n"
 "This can be set in the preferences menu."
 msgstr ""
+"Musíte definovať zachytávač obrázkov na použitie.\n"
+"Toto sa dá nastaviť v ponuke predvolieb."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:63
 #: src/presentation/frontends/qtfrontend/importtab.cpp:317
@@ -540,6 +568,8 @@ msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
 "images from the selected device."
 msgstr ""
+"Nižšie môžete nastaviť, ktorý program/proces má Stopmotion používať na "
+"zachytávanie obrázkov z vybraného video zariadenia."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:65
 #: src/presentation/frontends/qtfrontend/importtab.cpp:319
@@ -548,6 +578,9 @@ msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 "the video device and the image file, respectively."
 msgstr ""
+"Vždy by ste mali používať <b>$VIDEODEVICE</b> a <b>$IMAGEFILE</b> na "
+"označenie video zariadenia a súboru obrázka. Proces zachytávania ich nahradí "
+"ich hodnotami."
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:71
 #: src/presentation/frontends/qtfrontend/importtab.cpp:323
@@ -589,24 +622,24 @@ msgstr "Importovať zariadenie nastavenia"
 #: src/presentation/frontends/qtfrontend/importtab.cpp:331
 msgctxt "ImportTab|"
 msgid "Pre-poll command"
-msgstr ""
+msgstr "Príkaz pred zachytením"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:114
 #: src/presentation/frontends/qtfrontend/importtab.cpp:332
 msgctxt "ImportTab|"
 msgid "Start daemon"
-msgstr ""
+msgstr "Spustiť démona"
 
 #: src/presentation/frontends/qtfrontend/importtab.cpp:121
 #: src/presentation/frontends/qtfrontend/importtab.cpp:333
 msgctxt "ImportTab|"
 msgid "Stop daemon"
-msgstr ""
+msgstr "Zastaviť démona"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:154
 msgctxt "MainWindowGUI|"
 msgid "Ready to rumble ;-)"
-msgstr ""
+msgstr "Pripravený na akciu ;-)"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:364
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:524
@@ -708,12 +741,12 @@ msgstr "V&ložiť"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
-msgstr ""
+msgstr "&Prejsť na snímku"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
-msgstr ""
+msgstr "&Nastaviť Stopmotion"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
 msgctxt "MainWindowGUI|"
@@ -733,12 +766,12 @@ msgstr "Snímka číslo:"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
-msgstr ""
+msgstr "Prejsť na snímku:"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
-msgstr ""
+msgstr "<h4>Nový</h4> <p>Vytvorí <em>nový</em> projekt.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:576
 msgctxt "MainWindowGUI|"
@@ -748,7 +781,7 @@ msgstr "Nový projekt"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:580
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
-msgstr ""
+msgstr "<h4>Otvoriť</h4> <p><em>Otvorí</em> súbor projektu Stopmotion.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:584
 msgctxt "MainWindowGUI|"
@@ -762,6 +795,9 @@ msgid ""
 "project file. <BR>If this project has been saved before it will "
 "automatically be saved to the previously selected file.</p>"
 msgstr ""
+"<h4>Uložiť</h4> <p><em>Uloží</em> aktuálnu animáciu ako súbor projektu "
+"Stopmotion. <BR>Ak bol tento projekt predtým uložený alebo otvorený, použije "
+"sa tento súbor. Ak nie, budete požiadaní o určenie súboru.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
 msgctxt "MainWindowGUI|"
@@ -774,6 +810,8 @@ msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
 "project file.</p>"
 msgstr ""
+"<h4>Uložiť ako</h4> <p><em>Uloží</em> aktuálnu animáciu ako súbor projektu "
+"Stopmotion.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
 msgctxt "MainWindowGUI|"
@@ -786,6 +824,8 @@ msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
 "be given a wizard to guide you."
 msgstr ""
+"<h4>Video</h4> <p>Exportuje aktuálny projekt ako <em>video</em>.</"
+"p>Sprievodca vás prevedie procesom."
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
 msgctxt "MainWindowGUI|"
@@ -793,11 +833,13 @@ msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
 "project.</p>You will be given a wizard to guide you."
 msgstr ""
+"<h4>Cinerella</h4> <p>Exportuje aktuálnu animáciu ako projekt <em>Cinerella</"
+"em>.</p>Sprievodca vás prevedie procesom."
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:621
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
-msgstr ""
+msgstr "<h4>Ukončiť</h4> <p><em>Ukončí</em> program.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
 msgctxt "MainWindowGUI|"
@@ -810,6 +852,8 @@ msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
 "several time to undo earlier operations.</p>"
 msgstr ""
+"<h4>Vrátiť späť</h4> <p><em>Vráti späť</em> vašu poslednú operáciu. Môžete "
+"stlačiť vrátiť späť niekoľkokrát na vrátenie skorších operácií.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:636
 msgctxt "MainWindowGUI|"
@@ -822,6 +866,8 @@ msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
 "several times to redo several operations.</p>"
 msgstr ""
+"<h4>Opakovať</h4> <p><em>Opakuje</em> vašu poslednú operáciu. Môžete stlačiť "
+"opakovať niekoľkokrát na opakovanie viacerých operácií.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:645
 msgctxt "MainWindowGUI|"
@@ -834,6 +880,8 @@ msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
 "adds them to the clipboard so that you can paste them in somewhere else.</p>"
 msgstr ""
+"<h4>Vystrihnúť</h4> <p><em>Vystrihne</em> vybrané snímky z animácie a pridá "
+"ich do schránky.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:654
 msgctxt "MainWindowGUI|"
@@ -846,6 +894,8 @@ msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
 "can then paste them in another place.</p>"
 msgstr ""
+"<h4>Kopírovať</h4> <p><em>Skopíruje</em> vybrané snímky do schránky. Potom "
+"ich môžete vložiť kamkoľvek do animácie.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:663
 msgctxt "MainWindowGUI|"
@@ -860,6 +910,8 @@ msgid ""
 "another programs and then use this option to paste them into this animation."
 "</p>"
 msgstr ""
+"<h4>Vložiť</h4> <p><em>Vloží</em> snímky, ktoré sú momentálne v schránke, do "
+"vybraného miesta v animácii.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
 msgctxt "MainWindowGUI|"
@@ -872,11 +924,13 @@ msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
 "you can choose a frame you want to <em>go to</em>.</p>"
 msgstr ""
+"<h4>Prejsť na snímku</h4> <p>Zobrazí sa vyskakovacia ponuka v dolnej časti, "
+"kde si môžete vybrať snímku, na ktorú chcete <em>prejsť</em>.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:682
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
-msgstr ""
+msgstr "Prejsť na snímku"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
 msgctxt "MainWindowGUI|"
@@ -884,6 +938,8 @@ msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
 "<em>configure</em> Stopmotion with various input and output devices.</p>"
 msgstr ""
+"<h4>Nastaviť Stopmotion</h4> <p>Otvorí sa okno, v ktorom môžete "
+"<em>nastaviť</em> nastavenia Stopmotion.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
 msgctxt "MainWindowGUI|"
@@ -896,6 +952,8 @@ msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
 "can be used to bring up helpful information like this.</p>"
 msgstr ""
+"<h4>Čo je toto</h4> <p>Toto vám dá kurzor myši Čo je toto, ktorý sa dá "
+"použiť na zobrazenie užitočných informačných widgetov.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:702
 msgctxt "MainWindowGUI|"
@@ -908,6 +966,7 @@ msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
 "manual</p>"
 msgstr ""
+"<h4>Pomoc</h4> <p>Toto tlačidlo otvorí dialóg s manuálom Stopmotion</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:710
 msgctxt "MainWindowGUI|"
@@ -921,6 +980,8 @@ msgid ""
 "read general information as well as the names of the developers behind this "
 "excellent piece of software.</p>"
 msgstr ""
+"<h4>O programe</h4> <p>Zobrazí sa malý informačný box, kde si môžete "
+"prečítať všeobecné informácie o aplikácii a autoroch aplikácie</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:720
 msgctxt "MainWindowGUI|"
@@ -933,6 +994,8 @@ msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
 "selected frame</p>"
 msgstr ""
+"<h4>Číslo snímky</h4><p>Táto oblasť zobrazuje číslo aktuálne vybranej "
+"snímky</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:733
 msgctxt "MainWindowGUI|"
@@ -940,6 +1003,8 @@ msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
 "also play animations in this window by pressing the <b>Play</b> button.</p>"
 msgstr ""
+"<h4>Zobrazenie snímky</h4><p>V tejto oblasti môžete vidieť vybranú snímku. "
+"Animácie môžete prehrávať v tomto okne stlačením tlačidla prehrať.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
 msgctxt "MainWindowGUI|"
@@ -947,6 +1012,8 @@ msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
 "program will jump to the specified frame</p> "
 msgstr ""
+"<h4>Ponuka prejsť na snímku</h4> <p>Tu môžete zadať číslo snímky a program "
+"skočí na zadanú snímku</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
 msgctxt "MainWindowGUI|"
@@ -955,6 +1022,9 @@ msgid ""
 "the selected frame/frames, such as <b>subtitles</b>, <b>sound effects</b>, "
 "etc.</p>"
 msgstr ""
+"<h4>Ponuka predvolieb snímky</h4> <p>V tejto ponuke môžete nastaviť "
+"predvoľby pre vybranú snímku/snímky, ako sú <b>titulky</b>, <b>efekty</b> a "
+"<b>zvuky</b>.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:753
 msgctxt "MainWindowGUI|"
@@ -962,6 +1032,9 @@ msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
 "widgets you will need when working on stop motion animations are located.</p>"
 msgstr ""
+"<h4>Ponuka nástrojov</h4> <p>Toto je ponuka nástrojov, kde sa nachádza "
+"väčšina tlačidiel a widgetov, ktoré budete potrebovať pri práci so stop "
+"motion.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:759
 msgctxt "MainWindowGUI|"
@@ -971,6 +1044,8 @@ msgid ""
 "switch to the next and the previous frame using the <b>arrow buttons</b> or "
 "<b>x</b> and <b>z</b></p> "
 msgstr ""
+"<h4>Panel snímok</h4> <p>V tejto oblasti môžete vidieť snímky a scény v "
+"animáciách a zostavovať animáciu ich presúvaním.</p>"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
 msgctxt "MainWindowGUI|"
@@ -980,12 +1055,12 @@ msgstr "Neuložené zmeny"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
-msgstr ""
+msgstr "Sú tu neuložené zmeny. Chcete uložiť?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:808
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
-msgstr ""
+msgstr "Vybrať súbor projektu"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:876
 msgctxt "MainWindowGUI|"
@@ -1010,7 +1085,7 @@ msgstr "Nie je možné find any registered encoder to be used for"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
-msgstr ""
+msgstr "Exportovať do video súboru"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:955
 msgctxt "MainWindowGUI|"
@@ -1018,6 +1093,8 @@ msgid ""
 "The registered encoder is not valid. Do you want\n"
 "to check your settings in the preferences menu?"
 msgstr ""
+"Zaregistrovaný kodér nie je platný. Chcete\n"
+"skontrolovať nastavenia v ponuke predvolieb?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
 msgctxt "MainWindowGUI|"
@@ -1046,13 +1123,13 @@ msgstr "Preferences Menu"
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:128
 msgctxt "PreferencesMenu|"
 msgid "Video &Import"
-msgstr ""
+msgstr "&Import videa"
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:87
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:129
 msgctxt "PreferencesMenu|"
 msgid "Video &Export"
-msgstr ""
+msgstr "&Export videa"
 
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:96
 #: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:127
@@ -1068,12 +1145,12 @@ msgstr "Prosím, čakajte..."
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:89
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
-msgstr ""
+msgstr "Pripájanie kamery..."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
 msgctxt "QtFrontend|"
 msgid "Importing frames from disk"
-msgstr ""
+msgstr "Importovanie snímok z disku"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:95
 msgctxt "QtFrontend|"
@@ -1083,12 +1160,12 @@ msgstr "Exportujem..."
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:98
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
-msgstr ""
+msgstr "Obnovenie projektu..."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:101
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
-msgstr ""
+msgstr "Ukladanie scén na disk..."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:105
 msgctxt "QtFrontend|"
@@ -1098,7 +1175,7 @@ msgstr "Zrušiť"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:195
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
-msgstr ""
+msgstr "Zahodiť poškodený súbor"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:196
 #, qt-format
@@ -1107,6 +1184,8 @@ msgid ""
 "The file %1 seems to be corrupt, it's contents will be lost if you continue. "
 "Do you want to continue?"
 msgstr ""
+"Súbor %1 sa zdá byť poškodený, jeho obsah sa stratí, ak budete pokračovať. "
+"Chcete pokračovať?"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:255
 msgctxt "QtFrontend|"
@@ -1116,17 +1195,17 @@ msgstr "vgrabbj"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:257
 msgctxt "QtFrontend|"
 msgid "The simplest setting. Fairly slow"
-msgstr ""
+msgstr "Najjednoduchšie nastavenie. Pomerne pomalé"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:264
 msgctxt "QtFrontend|"
 msgid "vgrabbj VGA daemon"
-msgstr ""
+msgstr "Démon vgrabbj VGA"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:266
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
-msgstr ""
+msgstr "Spustí vgrabbj ako démona. Pomerne rýchle."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:274
 msgctxt "QtFrontend|"
@@ -1136,17 +1215,17 @@ msgstr "uvccapture"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:276
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
-msgstr ""
+msgstr "Zachytávanie zo zariadení V4L2"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:283
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
-msgstr ""
+msgstr "videodog jednorazové zachytenie"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:285
 msgctxt "QtFrontend|"
 msgid "Videodog."
-msgstr ""
+msgstr "Videodog."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:292
 msgctxt "QtFrontend|"
@@ -1156,44 +1235,44 @@ msgstr "dvgrab"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:294
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
-msgstr ""
+msgstr "Zachytávanie z DV-kamery."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:310
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
-msgstr ""
+msgstr "Export z obrázkov jpeg do videa mpeg1"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:319
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
-msgstr ""
+msgstr "Export z obrázkov jpeg do videa mpeg2"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:328
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:337
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
-msgstr ""
+msgstr "Export z obrázkov jpeg do videa mpeg4"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:357
 msgctxt "QtFrontend|"
 msgid "Unsupported image file type"
-msgstr ""
+msgstr "Nepodporovaný typ súboru obrázka"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
 msgctxt "QtFrontend|"
 msgid "Only JPeg image files can be added to the animation"
-msgstr ""
+msgstr "Do animácie možno pridať iba obrazové súbory JPEG"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:361
 msgctxt "QtFrontend|"
 msgid "The selected audio file could not be loaded"
-msgstr ""
+msgstr "Vybraný zvukový súbor sa nepodarilo načítať"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:362
 msgctxt "QtFrontend|"
 msgid "Perhaps it is corrupt."
-msgstr ""
+msgstr "Možno je poškodený."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:366
 msgctxt "QtFrontend|"
@@ -1226,7 +1305,7 @@ msgstr "Nepodarilo sa initialize audio driver"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:377
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
-msgstr ""
+msgstr "Zvuk nebude fungovať, kým sa to neopraví"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:381
 msgctxt "QtFrontend|"
@@ -1242,7 +1321,7 @@ msgstr "Nepodarilo sa write preferences to file: %1"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:391
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
-msgstr ""
+msgstr "Stopmotion sa nedá spustiť."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
 msgctxt "QtFrontend|"
@@ -1257,13 +1336,14 @@ msgstr ""
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
-msgstr ""
+msgstr "Súbor predvolieb sa nedá prečítať"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:397
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
 msgstr ""
+"Súbor predvolieb %1 nie je čitateľný. Opravte to prosím a skúste znova."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:402
 #, qt-format
@@ -1272,6 +1352,8 @@ msgid ""
 "Preferences file %1 is not a valid XML preferences file. Please correct this "
 "or delete the file and try again."
 msgstr ""
+"Súbor predvolieb %1 nie je platný XML súbor predvolieb. Opravte to prosím "
+"alebo súbor odstráňte a skúste znova."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:405
 msgctxt "QtFrontend|"
@@ -1281,7 +1363,7 @@ msgstr "Fatálne"
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:413
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
-msgstr ""
+msgstr "Stopmotion vyhodil výnimku, ktorú nedokázal spracovať."
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:414
 msgctxt "QtFrontend|"
@@ -1300,6 +1382,8 @@ msgid ""
 "values exists. Do you want to use this one? (Your old preferences\n"
 " will be saved in ~/.stopmotion/preferences.xml.OLD)"
 msgstr ""
+"Existuje novšia verzia súboru predvolieb s niekoľkými ďalšími\n"
+"predvolenými hodnotami. Chcete namiesto toho použiť túto?"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:468
 msgctxt "QtFrontend|"
@@ -1309,7 +1393,7 @@ msgstr "Otázka"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:207
 msgctxt "ToolsMenu|"
 msgid "FPS chooser"
-msgstr ""
+msgstr "Výber FPS"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:208
 msgctxt "ToolsMenu|"
@@ -1339,17 +1423,17 @@ msgstr "Auto"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:218
 msgctxt "ToolsMenu|"
 msgid "Per second"
-msgstr ""
+msgstr "Za sekundu"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:219
 msgctxt "ToolsMenu|"
 msgid "Per minute"
-msgstr ""
+msgstr "Za minútu"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:220
 msgctxt "ToolsMenu|"
 msgid "Per hour"
-msgstr ""
+msgstr "Za hodinu"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:225
 msgctxt "ToolsMenu|"
@@ -1357,6 +1441,8 @@ msgid ""
 "<h4>Add Frames (CTRL+F)</h4> <p>Click on this button to <em>add</em> frames "
 "to the animation.</p>"
 msgstr ""
+"<h4>Pridať snímky (CTRL+F)</h4> <p>Kliknite na toto tlačidlo na "
+"<em>pridanie</em> snímok do animácie.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:232
 msgctxt "ToolsMenu|"
@@ -1364,6 +1450,8 @@ msgid ""
 "<h4>Remove Selection (Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected frames from the animation.</p>"
 msgstr ""
+"<h4>Odstrániť výber (Delete)</h4> <p>Kliknite na toto tlačidlo na "
+"<em>odstránenie</em> vybraných snímok z animácie.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:239
 msgctxt "ToolsMenu|"
@@ -1371,6 +1459,8 @@ msgid ""
 "<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
 "<em>scene</em> to the animation.</p>"
 msgstr ""
+"<h4>Nová scéna (CTRL+E)</h4> <p>Kliknite na toto tlačidlo na <em>vytvorenie</"
+"em> novej <em>scény</em> v animácii.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
 msgctxt "ToolsMenu|"
@@ -1378,6 +1468,8 @@ msgid ""
 "<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</em> "
 "the selected scene from the animation.</p>"
 msgstr ""
+"<h4>Odstrániť scénu (SHIFT+Delete)</h4> <p>Kliknite na toto tlačidlo na "
+"<em>odstránenie</em> vybranej scény z animácie.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:253
 msgctxt "ToolsMenu|"
@@ -1385,6 +1477,8 @@ msgid ""
 "<h4>Toggle camera on/off (C)</h4> <p>Click this button to toggle the camera "
 "on and off</p> "
 msgstr ""
+"<h4>Zapnúť/vypnúť kameru (C)</h4> <p>Kliknite na toto tlačidlo na zapnutie a "
+"vypnutie kamery</p> "
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:259
 msgctxt "ToolsMenu|"
@@ -1393,6 +1487,9 @@ msgid ""
 "p> <p>Note that you can also drag images from the frame bar and drop them on "
 "Gimp</p>"
 msgstr ""
+"<h4>Spustiť Gimp</h4> <p>Kliknite na toto tlačidlo na otvorenie aktívnej "
+"snímky v Gimpe</p> <p>Upozorňujeme, že snímky môžete tiež pretiahnuť do okna "
+"Gimpu</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:266
 msgctxt "ToolsMenu|"
@@ -1401,6 +1498,8 @@ msgid ""
 "frame from the camera an put it in the animation</p> <p> This can also be "
 "done by pressing the <b>Space key</b></p>"
 msgstr ""
+"<h4>Zachytiť snímku (Medzerník)</h4> <p>Kliknite na toto tlačidlo na "
+"<em>zachytenie</em> snímky z kamery a jej pridanie do animácie.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:274
 msgctxt "ToolsMenu|"
@@ -1412,6 +1511,8 @@ msgid ""
 "see how the next shot will be in relation to the other, thereby making a "
 "smoother stop motion animation!</p>"
 msgstr ""
+"<h4>Počet obrázkov</h4> <p>Zmenou hodnoty v tomto posúvači môžete zadať, "
+"koľko obrázkov chcete pridať do animácie.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:285
 msgctxt "ToolsMenu|"
@@ -1420,36 +1521,38 @@ msgid ""
 "speed the animation in the <b>FrameView</b> should run at.</p> <p>To start "
 "an animation press the <b>Run Animation</b> button.</p>"
 msgstr ""
+"<h4>Výber FPS</h4> <p>Zmenou hodnoty v tomto výbere nastavíte, akou "
+"rýchlosťou sa má animácia v <b>zobrazení snímok</b> prehrávať.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:295
 msgctxt "ToolsMenu|"
 msgid "<h4>Play animation (K, P)</h4>"
-msgstr ""
+msgstr "<h4>Prehrať animáciu (K, P)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:298
 msgctxt "ToolsMenu|"
 msgid "<h4>Stop animation (K, P)</h4>"
-msgstr ""
+msgstr "<h4>Zastaviť animáciu (K, P)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:301
 msgctxt "ToolsMenu|"
 msgid "<h4>Previous frame (J, Left)</h4>"
-msgstr ""
+msgstr "<h4>Predchádzajúca snímka (J, Doľava)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:304
 msgctxt "ToolsMenu|"
 msgid "<h4>Next frame (L, Right)</h4>"
-msgstr ""
+msgstr "<h4>Ďalšia snímka (L, Doprava)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:307
 msgctxt "ToolsMenu|"
 msgid "<h4>Previous scene (I)</h4>"
-msgstr ""
+msgstr "<h4>Predchádzajúca scéna (I)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:310
 msgctxt "ToolsMenu|"
 msgid "<h4>Next scene (O)</h4>"
-msgstr ""
+msgstr "<h4>Ďalšia scéna (O)</h4>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:314
 msgctxt "ToolsMenu|"
@@ -1457,6 +1560,9 @@ msgid ""
 "<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether you "
 "want the animation to play to the end, or to loop indefinitely.</p>"
 msgstr ""
+"<h4>Slučková animácia (CTRL+L)</h4> <p>Týmto tlačidlom môžete nastaviť, či "
+"chcete, aby sa animácia prehrala do konca, alebo sa opakovala. Pri opakovaní "
+"sa animácia prehráva nepretržite, kým sa ručne nezastaví.</p>"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
 msgctxt "ToolsMenu|"
@@ -1470,6 +1576,8 @@ msgid ""
 "the preferences menu (CTRL+P) to switch to running the image grabbing as a "
 "daemon."
 msgstr ""
+"Prehrávanie momentálne funguje iba pri spustení zachytávača ako démona. "
+"Prejdite do ponuky predvolieb (CTRL+P) na nastavenie."
 
 #~ msgctxt "MainWindowGUI|"
 #~ msgid "Abort"
