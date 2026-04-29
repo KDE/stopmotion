@@ -1080,7 +1080,11 @@ msgid ""
 "video export. This can be set in the preferences\n"
 "menu. Export to video will not be possible until you\n"
 "have set an encoder to use. Do you want to set it now?"
-msgstr "Nie je možné find any registered encoder to be used for"
+msgstr ""
+"Nepodarilo sa nájsť žiadny zaregistrovaný kódovač na použitie pre\n"
+"export videa. Toto je možné nastaviť v ponuke\n"
+"nastavení. Export do videa nebude možný, kým\n"
+"nenastavíte kódovač na použitie. Chcete ho nastaviť teraz?"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
 msgctxt "MainWindowGUI|"
@@ -1277,7 +1281,7 @@ msgstr "Možno je poškodený."
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:366
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
-msgstr "Nie je možné open the selected file for reading"
+msgstr "Nie je možné otvoriť vybraný súbor na čítanie"
 
 #: src/presentation/frontends/qtfrontend/qtfrontend.cpp:367
 #, qt-format
