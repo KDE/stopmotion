@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2025 giovanni <g.sora@tiscali.it>
+# SPDX-FileCopyrightText: 2025, 2026 giovanni <g.sora@tiscali.it>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2025-01-10 11:55+0100\n"
+"PO-Revision-Date: 2026-07-30 14:58+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #: src/application/externalcommand.cpp:46
 msgctxt "ExternalCommand|"
@@ -75,7 +75,7 @@ msgstr "Selige photogramma a adder"
 #: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
-msgstr "Removite lephotogramma selectionate"
+msgstr "Removite le photogramma selectionate"
 
 #: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
 #: src/application/modelhandler.cpp:246
@@ -450,7 +450,7 @@ msgstr "&Remove Sono"
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:116
 msgctxt "FramePreferencesMenu|"
 msgid "Change name"
-msgstr ""
+msgstr "Modifica nomine"
 
 #: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:117
 msgctxt "FramePreferencesMenu|"
