@@ -652,7 +652,7 @@ msgstr "&صدّر"
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1132
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
-msgstr "افتح ملفاً &حديثًا"
+msgstr "افتح ملفًا &حديثًا"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:368
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:553
