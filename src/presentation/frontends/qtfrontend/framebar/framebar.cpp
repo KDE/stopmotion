@@ -29,6 +29,7 @@
 #include <QDebug>
 #include <QDragEnterEvent>
 #include <QDropEvent>
+#include <QFile>
 #include <QFrame>
 #include <QImage>
 #include <QImageReader>
@@ -247,14 +248,14 @@ void FrameBar::fileChanged(const QString& path) {
 	if (activeScene < 0 || sceneCount <= activeScene)
 		return;
 	int sceneSize = facade->getSceneSize(activeScene);
-	const char* pathStr = path.toLocal8Bit();
+	QByteArray pathStr = QFile::encodeName(path);
 	for (int i = 0; i != sceneSize; ++i) {
 		const char* ip = facade->getImagePath(activeScene, i);
 		// This is a bit slow because we have to search through
 		// the /home/tim/.stopmotion/ bit of the path each time.
-		if (strcmp(pathStr, ip) == 0) {
+		if (strcmp(pathStr.constData(), ip) == 0) {
 			ThumbView* thumb = getFrameThumb(i, false);
-			setThumbImage(thumb, pathStr);
+			setThumbImage(thumb, pathStr.constData());
 		}
 	}
 }

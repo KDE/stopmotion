@@ -24,6 +24,7 @@
 #include <cstring>
 
 #include <QApplication>
+#include <QFile>
 #include <QMessageBox>
 #include <QPainter>
 
@@ -445,8 +446,7 @@ int FrameView::getPlaybackSpeed() const {
 }
 
 void FrameView::fileChanged(const QString& path) {
-	const char* p = path.toLocal8Bit();
-	imageCache.drop(p);
+	imageCache.drop(QFile::encodeName(path).constData());
 	if (isPlayingVideo && 0 <= activeScene) {
 		update();
 	}
