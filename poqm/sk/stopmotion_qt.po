@@ -449,7 +449,7 @@ msgctxt "ExportTab|"
 msgid "Description"
 msgstr "Popis"
 
-#: src/presentation/frontends/qtfrontend/framebar/framebar.cpp:196
+#: src/presentation/frontends/qtfrontend/framebar/framebar.cpp:197
 msgctxt "FrameBar|"
 msgid "Frame number: "
 msgstr "Snímka číslo:"
@@ -515,33 +515,33 @@ msgstr ""
 "snímke.</p><p>Zvuky sa začnú prehrávať, keď sa táto snímka zobrazí, a budú "
 "hrať, kým sa nedokončia, alebo kým sa nezačne prehrávať nový zvuk.</p>"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:275
-#: src/presentation/frontends/qtfrontend/frameview.cpp:287
-#: src/presentation/frontends/qtfrontend/frameview.cpp:298
-#: src/presentation/frontends/qtfrontend/frameview.cpp:321
-#: src/presentation/frontends/qtfrontend/frameview.cpp:337
-#: src/presentation/frontends/qtfrontend/frameview.cpp:347
+#: src/presentation/frontends/qtfrontend/frameview.cpp:276
+#: src/presentation/frontends/qtfrontend/frameview.cpp:288
+#: src/presentation/frontends/qtfrontend/frameview.cpp:299
+#: src/presentation/frontends/qtfrontend/frameview.cpp:322
+#: src/presentation/frontends/qtfrontend/frameview.cpp:338
+#: src/presentation/frontends/qtfrontend/frameview.cpp:348
 msgctxt "FrameView|"
 msgid "Warning"
 msgstr "Upozornenie"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:275
+#: src/presentation/frontends/qtfrontend/frameview.cpp:276
 msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
 msgstr "V ponuke predvolieb nie je vybraté žiadne video zariadenie."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:287
+#: src/presentation/frontends/qtfrontend/frameview.cpp:288
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
 msgstr "Príkaz pred zachytením neexistuje"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:298
+#: src/presentation/frontends/qtfrontend/frameview.cpp:299
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
 msgstr "Nemáte na svojom systéme nainštalovaný daný zachytávač"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:321
-#: src/presentation/frontends/qtfrontend/frameview.cpp:337
+#: src/presentation/frontends/qtfrontend/frameview.cpp:322
+#: src/presentation/frontends/qtfrontend/frameview.cpp:338
 msgctxt "FrameView|"
 msgid ""
 "Grabbing failed. This may happen if you try\n"
@@ -552,7 +552,7 @@ msgstr ""
 "zachytávať z neplatného zariadenia. Skontrolujte prosím\n"
 "nastavenia zachytávača v ponuke predvolieb."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:347
+#: src/presentation/frontends/qtfrontend/frameview.cpp:348
 msgctxt "FrameView|"
 msgid ""
 "You have to define an image grabber to use.\n"
