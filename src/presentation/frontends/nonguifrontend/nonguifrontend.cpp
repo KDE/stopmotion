@@ -168,7 +168,7 @@ public:
 	int count() override {
 		int c = 0;
 		if (dp) {
-			while (atEnd()) {
+			while (!atEnd()) {
 				++c;
 				next();
 			}
