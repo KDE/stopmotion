@@ -42,6 +42,7 @@
 #include <map>
 #include <string>
 #include <set>
+#include <unistd.h>
 
 FileException::FileException(const char* functionName, int errorno) {
 	snprintf(buffer, sizeof(buffer), "%s(): %s", functionName,
@@ -104,8 +105,12 @@ public:
 		if (fd < 0)
 			throw ProjectFileReadException("open", errno);
 		if (archive_read_data_into_fd(tar, fd) < 0) {
-			throw ProjectFileReadException("archive_read_data_into_fd", errno);
+			int err = errno;
+			close(fd);
+			throw ProjectFileReadException("archive_read_data_into_fd", err);
 		}
+		if (close(fd) < 0)
+			throw ProjectFileReadException("close", errno);
 	}
 	void finish() {
 		if (archive_read_close(tar) != ARCHIVE_OK)
