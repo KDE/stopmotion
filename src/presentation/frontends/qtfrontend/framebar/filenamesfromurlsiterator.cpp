@@ -27,7 +27,6 @@ void FileNamesFromUrlsIterator::set() {
 	if (!atEnd()) {
 		QString file = b->toLocalFile();
 		buffer.assign(file.toLocal8Bit());
-		buffer.c_str();
 	}
 }
 
@@ -53,7 +52,7 @@ bool FileNamesFromUrlsIterator::atEnd() const {
 }
 
 const char* FileNamesFromUrlsIterator::get() const {
-	return &buffer[0];
+	return buffer.c_str();
 }
 
 void FileNamesFromUrlsIterator::next() {

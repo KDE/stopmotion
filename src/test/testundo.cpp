@@ -326,7 +326,6 @@ public:
 		  del(delegate), nameString("failing "), fail(false),
 		  totalFails(0), noMallocsToFailCount(0) {
 		nameString.append(del->name());
-		nameString.c_str();
 	}
 	const char* name() const {
 		return nameString.c_str();
@@ -555,7 +554,6 @@ public:
 		: ExecutorStep(following), s1(first), s2(second), nameStr(s1.name()) {
 		nameStr.append(" then ");
 		nameStr.append(s2.name());
-		nameStr.c_str();
 	}
 	const char* name() const {
 		return nameStr.c_str();

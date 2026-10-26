@@ -279,8 +279,7 @@ void Util::ensurePathExists(const char* path) {
 	if (0 == access(path, F_OK))
 		return;
 	std::string copy(path);
-	copy.c_str();  // ensure terminating '\0'
-	char* parent = &copy[0];
+	char* parent = copy.data();
 	char* end = strrchr(parent, '/');
 	if (end && end[1] == '\0') {
 		// there is a trailing '/', so let's remove it and try again.

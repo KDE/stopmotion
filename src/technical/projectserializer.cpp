@@ -100,8 +100,7 @@ public:
 		return archive_entry_filetype(entry) == AE_IFREG ? archive_entry_pathname(entry) : 0;
 	}
 	void extract(std::string& filename) {
-		filename.c_str();
-		int fd = open(&filename[0], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		int fd = open(filename.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (fd < 0)
 			throw ProjectFileReadException("open", errno);
 		if (archive_read_data_into_fd(tar, fd) < 0) {

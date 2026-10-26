@@ -344,7 +344,6 @@ ExportDirectory::ExportDirectory() : p(0) {
 	s << getenv("HOME");
 	s << "/.stopmotion/export/";
 	std::string pathOut = s.str();
-	pathOut.c_str();  // force allocation of trailing '\0'
 	p = new char[pathOut.length() + 1];
 	strcpy(p, pathOut.c_str());
 }

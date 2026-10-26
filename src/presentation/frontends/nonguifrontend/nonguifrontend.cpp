@@ -181,7 +181,7 @@ public:
 		return !dp || !ep;
 	}
 	const char* get() const override {
-		return &buffer[0];
+		return buffer.c_str();
 	}
 	void next() override {
 		if (dp) {
@@ -191,7 +191,6 @@ public:
 			if (ep) {
 				buffer.resize(dirLen);
 				buffer.append(ep->d_name);
-				buffer.c_str();
 			}
 		}
 	}

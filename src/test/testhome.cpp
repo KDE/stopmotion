@@ -30,8 +30,7 @@
 
 TestHome::TestHome() : delegate(0), fakeHome(0) {
 	std::string tmpdir("/tmp/t_home_lsmXXXXXX");
-	tmpdir.c_str(); // ensure trailing null is present
-	if (mkdtemp(&tmpdir[0])) {
+	if (mkdtemp(tmpdir.data())) {
 		std::string::size_type bufferSize = tmpdir.length() + 1;
 		fakeHome = static_cast<char*>(malloc(bufferSize));
 		if (fakeHome) {

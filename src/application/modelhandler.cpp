@@ -95,7 +95,6 @@ class StringListIterator : public StringIterator {
 	void set() {
 		if (!atEnd()) {
 			buffer = b->toStdString();
-			buffer.c_str();
 		}
 	}
 
@@ -117,7 +116,7 @@ public:
 		return b == e;
 	}
 	const char* get() const {
-		return &buffer[0];
+		return buffer.c_str();
 	}
 	void next() {
 		++b;
