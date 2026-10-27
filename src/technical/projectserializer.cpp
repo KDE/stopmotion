@@ -234,15 +234,24 @@ void ProjectSerializer::setProjectFile(const char *filename) {
 }
 
 bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) {
-	xmlDocPtr doc = xmlReadFile(filename, NULL, 0);
+	std::unique_ptr<xmlDoc, decltype(&xmlFreeDoc)> doc(
+			xmlReadFile(filename, NULL, 0), xmlFreeDoc);
 	if (!doc) {
 		Logger::get().logWarning("Couldn't load XML file");
 		return false;
 	}
-	xmlNodePtr rootNode = xmlDocGetRootElement(doc);
+	xmlNodePtr rootNode = xmlDocGetRootElement(doc.get());
 	out.clear();
-	getAttributes(rootNode, out);
-	xmlFreeDoc(doc);
+	try {
+		getAttributes(rootNode, out);
+	} catch (...) {
+		for (Scene* s : out) {
+			delete s;
+		}
+		out.clear();
+		throw;
+	}
+	doc.reset();
 	xmlCleanupParser();
 	return true;
 }
@@ -505,6 +514,27 @@ void ProjectSerializer::setAttributes(xmlNodePtr rootNode,
 	}
 }
 
+namespace {
+/**
+ * Owns a string returned by libxml2, freeing it with xmlFree.
+ */
+class XmlString {
+	xmlChar* s;
+public:
+	explicit XmlString(xmlChar* str) : s(str) {
+	}
+	XmlString(const XmlString&) = delete;
+	XmlString& operator=(const XmlString&) = delete;
+	~XmlString() {
+		if (s)
+			xmlFree(s);
+	}
+	const char* get() const {
+		return reinterpret_cast<const char*>(s);
+	}
+};
+}
+
 void ProjectSerializer::getAttributes(xmlNodePtr node,
 		std::vector<Scene*>& sVect) {
 	xmlNodePtr currNode = NULL;
@@ -514,14 +544,19 @@ void ProjectSerializer::getAttributes(xmlNodePtr node,
 			// We either have a image node or a sound node
 			if (strcmp(nodeName, "img") == 0
 					|| strcmp(nodeName, "audio") == 0) {
-				char *filename = (char*) xmlGetProp(currNode, BAD_CAST "src");
-				if (filename != NULL) {
+				XmlString filenameProp(xmlGetProp(currNode, BAD_CAST "src"));
+				const char* filename = filenameProp.get();
+				if (filename != NULL && sVect.empty()) {
+					Logger::get().logWarning(
+							"Ignoring %s outside of any scene", filename);
+				} else if (filename != NULL) {
 					// The node is a image node
 					if (strcmp(nodeName, "img") == 0) {
 						WorkspaceFile wf(filename);
-						Frame *f = new Frame(wf);
+						std::unique_ptr<Frame> f(new Frame(wf));
 						Scene *s = sVect.back();
-						s->addSavedFrame(f);
+						s->addSavedFrame(f.get());
+						f.release();
 					}
 					// The node is a sound node
 					else {
@@ -530,14 +565,19 @@ void ProjectSerializer::getAttributes(xmlNodePtr node,
 						WorkspaceFile wf(filename);
 						int soundNum = s->soundCount(frameNum);
 						s->newSound(frameNum, wf);
-						char *soundName = (char*) xmlGetProp(currNode,
-								BAD_CAST "alt");
-						if (soundName != NULL) {
-							s->setSoundName(frameNum, soundNum, soundName);
-							xmlFree((xmlChar*) soundName);
+						XmlString soundName(xmlGetProp(currNode,
+								BAD_CAST "alt"));
+						if (soundName.get() != NULL) {
+							// setSoundName takes ownership of a new[] string
+							// and returns ownership of the old name
+							size_t size = strlen(soundName.get()) + 1;
+							std::unique_ptr<char[]> name(new char[size]);
+							memcpy(name.get(), soundName.get(), size);
+							delete[] s->setSoundName(frameNum, soundNum,
+									name.get());
+							name.release();
 						}
 					}
-					xmlFree((xmlChar*) filename);
 				}
 			}
 			// The node is a scene node
