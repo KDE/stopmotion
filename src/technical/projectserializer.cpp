@@ -151,8 +151,10 @@ class StoFileRead {
 				if (slash2) {
 					std::ptrdiff_t dirLen = slash2 - slash1;
 					++slash2;
-					if ((strncmp(images, slash1, dirLen) == 0
-							|| strncmp(sounds, slash1, dirLen))
+					if (((dirLen == sizeof(images) - 1
+								&& strncmp(images, slash1, dirLen) == 0)
+							|| (dirLen == sizeof(sounds) - 1
+								&& strncmp(sounds, slash1, dirLen) == 0))
 							&& strchr(slash2, '/') == 0) {
 						return slash2;
 					}
