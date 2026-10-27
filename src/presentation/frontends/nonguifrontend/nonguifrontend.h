@@ -50,6 +50,13 @@ public:
 	 * @return the return status on exit
 	 */
 	int run(int argc, char **argv) override;
+
+	/**
+	 * Loads the preferences, creating default preferences if there are none
+	 * yet. Must be called before the preferences are used.
+	 * @throws UiException if the preferences file exists but cannot be read.
+	 */
+	void initializePreferences();
 	
 	void showProgress(ProgressMessage message, int numOperations) override;
 	void hideProgress() override;

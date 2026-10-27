@@ -112,6 +112,7 @@ int main(int argc, char **argv) {
 		NonGUIFrontend nonGUIFrontend(facadePtr);
 
 		try {
+			nonGUIFrontend.initializePreferences();
 			recover(facadePtr);
 			facadePtr->registerFrontend(&nonGUIFrontend);
 			ret = nonGUIFrontend.run(argc, argv);

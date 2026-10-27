@@ -23,10 +23,13 @@
 #include "frontends/frontend.h"
 #include "uiexception.h"
 #include "src/technical/stringiterator.h"
+#include "src/foundation/preferencestool.h"
+#include "src/domain/animation/workspacefile.h"
 
 #include <stdio.h>
 #include <getopt.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -41,6 +44,30 @@ NonGUIFrontend::NonGUIFrontend(DomainFacade *facadePtr)
 
 
 NonGUIFrontend::~ NonGUIFrontend() {
+}
+
+
+void NonGUIFrontend::initializePreferences() {
+	PreferencesTool *prefs = PreferencesTool::get();
+	WorkspaceFile preferencesFile(WorkspaceFile::preferencesFile);
+	WorkspaceFile oldPrefsFile(WorkspaceFile::preferencesFileOld);
+
+	WorkspaceFile::ensureStopmotionDirectoriesExist();
+
+	if (prefs->load(preferencesFile.path())) {
+		prefs->setSavePath(preferencesFile.path(), false);
+		return;
+	}
+	// There is no user to ask whether a corrupt preferences file may be
+	// overwritten, so refuse to continue instead.
+	if (0 == access(preferencesFile.path(), F_OK)) {
+		throw UiException(UiException::preferencesFileMalformed,
+				preferencesFile.path());
+	}
+	if (!prefs->load(oldPrefsFile.path()))
+		prefs->setDefaultPreferences(STOPMOTION_VERSION);
+	prefs->setSavePath(preferencesFile.path(), true);
+	prefs->flush();
 }
 
 

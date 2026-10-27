@@ -43,7 +43,7 @@
 #include <assert.h>
 #include <string>
 
-const char* QtFrontend::VERSION = "0.9.0";
+const char* QtFrontend::VERSION = STOPMOTION_VERSION;
 
 QtFrontend::QtFrontend(int &argc, char **argv) {
 	stApp = new QApplication(argc, argv);

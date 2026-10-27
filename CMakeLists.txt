@@ -56,6 +56,8 @@ endif ()
 include(FeatureSummary)
 feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND)
 
+add_compile_definitions(STOPMOTION_VERSION="${PROJECT_VERSION}")
+
 # if given, pass path to translations and html path
 if(TRANSLATIONS_PATH)
   add_compile_definitions(TRANSLATIONS_PATH="${TRANSLATIONS_PATH}")
