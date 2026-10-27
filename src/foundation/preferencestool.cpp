@@ -191,7 +191,10 @@ int PreferencesTool::getPreference(const char* key, const int defaultValue) {
 		return defaultValue;
 	}
 	xmlChar *tmp = xmlGetProp(node, BAD_CAST "attribute");
-	int ret = atoi((char*)tmp);
+	if (!tmp) {
+		return defaultValue;
+	}
+	int ret = atoi(reinterpret_cast<const char*>(tmp));
 	xmlFree(tmp);
 	return ret;
 }
