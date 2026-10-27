@@ -109,7 +109,7 @@ void EditMenuHandler::cut() {
 void EditMenuHandler::paste()
 {
 	const QMimeData *mimeData = QApplication::clipboard()->mimeData();
-	if ( mimeData->hasUrls() ) {
+	if ( mimeData && mimeData->hasUrls() ) {
 		QStringList fileNames;
 		QList<QUrl> urls = mimeData->urls();
 		int numFrames = urls.size();

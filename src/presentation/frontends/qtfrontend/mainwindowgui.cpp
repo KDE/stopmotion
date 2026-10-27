@@ -826,7 +826,7 @@ void MainWindowGUI::updateNewActiveFrame(int, int frame) {
 
 void MainWindowGUI::updatePasteEnabled() {
 	const QMimeData *mimeData = QApplication::clipboard()->mimeData();
-	pasteAct->setEnabled(mimeData->hasUrls());
+	pasteAct->setEnabled(mimeData && mimeData->hasUrls());
 }
 
 void MainWindowGUI::doOpenProject(const char* projectFile) {
