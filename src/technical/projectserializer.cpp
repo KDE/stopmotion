@@ -40,6 +40,7 @@
 #include <errno.h>
 #include <iosfwd>
 #include <map>
+#include <memory>
 #include <string>
 #include <set>
 #include <unistd.h>
@@ -75,8 +76,28 @@ ProjectSerializer::~ProjectSerializer() {
 	resetProjectFile();
 }
 
+class FileDescriptor {
+	int fd;
+public:
+	explicit FileDescriptor(int f) : fd(f) {
+	}
+	FileDescriptor(const FileDescriptor&) = delete;
+	FileDescriptor& operator=(const FileDescriptor&) = delete;
+	~FileDescriptor() {
+		if (0 <= fd)
+			::close(fd);
+	}
+	int get() const {
+		return fd;
+	}
+};
+
 class TarFileRead {
-	struct archive* tar = archive_read_new();
+	// owner frees the archive if the constructor throws or finish() is not
+	// reached
+	std::unique_ptr<struct archive, decltype(&archive_read_free)> owner{
+			archive_read_new(), archive_read_free};
+	struct archive* tar = owner.get();
 	struct archive_entry *entry;
 public:
 	TarFileRead(const char* filename) {
@@ -115,9 +136,9 @@ public:
 	void finish() {
 		if (archive_read_close(tar) != ARCHIVE_OK)
 			throw ProjectFileReadException("archive_read_close", errno);
-		if (archive_read_free(tar) != ARCHIVE_OK)
-			throw ProjectFileReadException("archive_read_finish", errno);
 		tar = NULL;
+		if (archive_read_free(owner.release()) != ARCHIVE_OK)
+			throw ProjectFileReadException("archive_read_finish", errno);
 	}
 };
 
@@ -292,7 +313,11 @@ public:
 };
 
 class TarFileWrite {
-	struct archive* tar = archive_write_new();
+	// owner frees the archive if the constructor throws or eof() is not
+	// reached
+	std::unique_ptr<struct archive, decltype(&archive_write_free)> owner{
+			archive_write_new(), archive_write_free};
+	struct archive* tar = owner.get();
 public:
 	TarFileWrite(const char* tarFilename) {
 		if (archive_write_set_format_ustar(tar) != ARCHIVE_OK) {
@@ -306,36 +331,36 @@ public:
 	}
 	void add(const char* realPath, const char* storedPath) {
 		char buff[4096];
-		int fd;
 		int len;
 		struct stat st;
-		struct archive_entry *entry = archive_entry_new();
+		std::unique_ptr<archive_entry, decltype(&archive_entry_free)>
+				entry(archive_entry_new(), archive_entry_free);
 		if (stat(realPath, &st) < 0)
 			throw ProjectFileCreationException("stat", errno);
-		archive_entry_copy_stat(entry, &st);
+		archive_entry_copy_stat(entry.get(), &st);
 		if (storedPath)
-			archive_entry_set_pathname(entry, storedPath);
-		if (archive_write_header(tar, entry) != ARCHIVE_OK)
+			archive_entry_set_pathname(entry.get(), storedPath);
+		if (archive_write_header(tar, entry.get()) != ARCHIVE_OK)
 			throw ProjectFileCreationException("archive_write_header", errno);
 
-		fd = open(realPath, O_RDONLY);
-		if (fd < 0)
+		FileDescriptor fd(open(realPath, O_RDONLY));
+		if (fd.get() < 0)
 			throw ProjectFileCreationException("open", errno);
-		len = read(fd, buff, sizeof(buff));
+		len = read(fd.get(), buff, sizeof(buff));
 		while (len > 0) {
 			if (archive_write_data(tar, buff, len) < 0)
 				throw ProjectFileCreationException("archive_write_data", errno);
-			len = read(fd, buff, sizeof(buff));
+			len = read(fd.get(), buff, sizeof(buff));
 		}
-		close(fd);
-		archive_entry_free(entry);
+		if (len < 0)
+			throw ProjectFileCreationException("read", errno);
 	}
 	void eof() {
 		if (archive_write_close(tar) != ARCHIVE_OK)
 			throw ProjectFileCreationException("archive_write_close", errno);
-		if (archive_write_free(tar) != ARCHIVE_OK)
-			throw ProjectFileCreationException("archive_write_free", errno);
 		tar = NULL;
+		if (archive_write_free(owner.release()) != ARCHIVE_OK)
+			throw ProjectFileCreationException("archive_write_free", errno);
 	}
 };
 
