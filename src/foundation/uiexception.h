@@ -22,6 +22,7 @@
 #define UIEXCEPTION_H_
 
 #include <exception>
+#include <string>
 
 /**
  * Exception requiring an error message to be displayed to the user.
@@ -62,7 +63,7 @@ public:
 	UiException(Warning, const char* param);
 	explicit UiException(Error);
 	UiException(Error, const char* param);
-	~UiException() throw();
+	~UiException() throw() override;
     const char* what() const throw();
 	/**
 	 * Returns the warning code, or @c IsError if it is an error.
@@ -80,8 +81,9 @@ private:
 	void setStringParam(const char*);
 	Error err;
 	Warning warn;
-	mutable const char* stringParam;
-	mutable const char* out;
+	bool hasStringParam;
+	std::string stringParam;
+	mutable std::string out;
 };
 
 #endif
