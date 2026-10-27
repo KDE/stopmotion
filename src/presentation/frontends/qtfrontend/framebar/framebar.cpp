@@ -644,6 +644,7 @@ void FrameBar::setActiveScene(int sceneNumber) {
 	if (sceneNumber < 0) {
 		activeScene = -1;
 		activeSceneSize = 0;
+		return;
 	}
 
 	activeScene = sceneNumber;
