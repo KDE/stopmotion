@@ -106,15 +106,6 @@ TestStopmotionUndo::TestStopmotionUndo() : anim(0), mockFrontend(0),
 	loadOomTestUtil();
 }
 
-TestStopmotionUndo::~TestStopmotionUndo() {
-	wrapFileSystem(0);
-	delete mockFrontend;
-	delete testEnvFs;
-	delete mfs;
-	delete ex;
-	delete sv;
-}
-
 class SceneVectorTestHelper : public ModelTestHelper {
 	SceneVector& sv;
 	class HashingFileNameVisitor : public FileNameVisitor {
@@ -274,6 +265,17 @@ public:
 		QCOMPARE(soundCount, anim->soundCount());
 	}
 };
+
+TestStopmotionUndo::~TestStopmotionUndo() {
+	delete animTester;
+	delete anim;
+	wrapFileSystem(0);
+	delete mockFrontend;
+	delete testEnvFs;
+	delete mfs;
+	delete ex;
+	delete sv;
+}
 
 class StringContainer : public StringIterator {
 	typedef std::vector<const char*> vect_t;

@@ -45,6 +45,7 @@ TestHome::TestHome() : delegate(0), fakeHome(0) {
 }
 
 TestHome::~TestHome() {
+	free(fakeHome);
 }
 
 void TestHome::setDelegate(MockableFileSystem* mfs) {

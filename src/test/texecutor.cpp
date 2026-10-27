@@ -84,7 +84,9 @@ public:
 			std::stringstream ss;
 			ss << name << ",i:" << i1 << ",s:" << s1 << ",i:" << i2;
 			output.push_back(ss.str());
-			return createNullCommand();
+			Command* inverse = createNullCommand();
+			delete this;
+			return inverse;
 		}
 		bool operator==(const EtCommand& other) const {
 			return name == other.name
@@ -182,6 +184,7 @@ TestCommandFactory::TestCommandFactory()
 
 TestCommandFactory::~TestCommandFactory() {
 	delete ce;
+	delete cl;
 	delete[] str;
 }
 
@@ -189,7 +192,8 @@ void TestCommandFactory::AddCharToRandomString(char c) {
 	if (strNext == str + strAllocLen) {
 		int32_t newLen = strAllocLen == 0? 64 : strAllocLen * 2;
 		char* newStr = new char[newLen];
-		strncpy(newStr, str, strAllocLen);
+		if (str)
+			strncpy(newStr, str, strAllocLen);
 		delete[] str;
 		strNext = newStr + (strNext - str);
 		str = newStr;
