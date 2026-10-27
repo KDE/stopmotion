@@ -45,8 +45,7 @@ void Logger::logDebug(const char *, ...) {
 void Logger::logWarning(const char * msg, ...) {
 	va_list ap;
 	va_start(ap, msg);
-	QString qsm;
-	qsm.vasprintf(msg, ap);
+	QString qsm = QString::vasprintf(msg, ap);
 	va_end(ap);
 	QDebug qdebug(QtWarningMsg);
 	qdebug << qsm;
@@ -55,8 +54,7 @@ void Logger::logWarning(const char * msg, ...) {
 void Logger::logFatal(const char * msg, ...) {
 	va_list ap;
 	va_start(ap, msg);
-	QString qsm;
-	qsm.vasprintf(msg, ap);
+	QString qsm = QString::vasprintf(msg, ap);
 	va_end(ap);
 	QDebug qdebug(QtFatalMsg);
 	qdebug << qsm;
