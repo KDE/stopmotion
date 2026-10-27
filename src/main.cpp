@@ -108,8 +108,8 @@ int main(int argc, char **argv) {
 	DomainFacade *facadePtr;
 	// if program is started with --nonGUI
 	if ( argc > 1 && strcmp(argv[1], "--nonGUI") == 0 ) {
-		NonGUIFrontend nonGUIFrontend(facadePtr);
 		facadePtr = DomainFacade::getFacade();
+		NonGUIFrontend nonGUIFrontend(facadePtr);
 
 		try {
 			recover(facadePtr);
