@@ -507,7 +507,7 @@ void ProjectSerializer::setAttributes(xmlNodePtr rootNode,
 					node = xmlNewChild(sounds, NULL, BAD_CAST "audio", NULL);
 					xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
 					xmlNewProp(node, BAD_CAST "alt",
-							BAD_CAST frame->getSoundName(i));
+							BAD_CAST sound->getName());
 				}
 			}
 		}
