@@ -100,8 +100,9 @@ void RunAnimationHandler::runAnimation() {
 	sceneNr = 0;
 	startFrame = 0;
 	endFrame = 0;
-	int activeFrame = selection->getActiveFrame();
+	int activeFrame = 0;
 	if (selection) {
+		activeFrame = selection->getActiveFrame();
 		sceneNr = selection->getActiveScene();
 		startFrame = activeFrame;
 		int sel = selection->getSelectionAnchor();
