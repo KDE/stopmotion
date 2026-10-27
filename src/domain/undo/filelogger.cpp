@@ -56,7 +56,14 @@ public:
 	FileCommandLoggerImpl() : fh(0), committedUpTo(0) {
 	}
 	~FileCommandLoggerImpl() override {
-		close();
+		// A destructor must not throw; if the final flush fails the
+		// uncommitted commands are lost either way.
+		try {
+			close();
+		} catch (...) {
+			if (fh)
+				fclose(fh);
+		}
 	}
 	void setLogFile(FILE* f) {
 		close();
