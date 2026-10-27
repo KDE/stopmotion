@@ -77,28 +77,28 @@ msgctxt "ModelHandler|"
 msgid "Choose frames to add"
 msgstr "Escoja los fotogramas a añadir"
 
-#: src/application/modelhandler.cpp:183
+#: src/application/modelhandler.cpp:182
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
 msgstr "Se ha eliminado el fotograma seleccionado"
 
-#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
-#: src/application/modelhandler.cpp:246
+#: src/application/modelhandler.cpp:219 src/application/modelhandler.cpp:229
+#: src/application/modelhandler.cpp:245
 msgctxt "ModelHandler|"
 msgid "Warning"
 msgstr "Advertencia"
 
-#: src/application/modelhandler.cpp:221
+#: src/application/modelhandler.cpp:220
 msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
 msgstr "No tiene Gimp instalado en el sistema"
 
-#: src/application/modelhandler.cpp:231
+#: src/application/modelhandler.cpp:230
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
 msgstr "No existe un fotograma activo a abrir"
 
-#: src/application/modelhandler.cpp:247
+#: src/application/modelhandler.cpp:246
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr "No se ha podido iniciar Gimp."
