@@ -526,10 +526,10 @@ public:
 		VaListParameters vpsd(args);
 		try {
 			WriterParametersWrapper vps(vpsd, name);
-			Command* c = f->create(vps, *ErrorHandler::getThrower());
+			std::unique_ptr<Command> c(f->create(vps, *ErrorHandler::getThrower()));
 			if (c) {
 				vps.writeCommand(logger);
-				history.execute(*c);
+				history.execute(*c.release());
 				logger->commit();
 			}
 		} catch(...) {
@@ -544,10 +544,10 @@ public:
 	void execute(const char* name, Parameters& params) override {
 		WriterParametersWrapper pw(params, name);
 		CommandFactory* f = Factory(name);
-		Command* c = f->create(pw, *ErrorHandler::getThrower());
+		std::unique_ptr<Command> c(f->create(pw, *ErrorHandler::getThrower()));
 		if (c) {
 			pw.writeCommand(logger);
-			history.execute(*c);
+			history.execute(*c.release());
 			logger->commit();
 		}
 	}
@@ -564,7 +564,7 @@ public:
 			const char* commandName = id.c_str();
 			CommandFactory* f = Factory(commandName);
 			StringReaderParameters sps(reader);
-			Command* c = f->create(sps, e);
+			std::unique_ptr<Command> c(f->create(sps, e));
 			// It is an error if a command executed from a log is invalid.
 			// This would mean that the log has become out-of-sync with the
 			// model.
@@ -576,7 +576,7 @@ public:
 					== reader.getEndOfCommand(subcommands, finished))
 				throw MalformedLineException();
 			if (finished)
-				history.execute(*c);
+				history.execute(*c.release());
 			return true;
 		}
 		if (StringReader::parseSucceeded == reader.isEndOfLine())
@@ -604,11 +604,11 @@ public:
 			RandomParameters rpsd(rng);
 			const char* commandName = name.c_str();
 			WriterParametersWrapper rps(rpsd, commandName);
-			Command* c = factories[name]->create(rps, *ErrorHandler::getThrower());
+			std::unique_ptr<Command> c(factories[name]->create(rps, *ErrorHandler::getThrower()));
 			if (c) {
 				if (logger)
 					rps.writeCommand(logger);
-				history.execute(*c);
+				history.execute(*c.release());
 				if (logger)
 					logger->commit();
 				++commandCount;
@@ -626,11 +626,11 @@ public:
 			std::string& name(constructiveCommands[r]);
 			RandomParameters rpsd(rng);
 			WriterParametersWrapper rps(rpsd, name.c_str());
-			Command* c = factories[name]->create(rps, *ErrorHandler::getThrower());
+			std::unique_ptr<Command> c(factories[name]->create(rps, *ErrorHandler::getThrower()));
 			if (c) {
 				if (logger)
 					rps.writeCommand(logger);
-				history.execute(*c);
+				history.execute(*c.release());
 				if (logger)
 					logger->commit();
 			}
