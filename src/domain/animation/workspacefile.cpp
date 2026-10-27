@@ -223,7 +223,7 @@ WorkspaceFile::WorkspaceFile()
 }
 
 WorkspaceFile& WorkspaceFile::operator=(const WorkspaceFile& other) {
-	if (other.fullPath) {
+	if (this != &other && other.fullPath) {
 		int nameStart = other.namePart - other.fullPath;
 		size_t length = 1 + nameStart + strlen(other.namePart);
 		char* buffer = new char[length];
