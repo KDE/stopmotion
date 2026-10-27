@@ -237,6 +237,7 @@ void TestCommandFactory::emptyCommandReplayerThrows() {
 void TestCommandFactory::canParseFromLog() {
 	executionOutput.clear();
 	ce->executeFromLog("et -5 \"hello world!\" 412345!", *ErrorHandler::getThrower());
+	QCOMPARE(executionOutput.size(), size_t(1));
 	QCOMPARE(executionOutput.begin()->c_str(),
 			"et,i:-5,s:hello world!,i:412345");
 }

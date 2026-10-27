@@ -98,7 +98,7 @@ class TarFileRead {
 	std::unique_ptr<struct archive, decltype(&archive_read_free)> owner{
 			archive_read_new(), archive_read_free};
 	struct archive* tar = owner.get();
-	struct archive_entry *entry;
+	struct archive_entry *entry = nullptr;
 public:
 	TarFileRead(const char* filename) {
 		if (archive_read_support_format_tar(tar) != ARCHIVE_OK) {
@@ -277,15 +277,13 @@ public:
 	}
 	void visitImage(const char* path) override {
 		std::string p(path);
-		if (visited.find(p) == visited.end()) {
-			visited.insert(p);
+		if (visited.insert(p).second) {
 			del->visitImage(path);
 		}
 	}
 	void visitSound(const char* path) override {
 		std::string p(path);
-		if (visited.find(p) == visited.end()) {
-			visited.insert(p);
+		if (visited.insert(p).second) {
 			del->visitSound(path);
 		}
 	}
