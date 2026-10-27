@@ -304,7 +304,12 @@ void TemporaryWorkspaceFile::copyToWorkspace(const char* filename,
 	getFreshFilename(fullPath, namePart, type.preferredExtension(filename));
 	toBeDeleted = false;
 	if (!Util::copyFile(fullPath, filename)) {
-		throw UiException(UiException::failedToCopyFilesToWorkspace);
+		// The destructor will not run if we are called from a constructor
+		unlink(fullPath);
+		delete[] fullPath;
+		fullPath = 0;
+		namePart = 0;
+		throw UiException(UiException::failedToCopyFilesToWorkspace, filename);
 	}
 	toBeDeleted = true;
 }
