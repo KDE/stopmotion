@@ -58,6 +58,7 @@ void ModelHandler::setRemoveFramesButton(QPushButton* removeFramesButton) {
 
 
 void ModelHandler::chooseFrame() {
+	delete fileDialog;
 	fileDialog = new QFileDialog((MainWindowGUI*)parent(),
 			tr("Choose frames to add"), *lastVisitedDir);
 	QStringList filters;
