@@ -242,20 +242,29 @@ bool Util::copyFile(const char *destFileName, const char *srcFileName) {
 
     char buf[4096];
     size_t bytesRead;
+    bool success = true;
     while ((bytesRead = fread(buf, 1, sizeof(buf), src)) > 0) {
         if (fwrite(buf, 1, bytesRead, dest) != bytesRead) {
             fprintf (stderr, "Error while writing '%s': %s\n", destFileName, strerror(errno));
+            success = false;
             break;
         }
     }
 
-    if (bytesRead == 0 && ferror(src))
+    if (bytesRead == 0 && ferror(src)) {
         fprintf(stderr, "Error while reading from file '%s': %s\n", srcFileName, strerror(errno));
+        success = false;
+    }
 
     fclose(src);
-    fclose(dest);
+    // buffered data is written here, so writing can fail here, too
+    if (fclose(dest) != 0) {
+        if (success)
+            fprintf(stderr, "Error while writing '%s': %s\n", destFileName, strerror(errno));
+        success = false;
+    }
 
-    return true;
+    return success;
 }
 
 void Util::linkOrCopyFile(const char* newName, const char* oldName) {
