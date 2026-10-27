@@ -30,7 +30,7 @@ public:
 	~ThrowingErrorHandler() override {
 	}
 	void error(UiException e) override {
-		throw &e;
+		throw e;
 	}
 };
 ThrowingErrorHandler singleton;
