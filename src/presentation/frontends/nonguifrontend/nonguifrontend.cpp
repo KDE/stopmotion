@@ -225,36 +225,40 @@ public:
 
 void NonGUIFrontend::addFrames(const char *directory) {
 	std::string dir;
-	getAbsolutePath(dir, directory);
+	getAbsolutePath(dir, directory, true);
 	DirIterator di(dir.c_str());
 	facadePtr->addFrames(0, 0, di);
 }
 
 
-void NonGUIFrontend::save(const char *directory) {
-	// returns a absolute path which is allocated with new[]
-	std::string dir;
-	getAbsolutePath(dir, directory);
-	facadePtr->saveProject(dir.c_str());
+void NonGUIFrontend::save(const char *projectFile) {
+	std::string file;
+	getAbsolutePath(file, projectFile, false);
+	facadePtr->saveProject(file.c_str());
 }
 
 
-void NonGUIFrontend::getAbsolutePath(std::string& out, const char *path) {
+void NonGUIFrontend::getAbsolutePath(std::string& out, const char *path,
+		bool isDirectory) {
 	if (!path || path[0] == '\0') {
 		out = "/";
 		return;
 	}
+	out = path;
 	// isn't an absolute path
 	if (path[0] != '/') {
-		// make it absolute
-		out = getenv("PWD");
-		out.append("/");
-		out.append(path);
-	} else {
-		out = path;
+		// make it absolute; $PWD may be unset or stale, so ask the system.
+		// If that fails the relative path still works.
+		char* cwd = getcwd(NULL, 0);
+		if (cwd) {
+			out = cwd;
+			free(cwd);
+			out.append("/");
+			out.append(path);
+		}
 	}
-	// ensure it ends in /
-	if (out[out.size() - 1] != '/')
+	// ensure a directory ends in /
+	if (isDirectory && out[out.size() - 1] != '/')
 		out.append("/");
 }
 

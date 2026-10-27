@@ -80,14 +80,15 @@ private:
 	
 	int parseArguments(int argc, char **argv);
 	void addFrames(const char *directory);
-	void save(const char *directory);
+	void save(const char *projectFile);
 	/**
-	 * Sets {@a out} to be the absolute path of {@a path}, always with a
-	 * trailing backslash.
+	 * Sets {@a out} to be the absolute path of {@a path}.
 	 * @param[out] out Receives the path returned.
 	 * @param[in] path The path to make absolute.
+	 * @param[in] isDirectory If true, a trailing slash is added if missing.
+	 * Must be false for paths of files.
 	 */
-	void getAbsolutePath(std::string& out, const char *path);
+	void getAbsolutePath(std::string& out, const char *path, bool isDirectory);
 	int checkFiles(const char *directory);
 };
 
