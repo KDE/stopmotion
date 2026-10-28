@@ -75,7 +75,10 @@ LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const cha
 	if (!translationFile.isEmpty()) {
 	    Logger::get().logDebug("Loading translator: ");
 	    Logger::get().logDebug(translationFile.toLatin1().constData());
-	    translator->load(translationFile);
+	    if (!translator->load(translationFile)) {
+		    Logger::get().logWarning("Failed to load translation %s",
+				    translationFile.toLocal8Bit().constData());
+	    }
 	}
 
 	stApp->installTranslator(translator);
@@ -103,7 +106,11 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 	int num = 2;
 	for (int i = 0; i < fileNames.size(); ++i) {
 		QTranslator translator;
-		translator.load(fileNames[i], qmPath);
+		if (!translator.load(fileNames[i], qmPath)) {
+			Logger::get().logWarning("Failed to load translation %s",
+					fileNames[i].toLocal8Bit().constData());
+			continue;
+		}
 
 		QString language = translator.translate("LanguageHandler", "English", 
 			"This should be translated to the name of the "
@@ -146,10 +153,15 @@ void LanguageHandler::changeLanguage(QAction *action)
 	
 	QString locale = locales[action];
 	if (locale != "en") {
-		translator->load("stopmotion_" + locale, qmPath);
+		if (!translator->load("stopmotion_" + locale, qmPath)) {
+			Logger::get().logWarning("Failed to load translation for %s",
+					locale.toLocal8Bit().constData());
+		}
 	}
 	else {
-		translator->load("");
+		// Loading an empty file name unloads the current translation, which
+		// is all we want for English. It always reports failure.
+		static_cast<void>(translator->load(QString()));
 	}
 	
 	PreferencesTool::get()->setPreference("language", locale.toLatin1().constData());
