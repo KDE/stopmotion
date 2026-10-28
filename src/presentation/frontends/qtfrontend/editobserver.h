@@ -31,8 +31,8 @@ class QFileSystemWatcher;
  */
 class EditObserver: public Observer {
 	QFileSystemWatcher* fsw;
-	EditObserver(const EditObserver&);
-	EditObserver& operator=(const EditObserver&);
+	EditObserver(const EditObserver&) = delete;
+	EditObserver& operator=(const EditObserver&) = delete;
 public:
 	EditObserver(QFileSystemWatcher* watcher);
 	~EditObserver() override;

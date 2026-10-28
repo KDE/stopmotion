@@ -175,8 +175,8 @@ class TemporaryWorkspaceFile {
 	char* fullPath;
 	const char* namePart;
 	bool toBeDeleted;
-	TemporaryWorkspaceFile(const TemporaryWorkspaceFile&);
-	TemporaryWorkspaceFile& operator=(const TemporaryWorkspaceFile);
+	TemporaryWorkspaceFile(const TemporaryWorkspaceFile&) = delete;
+	TemporaryWorkspaceFile& operator=(const TemporaryWorkspaceFile&) = delete;
 	friend class WorkspaceFile;
 	/**
 	 * @throws CopyFailedException if the copy failed.

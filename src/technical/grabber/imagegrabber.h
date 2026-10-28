@@ -27,8 +27,8 @@
  */
 class ImageGrabber {
 	char* path;
-	ImageGrabber(const ImageGrabber&); // unimplemented
-	ImageGrabber& operator=(const ImageGrabber&); // unimplemented
+	ImageGrabber(const ImageGrabber&) = delete;
+	ImageGrabber& operator=(const ImageGrabber&) = delete;
 public:
 	/**
 	 * Constructs and initializes the object.

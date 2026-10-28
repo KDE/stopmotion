@@ -30,9 +30,9 @@ class ExternalCommandWithTemporaryDirectory {
 	ExternalCommand* ec;
 	TemporaryDirectory* td;
 	ExternalCommandWithTemporaryDirectory&
-	operator=(const ExternalCommandWithTemporaryDirectory&);
+	operator=(const ExternalCommandWithTemporaryDirectory&) = delete;
 	ExternalCommandWithTemporaryDirectory(
-			const ExternalCommandWithTemporaryDirectory&);
+			const ExternalCommandWithTemporaryDirectory&) = delete;
 public:
 	ExternalCommandWithTemporaryDirectory(QWidget *parent = nullptr);
 	~ExternalCommandWithTemporaryDirectory();

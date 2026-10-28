@@ -31,8 +31,8 @@ class ErrorHandler;
 class Sound {
 	AudioFormat* af;
 	const char* name;
-	Sound& operator=(const Sound&) const;
-	Sound(const Sound&);
+	Sound& operator=(const Sound&) = delete;
+	Sound(const Sound&) = delete;
 public:
 	Sound();
 	~Sound();

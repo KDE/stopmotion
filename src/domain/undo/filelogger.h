@@ -42,8 +42,8 @@ class FileCommandLogger {
 public:
 	FileCommandLogger();
 	~FileCommandLogger();
-	FileCommandLogger(const FileCommandLogger&); // unimplemented
-	FileCommandLogger& operator=(const FileCommandLogger&); //unimplemented
+	FileCommandLogger(const FileCommandLogger&) = delete;
+	FileCommandLogger& operator=(const FileCommandLogger&) = delete;
 	void setLogFile(FILE* fileHandle);
 	FILE* getLogFile() const;
 	CommandLogger* getLogger();

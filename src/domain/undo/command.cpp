@@ -44,8 +44,8 @@ public:
 	 */
 	class NullAdder {
 		CommandList& cl;
-		NullAdder(const NullAdder&);
-		NullAdder& operator=(const NullAdder&);
+		NullAdder(const NullAdder&) = delete;
+		NullAdder& operator=(const NullAdder&) = delete;
 	public:
 		NullAdder(CommandList& c) : cl(c) {
 			cl.cs.push_front(nullptr);

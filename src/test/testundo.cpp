@@ -60,8 +60,8 @@ public:
 	StringLoggerWrapper(std::string* output, CommandLogger* wrapped) :
 			delegate(wrapped), out(output), committedUpTo(0) {
 	}
-	StringLoggerWrapper(const StringLoggerWrapper&); // unimplemented
-	StringLoggerWrapper& operator=(const StringLoggerWrapper&); // unimplemented
+	StringLoggerWrapper(const StringLoggerWrapper&) = delete;
+	StringLoggerWrapper& operator=(const StringLoggerWrapper&) = delete;
 	~StringLoggerWrapper() override {
 	}
 	void setOutputString(std::string* output) {

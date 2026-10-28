@@ -37,8 +37,8 @@ class SceneVector : public AnimationImpl {
 	int totalSoundCount;
 
 	Scene* getMutableScene(int);
-	SceneVector(const SceneVector&);
-	SceneVector& operator=(const SceneVector&);
+	SceneVector(const SceneVector&) = delete;
+	SceneVector& operator=(const SceneVector&) = delete;
 public:
 	SceneVector();
 	~SceneVector() override;

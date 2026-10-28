@@ -34,8 +34,8 @@ class ErrorHandler;
  * undo system. Most commands should derive from CommandAtomic.
  */
 class Command {
-	Command(const Command&);
-	Command& operator=(const Command&);
+	Command(const Command&) = delete;
+	Command& operator=(const Command&) = delete;
 public:
 	Command();
 	virtual ~Command() = 0;

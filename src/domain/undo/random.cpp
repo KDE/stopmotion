@@ -38,8 +38,8 @@ class RandomImpl {
 	}
 	RandomImpl() : refCount(1), nextIndex(0), nextChunk(nullptr) {
 	}
-	RandomImpl(const RandomImpl&); // unimplemented
-	RandomImpl& operator=(const RandomImpl&); // unimplemented
+	RandomImpl(const RandomImpl&) = delete;
+	RandomImpl& operator=(const RandomImpl&) = delete;
 	enum {
 		chunkSize = 10
 	};

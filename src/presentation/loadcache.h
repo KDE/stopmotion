@@ -57,8 +57,8 @@ private:
 		std::string n;
 		typename T::value_t* v;
 		Item* next;
-		Item(const Item&);
-		Item& operator=(const Item&);
+		Item(const Item&) = delete;
+		Item& operator=(const Item&) = delete;
 	public:
 		Item();
 		~Item();
