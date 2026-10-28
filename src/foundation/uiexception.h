@@ -63,8 +63,8 @@ public:
 	UiException(Warning, const char* param);
 	explicit UiException(Error);
 	UiException(Error, const char* param);
-	~UiException() throw() override;
-    const char* what() const throw() override;
+	~UiException() noexcept override;
+    const char* what() const noexcept override;
 	/**
 	 * Returns the warning code, or @c IsError if it is an error.
 	 */

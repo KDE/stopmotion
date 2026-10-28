@@ -29,7 +29,7 @@ class WorkspaceFile;
 FrameOutOfRangeException::FrameOutOfRangeException() {
 }
 
-const char* FrameOutOfRangeException::what() const throw() {
+const char* FrameOutOfRangeException::what() const noexcept {
 	return "Internal error: Frame out of range!";
 }
 

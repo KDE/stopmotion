@@ -29,7 +29,7 @@
  * that is of the wrong type, is not present or otherwise does not parse.
  */
 class IncorrectParameterException : public std::exception {
-	const char* what() const throw() override;
+	const char* what() const noexcept override;
 };
 
 /**
@@ -37,7 +37,7 @@ class IncorrectParameterException : public std::exception {
  * characters at its end.
  */
 class MalformedLineException : public std::exception {
-	const char* what() const throw() override;
+	const char* what() const noexcept override;
 };
 
 /**
@@ -48,7 +48,7 @@ class ParametersOutOfRangeException : public std::exception {
 public:
 	ParametersOutOfRangeException() {
 	}
-	const char* what() const throw() override;
+	const char* what() const noexcept override;
 };
 
 class CommandFactory;
@@ -66,11 +66,11 @@ class UndoRedoObserver;
  * on a @ref CommandFactory which has had no constructive commands set.
  */
 class UnknownCommandException : public std::exception {
-	const char* what() const throw() override;
+	const char* what() const noexcept override;
 };
 
 class CommandNameAlreadyUsedException : public std::exception {
-	const char* what() const throw() override;
+	const char* what() const noexcept override;
 };
 
 class Executor {

@@ -34,7 +34,7 @@ class FileException : public std::exception {
 	char buffer[100];
 public:
 	FileException(const char* functionName, int errorno);
-	const char* what() const throw() override;
+	const char* what() const noexcept override;
 };
 
 /**

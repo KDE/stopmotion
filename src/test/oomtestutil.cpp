@@ -41,7 +41,7 @@ int fflush(FILE* fh);
 size_t fread(void *out, size_t s, size_t n, FILE *fh);
 size_t fwrite(const void *in, size_t s, size_t n, FILE *fh);
 int access(const char *name, int type);
-int ferror(FILE* fh) throw();
+int ferror(FILE* fh) noexcept;
 int unlink(const char *name);
 char *getenv(const char *name);
 }
@@ -133,7 +133,7 @@ public:
 	int access(const char *name, int type) override {
 		return raccess(name, type);
 	}
-	int ferror(FILE* fh) throw() override {
+	int ferror(FILE* fh) noexcept override {
 		return rferror(fh);
 	}
 	int unlink(const char *name) override {
@@ -225,7 +225,7 @@ int access(const char *name, int type) {
 	return getFileSystem()->access(name, type);
 }
 
-int ferror(FILE* fh) throw() {
+int ferror(FILE* fh) noexcept {
 	return getFileSystem()->ferror(fh);
 }
 

@@ -51,7 +51,7 @@ class TestException : public std::exception {
 public:
 	TestException(const char* message) : msg(message) {
 	}
-	const char* what() const throw() override {
+	const char* what() const noexcept override {
 		return msg;
 	}
 };

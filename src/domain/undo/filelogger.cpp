@@ -125,6 +125,6 @@ LoggerWriteFailedException::LoggerWriteFailedException(int error) {
 			strerror(error));
 }
 
-const char* LoggerWriteFailedException::what() const throw() {
+const char* LoggerWriteFailedException::what() const noexcept {
 	return msg;
 }

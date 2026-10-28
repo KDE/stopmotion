@@ -43,7 +43,7 @@ FileLinkException::FileLinkException(const char* message) {
 	msg[sizeof(msg) - 1] = '\0';
 }
 
-const char* FileLinkException::what() const throw() {
+const char* FileLinkException::what() const noexcept {
 	return msg;
 }
 
@@ -52,7 +52,7 @@ DirectoryCreationException::DirectoryCreationException(const char* path) {
 }
 
 const char* DirectoryCreationException::what() const
-		throw() {
+		noexcept {
 	return buffer;
 }
 

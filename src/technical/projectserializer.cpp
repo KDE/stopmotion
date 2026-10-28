@@ -50,7 +50,7 @@ FileException::FileException(const char* functionName, int errorno) {
 			strerror(errorno));
 }
 
-const char* FileException::what() const throw() {
+const char* FileException::what() const noexcept {
 	return buffer;
 }
 

@@ -26,9 +26,9 @@ Frontend::~Frontend() {
 Frontend::CriticalError::CriticalError() {
 }
 
-Frontend::CriticalError::~CriticalError() throw () {
+Frontend::CriticalError::~CriticalError() noexcept {
 }
 
-const char* Frontend::CriticalError::what() const throw () {
+const char* Frontend::CriticalError::what() const noexcept {
 	return "Critical error. Program stopped.";
 }

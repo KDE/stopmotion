@@ -84,7 +84,7 @@ public:
 FailedToInitializeCommandLogger::FailedToInitializeCommandLogger() {
 }
 
-const char* FailedToInitializeCommandLogger::what() const throw () {
+const char* FailedToInitializeCommandLogger::what() const noexcept {
 	return "Failed to initialize command logger";
 }
 

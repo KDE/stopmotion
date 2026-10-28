@@ -47,7 +47,7 @@ class UndoRedoObserver;
 class FailedToInitializeCommandLogger : public std::exception {
 public:
 	FailedToInitializeCommandLogger();
-	const char* what() const throw() override;
+	const char* what() const noexcept override;
 };
 
 /**

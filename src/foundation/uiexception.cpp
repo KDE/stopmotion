@@ -46,7 +46,7 @@ UiException::UiException(Error e, const char* param)
 	setStringParam(param);
 }
 
-UiException::~UiException() throw() {
+UiException::~UiException() noexcept {
 }
 
 UiException::Warning UiException::warning() const {
@@ -68,7 +68,7 @@ std::string formatError(const char* format, const std::string& param) {
 }
 }
 
-const char* UiException::what() const throw () {
+const char* UiException::what() const noexcept {
 	if (!out.empty())
 		return out.c_str();
 	switch (err) {

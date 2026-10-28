@@ -691,25 +691,25 @@ Executor* makeExecutor() {
 	return new ConcreteExecutor();
 }
 
-const char* IncorrectParameterException::what() const throw() {
+const char* IncorrectParameterException::what() const noexcept {
 	return "Command log corrupt (incorrect parameter type)!";
 }
 
-const char* MalformedLineException::what() const throw() {
+const char* MalformedLineException::what() const noexcept {
 	return "Command log corrupt (malformed line)!";
 }
 
-const char* ParametersOutOfRangeException::what() const throw() {
+const char* ParametersOutOfRangeException::what() const noexcept {
 	return "Internal error or command log corrupt:\n"
 			"Command parameters out of range.";
 }
 
-const char* UnknownCommandException::what() const throw() {
+const char* UnknownCommandException::what() const noexcept {
 	return "Internal error or command log corrupt:\n"
 			"Unknown command.";
 }
 
 const char* CommandNameAlreadyUsedException::what() const
-		throw() {
+		noexcept {
 	return "Internal error: Command registered twice!";
 }

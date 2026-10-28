@@ -105,8 +105,8 @@ public:
 	class CriticalError : public std::exception {
 	public:
 		CriticalError();
-		~CriticalError() throw() override;
-		const char* what() const throw() override;
+		~CriticalError() noexcept override;
+		const char* what() const noexcept override;
 	};
 };
 
