@@ -41,6 +41,8 @@ struct GrabberDevice;
  */
 class DomainFacade {
 public:
+	DomainFacade(const DomainFacade&) = delete;
+	DomainFacade& operator=(const DomainFacade&) = delete;
 	~DomainFacade();
 
 	/**

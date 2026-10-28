@@ -38,6 +38,8 @@ class TestHome : public MockableFileSystem {
 	MockableFileSystem* delegate;
 	char* fakeHome;
 public:
+	TestHome(const TestHome&) = delete;
+	TestHome& operator=(const TestHome&) = delete;
 	TestHome();
 	~TestHome() override;
 	void setDelegate(MockableFileSystem* mfs) override;

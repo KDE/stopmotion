@@ -61,6 +61,8 @@ bool ensureUnlinked(const char* path) {
 class ErrorCapture : public ErrorHandler {
 	UiException* exception;
 public:
+	ErrorCapture(const ErrorCapture&) = delete;
+	ErrorCapture& operator=(const ErrorCapture&) = delete;
 	ErrorCapture() : exception(nullptr) {
 	}
 	~ErrorCapture() override {
@@ -483,6 +485,8 @@ class GetLine {
 	char* buffer;
 	size_t size;
 public:
+	GetLine(const GetLine&) = delete;
+	GetLine& operator=(const GetLine&) = delete;
 	GetLine(FILE* handle) : fh(handle), buffer(nullptr), size(0) {
 	}
 	~GetLine() {

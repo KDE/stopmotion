@@ -39,6 +39,8 @@ PreferencesTool* PreferencesTool::preferencesTool = nullptr;
 class XmlProp {
 	xmlChar* p;
 public:
+	XmlProp(const XmlProp&) = delete;
+	XmlProp& operator=(const XmlProp&) = delete;
 	XmlProp(const _xmlNode* node, const char* name) : p(nullptr) {
 		p = xmlGetProp(node, BAD_CAST name);
 	}
@@ -215,6 +217,8 @@ void PreferencesTool::removePreference(const char* key) {
 class WriteableFile {
 	FILE* f;
 public:
+	WriteableFile(const WriteableFile&) = delete;
+	WriteableFile& operator=(const WriteableFile&) = delete;
 	WriteableFile() : f(nullptr) {
 	}
 	~WriteableFile() {

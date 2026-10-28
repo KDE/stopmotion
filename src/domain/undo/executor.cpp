@@ -511,6 +511,8 @@ class ConcreteExecutor : public Executor {
 		return found->second;
 	}
 public:
+	ConcreteExecutor(const ConcreteExecutor&) = delete;
+	ConcreteExecutor& operator=(const ConcreteExecutor&) = delete;
 	ConcreteExecutor() : logger(nullptr) {
 	}
 	~ConcreteExecutor() override {

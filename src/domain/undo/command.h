@@ -133,6 +133,8 @@ class CommandHistory {
 	bool previousCanRedo;
 	void notifyObserver();
 public:
+	CommandHistory(const CommandHistory&) = delete;
+	CommandHistory& operator=(const CommandHistory&) = delete;
 	CommandHistory();
 	~CommandHistory();
 	/**

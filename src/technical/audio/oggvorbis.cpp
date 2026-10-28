@@ -36,6 +36,8 @@
 class FileCloser {
 	FILE* h;
 public:
+	FileCloser(const FileCloser&) = delete;
+	FileCloser& operator=(const FileCloser&) = delete;
 	FileCloser(FILE* fh) : h(fh) {
 	}
 	FILE* release() {

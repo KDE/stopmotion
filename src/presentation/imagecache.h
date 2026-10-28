@@ -29,6 +29,8 @@ template<typename T> class LoadCache;
 class ImageCache {
 	LoadCache<SurfaceLoader>* delegate;
 public:
+	ImageCache(const ImageCache&) = delete;
+	ImageCache& operator=(const ImageCache&) = delete;
 	/**
 	 * Constructs an image cache.
 	 * @param cacheSize The number of images that the cache should hold.

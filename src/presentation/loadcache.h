@@ -32,6 +32,8 @@
  */
 template<typename T> class LoadCache {
 public:
+	LoadCache(const LoadCache&) = delete;
+	LoadCache& operator=(const LoadCache&) = delete;
 	/**
 	 * Constructs an image cache.
 	 * @param cacheSize The number of images that the cache should hold.

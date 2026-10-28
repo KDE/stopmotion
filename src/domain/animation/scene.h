@@ -43,6 +43,8 @@ public:
  */
 class Scene {
 public:
+	Scene(const Scene&) = delete;
+	Scene& operator=(const Scene&) = delete;
 	/**
 	 * Initializes the scene
 	 */

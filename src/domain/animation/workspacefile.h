@@ -240,6 +240,8 @@ public:
 class ExportDirectory {
 	char* p;
 public:
+	ExportDirectory(const ExportDirectory&) = delete;
+	ExportDirectory& operator=(const ExportDirectory&) = delete;
 	ExportDirectory();
 	~ExportDirectory();
 	const char* path() const {

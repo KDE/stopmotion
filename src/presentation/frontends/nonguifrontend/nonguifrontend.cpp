@@ -183,6 +183,8 @@ class DirIterator : public StringIterator {
 	DIR *dp;
 	struct dirent *ep;
 public:
+	DirIterator(const DirIterator&) = delete;
+	DirIterator& operator=(const DirIterator&) = delete;
 	DirIterator(const char* path)
 			: buffer(path), dirLen(0), dp(opendir(path)) {
 		dirLen = buffer.size();

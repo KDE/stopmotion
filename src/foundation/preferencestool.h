@@ -29,6 +29,8 @@ class Preference {
 	const char* val;
 	bool owns;
 public:
+	Preference(const Preference&) = delete;
+	Preference& operator=(const Preference&) = delete;
 	/**
 	 * Retrieves the value associated with {@a key}. {@ref get} will return
 	 * this value, or {@c 0} if no such value exists.
@@ -70,6 +72,8 @@ public:
  */
 class PreferencesTool {
 public:
+	PreferencesTool(const PreferencesTool&) = delete;
+	PreferencesTool& operator=(const PreferencesTool&) = delete;
 	/**
 	 * Retrieves the instance of the PreferencesTool class.
 	 * @return the PreferencesTool singleton instance.

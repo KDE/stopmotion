@@ -30,6 +30,8 @@ class FileCommandLoggerImpl : public CommandLogger {
 	std::string buffer;
 	std::string::size_type committedUpTo;
 public:
+	FileCommandLoggerImpl(const FileCommandLoggerImpl&) = delete;
+	FileCommandLoggerImpl& operator=(const FileCommandLoggerImpl&) = delete;
 	void close() {
 		if (fh) {
 			flush();

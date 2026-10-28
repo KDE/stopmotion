@@ -56,6 +56,8 @@ public:
  */
 class Animation {
 public:
+	Animation(const Animation&) = delete;
+	Animation& operator=(const Animation&) = delete;
 	/**
 	 * Initializes the variables of the animation to starting values.
 	 */

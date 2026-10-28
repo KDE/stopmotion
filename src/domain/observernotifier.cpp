@@ -229,6 +229,8 @@ class FrameRemover : public ObservableOperation {
 	int n;
 	Frame* r;
 public:
+	FrameRemover(const FrameRemover&) = delete;
+	FrameRemover& operator=(const FrameRemover&) = delete;
 	FrameRemover(int scene, int where)
 			: sc(scene), n(where), r(nullptr) {
 	}

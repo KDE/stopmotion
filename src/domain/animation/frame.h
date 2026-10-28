@@ -35,6 +35,8 @@ class AudioDriver;
  */
 class Frame {
 public:
+	Frame(const Frame&) = delete;
+	Frame& operator=(const Frame&) = delete;
 	/**
 	 * Creates a frame with the specified file for its picture.
 	 * @param file The picture for this frame. The WorkspaceFile object is

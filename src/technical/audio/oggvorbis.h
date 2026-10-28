@@ -36,6 +36,8 @@ class ErrorHandler;
  */
 class OggVorbis : public AudioFormat {
 public:
+	OggVorbis(const OggVorbis&) = delete;
+	OggVorbis& operator=(const OggVorbis&) = delete;
 	OggVorbis();
 	~OggVorbis() override;
 

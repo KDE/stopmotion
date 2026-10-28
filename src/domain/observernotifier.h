@@ -42,6 +42,8 @@ class ObserverNotifier : public AnimationImpl {
 	observers_t observers;
 	void doOp(ObservableOperation& oo);
 public:
+	ObserverNotifier(const ObserverNotifier&) = delete;
+	ObserverNotifier& operator=(const ObserverNotifier&) = delete;
 	~ObserverNotifier() override;
 	/**
 	 * Constructs a wrapper for another {@ref AnimationImpl} that notifies
