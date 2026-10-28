@@ -100,7 +100,7 @@ FrameBar::FrameBar(QWidget *parent)
 	maxScrollAreaY = this->y() + FRAME_HEIGHT - 20;
 
 	scrollTimer = new QTimer(this);
-	connect(scrollTimer, SIGNAL(timeout()), this, SLOT(scroll()));
+	connect(scrollTimer, &QTimer::timeout, this, &FrameBar::scroll);
 	scrollBar = horizontalScrollBar();
 
 	mainWidget = new QWidget;

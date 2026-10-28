@@ -47,17 +47,17 @@ ExternalCommand::ExternalCommand(QWidget *parent)
     hboxLayout->addWidget(label);
 
     lineEdit = new QLineEdit(this);
-	connect(lineEdit, SIGNAL(returnPressed()), this, SLOT(submitInputToProgram()));	
+	connect(lineEdit, &QLineEdit::returnPressed, this, &ExternalCommand::submitInputToProgram);
     lineEdit->setEchoMode(QLineEdit::Normal);
     hboxLayout->addWidget(lineEdit);
 
     submitButton = new QPushButton(this);
-	connect(submitButton, SIGNAL(clicked()), this, SLOT(submitInputToProgram()));
+	connect(submitButton, &QAbstractButton::clicked, this, &ExternalCommand::submitInputToProgram);
     submitButton->setText(tr("Submit"));
     hboxLayout->addWidget(submitButton);
 
     closeButton = new QPushButton(this);
-    connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(closeButton, &QAbstractButton::clicked, this, &QWidget::close);
     closeButton->setEnabled(false);
     closeButton->setText(tr("Close"));
     hboxLayout->addWidget(closeButton);
@@ -65,9 +65,9 @@ ExternalCommand::ExternalCommand(QWidget *parent)
     vboxLayout->addLayout(hboxLayout);
 	
 	process = new QProcess(this);
-	connect(process, SIGNAL(readyReadStandardOutput()), this, SLOT(readFromStandardOutput())); 
-	connect(process, SIGNAL(readyReadStandardError()), this, SLOT(readFromStandardError())); 
-	connect(process, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(displayExitStatus(int, QProcess::ExitStatus)));
+	connect(process, &QProcess::readyReadStandardOutput, this, &ExternalCommand::readFromStandardOutput);
+	connect(process, &QProcess::readyReadStandardError, this, &ExternalCommand::readFromStandardError);
+	connect(process, &QProcess::finished, this, &ExternalCommand::displayExitStatus);
     
 	resize(QSize(593, 363).expandedTo(minimumSizeHint()));
 	

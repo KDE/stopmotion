@@ -55,7 +55,7 @@ SceneThumbView::SceneThumbView(FrameBar *frameBar, QWidget *parent, int number,
 	int height = getFrameBar()->getFrameHeight();
 	arrowButton->setGeometry( width - width / 4, height / 9, width / 6, width / 6 );
 	arrowButton->show();
-	QObject::connect( arrowButton, SIGNAL(clicked()), this, SLOT(closeScene()) );
+	QObject::connect( arrowButton, &SceneArrowButton::clicked, this, &SceneThumbView::closeScene );
 
 	f.setPointSize(12);
 	centerIcon = QPixmap(clapper);

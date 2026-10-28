@@ -99,8 +99,8 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 	mixCount = 2;
 	playbackModeFrame = -1;
 
-	connect(&grabTimer, SIGNAL(timeout()), this, SLOT(redraw()));
-	connect(&playbackTimer, SIGNAL(timeout()),this, SLOT(nextPlayBack()));
+	connect(&grabTimer, &QTimer::timeout, this, &FrameView::redraw);
+	connect(&playbackTimer, &QTimer::timeout,this, &FrameView::nextPlayBack);
 
 	setMinimumSize(400, 300);
 	setAttribute(Qt::WA_NoSystemBackground);
@@ -330,7 +330,7 @@ bool FrameView::on() {
 		// Otherwise a thread is needed
 		else {
 			grabThread = new ImageGrabThread(this, grabber);
-			connect(grabThread, SIGNAL(grabbed()), this, SLOT(redraw()));
+			connect(grabThread, &ImageGrabThread::grabbed, this, &FrameView::redraw);
 			grabThread->start();
 			grabThread->wait(500);
 

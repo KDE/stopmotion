@@ -79,20 +79,20 @@ void ImportTab::makeGUI()
 	deviceSelectionTable->setHorizontalHeaderLabels(lst);
 	deviceSelectionTable->verticalHeader()->setVisible(false);
 
-	connect(deviceSelectionTable, SIGNAL(cellClicked(int, int)),
-			this, SLOT(activeCellChanged(int, int)));
-	connect(deviceSelectionTable, SIGNAL(cellChanged(int, int)),
-			this, SLOT(contentsChanged(int, int)));
+	connect(deviceSelectionTable, &QTableWidget::cellClicked,
+			this, &ImportTab::activeCellChanged);
+	connect(deviceSelectionTable, &QTableWidget::cellChanged,
+			this, &ImportTab::contentsChanged);
 
 	addButton = new QPushButton(tr("&Add"));
 	addButton->setFocusPolicy( Qt::NoFocus );
-	QObject::connect(addButton, SIGNAL(clicked()), this, SLOT(addImportProgram()));
+	QObject::connect(addButton, &QAbstractButton::clicked, this, &ImportTab::addImportProgram);
 
 	removeButton = new QPushButton(tr("&Remove"));
-	QObject::connect( removeButton, SIGNAL(clicked()), this, SLOT(removeImportProgram()));
+	QObject::connect( removeButton, &QAbstractButton::clicked, this, &ImportTab::removeImportProgram);
 
 	changeButton = new QPushButton(tr("&Edit"));
-	QObject::connect( changeButton, SIGNAL(clicked()), this, SLOT(changeSettings()));
+	QObject::connect( changeButton, &QAbstractButton::clicked, this, &ImportTab::changeSettings);
 
 	grabberPreferences = new QGroupBox;
 	grabberPreferences->setTitle(tr("Import device settings"));
@@ -102,28 +102,28 @@ void ImportTab::makeGUI()
 	closeChangeBoxButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 	closeChangeBoxButton->setIcon(QPixmap(closeicon));
 	closeChangeBoxButton->setFlat(true);
-	QObject::connect( closeChangeBoxButton, SIGNAL(clicked()),this, SLOT(closeChangeBox()));
+	QObject::connect( closeChangeBoxButton, &QAbstractButton::clicked,this, &ImportTab::closeChangeBox);
 
 	prePollLabel = new QLabel( tr("Pre-poll command") );
 	prePollEdit = new FlexibleLineEdit;
 	prePollLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	prePollEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	QObject::connect( prePollEdit, SIGNAL(textChanged(const QString &)),
-			this, SLOT(updatePrePollString(const QString &)));
+	QObject::connect( prePollEdit, &QLineEdit::textChanged,
+			this, &ImportTab::updatePrePollString);
 
 	startDaemonLabel = new QLabel( tr("Start daemon") );
 	startDaemonEdit = new FlexibleLineEdit;
 	startDaemonLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	startDaemonEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	QObject::connect( startDaemonEdit, SIGNAL(textChanged(const QString &)),
-			this, SLOT(updateStartDaemonString(const QString &)));
+	QObject::connect( startDaemonEdit, &QLineEdit::textChanged,
+			this, &ImportTab::updateStartDaemonString);
 
 	stopDaemonLabel = new QLabel( tr("Stop daemon") );
 	stopDaemonEdit = new FlexibleLineEdit;
 	stopDaemonLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	stopDaemonEdit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	QObject::connect( stopDaemonEdit, SIGNAL(textChanged(const QString &)),
-			this, SLOT(updatestopDaemonString(const QString &)) );
+	QObject::connect( stopDaemonEdit, &QLineEdit::textChanged,
+			this, &ImportTab::updatestopDaemonString );
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(informationText);

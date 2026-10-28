@@ -97,7 +97,8 @@ private slots:
 	 * Slot called by the timer which checks if the frame has been fully captured.
 	 */
 	void storeFrame();
-	
+
+public slots:
 	void setMixCount(int mixCount);
 	
 	void setPlaybackSpeed(int playBackSpeed);

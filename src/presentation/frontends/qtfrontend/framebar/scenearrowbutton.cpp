@@ -35,7 +35,7 @@ SceneArrowButton::SceneArrowButton( QWidget *parent ) : QWidget(parent)
 	this->isOpened = false;
 	this->iconX = 2;
 	moveTimer = new QTimer(this);
-	QObject::connect( moveTimer, SIGNAL(timeout()), this, SLOT(moveIcon()) );
+	QObject::connect( moveTimer, &QTimer::timeout, this, &SceneArrowButton::moveIcon );
 }
 
 

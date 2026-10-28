@@ -137,6 +137,7 @@ private slots:
 	 */
 	void setPlaybackMode();
 
+public slots:
 	/**
 	 * Slot for being notified when the camera is turned on so that
 	 * it disable of some buttons.

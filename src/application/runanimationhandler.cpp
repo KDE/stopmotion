@@ -39,7 +39,7 @@ RunAnimationHandler::RunAnimationHandler(QObject *parent, QStatusBar *sb,
 		  startFrame(-1), endFrame(0) {
 	fps = PreferencesTool::get()->getPreference("fps", 10);
 	timer = new QTimer(this);
-	QObject::connect( timer, SIGNAL(timeout()), this, SLOT(playNextFrame()) );
+	QObject::connect( timer, &QTimer::timeout, this, &RunAnimationHandler::playNextFrame );
 	setObjectName(name);
 }
 
@@ -83,8 +83,8 @@ void RunAnimationHandler::resumeAnimation() {
 		if (endFrame <= frameNr)
 			frameNr = startFrame;
 		f->initAudioDevice();
-		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(runAnimation()) );
-		QObject::connect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
+		QObject::disconnect( playButton, &QAbstractButton::clicked, this, &RunAnimationHandler::runAnimation );
+		QObject::connect( playButton, &QAbstractButton::clicked, this, &RunAnimationHandler::pauseAnimation );
 
 		//playButton->setToggleButton(true);
 		playButton->setChecked(true);
@@ -126,8 +126,8 @@ void RunAnimationHandler::runAnimation() {
 
 void RunAnimationHandler::stopAnimation() {
 	if ( timer->isActive() ) {
- 		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
- 		QObject::connect(playButton, SIGNAL(clicked()), this, SLOT(runAnimation()));
+		QObject::disconnect( playButton, &QAbstractButton::clicked, this, &RunAnimationHandler::pauseAnimation );
+		QObject::connect(playButton, &QAbstractButton::clicked, this, &RunAnimationHandler::runAnimation);
 
 		if ( playButton->isChecked() ) {
 			playButton->toggle();
@@ -155,8 +155,8 @@ void RunAnimationHandler::setPauseButton(QPushButton * pauseButton) {
 
 void RunAnimationHandler::pauseAnimation() {
 	if ( timer->isActive() ) {
-		QObject::disconnect( playButton, SIGNAL(clicked()), this, SLOT(pauseAnimation()) );
-		QObject::connect(playButton, SIGNAL(clicked()), this, SLOT(runAnimation()));
+		QObject::disconnect( playButton, &QAbstractButton::clicked, this, &RunAnimationHandler::pauseAnimation );
+		QObject::connect(playButton, &QAbstractButton::clicked, this, &RunAnimationHandler::runAnimation);
 
 		playButton->setChecked(false);
 		removeFramesButton->setEnabled(true);

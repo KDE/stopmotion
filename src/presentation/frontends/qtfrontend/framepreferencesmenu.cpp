@@ -49,23 +49,23 @@ FramePreferencesMenu::FramePreferencesMenu( QWidget * parent,
 	addSoundButton = new QPushButton;
 	addSoundButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 	addSoundButton->setFocusPolicy( Qt::NoFocus );
-	connect( addSoundButton, SIGNAL( clicked() ), soundHandler, SLOT( addSound() ) );
+	connect( addSoundButton, &QAbstractButton::clicked, soundHandler, &SoundHandler::addSound );
 	
 	removeSoundsButton = new QPushButton;
 	removeSoundsButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 	removeSoundsButton->setFocusPolicy( Qt::NoFocus );
-	connect( removeSoundsButton, SIGNAL( clicked() ), soundHandler, SLOT( removeSound() ) );
+	connect( removeSoundsButton, &QAbstractButton::clicked, soundHandler, &SoundHandler::removeSound );
 			
 	changeNameButton = new QPushButton;
 	changeNameButton->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
 	changeNameButton->setFocusPolicy( Qt::NoFocus );
-	connect( changeNameButton, SIGNAL( clicked() ), soundHandler, SLOT( setSoundName() ) );
+	connect( changeNameButton, &QAbstractButton::clicked, soundHandler, &SoundHandler::setSoundName );
 	
 	closeButton = new QPushButton;
 	closeButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
 	closeButton->setIcon(QPixmap(closeicon));
 	closeButton->setFlat(true);
-	connect(closeButton, SIGNAL(clicked()),this, SLOT(close()) );
+	connect(closeButton, &QAbstractButton::clicked, this, &FramePreferencesMenu::close );
 	
 	soundsLabel = new QLabel;
 	soundsList = new QListWidget;

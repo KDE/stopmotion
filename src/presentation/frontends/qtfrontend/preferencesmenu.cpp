@@ -43,11 +43,11 @@ PreferencesMenu::PreferencesMenu(QWidget *parent)
 
 	applyButton = new QPushButton(tr("Apply"), this);
 	applyButton->setDefault(true);
-	connect(applyButton, SIGNAL(clicked()), this, SLOT(apply()));
+	connect(applyButton, &QAbstractButton::clicked, this, &PreferencesMenu::apply);
 
 	closeButton = new QPushButton(tr("Close"), this);
 	closeButton->setDefault(true);
-	connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
+	connect(closeButton, &QAbstractButton::clicked, this, &QWidget::close);
 
 	QHBoxLayout *buttonLayout = new QHBoxLayout;
 	buttonLayout->addStretch(1);

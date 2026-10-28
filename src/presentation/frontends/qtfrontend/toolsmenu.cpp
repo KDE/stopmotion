@@ -69,7 +69,7 @@ ToolsMenu::ToolsMenu(RunAnimationHandler *runAnimationHandler,
 	playbackAccel = 0;
 
 	captureTimer = new QTimer(this);
-	connect( captureTimer, SIGNAL( timeout() ), cameraHandler, SLOT(captureFrame()));
+	connect( captureTimer, &QTimer::timeout, cameraHandler, &CameraHandler::captureFrame);
 
 	setupUi();
 	createAccelerators();
@@ -83,114 +83,114 @@ void ToolsMenu::setupUi() {
 	setFocusPolicy(Qt::ClickFocus);
 
 	ui->addFramesButton->setIcon( QPixmap(addframeicon) );
-	connect(ui->addFramesButton, SIGNAL(clicked()), modelHandler, SLOT(chooseFrame()));
+	connect(ui->addFramesButton, &QAbstractButton::clicked, modelHandler, &ModelHandler::chooseFrame);
 
 	ui->removeFramesButton->setIcon( QPixmap(removeframeicon) );
-	connect(ui->removeFramesButton, SIGNAL(clicked()), modelHandler, SLOT(removeFrames()));
+	connect(ui->removeFramesButton, &QAbstractButton::clicked, modelHandler, &ModelHandler::removeFrames);
 
 	runAnimationHandler->setRemoveFramesButton(ui->removeFramesButton);
 	modelHandler->setRemoveFramesButton(ui->removeFramesButton);
 
 	ui->addSceneButton->setIcon( QPixmap(newscene) );
-	connect(ui->addSceneButton, SIGNAL(clicked()), modelHandler, SLOT(newScene()));
+	connect(ui->addSceneButton, &QAbstractButton::clicked, modelHandler, &ModelHandler::newScene);
 
 	ui->removeSceneButton->setIcon( QPixmap(removescene) );
-	connect(ui->removeSceneButton, SIGNAL(clicked()), modelHandler, SLOT(removeScene()));
+	connect(ui->removeSceneButton, &QAbstractButton::clicked, modelHandler, &ModelHandler::removeScene);
 
 	ui->cameraButton->setIcon( QPixmap(cameraon) );
 	cameraHandler->setCameraButton(ui->cameraButton);
-	connect( ui->cameraButton, SIGNAL(clicked()), cameraHandler, SLOT(toggleCamera()) );
+	connect( ui->cameraButton, &QAbstractButton::clicked, cameraHandler, &CameraHandler::toggleCamera );
 
 	ui->captureGroup->hide();
-	connect( cameraHandler, SIGNAL(cameraStateChanged(bool)), this, SLOT(activateCaptureGroup(bool)) );
+	connect( cameraHandler, &CameraHandler::cameraStateChanged, this, &ToolsMenu::activateCaptureGroup );
 
 	ui->captureButton->setIcon(  QPixmap(captureicon) );
-	connect(ui->captureButton, SIGNAL(clicked()), cameraHandler, SLOT(captureFrame()));
+	connect(ui->captureButton, &QAbstractButton::clicked, cameraHandler, &CameraHandler::captureFrame);
 
-	connect(ui->viewChooseCombo, SIGNAL(activated (int)),this, SLOT(changeViewingMode(int)));
+	connect(ui->viewChooseCombo, &QComboBox::activated, this, &ToolsMenu::changeViewingMode);
 
 	ui->unitChooseCombo->setEnabled(false);
-	connect(ui->unitChooseCombo, SIGNAL(activated (int)),this, SLOT(changeUnitMode(int)));
+	connect(ui->unitChooseCombo, &QComboBox::activated, this, &ToolsMenu::changeUnitMode);
 
 	ui->mixSlider->setMinimum(0);
 	ui->mixSlider->setMaximum(5);
 	ui->mixSlider->setPageStep(1);
 	ui->mixSlider->setValue(2);
 	ui->mixSlider->setTickPosition(QSlider::TicksBelow);
-	connect( ui->mixSlider, SIGNAL(valueChanged(int)), cameraHandler, SLOT(setMixCount(int)) );
-	connect( ui->mixSlider, SIGNAL(valueChanged(int)), this, SLOT(updateSliderValue(int)) );
+	connect( ui->mixSlider, &QAbstractSlider::valueChanged, cameraHandler, &CameraHandler::setMixCount );
+	connect( ui->mixSlider, &QAbstractSlider::valueChanged, this, &ToolsMenu::updateSliderValue );
 
 	ui->speedChooser->setMinimum(1);
 	ui->speedChooser->setMaximum(30);
 	ui->speedChooser->setValue(1);
 	ui->speedChooser->setValue(PreferencesTool::get()->getPreference("fps", 10));
-	connect( ui->speedChooser, SIGNAL(valueChanged(int)), runAnimationHandler, SLOT(setSpeed(int)));
-	connect( ui->speedChooser, SIGNAL( valueChanged(int) ), cameraHandler, SLOT(setPlaybackSpeed(int)) );
-	connect( ui->speedChooser, SIGNAL(editingFinished()), frameBar, SLOT(setFocus()) );
+	connect( ui->speedChooser, &QSpinBox::valueChanged, runAnimationHandler, &RunAnimationHandler::setSpeed);
+	connect( ui->speedChooser, &QSpinBox::valueChanged, cameraHandler, &CameraHandler::setPlaybackSpeed );
+	connect( ui->speedChooser, &QAbstractSpinBox::editingFinished, frameBar, qOverload<>(&QWidget::setFocus) );
 
 	ui->playButton->setIcon( QPixmap(playicon));
 
 	runAnimationHandler->setPlayButton(ui->playButton);
-	connect(ui->playButton, SIGNAL(clicked()), runAnimationHandler, SLOT(runAnimation()));
+	connect(ui->playButton, &QAbstractButton::clicked, runAnimationHandler, &RunAnimationHandler::runAnimation);
 	ui->playButton->setEnabled(false);
 
 	ui->nextFrameButton->setIcon( QPixmap(fastforwardicon) );
 	ui->nextFrameButton->setAutoRepeat(true);
-	connect( ui->nextFrameButton, SIGNAL(clicked()),
-			frameBar, SLOT(selectNextFrame()) );
+	connect( ui->nextFrameButton, &QAbstractButton::clicked,
+			frameBar, &FrameBar::selectNextFrame );
 	ui->nextFrameButton->setEnabled(false);
 
 	ui->previousFrameButton->setIcon( QIcon(QPixmap(rewindicon)) );
 	ui->previousFrameButton->setAutoRepeat(true);
-	connect( ui->previousFrameButton, SIGNAL(clicked()),
-			frameBar, SLOT(selectPreviousFrame()) );
+	connect( ui->previousFrameButton, &QAbstractButton::clicked,
+			frameBar, &FrameBar::selectPreviousFrame );
 	ui->previousFrameButton->setEnabled(false);
 
 	ui->toEndButton->setIcon( QIcon(QPixmap(steptoendicon)) );
-	connect( ui->toEndButton, SIGNAL(clicked()),
-			frameBar, SLOT(selectNextScene()) );
+	connect( ui->toEndButton, &QAbstractButton::clicked,
+			frameBar, &FrameBar::selectNextScene );
 	ui->toEndButton->setEnabled(false);
 
 	ui->toBeginningButton->setIcon( QIcon(QPixmap(steptobeginningicon)) );
-	connect( ui->toBeginningButton, SIGNAL(clicked()),
-			frameBar, SLOT(selectPreviousScene()) );
+	connect( ui->toBeginningButton, &QAbstractButton::clicked,
+			frameBar, &FrameBar::selectPreviousScene );
 	ui->toBeginningButton->setEnabled(false);
 
 	ui->stopButton->setIcon( QIcon(QPixmap(stopicon)) );
-	connect( ui->stopButton, SIGNAL(clicked()), runAnimationHandler, SLOT(stopAnimation()));
+	connect( ui->stopButton, &QAbstractButton::clicked, runAnimationHandler, &RunAnimationHandler::stopAnimation);
 	ui->stopButton->setEnabled(false);
 
 	ui->pauseButton->setIcon( QIcon(QPixmap(pauseicon)) );
 	ui->pauseButton->setEnabled(false);
 	runAnimationHandler->setPauseButton(ui->pauseButton);
-	connect(ui->pauseButton, SIGNAL(clicked()), runAnimationHandler, SLOT(pauseAnimation()));
+	connect(ui->pauseButton, &QAbstractButton::clicked, runAnimationHandler, &RunAnimationHandler::pauseAnimation);
 
 	ui->loopButton->setIcon( QIcon(QPixmap(loopicon)) );
 	runAnimationHandler->setLoopButton(ui->loopButton);
-	connect( ui->loopButton, SIGNAL(clicked()), runAnimationHandler, SLOT(toggleLooping()) );
+	connect( ui->loopButton, &QAbstractButton::clicked, runAnimationHandler, &RunAnimationHandler::toggleLooping );
 	ui->loopButton->setEnabled(false);
 
 	//Launcher for the Gimp.
 	ui->launchGimp->setIcon(QIcon(QPixmap(gimpicon)));
-	connect(ui->launchGimp, SIGNAL(clicked()), modelHandler, SLOT(editCurrentFrame()));
+	connect(ui->launchGimp, &QAbstractButton::clicked, modelHandler, &ModelHandler::editCurrentFrame);
 }
 
 
 void ToolsMenu::createAccelerators() {
 	loopAccel = new QShortcut(QKeySequence(Qt::ControlModifier | Qt::Key_L), this);
-	connect(loopAccel, SIGNAL(activated()), ui->loopButton, SLOT(toggle()));
+	connect(loopAccel, &QShortcut::activated, ui->loopButton, &QAbstractButton::toggle);
 
 	playAccel = new QShortcut(QKeySequence(Qt::Key_K), this);
-	connect(playAccel, SIGNAL(activated()), runAnimationHandler, SLOT(toggleRunning()));
+	connect(playAccel, &QShortcut::activated, runAnimationHandler, &RunAnimationHandler::toggleRunning);
 
 	mixAccel = new QShortcut(QKeySequence(Qt::Key_1), this);
-	connect(mixAccel, SIGNAL(activated()), this, SLOT(setMixingMode()));
+	connect(mixAccel, &QShortcut::activated, this, &ToolsMenu::setMixingMode);
 
 	diffAccel = new QShortcut(QKeySequence(Qt::Key_2), this);
-	connect(diffAccel, SIGNAL(activated()), this, SLOT(setDiffingMode()));
+	connect(diffAccel, &QShortcut::activated, this, &ToolsMenu::setDiffingMode);
 
 	playbackAccel = new QShortcut(QKeySequence(Qt::Key_3), this);
-	connect(playbackAccel, SIGNAL(activated()), this, SLOT(setPlaybackMode()));
+	connect(playbackAccel, &QShortcut::activated, this, &ToolsMenu::setPlaybackMode);
 }
 
 

@@ -110,7 +110,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 	tabWidget->addTab(licenceText, tr("&Licence Agreement"));
 
 	QPushButton *okButton = new QPushButton(tr("OK"), this);
-	connect(okButton, SIGNAL(clicked()), this, SLOT(close()));
+	connect(okButton, &QAbstractButton::clicked, this, &QWidget::close);
 
 	QHBoxLayout *buttonLayout = new QHBoxLayout;
 	buttonLayout->addStretch(1);

@@ -88,18 +88,18 @@ void DeviceTab::makeGUI()
 	deviceTable->setHorizontalHeaderLabels(lst);
 	deviceTable->verticalHeader()->setVisible(false);
 
-	connect(deviceTable, SIGNAL(cellClicked(int, int)), this, SLOT(activeCellChanged(int, int)));
-	connect(deviceTable, SIGNAL(cellChanged(int, int)), this, SLOT(contentsChanged(int, int)));
+	connect(deviceTable, &QTableWidget::cellClicked, this, &DeviceTab::activeCellChanged);
+	connect(deviceTable, &QTableWidget::cellChanged, this, &DeviceTab::contentsChanged);
 
 	addButton = new QPushButton(tr("&Add"));
 	addButton->setFocusPolicy( Qt::NoFocus );
-	connect(addButton, SIGNAL(clicked()), this, SLOT(addDevice()));
+	connect(addButton, &QAbstractButton::clicked, this, &DeviceTab::addDevice);
 
 	removeButton = new QPushButton(tr("&Remove"));
-	connect( removeButton, SIGNAL(clicked()), this, SLOT(removeDevice()));
+	connect( removeButton, &QAbstractButton::clicked, this, &DeviceTab::removeDevice);
 
 	editButton = new QPushButton(tr("&Edit"));
-	QObject::connect( editButton, SIGNAL(clicked()), this, SLOT(editDevice()));
+	QObject::connect( editButton, &QAbstractButton::clicked, this, &DeviceTab::editDevice);
 
 	devicePreferences = new QGroupBox;
 	devicePreferences->setTitle(tr("Video device settings"));
@@ -109,12 +109,12 @@ void DeviceTab::makeGUI()
 	closeChangeBoxButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
 	closeChangeBoxButton->setIcon(QPixmap(closeicon));
 	closeChangeBoxButton->setFlat(true);
-	connect(closeChangeBoxButton, SIGNAL(clicked()),this, SLOT(closeChangeBox()));
+	connect(closeChangeBoxButton, &QAbstractButton::clicked,this, &DeviceTab::closeChangeBox);
 
 	deviceLabel = new QLabel( tr("Video Device ($VIDEODEVICE): ") );
 	deviceEdit = new FlexibleLineEdit;
-	connect(deviceEdit, SIGNAL(textChanged(const QString &)),
-			this, SLOT(updateDeviceString(const QString &)));
+	connect(deviceEdit, &QLineEdit::textChanged,
+			this, &DeviceTab::updateDeviceString);
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(informationText);

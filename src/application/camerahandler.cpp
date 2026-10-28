@@ -42,7 +42,7 @@ CameraHandler::CameraHandler ( QObject *parent, QStatusBar *sb,
 	  modelHandler(modelHandler), frameView(0) {
 	timer = new QTimer(this);
 	timer->setSingleShot(true);
-	QObject::connect( timer, SIGNAL(timeout()), this, SLOT(storeFrame()) );
+	QObject::connect( timer, &QTimer::timeout, this, &CameraHandler::storeFrame );
 	setObjectName(name);
 }
 

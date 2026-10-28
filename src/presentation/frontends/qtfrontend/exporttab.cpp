@@ -81,18 +81,18 @@ void ExportTab::makeGUI()
 	encoderTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 	encoderTable->verticalHeader()->setVisible(false);
 
-	connect(encoderTable, SIGNAL(cellClicked(int, int)), this, SLOT(activeCellChanged(int, int)));
-	connect(encoderTable, SIGNAL(cellChanged(int, int)), this, SLOT(contentsChanged(int, int)));
+	connect(encoderTable, &QTableWidget::cellClicked, this, &ExportTab::activeCellChanged);
+	connect(encoderTable, &QTableWidget::cellChanged, this, &ExportTab::contentsChanged);
 
 	addButton = new QPushButton(tr("&Add"));
 	addButton->setFocusPolicy( Qt::NoFocus );
-	connect(addButton, SIGNAL(clicked()), this, SLOT(addEncoder()) );
+	connect(addButton, &QAbstractButton::clicked, this, &ExportTab::addEncoder );
 
 	removeButton = new QPushButton(tr("&Remove"));
-	connect( removeButton, SIGNAL(clicked()), this, SLOT(removeEncoder()) );
+	connect( removeButton, &QAbstractButton::clicked, this, &ExportTab::removeEncoder );
 
 	editButton = new QPushButton(tr("&Edit"));
-	QObject::connect( editButton, SIGNAL(clicked()), this, SLOT(editSettings()) );
+	QObject::connect( editButton, &QAbstractButton::clicked, this, &ExportTab::editSettings );
 
 	encoderPrefs = new QGroupBox;
 	encoderPrefs->setTitle( tr("Encoder settings") );
@@ -102,7 +102,7 @@ void ExportTab::makeGUI()
 	closeButton->setIcon(QPixmap(closeicon));
 	closeButton->setFlat(true);
 	closeButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
-	connect( closeButton, SIGNAL(clicked()),this, SLOT(closeSettings()) );
+	connect( closeButton, &QAbstractButton::clicked,this, &ExportTab::closeSettings );
 
 	askForOutput = new QLabel(
 			tr("Do you want to be asked for an output file every time you choose to export?"));
@@ -110,33 +110,33 @@ void ExportTab::makeGUI()
 	yesButton = new QRadioButton(tr("Yes"));
 	yesButton->setChecked(true);
 	yesButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect( yesButton, SIGNAL(clicked()), this, SLOT(setYesButtonOn()) );
+	connect( yesButton, &QAbstractButton::clicked, this, &ExportTab::setYesButtonOn );
 
 	noButton = new QRadioButton(tr("No"));
 	noButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 	noButton->setChecked(false);
-	connect( noButton, SIGNAL(clicked()), this, SLOT(setNoButtonOn()) );
+	connect( noButton, &QAbstractButton::clicked, this, &ExportTab::setNoButtonOn );
 
 	defaultOutputLabel = new QLabel( tr("Set default output file:"));
 	defaultOutput = new FlexibleLineEdit;
 	defaultOutput->setEnabled(false);
-	connect( defaultOutput, SIGNAL(textChanged(const QString &)),
-			this, SLOT(setDefaultOutput(const QString &)) );
+	connect( defaultOutput, &QLineEdit::textChanged,
+			this, &ExportTab::setDefaultOutput );
 
 	browseButton = new QPushButton(tr("Browse"));
 	browseButton->setEnabled(false);
 	browseButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect( browseButton, SIGNAL(clicked()), this, SLOT(browseFiles()) );
+	connect( browseButton, &QAbstractButton::clicked, this, &ExportTab::browseFiles );
 
 	startEncoderLabel = new QLabel( tr("Start encoder:") );
 	startEncoder = new FlexibleLineEdit;
-	connect( startEncoder, SIGNAL(textChanged(const QString &)),
-			this, SLOT(updateStartString(const QString &)) );
+	connect( startEncoder, &QLineEdit::textChanged,
+			this, &ExportTab::updateStartString );
 
 	stopEncoderLabel = new QLabel( tr("Stop encoder:") );
 	stopEncoder = new FlexibleLineEdit;
-	connect( stopEncoder, SIGNAL(textChanged(const QString &)),
-			this, SLOT(updateStopString(const QString &)) );
+	connect( stopEncoder, &QLineEdit::textChanged,
+			this, &ExportTab::updateStopString );
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(infoText);

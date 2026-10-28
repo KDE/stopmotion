@@ -90,7 +90,7 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 	tr("English");
 
 	languagesMenu = parent->addMenu(tr("&Translation"));
-	connect(languagesMenu, SIGNAL(triggered(QAction *)), this, SLOT(changeLanguage(QAction *)));
+	connect(languagesMenu, &QMenu::triggered, this, &LanguageHandler::changeLanguage);
 
 	QDir dir(qmPath);
 	QStringList fileNames = dir.entryList(QStringList("stopmotion_*.qm"));

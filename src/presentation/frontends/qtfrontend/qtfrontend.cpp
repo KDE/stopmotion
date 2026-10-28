@@ -77,7 +77,7 @@ QtFrontend::~QtFrontend() {
 
 
 int QtFrontend::run(int, char **) {
-	stApp->connect( stApp, SIGNAL(lastWindowClosed()), stApp, SLOT(quit()) );
+	QObject::connect( stApp, &QGuiApplication::lastWindowClosed, stApp, &QCoreApplication::quit );
 	return stApp->exec();
 }
 
@@ -112,7 +112,7 @@ void QtFrontend::showProgress(ProgressMessage message, int numOperations) {
 		mw->statusBar()->addWidget(infoText);
 		mw->statusBar()->addWidget(progressBar);
 		timer = new QTimer();
-		connect( timer, SIGNAL( timeout() ), this, SLOT( updateProgressBar() ) );
+		connect( timer, &QTimer::timeout, this, &QtFrontend::updateProgressBar );
         timer->start(10);
 	}
 }

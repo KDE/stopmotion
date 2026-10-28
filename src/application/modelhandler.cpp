@@ -81,8 +81,8 @@ void ModelHandler::chooseFrame() {
 
 	//PicturePreview* p = new PicturePreview(fileDialog);
 
-	QObject::connect( fileDialog, SIGNAL(filesSelected (const QStringList &)),
-			this, SLOT(addFrames(const QStringList &)) );
+	QObject::connect( fileDialog, &QFileDialog::filesSelected,
+			this, &ModelHandler::addFrames );
 
 	fileDialog->show();
 }
