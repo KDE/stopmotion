@@ -21,7 +21,7 @@
 #ifndef TEXECUTOR_H_
 #define TEXECUTOR_H_
 
-#include <stdint.h>
+#include <cstdint>
 #include <list>
 #include <string>
 #include <QObject>

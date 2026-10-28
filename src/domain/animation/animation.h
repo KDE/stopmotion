@@ -22,8 +22,8 @@
 
 #include "src/config.h"
 
-#include <stdint.h>
-#include <stdio.h>
+#include <cstdint>
+#include <cstdio>
 #include <exception>
 #include <vector>
 

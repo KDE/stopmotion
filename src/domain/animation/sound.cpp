@@ -24,8 +24,8 @@
 #include "src/technical/audio/oggvorbis.h"
 #include "src/technical/audio/audiodriver.h"
 
-#include <assert.h>
-#include <string.h>
+#include <cassert>
+#include <cstring>
 #include <memory>
 
 Sound::Sound() : af(nullptr), name(nullptr) {

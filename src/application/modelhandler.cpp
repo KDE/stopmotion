@@ -26,7 +26,7 @@
 #include "src/technical/stringiterator.h"
 #include "src/technical/util.h"
 
-#include <stddef.h>
+#include <cstddef>
 #include <string>
 #include <QChar>
 #include <QFileDialog>

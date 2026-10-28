@@ -20,7 +20,7 @@
 #ifndef AUDIOFORMAT_H
 #define AUDIOFORMAT_H
 
-#include <stdint.h>
+#include <cstdint>
 
 /**
  * Interface to be used by the implemented audio formats. They

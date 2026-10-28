@@ -21,7 +21,7 @@
 #ifndef WORKSPACEFILE_H_
 #define WORKSPACEFILE_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 /**
  * Represents the filename of a file in the workspace (~/.stopmotion/).

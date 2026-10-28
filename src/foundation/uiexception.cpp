@@ -20,7 +20,7 @@
 
 #include "uiexception.h"
 
-#include <stdio.h>
+#include <cstdio>
 
 void UiException::setStringParam(const char* s) {
 	hasStringParam = s != nullptr;

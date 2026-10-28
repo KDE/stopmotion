@@ -20,9 +20,9 @@
 
 #include "random.h"
 
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include <cstdlib>
+#include <cstring>
+#include <cassert>
 
 namespace {
 const char alphanumericCharacters[] =

@@ -23,7 +23,7 @@
 #include "undoredoobserver.h"
 
 #include <list>
-#include <stdint.h>
+#include <cstdint>
 
 // help out Eclipse's C++ parsing
 #ifndef INT32_MAX

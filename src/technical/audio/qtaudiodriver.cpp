@@ -28,7 +28,7 @@
 #include <QAudioOutput>
 #include <QAudioSink>
 
-#include <stdint.h>
+#include <cstdint>
 #include <algorithm>
 #include <list>
 #include <vector>

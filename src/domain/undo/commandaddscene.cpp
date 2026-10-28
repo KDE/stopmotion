@@ -20,7 +20,7 @@
 
 #include "commandaddscene.h"
 
-#include <assert.h>
+#include <cassert>
 #include <memory>
 
 #include "commandremovescene.h"

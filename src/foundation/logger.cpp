@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "logger.h"
 
-#include <stdarg.h>
+#include <cstdarg>
 #include <qdebug.h>
 #include <qstring.h>
 #include <QtCore/qglobal.h>

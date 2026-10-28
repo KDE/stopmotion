@@ -26,15 +26,15 @@
 #include "src/foundation/preferencestool.h"
 #include "src/domain/animation/workspacefile.h"
 
-#include <stdio.h>
+#include <cstdio>
 #include <getopt.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/stat.h>
-#include <errno.h>
+#include <cerrno>
 #include <string>
-#include <string.h>
+#include <cstring>
 #include <sstream>
 
 

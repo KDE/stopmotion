@@ -22,7 +22,7 @@
 
 #include "command.h"
 
-#include <stdint.h>
+#include <cstdint>
 
 class AnimationImpl;
 class ErrorHandler;

@@ -23,7 +23,7 @@
 #include "src/foundation/preferencestool.h"
 #include "src/config.h"
 
-#include <assert.h>
+#include <cassert>
 #include <QDebug>
 #include <QDir>
 #include <QTranslator>

@@ -21,7 +21,7 @@
 #define CONFIG_H
 
 //Global includes
-#include <assert.h>
+#include <cassert>
 #include "foundation/logger.h"
 
 //Global defines

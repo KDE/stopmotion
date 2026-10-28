@@ -21,7 +21,7 @@
 #ifndef COMMANDREMOVESOUND_H_
 #define COMMANDREMOVESOUND_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "command.h"
 

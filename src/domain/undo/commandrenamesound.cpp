@@ -20,7 +20,7 @@
 
 #include "commandrenamesound.h"
 
-#include <string.h>
+#include <cstring>
 #include <memory>
 #include <string>
 

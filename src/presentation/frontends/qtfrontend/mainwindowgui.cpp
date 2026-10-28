@@ -65,8 +65,8 @@
 #include <QFileSystemWatcher>
 #include <QClipboard>
 
-#include <assert.h>
-#include <string.h>
+#include <cassert>
+#include <cstring>
 #include <unistd.h>
 #include <cstdlib>
 #include <sstream>

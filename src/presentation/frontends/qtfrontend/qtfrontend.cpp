@@ -39,8 +39,8 @@
 
 #include <cstring>
 #include <unistd.h>
-#include <stdio.h>
-#include <assert.h>
+#include <cstdio>
+#include <cassert>
 #include <string>
 
 const char* QtFrontend::VERSION = STOPMOTION_VERSION;

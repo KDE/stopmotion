@@ -27,7 +27,7 @@
 #include "src/presentation/frontends/frontend.h"
 #include "technical/util.h"
 
-#include <stdio.h>
+#include <cstdio>
 #include <sys/file.h>
 #include <exception>
 

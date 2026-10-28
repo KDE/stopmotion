@@ -40,10 +40,10 @@
 #include "src/technical/audio/audiodriver.h"
 #include "src/technical/stringiterator.h"
 
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
+#include <cassert>
+#include <cstdlib>
+#include <cstring>
+#include <cerrno>
 #include <unistd.h>
 #include <vector>
 #include <sstream>

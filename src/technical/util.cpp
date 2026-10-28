@@ -21,14 +21,14 @@
 #include "src/foundation/logger.h"
 
 #include <ext/stdio_filebuf.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
-#include <errno.h>
+#include <cerrno>
 #include <fcntl.h>
-#include <string.h>
+#include <cstring>
 #include <cassert>
 #include <fstream>
 #include <ftw.h>

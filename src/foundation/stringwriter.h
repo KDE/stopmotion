@@ -22,7 +22,7 @@
 #define STRINGWRITER_H_
 
 #include <string>
-#include <stdint.h>
+#include <cstdint>
 
 class StringWriter {
 	bool startOfLine;

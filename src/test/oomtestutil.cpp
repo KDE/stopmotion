@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 #include <dlfcn.h>
-#include <assert.h>
+#include <cassert>
 
 #include "oomtestutil.h"
 

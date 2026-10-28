@@ -19,9 +19,9 @@
  ***************************************************************************/
 #include "oggvorbis.h"
 
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
 #include <cerrno>
 #include <new>
 

@@ -21,8 +21,8 @@
 #include "filelogger.h"
 #include "commandlogger.h"
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <string>
 
 class FileCommandLoggerImpl : public CommandLogger {

@@ -22,7 +22,7 @@
 #define LOADCACHE_H_
 
 #include <string>
-#include <string.h>
+#include <cstring>
 
 /**
  * Type parameter {@c T} has the following members:

@@ -20,7 +20,7 @@
 
 #include "commandsetimage.h"
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 
 #include "src/domain/animation/animationimpl.h"

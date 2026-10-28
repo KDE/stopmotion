@@ -21,7 +21,7 @@
 #ifndef RANDOM_H_
 #define RANDOM_H_
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 
 class RandomImpl;

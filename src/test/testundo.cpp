@@ -29,13 +29,13 @@
 #include "src/domain/animation/errorhandler.h"
 #include "src/foundation/stringwriter.h"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <sstream>
-#include <stdio.h>
+#include <cstdio>
 #include <cerrno>
 #include <exception>
-#include <assert.h>
+#include <cassert>
 #include <unistd.h>
 
 #include <QTest>

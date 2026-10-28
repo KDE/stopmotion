@@ -31,13 +31,13 @@
 
 #include <libxml/tree.h>
 
-#include <assert.h>
+#include <cassert>
 #include <fcntl.h>
-#include <stdio.h>
+#include <cstdio>
 #include <archive.h>
 #include <archive_entry.h>
 #include <cstring>
-#include <errno.h>
+#include <cerrno>
 #include <iosfwd>
 #include <map>
 #include <memory>

@@ -41,8 +41,8 @@
 #include <algorithm>
 #include <vector>
 #include <string>
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <unistd.h>
 
 class UiException;

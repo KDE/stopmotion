@@ -30,11 +30,11 @@
 #include "uiexception.h"
 
 #include <unistd.h>
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <sys/stat.h>
-#include <stddef.h>
-#include <errno.h>
+#include <cstddef>
+#include <cerrno>
 #include <exception>
 #include <iostream>
 

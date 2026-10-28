@@ -21,7 +21,7 @@
 #ifndef TESTHOME_H_
 #define TESTHOME_H_
 
-#include <stdio.h>
+#include <cstdio>
 
 #include "oomtestutil.h"
 

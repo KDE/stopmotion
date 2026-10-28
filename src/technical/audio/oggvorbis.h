@@ -20,7 +20,7 @@
 #ifndef OGGVORBIS_H
 #define OGGVORBIS_H
 
-#include <stdint.h>
+#include <cstdint>
 
 #include <vorbis/vorbisfile.h>
 

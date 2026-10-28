@@ -21,7 +21,7 @@
 #ifndef COMMANDRENAMESOUND_H_
 #define COMMANDRENAMESOUND_H_
 
-#include <stdint.h>
+#include <cstdint>
 
 #include "command.h"
 

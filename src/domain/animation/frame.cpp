@@ -27,8 +27,8 @@
 #include "src/config.h"
 #include "sound.h"
 
-#include <assert.h>
-#include <string.h>
+#include <cassert>
+#include <cstring>
 #include <memory>
 #include <exception>
 #include <sstream>

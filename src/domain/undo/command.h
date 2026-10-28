@@ -21,7 +21,7 @@
 #ifndef COMMAND_H_
 #define COMMAND_H_
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 
 class CommandList;

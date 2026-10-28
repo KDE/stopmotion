@@ -20,7 +20,7 @@
 
 #include "fakefiles.h"
 
-#include <string.h>
+#include <cstring>
 
 #include "src/test/oomtestutil.h"
 

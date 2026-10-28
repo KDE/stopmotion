@@ -18,7 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <stdarg.h>
+#include <cstdarg>
 
 #include "executor.h"
 #include "command.h"
@@ -32,8 +32,8 @@
 #include <string>
 #include <memory>
 
-#include <stdint.h>
-#include <string.h>
+#include <cstdint>
+#include <cstring>
 
 // help out Eclipse's C++ parsing
 #ifndef INT32_MAX

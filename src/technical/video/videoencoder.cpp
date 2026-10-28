@@ -22,8 +22,8 @@
 
 #include "src/technical/util.h"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 
 
 VideoEncoder::VideoEncoder()

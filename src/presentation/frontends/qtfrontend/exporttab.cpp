@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "src/presentation/frontends/qtfrontend/exporttab.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <algorithm>
 #include <memory>
 

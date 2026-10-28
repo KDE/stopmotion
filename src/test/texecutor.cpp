@@ -21,15 +21,15 @@
 
 #include <QTest>
 
-#include <string.h>
+#include <cstring>
 #include <memory>
 #include <limits>
-#include <stdint.h>
+#include <cstdint>
 #include <cstdlib>
-#include <stdio.h>
+#include <cstdio>
 #include <sstream>
 #include <exception>
-#include <assert.h>
+#include <cassert>
 #include <utility>
 
 #include "src/domain/undo/executor.h"

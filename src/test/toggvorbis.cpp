@@ -19,8 +19,8 @@
  ***************************************************************************/
 #include "../technical/audio/oggvorbis.h"
 
-#include <stddef.h>
-#include <stdint.h>
+#include <cstddef>
+#include <cstdint>
 
 #include "src/domain/animation/workspacefile.h"
 

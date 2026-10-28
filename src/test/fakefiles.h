@@ -23,7 +23,7 @@
 
 #include "oomtestutil.h"
 
-#include <stdio.h>
+#include <cstdio>
 
 struct OggVorbis_File;
 

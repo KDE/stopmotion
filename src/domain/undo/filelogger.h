@@ -21,7 +21,7 @@
 #ifndef FILELOGGER_H_
 #define FILELOGGER_H_
 
-#include <stdio.h>
+#include <cstdio>
 #include <exception>
 
 class FileCommandLoggerImpl;

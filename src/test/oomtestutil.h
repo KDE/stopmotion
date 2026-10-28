@@ -22,7 +22,7 @@
 #define OOMTESTUTIL_H_
 
 // sadly, can't simply forward-declare FILE
-#include <stdio.h>
+#include <cstdio>
 
 /**
  * Interface class for mock file systems, and the facade for the real file

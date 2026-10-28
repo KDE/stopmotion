@@ -21,8 +21,8 @@
 #ifndef HASH_H_
 #define HASH_H_
 
-#include <stdint.h>
-#include <stdio.h>
+#include <cstdint>
+#include <cstdio>
 #include <string>
 
 /**

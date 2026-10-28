@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 #include "imagegrabber.h"
-#include <string.h>
+#include <cstring>
 
 ImageGrabber::ImageGrabber(const char* filePath)
 		: path(nullptr) {
