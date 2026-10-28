@@ -66,13 +66,18 @@ feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND)
 
 add_compile_definitions(STOPMOTION_VERSION="${PROJECT_VERSION}")
 
-# if given, pass path to translations and html path
-if(TRANSLATIONS_PATH)
-  add_compile_definitions(TRANSLATIONS_PATH="${TRANSLATIONS_PATH}")
+# where translations and the manual are installed and looked up at runtime;
+# packagers can override the latter with TRANSLATIONS_PATH and HTML_PATH
+set(STOPMOTION_TRANSLATIONS_INSTALL_DIR ${KDE_INSTALL_DATADIR}/stopmotion/translations)
+set(STOPMOTION_DOC_INSTALL_DIR ${KDE_INSTALL_DATAROOTDIR}/doc/stopmotion)
+if(NOT TRANSLATIONS_PATH)
+  set(TRANSLATIONS_PATH ${CMAKE_INSTALL_PREFIX}/${STOPMOTION_TRANSLATIONS_INSTALL_DIR})
 endif()
-if(HTML_PATH)
-  add_compile_definitions(HTML_PATH="${HTML_PATH}")
+if(NOT HTML_PATH)
+  set(HTML_PATH ${CMAKE_INSTALL_PREFIX}/${STOPMOTION_DOC_INSTALL_DIR}/manual)
 endif()
+add_compile_definitions(TRANSLATIONS_PATH="${TRANSLATIONS_PATH}")
+add_compile_definitions(HTML_PATH="${HTML_PATH}")
 
 add_subdirectory(src)
 add_subdirectory(translations)
@@ -208,8 +213,8 @@ install(FILES graphics/stopmotion.png
 install(FILES graphics/stopmotion.svg
   DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps)
 install(FILES ${QM_FILES}
-  DESTINATION ${KDE_INSTALL_DATADIR}/stopmotion/translations)
+  DESTINATION ${STOPMOTION_TRANSLATIONS_INSTALL_DIR})
 install(FILES stopmotion.1
   DESTINATION ${KDE_INSTALL_MANDIR}/man1)
 install(DIRECTORY manual
-  DESTINATION ${KDE_INSTALL_DATAROOTDIR}/doc/stopmotion)
+  DESTINATION ${STOPMOTION_DOC_INSTALL_DIR})
