@@ -68,33 +68,33 @@ msgctxt ""
 msgid "English"
 msgstr "आंग्ल"
 
-#: src/application/modelhandler.cpp:62
+#: src/application/modelhandler.cpp:63
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
 msgstr "योजयितुं फ्रेम्स् चिनोतु"
 
-#: src/application/modelhandler.cpp:182
+#: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
 msgstr "चयनितं फ्रेमं निष्कासितम्"
 
-#: src/application/modelhandler.cpp:219 src/application/modelhandler.cpp:229
-#: src/application/modelhandler.cpp:245
+#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
+#: src/application/modelhandler.cpp:246
 msgctxt "ModelHandler|"
 msgid "Warning"
 msgstr "चेतवानी"
 
-#: src/application/modelhandler.cpp:220
+#: src/application/modelhandler.cpp:221
 msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
 msgstr "भवतः प्रणाल्यां Gimp संस्थापितम् नास्ति"
 
-#: src/application/modelhandler.cpp:230
+#: src/application/modelhandler.cpp:231
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
 msgstr "उद्घाटयितुं सक्रियः फ्रेमः नास्ति"
 
-#: src/application/modelhandler.cpp:246
+#: src/application/modelhandler.cpp:247
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr "Gimp आरभ्यतुं असफलः अभवत्!"

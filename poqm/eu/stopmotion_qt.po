@@ -73,33 +73,33 @@ msgctxt ""
 msgid "English"
 msgstr "Ingelesa"
 
-#: src/application/modelhandler.cpp:62
+#: src/application/modelhandler.cpp:63
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
 msgstr "Aukeratu gehitu beharreko fotogramak"
 
-#: src/application/modelhandler.cpp:182
+#: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
 msgstr "Kendu da hautatutako fotograma"
 
-#: src/application/modelhandler.cpp:219 src/application/modelhandler.cpp:229
-#: src/application/modelhandler.cpp:245
+#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
+#: src/application/modelhandler.cpp:246
 msgctxt "ModelHandler|"
 msgid "Warning"
 msgstr "Abisua"
 
-#: src/application/modelhandler.cpp:220
+#: src/application/modelhandler.cpp:221
 msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
 msgstr "Ez daukazu Gimp zure sisteman instalatuta"
 
-#: src/application/modelhandler.cpp:230
+#: src/application/modelhandler.cpp:231
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
 msgstr "Ez dago irekitzeko fotograma aktiborik"
 
-#: src/application/modelhandler.cpp:246
+#: src/application/modelhandler.cpp:247
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr "Gimp abiatzea huts egin du!"

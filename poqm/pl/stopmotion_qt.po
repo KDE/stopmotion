@@ -67,33 +67,33 @@ msgctxt ""
 msgid "English"
 msgstr "Angielski"
 
-#: src/application/modelhandler.cpp:62
+#: src/application/modelhandler.cpp:63
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
 msgstr "Wybierz klatki do dodania"
 
-#: src/application/modelhandler.cpp:182
+#: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
 msgstr "Usuń zaznaczoną klatkę"
 
-#: src/application/modelhandler.cpp:219 src/application/modelhandler.cpp:229
-#: src/application/modelhandler.cpp:245
+#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
+#: src/application/modelhandler.cpp:246
 msgctxt "ModelHandler|"
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: src/application/modelhandler.cpp:220
+#: src/application/modelhandler.cpp:221
 msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
 msgstr "Nie masz programu Gimp w swoim systemie"
 
-#: src/application/modelhandler.cpp:230
+#: src/application/modelhandler.cpp:231
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
 msgstr "Nie ma żadnej bieżącej klatki do otwarcia"
 
-#: src/application/modelhandler.cpp:246
+#: src/application/modelhandler.cpp:247
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr "Nie udało się uruchomić Gimpa!"

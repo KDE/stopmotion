@@ -70,33 +70,33 @@ msgctxt ""
 msgid "English"
 msgstr "Angličtina"
 
-#: src/application/modelhandler.cpp:62
+#: src/application/modelhandler.cpp:63
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
 msgstr "Vyberte snímky na pridanie"
 
-#: src/application/modelhandler.cpp:182
+#: src/application/modelhandler.cpp:183
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
 msgstr "Vybraná snímka bola odstránená"
 
-#: src/application/modelhandler.cpp:219 src/application/modelhandler.cpp:229
-#: src/application/modelhandler.cpp:245
+#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
+#: src/application/modelhandler.cpp:246
 msgctxt "ModelHandler|"
 msgid "Warning"
 msgstr "Upozornenie"
 
-#: src/application/modelhandler.cpp:220
+#: src/application/modelhandler.cpp:221
 msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
 msgstr "Nemáte na svojom systéme nainštalovaný Gimp"
 
-#: src/application/modelhandler.cpp:230
+#: src/application/modelhandler.cpp:231
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
 msgstr "Nie je žiadna aktívna snímka na otvorenie"
 
-#: src/application/modelhandler.cpp:246
+#: src/application/modelhandler.cpp:247
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr "Nepodarilo sa start Gimp!"
