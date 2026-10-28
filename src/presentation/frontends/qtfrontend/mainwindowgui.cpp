@@ -432,7 +432,7 @@ void MainWindowGUI::makeGotoMenu(QVBoxLayout *layout)
 	gotoSpinner->setRange(1, 1);
 
 	connect(frameBar, qOverload<int, int>(&FrameBar::newActiveFrame),
-			gotoSpinner, &QSpinBox::setValue);
+			gotoSpinner, &FlexibleSpinBox::setIndexSecond);
 	connect(frameBar, &FrameBar::modelSizeChanged,
 			gotoSpinner, &FlexibleSpinBox::setMaximumValue);
 	connect(frameBar, &FrameBar::newMaximumValue, gotoSpinner, &FlexibleSpinBox::setMaximumValue);
