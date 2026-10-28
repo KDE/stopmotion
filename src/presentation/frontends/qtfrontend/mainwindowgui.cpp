@@ -189,7 +189,7 @@ void MainWindowGUI::createHandlers(QApplication *stApp) {
 			this, &MainWindowGUI::activateMenuOptions);
 
 	soundHandler = new SoundHandler( this, this->statusBar(), frameBar,
-			this->lastVisitedDir.toLocal8Bit() );
+			this->lastVisitedDir );
 }
 
 

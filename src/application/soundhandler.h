@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QStatusBar>
 #include <QListWidget>
+#include <QString>
 
 class FrameBar;
 
@@ -44,7 +45,7 @@ public:
 	 * @param name the name of the soundhandler
 	 */
 	SoundHandler ( QObject *parent = nullptr, QStatusBar *sb = nullptr,
-			const FrameBar* frameBar = nullptr, const char* homeDir = nullptr,
+			const FrameBar* frameBar = nullptr, const QString& homeDir = QString(),
 			const char *name = nullptr );
 	
 	/**
@@ -75,7 +76,7 @@ public slots:
 private:
 	QStatusBar *statusBar;
 	const FrameBar* frameBar;
-	const char* homeDir;
+	QString homeDir;
 	//Q3ListBox *soundsList;
 	QListWidget *soundsList;
 };
