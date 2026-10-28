@@ -423,6 +423,8 @@ void QtFrontend::reportWarning(const char *message) {
 void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 	// Replace all occurrences of '(DEFAULTPATH)' with '$IMAGEFILE'  (version 0.3 and 0.4)
 	// Replace all occurrences of '/dev/xxx' with $VIDEODEVICE (version < 0.7)
+	static const QRegularExpression videoDevice(
+			QStringLiteral("/dev/(v4l/){0,1}video[0-9]{0,1}"));
 	int numImports = prefs->getPreference("numberofimports", 1);
 	for (int i = 0; i < numImports; ++i) {
 		Preference startPref(QString("importstartdaemon%1")
@@ -434,8 +436,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 					std::string("$IMAGEFILE"));
 		}
 		QString s(start.c_str());
-		s.replace( QRegularExpression("/dev/(v4l/){0,1}video[0-9]{0,1}"),
-				QString("$VIDEODEVICE") );
+		s.replace( videoDevice, QString("$VIDEODEVICE") );
 		prefs->setPreference( QString("importstartdaemon%1")
 				.arg(i).toUtf8().constData(), s.toUtf8().constData());
 
@@ -448,7 +449,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 					std::string("$IMAGEFILE"));
 		}
 		QString ss(prepoll.c_str());
-		ss.replace( QRegularExpression("/dev/(v4l/){0,1}video[0-9]{0,1}"), QString("$VIDEODEVICE") );
+		ss.replace( videoDevice, QString("$VIDEODEVICE") );
 		prefs->setPreference( QString("importprepoll%1").arg(i).toUtf8().constData(), ss.toUtf8().constData());
 	}
 }
