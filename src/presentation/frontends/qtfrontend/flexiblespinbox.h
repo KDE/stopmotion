@@ -38,14 +38,14 @@ public:
 	 * Constructs and initializes the object.
 	 * @param parent the parent widget
 	 */
-	FlexibleSpinBox(QWidget *parent = 0);
+	FlexibleSpinBox(QWidget *parent = nullptr);
 	
 	/**
 	 * Checks what kind of key event the user has requested and 
 	 * does actions based on this. 
 	 * @param k the key event
 	 */
-	void keyPressEvent( QKeyEvent * k );
+	void keyPressEvent( QKeyEvent * k ) override;
 	
 public slots:
 	/**
@@ -73,7 +73,7 @@ signals:
 	void spinBoxCanceled();
 
 protected:
-	void showEvent(QShowEvent * event);
+	void showEvent(QShowEvent * event) override;
 };
 
 #endif

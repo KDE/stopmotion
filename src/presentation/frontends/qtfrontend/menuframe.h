@@ -96,7 +96,7 @@ public slots:
 	 * @param newFocusWidget the widget who will receive the focus after this menu
 	 * closes.
 	 */
-	virtual void close(QWidget * newFocusWidget);
+	void close(QWidget * newFocusWidget);
 };
 
 #endif

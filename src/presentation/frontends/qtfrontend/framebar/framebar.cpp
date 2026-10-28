@@ -330,7 +330,7 @@ void FrameBar::deleteFrames(int fromFrame, int frameCount) {
 	std::vector<ThumbView*>::iterator end = start + frameCount;
 	for (std::vector<ThumbView*>::iterator i = start; i != end; ++i) {
 		(*i)->delRef();
-		(*i) = 0;
+		(*i) = nullptr;
 	}
 	thumbViews.erase(start, end);
 	activeSceneSize -= frameCount;

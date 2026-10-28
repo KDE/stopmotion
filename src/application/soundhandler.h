@@ -43,9 +43,9 @@ public:
 	 * @param homeDir the home directory of the user.
 	 * @param name the name of the soundhandler
 	 */
-	SoundHandler ( QObject *parent = 0, QStatusBar *sb = 0,
-			const FrameBar* frameBar = 0, const char* homeDir = 0,
-			const char *name = 0 );
+	SoundHandler ( QObject *parent = nullptr, QStatusBar *sb = nullptr,
+			const FrameBar* frameBar = nullptr, const char* homeDir = nullptr,
+			const char *name = nullptr );
 	
 	/**
 	 * Add the soundsList to the handler so that it can be cleared and filled as
