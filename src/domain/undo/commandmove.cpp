@@ -67,11 +67,11 @@ CommandMoveFactory::~CommandMoveFactory() {
 Command* CommandMoveFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
-		return 0;
+		return nullptr;
 	int fs = ps.getInteger(0, sceneCount - 1);
 	int framesInScene = sv.frameCount(fs);
 	if (framesInScene == 0)
-		return 0;
+		return nullptr;
 	int ff = ps.getInteger(0, framesInScene - 1);
 	int fc = ps.getInteger(0, framesInScene - ff);
 	int ts = ps.getInteger(0, sceneCount - 1);

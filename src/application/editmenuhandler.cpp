@@ -36,7 +36,7 @@ EditMenuHandler::EditMenuHandler ( QObject *parent, QStatusBar *sb,
 		FrameBar *frameBar, const char *name ) 
 	: QObject(parent), statusBar(sb), frameBar(frameBar)
 {
-	gotoMenu = 0;
+	gotoMenu = nullptr;
 	setObjectName(name);
 }
 

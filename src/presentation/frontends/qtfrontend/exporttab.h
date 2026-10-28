@@ -47,7 +47,7 @@ public:
 	 * Sets up the tab.
 	 * @param parent the parent of the this widget
 	 */
-	ExportTab(QWidget *parent = 0);
+	ExportTab(QWidget *parent = nullptr);
 
 	/**
 	 * Applies the settings in the import tab.

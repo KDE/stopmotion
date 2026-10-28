@@ -45,7 +45,7 @@ public:
 	 * @param parent the parent widget.
 	 * @param number the number of this widget in the framebar.
 	 */
-	FrameThumbView(FrameBar *frameBar, QWidget *parent = 0, int number = 0, const char *name = 0);
+	FrameThumbView(FrameBar *frameBar, QWidget *parent = nullptr, int number = 0, const char *name = nullptr);
 	
 	/**
 	 * Cleans up after the widget.

@@ -96,8 +96,8 @@ public:
 	}
 };
 
-TestStopmotionUndo::TestStopmotionUndo() : anim(0), mockFrontend(0),
-		sv(0), ex(0), mfs(0), animTester(0) {
+TestStopmotionUndo::TestStopmotionUndo() : anim(nullptr), mockFrontend(nullptr),
+		sv(nullptr), ex(nullptr), mfs(nullptr), animTester(nullptr) {
 	sv = new SceneVector();
 	ex = makeAnimationCommandExecutor(*sv);
 	mfs = new RealOggEmptyJpg();
@@ -172,11 +172,11 @@ public:
 
 void TestStopmotionUndo::stopmotionCommandsInvertCorrectly() {
 	SceneVectorTestHelper helper(*sv);
-	wrapFileSystem(0);
+	wrapFileSystem(nullptr);
 	wrapFileSystem(testEnvFs);
 	wrapFileSystem(mfs);
 	testUndo(*ex, helper);
-	wrapFileSystem(0);
+	wrapFileSystem(nullptr);
 }
 
 class AnimTester {
@@ -269,7 +269,7 @@ public:
 TestStopmotionUndo::~TestStopmotionUndo() {
 	delete animTester;
 	delete anim;
-	wrapFileSystem(0);
+	wrapFileSystem(nullptr);
 	delete mockFrontend;
 	delete testEnvFs;
 	delete mfs;
@@ -304,13 +304,13 @@ public:
 };
 
 void TestStopmotionUndo::setUpAnim() {
-	wrapFileSystem(0);
+	wrapFileSystem(nullptr);
 	wrapFileSystem(testEnvFs);
 	WorkspaceFile::clear();
 	delete anim;
-	anim = 0;
+	anim = nullptr;
 	delete animTester;
-	animTester = 0;
+	animTester = nullptr;
 	anim = new Animation();
 	anim->registerFrontend(mockFrontend);
 	animTester = new AnimTester(anim);

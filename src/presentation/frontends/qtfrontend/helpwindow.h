@@ -31,7 +31,7 @@ class HelpWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	HelpWindow(QWidget *parent = 0);
+	HelpWindow(QWidget *parent = nullptr);
 
 private:
 	Ui::MainWindow ui;

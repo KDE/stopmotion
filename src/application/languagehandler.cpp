@@ -33,9 +33,9 @@
 
 
 LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const char *name) 
-		: QObject(parent), languagesMenu(0) {
+		: QObject(parent), languagesMenu(nullptr) {
 	qmPath = QString(stopmotion::translationsDirectory);
-	activeAction = 0;
+	activeAction = nullptr;
 	translator = new QTranslator(this);
 
 	// Get system locale.
@@ -127,7 +127,7 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 
 	Preference languagePref("language", "en");
 	activeAction = locales.key(QString(languagePref.get()));
-	if (activeAction != 0) {
+	if (activeAction != nullptr) {
 		activeAction->setChecked(true);
 	} else {
 		Logger::get().logWarning("Something wrong with the locale!");
@@ -138,7 +138,7 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 
 void LanguageHandler::changeLanguage(QAction *action)
 {
-	if (activeAction != 0) {
+	if (activeAction != nullptr) {
 		activeAction->setChecked(false);
 	}
 	action->setChecked(true);

@@ -35,7 +35,7 @@ public:
 			flush();
 			fclose(fh);
 		}
-		fh = 0;
+		fh = nullptr;
 	}
 	void flush() override {
 		if (!fh) {
@@ -53,7 +53,7 @@ public:
 		}
 		fflush(fh);
 	}
-	FileCommandLoggerImpl() : fh(0), committedUpTo(0) {
+	FileCommandLoggerImpl() : fh(nullptr), committedUpTo(0) {
 	}
 	~FileCommandLoggerImpl() override {
 		// A destructor must not throw; if the final flush fails the

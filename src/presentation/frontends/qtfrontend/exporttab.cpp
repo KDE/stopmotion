@@ -44,23 +44,23 @@
 
 ExportTab::ExportTab(QWidget *parent) : QWidget(parent)
 {
-	addButton          = 0;
-	removeButton       = 0;
-	editButton         = 0;
-	browseButton       = 0;
-	yesButton          = 0;
-	noButton           = 0;
-	closeButton        = 0;
-	encoderPrefs       = 0;
-	encoderTable       = 0;
-	startEncoder       = 0;
-	stopEncoder        = 0;
-	startEncoderLabel  = 0;
-	stopEncoderLabel   = 0;
-	defaultOutput      = 0;
-	defaultOutputLabel = 0;
-	askForOutput       = 0;
-	infoText           = 0;
+	addButton          = nullptr;
+	removeButton       = nullptr;
+	editButton         = nullptr;
+	browseButton       = nullptr;
+	yesButton          = nullptr;
+	noButton           = nullptr;
+	closeButton        = nullptr;
+	encoderPrefs       = nullptr;
+	encoderTable       = nullptr;
+	startEncoder       = nullptr;
+	stopEncoder        = nullptr;
+	startEncoderLabel  = nullptr;
+	stopEncoderLabel   = nullptr;
+	defaultOutput      = nullptr;
+	defaultOutputLabel = nullptr;
+	askForOutput       = nullptr;
+	infoText           = nullptr;
 
 	makeGUI();
 }

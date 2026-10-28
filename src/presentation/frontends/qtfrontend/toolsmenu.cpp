@@ -56,17 +56,17 @@
 ToolsMenu::ToolsMenu(RunAnimationHandler *runAnimationHandler,
 		ModelHandler *modelHandler, CameraHandler *cameraHandler,
 		FrameBar *frameBar, QWidget *parent)
-	: QWidget(parent), ui(0), runAnimationHandler(runAnimationHandler),
+	: QWidget(parent), ui(nullptr), runAnimationHandler(runAnimationHandler),
 	  modelHandler(modelHandler), cameraHandler(cameraHandler),
 	  frameBar(frameBar) {
 	ui = new Ui::Form;
 	ui->setupUi(this);
 
-	loopAccel = 0;
-	playAccel = 0;
-	mixAccel = 0;
-	diffAccel = 0;
-	playbackAccel = 0;
+	loopAccel = nullptr;
+	playAccel = nullptr;
+	mixAccel = nullptr;
+	diffAccel = nullptr;
+	playbackAccel = nullptr;
 
 	captureTimer = new QTimer(this);
 	connect( captureTimer, &QTimer::timeout, cameraHandler, &CameraHandler::captureFrame);

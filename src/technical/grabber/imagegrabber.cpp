@@ -22,7 +22,7 @@
 #include <string.h>
 
 ImageGrabber::ImageGrabber(const char* filePath)
-		: path(0) {
+		: path(nullptr) {
 	size_t pathLen = strlen(filePath) + 1;
 	path = new char[pathLen];
 	strncpy(path, filePath, pathLen);

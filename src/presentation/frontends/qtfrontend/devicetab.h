@@ -39,7 +39,7 @@ class DeviceTab : public QWidget
 {
 	Q_OBJECT
 public:
-	DeviceTab(QWidget *parent = 0);
+	DeviceTab(QWidget *parent = nullptr);
 
 	void initialize();
 	void apply();

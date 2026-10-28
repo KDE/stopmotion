@@ -23,7 +23,7 @@
 #include <stdio.h>
 
 void UiException::setStringParam(const char* s) {
-	hasStringParam = s != 0;
+	hasStringParam = s != nullptr;
 	stringParam = s? s : "";
 }
 
@@ -59,7 +59,7 @@ UiException::Error UiException::error() const {
 
 namespace {
 std::string formatError(const char* format, const std::string& param) {
-	int n = snprintf(0, 0, format, param.c_str());
+	int n = snprintf(nullptr, 0, format, param.c_str());
 	if (n < 0)
 		return format;
 	std::string p(n, '\0');
@@ -110,5 +110,5 @@ const char* UiException::what() const throw () {
 }
 
 const char* UiException::string() const {
-	return hasStringParam? stringParam.c_str() : 0;
+	return hasStringParam? stringParam.c_str() : nullptr;
 }

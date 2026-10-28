@@ -45,8 +45,8 @@ public:
 	 * @param modelHandler for adding frames when capturing.
 	 * @param name the name of the object
 	 */
-	CameraHandler ( QObject *parent = 0, QStatusBar *sb = 0, 
-			ModelHandler* modelHandler = 0, const char *name = 0);
+	CameraHandler ( QObject *parent = nullptr, QStatusBar *sb = nullptr,
+			ModelHandler* modelHandler = nullptr, const char *name = nullptr);
 	
 	~CameraHandler();
 

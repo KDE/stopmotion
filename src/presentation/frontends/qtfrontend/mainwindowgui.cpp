@@ -76,22 +76,22 @@ using namespace std;
 using namespace Qt;
 
 MainWindowGUI::MainWindowGUI(QApplication *stApp)
-	: stApp(stApp), centerWidget(0), centerWidgetLayout(0), bottomWidget(0),
-	  bottomWidgetLayout(0), workArea(0), workAreaLayout(0),
-	  frameBar(0), frameView(0), gotoMenuWidget(0), gotoMenuWidgetLayout(0),
-	  fileWatcher(0), editObserver(0),
-	  newAct(0), openAct(0), mostRecentAct(0), secondMostRecentAct(0),
-	  thirdMostRecentAct(0), saveAct(0), saveAsAct(0), videoAct(0), cinerellaAct(0),
-	  quitAct(0), undoAct(0), redoAct(0), cutAct(0), copyAct(0), pasteAct(0),
-	  gotoFrameAct(0), configureAct(0), whatsthisAct(0), aboutAct(0),
-	  helpAct(0),
-	  fileMenu(0), exportMenu(0), mostRecentMenu(0), editMenu(0),
-	  settingsMenu(0), languagesMenu(0), helpMenu(0), toolsMenu(0),
-	  framePreferencesMenu(0), preferencesMenu(0),
-	  gotoMenuCloseButton(0), numberDisplay(0), gotoSpinner(0),
-	  gotoFrameLabel(0),
-	  modelHandler(0), soundHandler(0), cameraHandler(0), editMenuHandler(0),
-	  languageHandler(0), runAnimationHandler(0),
+	: stApp(stApp), centerWidget(nullptr), centerWidgetLayout(nullptr), bottomWidget(nullptr),
+	  bottomWidgetLayout(nullptr), workArea(nullptr), workAreaLayout(nullptr),
+	  frameBar(nullptr), frameView(nullptr), gotoMenuWidget(nullptr), gotoMenuWidgetLayout(nullptr),
+	  fileWatcher(nullptr), editObserver(nullptr),
+	  newAct(nullptr), openAct(nullptr), mostRecentAct(nullptr), secondMostRecentAct(nullptr),
+	  thirdMostRecentAct(nullptr), saveAct(nullptr), saveAsAct(nullptr), videoAct(nullptr), cinerellaAct(nullptr),
+	  quitAct(nullptr), undoAct(nullptr), redoAct(nullptr), cutAct(nullptr), copyAct(nullptr), pasteAct(nullptr),
+	  gotoFrameAct(nullptr), configureAct(nullptr), whatsthisAct(nullptr), aboutAct(nullptr),
+	  helpAct(nullptr),
+	  fileMenu(nullptr), exportMenu(nullptr), mostRecentMenu(nullptr), editMenu(nullptr),
+	  settingsMenu(nullptr), languagesMenu(nullptr), helpMenu(nullptr), toolsMenu(nullptr),
+	  framePreferencesMenu(nullptr), preferencesMenu(nullptr),
+	  gotoMenuCloseButton(nullptr), numberDisplay(nullptr), gotoSpinner(nullptr),
+	  gotoFrameLabel(nullptr),
+	  modelHandler(nullptr), soundHandler(nullptr), cameraHandler(nullptr), editMenuHandler(nullptr),
+	  languageHandler(nullptr), runAnimationHandler(nullptr),
 	  lastVisitedDir(getenv("PWD")) {
 
 	centerWidget = new QWidget;
@@ -408,7 +408,7 @@ void MainWindowGUI::makeToolsMenu(QHBoxLayout *layout)
 
 void MainWindowGUI::makePreferencesMenu(QVBoxLayout *layout)
 {
-	framePreferencesMenu = new FramePreferencesMenu(0, soundHandler, frameBar);
+	framePreferencesMenu = new FramePreferencesMenu(nullptr, soundHandler, frameBar);
 	layout->addWidget(framePreferencesMenu);
 	frameBar->setPreferencesMenu(framePreferencesMenu);
 	framePreferencesMenu->hide();
@@ -832,7 +832,7 @@ void MainWindowGUI::updatePasteEnabled() {
 }
 
 void MainWindowGUI::doOpenProject(const char* projectFile) {
-	assert(projectFile != NULL);
+	assert(projectFile != nullptr);
 	DomainFacade::getFacade()->openProject(projectFile);
 	frameView->workspaceCleared();
 	saveAsAct->setEnabled(true);

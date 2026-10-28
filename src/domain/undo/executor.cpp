@@ -75,7 +75,7 @@ public:
 	 * Constructs a @c StringReader without a buffer. The buffer must be set with
 	 * @c SetBuffer before use.
 	 */
-	StringReader() : p(0), end(0) {
+	StringReader() : p(nullptr), end(nullptr) {
 	}
 	/**
 	 * Constructs a @c StringReader.
@@ -511,7 +511,7 @@ class ConcreteExecutor : public Executor {
 		return found->second;
 	}
 public:
-	ConcreteExecutor() : logger(0) {
+	ConcreteExecutor() : logger(nullptr) {
 	}
 	~ConcreteExecutor() override {
 		for (FactoryMap::iterator i = factories.begin();

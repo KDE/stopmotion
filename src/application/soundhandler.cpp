@@ -29,7 +29,7 @@
 SoundHandler::SoundHandler(QObject *parent, QStatusBar *sb,
 		const FrameBar* fb, const char* homeDir, const char *name)
 	: QObject(parent), statusBar(sb), frameBar(fb), homeDir(homeDir) {
-	soundsList = NULL;
+	soundsList = nullptr;
 	setObjectName(name);
 }
 
@@ -41,7 +41,7 @@ void SoundHandler::setSoundsList(QListWidget *soundsList) {
 
 void SoundHandler::addSound() {
 	QString file = QFileDialog::
-		getOpenFileName(0, tr("Choose sound file"), QString(homeDir), tr("Sounds (*.ogg)") );
+		getOpenFileName(nullptr, tr("Choose sound file"), QString(homeDir), tr("Sounds (*.ogg)") );
 	if ( !file.isNull() ) {
 		DomainFacade *facade = DomainFacade::getFacade();
 		int activeScene = frameBar->getActiveScene();
@@ -67,7 +67,7 @@ void SoundHandler::setSoundName()
 	int index = soundsList->currentRow();
 	if (index >= 0) {
 		bool ok = false;
-		QString text = QInputDialog::getText(0, tr("Sound name"),
+		QString text = QInputDialog::getText(nullptr, tr("Sound name"),
 				tr("Enter the name of the sound:"),
 				QLineEdit::Normal,QString(), &ok);
 		if ( ok && !text.isEmpty() ) {

@@ -45,7 +45,7 @@ public:
 	 */
 	ToolsMenu( RunAnimationHandler *runAnimationHandler,
 			ModelHandler *modelHandler, CameraHandler *cameraHandler,
-			FrameBar *frameBar, QWidget *parent = 0 );
+			FrameBar *frameBar, QWidget *parent = nullptr );
 
 	~ToolsMenu();
 

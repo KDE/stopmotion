@@ -62,9 +62,9 @@ class TemporaryDirectory {
 	}
 public:
 	//TODO there's got to be a better way of making a temporary directory
-	TemporaryDirectory() : pptr(0) {
-		if (!tryTemplate("TMPDIR", 0)
-				&& !tryTemplate(0, "/tmp")
+	TemporaryDirectory() : pptr(nullptr) {
+		if (!tryTemplate("TMPDIR", nullptr)
+				&& !tryTemplate(nullptr, "/tmp")
 				&& !tryTemplate("HOME", "/.stopmotion")) {
 			throw TemporaryDirectoryCreationException(
 					"Failed to create temporary directory");
@@ -81,7 +81,7 @@ public:
 
 ExternalCommandWithTemporaryDirectory
 		::ExternalCommandWithTemporaryDirectory(
-		QWidget* parent) :ec(0), td(0) {
+		QWidget* parent) :ec(nullptr), td(nullptr) {
 	std::unique_ptr<TemporaryDirectory> ttd(new TemporaryDirectory);
 	ec = new ExternalCommand(parent);
 	td = ttd.release();
@@ -90,9 +90,9 @@ ExternalCommandWithTemporaryDirectory
 ExternalCommandWithTemporaryDirectory
 		::~ExternalCommandWithTemporaryDirectory() {
 	delete ec;
-	ec = 0;
+	ec = nullptr;
 	delete td;
-	td = 0;
+	td = nullptr;
 }
 
 void ExternalCommandWithTemporaryDirectory::run(const QString& command) {

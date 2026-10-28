@@ -41,7 +41,7 @@ public:
 	 * Sets up the filepreview-label.
 	 * @param parent the parent of the widget.
 	 */
-	PreferencesMenu(QWidget *parent = 0);
+	PreferencesMenu(QWidget *parent = nullptr);
 	void display();
 	void retranslateStrings();
 	

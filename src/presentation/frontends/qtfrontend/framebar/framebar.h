@@ -50,7 +50,7 @@ public:
 	 * Creates and sets up the framebar.
 	 * @param parent the parent widget
 	 */
-	FrameBar(QWidget *parent = 0);
+	FrameBar(QWidget *parent = nullptr);
 
 	/**
 	 * Cleans up after the framebar.

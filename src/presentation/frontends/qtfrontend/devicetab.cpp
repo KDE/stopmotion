@@ -43,16 +43,16 @@
 DeviceTab::DeviceTab(QWidget *parent)
 	: QWidget(parent)
 {
-	deviceTable          = 0;
-	addButton            = 0;
-	removeButton         = 0;
-	editButton           = 0;
-	closeChangeBoxButton = 0;
-	deviceEdit           = 0;
-	devicePreferences    = 0;
-	deviceLabel          = 0;
-	checkTableItem       = 0;
-	informationText      = 0;
+	deviceTable          = nullptr;
+	addButton            = nullptr;
+	removeButton         = nullptr;
+	editButton           = nullptr;
+	closeChangeBoxButton = nullptr;
+	deviceEdit           = nullptr;
+	devicePreferences    = nullptr;
+	deviceLabel          = nullptr;
+	checkTableItem       = nullptr;
+	informationText      = nullptr;
 
 	numAutoDetectedDevices = -1;
 	makeGUI();

@@ -46,7 +46,7 @@ public:
 
 
 Frame::Frame(WorkspaceFile& file) {
-	assert(file.path() != NULL);
+	assert(file.path() != nullptr);
 	imagePath.swap(file);
 }
 
@@ -55,19 +55,19 @@ Frame::~Frame() {
 	int numElem = sounds.size();
 	for (int i = 0; i < numElem; ++i) {
 		delete sounds[i];
-		sounds[i] = NULL;
+		sounds[i] = nullptr;
 	}
 }
 
 
 const char* Frame::getImagePath() const {
-	assert(imagePath.path() != NULL);
+	assert(imagePath.path() != nullptr);
 	return imagePath.path();
 }
 
 
 const char* Frame::getBasename() const {
-	assert(imagePath.basename() != 0);
+	assert(imagePath.basename() != nullptr);
 	return imagePath.basename();
 }
 
@@ -83,7 +83,7 @@ int Frame::newSound(WorkspaceFile& file) {
 	std::string cs = ss.str();
 	strncpy(soundName, cs.c_str(), size);
 	const char* oldName = sound->setName(soundName);
-	assert(oldName == NULL);
+	assert(oldName == nullptr);
 	sound->open(file, *ErrorHandler::getThrower());
 	WorkspaceFile::nextSoundNumber();
 	sounds.push_back(sound.release());

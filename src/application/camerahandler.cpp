@@ -37,9 +37,9 @@
 
 CameraHandler::CameraHandler ( QObject *parent, QStatusBar *sb, 
 		ModelHandler* modelHandler, const char *name) 
-	: QObject(parent), statusBar(sb), cameraButton(0), timer(0),
+	: QObject(parent), statusBar(sb), cameraButton(nullptr), timer(nullptr),
 	  capturedFile(WorkspaceFile::capturedImage), isCameraOn(false),
-	  modelHandler(modelHandler), frameView(0) {
+	  modelHandler(modelHandler), frameView(nullptr) {
 	timer = new QTimer(this);
 	timer->setSingleShot(true);
 	QObject::connect( timer, &QTimer::timeout, this, &CameraHandler::storeFrame );

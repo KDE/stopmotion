@@ -33,13 +33,13 @@ FramePreferencesMenu::FramePreferencesMenu( QWidget * parent,
 		SoundHandler *soundHandler, const FrameBar* fb, const char * name )
 	: MenuFrame(parent, name), soundHandler(soundHandler),
 	  frameBar(fb) {
-	soundsList = 0;
-	soundsLabel = 0;
-	closeButton = 0;
-	addSoundButton = 0;
-	removeSoundsButton = 0;
-	changeNameButton = 0;
-	grid = 0;
+	soundsList = nullptr;
+	soundsLabel = nullptr;
+	closeButton = nullptr;
+	addSoundButton = nullptr;
+	removeSoundsButton = nullptr;
+	changeNameButton = nullptr;
+	grid = nullptr;
 	
 	this->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 	grid = new QGridLayout;

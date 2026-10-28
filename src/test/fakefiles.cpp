@@ -26,7 +26,7 @@
 
 struct OggVorbis_File;
 
-RealOggEmptyJpg::RealOggEmptyJpg() : delegate(0),
+RealOggEmptyJpg::RealOggEmptyJpg() : delegate(nullptr),
 		fakeJpg(reinterpret_cast<FILE*>(1)),
 		fakePng(reinterpret_cast<FILE*>(2)),
 		fakeReads(0) {
@@ -66,7 +66,7 @@ FILE* RealOggEmptyJpg::fopen(const char* filename, const char* mode) {
 		fakeReads = 0;
 		return fakePng;
 	} else if (isSound(filename)) {
-		if (strstr(mode, "w") == 0)
+		if (strstr(mode, "w") == nullptr)
 			return delegate->fopen("resources/click.test-sound", mode);
 		return fakePng;
 	}

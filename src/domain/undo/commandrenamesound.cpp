@@ -61,17 +61,17 @@ CommandRenameSoundFactory::~CommandRenameSoundFactory() {
 Command* CommandRenameSoundFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
-		return 0;
+		return nullptr;
 	int32_t sc = ps.getInteger(0, sceneCount - 1);
 	int frameCount = sv.frameCount(sc);
 	if (frameCount == 0)
-		return 0;
+		return nullptr;
 	int32_t fr = ps.getInteger(0, frameCount - 1);
 	int soundCount = sv.getScene(sc)->getFrame(fr)->soundCount();
 	if (soundCount == 0)
-		return 0;
+		return nullptr;
 	int32_t index = ps.getInteger(0, soundCount - 1);
-	std::unique_ptr<CommandRenameSound> r(new CommandRenameSound(sv, sc, fr, index, 0));
+	std::unique_ptr<CommandRenameSound> r(new CommandRenameSound(sv, sc, fr, index, nullptr));
 	std::string name;
 	ps.getString(name, "sound ?*");
 	r->setName(name.c_str());

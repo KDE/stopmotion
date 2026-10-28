@@ -49,7 +49,7 @@ class StringLoggerWrapper: public CommandLogger {
 	int committedUpTo;
 public:
 	StringLoggerWrapper(std::string* output) :
-			delegate(0), out(output), committedUpTo(0) {
+			delegate(nullptr), out(output), committedUpTo(0) {
 	}
 	/**
 	 * Create a logger that writes to a std::string and also passes writes
@@ -175,7 +175,7 @@ public:
 	virtual const char* name() const = 0;
 	virtual void doStep(Executor& e, RandomSource& rng) = 0;
 	virtual CommandLogger* logger() {
-		return 0;
+		return nullptr;
 	}
 	virtual void cleanup() {
 	}
@@ -322,7 +322,7 @@ class FailingStep : public ExecutorStep {
 	int noMallocsToFailCount;
 public:
 	FailingStep(ExecutorStep* delegate)
-		: ExecutorStep(delegate? delegate->getPrevious() : 0),
+		: ExecutorStep(delegate? delegate->getPrevious() : nullptr),
 		  del(delegate), nameString("failing "), fail(false),
 		  totalFails(0), noMallocsToFailCount(0) {
 		nameString.append(del->name());
@@ -368,7 +368,7 @@ public:
 class ExecutorInit : public ExecutorStep {
 	ModelTestHelper& mth;
 public:
-	ExecutorInit(ModelTestHelper& helper) : ExecutorStep(0), mth(helper) {
+	ExecutorInit(ModelTestHelper& helper) : ExecutorStep(nullptr), mth(helper) {
 	}
 	const char* name() const {
 		return "initialize";
@@ -412,7 +412,7 @@ class ExecutorDo : public ExecutorStep {
 public:
 	ExecutorDo(ExecutorStep* following, const char* logFileName)
 		: ExecutorStep(following), min(1), max(40), logFName(logFileName),
-		  fh(0) {
+		  fh(nullptr) {
 	}
 	void setMinimumAndMaximumCommands(int minimum, int maximum) {
 		min = minimum;
@@ -430,8 +430,8 @@ public:
 	}
 	void cleanup() {
 		fLogger.getLogger()->flush();
-		fLogger.setLogFile(0);
-		fh = 0;
+		fLogger.setLogFile(nullptr);
+		fh = nullptr;
 	}
 	CommandLogger* logger() {
 		return fLogger.getLogger();
@@ -445,7 +445,7 @@ class ExecutorDoesAndRandomUndoesAndRedoes : public ExecutorStep {
 public:
 	ExecutorDoesAndRandomUndoesAndRedoes(ExecutorStep* following,
 			const char* logFileName)
-		: ExecutorStep(following), logFName(logFileName), fh(0) {
+		: ExecutorStep(following), logFName(logFileName), fh(nullptr) {
 	}
 	const char* name() const {
 		return "random undoes and redoes";
@@ -467,8 +467,8 @@ public:
 		e.executeRandomCommands(commandCount, rng, 1, 3);
 	}
 	void cleanup() {
-		fLogger.setLogFile(0);
-		fh = 0;
+		fLogger.setLogFile(nullptr);
+		fh = nullptr;
 	}
 	CommandLogger* logger() {
 		return fLogger.getLogger();
@@ -513,7 +513,7 @@ class ExecutorReplay : public ExecutorStep {
 	std::string replayed[2];
 public:
 	ExecutorReplay(ExecutorStep* following, const char* logFileName)
-		: ExecutorStep(following),  logFName(logFileName), fh(0) {
+		: ExecutorStep(following),  logFName(logFileName), fh(nullptr) {
 	}
 	~ExecutorReplay() {
 		cleanup();
@@ -538,7 +538,7 @@ public:
 	void cleanup() {
 		if (fh) {
 			fclose(fh);
-			fh = 0;
+			fh = nullptr;
 		}
 	}
 };

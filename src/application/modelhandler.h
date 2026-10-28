@@ -45,8 +45,8 @@ public:
 	 * @param lastVisitedDir the last visited directory
 	 * @param name the name of the ModelHander
 	 */
-	ModelHandler( QObject *parent = 0, QStatusBar *sb = 0, FrameBar *frameBar = 0,
-			QString *lastVisitedDir = 0, const char *name = 0 );
+	ModelHandler( QObject *parent = nullptr, QStatusBar *sb = nullptr, FrameBar *frameBar = nullptr,
+			QString *lastVisitedDir = nullptr, const char *name = nullptr );
 
 	/**
 	 * Cleans up after the modelhandler.

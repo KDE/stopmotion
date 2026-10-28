@@ -42,8 +42,8 @@ public:
 	 * @param frameBar the frameBar containing thumbnails
 	 * @param name the name of the soundhandler
 	 */
-	EditMenuHandler( QObject *parent = 0, QStatusBar *sb = 0, FrameBar *frameBar = 0, 
-			const char *name = 0 );
+	EditMenuHandler( QObject *parent = nullptr, QStatusBar *sb = nullptr, FrameBar *frameBar = nullptr,
+			const char *name = nullptr );
 	
 	
 	/**

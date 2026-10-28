@@ -27,7 +27,7 @@ class AboutDialog : public QDialog
 {
 	Q_OBJECT
 public:
-	AboutDialog(QWidget *parent = 0);
+	AboutDialog(QWidget *parent = nullptr);
 
 private:
 	QTabWidget *tabWidget;

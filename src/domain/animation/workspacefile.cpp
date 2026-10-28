@@ -156,9 +156,9 @@ const WorkspaceFileType& WorkspaceFileType::sound() {
  * @param inFrames True for a sound or image file.
  */
 void WorkspaceFile::setFilename(const char* basename, bool inFrames) {
-	namePart = 0;
+	namePart = nullptr;
 	delete[] fullPath;
-	fullPath = 0;
+	fullPath = nullptr;
 	std::stringstream p;
 	if (p.fail())
 		throw UiException(UiException::failedToCopyFilesToWorkspace);
@@ -219,7 +219,7 @@ void WorkspaceFile::nextSoundNumber() {
 }
 
 WorkspaceFile::WorkspaceFile()
-		: fullPath(0), namePart(0) {
+		: fullPath(nullptr), namePart(nullptr) {
 }
 
 WorkspaceFile& WorkspaceFile::operator=(const WorkspaceFile& other) {
@@ -236,42 +236,42 @@ WorkspaceFile& WorkspaceFile::operator=(const WorkspaceFile& other) {
 }
 
 WorkspaceFile::WorkspaceFile(const WorkspaceFile& t)
-		: fullPath(0), namePart(0) {
+		: fullPath(nullptr), namePart(nullptr) {
 	*this = t;
 }
 
 WorkspaceFile::WorkspaceFile(const char* name)
-		: fullPath(0), namePart(0) {
+		: fullPath(nullptr), namePart(nullptr) {
 	setFilename(name, true);
 }
 
 WorkspaceFile::WorkspaceFile(NewModelFile)
-		: fullPath(0), namePart(0) {
+		: fullPath(nullptr), namePart(nullptr) {
 	setFilename("new.dat");
 }
 
 WorkspaceFile::WorkspaceFile(CurrentModelFile)
-		: fullPath(0), namePart(0) {
+		: fullPath(nullptr), namePart(nullptr) {
 	setFilename("current.dat");
 }
 
 WorkspaceFile::WorkspaceFile(CommandLogFile)
-		: fullPath(0), namePart(0) {
+		: fullPath(nullptr), namePart(nullptr) {
 	setFilename("command.log");
 }
 
 WorkspaceFile::WorkspaceFile(CapturedImage)
-	: fullPath(0), namePart(0) {
+	: fullPath(nullptr), namePart(nullptr) {
 	setFilename("capturedfile.jpg");
 }
 
 WorkspaceFile::WorkspaceFile(PreferencesFile)
-	: fullPath(0), namePart(0) {
+	: fullPath(nullptr), namePart(nullptr) {
 	setFilename("preferences.xml");
 }
 
 WorkspaceFile::WorkspaceFile(PreferencesFileOld)
-	: fullPath(0), namePart(0) {
+	: fullPath(nullptr), namePart(nullptr) {
 	setFilename("preferences.xml.OLD");
 }
 
@@ -307,8 +307,8 @@ void TemporaryWorkspaceFile::copyToWorkspace(const char* filename,
 		// The destructor will not run if we are called from a constructor
 		unlink(fullPath);
 		delete[] fullPath;
-		fullPath = 0;
-		namePart = 0;
+		fullPath = nullptr;
+		namePart = nullptr;
 		throw UiException(UiException::failedToCopyFilesToWorkspace, filename);
 	}
 	toBeDeleted = true;
@@ -316,9 +316,9 @@ void TemporaryWorkspaceFile::copyToWorkspace(const char* filename,
 
 TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename,
 		const WorkspaceFileType& type)
-		: fullPath(0), namePart(0), toBeDeleted(false) {
+		: fullPath(nullptr), namePart(nullptr), toBeDeleted(false) {
 	// not a totally foolproof test...
-	if (strstr(filename, "/.stopmotion/frames/") != NULL) {
+	if (strstr(filename, "/.stopmotion/frames/") != nullptr) {
 		// Already a workspace file; no need to copy it again
 		int size = strlen(filename) + 1;
 		fullPath = new char[size];
@@ -331,7 +331,7 @@ TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename,
 
 TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename,
 		const WorkspaceFileType& type, ForceCopy)
-		: fullPath(0), namePart(0), toBeDeleted(false) {
+		: fullPath(nullptr), namePart(nullptr), toBeDeleted(false) {
 	copyToWorkspace(filename, type);
 }
 
@@ -340,11 +340,11 @@ TemporaryWorkspaceFile::~TemporaryWorkspaceFile() {
 		unlink(fullPath);
 	}
 	delete[] fullPath;
-	fullPath = 0;
-	namePart = 0;
+	fullPath = nullptr;
+	namePart = nullptr;
 }
 
-ExportDirectory::ExportDirectory() : p(0) {
+ExportDirectory::ExportDirectory() : p(nullptr) {
 	std::stringstream s;
 	s << getenv("HOME");
 	s << "/.stopmotion/export/";

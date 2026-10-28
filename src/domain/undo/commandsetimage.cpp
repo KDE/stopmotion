@@ -51,11 +51,11 @@ CommandSetImageFactory::~CommandSetImageFactory() {
 Command* CommandSetImageFactory::create(Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
-		return 0;
+		return nullptr;
 	int32_t sc = ps.getInteger(0, sceneCount - 1);
 	int frameCount = sv.frameCount(sc);
 	if (frameCount == 0)
-		return 0;
+		return nullptr;
 	int32_t fr = ps.getInteger(0, frameCount - 1);
 	std::string path;
 	ps.getString(path, "?*.jpg");

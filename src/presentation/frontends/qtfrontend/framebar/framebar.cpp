@@ -77,7 +77,7 @@ static QImage tryReadImage(const char *filename) {
 
 FrameBar::FrameBar(QWidget *parent)
 		: QScrollArea(parent) {
-	preferencesMenu = 0;
+	preferencesMenu = nullptr;
 	activeFrame = -1;
 	activeScene = -1;
 	activeSceneSize = 0;
@@ -275,7 +275,7 @@ void FrameBar::resync() {
 	int sceneSize = 0 <= scene? facade->getSceneSize(scene) : 0;
 
 	std::vector<ThumbView*>::size_type thumbCount = sceneCount + sceneSize;
-	thumbViews.insert(thumbViews.begin(), thumbCount, 0);
+	thumbViews.insert(thumbViews.begin(), thumbCount, nullptr);
 	activeScene = scene;
 	activeSceneSize = sceneSize;
 	if (scene != activeScene || scene < 0 || sceneSize <= activeFrame) {
@@ -300,7 +300,7 @@ void FrameBar::insertFrames(int index, int numFrames) {
 	std::vector<ThumbView*>::iterator pos = thumbViews.begin()
 			+ (index + activeScene + 1);
 	thumbViews.insert(pos,
-			static_cast<std::vector<ThumbView*>::size_type>(numFrames), 0);
+			static_cast<std::vector<ThumbView*>::size_type>(numFrames), nullptr);
 	activeSceneSize += numFrames;
 	// fix all frames after the insertion point
 	for (int i = index; i != activeSceneSize; ++i) {
@@ -541,7 +541,7 @@ void FrameBar::newScene(int index) {
 	Logger::get().logDebug("Adding new scene thumb to framebar");
 
 	int thumbIndex = index <= activeScene? index : index + activeSceneSize;
-	thumbViews.insert(thumbViews.begin() + thumbIndex, 0);
+	thumbViews.insert(thumbViews.begin() + thumbIndex, nullptr);
 	if (index <= activeScene) {
 		++activeScene;
 		for (int i = 0; i != activeSceneSize; ++i) {
@@ -792,7 +792,7 @@ ThumbView* FrameBar::getFrameThumb(int index, bool fix) {
 	ThumbView* thumb = thumbViews[thumbIndex];
 	DomainFacade* facade = DomainFacade::getFacade();
 	if (!thumb) {
-		thumb = new FrameThumbView(this, 0, index);
+		thumb = new FrameThumbView(this, nullptr, index);
 		thumb->setMinimumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setScaledContents(true);
@@ -821,7 +821,7 @@ ThumbView* FrameBar::getSceneThumb(int index, bool fix) {
 	int thumbIndex = index <= activeScene? index : index + activeSceneSize;
 	ThumbView* thumb = thumbViews[thumbIndex];
 	if (!thumb) {
-		thumb = new SceneThumbView(this, 0, index, "scene");
+		thumb = new SceneThumbView(this, nullptr, index, "scene");
 		thumb->setMinimumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setMaximumSize(FRAME_WIDTH, FRAME_HEIGHT);
 		thumb->setScaledContents(true);

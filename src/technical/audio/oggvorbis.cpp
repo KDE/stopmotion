@@ -40,7 +40,7 @@ public:
 	}
 	FILE* release() {
 		FILE* r = h;
-		h = 0;
+		h = nullptr;
 		return r;
 	}
 	~FileCloser() {
@@ -51,7 +51,7 @@ public:
 };
 
 OggVorbis::OggVorbis() {
-	oggFile = NULL;
+	oggFile = nullptr;
 }
 
 
@@ -61,7 +61,7 @@ OggVorbis::~OggVorbis() {
 
 
 void OggVorbis::setFilename(WorkspaceFile& file, ErrorHandler& e) {
-	assert(file.path() != NULL);
+	assert(file.path() != nullptr);
 
 	// Opens the file and tests for vorbis-ness
 	FILE *f = fopen(file.path(), "r");
@@ -69,14 +69,14 @@ void OggVorbis::setFilename(WorkspaceFile& file, ErrorHandler& e) {
 	if (f) {
 		close();
 		oggFile = static_cast<OggVorbis_File*>(malloc(sizeof(OggVorbis_File)));
-		if (oggFile == NULL) {
+		if (oggFile == nullptr) {
 			throw std::bad_alloc();
 		}
 
-		if ( ov_test(f, oggFile, NULL, 0) < 0 ) {
+		if ( ov_test(f, oggFile, nullptr, 0) < 0 ) {
 			Logger::get().logDebug("Not a valid oggfile");
 			free(oggFile);
-			oggFile = NULL;
+			oggFile = nullptr;
 			e.error( UiException(UiException::invalidAudioFormat) );
 			return;
 		}
@@ -103,15 +103,15 @@ int OggVorbis::open() {
 	if (f) {
 		close();
 		oggFile = static_cast<OggVorbis_File*>(malloc(sizeof(OggVorbis_File)));
-		if (oggFile == NULL) {
+		if (oggFile == nullptr) {
 			throw std::bad_alloc();
 		}
-		if ( ov_open(f, oggFile, NULL, 0) == 0 ) {
+		if ( ov_open(f, oggFile, nullptr, 0) == 0 ) {
 			fcloser.release();
 			return 0;
 		}
 		free(oggFile);
-		oggFile = NULL;
+		oggFile = nullptr;
 	}
 	return -1;
 }
@@ -128,7 +128,7 @@ int OggVorbis::close() {
 	if (oggFile) {
 		ov_clear(oggFile);
 		free(oggFile);
-		oggFile = NULL;
+		oggFile = nullptr;
 		return 0;
 	}
 	return -1;
@@ -136,7 +136,7 @@ int OggVorbis::close() {
 
 
 int OggVorbis::fillBuffer(char *audioBuffer, int numBytes) {
-	assert(audioBuffer != NULL);
+	assert(audioBuffer != nullptr);
 	if (oggFile) {
 		int dummy;
 		int ret = ov_read(oggFile, audioBuffer, numBytes,

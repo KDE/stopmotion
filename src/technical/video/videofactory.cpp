@@ -96,7 +96,7 @@ const char* VideoFactory::createVideoFile(VideoEncoder *encoder,
 	if ( !startCommand.empty() ) {
 		replaceText(startCommand, "$IMAGEPATH", tmpDir);
 		if (!replaceText(startCommand, "$VIDEOFILE", encoder->getOutputFile())) {
-			return NULL;
+			return nullptr;
 		}
 		replaceText(startCommand, "$opt", "");
 		std::string playbackSpeedString = integerToString(playbackSpeed);
@@ -111,5 +111,5 @@ const char* VideoFactory::createVideoFile(VideoEncoder *encoder,
 		ec.release();
 		return encoder->getOutputFile();
 	}
-	return NULL;
+	return nullptr;
 }

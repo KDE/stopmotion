@@ -48,7 +48,7 @@ public:
 		NullAdder& operator=(const NullAdder&);
 	public:
 		NullAdder(CommandList& c) : cl(c) {
-			cl.cs.push_front(0);
+			cl.cs.push_front(nullptr);
 		}
 		~NullAdder() {
 			if (!cl.cs.front())
@@ -183,7 +183,7 @@ int32_t Parameters::getHowMany() {
 	return getInteger(1, INT32_MAX);
 }
 
-CommandHistory::CommandHistory() : past(0), future(0), observer(0),
+CommandHistory::CommandHistory() : past(nullptr), future(nullptr), observer(nullptr),
 		previousCanUndo(false), previousCanRedo(false) {
 	past = new CommandList();
 	future = new CommandList();

@@ -85,8 +85,8 @@ class RealFileSystem : public MockableFileSystem {
 	unlink_t* runlink;
 	getenv_t* rgetenv;
 public:
-	RealFileSystem() : rfopen(0), rfreopen(0), rfclose(0), rfflush(0),
-			rfread(0), rfwrite(0), raccess(0), rferror(0), rgetenv(0) {
+	RealFileSystem() : rfopen(nullptr), rfreopen(nullptr), rfclose(nullptr), rfflush(nullptr),
+			rfread(nullptr), rfwrite(nullptr), raccess(nullptr), rferror(nullptr), rgetenv(nullptr) {
 		rfopen = reinterpret_cast<fopen_t*>(dlsym(RTLD_NEXT, "fopen"));
 		assert(rfopen);
 		rfreopen = reinterpret_cast<freopen_t*>(dlsym(RTLD_NEXT, "freopen"));
@@ -183,7 +183,7 @@ void* malloc(size_t bytes) {
 	__sync_add_and_fetch(&mallocCount, 1);
 	if (0 < mallocsUntilFailure &&
 			0 == __sync_sub_and_fetch(&mallocsUntilFailure, 1))
-		return 0;
+		return nullptr;
 	if (!realMalloc)
 		init();
 	return realMalloc(bytes);

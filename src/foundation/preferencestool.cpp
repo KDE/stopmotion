@@ -33,13 +33,13 @@
 using namespace std;
 
 
-PreferencesTool* PreferencesTool::preferencesTool = 0;
+PreferencesTool* PreferencesTool::preferencesTool = nullptr;
 
 
 class XmlProp {
 	xmlChar* p;
 public:
-	XmlProp(const _xmlNode* node, const char* name) : p(0) {
+	XmlProp(const _xmlNode* node, const char* name) : p(nullptr) {
 		p = xmlGetProp(node, BAD_CAST name);
 	}
 	~XmlProp() {
@@ -52,8 +52,8 @@ public:
 
 
 PreferencesTool::PreferencesTool() :
-		doc(0), dtd(0), rootNode(0), preferences(0), versionNode(0),
-		dirty(false), preferencesFile(0) {
+		doc(nullptr), dtd(nullptr), rootNode(nullptr), preferences(nullptr), versionNode(nullptr),
+		dirty(false), preferencesFile(nullptr) {
 	LIBXML_TEST_VERSION;
 }
 
@@ -65,7 +65,7 @@ PreferencesTool::~PreferencesTool() {
 
 
 PreferencesTool* PreferencesTool::get() {
-	if (preferencesTool == NULL) {
+	if (preferencesTool == nullptr) {
 		preferencesTool = new PreferencesTool();
 	}
 	return preferencesTool;
@@ -82,7 +82,7 @@ void PreferencesTool::setSavePath(const char* s, bool wantSave) {
 bool PreferencesTool::load(const char* filePath) {
 	if (preferencesFile) {
 		delete [] preferencesFile;
-		preferencesFile = NULL;
+		preferencesFile = nullptr;
 	}
 	
 	if (doc) {
@@ -90,7 +90,7 @@ bool PreferencesTool::load(const char* filePath) {
 	}
 	dirty = false;
 
-	doc = xmlReadFile(filePath, NULL, 0);
+	doc = xmlReadFile(filePath, nullptr, 0);
 	if (!doc)
 		return false;
 
@@ -120,20 +120,20 @@ bool PreferencesTool::load(const char* filePath) {
 
 void PreferencesTool::setDefaultPreferences(const char* version) {
 	delete[] preferencesFile;
-	preferencesFile = 0;
+	preferencesFile = nullptr;
 	dirty = true;
 
 	doc = xmlNewDoc(BAD_CAST "1.0");
-	dtd = xmlCreateIntSubset(doc, BAD_CAST "root", NULL, NULL);
+	dtd = xmlCreateIntSubset(doc, BAD_CAST "root", nullptr, nullptr);
 
-	rootNode = xmlNewNode(NULL, BAD_CAST "root");
+	rootNode = xmlNewNode(nullptr, BAD_CAST "root");
 	xmlNewProp(rootNode, BAD_CAST "xml:lang", BAD_CAST "en");
 	xmlNewProp(rootNode, BAD_CAST "title", BAD_CAST "Preferences");
 	xmlDocSetRootElement(doc, rootNode);
 
-	versionNode = xmlNewChild(rootNode, NULL, BAD_CAST "version", NULL);
+	versionNode = xmlNewChild(rootNode, nullptr, BAD_CAST "version", nullptr);
 	xmlNewProp(versionNode, BAD_CAST "version", BAD_CAST version);
-	preferences = xmlNewChild(rootNode, NULL, BAD_CAST "preferences", NULL);
+	preferences = xmlNewChild(rootNode, nullptr, BAD_CAST "preferences", nullptr);
 }
 
 bool PreferencesTool::isVersion(const char* version) {
@@ -152,11 +152,11 @@ void PreferencesTool::setVersion(const char* version) {
 
 void PreferencesTool::setPreference(const char* key, const char* attribute) {
 	checkInitialized();
-	xmlNodePtr node = NULL;
+	xmlNodePtr node = nullptr;
 	node = findNode(key);
 	
-	if (node == NULL) {
-		node = xmlNewChild(preferences, NULL, BAD_CAST "pref", NULL);
+	if (node == nullptr) {
+		node = xmlNewChild(preferences, nullptr, BAD_CAST "pref", nullptr);
 		xmlNewProp(node, BAD_CAST "key", BAD_CAST key);
 		xmlNewProp(node, BAD_CAST "attribute", BAD_CAST attribute);
 		dirty = true;
@@ -203,7 +203,7 @@ int PreferencesTool::getPreference(const char* key, const int defaultValue) {
 void PreferencesTool::removePreference(const char* key) {
 	checkInitialized();
 	xmlNode *node = findNode(key);
-	if (node != NULL) {
+	if (node != nullptr) {
 		xmlUnlinkNode(node);
 		xmlFreeNode(node);
 		dirty = true;
@@ -215,7 +215,7 @@ void PreferencesTool::removePreference(const char* key) {
 class WriteableFile {
 	FILE* f;
 public:
-	WriteableFile() : f(0) {
+	WriteableFile() : f(nullptr) {
 	}
 	~WriteableFile() {
 		if (f)
@@ -259,12 +259,12 @@ xmlNodePtr PreferencesTool::findNode(const char * key) {
 				return node;
 		}
 	}
-	return 0;
+	return nullptr;
 }
 
 
 void PreferencesTool::checkInitialized() {
-	if (doc == NULL) {
+	if (doc == nullptr) {
 		Logger::get().logFatal("A preferencesfile has to be specified before "
 				"using the PreferencesTool.");
 		exit(1);
@@ -276,20 +276,20 @@ void PreferencesTool::cleanTree() {
 	xmlFreeDoc(doc);
 	xmlCleanupParser();
 	
-	doc             = NULL;
-	dtd             = NULL;
-	rootNode        = NULL;
-	preferences     = NULL;
+	doc             = nullptr;
+	dtd             = nullptr;
+	rootNode        = nullptr;
+	preferences     = nullptr;
 }
 
-Preference::Preference(const char* key) : val(0), owns(false) {
+Preference::Preference(const char* key) : val(nullptr), owns(false) {
 	val = PreferencesTool::get()->getPreference(key);
 	if (val)
 		owns = true;
 }
 
 Preference::Preference(const char* key, const char* defaultValue)
-	: val(0), owns(false) {
+	: val(nullptr), owns(false) {
 	val = PreferencesTool::get()->getPreference(key);
 	if (val) {
 		owns = true;

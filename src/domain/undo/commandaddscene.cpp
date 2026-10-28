@@ -31,7 +31,7 @@
 class ErrorHandler;
 
 CommandAddScene::CommandAddScene(AnimationImpl& model, int32_t sn)
-		: sv(model), index(sn), sc(0) {
+		: sv(model), index(sn), sc(nullptr) {
 }
 
 CommandAddScene::~CommandAddScene() {
@@ -46,7 +46,7 @@ void CommandAddScene::setScene(Scene* s) {
 Command* CommandAddScene::execute() {
 	std::unique_ptr<UndoRemoveScene> inv(new UndoRemoveScene(sv, index));
 	sv.addScene(index, sc);
-	sc = 0;
+	sc = nullptr;
 	delete this;
 	return inv.release();
 }

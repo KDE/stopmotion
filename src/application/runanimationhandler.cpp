@@ -33,8 +33,8 @@
 RunAnimationHandler::RunAnimationHandler(QObject *parent, QStatusBar *sb,
 		Selection *sel, const char *name )
 		: QObject(parent), statusBar(sb), selection(sel),
-		  playButton(0), removeFramesButton(0), loopButton(0),
-		  pauseButton(0), timer(0), sceneNr(0), frameNr(0),
+		  playButton(nullptr), removeFramesButton(nullptr), loopButton(nullptr),
+		  pauseButton(nullptr), timer(nullptr), sceneNr(0), frameNr(0),
 		  fps(0), isLooping(false),
 		  startFrame(-1), endFrame(0) {
 	fps = PreferencesTool::get()->getPreference("fps", 10);

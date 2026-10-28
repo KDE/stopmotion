@@ -46,7 +46,7 @@ public:
 	 * @param parent the parent widget.
 	 * @param name the name of the menu.
 	 */
-	MenuFrame(QWidget * parent = 0, const char * name = 0);
+	MenuFrame(QWidget * parent = nullptr, const char * name = nullptr);
 			
 	/**
 	 * Sets the focus widget to the QSpinBox: focusSpinBox.
@@ -58,7 +58,7 @@ public:
 	 *
 	 * @param focusSpinBox the focuswidget of this menu.
 	 */
-	void setFocusWidget(QSpinBox * focusSpinBox = 0);
+	void setFocusWidget(QSpinBox * focusSpinBox = nullptr);
 	
 	
 	/**
@@ -71,7 +71,7 @@ public:
 	 *
 	 * @param focusLineEdit the focuswidget of this menu.
 	 */
-	void setFocusWidget(QLineEdit * focusLineEdit = 0);
+	void setFocusWidget(QLineEdit * focusLineEdit = nullptr);
 	
 protected:
 	/**

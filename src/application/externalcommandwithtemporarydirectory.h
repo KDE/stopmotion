@@ -34,7 +34,7 @@ class ExternalCommandWithTemporaryDirectory {
 	ExternalCommandWithTemporaryDirectory(
 			const ExternalCommandWithTemporaryDirectory&);
 public:
-	ExternalCommandWithTemporaryDirectory(QWidget *parent = 0);
+	ExternalCommandWithTemporaryDirectory(QWidget *parent = nullptr);
 	~ExternalCommandWithTemporaryDirectory();
 	void run(const QString &command);
 	void show();

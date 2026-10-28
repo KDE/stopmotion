@@ -46,7 +46,7 @@ public:
 	 * @param stApp the main window
 	 * @param name the name of the LanguageHandler
 	 */
-	LanguageHandler ( QObject *parent = 0, QApplication *stApp = 0, const char *name = 0 );
+	LanguageHandler ( QObject *parent = nullptr, QApplication *stApp = nullptr, const char *name = nullptr );
 	
 	/**
 	 * Creates the languagesMenu.

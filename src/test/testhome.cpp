@@ -28,7 +28,7 @@
 
 #include "src/test/oomtestutil.h"
 
-TestHome::TestHome() : delegate(0), fakeHome(0) {
+TestHome::TestHome() : delegate(nullptr), fakeHome(nullptr) {
 	std::string tmpdir("/tmp/t_home_lsmXXXXXX");
 	if (mkdtemp(tmpdir.data())) {
 		std::string::size_type bufferSize = tmpdir.length() + 1;

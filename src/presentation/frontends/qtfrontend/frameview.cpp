@@ -86,7 +86,7 @@ void drawBorders(QPainter& painter, const QRect& inner, const QRect& outer) {
 
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 		: QWidget(parent),
-		  imageCache(IMAGE_CACHE_SIZE), grabThread(0), grabber(0),
+		  imageCache(IMAGE_CACHE_SIZE), grabThread(nullptr), grabber(nullptr),
 		  capturedFile(WorkspaceFile::capturedImage) {
 	facade = DomainFacade::getFacade();
 
@@ -117,7 +117,7 @@ FrameView::~FrameView() {
 		off();
 	}
 	delete grabber;
-	grabber = 0;
+	grabber = nullptr;
 }
 
 
@@ -356,21 +356,21 @@ bool FrameView::on() {
 
 
 void FrameView::off() {
-	if ( grabber != 0 ) {
+	if ( grabber != nullptr ) {
 		if ( grabber->isGrabberProcess() ) {
 			grabber->tearDown();
 			grabTimer.stop();
 			playbackTimer.stop();
 		}
 	}
-	if (grabThread != 0) {
+	if (grabThread != nullptr) {
 		grabThread->terminate();
 		grabThread->wait();
 		delete grabThread;
-		grabThread = 0;
+		grabThread = nullptr;
 	}
 	delete grabber;
-	grabber = 0;
+	grabber = nullptr;
 
 	isPlayingVideo = false;
 	setActiveFrame(activeScene, activeFrame);

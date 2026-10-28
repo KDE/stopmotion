@@ -42,8 +42,8 @@ ModelHandler::ModelHandler ( QObject *parent, QStatusBar *sb, FrameBar *frameBar
 		QString* lastVisitedDir, const char *name )
 		: QObject(parent), frameBar(frameBar), statusBar(sb),
 		lastVisitedDir(lastVisitedDir) {
-	fileDialog = NULL;
-	removeFramesButton = NULL;
+	fileDialog = nullptr;
+	removeFramesButton = nullptr;
 	setObjectName(name);
 }
 
@@ -131,7 +131,7 @@ void ModelHandler::addFrames(const QStringList & fileNames) {
 
 	// the fileDialog pointer is NULL when adding of frames is
 	// done by drag 'n drop
-	if ( fileDialog != NULL ) {
+	if ( fileDialog != nullptr ) {
 		fileDialog->hide();
 		*lastVisitedDir = fileDialog->directory().path();
 	}
@@ -156,7 +156,7 @@ void ModelHandler::addFrames(const QStringList & fileNames) {
 
 
 void ModelHandler::addFrame( const QString &fileName ) {
-	if (fileDialog != NULL) {
+	if (fileDialog != nullptr) {
 		fileDialog->hide();
 		*lastVisitedDir = fileDialog->directory().path();
 	}

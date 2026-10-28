@@ -149,7 +149,7 @@ const char* Util::endOfArgument(const char* in) {
 }
 
 bool Util::checkCommand(std::string* pathOut, const char* command) {
-	assert(command != 0);
+	assert(command != nullptr);
 	std::string which("which ");
 	const char* commandEnd = endOfArgument(command);
 	which.append(command, commandEnd);
@@ -208,7 +208,7 @@ bool getGrabberDevice(const char* dev, GrabberDevice& d) {
 const vector<GrabberDevice> Util::getGrabberDevices() {
 	vector<GrabberDevice> devices;
 	glob_t matches;
-	int globRv = glob("/dev/video*", 0, 0, &matches);
+	int globRv = glob("/dev/video*", 0, nullptr, &matches);
 	if (0 < matches.gl_pathc) {
 		for (char** match = matches.gl_pathv; *match; ++match) {
 			GrabberDevice gd;
@@ -224,8 +224,8 @@ const vector<GrabberDevice> Util::getGrabberDevices() {
 }
 
 bool Util::copyFile(const char *destFileName, const char *srcFileName) {
-    assert(destFileName != 0);
-    assert(srcFileName != 0);
+    assert(destFileName != nullptr);
+    assert(srcFileName != nullptr);
 
     FILE *src = fopen(srcFileName, "rb");
     if (!src) {

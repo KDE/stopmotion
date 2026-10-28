@@ -88,7 +88,7 @@ void recover(DomainFacade *facadePtr) {
 				throw CouldNotInitializeRecoveryFiles(errno);
 			}
 			commandLogExists = false;
-			if (!facadePtr->loadProject(newDat.path(), 0)) {
+			if (!facadePtr->loadProject(newDat.path(), nullptr)) {
 				throw RecoveryIncompleteException(newDat.path());
 			}
 		}
@@ -146,6 +146,6 @@ int main(int argc, char **argv) {
 	}
 
 	delete facadePtr;
-	facadePtr = NULL;
+	facadePtr = nullptr;
 	return ret;
 }

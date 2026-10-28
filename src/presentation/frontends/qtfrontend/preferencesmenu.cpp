@@ -36,9 +36,9 @@
 PreferencesMenu::PreferencesMenu(QWidget *parent) 
 		: QDialog(parent, Qt::Dialog)
 {
-	importVideoTab = 0;
-	exportVideoTab = 0;
-	videoDeviceTab = 0;
+	importVideoTab = nullptr;
+	exportVideoTab = nullptr;
+	videoDeviceTab = nullptr;
 	tabWidget = new QTabWidget;
 
 	applyButton = new QPushButton(tr("Apply"), this);

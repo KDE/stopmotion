@@ -27,8 +27,8 @@
 MenuFrame::MenuFrame(QWidget * parent, const char * name)
 	: QFrame(parent)
 {
-	focusSpinBox = NULL;
-	focusLineEdit = NULL;
+	focusSpinBox = nullptr;
+	focusLineEdit = nullptr;
 	setObjectName(name);
 }
 
@@ -52,11 +52,11 @@ void MenuFrame::setFocusWidget( QLineEdit * focusLineEdit )
 
 void MenuFrame::open( )
 {
-	if (focusSpinBox != 0) {
+	if (focusSpinBox != nullptr) {
 		focusSpinBox->setFocus();
 		focusSpinBox->selectAll();
 	}
-	else if (focusLineEdit != 0) {
+	else if (focusLineEdit != nullptr) {
 		focusLineEdit->setFocus();
 		focusLineEdit->selectAll();
 	}

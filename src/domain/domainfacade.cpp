@@ -31,7 +31,7 @@
 #include <sys/file.h>
 #include <exception>
 
-DomainFacade* DomainFacade::domainFacade = 0;
+DomainFacade* DomainFacade::domainFacade = nullptr;
 
 const char* DomainFacade::getImagePath(int scene, int frame) {
 	try {
@@ -41,7 +41,7 @@ const char* DomainFacade::getImagePath(int scene, int frame) {
 	} catch (std::exception& e) {
 		animationModel->resync(e);
 	}
-	return 0;
+	return nullptr;
 }
 
 int DomainFacade::soundCount(int scene, int frame) const {
@@ -68,7 +68,7 @@ void DomainFacade::setMostRecentProject() {
 	} else {
 		prefs->removePreference("projectFile");
 	}
-	if (first != 0) {
+	if (first != nullptr) {
 		Preference prefsFirst("mostRecent");
 		if (!prefsFirst.equals(first)) {
 			Preference second("secondMostRecent");
@@ -88,18 +88,18 @@ void DomainFacade::setMostRecentProject() {
 
 DomainFacade::DomainFacade() {
 	animationModel = new Animation();
-	domainFacade = NULL;
+	domainFacade = nullptr;
 }
 
 
 DomainFacade::~DomainFacade() {
 	delete animationModel;
-	animationModel = NULL;
+	animationModel = nullptr;
 }
 
 
 DomainFacade* DomainFacade::getFacade() {
-	if(domainFacade == NULL) {
+	if(domainFacade == nullptr) {
 		domainFacade = new DomainFacade();
 	}
 	return domainFacade;
@@ -344,7 +344,7 @@ const char* DomainFacade::getSoundName(int sceneNumber, int frameNumber,
 	} catch (std::exception& e) {
 		animationModel->resync(e);
 	}
-	return 0;
+	return nullptr;
 }
 
 void DomainFacade::duplicateImage(int scene, int frame) {

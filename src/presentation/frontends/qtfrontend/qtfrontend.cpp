@@ -61,18 +61,18 @@ QtFrontend::QtFrontend(int &argc, char **argv) {
 
 	mw->ConstructUI();
 
-	progressDialog = 0;
-	progressBar = 0;
-	infoText = 0;
-	timer = 0;
+	progressDialog = nullptr;
+	progressBar = nullptr;
+	infoText = nullptr;
+	timer = nullptr;
 }
 
 
 QtFrontend::~QtFrontend() {
 	delete mw;
-	mw = 0;
+	mw = nullptr;
 	delete stApp;
-	stApp = 0;
+	stApp = nullptr;
 }
 
 
@@ -122,18 +122,18 @@ void QtFrontend::hideProgress() {
 	if (progressDialog) {
 		progressDialog->hide();
 		delete progressDialog;
-		progressDialog = NULL;
+		progressDialog = nullptr;
 	} else if (progressBar) {
 		timer->stop();
 		progressBar->hide();
 		mw->statusBar()->removeWidget(progressBar);
 		mw->statusBar()->removeWidget(infoText);
 		delete progressBar;
-		progressBar = NULL;
+		progressBar = nullptr;
 		delete infoText;
-		infoText = NULL;
+		infoText = nullptr;
 		delete timer;
-		timer = NULL;
+		timer = nullptr;
 	}
 }
 
@@ -191,7 +191,7 @@ bool QtFrontend::loadPreferencesFrom(PreferencesTool* prefs, const char* path) {
 			// not worth keeping a file this small
 			return false;
 		}
-		QMessageBox::StandardButton ret = QMessageBox::question(0,
+		QMessageBox::StandardButton ret = QMessageBox::question(nullptr,
 				tr("Lose corrupt file"),
 				tr("The file %1 seems to be corrupt, it's contents will be lost if you continue. Do you want to continue?").arg(path),
 				QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
@@ -244,7 +244,7 @@ void QtFrontend::initializePreferences() {
 
 
 void QtFrontend::setDefaultPreferences(PreferencesTool *prefs) {
-	assert(prefs != NULL);
+	assert(prefs != nullptr);
 	Logger::get().logDebug("Setting default preferences");
 
 	// Default import options ------------------------------------------------
@@ -354,30 +354,30 @@ void QtFrontend::handleException(UiException& e) {
 	case UiException::IsWarning:
 		switch (e.warning()) {
 		case UiException::unsupportedImageType:
-			QMessageBox::warning(0, tr("Unsupported image file type"),
+			QMessageBox::warning(nullptr, tr("Unsupported image file type"),
 					tr("Only JPeg image files can be added to the animation"));
 			return;
 		case UiException::invalidAudioFormat:
-			QMessageBox::warning(0, tr("The selected audio file could not be loaded"),
+			QMessageBox::warning(nullptr, tr("The selected audio file could not be loaded"),
 					tr("Perhaps it is corrupt."));
 			return;
 		case UiException::couldNotOpenFile:
-			QMessageBox::warning(0,
+			QMessageBox::warning(nullptr,
 					tr("Cannot open the selected file for reading"),
 					tr("The file %1 could not be opened").arg(e.string()));
 			return;
 		case UiException::failedToCopyFilesToWorkspace:
-			QMessageBox::warning(0,
+			QMessageBox::warning(nullptr,
 					tr("Could not copy file to workspace"),
 					tr("Failed to copy the following files to the workspace (~/.stopmotion): %1").arg(e.string()));
 			return;
 		case UiException::failedToInitializeAudioDriver:
-			QMessageBox::warning(0,
+			QMessageBox::warning(nullptr,
 					tr("Failed to initialize audio driver"),
 					tr("Sound will not work until this is corrected"));
 			break;
 		case UiException::failedToWriteToPreferencesFile:
-			QMessageBox::warning(0,
+			QMessageBox::warning(nullptr,
 					tr("Failed to write preferences"),
 					tr("Could not write preferences to file: %1").arg(e.string()));
 			break;
@@ -387,29 +387,29 @@ void QtFrontend::handleException(UiException& e) {
 		}
 		break;
 	case UiException::failedToGetExclusiveLock:
-		QMessageBox::critical(0,
+		QMessageBox::critical(nullptr,
 				tr("Stopmotion cannot be started."),
 				tr("Failed to get exclusive lock on command.log. Perhaps Stopmotion is already running."));
 		break;
 	case UiException::preferencesFileUnreadable:
-		QMessageBox::critical(0,
+		QMessageBox::critical(nullptr,
 				tr("Preferences file cannot be read"),
 				tr("Preferences file %1 is unreadable. Please correct this and try again.").arg(e.string()));
 		break;
 	case UiException::preferencesFileMalformed:
-		QMessageBox::critical(0,
+		QMessageBox::critical(nullptr,
 				tr("Preferences file cannot be read"),
 				tr("Preferences file %1 is not a valid XML preferences file. Please correct this or delete the file and try again.").arg(e.string()));
 		break;
 	case UiException::ArbitraryError:
-		QMessageBox::critical(0, tr("Fatal"), e.what());
+		QMessageBox::critical(nullptr, tr("Fatal"), e.what());
 		break;
 	default:
 		unhandled = true;
 		break;
 	}
 	if (unhandled) {
-		QMessageBox::critical(0,
+		QMessageBox::critical(nullptr,
 				tr("Stopmotion threw an exception it could not handle."),
 				tr("Please raise a bug report."));
 		throw CriticalError();
@@ -417,7 +417,7 @@ void QtFrontend::handleException(UiException& e) {
 }
 
 void QtFrontend::reportWarning(const char *message) {
-	QMessageBox::warning(0, tr("Warning"), message);
+	QMessageBox::warning(nullptr, tr("Warning"), message);
 }
 
 void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
@@ -464,7 +464,7 @@ bool QtFrontend::askQuestion(Question question) {
 				"will be saved in ~/.stopmotion/preferences.xml.OLD)");
 		break;
 	}
-	QMessageBox::StandardButton ret = QMessageBox::question(0,
+	QMessageBox::StandardButton ret = QMessageBox::question(nullptr,
 			tr("Question"), text,
 			QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 	return ret == QMessageBox::Yes;

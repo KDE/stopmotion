@@ -28,7 +28,7 @@
 
 #include "tworkspace.h"
 
-TestWorkspace::TestWorkspace() : testEnvFs(0), mfs(0) {
+TestWorkspace::TestWorkspace() : testEnvFs(nullptr), mfs(nullptr) {
 	testEnvFs = new TestHome();
 	mfs = new RealOggEmptyJpg();
 }
@@ -39,7 +39,7 @@ TestWorkspace::~TestWorkspace() {
 }
 
 void TestWorkspace::jpgsCanBeCopiedIntoWorkspace() {
-	wrapFileSystem(0);
+	wrapFileSystem(nullptr);
 	wrapFileSystem(testEnvFs);
 	wrapFileSystem(mfs);
 	try {
@@ -60,11 +60,11 @@ void TestWorkspace::jpgsCanBeCopiedIntoWorkspace() {
 	} catch (...) {
 		QFAIL("Copying .JPG image to workspace should be OK");
 	}
-	wrapFileSystem(0);
+	wrapFileSystem(nullptr);
 }
 
 void TestWorkspace::nonJpgImagesCannotBeCopied() {
-	wrapFileSystem(0);
+	wrapFileSystem(nullptr);
 	wrapFileSystem(testEnvFs);
 	wrapFileSystem(mfs);
 	try {
@@ -72,10 +72,10 @@ void TestWorkspace::nonJpgImagesCannotBeCopied() {
 				WorkspaceFileType::image());
 	} catch (UiException& e) {
 		QCOMPARE(e.warning(), UiException::unsupportedImageType);
-		wrapFileSystem(0);
+		wrapFileSystem(nullptr);
 		return;
 	} catch (...) {
 	}
 	QFAIL("Copying .PNG image to workspace should not be OK");
-	wrapFileSystem(0);
+	wrapFileSystem(nullptr);
 }

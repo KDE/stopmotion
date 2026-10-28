@@ -34,20 +34,20 @@ class QResizeEvent;
 
 ImportTab::ImportTab( QWidget *parent ) : QWidget(parent)
 {
-	deviceSelectionTable = 0;
-	addButton            = 0;
-	removeButton         = 0;
-	changeButton         = 0;
-	closeChangeBoxButton = 0;
-	prePollEdit          = 0;
-	startDaemonEdit      = 0;
-	stopDaemonEdit       = 0;
-	grabberPreferences   = 0;
-	prePollLabel         = 0;
-	startDaemonLabel     = 0;
-	stopDaemonLabel      = 0;
-	checkTableItem       = 0;
-	informationText      = 0;
+	deviceSelectionTable = nullptr;
+	addButton            = nullptr;
+	removeButton         = nullptr;
+	changeButton         = nullptr;
+	closeChangeBoxButton = nullptr;
+	prePollEdit          = nullptr;
+	startDaemonEdit      = nullptr;
+	stopDaemonEdit       = nullptr;
+	grabberPreferences   = nullptr;
+	prePollLabel         = nullptr;
+	startDaemonLabel     = nullptr;
+	stopDaemonLabel      = nullptr;
+	checkTableItem       = nullptr;
+	informationText      = nullptr;
 
 	makeGUI();
 }

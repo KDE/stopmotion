@@ -42,7 +42,7 @@ class QtAudioDriver::Impl : public QIODevice {
 	std::list<AudioFormat*> sounds;
 	std::vector<sample_t> buffer;
 public:
-    Impl() : output(0), buffer(buffer_size) {
+    Impl() : output(nullptr), buffer(buffer_size) {
 		audioFormat.setSampleRate(44100);
 		audioFormat.setChannelCount(2);
 		audioFormat.setSampleFormat(QAudioFormat::Int16);
@@ -116,7 +116,7 @@ private:
 	}
 };
 
-QtAudioDriver::QtAudioDriver() : impl(0) {
+QtAudioDriver::QtAudioDriver() : impl(nullptr) {
 	impl = new Impl();
 }
 

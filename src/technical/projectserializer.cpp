@@ -68,7 +68,7 @@ public:
 	}
 };
 
-ProjectSerializer::ProjectSerializer() : projectFile(0) {
+ProjectSerializer::ProjectSerializer() : projectFile(nullptr) {
 	LIBXML_TEST_VERSION;
 }
 
@@ -119,7 +119,7 @@ public:
 		return false;
 	}
 	const char *regularFileFilename() const {
-		return archive_entry_filetype(entry) == AE_IFREG ? archive_entry_pathname(entry) : 0;
+		return archive_entry_filetype(entry) == AE_IFREG ? archive_entry_pathname(entry) : nullptr;
 	}
 	void extract(std::string& filename) {
 		int fd = open(filename.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0666);
@@ -136,7 +136,7 @@ public:
 	void finish() {
 		if (archive_read_close(tar) != ARCHIVE_OK)
 			throw ProjectFileReadException("archive_read_close", errno);
-		tar = NULL;
+		tar = nullptr;
 		if (archive_read_free(owner.release()) != ARCHIVE_OK)
 			throw ProjectFileReadException("archive_read_finish", errno);
 	}
@@ -176,13 +176,13 @@ class StoFileRead {
 								&& strncmp(images, slash1, dirLen) == 0)
 							|| (dirLen == sizeof(sounds) - 1
 								&& strncmp(sounds, slash1, dirLen) == 0))
-							&& strchr(slash2, '/') == 0) {
+							&& strchr(slash2, '/') == nullptr) {
 						return slash2;
 					}
 				}
 			}
 		}
-		return 0;
+		return nullptr;
 	}
 public:
 	StoFileRead(const char* filename) : tar(filename) {
@@ -226,7 +226,7 @@ void ProjectSerializer::setProjectFile(const char *filename) {
 	char* newProjectFile = new char[len + sizeof(appendix)];
 	strcpy(newProjectFile, filename);
 	const char *dotPtr = strrchr(filename, '.');
-	if (dotPtr == NULL || strcmp(dotPtr, ".sto") != 0) {
+	if (dotPtr == nullptr || strcmp(dotPtr, ".sto") != 0) {
 		strcat(newProjectFile, ".sto");
 	}
 	delete[] projectFile;
@@ -235,7 +235,7 @@ void ProjectSerializer::setProjectFile(const char *filename) {
 
 bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) {
 	std::unique_ptr<xmlDoc, decltype(&xmlFreeDoc)> doc(
-			xmlReadFile(filename, NULL, 0), xmlFreeDoc);
+			xmlReadFile(filename, nullptr, 0), xmlFreeDoc);
 	if (!doc) {
 		Logger::get().logWarning("Couldn't load XML file");
 		return false;
@@ -257,7 +257,7 @@ bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) 
 }
 
 std::vector<Scene*> ProjectSerializer::openSto(const char *filename) {
-	assert(filename != NULL);
+	assert(filename != nullptr);
 	setProjectFile(filename);
 	readSto(projectFile);
 	WorkspaceFile dat(WorkspaceFile::currentModelFile);
@@ -365,7 +365,7 @@ public:
 	void eof() {
 		if (archive_write_close(tar) != ARCHIVE_OK)
 			throw ProjectFileCreationException("archive_write_close", errno);
-		tar = NULL;
+		tar = nullptr;
 		if (archive_write_free(owner.release()) != ARCHIVE_OK)
 			throw ProjectFileCreationException("archive_write_free", errno);
 	}
@@ -437,8 +437,8 @@ void writeSto(const char* filename, const char* xmlProjectFile,
  */
 void ProjectSerializer::save(const char *filename,
 		const AnimationImpl& anim, Frontend *frontend) {
-	assert(filename != NULL);
-	assert(frontend != NULL);
+	assert(filename != nullptr);
+	assert(frontend != nullptr);
 
 	setProjectFile(filename);
 
@@ -447,7 +447,7 @@ void ProjectSerializer::save(const char *filename,
 			BAD_CAST "-//W3C//DTD SMIL 2.0//EN",
 			BAD_CAST "http://www.w3.org/2001/SMIL20/SMIL20.dtd");
 
-	xmlNodePtr rootNode = xmlNewNode(NULL, BAD_CAST "smil");
+	xmlNodePtr rootNode = xmlNewNode(nullptr, BAD_CAST "smil");
 	xmlNewProp(rootNode, BAD_CAST "xmlns",
 			BAD_CAST "http://www.w3.org/2001/SMIL20/Language");
 	xmlNewProp(rootNode, BAD_CAST "xml:lang", BAD_CAST "en");
@@ -471,38 +471,38 @@ void ProjectSerializer::save(const char *filename,
 
 void ProjectSerializer::setAttributes(xmlNodePtr rootNode,
 		const AnimationImpl& anim, Frontend *frontend) {
-	xmlNodePtr node = NULL;
-	const Frame *frame = NULL;
-	const Sound *sound = NULL;
+	xmlNodePtr node = nullptr;
+	const Frame *frame = nullptr;
+	const Sound *sound = nullptr;
 
-	xmlNodePtr scenes = xmlNewChild(rootNode, NULL, BAD_CAST "scenes", NULL);
+	xmlNodePtr scenes = xmlNewChild(rootNode, nullptr, BAD_CAST "scenes", nullptr);
 
 	int numScenes = anim.sceneCount();
 	frontend->showProgress(Frontend::savingScenesToDisk, numScenes);
 	for (int i = 0; i < numScenes; ++i) {
 		frontend->updateProgress(i);
 		// Scenes
-		node = xmlNewChild(scenes, NULL, BAD_CAST "seq", NULL);
+		node = xmlNewChild(scenes, nullptr, BAD_CAST "seq", nullptr);
 
 		// Images
-		xmlNodePtr images = xmlNewChild(node, NULL, BAD_CAST "images", NULL);
+		xmlNodePtr images = xmlNewChild(node, nullptr, BAD_CAST "images", nullptr);
 		const Scene* scene = anim.getScene(i);
 		int numFrames = scene->getSize();
 		for (int j = 0; j < numFrames; ++j) {
 			frame = scene->getFrame(j);
 			const char *filename = frame->getBasename();
-			node = xmlNewChild(images, NULL, BAD_CAST "img", NULL);
+			node = xmlNewChild(images, nullptr, BAD_CAST "img", nullptr);
 			xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
 
 			// Sounds
 			int numSounds = frame->soundCount();
 			if (numSounds > 0) {
-				xmlNodePtr sounds = xmlNewChild(node, NULL, BAD_CAST "sounds",
-						NULL);
+				xmlNodePtr sounds = xmlNewChild(node, nullptr, BAD_CAST "sounds",
+						nullptr);
 				for (int k = 0; k < numSounds; ++k) {
 					sound = frame->getSound(k);
 					filename = sound->getBasename();
-					node = xmlNewChild(sounds, NULL, BAD_CAST "audio", NULL);
+					node = xmlNewChild(sounds, nullptr, BAD_CAST "audio", nullptr);
 					xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
 					xmlNewProp(node, BAD_CAST "alt",
 							BAD_CAST sound->getName());
@@ -535,7 +535,7 @@ public:
 
 void ProjectSerializer::getAttributes(xmlNodePtr node,
 		std::vector<Scene*>& sVect) {
-	xmlNodePtr currNode = NULL;
+	xmlNodePtr currNode = nullptr;
 	for (currNode = node; currNode; currNode = currNode->next) {
 		if (currNode->type == XML_ELEMENT_NODE) {
 			char *nodeName = (char*) currNode->name;
@@ -544,10 +544,10 @@ void ProjectSerializer::getAttributes(xmlNodePtr node,
 					|| strcmp(nodeName, "audio") == 0) {
 				XmlString filenameProp(xmlGetProp(currNode, BAD_CAST "src"));
 				const char* filename = filenameProp.get();
-				if (filename != NULL && sVect.empty()) {
+				if (filename != nullptr && sVect.empty()) {
 					Logger::get().logWarning(
 							"Ignoring %s outside of any scene", filename);
-				} else if (filename != NULL) {
+				} else if (filename != nullptr) {
 					// The node is a image node
 					if (strcmp(nodeName, "img") == 0) {
 						WorkspaceFile wf(filename);
@@ -565,7 +565,7 @@ void ProjectSerializer::getAttributes(xmlNodePtr node,
 						s->newSound(frameNum, wf);
 						XmlString soundName(xmlGetProp(currNode,
 								BAD_CAST "alt"));
-						if (soundName.get() != NULL) {
+						if (soundName.get() != nullptr) {
 							// setSoundName takes ownership of a new[] string
 							// and returns ownership of the old name
 							size_t size = strlen(soundName.get()) + 1;
@@ -600,7 +600,7 @@ const char* ProjectSerializer::getProjectFile() {
 }
 
 void ProjectSerializer::resetProjectFile(const char* filename) {
-	char* copy = 0;
+	char* copy = nullptr;
 	if (filename) {
 		size_t len = strlen(filename);
 		copy = new char[len + 1];
@@ -611,5 +611,5 @@ void ProjectSerializer::resetProjectFile(const char* filename) {
 }
 
 void ProjectSerializer::resetProjectFile() {
-	resetProjectFile(0);
+	resetProjectFile(nullptr);
 }

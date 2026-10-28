@@ -133,7 +133,7 @@ void ObserverNotifier::addScene(int where, Scene* newScene) {
 }
 
 void ObserverNotifier::addScene(int where) {
-	SceneAdder sa(where, 0);
+	SceneAdder sa(where, nullptr);
 	doOp(sa);
 }
 
@@ -145,7 +145,7 @@ class SceneRemover : public ObservableOperation {
 	int sc;
 public:
 	Scene* r;
-	SceneRemover(int from) : sc(from), r(0) {
+	SceneRemover(int from) : sc(from), r(nullptr) {
 	}
 	void op(AnimationImpl& del) override {
 		r = del.removeScene(sc);
@@ -230,14 +230,14 @@ class FrameRemover : public ObservableOperation {
 	Frame* r;
 public:
 	FrameRemover(int scene, int where)
-			: sc(scene), n(where), r(0) {
+			: sc(scene), n(where), r(nullptr) {
 	}
 	~FrameRemover() override {
 		delete r;
 	}
 	Frame* release() {
 		Frame* v = r;
-		r = 0;
+		r = nullptr;
 		return v;
 	}
 	void op(AnimationImpl& del) override {
@@ -382,7 +382,7 @@ class SoundNamer : public SoundChanger {
 	const char* r;
 public:
 	SoundNamer(int scene, int frame, int soundNumber, const char* name)
-			: SoundChanger(scene, frame), sn(soundNumber), nm(name), r(0) {
+			: SoundChanger(scene, frame), sn(soundNumber), nm(name), r(nullptr) {
 	}
 	void op(AnimationImpl& del) override {
 		r = del.setSoundName(scene(), frame(), sn, nm);
@@ -404,7 +404,7 @@ class SoundRemover : public SoundChanger {
 	Sound* r;
 public:
 	SoundRemover(int scene, int frame, int soundNumber)
-			: SoundChanger(scene, frame), sn(soundNumber), r(0) {
+			: SoundChanger(scene, frame), sn(soundNumber), r(nullptr) {
 	}
 	void op(AnimationImpl& del) override {
 		r = del.removeSound(scene(), frame(), sn);

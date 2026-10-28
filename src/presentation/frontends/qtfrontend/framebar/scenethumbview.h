@@ -45,7 +45,7 @@ public:
 	 * @param parent the parent of this widget.
 	 * @param number the number of the scene this widget represents.
 	 */
-	SceneThumbView(FrameBar *frameBar, QWidget *parent = 0, int number = 0, const char * name = 0);
+	SceneThumbView(FrameBar *frameBar, QWidget *parent = nullptr, int number = 0, const char * name = nullptr);
 
 	/**
 	 * Clean up after the SceneThumbView.

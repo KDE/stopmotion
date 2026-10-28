@@ -80,7 +80,7 @@ int NonGUIFrontend::run(int argc, char **argv) {
 void NonGUIFrontend::showProgress(ProgressMessage message,
 		int /*numOperations*/) {
 	// sets the stdout to be unbuffered
-	setvbuf(stdout, NULL, _IONBF,0);
+	setvbuf(stdout, nullptr, _IONBF,0);
 	const char* infoText = "Please wait";
 	switch (message) {
 	case connectingCamera:
@@ -106,7 +106,7 @@ void NonGUIFrontend::showProgress(ProgressMessage message,
 void NonGUIFrontend::hideProgress() {
 	printf("\nOperation finished!\n");
 	// sets the stdout the be buffered
-	setvbuf (stdout, NULL , _IOFBF , 1024);
+	setvbuf (stdout, nullptr , _IOFBF , 1024);
 }
 
 
@@ -126,12 +126,12 @@ int NonGUIFrontend::parseArguments(int argc, char **argv) {
 	while (1) {
 		static struct option longOptions[] =
 			{
-				{"nonGUI", 0, 0, 0},
-				{"addFrames", 1, 0, 'a'},
-				{"capture", 1, 0, 'c'},
-				{"save", 1, 0, 's'},
-				{"export", 0, 0, 'e'},
-				{0, 0, 0, 0}
+				{"nonGUI", 0, nullptr, 0},
+				{"addFrames", 1, nullptr, 'a'},
+				{"capture", 1, nullptr, 'c'},
+				{"save", 1, nullptr, 's'},
+				{"export", 0, nullptr, 'e'},
+				{nullptr, 0, nullptr, 0}
 			};
 
 		/* getopt_long  stores the option index here. */
@@ -249,7 +249,7 @@ void NonGUIFrontend::getAbsolutePath(std::string& out, const char *path,
 	if (path[0] != '/') {
 		// make it absolute; $PWD may be unset or stale, so ask the system.
 		// If that fails the relative path still works.
-		char* cwd = getcwd(NULL, 0);
+		char* cwd = getcwd(nullptr, 0);
 		if (cwd) {
 			out = cwd;
 			free(cwd);

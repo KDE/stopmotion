@@ -121,7 +121,7 @@ private:
 
 template<typename T>
 LoadCache<T>::LoadCache(int cacheSize)
-		: buffer(0), cacheHead(0), freeHead(0) {
+		: buffer(nullptr), cacheHead(nullptr), freeHead(nullptr) {
 	buffer = new Item[cacheSize < 1? 1 : cacheSize];
 	// construct the free list
 	for (int i = 0; i != cacheSize; ++i) {
@@ -165,7 +165,7 @@ void LoadCache<T>::clear() {
 }
 
 template<typename T>
-LoadCache<T>::Item::Item() : v(0), next(0) {
+LoadCache<T>::Item::Item() : v(nullptr), next(nullptr) {
 }
 
 template<typename T>
@@ -177,7 +177,7 @@ template<typename T>
 void LoadCache<T>::Item::clear() {
 	n.clear();
 	T::free(v);
-	v = 0;
+	v = nullptr;
 }
 
 template<typename T>
@@ -200,14 +200,14 @@ void LoadCache<T>::Item::set(const char* path, typename T::value_t* value) {
 template<typename T>
 typename LoadCache<T>::Item* LoadCache<T>::Item::find(
 		const char* path, Item*& head) {
-	return findOrFree(path, head, 0);
+	return findOrFree(path, head, nullptr);
 }
 
 template<typename T>
 typename LoadCache<T>::Item* LoadCache<T>::Item::findOrFree(
 		const char* path, Item*& head, Item** freeHead) {
 	Item** pp = &head;
-	Item** pLast = 0;
+	Item** pLast = nullptr;
 	while (*pp) {
 		if (0 == strcmp((*pp)->n.c_str(), path)) {
 			move(head, *pp);
@@ -219,7 +219,7 @@ typename LoadCache<T>::Item* LoadCache<T>::Item::findOrFree(
 	if (freeHead && !*freeHead && pLast) {
 		move(*freeHead, *pLast);
 	}
-	return 0;
+	return nullptr;
 }
 
 template<typename T>

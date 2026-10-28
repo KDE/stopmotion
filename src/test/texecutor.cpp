@@ -103,7 +103,7 @@ public:
 	Command* create(Parameters& ps, ErrorHandler&) {
 		EtCommand* e = new EtCommand(name, output);
 		e->i1 = ps.getInteger(-RAND_MAX/2, RAND_MAX/2);
-		ps.getString(e->s1, 0);
+		ps.getString(e->s1, nullptr);
 		e->i2 = ps.getInteger(-RAND_MAX/2, RAND_MAX/2);
 		return e;
 	}
@@ -134,7 +134,7 @@ class CloneLogger : public CommandLogger {
 		}
 	};
 public:
-	CloneLogger() : ex(0), alreadyIn(false) {
+	CloneLogger() : ex(nullptr), alreadyIn(false) {
 	}
 	~CloneLogger() {
 	}
@@ -169,7 +169,7 @@ public:
 };
 
 TestCommandFactory::TestCommandFactory()
-		: ce(0), cl(0), str(0), strNext(0), strAllocLen(0) {
+		: ce(nullptr), cl(nullptr), str(nullptr), strNext(nullptr), strAllocLen(0) {
 	cl = new CloneLogger();
 	ce = makeExecutor();
 	ce->setCommandLogger(cl);
@@ -309,7 +309,7 @@ public:
 	Command* create(Parameters& ps, ErrorHandler&) {
 		int32_t len = model->length();
 		if (len == 0)
-			return 0;
+			return nullptr;
 		int32_t position = ps.getInteger(0, len - 1);
 		return new DelChar(*model, position);
 	}
@@ -377,7 +377,7 @@ public:
 			df(new DelCharFactory(&finalString)),
 			logger(new FileCommandLogger),
 			ex(makeExecutor()),
-			logFile(0),
+			logFile(nullptr),
 			helper(finalString) {
 		ex->setCommandLogger(logger->getLogger());
 		ex->addCommand("add", std::move(af), true);
@@ -405,11 +405,11 @@ void TestCommandFactory::testUndo() {
 void TestCommandFactory::replayIsRobust() {
 	loadOomTestUtil();
 	setMallocsUntilFailure(0);
-	QVERIFY2(0 == malloc(1), "SetMallocsUntilFailure(0) not working");
+	QVERIFY2(nullptr == malloc(1), "SetMallocsUntilFailure(0) not working");
 	setMallocsUntilFailure(1);
 	void* shouldSucceed = malloc(1);
 	QVERIFY2(shouldSucceed,
 			"SetMallocsUntilFailure not allowing mallocs at all");
 	free(shouldSucceed);
-	QVERIFY2(0 == malloc(1), "SetMallocsUntilFailure(1) not working");
+	QVERIFY2(nullptr == malloc(1), "SetMallocsUntilFailure(1) not working");
 }

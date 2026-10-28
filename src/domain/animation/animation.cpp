@@ -61,7 +61,7 @@ bool ensureUnlinked(const char* path) {
 class ErrorCapture : public ErrorHandler {
 	UiException* exception;
 public:
-	ErrorCapture() : exception(0) {
+	ErrorCapture() : exception(nullptr) {
 	}
 	~ErrorCapture() override {
 		delete exception;
@@ -89,10 +89,10 @@ const char* FailedToInitializeCommandLogger::what() const throw () {
 }
 
 Animation::Animation()
-		: scenes(0), executor(0), logger(0), serializer(0), audioDriver(0),
-		  isAudioDriverInitialized(false), frontend(0) {
+		: scenes(nullptr), executor(nullptr), logger(nullptr), serializer(nullptr), audioDriver(nullptr),
+		  isAudioDriverInitialized(false), frontend(nullptr) {
 	std::unique_ptr<SceneVector> scs(new SceneVector);
-	std::unique_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), 0));
+	std::unique_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), nullptr));
 	scs.release();
 	std::unique_ptr<ProjectSerializer> szer(new ProjectSerializer);
 	std::unique_ptr<AudioDriver> ad(new QtAudioDriver());
@@ -109,15 +109,15 @@ Animation::Animation()
 
 Animation::~Animation() {
 	delete scenes;
-	scenes = NULL;
+	scenes = nullptr;
 	delete serializer;
-	serializer = NULL;
+	serializer = nullptr;
 	delete audioDriver;
-	audioDriver = NULL;
+	audioDriver = nullptr;
 	delete executor;
-	executor = NULL;
+	executor = nullptr;
 	delete logger;
-	logger = NULL;
+	logger = nullptr;
 }
 
 
@@ -205,7 +205,7 @@ void Animation::addSound(int32_t scene, int32_t frameNumber,
 	std::string sc = ss.str();
 	strncpy(soundName, sc.c_str(), size);
 	const char* oldName = sound->setName(soundName);
-	assert(oldName == NULL);
+	assert(oldName == nullptr);
 	int32_t index = soundCount(scene, frameNumber);
 	executor->execute(Commands::addSound, scene, frameNumber,
 			index, soundFileWs.basename(), soundName);
@@ -257,7 +257,7 @@ const char* Animation::getProjectFile() {
 
 
 void Animation::clear() {
-	logger->setLogFile(0);
+	logger->setLogFile(nullptr);
 	scenes->clear();
 	executor->clearHistory();
 	WorkspaceFile::clear();
@@ -286,10 +286,10 @@ bool Animation::loadFromDat(const char* filename,
 
 
 void Animation::openProject(const char *filename) {
-	logger->setLogFile(0);
+	logger->setLogFile(nullptr);
 	clear();
 	initializeCommandLog();
-	assert(filename != 0);
+	assert(filename != nullptr);
 	vector<Scene*> newScenes = serializer->openSto(filename);
 	setScenes(newScenes);
 }
@@ -304,7 +304,7 @@ FILE* Animation::initializeCommandLog() {
 }
 
 void Animation::saveProject(const char *filename) {
-	assert(filename != 0);
+	assert(filename != nullptr);
 	WorkspaceFile newDat(WorkspaceFile::newModelFile);
 	if (!ensureUnlinked(newDat.path())) {
 		Logger::get().logWarning("newModelFile not removed prior to saving");
@@ -314,7 +314,7 @@ void Animation::saveProject(const char *filename) {
 	if (!ensureUnlinked(currentDat.path())) {
 		Logger::get().logWarning("currentModelFile not removed after saving");
 	}
-	logger->setLogFile(0);
+	logger->setLogFile(nullptr);
 	initializeCommandLog();
 	if (rename(newDat.path(), currentDat.path()) < 0)
 		throw FailedToInitializeCommandLogger();
@@ -425,7 +425,7 @@ void Animation::shutdownAudioDevice() {
 bool Animation::exportToVideo(VideoEncoder * encoder, int playbackSpeed) {
 	VideoFactory factory(scenes);
 	frontend->showProgress(Frontend::exporting, 0);
-	if (factory.createVideoFile(encoder, playbackSpeed) != NULL) {
+	if (factory.createVideoFile(encoder, playbackSpeed) != nullptr) {
 		frontend->hideProgress();
 		return true;
 	}
@@ -483,7 +483,7 @@ class GetLine {
 	char* buffer;
 	size_t size;
 public:
-	GetLine(FILE* handle) : fh(handle), buffer(0), size(0) {
+	GetLine(FILE* handle) : fh(handle), buffer(nullptr), size(0) {
 	}
 	~GetLine() {
 		free(buffer);

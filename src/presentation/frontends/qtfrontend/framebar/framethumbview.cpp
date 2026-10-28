@@ -195,7 +195,7 @@ void FrameThumbView::setSelected(bool selected) {
 void FrameThumbView::contentsDropped(QDropEvent * event) {
 	DomainFacade* facade = DomainFacade::getFacade();
 	int activeScene = getFrameBar()->getActiveScene();
-	if (event->source() == 0) {
+	if (event->source() == nullptr) {
 		Logger::get().logDebug("Adding picture(s)");
 		if ( event->mimeData()->hasUrls() ) {
 			QList<QUrl> urls = event->mimeData()->urls();

@@ -29,7 +29,7 @@ class ErrorHandler;
 // A mock OggVorbis implementation that does nothing.
 
 OggVorbis::OggVorbis() {
-	oggFile = NULL;
+	oggFile = nullptr;
 }
 
 

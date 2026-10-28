@@ -34,9 +34,9 @@ class RandomImpl {
 	~RandomImpl() {
 		if (nextChunk)
 			nextChunk->delRef();
-		nextChunk = 0;
+		nextChunk = nullptr;
 	}
-	RandomImpl() : refCount(1), nextIndex(0), nextChunk(0) {
+	RandomImpl() : refCount(1), nextIndex(0), nextChunk(nullptr) {
 	}
 	RandomImpl(const RandomImpl&); // unimplemented
 	RandomImpl& operator=(const RandomImpl&); // unimplemented

@@ -65,7 +65,7 @@ void CommandAdd::accept(FileNameVisitor& v) const {
 }
 
 CommandAddFactory::Parameters::Parameters(int scene, int frame, int count)
-		: sc(scene), fr(frame), frameCount(count), twfs(0), twfCount(0),
+		: sc(scene), fr(frame), frameCount(count), twfs(nullptr), twfCount(0),
 		  parameterCount(0) {
 	twfs = static_cast<TemporaryWorkspaceFile*>(malloc(
 			frameCount * sizeof(TemporaryWorkspaceFile)));
@@ -121,7 +121,7 @@ CommandAddFactory::~CommandAddFactory() {
 Command* CommandAddFactory::create(::Parameters& ps, ErrorHandler&) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
-		return 0;
+		return nullptr;
 	int scene = ps.getInteger(0, sceneCount - 1);
 	int frame = ps.getInteger(0, sv.frameCount(scene));
 	int count = ps.getHowMany();

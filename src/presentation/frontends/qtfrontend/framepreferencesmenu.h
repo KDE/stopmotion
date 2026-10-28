@@ -50,8 +50,8 @@ public:
 	 * @param frameBar The frame bar.
 	 * @param name the name of the menu
 	 */
-	FramePreferencesMenu( QWidget * parent = 0, SoundHandler *soundHandler = 0,
-			const FrameBar *frameBar = 0, const char * name = 0);
+	FramePreferencesMenu( QWidget * parent = nullptr, SoundHandler *soundHandler = nullptr,
+			const FrameBar *frameBar = nullptr, const char * name = nullptr);
 
 	virtual ~FramePreferencesMenu();
 

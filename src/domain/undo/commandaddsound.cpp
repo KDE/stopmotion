@@ -36,7 +36,7 @@ class ErrorHandler;
 CommandAddSound::CommandAddSound(AnimationImpl& model, int32_t scene, int32_t frame,
 		int32_t soundNumber)
 	: sv(model), sc(scene), fr(frame), index(soundNumber),
-	  snd(0) {
+	  snd(nullptr) {
 }
 
 CommandAddSound::~CommandAddSound() {
@@ -52,7 +52,7 @@ Command* CommandAddSound::execute() {
 	std::unique_ptr<CommandRemoveSound>
 			inv(new CommandRemoveSound(sv, sc, fr, index));
 	sv.addSound(sc, fr, index, snd);
-	snd = 0;
+	snd = nullptr;
 	delete this;
 	return inv.release();
 };
@@ -70,11 +70,11 @@ CommandAddSoundFactory::~CommandAddSoundFactory() {
 Command* CommandAddSoundFactory::create(Parameters& ps, ErrorHandler& e) {
 	int sceneCount = sv.sceneCount();
 	if (sceneCount == 0)
-		return 0;
+		return nullptr;
 	int32_t sc = ps.getInteger(0, sceneCount - 1);
 	int frameCount = sv.frameCount(sc);
 	if (frameCount == 0)
-		return 0;
+		return nullptr;
 	int32_t fr = ps.getInteger(0, frameCount - 1);
 	int32_t index = ps.getInteger(0, sv.soundCount(sc, fr));
 	std::string filename;

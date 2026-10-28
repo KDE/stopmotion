@@ -28,7 +28,7 @@
 #include <string.h>
 #include <memory>
 
-Sound::Sound() : af(0), name(0) {
+Sound::Sound() : af(nullptr), name(nullptr) {
 }
 
 Sound::~Sound() {

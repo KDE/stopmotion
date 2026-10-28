@@ -28,20 +28,20 @@
 
 VideoEncoder::VideoEncoder()
 {
-	startCommand = NULL;
-	stopCommand = NULL;
-	outputFile = NULL;
+	startCommand = nullptr;
+	stopCommand = nullptr;
+	outputFile = nullptr;
 }
 
 
 VideoEncoder::~ VideoEncoder()
 {
 	delete [] startCommand;
-	startCommand = NULL;
+	startCommand = nullptr;
 	delete [] stopCommand;
-	stopCommand = NULL;
+	stopCommand = nullptr;
 	delete [] outputFile;
-	outputFile = NULL;
+	outputFile = nullptr;
 }
 
 
@@ -67,7 +67,7 @@ void VideoEncoder::setStartCommand(const char* command)
 {
 	if (startCommand) {
 		delete [] startCommand;
-		startCommand = NULL;
+		startCommand = nullptr;
 	}
 	startCommand = new char[strlen(command) + 1];
 	strcpy(startCommand, command);
@@ -78,7 +78,7 @@ void VideoEncoder::setStopCommand(const char* command)
 {
 	if (stopCommand) {
 		delete [] stopCommand;
-		stopCommand = NULL;
+		stopCommand = nullptr;
 	}
 	stopCommand = new char[strlen(command) + 1];
 	strcpy(stopCommand, command);
@@ -89,7 +89,7 @@ void VideoEncoder::setOutputFile(const char* file)
 {
 	if (outputFile) {
 		delete [] outputFile;
-		outputFile = NULL;
+		outputFile = nullptr;
 	}
 	outputFile = new char[strlen(file) + 1];
 	strcpy(outputFile, file);
@@ -97,5 +97,5 @@ void VideoEncoder::setOutputFile(const char* file)
 
 
 bool VideoEncoder::isValid() {
-	return Util::checkCommand(0, startCommand);
+	return Util::checkCommand(nullptr, startCommand);
 }
