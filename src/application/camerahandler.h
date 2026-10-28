@@ -48,7 +48,7 @@ public:
 	CameraHandler ( QObject *parent = nullptr, QStatusBar *sb = nullptr,
 			ModelHandler* modelHandler = nullptr, const char *name = nullptr);
 	
-	~CameraHandler();
+	~CameraHandler() override;
 
 	void setCameraButton( QPushButton *cameraButton );
 	void setFrameView(FrameView *frameView);

@@ -33,7 +33,7 @@ class WorkspaceFile;
 class FrameOutOfRangeException : public std::exception {
 public:
 	FrameOutOfRangeException();
-    const char* what() const throw();
+    const char* what() const throw() override;
 };
 
 /**

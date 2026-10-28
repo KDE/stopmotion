@@ -34,14 +34,14 @@ class FileLinkException : public std::exception {
 	char msg[100];
 public:
 	FileLinkException(const char* message);
-	const char* what() const throw();
+	const char* what() const throw() override;
 };
 
 class DirectoryCreationException : public std::exception {
 	char buffer[1024];
 public:
 	DirectoryCreationException(const char* path);
-	const char* what() const throw();
+	const char* what() const throw() override;
 };
 
 class Util {

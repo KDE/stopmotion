@@ -43,7 +43,7 @@ public:
 	 * does actions based on this. 
 	 * @param k the key event
 	 */
-	void keyPressEvent( QKeyEvent * k );
+	void keyPressEvent( QKeyEvent * k ) override;
 	
 signals:
 	/**

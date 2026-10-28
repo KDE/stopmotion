@@ -104,22 +104,22 @@ public:
 			QStringList::ConstIterator end) : b(begin), e(end) {
 		set();
 	}
-	~StringListIterator() {
+	~StringListIterator() override {
 	}
-	int count() {
+	int count() override {
 		int c = 0;
 		for (QStringList::ConstIterator i(b); i != e; ++i) {
 			++c;
 		}
 		return c;
 	}
-	bool atEnd() const {
+	bool atEnd() const override {
 		return b == e;
 	}
-	const char* get() const {
+	const char* get() const override {
 		return buffer.c_str();
 	}
-	void next() {
+	void next() override {
 		++b;
 		set();
 	}

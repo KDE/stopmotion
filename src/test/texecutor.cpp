@@ -51,7 +51,7 @@ class TestException : public std::exception {
 public:
 	TestException(const char* message) : msg(message) {
 	}
-	const char* what() const throw() {
+	const char* what() const throw() override {
 		return msg;
 	}
 };
@@ -80,7 +80,7 @@ public:
 				: name(commandName), output(out),
 				  s1(""), i1(no_num), i2(no_num) {
 		}
-		Command* execute() {
+		Command* execute() override {
 			std::stringstream ss;
 			ss << name << ",i:" << i1 << ",s:" << s1 << ",i:" << i2;
 			output.push_back(ss.str());
@@ -98,9 +98,9 @@ public:
 			return !(*this == other);
 		}
 	};
-	~EmptyTestCommandFactory() {
+	~EmptyTestCommandFactory() override {
 	}
-	Command* create(Parameters& ps, ErrorHandler&) {
+	Command* create(Parameters& ps, ErrorHandler&) override {
 		EtCommand* e = new EtCommand(name, output);
 		e->i1 = ps.getInteger(-RAND_MAX/2, RAND_MAX/2);
 		ps.getString(e->s1, nullptr);
@@ -136,16 +136,16 @@ class CloneLogger : public CommandLogger {
 public:
 	CloneLogger() : ex(nullptr), alreadyIn(false) {
 	}
-	~CloneLogger() {
+	~CloneLogger() override {
 	}
 	/** @param e Ownership is not passed. */
 	void SetExecutor(Executor* e) {
 		ex = e;
 	}
-	void writePendingCommand(const char* lineToLog) {
+	void writePendingCommand(const char* lineToLog) override {
 		command = lineToLog;
 	}
-	void commit() {
+	void commit() override {
 		if (!alreadyIn) {
 			// Make sure we don't recursively call ourselves
 			AlreadyIn a(alreadyIn);
@@ -156,13 +156,13 @@ public:
 			}
 		}
 	}
-	void writePendingUndo() {
+	void writePendingUndo() override {
 		assert(false);
 	}
-	void writePendingRedo() {
+	void writePendingRedo() override {
 		assert(false);
 	}
-	void flush() {
+	void flush() override {
 		// For the tests we will assume that commit() never fails, so we do not
 		// need an implementation here.
 	}
@@ -280,11 +280,11 @@ public:
 		AddChar(std::string& model, int32_t character, int32_t position)
 			: m(&model), c(character), p(position) {
 		}
-		Command* execute();
+		Command* execute() override;
 	};
 	AddCharFactory(std::string* m) : model(m) {
 	}
-	Command* create(Parameters& ps, ErrorHandler&) {
+	Command* create(Parameters& ps, ErrorHandler&) override {
 		int32_t i = ps.getInteger(0, sizeof(alphanumeric) - 1);
 		int32_t character = alphanumeric[i];
 		int32_t position = ps.getInteger(0, model->length());
@@ -302,11 +302,11 @@ public:
 		DelChar(std::string& model, int32_t position)
 			: m(&model), p(position) {
 		}
-		Command* execute();
+		Command* execute() override;
 	};
 	DelCharFactory(std::string* m) : model(m) {
 	}
-	Command* create(Parameters& ps, ErrorHandler&) {
+	Command* create(Parameters& ps, ErrorHandler&) override {
 		int32_t len = model->length();
 		if (len == 0)
 			return nullptr;
@@ -344,17 +344,17 @@ class StringModelTestHelper : public ModelTestHelper {
 public:
 	StringModelTestHelper(std::string& model) : s(&model) {
 	}
-	~StringModelTestHelper() {
+	~StringModelTestHelper() override {
 	}
-	void resetModel(Executor&) {
+	void resetModel(Executor&) override {
 		s->clear();
 	}
-	Hash hashModel(const Executor&) {
+	Hash hashModel(const Executor&) override {
 		Hash h;
 		h.add(s->c_str());
 		return h;
 	}
-	void dumpModel(std::string& out, const Executor&) {
+	void dumpModel(std::string& out, const Executor&) override {
 		out = *s;
 	}
 };

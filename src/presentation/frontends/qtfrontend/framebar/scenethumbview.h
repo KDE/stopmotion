@@ -50,13 +50,13 @@ public:
 	/**
 	 * Clean up after the SceneThumbView.
 	 */
-	~SceneThumbView();
+	~SceneThumbView() override;
 
 	/**
 	 * Sets if the scene is opened or closed.
 	 * @param isOpened true if the scene is opened.
 	 */
-	void setOpened(bool isOpened);
+	void setOpened(bool isOpened) override;
 
 	/**
 	 * Returns whether the scene is opened.
@@ -75,32 +75,32 @@ protected:
 	 * Overloaded function to paint the widget.
 	 * @param p information about the paintEvent.
 	 */
-	virtual void paintEvent ( QPaintEvent *p );
+	void paintEvent ( QPaintEvent *p ) override;
 
 	/**
 	 * Overloaded event function to receive mousepress-events.
 	 * @param e information about the mousepress-event.
 	 */
-	void mousePressEvent( QMouseEvent * e );
+	void mousePressEvent( QMouseEvent * e ) override;
 
 	/**
 	 * Overloaded event function to receive mouserelease events.
 	 * @param e information about the event.
 	 */
-	void mouseReleaseEvent( QMouseEvent * e );
+	void mouseReleaseEvent( QMouseEvent * e ) override;
 
 	/**
 	 * Overloaded event function to receive mouseMoveEvents in the scenethumbview.
 	 * Used for moving scenes.
 	 * @param me information about the mouseMoveEvent.
 	 */
-	void mouseMoveEvent(QMouseEvent *me);
+	void mouseMoveEvent(QMouseEvent *me) override;
 
 	/**
 	 * Notifies the scenethumbview that a drop have happened inside its borders.
 	 * @param event information about the event.
 	 */
-	virtual void contentsDropped(QDropEvent * event);
+	void contentsDropped(QDropEvent * event) override;
 
 private:
 	/** Coordinate for calculating when a drag should start */

@@ -50,25 +50,25 @@ public:
 	/**
 	 * Cleans up after the widget.
 	 */
-	~FrameThumbView();
+	~FrameThumbView() override;
 	
 	/**
 	 * Overloaded event function to receive mousepress-events.
 	 * @param e information about the mousepress-event.
 	 */
-	void mousePressEvent( QMouseEvent * e );
+	void mousePressEvent( QMouseEvent * e ) override;
 	
 	/**
 	 * Overloaded event function to receive mouserelease-events.
 	 * @param e information about the mouserelease-event.
 	 */
-	void mouseReleaseEvent( QMouseEvent * e );
+	void mouseReleaseEvent( QMouseEvent * e ) override;
 	
 	/**
 	 * Overloaded event function to receive mouseMoveEvents.
 	 * @param me information about the mouseMoveEvent. 
 	 */
-	void mouseMoveEvent(QMouseEvent *me);
+	void mouseMoveEvent(QMouseEvent *me) override;
 	
 	/**
 	 * Overloaded event function to receive events when the user double clicks
@@ -76,37 +76,37 @@ public:
 	 * frame to be shown.
 	 * @param e information about the mouseDoubleClickEvent.
 	 */
-	void mouseDoubleClickEvent ( QMouseEvent * e );
+	void mouseDoubleClickEvent ( QMouseEvent * e ) override;
 	
 	/**
 	 * Sets/changes the number of this widget.
 	 * @param number the new number of this widget.
 	 */
-	void setNumber(int number);
+	void setNumber(int number) override;
 	
 	/**
 	 * Sets whether this widget has sounds.
 	 * @param hasSounds 
 	 */
-	void setHasSounds( bool hasSounds );
+	void setHasSounds( bool hasSounds ) override;
 	
 	/**
 	 * Sets whether this thumbview should be selected.
 	 * @param selected whether this frame is selected.
 	 */
-	void setSelected(bool selected);
+	void setSelected(bool selected) override;
 	
 	/**
 	 * Notifies the framethumbview that a drop have happened inside its borders. 
 	 * @param event information about the event.
 	 */
-	void contentsDropped(QDropEvent * event);
+	void contentsDropped(QDropEvent * event) override;
 	
 protected:
 	/**
 	 * Event function which paints the widget.
 	 */
-	void paintEvent ( QPaintEvent * );
+	void paintEvent ( QPaintEvent * ) override;
 	
 private:	
 	/** Coordinate for calculating when a drag should start */

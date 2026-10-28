@@ -52,7 +52,7 @@ public:
 	/**
 	 * Deallocates allocated memory and sets the pointers to NULL.
 	 */
-	virtual ~QtFrontend();
+	~QtFrontend() override;
 
 	/**
 	 * The run function for starting the application.
@@ -60,18 +60,18 @@ public:
 	 * @param argv the argv arguments from the environment through main.
 	 * @return the return status on exit
 	 */
-	int run(int argc, char **argv);
+	int run(int argc, char **argv) override;
 
-	void showProgress(ProgressMessage message, int numOperations);
-	void hideProgress();
-	void updateProgress(int numOperationsDone);
+	void showProgress(ProgressMessage message, int numOperations) override;
+	void hideProgress() override;
+	void updateProgress(int numOperationsDone) override;
 	void setProgressInfo(const char *infoText);
-	bool isOperationAborted();
-	void processEvents();
-	bool askQuestion(Question question);
-	int runExternalCommand(const char *command);
-	void handleException(UiException&);
-	void reportWarning(const char *message);
+	bool isOperationAborted() override;
+	void processEvents() override;
+	bool askQuestion(Question question) override;
+	int runExternalCommand(const char *command) override;
+	void handleException(UiException&) override;
+	void reportWarning(const char *message) override;
 
 	/**
 	 * Set the Undo and Redo actions to be enabled or disabled according to the

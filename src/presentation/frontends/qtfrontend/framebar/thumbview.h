@@ -48,7 +48,7 @@ public:
 	/**
 	 * Cleans up after the widget.
 	 */
-	virtual ~ThumbView();
+	~ThumbView() override;
 
 	/**
 	 * Adds another reference. The reference count starts at 1 on construction.

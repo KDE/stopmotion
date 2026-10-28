@@ -46,7 +46,7 @@ public:
 	void retranslateStrings();
 
 protected:
-	void resizeEvent(QResizeEvent *event);
+	void resizeEvent(QResizeEvent *event) override;
 
 private slots:
 	void contentsChanged(int row, int column);

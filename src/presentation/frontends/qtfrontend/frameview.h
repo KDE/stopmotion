@@ -58,7 +58,7 @@ public:
 	/**
 	* Cleans up after the frameview.
 	*/
-	~FrameView();
+	~FrameView() override;
 
 	void initCompleted();
 
@@ -138,8 +138,8 @@ public slots:
 	void workspaceCleared();
 
 protected:
-	void resizeEvent(QResizeEvent *);
-	void paintEvent(QPaintEvent *);
+	void resizeEvent(QResizeEvent *) override;
+	void paintEvent(QPaintEvent *) override;
 
 private:
 	static const int alphaLut[5];

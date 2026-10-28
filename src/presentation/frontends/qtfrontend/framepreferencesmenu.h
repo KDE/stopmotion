@@ -53,7 +53,7 @@ public:
 	FramePreferencesMenu( QWidget * parent = nullptr, SoundHandler *soundHandler = nullptr,
 			const FrameBar *frameBar = nullptr, const char * name = nullptr);
 
-	virtual ~FramePreferencesMenu();
+	~FramePreferencesMenu() override;
 
 	/**
 	 * Retranslates the strings in the frame preferences menu.
@@ -75,7 +75,7 @@ public slots:
 	/**
 	 * Opens the menu.
 	 */
-	void open();
+	void open() override;
 	
 	/**
 	 * Closes the menu and turns the focus to the newFocusWidget.

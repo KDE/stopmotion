@@ -70,7 +70,7 @@ public:
 	 * on runtime.
 	 */
 	MainWindowGUI(QApplication *stApp);
-	~MainWindowGUI();
+	~MainWindowGUI() override;
 
 	/**
 	 * Finish constructing the UI. The preferences must be loaded before calling this.
@@ -82,17 +82,17 @@ public:
 	 * clicks inside the main window.
 	 * @param e information about the event.
 	 */
-	void mousePressEvent ( QMouseEvent * e );
+	void mousePressEvent ( QMouseEvent * e ) override;
 
 	/**
 	 * Overloaded event listener which receives information when a keyboard key is
 	 * pressed.
 	 * @param k information about the key event.
 	 */
-	void keyPressEvent( QKeyEvent *k );
+	void keyPressEvent( QKeyEvent *k ) override;
 
-	void updateCanUndo(bool newCanUndo);
-	void updateCanRedo(bool newCanRedo);
+	void updateCanUndo(bool newCanUndo) override;
+	void updateCanRedo(bool newCanRedo) override;
 
 private:
 	QApplication *stApp;
@@ -229,20 +229,20 @@ private:
 	 *Overloaded event listener for when when a drag enters the application.
 	 *@param event information about the dragEnterEvent
 	 */
-	void dragEnterEvent ( QDragEnterEvent * event);
+	void dragEnterEvent ( QDragEnterEvent * event) override;
 
 	/**
 	 *Overloaded event listener for when a drop event occur in the application.
 	 *@param event information about the dropEvent
 	 */
-	void dropEvent(QDropEvent *event);
+	void dropEvent(QDropEvent *event) override;
 
 	/**
 	 * Overloaded event listener which receives information when a keyboard key is
 	 * released
 	 * @param k information about the key event.
 	 */
-	void keyReleaseEvent ( QKeyEvent * k );
+	void keyReleaseEvent ( QKeyEvent * k ) override;
 
 	/**
 	 * Retranslates the tooltip and whatsthis text.

@@ -47,7 +47,7 @@ public:
 	 * are displayed one after one and it looks like we are streaming
 	 * live from the camera.
 	 */
-	void run();
+	void run() override;
 	
 	/**
 	 * Checks if last grabbing was successful.

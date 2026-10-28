@@ -108,38 +108,38 @@ public:
 		rgetenv = reinterpret_cast<getenv_t*>(dlsym(RTLD_NEXT, "getenv"));
 		assert(rgetenv);
 	}
-	~RealFileSystem() {
+	~RealFileSystem() override {
 	}
-	void setDelegate(MockableFileSystem*) {
+	void setDelegate(MockableFileSystem*) override {
 	}
-	FILE* fopen(const char* filename, const char* mode) {
+	FILE* fopen(const char* filename, const char* mode) override {
 		return rfopen(filename, mode);
 	}
-	FILE* freopen(const char* filename, const char* mode, FILE* fh) {
+	FILE* freopen(const char* filename, const char* mode, FILE* fh) override {
 		return rfreopen(filename, mode, fh);
 	}
-	int fclose(FILE* fh) {
+	int fclose(FILE* fh) override {
 		return rfclose(fh);
 	}
-	int fflush(FILE* fh) {
+	int fflush(FILE* fh) override {
 		return rfflush(fh);
 	}
-	size_t fread(void *out, size_t s, size_t n, FILE *fh) {
+	size_t fread(void *out, size_t s, size_t n, FILE *fh) override {
 		return rfread(out, s, n, fh);
 	}
-	size_t fwrite(const void *in, size_t s, size_t n, FILE *fh) {
+	size_t fwrite(const void *in, size_t s, size_t n, FILE *fh) override {
 		return rfwrite(in, s, n, fh);
 	}
-	int access(const char *name, int type) {
+	int access(const char *name, int type) override {
 		return raccess(name, type);
 	}
-	int ferror(FILE* fh) throw() {
+	int ferror(FILE* fh) throw() override {
 		return rferror(fh);
 	}
-	int unlink(const char *name) {
+	int unlink(const char *name) override {
 		return runlink(name);
 	}
-	char *getenv(const char *name) {
+	char *getenv(const char *name) override {
 		return rgetenv(name);
 	}
 };

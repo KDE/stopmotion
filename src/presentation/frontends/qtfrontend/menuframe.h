@@ -79,7 +79,7 @@ protected:
 	 * the menu. (So that the mainwindow doesn't get the event).
 	 * @param e information about the event.
 	 */
-	void mousePressEvent( QMouseEvent * e);
+	void mousePressEvent( QMouseEvent * e) override;
 	
 private:
 	QSpinBox *focusSpinBox;

@@ -53,7 +53,7 @@ public:
 		output = new QAudioSink(info, audioFormat);
 		setOpenMode(ReadOnly);
 	}
-	~Impl() {
+	~Impl() override {
 		delete output;
 	}
 	void addSound(AudioFormat* a) {
@@ -62,7 +62,7 @@ public:
 		Logger::get().logDebug("Added sound");
 		emit output->stateChanged(QAudio::ActiveState);
 	}
-    qint64 readData(char *data, qint64 maxlen) {
+    qint64 readData(char *data, qint64 maxlen) override {
 		std::list<AudioFormat*>::iterator s = sounds.begin();
 		int len = 0;
 		for (; s != sounds.end(); ++s) {
@@ -86,7 +86,7 @@ public:
 		Logger::get().logDebug("Sent data %d", len);
 		return len;
 	}
-    qint64 writeData(const char *, qint64) {
+    qint64 writeData(const char *, qint64) override {
 		return 0;
 	}
 	void play() {

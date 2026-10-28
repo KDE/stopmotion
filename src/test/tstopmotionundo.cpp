@@ -66,33 +66,33 @@ void getHashes(std::vector<Hash>& out, const char* filenameTemplate) {
 
 class MockFrontend : public Frontend {
 public:
-	~MockFrontend() {
+	~MockFrontend() override {
 	}
-	int run(int, char **) {
+	int run(int, char **) override {
 		return 0;
 	}
-	void showProgress(ProgressMessage, int) {
+	void showProgress(ProgressMessage, int) override {
 	}
-	void hideProgress() {
+	void hideProgress() override {
 	}
-	void updateProgress(int) {
+	void updateProgress(int) override {
 	}
-	bool isOperationAborted() {
+	bool isOperationAborted() override {
 		return false;
 	}
-	void processEvents() {
+	void processEvents() override {
 	}
 	void reportError(const char *, int) {
 	}
-	bool askQuestion(Question) {
+	bool askQuestion(Question) override {
 		return true;
 	}
-	int runExternalCommand(const char *) {
+	int runExternalCommand(const char *) override {
 		return 0;
 	}
-	void reportWarning(const char *) {
+	void reportWarning(const char *) override {
 	}
-	void handleException(UiException&) {
+	void handleException(UiException&) override {
 	}
 };
 
@@ -117,14 +117,14 @@ class SceneVectorTestHelper : public ModelTestHelper {
 		Hash get() const {
 			return h;
 		}
-		void visitImage(const char* s) {
+		void visitImage(const char* s) override {
 			h.add("");
 			h.add(s);
 		}
-		void visitSound(const char* s) {
+		void visitSound(const char* s) override {
 			h.add(s);
 		}
-		void reportNewScene() {
+		void reportNewScene() override {
 			h.add("");
 		}
 	};
@@ -137,17 +137,17 @@ class SceneVectorTestHelper : public ModelTestHelper {
 		const char* get() const {
 			return dump.result();
 		}
-		void visitImage(const char* s) {
+		void visitImage(const char* s) override {
 			dump.writeIdentifier("frame:");
 			dump.writeChar('\n');
 			dump.writeString(s);
 			dump.writeChar('\n');
 		}
-		void visitSound(const char* s) {
+		void visitSound(const char* s) override {
 			dump.writeString(s);
 			dump.writeChar('\n');
 		}
-		void reportNewScene() {
+		void reportNewScene() override {
 			dump.writeIdentifier("scene:");
 			dump.writeChar('\n');
 		}
@@ -155,16 +155,16 @@ class SceneVectorTestHelper : public ModelTestHelper {
 public:
 	SceneVectorTestHelper(SceneVector& s) : sv(s) {
 	}
-	~SceneVectorTestHelper() {
+	~SceneVectorTestHelper() override {
 	}
-	void resetModel(Executor&) {
+	void resetModel(Executor&) override {
 		sv.clear();
 	}
-	Hash hashModel(const Executor&) {
+	Hash hashModel(const Executor&) override {
 		HashingFileNameVisitor v(sv);
 		return v.get();
 	}
-	void dumpModel(std::string& out, const Executor&) {
+	void dumpModel(std::string& out, const Executor&) override {
 		DumpingFileNameVisitor v(sv);
 		out = v.get();
 	}
@@ -284,18 +284,18 @@ class StringContainer : public StringIterator {
 public:
 	StringContainer() : i(0) {
 	}
-	~StringContainer() {
+	~StringContainer() override {
 	}
-	int count() {
+	int count() override {
 		return static_cast<int>(v.size()) - i;
 	}
-	bool atEnd() const {
+	bool atEnd() const override {
 		return v.size() == i;
 	}
-	const char* get() const {
+	const char* get() const override {
 		return v[i];
 	}
-	void next() {
+	void next() override {
 		++i;
 	}
 	void add(const char* s) {

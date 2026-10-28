@@ -41,7 +41,7 @@ public:
      * @param facadePtr pointer to the domain facade
      */
     NonGUIFrontend(DomainFacade *facadePtr);
-	virtual ~NonGUIFrontend() override;
+	~NonGUIFrontend() override;
 	
 	/**
 	 * The run function for starting the application.

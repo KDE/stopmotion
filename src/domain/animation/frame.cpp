@@ -39,7 +39,7 @@ class SoundOutOfRangeException : public std::exception {
 public:
 	SoundOutOfRangeException() {
 	}
-    const char* what() const throw() {
+    const char* what() const throw() override {
     	return "Internal error: Sound out of range!";
     }
 };

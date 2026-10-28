@@ -62,7 +62,7 @@ public:
 	}
 	StringLoggerWrapper(const StringLoggerWrapper&); // unimplemented
 	StringLoggerWrapper& operator=(const StringLoggerWrapper&); // unimplemented
-	~StringLoggerWrapper() {
+	~StringLoggerWrapper() override {
 	}
 	void setOutputString(std::string* output) {
 		out = output;
@@ -73,26 +73,26 @@ public:
 		pending.erase(0, committedUpTo);
 		committedUpTo = 0;
 	}
-	void writePendingCommand(const char* command) {
+	void writePendingCommand(const char* command) override {
 		pending.resize(committedUpTo);
 		pending.append(command);
 		pending.append("!\n");
 		if (delegate)
 			delegate->writePendingCommand(command);
 	}
-	void commit() {
+	void commit() override {
 		committedUpTo = pending.length();
 		if (delegate)
 			delegate->commit();
 		output(out);
 	}
-	void writePendingUndo() {
+	void writePendingUndo() override {
 		pending.resize(committedUpTo);
 		pending.append("--undo---\n");
 		if (delegate)
 			delegate->writePendingUndo();
 	}
-	void writePendingRedo() {
+	void writePendingRedo() override {
 		pending.resize(committedUpTo);
 		pending.append("--redo---\n");
 		if (delegate)
@@ -101,7 +101,7 @@ public:
 	void setDelegate(CommandLogger* newLogger) {
 		delegate = newLogger;
 	}
-	void flush() {
+	void flush() override {
 		output(out);
 		if (delegate)
 			delegate->flush();
@@ -327,10 +327,10 @@ public:
 		  totalFails(0), noMallocsToFailCount(0) {
 		nameString.append(del->name());
 	}
-	const char* name() const {
+	const char* name() const override {
 		return nameString.c_str();
 	}
-	CommandLogger* logger() {
+	CommandLogger* logger() override {
 		return del->logger();
 	}
 	bool failed() const {
@@ -342,7 +342,7 @@ public:
 	int noMallocsCount() const {
 		return noMallocsToFailCount;
 	}
-	void doStep(Executor& e, RandomSource& rng) {
+	void doStep(Executor& e, RandomSource& rng) override {
 		fail = false;
 		long mallocCount = del->getMallocCount();
 		if (mallocCount < 1) {
@@ -360,7 +360,7 @@ public:
 		}
 		cancelAnyMallocFailure();
 	}
-	void cleanup() {
+	void cleanup() override {
 		del->cleanup();
 	}
 };
@@ -370,10 +370,10 @@ class ExecutorInit : public ExecutorStep {
 public:
 	ExecutorInit(ModelTestHelper& helper) : ExecutorStep(nullptr), mth(helper) {
 	}
-	const char* name() const {
+	const char* name() const override {
 		return "initialize";
 	}
-	void doStep(Executor& e, RandomSource&) {
+	void doStep(Executor& e, RandomSource&) override {
 		mth.resetModel(e);
 	}
 };
@@ -382,10 +382,10 @@ class ExecutorConstruct : public ExecutorStep {
 public:
 	ExecutorConstruct(ExecutorStep* following) : ExecutorStep(following) {
 	}
-	const char* name() const {
+	const char* name() const override {
 		return "constructive commands";
 	}
-	void doStep(Executor& e, RandomSource& rng) {
+	void doStep(Executor& e, RandomSource& rng) override {
 		e.executeRandomConstructiveCommands(rng);
 	}
 };
@@ -395,10 +395,10 @@ public:
 	ClearHistory(ExecutorStep* following)
 		: ExecutorStep(following) {
 	}
-	const char* name() const {
+	const char* name() const override {
 		return "clear history";
 	}
-	void doStep(Executor& e, RandomSource&) {
+	void doStep(Executor& e, RandomSource&) override {
 		e.clearHistory();
 	}
 };
@@ -418,22 +418,22 @@ public:
 		min = minimum;
 		max = maximum;
 	}
-	const char* name() const {
+	const char* name() const override {
 		return "random commands";
 	}
-	void doStep(Executor& e, RandomSource& rng) {
+	void doStep(Executor& e, RandomSource& rng) override {
 		fh = fileOpen(logFName, "w");
 		assert(fh);
 		fLogger.setLogFile(fh);
 		int cc;
 		e.executeRandomCommands(cc, rng, min, max);
 	}
-	void cleanup() {
+	void cleanup() override {
 		fLogger.getLogger()->flush();
 		fLogger.setLogFile(nullptr);
 		fh = nullptr;
 	}
-	CommandLogger* logger() {
+	CommandLogger* logger() override {
 		return fLogger.getLogger();
 	}
 };
@@ -447,10 +447,10 @@ public:
 			const char* logFileName)
 		: ExecutorStep(following), logFName(logFileName), fh(nullptr) {
 	}
-	const char* name() const {
+	const char* name() const override {
 		return "random undoes and redoes";
 	}
-	void doStep(Executor& e, RandomSource& rng) {
+	void doStep(Executor& e, RandomSource& rng) override {
 		fh = fileOpen(logFName, "w");
 		assert(fh);
 		fLogger.setLogFile(fh);
@@ -466,11 +466,11 @@ public:
 		}
 		e.executeRandomCommands(commandCount, rng, 1, 3);
 	}
-	void cleanup() {
+	void cleanup() override {
 		fLogger.setLogFile(nullptr);
 		fh = nullptr;
 	}
-	CommandLogger* logger() {
+	CommandLogger* logger() override {
 		return fLogger.getLogger();
 	}
 };
@@ -479,10 +479,10 @@ class ExecutorUndoAll : public ExecutorStep {
 public:
 	ExecutorUndoAll(ExecutorStep* following) : ExecutorStep(following) {
 	}
-	const char* name() const {
+	const char* name() const override {
 		return "undo all";
 	}
-	void doStep(Executor& e, RandomSource&) {
+	void doStep(Executor& e, RandomSource&) override {
 		while (e.canUndo()) {
 			e.undo();
 		}
@@ -493,10 +493,10 @@ class ExecutorRedoAll : public ExecutorStep {
 public:
 	ExecutorRedoAll(ExecutorStep* following) : ExecutorStep(following) {
 	}
-	const char* name() const {
+	const char* name() const override {
 		return "redo all";
 	}
-	void doStep(Executor& e, RandomSource&) {
+	void doStep(Executor& e, RandomSource&) override {
 		while (e.canRedo()) {
 			e.redo();
 		}
@@ -515,16 +515,16 @@ public:
 	ExecutorReplay(ExecutorStep* following, const char* logFileName)
 		: ExecutorStep(following),  logFName(logFileName), fh(nullptr) {
 	}
-	~ExecutorReplay() {
+	~ExecutorReplay() override {
 		cleanup();
 	}
-	const char* name() const {
+	const char* name() const override {
 		return "replay";
 	}
-	void appendCommandLog(std::string& out, int which) {
+	void appendCommandLog(std::string& out, int which) override {
 		out.append(replayed[which]);
 	}
-	void doStep(Executor& e, RandomSource&) {
+	void doStep(Executor& e, RandomSource&) override {
 		cleanup();
 		int whichLog = getCurrentlyActiveLog();
 		replayed[whichLog].clear();
@@ -535,7 +535,7 @@ public:
 			replayed[whichLog].append(lineBuffer);
 		}
 	}
-	void cleanup() {
+	void cleanup() override {
 		if (fh) {
 			fclose(fh);
 			fh = nullptr;
@@ -555,10 +555,10 @@ public:
 		nameStr.append(" then ");
 		nameStr.append(s2.name());
 	}
-	const char* name() const {
+	const char* name() const override {
 		return nameStr.c_str();
 	}
-	void doStep(Executor& e, RandomSource& rng) {
+	void doStep(Executor& e, RandomSource& rng) override {
 		s1.doStep(e, rng);
 		s2.doStep(e, rng);
 	}

@@ -48,7 +48,7 @@ public:
 				" You need permission to read and write in a ~/.stopmotion"
 				" directory.", strerror(err));
 	}
-    const char* what() const throw() {
+    const char* what() const throw() override {
     	return buffer;
     }
 };
@@ -62,7 +62,7 @@ public:
 				" Perhaps the file is corrupt or you don't have permission"
 				" to read it.", filename);
 	}
-    const char* what() const throw() {
+    const char* what() const throw() override {
     	return buffer;
     }
 };

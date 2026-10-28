@@ -31,7 +31,7 @@ class LoggerWriteFailedException : public std::exception {
 	char msg[400];
 public:
 	LoggerWriteFailedException(int error);
-	const char* what() const throw();
+	const char* what() const throw() override;
 };
 
 /**

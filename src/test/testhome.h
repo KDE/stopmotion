@@ -39,20 +39,20 @@ class TestHome : public MockableFileSystem {
 	char* fakeHome;
 public:
 	TestHome();
-	~TestHome();
-	void setDelegate(MockableFileSystem* mfs);
-	FILE* fopen(const char* filename, const char* mode);
-	FILE* freopen(const char* filename, const char* mode, FILE* fh);
-	int fclose(FILE* fh);
-	int fflush(FILE* fh);
+	~TestHome() override;
+	void setDelegate(MockableFileSystem* mfs) override;
+	FILE* fopen(const char* filename, const char* mode) override;
+	FILE* freopen(const char* filename, const char* mode, FILE* fh) override;
+	int fclose(FILE* fh) override;
+	int fflush(FILE* fh) override;
 	size_t fread (void *out, size_t blockSize,
-			     size_t blockCount, FILE *fh);
+			     size_t blockCount, FILE *fh) override;
 	size_t fwrite (const void *in, size_t blockSize,
-			      size_t blockCount, FILE *fh);
-	int access (const char *name, int type);
-	int ferror(FILE* fh);
-	int unlink(const char *name);
-	char *getenv(const char *name);
+			      size_t blockCount, FILE *fh) override;
+	int access (const char *name, int type) override;
+	int ferror(FILE* fh) override;
+	int unlink(const char *name) override;
+	char *getenv(const char *name) override;
 };
 
 #endif

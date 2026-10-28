@@ -51,7 +51,7 @@ public:
 	/**
 	 * Cleans up after the modelhandler.
 	 */
-	~ModelHandler();
+	~ModelHandler() override;
 
 	/**
 	 * Function for setting the button used for removing frames. This button is

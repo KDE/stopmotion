@@ -55,44 +55,44 @@ public:
 	/**
 	 * Cleans up after the framebar.
 	 */
-	~FrameBar();
+	~FrameBar() override;
 
 	/**
 	 * Receives notification when a frame is added.
 	 */
-	void updateAdd(int scene, int index, int numFrames);
+	void updateAdd(int scene, int index, int numFrames) override;
 
 	/**
 	 * Function to receive notification when one or more frames are deleted.
 	 * @param fromFrame the first frame in the selection
 	 * @param toFrame the last frame in the selection
 	 */
-	void updateRemove(int scene, int fromFrame, int toFrame);
+	void updateRemove(int scene, int fromFrame, int toFrame) override;
 
 	/**
 	 *Function to receive notification when one or more frames are moved.
 	 */
 	void updateMove(int fromScene, int fromFrame, int count,
-			int toScene, int toFrame);
+			int toScene, int toFrame) override;
 
 	/**
 	 * Function to receive notification when the model is erased.
 	 */
-	void updateClear();
+	void updateClear() override;
 
 	/**
 	 * Function to receive notification when a new scene is added to the
 	 * model.
 	 * @param index the index of the new scene.
 	 */
-	void updateNewScene(int index);
+	void updateNewScene(int index) override;
 
 	/**
 	 * Function to receive notification when a scene is removed from
 	 * the model.
 	 * @param sceneNumber the scene which has been removed from the model.
 	 */
-	void updateRemoveScene(int sceneNumber);
+	void updateRemoveScene(int sceneNumber) override;
 
 	/**
 	 * Function which receives notification when a scene in the animation
@@ -100,7 +100,7 @@ public:
 	 * @param sceneNumber the scene which have been moved.
 	 * @param movePosition the position the scene has been moved to.
 	 */
-	void updateMoveScene(int sceneNumber, int movePosition);
+	void updateMoveScene(int sceneNumber, int movePosition) override;
 
 	/**
 	 * Function which receives notification when a scene is selected as the
@@ -118,7 +118,7 @@ public:
 	 * @param sceneNumber The scene containing the changed frame.
 	 * @param frameNumber the frame whose disk representation has been changed.
 	 */
-	void updateAnimationChanged(int sceneNumber, int frameNumber);
+	void updateAnimationChanged(int sceneNumber, int frameNumber) override;
 
 	/**
 	 * Updates the framebar when the sounds attached to the specified frame
@@ -126,7 +126,7 @@ public:
 	 * @param sceneNumber The scene to which the changed frame belongs.
 	 * @param frameNumber The frame number within the scene
 	 */
-	void updateSoundChanged(int sceneNumber, int frameNumber);
+	void updateSoundChanged(int sceneNumber, int frameNumber) override;
 
 	/**
 	 * Set whether the user is engaged selecting several frames or not (pressing
@@ -139,7 +139,7 @@ public:
 	 * Returns true if the user is currently selecting several thumbviews.
 	 * @return true if the user is currently selecting several thumbviews.
 	 */
-	bool isSelecting() const;
+	bool isSelecting() const override;
 
 	/**
 	 * Sets a selection of frames between (including) this frame and the activeFrame.
@@ -153,17 +153,17 @@ public:
 	 * @return The anchor of the current selection, or returns the same value
 	 * as {@ref getActiveFrame} if there is no selection.
 	 */
-	int getSelectionAnchor() const;
+	int getSelectionAnchor() const override;
 
 	/**
 	 * Returns the current active frame.
 	 */
-	int getActiveFrame() const;
+	int getActiveFrame() const override;
 
 	/**
 	 * Returns the current active scene.
 	 */
-	int getActiveScene() const;
+	int getActiveScene() const override;
 
 	/**
 	 * Registers the frame preferences menu in the framebar.
@@ -199,17 +199,17 @@ protected:
 	 * Overloaded event function for when a drag enter occurs in the framebar
 	 * @param event information about the dragEnterEvent
 	 */
-	void dragEnterEvent(QDragEnterEvent *event);
+	void dragEnterEvent(QDragEnterEvent *event) override;
 
 	/**
 	 * Overloaded event function for when a drop event occurs in the framebar.
 	 * @param event information about the dropEvent
 	 */
-	void dropEvent(QDropEvent *event);
+	void dropEvent(QDropEvent *event) override;
 
-	void dragMoveEvent(QDragMoveEvent *event);
+	void dragMoveEvent(QDragMoveEvent *event) override;
 
-	void resizeEvent(QResizeEvent *event);
+	void resizeEvent(QResizeEvent *event) override;
 
 public slots:
 	void updateNewActiveFrame(int scene, int frame);
@@ -384,7 +384,7 @@ private:
 	 * Resynchronizes the thumbnails with the domain facade, and puts the
 	 * active frame, active scene and selection frame within bounds.
 	 */
-	void resync();
+	void resync() override;
 	/**
 	 * Deletes the specified frames from the active scene.
 	 */

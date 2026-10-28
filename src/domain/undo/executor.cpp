@@ -615,7 +615,7 @@ public:
 			}
 		}
 	}
-	virtual void executeRandomConstructiveCommands(RandomSource& rng) override {
+	void executeRandomConstructiveCommands(RandomSource& rng) override {
 		int n = constructiveCommands.size();
 		if (n == 0)
 			throw UnknownCommandException();

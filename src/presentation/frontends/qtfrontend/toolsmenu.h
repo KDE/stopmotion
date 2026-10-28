@@ -47,7 +47,7 @@ public:
 			ModelHandler *modelHandler, CameraHandler *cameraHandler,
 			FrameBar *frameBar, QWidget *parent = nullptr );
 
-	~ToolsMenu();
+	~ToolsMenu() override;
 
 	/**
 	 * Retranslates the strings.

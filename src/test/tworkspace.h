@@ -33,7 +33,7 @@ class TestWorkspace : public QObject {
 	RealOggEmptyJpg* mfs;
 public:
 	TestWorkspace();
-	~TestWorkspace();
+	~TestWorkspace() override;
 private slots:
 	void jpgsCanBeCopiedIntoWorkspace();
 	void nonJpgImagesCannotBeCopied();

@@ -57,13 +57,13 @@ protected:
 	/** Overloaded function to paint the widget.
 	 * @param p information about the paintEvent.
 	 */
-	virtual void paintEvent ( QPaintEvent *p);
+	void paintEvent ( QPaintEvent *p) override;
 	
 	/**
 	 * Overloaded event function to receive mouserelease-events.
 	 * @param e information about the mouserelease-event.
 	 */
-	void mouseReleaseEvent( QMouseEvent * e );
+	void mouseReleaseEvent( QMouseEvent * e ) override;
 	
 	/**
 	 * Overloaded event function for receiving information when the mouse
@@ -77,7 +77,7 @@ protected:
 	 * leaves the widget
 	 * @param e information about the event
 	 */
-	void leaveEvent ( QEvent * e);
+	void leaveEvent ( QEvent * e) override;
 	
 private:
 	bool isOpened;

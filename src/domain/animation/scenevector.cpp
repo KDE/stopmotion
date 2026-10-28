@@ -29,7 +29,7 @@ class SceneOutOfRangeException : public std::exception {
 public:
 	SceneOutOfRangeException() {
 	}
-    const char* what() const throw() {
+    const char* what() const throw() override {
     	return "Internal error: Scene out of range!";
     }
 };

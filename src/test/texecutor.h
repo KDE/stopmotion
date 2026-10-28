@@ -43,7 +43,7 @@ private:
 	void AddCharToRandomString(char);
 public:
 	TestCommandFactory();
-	~TestCommandFactory();
+	~TestCommandFactory() override;
 	const char* RandomString();
 private slots:
 	void emptyCommandReplayerThrows();
