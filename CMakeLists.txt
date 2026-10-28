@@ -7,15 +7,24 @@ project(stopmotion
   LANGUAGES CXX)
 set(PROJECT_VERSION 0.9.0)
 
-# set project options required by Qt
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_AUTOMOC ON)
+# use KDE's build settings from extra-cmake-modules
+find_package(ECM 6.0 REQUIRED NO_MODULE)
+set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+
+include(KDEInstallDirs6)
+include(KDECMakeSettings)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-
-option(BUILD_TESTING "Build the tests" OFF)
+include(KDECompilerSettings NO_POLICY_SCOPE)
+kde_enable_exceptions()
+# not yet ready for these Qt definitions set by KDECompilerSettings
+remove_definitions(
+  -DQT_NO_CAST_FROM_ASCII
+  -DQT_NO_KEYWORDS
+  )
 
 ###
 # find external dependencies
@@ -43,7 +52,6 @@ find_library(VORBISFILE_LIBRARY_PATH
   REQUIRED)
 
 if(BUILD_TESTING)
-  enable_testing()
   find_package(Qt6 6.5 REQUIRED
     COMPONENTS Test
   )
@@ -192,20 +200,16 @@ target_include_directories(stopmotion
 ###
 # handle installation
 ###
-include(GNUInstallDirs)
-
-install(TARGETS stopmotion
-  RUNTIME
-  DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
+install(TARGETS stopmotion ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES stopmotion.desktop
-  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/applications)
+  DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES graphics/stopmotion.png
-  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/32x32/apps)
+  DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/32x32/apps)
 install(FILES graphics/stopmotion.svg
-  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons/hicolor/scalable/apps)
+  DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps)
 install(FILES ${QM_FILES}
-  DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/stopmotion/translations)
+  DESTINATION ${KDE_INSTALL_DATADIR}/stopmotion/translations)
 install(FILES stopmotion.1
-  DESTINATION ${CMAKE_INSTALL_FULL_MANDIR}/man1)
+  DESTINATION ${KDE_INSTALL_MANDIR}/man1)
 install(DIRECTORY manual
-  DESTINATION ${CMAKE_INSTALL_FULL_DOCDIR})
+  DESTINATION ${KDE_INSTALL_DATAROOTDIR}/doc/stopmotion)

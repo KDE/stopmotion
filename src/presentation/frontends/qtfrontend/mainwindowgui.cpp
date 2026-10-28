@@ -878,7 +878,7 @@ bool MainWindowGUI::saveProjectAs() {
 			tr("Save As"), lastVisitedDir, "Stopmotion (*.sto)");
 	if ( file.isNull() )
 		return false;
-	DomainFacade::getFacade()->saveProject(file.toLocal8Bit());
+	DomainFacade::getFacade()->saveProject(file.toLocal8Bit().constData());
 	saveAct->setEnabled(false);
 	setTitle(false);
 	updateMostRecentMenu();

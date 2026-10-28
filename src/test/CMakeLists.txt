@@ -7,19 +7,24 @@ if(BUILD_TESTING)
     _GNU_SOURCE)
   set_target_properties(oomtestutil
     PROPERTIES
-    POSITION_INDEPENDENT_CODE TRUE)
+    POSITION_INDEPENDENT_CODE TRUE
+    CXX_VISIBILITY_PRESET default
+    VISIBILITY_INLINES_HIDDEN OFF)
   target_link_libraries(oomtestutil
     PUBLIC
     ${DL_LIBRARY_PATH})
 
   add_library(oomteststub
+    STATIC
     oomteststub.cpp)
   target_compile_definitions(oomteststub
     PUBLIC
     _GNU_SOURCE)
   set_target_properties(oomteststub
     PROPERTIES
-    POSITION_INDEPENDENT_CODE TRUE)
+    POSITION_INDEPENDENT_CODE TRUE
+    CXX_VISIBILITY_PRESET default
+    VISIBILITY_INLINES_HIDDEN OFF)
   target_link_libraries(oomteststub
     PUBLIC
     ${DL_LIBRARY_PATH})
