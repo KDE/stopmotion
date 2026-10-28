@@ -25,7 +25,7 @@
 #include <memory>
 
 struct SurfaceLoader {
-	typedef QPixmap value_t;
+	using value_t = QPixmap;
 	static value_t* load(const char*);
 	static void free(value_t*);
 };

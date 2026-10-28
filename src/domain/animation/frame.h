@@ -151,7 +151,7 @@ private:
 
 	WorkspaceFile imagePath;
 
-	typedef std::vector<Sound*> SoundVector;
+	using SoundVector = std::vector<Sound*>;
 
 	/** Contains the sounds belonging to this frame. */
 	SoundVector sounds;

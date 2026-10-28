@@ -23,10 +23,10 @@
 #include "oomtestutil.h"
 
 namespace {
-typedef void setMallocsUntilFailure_t(int);
-typedef long mallocsSoFar_t(void);
-typedef void init_t(void);
-typedef void wrapFileSystem_t(MockableFileSystem*);
+using setMallocsUntilFailure_t = void(int);
+using mallocsSoFar_t = long();
+using init_t = void();
+using wrapFileSystem_t = void(MockableFileSystem*);
 
 init_t* init;
 setMallocsUntilFailure_t* smuf;

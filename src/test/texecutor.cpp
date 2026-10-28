@@ -62,7 +62,7 @@ public:
  */
 class EmptyTestCommandFactory : public CommandFactory {
 	std::string name;
-	typedef TestCommandFactory::output_t output_t;
+	using output_t = TestCommandFactory::output_t;
 	output_t& output;
 public:
 	EmptyTestCommandFactory(const char* nameForCommand,

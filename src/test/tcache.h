@@ -24,7 +24,7 @@
 #include <QObject>
 
 struct TestLoader {
-	typedef const char value_t;
+	using value_t = const char;
 	static value_t* lastFreed;
 	static value_t* lastLoaded;
 	static int freeCount;

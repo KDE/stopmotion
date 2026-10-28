@@ -38,7 +38,7 @@ class WorkspaceFile;
 class ObserverNotifier : public AnimationImpl {
 	AnimationImpl* del;
 	Frontend* frontend;
-	typedef std::vector<Observer*> observers_t;
+	using observers_t = std::vector<Observer*>;
 	observers_t observers;
 	void doOp(ObservableOperation& oo);
 public:

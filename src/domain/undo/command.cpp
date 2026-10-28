@@ -34,7 +34,7 @@
  * Command list, for example the Undo or Redo stack.
  */
 class CommandList {
-	typedef std::list<Command*> clist;
+	using clist = std::list<Command*>;
 	clist cs;
 public:
 	/**

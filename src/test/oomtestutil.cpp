@@ -26,7 +26,7 @@
 // make malloc_t a type alias for the type of the malloc function. Now we can
 // declare a pointer to a malloc function with something like:
 // malloc_t* mallocFnPtr;
-typedef void* malloc_t (size_t);
+using malloc_t = void*(size_t);
 
 extern "C" {
 malloc_t malloc;
@@ -64,16 +64,16 @@ MockableFileSystem::~MockableFileSystem() {
 }
 
 class RealFileSystem : public MockableFileSystem {
-	typedef FILE* fopen_t(const char*, const char*);
-	typedef FILE* freopen_t(const char*, const char*, FILE*);
-	typedef int fclose_t(FILE*);
-	typedef int fflush_t(FILE*);
-	typedef size_t fread_t(void *, size_t, size_t, FILE*);
-	typedef size_t fwrite_t(const void*, size_t, size_t, FILE*);
-	typedef int access_t(const char*, int);
-	typedef int ferror_t(FILE*);
-	typedef int unlink_t(const char *);
-	typedef char *getenv_t(const char *name);
+	using fopen_t = FILE*(const char*, const char*);
+	using freopen_t = FILE*(const char*, const char*, FILE*);
+	using fclose_t = int(FILE*);
+	using fflush_t = int(FILE*);
+	using fread_t = size_t(void *, size_t, size_t, FILE*);
+	using fwrite_t = size_t(const void*, size_t, size_t, FILE*);
+	using access_t = int(const char*, int);
+	using ferror_t = int(FILE*);
+	using unlink_t = int(const char *);
+	using getenv_t = char *(const char *name);
 	fopen_t* rfopen;
 	freopen_t* rfreopen;
 	fclose_t* rfclose;

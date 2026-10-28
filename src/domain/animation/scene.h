@@ -214,7 +214,7 @@ public:
 	void accept(FileNameVisitor& v) const;
 
 private:
-	typedef std::vector<Frame*> FrameVector;
+	using FrameVector = std::vector<Frame*>;
 	FrameVector frames;
 };
 

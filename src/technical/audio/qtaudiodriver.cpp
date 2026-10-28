@@ -36,7 +36,7 @@
 class QtAudioDriver::Impl : public QIODevice {
 	Q_OBJECT
 	static const int buffer_size = 4096;
-	typedef int16_t sample_t;
+	using sample_t = int16_t;
 	QAudioFormat audioFormat;
 	QAudioSink* output;
 	std::list<AudioFormat*> sounds;

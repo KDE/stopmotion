@@ -37,7 +37,7 @@ class TestCommandFactory : public QObject {
 	char* strNext;
 	int32_t strAllocLen;
 public:
-	typedef std::list<std::string> output_t;
+	using output_t = std::list<std::string>;
 private:
 	output_t executionOutput;
 	void AddCharToRandomString(char);

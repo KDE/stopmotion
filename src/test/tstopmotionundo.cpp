@@ -278,7 +278,7 @@ TestStopmotionUndo::~TestStopmotionUndo() {
 }
 
 class StringContainer : public StringIterator {
-	typedef std::vector<const char*> vect_t;
+	using vect_t = std::vector<const char*>;
 	vect_t v;
 	vect_t::size_type i;
 public:

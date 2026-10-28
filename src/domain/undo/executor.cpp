@@ -499,7 +499,7 @@ public:
 class ConcreteExecutor : public Executor {
 	CommandHistory history;
 	CommandLogger* logger;
-	typedef std::map<std::string, CommandFactory*> FactoryMap;
+	using FactoryMap = std::map<std::string, CommandFactory*>;
 	FactoryMap factories;
 	// does not own its factories
 	std::vector<std::string> constructiveCommands;
