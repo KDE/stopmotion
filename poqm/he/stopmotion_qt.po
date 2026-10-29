@@ -50,17 +50,17 @@ msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "הצליח!"
 
-#: src/application/languagehandler.cpp:90
+#: src/application/languagehandler.cpp:93
 msgctxt "LanguageHandler|"
 msgid "English"
 msgstr "אנגלית"
 
-#: src/application/languagehandler.cpp:92
+#: src/application/languagehandler.cpp:95
 msgctxt "LanguageHandler|"
 msgid "&Translation"
 msgstr "&תרגום"
 
-#: src/application/languagehandler.cpp:108
+#: src/application/languagehandler.cpp:115
 msgctxt ""
 "LanguageHandler|This should be translated to the name of the language you "
 "are translating to, in that language. Example: English = Deutsch (Deutsch is "
@@ -633,153 +633,153 @@ msgid "Ready to rumble ;-)"
 msgstr "יאללה בלגן ;-)"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:364
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:524
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:526
 msgctxt "MainWindowGUI|"
 msgid "&File"
 msgstr "&קובץ"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:365
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:537
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:539
 msgctxt "MainWindowGUI|"
 msgid "&Export"
 msgstr "יי&צוא"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:366
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1132
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1134
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr "פתיחת ה&אחרונים"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:368
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:553
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:555
 msgctxt "MainWindowGUI|"
 msgid "&Edit"
 msgstr "&עריכה"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:385
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:548
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:550
 msgctxt "MainWindowGUI|"
 msgid "&Settings"
 msgstr "ה&גדרות"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:388
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:508
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:555
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:510
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:557
 msgctxt "MainWindowGUI|"
 msgid "&Help"
 msgstr "ע&זרה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
 msgctxt "MainWindowGUI|"
 msgid "&New"
 msgstr "&חדש"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
 msgctxt "MainWindowGUI|"
 msgid "&Open"
 msgstr "&פתיחה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr "&שמירה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
 msgctxt "MainWindowGUI|"
 msgid "Save &As"
 msgstr "שמירה &בשם"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
 msgctxt "MainWindowGUI|"
 msgid "Video"
 msgstr "וידאו"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
 msgstr "Cinelerra"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
 msgctxt "MainWindowGUI|"
 msgid "&Quit"
 msgstr "י&ציאה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
 msgctxt "MainWindowGUI|"
 msgid "&Undo"
 msgstr "הס&גה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
 msgctxt "MainWindowGUI|"
 msgid "Re&do"
 msgstr "ביצוע מ&חדש"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:504
 msgctxt "MainWindowGUI|"
 msgid "Cu&t"
 msgstr "ג&זירה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
 msgctxt "MainWindowGUI|"
 msgid "&Copy"
 msgstr "ה&עתקה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:504
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
 msgctxt "MainWindowGUI|"
 msgid "&Paste"
 msgstr "ה&דבקה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
 msgstr "מ&עבר לתמונית"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:508
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
 msgstr "ה&גדרת סטופמושן"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
 msgctxt "MainWindowGUI|"
 msgid "What's &This"
 msgstr "מה &זה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:511
 msgctxt "MainWindowGUI|"
 msgid "&About"
 msgstr "על &אודות"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:512
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
 msgstr "מספרי תמוניות:"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:516
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
 msgstr "מעבר לתמונית:"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:573
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
 msgstr "<h4>חדש</h4> <p>יוצר מיזם <em>חדש</em>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:576
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:578
 msgctxt "MainWindowGUI|"
 msgid "New project"
 msgstr "מיזם חדש"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:580
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:582
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
 msgstr "<h4>פתיחה</h4> <p><em>פותח</em> קובץ מיזם של סטופמושן.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:584
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:586
 msgctxt "MainWindowGUI|"
 msgid "Open project"
 msgstr "פתיחת מיזם"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:588
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:590
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -789,12 +789,12 @@ msgstr ""
 "<h4>שמירה</h4> <p><em>שומר</em> את ההנפשה הנוכחית כקובץ מיזם של סטופמושן. "
 "<BR>אם המיזם הזה נשמר בעבר הוא יישמר אוטומטית לקובץ הקודם שנבחר.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:596
 msgctxt "MainWindowGUI|"
 msgid "Save project"
 msgstr "שמירת מיזם"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:598
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:600
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -802,12 +802,12 @@ msgid ""
 msgstr ""
 "<h4>שמירה בשם</h4> <p><em>שומר</em> את המיזם הנוכחי כקובץ מיזם סטופמושן.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:605
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
 msgstr "שמירת מיזם בשם"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:607
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:609
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
@@ -816,7 +816,7 @@ msgstr ""
 "<h4>סרטון</h4> <p>מייצא את המיזם הנוכחי כ<em>סרטון</em>.</p>יופיע אשף שינחה "
 "אותך מה לעשות."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:616
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
@@ -825,17 +825,17 @@ msgstr ""
 "<h4>Cinerella</h4> <p>מייצא את ההנפשה הנוכחית כמיזם <em>Cinerella</em>.</"
 "p>יופיע אשף שינחה אותך מה לעשות."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:621
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:623
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
 msgstr "<h4>יציאה</h4> <p><em>סוגר</em> את התוכנית.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:627
 msgctxt "MainWindowGUI|"
 msgid "Quit"
 msgstr "יציאה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:631
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:633
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
@@ -844,12 +844,12 @@ msgstr ""
 "<h4>הסגה</h4> <p><em>מסיג</em> את הפעולה האחרונה שלך. אפשר ללחוץ על הסגה "
 "מספר פעמים כדי להסיג פעולות קודמות.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:636
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:638
 msgctxt "MainWindowGUI|"
 msgid "Undo"
 msgstr "הסגה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:640
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:642
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
@@ -858,12 +858,12 @@ msgstr ""
 "<h4>ביצוע מחדש</h4> <p><em>מבצע מחדש</em> את הפעולה האחרונה שלך. אפשר ללחוץ "
 "על ביצוע מחדש מספר פעמים כדי לבצע מחדש כמה פעולות.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:645
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:647
 msgctxt "MainWindowGUI|"
 msgid "Redo"
 msgstr "ביצוע מחדש"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:649
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:651
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
@@ -872,12 +872,12 @@ msgstr ""
 "<h4>גזירה</h4> <p><em>גוזר</em> את התמוניות הנבחרות מחוץ להנפשה ומוסיף אותן "
 "ללוח הגזירים כדי שאפשר יהיה להדביק אותן במקום אחר.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:654
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:656
 msgctxt "MainWindowGUI|"
 msgid "Cut"
 msgstr "גזירה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:658
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:660
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
@@ -886,12 +886,12 @@ msgstr ""
 "<h4>העתקה</h4> <p><em>מעתיק</em> את התמוניות הנבחרות ללוח הגזירים. לאחר מכן "
 "אפשר להדביק אותן למקום אחר.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:663
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:665
 msgctxt "MainWindowGUI|"
 msgid "Copy"
 msgstr "העתקה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:667
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:669
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Paste</h4> <p><em>Pastes</em> the frames which are currently in the "
@@ -903,12 +903,12 @@ msgstr ""
 "<p>אפשר להעתיק/לגזור תמונות מתוכניות אחרות ואז להשתמש באפשרות הזאת כדי "
 "להדביק אותן להנפשה הזאת.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:675
 msgctxt "MainWindowGUI|"
 msgid "Paste"
 msgstr "הדבקה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:677
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:679
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
@@ -917,12 +917,12 @@ msgstr ""
 "<h4>מעבר לתמונית</h4> <p>יעלה תפריט קופץ מהתחתית בו ניתן לבחור תמונית "
 "<em>לעבור אליה</em>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:682
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:684
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
 msgstr "מעבר לתמונית"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:688
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
@@ -931,12 +931,12 @@ msgstr ""
 "<h4>הגדרת סטופמושן</h4> <p>ייפתח חלון בו ניתן <em>להגדיר</em> מגוון התקני "
 "קלט ופלט לסטופמושן.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:693
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
 msgstr "הגדרת סטופמושן"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:697
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:699
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
@@ -945,24 +945,24 @@ msgstr ""
 "<h4>מה זה</h4> <p>מספק סמן „מה זה” שניתן להשתמש בו כדי להעלות מידע שימושי "
 "כמו זה למשל.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:702
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:704
 msgctxt "MainWindowGUI|"
 msgid "What's This"
 msgstr "מה זה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:706
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:708
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
 "manual</p>"
 msgstr "<h4>עזרה</h4> <p>הכפתור הזה יעלה חלוניות עם המדריך של סטופמושן</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:710
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:712
 msgctxt "MainWindowGUI|"
 msgid "Help"
 msgstr "עזרה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:714
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:716
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>About</h4> <p>This will display a small information box where you can "
@@ -972,19 +972,19 @@ msgstr ""
 "<h4>על אודות</h4> <p>יציג תיבת פרטים קטנה בה ניתן לקרוא פרטים כללים לרבות "
 "שמות המפתחים שמאחורי התוכנה המפוארת הזאת.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:720
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:722
 msgctxt "MainWindowGUI|"
 msgid "About"
 msgstr "על אודות"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:726
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:728
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
 "selected frame</p>"
 msgstr "<h4>מספר תמונית</h4><p>האזור הזה מציג את מספר התמונית הנבחרת</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:733
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:735
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
@@ -993,7 +993,7 @@ msgstr ""
 "<h4>תצוגת תמוניות</h4><p> באזור הזה ניתן לראות את התמונית הנבחרת. אפשר גם "
 "להציג הנפשות בחלון הזה בלחיצה על כפתור <b>נגינה</b>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:742
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
@@ -1002,7 +1002,7 @@ msgstr ""
 "<h4>מעבר לתפריט תמוניות</h4> <p>כאן אפשר לבחור מספר תמונית והתוכנית תקפוץ "
 "לתמונית שנבחרה</p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:748
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame preferences menu</h4> <p>In this menu you can set preferences for "
@@ -1012,7 +1012,7 @@ msgstr ""
 "<h4>תפריט העדפות תמונית</h4> <p>בתפריט הזה אפשר להגדיר העדפות לתמונית."
 "תמוניות הנבחרות, כגון <b>כתוביות</b>, <b>אפקטים קוליים</b>, ועוד.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:753
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:755
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
@@ -1021,7 +1021,7 @@ msgstr ""
 "<h4>תפריט כלים</h4> <p>זה תפריט הכלים בו נמצאים רוב הכפתורים והווידג׳טים "
 "שיהיו נחוצים לך בזמן עבודה על הנפשות סטופמושן.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:759
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:761
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameBar</h4> <p>In this area you can see the frames and scenes in the "
@@ -1033,33 +1033,33 @@ msgstr ""
 "ולבנות את ההנפשה על ידי הזזתן במרחב.</p><p>אפשר לעבור לתמונית הבאה והקודמת "
 "עם <b>מקשי החיצים</b> או <b>ס</b> ו<b>ז</b></p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr "שינויים שלא נשמרו"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:776
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr "יש שינויים שלא נשמרו, לשמור?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:808
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:810
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr "בחירת קובץ מיזם"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:876
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:878
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr "שמירה בשם"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:903
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:905
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr "אזהרה"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:904
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:906
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1072,12 +1072,12 @@ msgstr ""
 "לא יתאפשר עד להגדרת המקודד לשימוש. להגדיר\n"
 "אותו כעת?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:941
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr "ייצוא לקובץ וידאו"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:955
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:957
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
@@ -1086,7 +1086,7 @@ msgstr ""
 "המקודד הרשום לא תקף. אולי כדאי לבדוק\n"
 "את ההגדרות שלך בתפריט ההעדפות?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:971
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr "ייצוא לקובץ"
@@ -1359,7 +1359,7 @@ msgctxt "QtFrontend|"
 msgid "Warning"
 msgstr "אזהרה"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:461
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:462
 msgctxt "QtFrontend|"
 msgid ""
 "A newer version of the preferences file with few more default\n"
@@ -1370,7 +1370,7 @@ msgstr ""
 "מחדל. להשתמש בה? (קובץ ההעדפות הישן שלך\n"
 " יישמר תחת ‎~/.stopmotion/preferences.xml.OLD)"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:468
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:469
 msgctxt "QtFrontend|"
 msgid "Question"
 msgstr "שאלה"

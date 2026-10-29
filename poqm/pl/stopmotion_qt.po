@@ -49,17 +49,17 @@ msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "Powodzenie!"
 
-#: src/application/languagehandler.cpp:90
+#: src/application/languagehandler.cpp:93
 msgctxt "LanguageHandler|"
 msgid "English"
 msgstr "Angielski"
 
-#: src/application/languagehandler.cpp:92
+#: src/application/languagehandler.cpp:95
 msgctxt "LanguageHandler|"
 msgid "&Translation"
 msgstr "&Tłumaczenie"
 
-#: src/application/languagehandler.cpp:108
+#: src/application/languagehandler.cpp:115
 msgctxt ""
 "LanguageHandler|This should be translated to the name of the language you "
 "are translating to, in that language. Example: English = Deutsch (Deutsch is "
@@ -639,153 +639,153 @@ msgid "Ready to rumble ;-)"
 msgstr "Gotowy na robienie hałasu ;-)"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:364
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:524
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:526
 msgctxt "MainWindowGUI|"
 msgid "&File"
 msgstr "&Plik"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:365
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:537
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:539
 msgctxt "MainWindowGUI|"
 msgid "&Export"
 msgstr "Wy&eksportuj"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:366
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1132
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1134
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr "Otwó&rz ostatni"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:368
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:553
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:555
 msgctxt "MainWindowGUI|"
 msgid "&Edit"
 msgstr "&Edycja"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:385
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:548
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:550
 msgctxt "MainWindowGUI|"
 msgid "&Settings"
 msgstr "U&stawienia"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:388
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:508
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:555
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:510
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:557
 msgctxt "MainWindowGUI|"
 msgid "&Help"
 msgstr "&Pomoc"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
 msgctxt "MainWindowGUI|"
 msgid "&New"
 msgstr "&Nowy"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
 msgctxt "MainWindowGUI|"
 msgid "&Open"
 msgstr "&Otwórz"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr "Zapi&sz"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
 msgctxt "MainWindowGUI|"
 msgid "Save &As"
 msgstr "Zapisz j&ako"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
 msgctxt "MainWindowGUI|"
 msgid "Video"
 msgstr "Wideo"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
 msgstr "Cinelerra"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
 msgctxt "MainWindowGUI|"
 msgid "&Quit"
 msgstr "Za&kończ"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
 msgctxt "MainWindowGUI|"
 msgid "&Undo"
 msgstr "&Cofnij"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
 msgctxt "MainWindowGUI|"
 msgid "Re&do"
 msgstr "&Przywróć"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:504
 msgctxt "MainWindowGUI|"
 msgid "Cu&t"
 msgstr "Wy&tnij"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
 msgctxt "MainWindowGUI|"
 msgid "&Copy"
 msgstr "S&kopiuj"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:504
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
 msgctxt "MainWindowGUI|"
 msgid "&Paste"
 msgstr "&Wklej"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
 msgstr "&Przejdź do klatki"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:508
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
 msgstr "&Ustawienia Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
 msgctxt "MainWindowGUI|"
 msgid "What's &This"
 msgstr "Co &to jest"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:511
 msgctxt "MainWindowGUI|"
 msgid "&About"
 msgstr "O progr&amie"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:512
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
 msgstr "Numer klatki: "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:516
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
 msgstr "Przejdź do klatki:"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:573
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
 msgstr "<h4>Nowy</h4> <p>Tworzy <em>nowy</em> projekt.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:576
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:578
 msgctxt "MainWindowGUI|"
 msgid "New project"
 msgstr "Nowy projekt"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:580
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:582
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
 msgstr "<h4>Otwórz</h4> <p><em>Otwiera</em> plik projektu Stopmotion.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:584
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:586
 msgctxt "MainWindowGUI|"
 msgid "Open project"
 msgstr "Otwórz projekt"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:588
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:590
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -796,12 +796,12 @@ msgstr ""
 "poklatkowego. <BR>Jeśli ten projekt został zapisany poprzednio, to zostanie "
 "zapisze się do poprzednio wybranego pliku.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:596
 msgctxt "MainWindowGUI|"
 msgid "Save project"
 msgstr "Zapisz projekt"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:598
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:600
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -810,12 +810,12 @@ msgstr ""
 "<h4>Zapisz jako</h4> <p><em>Zapisuje</em> bieżącą animację jako plik "
 "projektu Stopmotion.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:605
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
 msgstr "Zapisz projekt jako"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:607
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:609
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
@@ -824,7 +824,7 @@ msgstr ""
 "<h4>Film</h4> <p>Wyeksportuje bieżący projekt jako <em>film</em>.</p>Otworzy "
 "się okno pomocnika, które w tym pomoże."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:616
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
@@ -833,17 +833,17 @@ msgstr ""
 "<h4>Cinerella</h4> <p>Wyeksportuje bieżącą animację jako projekt "
 "<em>Cinerella</em>.</p>Otworzy się okno pomocnika, które w tym pomoże."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:621
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:623
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
 msgstr "<h4>Zakończ</h4> <p><em>Kończy pracę</em> programu.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:627
 msgctxt "MainWindowGUI|"
 msgid "Quit"
 msgstr "Zakończ"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:631
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:633
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
@@ -852,12 +852,12 @@ msgstr ""
 "<h4>Wycofaj</h4> <p><em>Wycofuj</em> wynik ostatniego działania. Możesz to "
 "nacisnąć kilkakrotnie, aby wycofać kila działań.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:636
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:638
 msgctxt "MainWindowGUI|"
 msgid "Undo"
 msgstr "Cofnij"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:640
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:642
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
@@ -866,12 +866,12 @@ msgstr ""
 "<h4>Przywróć</h4> <p><em>Przywraca</em> wynik ostatniego działania. Możesz "
 "to nacisnąć kilkakrotnie, aby przywrócić kila działań.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:645
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:647
 msgctxt "MainWindowGUI|"
 msgid "Redo"
 msgstr "Przywróć"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:649
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:651
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
@@ -880,12 +880,12 @@ msgstr ""
 "<h4>Wytnij</h4> <p><em>Wycina</em> zaznaczone klatki z animacji i dodaje je "
 "do schowka tak, aby można było je wkleić w innym miejscu.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:654
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:656
 msgctxt "MainWindowGUI|"
 msgid "Cut"
 msgstr "Wytnij"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:658
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:660
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
@@ -894,12 +894,12 @@ msgstr ""
 "<h4>Skopiuj</h4> <p><em>Kopiuje</em> zaznaczone klatki do schowka, aby móc "
 "je później wkleić w innym miejscu.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:663
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:665
 msgctxt "MainWindowGUI|"
 msgid "Copy"
 msgstr "Skopiuj"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:667
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:669
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Paste</h4> <p><em>Pastes</em> the frames which are currently in the "
@@ -911,12 +911,12 @@ msgstr ""
 "miejsce.</p> <p>Możesz kopiować/wycinać obrazy z innych programów, a "
 "następnie użyć tego ustawienia do wklejania ich do tej animacji.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:675
 msgctxt "MainWindowGUI|"
 msgid "Paste"
 msgstr "Wklej"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:677
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:679
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
@@ -925,12 +925,12 @@ msgstr ""
 "<h4>Przejdź do klatki</h4> <p>Wysunie to menu na dole do wyboru klatki, do "
 "której <em>przejść</em>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:682
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:684
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
 msgstr "Przejdź do klatki"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:688
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
@@ -939,12 +939,12 @@ msgstr ""
 "<h4>Ustawienia Stopmotion</h4> <p>Otworzy to okno do nadania <em>ustawień</"
 "em> w Stopmotion różnym urządzeniom wejściowym i wyjściowym.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:693
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
 msgstr "Ustawienia Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:697
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:699
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
@@ -953,12 +953,12 @@ msgstr ""
 "<h4>Co to</h4> <p>Zmieni to wskaźnik na wskaźnik \"Co to\", dostarczający "
 "przydatnych informacji takich jak ta.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:702
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:704
 msgctxt "MainWindowGUI|"
 msgid "What's This"
 msgstr "Co to"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:706
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:708
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
@@ -967,12 +967,12 @@ msgstr ""
 "<h4>Pomoc</h4> <p>Tym przyciskiem przywołasz okno dialogowe podręcznika "
 "Stopmotion</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:710
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:712
 msgctxt "MainWindowGUI|"
 msgid "Help"
 msgstr "Pomoc"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:714
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:716
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>About</h4> <p>This will display a small information box where you can "
@@ -983,12 +983,12 @@ msgstr ""
 "ogólnych rzeczy o programie, a także programistów stojących za tą doskonałą "
 "częścią oprogramowania.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:720
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:722
 msgctxt "MainWindowGUI|"
 msgid "About"
 msgstr "O programie"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:726
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:728
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
@@ -997,7 +997,7 @@ msgstr ""
 "<h4>Liczba klatek</h4><p>Ten obszar wyświetla liczbę obecnie zaznaczonych "
 "klatek</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:733
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:735
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
@@ -1007,7 +1007,7 @@ msgstr ""
 "także odtwarzać animację w tym oknie, naciskając przycisk <b>Odtwarzaj</b>.</"
 "p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:742
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
@@ -1016,7 +1016,7 @@ msgstr ""
 "<h4>Menu przechodzenia do klatki</h4> <p>Aby przejść do danego numeru "
 "klatki, wpisz ją tutaj</p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:748
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame preferences menu</h4> <p>In this menu you can set preferences for "
@@ -1027,7 +1027,7 @@ msgstr ""
 "zaznaczonej klatki/klatek, takie jak <b>napisy</b>, <b>efekty dźwiękowe</b>, "
 "itp.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:753
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:755
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
@@ -1036,7 +1036,7 @@ msgstr ""
 "<h4>Menu narzędzi</h4> <p>W menu narzędzi umieszczono większość przycisków "
 "niezbędnych do pracy nad animacjami poklatkowymi.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:759
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:761
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameBar</h4> <p>In this area you can see the frames and scenes in the "
@@ -1049,33 +1049,33 @@ msgstr ""
 "p><p>Możesz przełączyć do następnej i poprzedniej klatki przy użyciu "
 "<b>przycisków strzałek</b> lub <b>x</b> oraz <b>z</b></p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr "Niezapisane zmiany"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:776
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr "Masz niezapisane zmiany. Czy zapisać je?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:808
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:810
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr "Wybierz plik projektu"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:876
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:878
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr "Zapisz jako"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:903
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:905
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:904
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:906
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1088,12 +1088,12 @@ msgstr ""
 "ustawień. Eksportowanie filmów nie będzie możliwe\n"
 "dopóki nie ustawisz enkodera. Czy chcesz to zrobić teraz?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:941
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr "Wyeksportuj film do pliku"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:955
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:957
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
@@ -1102,7 +1102,7 @@ msgstr ""
 "Zarejestrowany enkoder nie jest prawidłowy.\n"
 "Czy sprawdzić ustawienia w menu ustawień?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:971
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr "Wyeksportuj do pliku"
@@ -1382,7 +1382,7 @@ msgctxt "QtFrontend|"
 msgid "Warning"
 msgstr "Ostrzeżenie"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:461
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:462
 msgctxt "QtFrontend|"
 msgid ""
 "A newer version of the preferences file with few more default\n"
@@ -1393,7 +1393,7 @@ msgstr ""
 "wartości. Czy chcesz jej użyć? (Stary plik ustawień, zostanie zapisany\n"
 "w ~/.stopmotion/preferences.xml.OLD)"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:468
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:469
 msgctxt "QtFrontend|"
 msgid "Question"
 msgstr "Pytanie"

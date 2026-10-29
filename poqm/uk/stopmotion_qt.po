@@ -50,17 +50,17 @@ msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "Успішно виконано!"
 
-#: src/application/languagehandler.cpp:90
+#: src/application/languagehandler.cpp:93
 msgctxt "LanguageHandler|"
 msgid "English"
 msgstr "англійська"
 
-#: src/application/languagehandler.cpp:92
+#: src/application/languagehandler.cpp:95
 msgctxt "LanguageHandler|"
 msgid "&Translation"
 msgstr "П&ереклад"
 
-#: src/application/languagehandler.cpp:108
+#: src/application/languagehandler.cpp:115
 msgctxt ""
 "LanguageHandler|This should be translated to the name of the language you "
 "are translating to, in that language. Example: English = Deutsch (Deutsch is "
@@ -642,153 +642,153 @@ msgid "Ready to rumble ;-)"
 msgstr "Готові до роботи ;-)"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:364
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:524
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:526
 msgctxt "MainWindowGUI|"
 msgid "&File"
 msgstr "&Файл"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:365
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:537
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:539
 msgctxt "MainWindowGUI|"
 msgid "&Export"
 msgstr "&Експорт"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:366
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1132
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1134
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr "Відкрити &недавні"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:368
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:553
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:555
 msgctxt "MainWindowGUI|"
 msgid "&Edit"
 msgstr "З&міни"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:385
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:548
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:550
 msgctxt "MainWindowGUI|"
 msgid "&Settings"
 msgstr "П&араметри"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:388
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:508
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:555
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:510
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:557
 msgctxt "MainWindowGUI|"
 msgid "&Help"
 msgstr "&Довідка"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
 msgctxt "MainWindowGUI|"
 msgid "&New"
 msgstr "С&творити"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
 msgctxt "MainWindowGUI|"
 msgid "&Open"
 msgstr "&Відкрити"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr "&Зберегти"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
 msgctxt "MainWindowGUI|"
 msgid "Save &As"
 msgstr "Зберегти &як"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
 msgctxt "MainWindowGUI|"
 msgid "Video"
 msgstr "Відео"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
 msgstr "Cinelerra"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
 msgctxt "MainWindowGUI|"
 msgid "&Quit"
 msgstr "Ви&йти"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
 msgctxt "MainWindowGUI|"
 msgid "&Undo"
 msgstr "&Вернути"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
 msgctxt "MainWindowGUI|"
 msgid "Re&do"
 msgstr "П&овторити"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:504
 msgctxt "MainWindowGUI|"
 msgid "Cu&t"
 msgstr "Виріза&ти"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
 msgctxt "MainWindowGUI|"
 msgid "&Copy"
 msgstr "&Копіювати"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:504
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
 msgctxt "MainWindowGUI|"
 msgid "&Paste"
 msgstr "&Вставити"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
 msgstr "Пере&йти до кадру"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:508
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
 msgstr "&Налаштувати Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
 msgctxt "MainWindowGUI|"
 msgid "What's &This"
 msgstr "&Що це"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:511
 msgctxt "MainWindowGUI|"
 msgid "&About"
 msgstr "Пр&о програму"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:512
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
 msgstr "Номер кадру:"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:516
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
 msgstr "Перейти до кадру:"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:573
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
 msgstr "<h4>Створити</h4> <p>Створює <em>новий</em> проєкт.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:576
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:578
 msgctxt "MainWindowGUI|"
 msgid "New project"
 msgstr "Створити проєкт"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:580
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:582
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
 msgstr "<h4>Відкрити</h4> <p><em>Відкриває</em> файл проєкту Stopmotion.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:584
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:586
 msgctxt "MainWindowGUI|"
 msgid "Open project"
 msgstr "Відкрити проєкт"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:588
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:590
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -799,12 +799,12 @@ msgstr ""
 "Stopmotion. <BR>Якщо цей проєкт було збережено раніше, його дані у раніше "
 "вибраному файлі буде автоматично оновлено.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:596
 msgctxt "MainWindowGUI|"
 msgid "Save project"
 msgstr "Зберегти проєкт"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:598
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:600
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -813,12 +813,12 @@ msgstr ""
 "<h4>Зберегти як</h4> <p><em>Зберігає</em> поточну анімацію як файл проєкту "
 "Stopmotion.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:605
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
 msgstr "Збереження проєкту із новою назвою"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:607
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:609
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
@@ -827,7 +827,7 @@ msgstr ""
 "<h4>Відео</h4> <p>Експортує поточний проєкт як <em>відео</em>.</p>Програма "
 "відкриє вікно допоміжного майстра із настановами."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:616
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
@@ -836,17 +836,17 @@ msgstr ""
 "<h4>Cinerella</h4> <p>Експортує поточну анімацію як проєкт <em>Cinerella</"
 "em>.</p>Вам буде показано вікно програми-майстра із настановами."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:621
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:623
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
 msgstr "<h4>Вийти</h4> <p><em>Завершує</em> роботу програми.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:627
 msgctxt "MainWindowGUI|"
 msgid "Quit"
 msgstr "Вийти"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:631
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:633
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
@@ -855,12 +855,12 @@ msgstr ""
 "<h4>Вернути</h4> <p><em>Скасовує</em> останню дію. Ви можете вибирати пункт "
 "повернення декілька разів, щоб скасувати попередні дії.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:636
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:638
 msgctxt "MainWindowGUI|"
 msgid "Undo"
 msgstr "Скасувати"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:640
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:642
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
@@ -869,12 +869,12 @@ msgstr ""
 "<h4>Повторити</h4> <p><em>Повторює</em> останню скасовану дію. Вибирати дію "
 "зі скасовування можна декілька разів, щоб повторно виконати декілька дій.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:645
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:647
 msgctxt "MainWindowGUI|"
 msgid "Redo"
 msgstr "Повторити"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:649
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:651
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
@@ -883,12 +883,12 @@ msgstr ""
 "<h4>Вирізати</h4> <p><em>Вирізає</em> позначені кадри з анімації і додає їх "
 "до буфера обміну даними, щоб ви могли вставити їх в іншому місці.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:654
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:656
 msgctxt "MainWindowGUI|"
 msgid "Cut"
 msgstr "Вирізати"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:658
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:660
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
@@ -897,12 +897,12 @@ msgstr ""
 "<h4>Копіювати</h4> <p><em>Копіює</em> позначені кадри до буфера обміну "
 "даними. Згодом ви можете вставити ці кадри в іншому місці.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:663
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:665
 msgctxt "MainWindowGUI|"
 msgid "Copy"
 msgstr "Копіювати"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:667
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:669
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Paste</h4> <p><em>Pastes</em> the frames which are currently in the "
@@ -914,12 +914,12 @@ msgstr ""
 "вибраного місця.</p> <p>Ви можете скопіювати або вирізати зображення з інших "
 "програм, а потім скористатися цим пунктом для вставляння їх до анімації.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:675
 msgctxt "MainWindowGUI|"
 msgid "Paste"
 msgstr "Вставити"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:677
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:679
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
@@ -929,12 +929,12 @@ msgstr ""
 "нижній частині, за допомогою якого ви можете вибрати кадр, до якого ви "
 "можете <em>перейти</em>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:682
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:684
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
 msgstr "Перейти до кадру"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:688
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
@@ -944,12 +944,12 @@ msgstr ""
 "<em>налаштувати</em> роботу Stopmotion із різноманітними пристроями вхідних "
 "і вихідних даних.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:693
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
 msgstr "Налаштування Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:697
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:699
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
@@ -959,12 +959,12 @@ msgstr ""
 "вказівником можна скористатися для отримання допоміжних відомостей, подібних "
 "до цих.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:702
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:704
 msgctxt "MainWindowGUI|"
 msgid "What's This"
 msgstr "Що це?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:706
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:708
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
@@ -973,12 +973,12 @@ msgstr ""
 "<h4>Довідка</h4> <p>Ця кнопка відкриває діалогове вікно із підручником "
 "Stopmotion.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:710
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:712
 msgctxt "MainWindowGUI|"
 msgid "Help"
 msgstr "Довідка"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:714
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:716
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>About</h4> <p>This will display a small information box where you can "
@@ -989,12 +989,12 @@ msgstr ""
 "зможете прочитати загальні відомості, а також імена розробників, які "
 "попрацювали над цією чудовою частиною програмного забезпечення.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:720
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:722
 msgctxt "MainWindowGUI|"
 msgid "About"
 msgstr "Про програму"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:726
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:728
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
@@ -1003,7 +1003,7 @@ msgstr ""
 "<h4>Номер кадру</h4><p>У цій області буде показано номер поточного "
 "позначеного кадру.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:733
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:735
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
@@ -1012,7 +1012,7 @@ msgstr ""
 "<h4>Перегляд кадрів</h4><p>У цій області ви бачитимете позначений кадр. Ви "
 "також зможете запускати анімації натисканням кнопки <b>Відтворити</b>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:742
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
@@ -1021,7 +1021,7 @@ msgstr ""
 "<h4>Меню переходу до кадру</h4> <p>Тут ви можете вказати номер кадру, і "
 "програма перейде до вказаного вами кадру.</p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:748
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame preferences menu</h4> <p>In this menu you can set preferences for "
@@ -1032,7 +1032,7 @@ msgstr ""
 "встановити налаштування для позначеного кадру або позначених кадрів, зокрема "
 "вказати <b>субтитри</b>, <b>звукові ефекти</b> тощо.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:753
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:755
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
@@ -1042,7 +1042,7 @@ msgstr ""
 "кнопками і віджетами, які знадобляться вам для роботи із покадровими "
 "анімаціями.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:759
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:761
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameBar</h4> <p>In this area you can see the frames and scenes in the "
@@ -1055,33 +1055,33 @@ msgstr ""
 "p><p>Ви можете перемикатися на наступний або попередній кадр за допомогою "
 "<b>кнопок зі стрілками</b> або клавіш <b>x</b> та <b>z</b></p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:773
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr "Незбережені зміни"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:774
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:776
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr "Виявлено незбережені зміни. Хочете їх зберегти?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:808
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:810
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr "Виберіть файл проєкту"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:876
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:878
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr "Зберегти як"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:903
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:954
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:905
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr "Попередження"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:904
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:906
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1094,12 +1094,12 @@ msgstr ""
 "Експортування відео буде неможливим, аж доки ви не встановите\n"
 "кодувальника, яким слід скористатися. Хочете встановити його зараз?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:939
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:941
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr "Експортувати до відеофайла"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:955
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:957
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
@@ -1108,7 +1108,7 @@ msgstr ""
 "Зареєстрований кодувальник є некоректним. Хочете перевірити його\n"
 "параметри у налаштуваннях?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:971
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr "Експортувати до файла"
@@ -1388,7 +1388,7 @@ msgctxt "QtFrontend|"
 msgid "Warning"
 msgstr "Попередження"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:461
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:462
 msgctxt "QtFrontend|"
 msgid ""
 "A newer version of the preferences file with few more default\n"
@@ -1399,7 +1399,7 @@ msgstr ""
 "типовими значеннями. Хочете скористатися цією версією (ваші\n"
 " старі налаштування буде збережено до ~/.stopmotion/preferences.xml.OLD)"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:468
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:469
 msgctxt "QtFrontend|"
 msgid "Question"
 msgstr "Питання"
