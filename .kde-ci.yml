@@ -1,6 +1,11 @@
 # SPDX-FileCopyrightText: None
 # SPDX-License-Identifier: CC0-1.0
 
+Dependencies:
+- 'on': ['@all']
+  'require':
+    'frameworks/extra-cmake-modules': '@latest-kf6'
+
 Options:
   cmake-options: '-DBUILD_TESTING=ON'
   test-before-installing: True
