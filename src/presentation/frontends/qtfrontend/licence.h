@@ -7,9 +7,12 @@
 // part of that text and not about this file.
 // REUSE-IgnoreStart
 QString licence = 
-"(c) 2005-2016, Fredrik Berg Kj\xf6lstad and Bj\xf6rn Erik Nilsen\n"
+"(c) 2005-2016, Fredrik Berg Kjølstad and Bjørn Erik Nilsen\n"
 "\n"
-"This program is distributed under the terms of the GPL v2.\n"
+"This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
 "\n"
 "		    GNU GENERAL PUBLIC LICENSE\n"
 "		       Version 2, June 1991\n"
