@@ -196,6 +196,9 @@ protected:
 
 	void resizeEvent(QResizeEvent *event) override;
 
+public:
+	void setThumbImage(ThumbView* thumb, const char* imagePath);
+
 public slots:
 	void updateNewActiveFrame(int scene, int frame);
 	/**
@@ -213,7 +216,6 @@ public slots:
 	void selectPreviousScene();
 	void selectNextScene();
 	void fileChanged(const QString &path);
-	void setThumbImage(ThumbView* thumb, const char* imagePath);
 	void setSelection(int scene, int selectionFrame, int activeFrame);
 
 signals:
