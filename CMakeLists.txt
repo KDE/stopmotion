@@ -38,10 +38,6 @@ find_package(Qt6 6.5
   COMPONENTS Widgets Multimedia Xml LinguistTools
   REQUIRED)
 
-# LibXml2
-find_package(LibXml2
-  REQUIRED)
-
 # KArchive, to read and write project files
 find_package(KF6Archive 6.0
   REQUIRED)
@@ -180,9 +176,6 @@ target_link_libraries(stopmotion
   Qt6::Multimedia
   Qt6::Xml
   )
-# link to LibXml2
-target_link_libraries(stopmotion
-  PUBLIC LibXml2::LibXml2)
 # link to libVorbis, KArchive
 target_link_libraries(stopmotion
   PUBLIC

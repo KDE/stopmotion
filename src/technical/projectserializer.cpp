@@ -14,14 +14,15 @@
 #include "src/domain/animation/workspacefile.h"
 #include "src/presentation/frontends/frontend.h"
 
-#include <libxml/tree.h>
-
 #include <KArchiveDirectory>
 #include <KArchiveFile>
 #include <KTar>
 
+#include <QDomDocument>
+#include <QDomElement>
 #include <QFile>
 #include <QString>
+#include <QXmlStreamWriter>
 
 #include <cassert>
 #include <cstdio>
@@ -71,7 +72,6 @@ const QString tarMimeType = QStringLiteral("application/x-tar");
 }
 
 ProjectSerializer::ProjectSerializer() : projectFile(nullptr) {
-	LIBXML_TEST_VERSION;
 }
 
 ProjectSerializer::~ProjectSerializer() {
@@ -237,16 +237,15 @@ void ProjectSerializer::setProjectFile(const char *filename) {
 }
 
 bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) {
-	std::unique_ptr<xmlDoc, decltype(&xmlFreeDoc)> doc(
-			xmlReadFile(filename, nullptr, 0), xmlFreeDoc);
-	if (!doc) {
+	QFile file(QString::fromLocal8Bit(filename));
+	QDomDocument doc;
+	if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file)) {
 		Logger::get().logWarning("Couldn't load XML file");
 		return false;
 	}
-	xmlNodePtr rootNode = xmlDocGetRootElement(doc.get());
 	out.clear();
 	try {
-		getAttributes(rootNode, out);
+		getAttributes(doc.documentElement(), out);
 	} catch (...) {
 		for (Scene* s : out) {
 			delete s;
@@ -254,8 +253,6 @@ bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) 
 		out.clear();
 		throw;
 	}
-	doc.reset();
-	xmlCleanupParser();
 	return true;
 }
 
@@ -425,25 +422,8 @@ void ProjectSerializer::save(const char *filename,
 
 	setProjectFile(filename);
 
-	xmlDocPtr doc = xmlNewDoc(BAD_CAST "1.0");
-	xmlCreateIntSubset(doc, BAD_CAST "smil",
-			BAD_CAST "-//W3C//DTD SMIL 2.0//EN",
-			BAD_CAST "http://www.w3.org/2001/SMIL20/SMIL20.dtd");
-
-	xmlNodePtr rootNode = xmlNewNode(nullptr, BAD_CAST "smil");
-	xmlNewProp(rootNode, BAD_CAST "xmlns",
-			BAD_CAST "http://www.w3.org/2001/SMIL20/Language");
-	xmlNewProp(rootNode, BAD_CAST "xml:lang", BAD_CAST "en");
-	xmlNewProp(rootNode, BAD_CAST "title", BAD_CAST "Stopmotion");
-	xmlDocSetRootElement(doc, rootNode);
-
-	setAttributes(rootNode, anim, frontend);
-
 	WorkspaceFile newDat(WorkspaceFile::newModelFile);
-	saveDOMToFile(doc, newDat.path());
-
-	xmlFreeDoc(doc);
-	xmlCleanupParser();
+	writeDat(newDat.path(), anim, frontend);
 
 	// Write out new.dat file. The recovery system will ignore it until...
 	writeSto(projectFile, newDat.path(), anim);
@@ -452,94 +432,94 @@ void ProjectSerializer::save(const char *filename,
 	frontend->hideProgress();
 }
 
-void ProjectSerializer::setAttributes(xmlNodePtr rootNode,
+void ProjectSerializer::writeDat(const char* filename,
 		const AnimationImpl& anim, Frontend *frontend) {
-	xmlNodePtr node = nullptr;
-	const Frame *frame = nullptr;
-	const Sound *sound = nullptr;
+	QFile file(QString::fromLocal8Bit(filename));
+	if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+		throw ProjectFileCreationException("QFile::open", file.errorString());
+	QXmlStreamWriter writer(&file);
+	writer.setAutoFormatting(true);
+	writer.setAutoFormattingIndent(2);
+	writer.writeStartDocument();
+	writer.writeDTD(QStringLiteral("<!DOCTYPE smil PUBLIC \"-//W3C//DTD SMIL 2.0//EN\" "
+			"\"http://www.w3.org/2001/SMIL20/SMIL20.dtd\">"));
+	writer.writeStartElement(QStringLiteral("smil"));
+	writer.writeDefaultNamespace(
+			QStringLiteral("http://www.w3.org/2001/SMIL20/Language"));
+	writer.writeAttribute(QStringLiteral("xml:lang"), QStringLiteral("en"));
+	writer.writeAttribute(QStringLiteral("title"), QStringLiteral("Stopmotion"));
 
-	xmlNodePtr scenes = xmlNewChild(rootNode, nullptr, BAD_CAST "scenes", nullptr);
-
+	writer.writeStartElement(QStringLiteral("scenes"));
 	int numScenes = anim.sceneCount();
 	frontend->showProgress(Frontend::savingScenesToDisk, numScenes);
 	for (int i = 0; i < numScenes; ++i) {
 		frontend->updateProgress(i);
-		// Scenes
-		node = xmlNewChild(scenes, nullptr, BAD_CAST "seq", nullptr);
-
-		// Images
-		xmlNodePtr images = xmlNewChild(node, nullptr, BAD_CAST "images", nullptr);
+		writer.writeStartElement(QStringLiteral("seq"));
+		writer.writeStartElement(QStringLiteral("images"));
 		const Scene* scene = anim.getScene(i);
 		int numFrames = scene->getSize();
 		for (int j = 0; j < numFrames; ++j) {
-			frame = scene->getFrame(j);
-			const char *filename = frame->getBasename();
-			node = xmlNewChild(images, nullptr, BAD_CAST "img", nullptr);
-			xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
-
-			// Sounds
+			const Frame* frame = scene->getFrame(j);
+			writer.writeStartElement(QStringLiteral("img"));
+			writer.writeAttribute(QStringLiteral("src"),
+					QString::fromUtf8(frame->getBasename()));
 			int numSounds = frame->soundCount();
 			if (numSounds > 0) {
-				xmlNodePtr sounds = xmlNewChild(node, nullptr, BAD_CAST "sounds",
-						nullptr);
+				writer.writeStartElement(QStringLiteral("sounds"));
 				for (int k = 0; k < numSounds; ++k) {
-					sound = frame->getSound(k);
-					filename = sound->getBasename();
-					node = xmlNewChild(sounds, nullptr, BAD_CAST "audio", nullptr);
-					xmlNewProp(node, BAD_CAST "src", BAD_CAST filename);
-					xmlNewProp(node, BAD_CAST "alt",
-							BAD_CAST sound->getName());
+					const Sound* sound = frame->getSound(k);
+					writer.writeStartElement(QStringLiteral("audio"));
+					writer.writeAttribute(QStringLiteral("src"),
+							QString::fromUtf8(sound->getBasename()));
+					writer.writeAttribute(QStringLiteral("alt"),
+							QString::fromUtf8(sound->getName()));
+					writer.writeEndElement(); // audio
 				}
+				writer.writeEndElement(); // sounds
 			}
+			writer.writeEndElement(); // img
 		}
+		writer.writeEndElement(); // images
+		writer.writeEndElement(); // seq
 	}
+	writer.writeEndElement(); // scenes
+	writer.writeEndElement(); // smil
+	writer.writeEndDocument();
+
+	if (writer.hasError())
+		throw ProjectFileCreationException("QXmlStreamWriter", file.errorString());
+	file.close();
+	if (file.error() != QFileDevice::NoError)
+		throw ProjectFileCreationException("QFile::close", file.errorString());
 }
 
-namespace {
-/**
- * Owns a string returned by libxml2, freeing it with xmlFree.
- */
-class XmlString {
-	xmlChar* s;
-public:
-	explicit XmlString(xmlChar* str) : s(str) {
-	}
-	XmlString(const XmlString&) = delete;
-	XmlString& operator=(const XmlString&) = delete;
-	~XmlString() {
-		if (s)
-			xmlFree(s);
-	}
-	const char* get() const {
-		return reinterpret_cast<const char*>(s);
-	}
-};
-}
-
-void ProjectSerializer::getAttributes(xmlNodePtr node,
+void ProjectSerializer::getAttributes(const QDomNode& node,
 		std::vector<Scene*>& sVect) {
-	xmlNodePtr currNode = nullptr;
-	for (currNode = node; currNode; currNode = currNode->next) {
-		if (currNode->type == XML_ELEMENT_NODE) {
-			char *nodeName = (char*) currNode->name;
+	for (QDomNode currNode = node; !currNode.isNull();
+			currNode = currNode.nextSibling()) {
+		const QDomElement element = currNode.toElement();
+		if (!element.isNull()) {
+			const QString nodeName = element.tagName();
 			// We either have a image node or a sound node
-			if (strcmp(nodeName, "img") == 0
-					|| strcmp(nodeName, "audio") == 0) {
-				XmlString filenameProp(xmlGetProp(currNode, BAD_CAST "src"));
-				const char* filename = filenameProp.get();
-				if (filename != nullptr && sVect.empty()) {
-					Logger::get().logWarning(
-							"Ignoring %s outside of any scene", filename);
-				} else if (filename != nullptr) {
-					WorkspaceFile wf(filename);
+			if (nodeName == QLatin1String("img")
+					|| nodeName == QLatin1String("audio")) {
+				if (!element.hasAttribute(QStringLiteral("src"))) {
+					// nothing to load
+				} else if (sVect.empty()) {
+					Logger::get().logWarning("Ignoring %s outside of any scene",
+							element.attribute(QStringLiteral("src")).toUtf8().constData());
+				} else {
+					const QByteArray filename =
+							element.attribute(QStringLiteral("src")).toUtf8();
+					WorkspaceFile wf(filename.constData());
 					// e.g. a truncated project file
 					if (!QFile::exists(QString::fromLocal8Bit(wf.path()))) {
 						throw ProjectFileReadException("openDat",
 								QStringLiteral("%1 is missing from the project")
-								.arg(QString::fromLocal8Bit(filename)));
+								.arg(QString::fromUtf8(filename)));
 					}
 					// The node is a image node
-					if (strcmp(nodeName, "img") == 0) {
+					if (nodeName == QLatin1String("img")) {
 						std::unique_ptr<Frame> f(new Frame(wf));
 						Scene *s = sVect.back();
 						s->addSavedFrame(f.get());
@@ -551,14 +531,14 @@ void ProjectSerializer::getAttributes(xmlNodePtr node,
 						int frameNum = s->getSize() - 1;
 						int soundNum = s->soundCount(frameNum);
 						s->newSound(frameNum, wf);
-						XmlString soundName(xmlGetProp(currNode,
-								BAD_CAST "alt"));
-						if (soundName.get() != nullptr) {
+						if (element.hasAttribute(QStringLiteral("alt"))) {
+							const QByteArray soundName =
+									element.attribute(QStringLiteral("alt")).toUtf8();
 							// setSoundName takes ownership of a new[] string
 							// and returns ownership of the old name
-							size_t size = strlen(soundName.get()) + 1;
+							size_t size = soundName.size() + 1;
 							std::unique_ptr<char[]> name(new char[size]);
-							memcpy(name.get(), soundName.get(), size);
+							memcpy(name.get(), soundName.constData(), size);
 							delete[] s->setSoundName(frameNum, soundNum,
 									name.get());
 							name.release();
@@ -567,19 +547,12 @@ void ProjectSerializer::getAttributes(xmlNodePtr node,
 				}
 			}
 			// The node is a scene node
-			else if (strcmp((char*) currNode->name, "seq") == 0) {
+			else if (nodeName == QLatin1String("seq")) {
 				Scene *s = new Scene();
 				sVect.push_back(s);
 			}
 		}
-		getAttributes(currNode->children, sVect);
-	}
-}
-
-void ProjectSerializer::saveDOMToFile(xmlDocPtr doc, const char* filename) {
-	int ret = xmlSaveFormatFile(filename, doc, 1);
-	if (ret == -1) {
-		throw ProjectFileCreationException("xmlSaveFormatFile", errno);
+		getAttributes(currNode.firstChild(), sVect);
 	}
 }
 

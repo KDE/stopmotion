@@ -6,12 +6,12 @@
 #ifndef PROJECTSERIALIZER_H
 #define PROJECTSERIALIZER_H
 
-#include <libxml/tree.h>
 
 #include <exception>
 #include <vector>
 
 class AnimationImpl;
+class QDomNode;
 class Scene;
 class Frontend;
 
@@ -82,10 +82,10 @@ public:
 
 private:
 	char* projectFile;
-	void setAttributes(xmlNodePtr rootNode,
+	static void writeDat(const char* filename,
 			const AnimationImpl& anim, Frontend *frontend);
-	static void getAttributes(xmlNodePtr node, std::vector<Scene*>& scenes);
-	void saveDOMToFile(xmlDocPtr doc, const char* filename);
+	static void getAttributes(const QDomNode& node,
+			std::vector<Scene*>& scenes);
 	void setProjectFile(const char *filename);
 };
 

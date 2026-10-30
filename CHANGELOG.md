@@ -4,6 +4,7 @@
 Changes
 * Use ECM for project settings similar to other KDE applications.
 * Use KArchive instead of libarchive to read and write project files.
+* Use Qt XML instead of libxml2 for project files and preferences.
 
 Features
 * Use KArchive instead of libarchive.

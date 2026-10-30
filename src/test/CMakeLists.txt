@@ -84,11 +84,9 @@ if(BUILD_TESTING)
     Qt6::Core
     Qt6::Widgets
     Qt6::Multimedia
+    Qt6::Xml
     Qt6::Test
     )
-  # link to LibXml2
-  target_link_libraries(test-stopmotion
-    PUBLIC LibXml2::LibXml2)
   # link to libVorbisFile, KArchive
   target_link_libraries(test-stopmotion
     PUBLIC
