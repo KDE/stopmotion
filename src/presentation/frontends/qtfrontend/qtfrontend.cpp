@@ -211,10 +211,11 @@ void QtFrontend::initializePreferences() {
 	if (!prefs->isVersion(VERSION)) {
 		bool useNewPrefsFile = askQuestion(Frontend::useNewerPreferences);
 		if (useNewPrefsFile) {
-			// copy to old
-			prefs->setSavePath(preferencesFile.path(), oldIsDirty);
+			// keep the old preferences in the .OLD file
+			prefs->setSavePath(oldPrefsFile.path(), oldIsDirty);
 			prefs->flush();
-			// Create new default preferences
+			// Create new default preferences, including the new version
+			prefs->setDefaultPreferences(VERSION);
 			setDefaultPreferences(prefs);
 		} else {
 			// Use and update old preferences
