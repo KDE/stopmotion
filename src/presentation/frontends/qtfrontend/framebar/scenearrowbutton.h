@@ -9,6 +9,7 @@
 #include <QTimer>
 //Added by qt3to4:
 #include <QMouseEvent>
+#include <QEnterEvent>
 #include <QEvent>
 #include <QPaintEvent>
 
@@ -55,7 +56,7 @@ protected:
 	 * enter the widget
 	 * @param e information about the event
 	 */
-	void enterEvent ( QEvent * e);
+	void enterEvent ( QEnterEvent * e) override;
 	
 	/**
 	 * Overloaded event function for receiving information when the mouse

@@ -70,7 +70,7 @@ void SceneArrowButton::mouseReleaseEvent( QMouseEvent * e )
 }
 
 
-void SceneArrowButton::enterEvent( QEvent * )
+void SceneArrowButton::enterEvent( QEnterEvent * )
 {
 	if (isOpened) {
 		moveTimer->start(400);
