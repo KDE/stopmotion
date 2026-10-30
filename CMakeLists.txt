@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2021-2026 Linuxstopmotion contributors; see the AUTHORS file for details
+# SPDX-License-Identifier: GPL-2.0-or-later
+
 ###
 # general project setup
 ###

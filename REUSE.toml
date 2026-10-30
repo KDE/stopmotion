@@ -1,0 +1,39 @@
+# SPDX-FileCopyrightText: None
+# SPDX-License-Identifier: CC0-1.0
+
+# Copyright and licensing information for files that cannot carry a header.
+# See https://reuse.software/spec/ for the format.
+#
+# The translations in poqm/ are synced from KDE's translation system and are
+# not covered here; KDE's reuse-lint CI job removes them before checking.
+
+version = 1
+
+# Images, icons, the manual, test data, Qt Designer forms, packaging metadata
+# and documentation are part of Stopmotion and under its license.
+[[annotations]]
+path = [
+    "AUTHORS",
+    "CHANGELOG.md",
+    "README.md",
+    "graphics/**",
+    "manual/**",
+    "src/domain/undo/README.md",
+    "src/**/*.ui",
+    "src/test/resources/**",
+    "stopmotion.1",
+    "stopmotion.desktop",
+    "stopmotion.mime",
+    "translations/translations.qrc",
+    "translations/stopmotion_*.ts",
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Linuxstopmotion contributors; see the AUTHORS file for details"
+SPDX-License-Identifier = "GPL-2.0-or-later"
+
+# the logo, also used as application icon
+[[annotations]]
+path = ["logo.png", "graphics/stopmotion.png", "graphics/stopmotion.svg"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "Gorazd Bizjak <gorazd@zapstudio.net>"
+SPDX-License-Identifier = "GPL-2.0-or-later"
