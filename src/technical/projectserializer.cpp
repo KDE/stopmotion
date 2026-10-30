@@ -531,9 +531,15 @@ void ProjectSerializer::getAttributes(xmlNodePtr node,
 					Logger::get().logWarning(
 							"Ignoring %s outside of any scene", filename);
 				} else if (filename != nullptr) {
+					WorkspaceFile wf(filename);
+					// e.g. a truncated project file
+					if (!QFile::exists(QString::fromLocal8Bit(wf.path()))) {
+						throw ProjectFileReadException("openDat",
+								QStringLiteral("%1 is missing from the project")
+								.arg(QString::fromLocal8Bit(filename)));
+					}
 					// The node is a image node
 					if (strcmp(nodeName, "img") == 0) {
-						WorkspaceFile wf(filename);
 						std::unique_ptr<Frame> f(new Frame(wf));
 						Scene *s = sVect.back();
 						s->addSavedFrame(f.get());
@@ -543,7 +549,6 @@ void ProjectSerializer::getAttributes(xmlNodePtr node,
 					else {
 						Scene *s = sVect.back();
 						int frameNum = s->getSize() - 1;
-						WorkspaceFile wf(filename);
 						int soundNum = s->soundCount(frameNum);
 						s->newSound(frameNum, wf);
 						XmlString soundName(xmlGetProp(currNode,
