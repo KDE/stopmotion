@@ -667,6 +667,12 @@ void testUndo(Executor& e, ModelTestHelper& helper) {
 
 	QVERIFY2(0 == unlink(tmpFileName.c_str()), "Could not delete test command log file");
 	QVERIFY2(0 == rmdir(tmpDirName), "Could not delete test directory");
+	if (!mallocFailuresWork()) {
+		qWarning("Memory allocation failures cannot be injected, e.g. with "
+				"AddressSanitizer or Valgrind; not checking how often "
+				"commands failed");
+		return;
+	}
 	// The tests that rely on failing commands will pass if the fake malloc
 	// somehow does not cause any command to fail (this will happen, for
 	// example, if no allocations are actually made). If this happens too much

@@ -403,13 +403,22 @@ void TestCommandFactory::testUndo() {
 }
 
 void TestCommandFactory::replayIsRobust() {
-	loadOomTestUtil();
-	setMallocsUntilFailure(0);
-	QVERIFY2(nullptr == malloc(1), "SetMallocsUntilFailure(0) not working");
+	QVERIFY(loadOomTestUtil());
+	if (!mallocFailuresWork()) {
+		QSKIP("Memory allocation failures cannot be injected, "
+				"e.g. with AddressSanitizer or Valgrind");
+	}
+	// Call malloc through a volatile pointer, otherwise the compiler may
+	// optimize the allocations away. Cancel the failures before checking,
+	// as reporting a failed check allocates memory.
+	void* (*volatile mallocFn)(size_t) = malloc;
 	setMallocsUntilFailure(1);
-	void* shouldSucceed = malloc(1);
+	void* shouldSucceed = mallocFn(1);
+	void* shouldFail = mallocFn(1);
+	cancelAnyMallocFailure();
+	free(shouldSucceed);
+	free(shouldFail);
 	QVERIFY2(shouldSucceed,
 			"SetMallocsUntilFailure not allowing mallocs at all");
-	free(shouldSucceed);
-	QVERIFY2(nullptr == malloc(1), "SetMallocsUntilFailure(1) not working");
+	QVERIFY2(nullptr == shouldFail, "SetMallocsUntilFailure(1) not working");
 }

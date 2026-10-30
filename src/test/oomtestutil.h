@@ -68,6 +68,13 @@ void setMallocsUntilFailure(int successes);
 void cancelAnyMallocFailure();
 
 /**
+ * Returns 1 if artificial memory allocation failures work, 0 otherwise.
+ * They do not work if a tool such as AddressSanitizer or Valgrind replaces
+ * @c malloc.
+ */
+int mallocFailuresWork();
+
+/**
  * Returns a counter of the number of (successful or unsuccessful) calls to
  * @c malloc so far. Will not work unless @ref LoadOomTestUtil has been called
  * and returned 1.

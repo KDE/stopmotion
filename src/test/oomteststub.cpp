@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include <dlfcn.h>
+#include <cstdlib>
 
 #include "oomtestutil.h"
 
@@ -69,6 +70,19 @@ void setMallocsUntilFailure(int successes) {
 void cancelAnyMallocFailure() {
 	if (smuf)
 		smuf(-1);
+}
+
+int mallocFailuresWork() {
+	if (!smuf && !loadOomTestUtil())
+		return 0;
+	// Call malloc through a volatile pointer, otherwise the compiler may
+	// optimize the allocation away, as its result is not used.
+	void* (*volatile mallocFn)(size_t) = malloc;
+	smuf(0);
+	void* p = mallocFn(1);
+	smuf(-1);
+	free(p);
+	return p == nullptr;
 }
 
 long mallocsSoFar() {
