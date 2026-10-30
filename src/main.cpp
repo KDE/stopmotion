@@ -24,10 +24,9 @@
 #include <iostream>
 
 class CouldNotInitializeRecoveryFiles : public std::exception {
-	int error;
 	char buffer[1024];
 public:
-	CouldNotInitializeRecoveryFiles(int err) : error(err) {
+	CouldNotInitializeRecoveryFiles(int err) {
 		snprintf(buffer, sizeof(buffer),
 				"Could not initialize recovery files (%s)."
 				" You need permission to read and write in a ~/.stopmotion"
