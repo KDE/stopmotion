@@ -35,7 +35,7 @@ remove_definitions(
 
 # Qt
 find_package(Qt6 6.5
-  COMPONENTS Widgets Multimedia LinguistTools
+  COMPONENTS Widgets Multimedia Xml LinguistTools
   REQUIRED)
 
 # LibXml2
@@ -178,6 +178,7 @@ target_link_libraries(stopmotion
   Qt6::Core
   Qt6::Widgets
   Qt6::Multimedia
+  Qt6::Xml
   )
 # link to LibXml2
 target_link_libraries(stopmotion

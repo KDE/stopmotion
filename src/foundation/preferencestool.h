@@ -5,14 +5,19 @@
 #ifndef PREFERENCESTOOL_H
 #define PREFERENCESTOOL_H
 
-#include <libxml/tree.h>
+#include <QByteArray>
+#include <QDomDocument>
+#include <QDomElement>
+
+#include <optional>
+#include <string>
 
 /**
  * Represents one string from the preferences file.
  */
 class Preference {
-	const char* val;
-	bool owns;
+	std::optional<QByteArray> value;
+	const char* defaultValue;
 public:
 	Preference(const Preference&) = delete;
 	Preference& operator=(const Preference&) = delete;
@@ -114,9 +119,10 @@ public:
 	/**
 	 * Retrieves a string preference.
 	 * @param key the key of the preference to retrieve.
-	 * @return the attribute for the given key or null if the key wasn't found.
+	 * @return the attribute for the given key (UTF-8) or nothing if the key
+	 * wasn't found.
 	 */
-	const char* getPreference(const char* key);
+	std::optional<QByteArray> getPreference(const char* key);
 
 	/**
 	 * Retrieves an int preference.
@@ -166,21 +172,19 @@ private:
 	/** The singleton instance of this class.*/
 	static PreferencesTool *preferencesTool;
 
-	xmlDocPtr doc;
-	xmlDtdPtr dtd;
-	xmlNodePtr rootNode;
-	xmlNodePtr preferences;
-	xmlNodePtr versionNode;
+	QDomDocument doc;
+	QDomElement preferences;
+	QDomElement versionNode;
 	bool dirty;
 
-	char *preferencesFile;
+	std::string preferencesFile;
 
 	/**
 	 * Retrieves the node with key "key".
 	 * @param key the key of the node to retrieve.
-	 * @return the node with the given key.
+	 * @return the node with the given key, or a null element.
 	 */
-	xmlNodePtr findNode(const char* key);
+	QDomElement findNode(const char* key);
 
 	/**
 	 * Checks if the preferences tool has been initialized and exits with an error

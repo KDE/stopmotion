@@ -7,47 +7,81 @@
 #include "logger.h"
 #include "uiexception.h"
 
+#include <QFile>
+#include <QString>
+#include <QStringList>
+#include <QXmlStreamWriter>
+
+#include <algorithm>
+
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
-#include <iostream>
 #include <sys/file.h>
 
-#include <libxml/parser.h>
+namespace {
+QString fromUtf8(const char* s) {
+	return QString::fromUtf8(s);
+}
 
-using namespace std;
+// QDomDocument writes attributes in an unpredictable order, so the
+// preferences are written with QXmlStreamWriter in a fixed order instead.
+void writeElement(QXmlStreamWriter& writer, const QDomElement& element) {
+	static const QStringList knownOrder = {
+		QStringLiteral("xml:lang"), QStringLiteral("title"),
+		QStringLiteral("version"), QStringLiteral("key"),
+		QStringLiteral("attribute")};
+	const QDomNamedNodeMap attributes = element.attributes();
+	QStringList names;
+	for (int i = 0; i != attributes.count(); ++i)
+		names.append(attributes.item(i).nodeName());
+	std::sort(names.begin(), names.end(),
+			[](const QString& a, const QString& b) {
+		qsizetype ia = knownOrder.indexOf(a);
+		qsizetype ib = knownOrder.indexOf(b);
+		if (ia < 0)
+			ia = knownOrder.size();
+		if (ib < 0)
+			ib = knownOrder.size();
+		return ia != ib? ia < ib : a < b;
+	});
+	QDomElement child = element.firstChildElement();
+	if (child.isNull())
+		writer.writeEmptyElement(element.tagName());
+	else
+		writer.writeStartElement(element.tagName());
+	for (const QString& name : names)
+		writer.writeAttribute(name, element.attribute(name));
+	if (!child.isNull()) {
+		for (; !child.isNull(); child = child.nextSiblingElement())
+			writeElement(writer, child);
+		writer.writeEndElement();
+	}
+}
+
+QByteArray toXml(const QDomDocument& doc) {
+	QByteArray out;
+	QXmlStreamWriter writer(&out);
+	writer.setAutoFormatting(true);
+	writer.setAutoFormattingIndent(2);
+	writer.writeStartDocument();
+	writer.writeDTD(QStringLiteral("<!DOCTYPE root>"));
+	writeElement(writer, doc.documentElement());
+	writer.writeEndDocument();
+	return out;
+}
+}
 
 
 PreferencesTool* PreferencesTool::preferencesTool = nullptr;
 
 
-class XmlProp {
-	xmlChar* p;
-public:
-	XmlProp(const XmlProp&) = delete;
-	XmlProp& operator=(const XmlProp&) = delete;
-	XmlProp(const _xmlNode* node, const char* name) : p(nullptr) {
-		p = xmlGetProp(node, BAD_CAST name);
-	}
-	~XmlProp() {
-		xmlFree(p);
-	}
-	const char* value() const {
-		return reinterpret_cast<char*>(p);
-	}
-};
-
-
-PreferencesTool::PreferencesTool() :
-		doc(nullptr), dtd(nullptr), rootNode(nullptr), preferences(nullptr), versionNode(nullptr),
-		dirty(false), preferencesFile(nullptr) {
-	LIBXML_TEST_VERSION;
+PreferencesTool::PreferencesTool() : dirty(false) {
 }
 
 
 PreferencesTool::~PreferencesTool() {
 	cleanTree();
-	delete[] preferencesFile;
 }
 
 
@@ -59,140 +93,115 @@ PreferencesTool* PreferencesTool::get() {
 }
 
 void PreferencesTool::setSavePath(const char* s, bool wantSave) {
-	unsigned long length = strlen(s) + 1;
-	preferencesFile = new char[length];
-	strncpy(preferencesFile, s, length);
+	preferencesFile = s;
 	if (wantSave)
 		dirty = true;
 }
 
 bool PreferencesTool::load(const char* filePath) {
-	if (preferencesFile) {
-		delete [] preferencesFile;
-		preferencesFile = nullptr;
-	}
-	
-	if (doc) {
-		cleanTree();
-	}
+	preferencesFile.clear();
+	cleanTree();
 	dirty = false;
 
-	doc = xmlReadFile(filePath, nullptr, 0);
-	if (!doc)
+	QFile file(QString::fromLocal8Bit(filePath));
+	if (!file.open(QIODevice::ReadOnly))
+		return false;
+	QDomDocument loaded;
+	if (!loaded.setContent(&file))
 		return false;
 
-	rootNode = xmlDocGetRootElement(doc);
-	if (!doc)
-		return false;
-
-	xmlNode* node = rootNode->children;
-	for (; node; node = node->next) {
-		if (node->type == XML_ELEMENT_NODE) {
-			if (xmlStrEqual(node->name, BAD_CAST "version")) {
-				versionNode = node;
-			}
-		}
-		if (node->type == XML_ELEMENT_NODE) {
-			if (xmlStrEqual(node->name, BAD_CAST "preferences")) {
-				preferences = node;
-			}
-		}
-	}
-	if (!preferences || !versionNode) {
+	QDomElement root = loaded.documentElement();
+	QDomElement loadedVersion = root.firstChildElement(QStringLiteral("version"));
+	QDomElement loadedPreferences =
+			root.firstChildElement(QStringLiteral("preferences"));
+	if (loadedPreferences.isNull() || loadedVersion.isNull()) {
 		Logger::get().logWarning("Error while parsing preferences file");
 		return false;
 	}
+	doc = loaded;
+	versionNode = loadedVersion;
+	preferences = loadedPreferences;
 	return true;
 }
 
 void PreferencesTool::setDefaultPreferences(const char* version) {
-	delete[] preferencesFile;
-	preferencesFile = nullptr;
+	cleanTree();
+	preferencesFile.clear();
 	dirty = true;
 
-	doc = xmlNewDoc(BAD_CAST "1.0");
-	dtd = xmlCreateIntSubset(doc, BAD_CAST "root", nullptr, nullptr);
+	doc = QDomDocument(QStringLiteral("root"));
+	QDomElement rootNode = doc.createElement(QStringLiteral("root"));
+	rootNode.setAttribute(QStringLiteral("xml:lang"), QStringLiteral("en"));
+	rootNode.setAttribute(QStringLiteral("title"), QStringLiteral("Preferences"));
+	doc.appendChild(rootNode);
 
-	rootNode = xmlNewNode(nullptr, BAD_CAST "root");
-	xmlNewProp(rootNode, BAD_CAST "xml:lang", BAD_CAST "en");
-	xmlNewProp(rootNode, BAD_CAST "title", BAD_CAST "Preferences");
-	xmlDocSetRootElement(doc, rootNode);
-
-	versionNode = xmlNewChild(rootNode, nullptr, BAD_CAST "version", nullptr);
-	xmlNewProp(versionNode, BAD_CAST "version", BAD_CAST version);
-	preferences = xmlNewChild(rootNode, nullptr, BAD_CAST "preferences", nullptr);
+	versionNode = doc.createElement(QStringLiteral("version"));
+	versionNode.setAttribute(QStringLiteral("version"), fromUtf8(version));
+	rootNode.appendChild(versionNode);
+	preferences = doc.createElement(QStringLiteral("preferences"));
+	rootNode.appendChild(preferences);
 }
 
 bool PreferencesTool::isVersion(const char* version) {
-	XmlProp v(versionNode, "version");
-	const char* versionLoaded = v.value();
-	return versionLoaded && strcmp(versionLoaded, version) == 0;
+	return versionNode.hasAttribute(QStringLiteral("version"))
+			&& versionNode.attribute(QStringLiteral("version")) == fromUtf8(version);
 }
 
 
 void PreferencesTool::setVersion(const char* version) {
 	checkInitialized();
-	xmlSetProp(versionNode, BAD_CAST "version", BAD_CAST version);
+	versionNode.setAttribute(QStringLiteral("version"), fromUtf8(version));
 	dirty = true;
 }
 
 
 void PreferencesTool::setPreference(const char* key, const char* attribute) {
 	checkInitialized();
-	xmlNodePtr node = nullptr;
-	node = findNode(key);
-	
-	if (node == nullptr) {
-		node = xmlNewChild(preferences, nullptr, BAD_CAST "pref", nullptr);
-		xmlNewProp(node, BAD_CAST "key", BAD_CAST key);
-		xmlNewProp(node, BAD_CAST "attribute", BAD_CAST attribute);
+	const QString value = fromUtf8(attribute);
+	QDomElement node = findNode(key);
+	if (node.isNull()) {
+		node = doc.createElement(QStringLiteral("pref"));
+		node.setAttribute(QStringLiteral("key"), fromUtf8(key));
+		node.setAttribute(QStringLiteral("attribute"), value);
+		preferences.appendChild(node);
 		dirty = true;
-	} else {
-		const char* currentValue = (const char*) xmlGetProp(node, BAD_CAST "attribute");
-		if (strcmp(currentValue, attribute) != 0) {
-			xmlSetProp(node, BAD_CAST "attribute", BAD_CAST attribute);
-			dirty = true;
-		}
+	} else if (!node.hasAttribute(QStringLiteral("attribute"))
+			|| node.attribute(QStringLiteral("attribute")) != value) {
+		node.setAttribute(QStringLiteral("attribute"), value);
+		dirty = true;
 	}
 }
 
 
 void PreferencesTool::setPreference(const char* key, const int attribute) {
-	char tmp[11] = {0};
-	snprintf(tmp, 11, "%d", attribute);
+	char tmp[12] = {0};
+	snprintf(tmp, sizeof(tmp), "%d", attribute);
 	setPreference(key, tmp);
 }
 
 
-const char* PreferencesTool::getPreference(const char* key) {
+std::optional<QByteArray> PreferencesTool::getPreference(const char* key) {
 	checkInitialized();
-	xmlNode *node = findNode(key);
-	return (const char*)xmlGetProp(node, BAD_CAST "attribute");
+	QDomElement node = findNode(key);
+	if (node.isNull() || !node.hasAttribute(QStringLiteral("attribute")))
+		return std::nullopt;
+	return node.attribute(QStringLiteral("attribute")).toUtf8();
 }
 
 
 int PreferencesTool::getPreference(const char* key, const int defaultValue) {
-	checkInitialized();
-	xmlNode *node = findNode(key);
-	if (!node) {
+	std::optional<QByteArray> value = getPreference(key);
+	if (!value)
 		return defaultValue;
-	}
-	xmlChar *tmp = xmlGetProp(node, BAD_CAST "attribute");
-	if (!tmp) {
-		return defaultValue;
-	}
-	int ret = atoi(reinterpret_cast<const char*>(tmp));
-	xmlFree(tmp);
-	return ret;
+	return atoi(value->constData());
 }
 
 
 void PreferencesTool::removePreference(const char* key) {
 	checkInitialized();
-	xmlNode *node = findNode(key);
-	if (node != nullptr) {
-		xmlUnlinkNode(node);
-		xmlFreeNode(node);
+	QDomElement node = findNode(key);
+	if (!node.isNull()) {
+		preferences.removeChild(node);
 		dirty = true;
 	}
 }
@@ -217,43 +226,46 @@ public:
 		flock(fileno(f), LOCK_EX);
 		return true;
 	}
-	FILE* file() const {
-		return f;
+	bool write(const QByteArray& data) {
+		return fwrite(data.constData(), 1, data.size(), f)
+				== static_cast<size_t>(data.size());
+	}
+	bool close() {
+		int r = fclose(f);
+		f = nullptr;
+		return r == 0;
 	}
 };
 
 void PreferencesTool::flush() {
 	if (dirty) {
 		WriteableFile prefs;
-		if (!prefs.open(preferencesFile)
-				|| xmlDocFormatDump(prefs.file(), doc, 1) == -1) {
+		if (!prefs.open(preferencesFile.c_str())
+				|| !prefs.write(toXml(doc))
+				|| !prefs.close()) {
 			throw UiException(UiException::failedToWriteToPreferencesFile,
-					preferencesFile);
+					preferencesFile.c_str());
 		}
 		dirty = false;
 	}
 }
 
 
-xmlNodePtr PreferencesTool::findNode(const char * key) {
+QDomElement PreferencesTool::findNode(const char * key) {
 	//Search through the preferences for the element with a key which
 	//equals the key parameter.
-	xmlNode *node = preferences->children;
-	for (; node; node = node->next) {
-		if (node->type == XML_ELEMENT_NODE) {
-			xmlChar *prop = xmlGetProp(node, BAD_CAST "key");
-			int found = xmlStrEqual(prop, BAD_CAST key);
-			xmlFree(prop);
-			if (found)
-				return node;
-		}
+	const QString k = fromUtf8(key);
+	for (QDomElement node = preferences.firstChildElement(); !node.isNull();
+			node = node.nextSiblingElement()) {
+		if (node.attribute(QStringLiteral("key")) == k)
+			return node;
 	}
-	return nullptr;
+	return QDomElement();
 }
 
 
 void PreferencesTool::checkInitialized() {
-	if (doc == nullptr) {
+	if (doc.isNull()) {
 		Logger::get().logFatal("A preferencesfile has to be specified before "
 				"using the PreferencesTool.");
 		exit(1);
@@ -262,41 +274,30 @@ void PreferencesTool::checkInitialized() {
 
 
 void PreferencesTool::cleanTree() {
-	xmlFreeDoc(doc);
-	xmlCleanupParser();
-	
-	doc             = nullptr;
-	dtd             = nullptr;
-	rootNode        = nullptr;
-	preferences     = nullptr;
+	doc = QDomDocument();
+	preferences = QDomElement();
+	versionNode = QDomElement();
 }
 
-Preference::Preference(const char* key) : val(nullptr), owns(false) {
-	val = PreferencesTool::get()->getPreference(key);
-	if (val)
-		owns = true;
+Preference::Preference(const char* key)
+	: value(PreferencesTool::get()->getPreference(key)),
+	  defaultValue(nullptr) {
 }
 
 Preference::Preference(const char* key, const char* defaultValue)
-	: val(nullptr), owns(false) {
-	val = PreferencesTool::get()->getPreference(key);
-	if (val) {
-		owns = true;
-	} else {
-		val = defaultValue;
-	}
+	: value(PreferencesTool::get()->getPreference(key)),
+	  defaultValue(defaultValue) {
 }
 
 Preference::~Preference() {
-	if (owns)
-		xmlFree((xmlChar*)val);
 }
 
 const char* Preference::get() const {
-	return val;
+	return value? value->constData() : defaultValue;
 }
 
 bool Preference::equals(const char* str) {
+	const char* val = get();
 	if (str) {
 		return val? 0 == strcmp(val, str) : false;
 	} else {
