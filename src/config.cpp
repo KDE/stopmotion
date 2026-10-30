@@ -1,3 +1,7 @@
+/*
+ * SPDX-FileCopyrightText: 2012-2026 Linuxstopmotion contributors; see the AUTHORS file for details
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
 #include "src/config.h"
 
 #ifndef HTML_PATH

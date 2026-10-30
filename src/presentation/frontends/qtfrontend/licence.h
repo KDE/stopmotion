@@ -1,3 +1,11 @@
+/*
+ * SPDX-FileCopyrightText: 2005-2016 Bjoern Erik Nilsen <bjoern.nilsen@bjoernen.com>
+ * SPDX-FileCopyrightText: 2005-2016 Fredrik Berg Kjoelstad <fredrikbk@hotmail.com>
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+// The license text shown in the about dialog. Its copyright notices are
+// part of that text and not about this file.
+// REUSE-IgnoreStart
 QString licence = 
 "(c) 2005-2016, Fredrik Berg Kj\xf6lstad and Bj\xf6rn Erik Nilsen\n"
 "\n"
@@ -344,3 +352,4 @@ QString licence =
 "library.  If this is what you want to do, use the GNU Library General\n"
 "Public License instead of this License.\n"
 ;
+// REUSE-IgnoreEnd
