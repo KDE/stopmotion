@@ -16,11 +16,15 @@
 
 #include <libxml/tree.h>
 
+#include <KArchiveDirectory>
+#include <KArchiveFile>
+#include <KTar>
+
+#include <QFile>
+#include <QString>
+
 #include <cassert>
-#include <fcntl.h>
 #include <cstdio>
-#include <archive.h>
-#include <archive_entry.h>
 #include <cstring>
 #include <cerrno>
 #include <iosfwd>
@@ -28,11 +32,14 @@
 #include <memory>
 #include <string>
 #include <set>
-#include <unistd.h>
 
 FileException::FileException(const char* functionName, int errorno) {
 	snprintf(buffer, sizeof(buffer), "%s(): %s", functionName,
 			strerror(errorno));
+}
+
+FileException::FileException(const char* functionName, const char* message) {
+	snprintf(buffer, sizeof(buffer), "%s(): %s", functionName, message);
 }
 
 const char* FileException::what() const noexcept {
@@ -44,14 +51,24 @@ public:
 	ProjectFileCreationException(const char* functionName, int errorno)
 			: FileException(functionName, errorno) {
 	}
+	ProjectFileCreationException(const char* functionName,
+			const QString& message)
+			: FileException(functionName, message.toLocal8Bit().constData()) {
+	}
 };
 
 class ProjectFileReadException : public FileException {
 public:
-	ProjectFileReadException(const char* functionName, int errorno)
-			: FileException(functionName, errorno) {
+	ProjectFileReadException(const char* functionName, const QString& message)
+			: FileException(functionName, message.toLocal8Bit().constData()) {
 	}
 };
+
+namespace {
+// Project files are uncompressed tar archives. Pass the type explicitly, as
+// KTar cannot guess it from the .sto extension.
+const QString tarMimeType = QStringLiteral("application/x-tar");
+}
 
 ProjectSerializer::ProjectSerializer() : projectFile(nullptr) {
 	LIBXML_TEST_VERSION;
@@ -61,69 +78,71 @@ ProjectSerializer::~ProjectSerializer() {
 	resetProjectFile();
 }
 
-class FileDescriptor {
-	int fd;
-public:
-	explicit FileDescriptor(int f) : fd(f) {
-	}
-	FileDescriptor(const FileDescriptor&) = delete;
-	FileDescriptor& operator=(const FileDescriptor&) = delete;
-	~FileDescriptor() {
-		if (0 <= fd)
-			::close(fd);
-	}
-	int get() const {
-		return fd;
-	}
-};
-
 class TarFileRead {
-	// owner frees the archive if the constructor throws or finish() is not
-	// reached
-	std::unique_ptr<struct archive, decltype(&archive_read_free)> owner{
-			archive_read_new(), archive_read_free};
-	struct archive* tar = owner.get();
-	struct archive_entry *entry = nullptr;
+	KTar tar;
+	template<typename F>
+	static void forEachFile(const KArchiveDirectory* dir,
+			const QString& prefix, F& f) {
+		const QStringList names = dir->entries();
+		for (const QString& name : names) {
+			const KArchiveEntry* entry = dir->entry(name);
+			const QString path = prefix + name;
+			if (entry->isDirectory()) {
+				forEachFile(static_cast<const KArchiveDirectory*>(entry),
+						path + QLatin1Char('/'), f);
+			} else if (entry->isFile() && entry->symLinkTarget().isEmpty()) {
+				f(path, static_cast<const KArchiveFile*>(entry));
+			}
+		}
+	}
 public:
-	TarFileRead(const char* filename) {
-		if (archive_read_support_format_tar(tar) != ARCHIVE_OK) {
-			throw ProjectFileReadException("archive_read_support_format_tar", errno);
+	TarFileRead(const char* filename)
+			: tar(QString::fromLocal8Bit(filename), tarMimeType) {
+		if (!tar.open(QIODevice::ReadOnly)) {
+			// KTar does not say why it could not open the file itself
+			QFile file(QString::fromLocal8Bit(filename));
+			if (!file.open(QIODevice::ReadOnly))
+				throw ProjectFileReadException("QFile::open", file.errorString());
+			throw ProjectFileReadException("KTar::open", tar.errorString());
 		}
-		if (archive_read_open_filename(tar, filename, 4096) != ARCHIVE_OK) {
-			throw ProjectFileReadException("archive_read_open_filename", errno);
+	}
+	/**
+	 * Calls f(path, file) for each regular file in the archive, with its path
+	 * relative to the root of the archive.
+	 */
+	template<typename F>
+	void forEachFile(F f) {
+		forEachFile(tar.directory(), QString(), f);
+	}
+	static void extract(const KArchiveFile* file, const std::string& filename) {
+		std::unique_ptr<QIODevice> in(file->createDevice());
+		if (!in)
+			throw ProjectFileReadException("KArchiveFile::createDevice",
+					QStringLiteral("cannot read %1").arg(file->name()));
+		QFile out(QString::fromLocal8Bit(filename.c_str()));
+		if (!out.open(QIODevice::WriteOnly | QIODevice::Truncate))
+			throw ProjectFileReadException("QFile::open", out.errorString());
+		char buffer[65536];
+		qint64 n;
+		qint64 total = 0;
+		while (0 < (n = in->read(buffer, sizeof(buffer)))) {
+			if (out.write(buffer, n) != n)
+				throw ProjectFileReadException("QFile::write", out.errorString());
+			total += n;
 		}
-	}
-	~TarFileRead() {
-	}
-	bool next() {
-		int ret = archive_read_next_header(tar, &entry);
-		if (ret == ARCHIVE_OK || ret == ARCHIVE_RETRY || ret == ARCHIVE_WARN)
-			return true;
-		if (ret == ARCHIVE_FATAL)
-			throw ProjectFileReadException("archive_read_next_header", errno);
-		return false;
-	}
-	const char *regularFileFilename() const {
-		return archive_entry_filetype(entry) == AE_IFREG ? archive_entry_pathname(entry) : nullptr;
-	}
-	void extract(std::string& filename) {
-		int fd = open(filename.c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0666);
-		if (fd < 0)
-			throw ProjectFileReadException("open", errno);
-		if (archive_read_data_into_fd(tar, fd) < 0) {
-			int err = errno;
-			close(fd);
-			throw ProjectFileReadException("archive_read_data_into_fd", err);
-		}
-		if (close(fd) < 0)
-			throw ProjectFileReadException("close", errno);
+		if (n < 0)
+			throw ProjectFileReadException("QIODevice::read", in->errorString());
+		// KTar opens truncated archives without complaint
+		if (total != file->size())
+			throw ProjectFileReadException("KArchiveFile::createDevice",
+					QStringLiteral("%1 is truncated").arg(file->name()));
+		out.close();
+		if (out.error() != QFileDevice::NoError)
+			throw ProjectFileReadException("QFile::close", out.errorString());
 	}
 	void finish() {
-		if (archive_read_close(tar) != ARCHIVE_OK)
-			throw ProjectFileReadException("archive_read_close", errno);
-		tar = nullptr;
-		if (archive_read_free(owner.release()) != ARCHIVE_OK)
-			throw ProjectFileReadException("archive_read_finish", errno);
+		if (!tar.close())
+			throw ProjectFileReadException("KTar::close", tar.errorString());
 	}
 };
 
@@ -175,23 +194,22 @@ public:
 	~StoFileRead() {
 	}
 	void unpack() {
-		while (tar.next()) {
-			const char* fn = tar.regularFileFilename();
+		tar.forEachFile([](const QString& path, const KArchiveFile* file) {
+			const QByteArray name = path.toLocal8Bit();
+			const char* fn = name.constData();
 			const char* base = imageOrSoundFile(fn);
 			if (base) {
 				// image or sound
 				WorkspaceFile wf(base);
-				std::string path = wf.path();
-				tar.extract(path);
+				TarFileRead::extract(file, wf.path());
 			} else if (isProjectFile(fn)) {
 				WorkspaceFile dat(WorkspaceFile::currentModelFile);
-				std::string path = dat.path();
-				tar.extract(path);
-			} else if (fn) {
+				TarFileRead::extract(file, dat.path());
+			} else {
 				Logger::get().logWarning(
 						"Did not know what to do with tarred file %s", fn);
 			}
-		}
+		});
 	}
 	void finish() {
 		tar.finish();
@@ -305,54 +323,34 @@ public:
 };
 
 class TarFileWrite {
-	// owner frees the archive if the constructor throws or eof() is not
-	// reached
-	std::unique_ptr<struct archive, decltype(&archive_write_free)> owner{
-			archive_write_new(), archive_write_free};
-	struct archive* tar = owner.get();
+	QString filename;
+	KTar tar;
 public:
-	TarFileWrite(const char* tarFilename) {
-		if (archive_write_set_format_ustar(tar) != ARCHIVE_OK) {
-			throw ProjectFileCreationException("archive_write_set_format_ustar", errno);
-		}
-		if (archive_write_open_filename(tar, tarFilename) != ARCHIVE_OK) {
-			throw ProjectFileCreationException("archive_write_open_filename", errno);
-		}
-	}
-	~TarFileWrite() {
+	TarFileWrite(const char* tarFilename)
+			: filename(QString::fromLocal8Bit(tarFilename)),
+			  tar(filename, tarMimeType) {
+		if (!tar.open(QIODevice::WriteOnly))
+			throw ProjectFileCreationException("KTar::open", tar.errorString());
 	}
 	void add(const char* realPath, const char* storedPath) {
-		char buff[4096];
-		int len;
-		struct stat st;
-		std::unique_ptr<archive_entry, decltype(&archive_entry_free)>
-				entry(archive_entry_new(), archive_entry_free);
-		if (stat(realPath, &st) < 0)
-			throw ProjectFileCreationException("stat", errno);
-		archive_entry_copy_stat(entry.get(), &st);
-		if (storedPath)
-			archive_entry_set_pathname(entry.get(), storedPath);
-		if (archive_write_header(tar, entry.get()) != ARCHIVE_OK)
-			throw ProjectFileCreationException("archive_write_header", errno);
-
-		FileDescriptor fd(open(realPath, O_RDONLY));
-		if (fd.get() < 0)
-			throw ProjectFileCreationException("open", errno);
-		len = read(fd.get(), buff, sizeof(buff));
-		while (len > 0) {
-			if (archive_write_data(tar, buff, len) < 0)
-				throw ProjectFileCreationException("archive_write_data", errno);
-			len = read(fd.get(), buff, sizeof(buff));
-		}
-		if (len < 0)
-			throw ProjectFileCreationException("read", errno);
+		if (!tar.addLocalFile(QString::fromLocal8Bit(realPath),
+				QString::fromLocal8Bit(storedPath)))
+			throw ProjectFileCreationException("KTar::addLocalFile",
+					tar.errorString());
 	}
 	void eof() {
-		if (archive_write_close(tar) != ARCHIVE_OK)
-			throw ProjectFileCreationException("archive_write_close", errno);
-		tar = nullptr;
-		if (archive_write_free(owner.release()) != ARCHIVE_OK)
-			throw ProjectFileCreationException("archive_write_free", errno);
+		if (!tar.close())
+			throw ProjectFileCreationException("KTar::close", tar.errorString());
+		// A tar archive ends with two zero-filled blocks, which KTar does not
+		// write. Add them, as earlier versions of Stopmotion did (#16).
+		QFile file(filename);
+		if (!file.open(QIODevice::WriteOnly | QIODevice::Append)
+				|| file.write(QByteArray(2 * 512, '\0')) != 2 * 512
+				|| !file.flush())
+			throw ProjectFileCreationException("QFile::write", file.errorString());
+		file.close();
+		if (file.error() != QFileDevice::NoError)
+			throw ProjectFileCreationException("QFile::close", file.errorString());
 	}
 };
 

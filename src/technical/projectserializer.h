@@ -16,9 +16,10 @@ class Scene;
 class Frontend;
 
 class FileException : public std::exception {
-	char buffer[100];
+	char buffer[300];
 public:
 	FileException(const char* functionName, int errorno);
+	FileException(const char* functionName, const char* message);
 	const char* what() const noexcept override;
 };
 

@@ -95,12 +95,12 @@ if(BUILD_TESTING)
   # link to LibXml2
   target_link_libraries(test-stopmotion
     PUBLIC LibXml2::LibXml2)
-  # link to libVorbisFile, libtar
+  # link to libVorbisFile, KArchive
   target_link_libraries(test-stopmotion
     PUBLIC
     oomtestutil oomteststub
     ${VORBISFILE_LIBRARY_PATH}
-    LibArchive::LibArchive
+    KF6::Archive
     ${DL_LIBRARY_PATH}
     )
 

@@ -42,8 +42,8 @@ find_package(Qt6 6.5
 find_package(LibXml2
   REQUIRED)
 
-# libarchive
-find_package(LibArchive
+# KArchive, to read and write project files
+find_package(KF6Archive 6.0
   REQUIRED)
 
 # libVorbisFile
@@ -186,11 +186,11 @@ target_link_libraries(stopmotion
 # link to LibXml2
 target_link_libraries(stopmotion
   PUBLIC LibXml2::LibXml2)
-# link to libVorbis, libarchive
+# link to libVorbis, KArchive
 target_link_libraries(stopmotion
   PUBLIC
   ${VORBISFILE_LIBRARY_PATH}
-  LibArchive::LibArchive
+  KF6::Archive
   )
 
 target_include_directories(stopmotion
