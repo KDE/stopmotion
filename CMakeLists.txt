@@ -58,10 +58,6 @@ if(BUILD_TESTING)
   find_package(Qt6 6.5 REQUIRED
     COMPONENTS Test
   )
-  # libdl, only needed for testing
-  find_library(DL_LIBRARY_PATH REQUIRED
-    NAMES dl
-  )
 endif ()
 
 include(FeatureSummary)

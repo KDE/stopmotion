@@ -13,9 +13,6 @@ if(BUILD_TESTING)
     POSITION_INDEPENDENT_CODE TRUE
     CXX_VISIBILITY_PRESET default
     VISIBILITY_INLINES_HIDDEN OFF)
-  target_link_libraries(oomtestutil
-    PUBLIC
-    ${DL_LIBRARY_PATH})
 
   add_library(oomteststub
     STATIC
@@ -28,9 +25,6 @@ if(BUILD_TESTING)
     POSITION_INDEPENDENT_CODE TRUE
     CXX_VISIBILITY_PRESET default
     VISIBILITY_INLINES_HIDDEN OFF)
-  target_link_libraries(oomteststub
-    PUBLIC
-    ${DL_LIBRARY_PATH})
 
   add_executable(test-stopmotion
     tmain.cpp
@@ -101,7 +95,6 @@ if(BUILD_TESTING)
     oomtestutil oomteststub
     ${VORBISFILE_LIBRARY_PATH}
     KF6::Archive
-    ${DL_LIBRARY_PATH}
     )
 
   target_include_directories(test-stopmotion
