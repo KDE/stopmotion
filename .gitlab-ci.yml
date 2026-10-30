@@ -6,3 +6,4 @@ include:
     file:
       - /gitlab-templates/cppcheck.yml
       - /gitlab-templates/linux-qt6.yml
+      - /gitlab-templates/reuse-lint.yml
