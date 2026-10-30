@@ -42,6 +42,7 @@ if(BUILD_TESTING)
     tstopmotionundo.cpp
     ../domain/undo/filelogger.cpp
     ../domain/undo/command.cpp
+    ../domain/undo/undoredoobserver.cpp
     ../domain/undo/commandlogger.cpp
     ../domain/undo/executor.cpp
     ../domain/undo/addallcommands.cpp
