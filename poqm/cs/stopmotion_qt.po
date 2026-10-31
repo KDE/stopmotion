@@ -14,53 +14,53 @@ msgstr ""
 "X-Generator: Poedit 3.9\n"
 "X-Qt-Contexts: true\n"
 
-#: src/application/externalcommand.cpp:46
+#: src/application/externalcommand.cpp:31
 msgctxt "ExternalCommand|"
 msgid "Input to program:"
 msgstr "Vstup do programu:"
 
-#: src/application/externalcommand.cpp:56
+#: src/application/externalcommand.cpp:41
 msgctxt "ExternalCommand|"
 msgid "Submit"
 msgstr "Odeslat"
 
-#: src/application/externalcommand.cpp:62
+#: src/application/externalcommand.cpp:47
 msgctxt "ExternalCommand|"
 msgid "Close"
 msgstr "Zavřít"
 
-#: src/application/externalcommand.cpp:75
+#: src/application/externalcommand.cpp:60
 msgctxt "ExternalCommand|"
 msgid "Output from external command"
 msgstr "Výstup z externího příkazu"
 
-#: src/application/externalcommand.cpp:119
-#: src/application/externalcommand.cpp:122
+#: src/application/externalcommand.cpp:104
+#: src/application/externalcommand.cpp:107
 msgctxt "ExternalCommand|"
 msgid "Result"
 msgstr "Výsledek"
 
-#: src/application/externalcommand.cpp:119
+#: src/application/externalcommand.cpp:104
 msgctxt "ExternalCommand|"
 msgid "Failed!"
 msgstr "Selhalo!"
 
-#: src/application/externalcommand.cpp:122
+#: src/application/externalcommand.cpp:107
 msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "Hotovo!"
 
-#: src/application/languagehandler.cpp:93
+#: src/application/languagehandler.cpp:79
 msgctxt "LanguageHandler|"
 msgid "English"
 msgstr "Anglický"
 
-#: src/application/languagehandler.cpp:95
+#: src/application/languagehandler.cpp:81
 msgctxt "LanguageHandler|"
 msgid "&Translation"
 msgstr "&Překlad"
 
-#: src/application/languagehandler.cpp:115
+#: src/application/languagehandler.cpp:101
 msgctxt ""
 "LanguageHandler|This should be translated to the name of the language you "
 "are translating to, in that language. Example: English = Deutsch (Deutsch is "
@@ -68,195 +68,195 @@ msgctxt ""
 msgid "English"
 msgstr "Anglický"
 
-#: src/application/modelhandler.cpp:63
+#: src/application/modelhandler.cpp:48
 msgctxt "ModelHandler|"
 msgid "Choose frames to add"
 msgstr "Vyberte snímky, které chcete přidat"
 
-#: src/application/modelhandler.cpp:183
+#: src/application/modelhandler.cpp:168
 msgctxt "ModelHandler|"
 msgid "Removed the selected frame"
 msgstr "Vybraný snímek byl odstraněn"
 
-#: src/application/modelhandler.cpp:220 src/application/modelhandler.cpp:230
-#: src/application/modelhandler.cpp:246
+#: src/application/modelhandler.cpp:205 src/application/modelhandler.cpp:215
+#: src/application/modelhandler.cpp:231
 msgctxt "ModelHandler|"
 msgid "Warning"
 msgstr "Varování"
 
-#: src/application/modelhandler.cpp:221
+#: src/application/modelhandler.cpp:206
 msgctxt "ModelHandler|"
 msgid "You do not have Gimp installed on your system"
 msgstr "Ve vašem systému nemáte nainstalovaný program Gimp"
 
-#: src/application/modelhandler.cpp:231
+#: src/application/modelhandler.cpp:216
 msgctxt "ModelHandler|"
 msgid "There is no active frame to open"
 msgstr "K otevření není k dispozici žádný aktivní snímek"
 
-#: src/application/modelhandler.cpp:247
+#: src/application/modelhandler.cpp:232
 msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr "Spuštění programu Gimp se nezdařilo!"
 
-#: src/application/runanimationhandler.cpp:93
+#: src/application/runanimationhandler.cpp:78
 msgctxt "RunAnimationHandler|"
 msgid "Running animation"
 msgstr "Běžící animace"
 
-#: src/application/soundhandler.cpp:44
+#: src/application/soundhandler.cpp:30
 msgctxt "SoundHandler|"
 msgid "Choose sound file"
 msgstr "Vybrat zvukový soubor"
 
-#: src/application/soundhandler.cpp:44
+#: src/application/soundhandler.cpp:30
 msgctxt "SoundHandler|"
 msgid "Sounds (*.ogg)"
 msgstr "Zvuky (*.ogg)"
 
-#: src/application/soundhandler.cpp:70
+#: src/application/soundhandler.cpp:56
 msgctxt "SoundHandler|"
 msgid "Sound name"
 msgstr "Název zvuku"
 
-#: src/application/soundhandler.cpp:71
+#: src/application/soundhandler.cpp:57
 msgctxt "SoundHandler|"
 msgid "Enter the name of the sound:"
 msgstr "Zadejte název zvuku:"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:42
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:27
 msgctxt "AboutDialog|"
 msgid "This is the Stopmotion application for creating stop motion animations."
 msgstr "Toto je aplikace Stopmotion určená k tvorbě stop-motion animací."
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:47
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:32
 msgctxt "AboutDialog|"
 msgid "&About"
 msgstr "Informace o &aplikaci"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:50
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:35
 msgctxt "AboutDialog|"
 msgid "Main developers"
 msgstr "Hlavní vývojáři"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:54
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:39
 msgctxt "AboutDialog|"
 msgid "Contributors"
 msgstr "Přispěvatelé"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:64
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:49
 msgctxt "AboutDialog|"
 msgid "A&uthors"
 msgstr "A&utoři"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:68
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:53
 msgctxt "AboutDialog|"
 msgid "Translation"
 msgstr "Překlad"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:69
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:54
 msgctxt "AboutDialog|"
 msgid "Czech"
 msgstr "Český"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:70
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:55
 msgctxt "AboutDialog|"
 msgid "Slovenian"
 msgstr "Slovinský"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:71
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:56
 msgctxt "AboutDialog|"
 msgid "French"
 msgstr "Francouzský"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:72
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:57
 msgctxt "AboutDialog|"
 msgid "German"
 msgstr "Německý"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:74
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:59
 msgctxt "AboutDialog|"
 msgid "Portuguese"
 msgstr "Portugalský"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:76
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:61
 msgctxt "AboutDialog|"
 msgid "Spanish"
 msgstr "Španělský"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:77
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:62
 msgctxt "AboutDialog|"
 msgid "Swedish"
 msgstr "Švédský"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:79
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:64
 msgctxt "AboutDialog|"
 msgid "Turkish"
 msgstr "Turecký"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:80
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:81
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:65
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:66
 msgctxt "AboutDialog|"
 msgid "Italian"
 msgstr "Italský"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:82
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:67
 msgctxt "AboutDialog|"
 msgid "Traditional Chinese"
 msgstr "Tradiční čínština"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:83
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:68
 msgctxt "AboutDialog|"
 msgid "Arabic"
 msgstr "Arabský"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:84
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:69
 msgctxt "AboutDialog|"
 msgid "Russian"
 msgstr "Ruský"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:85
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:70
 msgctxt "AboutDialog|"
 msgid "Hebrew"
 msgstr "Hebrejština"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:87
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:72
 msgctxt "AboutDialog|"
 msgid "Logo"
 msgstr "Logo"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:89
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:74
 msgctxt "AboutDialog|"
 msgid "Coordinating"
 msgstr "Koordinace"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:93
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:78
 msgctxt "AboutDialog|"
 msgid "Testing"
 msgstr "Testování"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:105
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:90
 msgctxt "AboutDialog|"
 msgid "&Thanks To"
 msgstr "&Poděkování"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:110
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:95
 msgctxt "AboutDialog|"
 msgid "&Licence Agreement"
 msgstr "&Licenční smlouva"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:112
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:97
 msgctxt "AboutDialog|"
 msgid "OK"
 msgstr "OK"
 
-#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:125
+#: src/presentation/frontends/qtfrontend/aboutdialog.cpp:110
 msgctxt "AboutDialog|"
 msgid "About"
 msgstr "O aplikaci"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:69
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:356
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:54
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:341
 msgctxt "DeviceTab|"
 msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
@@ -265,8 +265,8 @@ msgstr ""
 "Níže můžete nastavit, které zařízení má Stopmotion používat pro pořizování "
 "snímků a přehrávání videa."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:71
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:358
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:56
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:343
 msgctxt "DeviceTab|"
 msgid ""
 "You can select from the auto-detected devices below or add devices yourself. "
@@ -277,133 +277,133 @@ msgstr ""
 "přidat zařízení sami. Nedoporučujeme používat zařízení, která nebyla "
 "automaticky rozpoznána, ale pokud jste pokročilý uživatel, můžete tak učinit."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:74
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:361
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:59
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:346
 msgctxt "DeviceTab|"
 msgid ""
 "The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
 msgstr ""
 "Vybrané zařízení je v části Import videa rozpoznáno jako <b>$VIDEODEVICE</b>."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:80
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:365
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:65
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:350
 msgctxt "DeviceTab|"
 msgid "Name"
 msgstr "Název"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:80
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:365
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:65
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:350
 msgctxt "DeviceTab|"
 msgid "Description"
 msgstr "Popis"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:94
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:368
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:79
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:353
 msgctxt "DeviceTab|"
 msgid "&Add"
 msgstr "Přid&at"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:98
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:369
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:83
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:354
 msgctxt "DeviceTab|"
 msgid "&Remove"
 msgstr "Odst&ranit"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:101
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:370
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:86
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:355
 msgctxt "DeviceTab|"
 msgid "&Edit"
 msgstr "&Upravit"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:105
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:373
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:90
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:358
 msgctxt "DeviceTab|"
 msgid "Video device settings"
 msgstr "Nastavení video zařízení"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:114
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:374
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:99
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:359
 msgctxt "DeviceTab|"
 msgid "Video Device ($VIDEODEVICE): "
 msgstr "Video zařízení ($VIDEODEVICE): "
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:161
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:146
 msgctxt "DeviceTab|"
 msgid "device"
 msgstr "zařízení"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:87
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:386
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:72
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:371
 msgctxt "ExportTab|"
 msgid "&Add"
 msgstr "Přid&at"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:91
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:387
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:76
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:372
 msgctxt "ExportTab|"
 msgid "&Remove"
 msgstr "Odst&ranit"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:94
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:388
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:79
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:373
 msgctxt "ExportTab|"
 msgid "&Edit"
 msgstr "&Upravit"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:98
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:83
 msgctxt "ExportTab|"
 msgid "Encoder settings"
 msgstr "Nastavení kódování"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:108
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:391
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:93
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:376
 msgctxt "ExportTab|"
 msgid ""
 "Do you want to be asked for an output file every time you choose to export?"
 msgstr "Chcete, aby se vás systém při každém exportu ptal na výstupní soubor?"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:110
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:393
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:95
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:378
 msgctxt "ExportTab|"
 msgid "Yes"
 msgstr "Ano"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:115
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:394
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:100
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
 msgctxt "ExportTab|"
 msgid "No"
 msgstr "Ne"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:120
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:395
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:105
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:380
 msgctxt "ExportTab|"
 msgid "Set default output file:"
 msgstr "Nastavit výchozího výstupního souboru:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:126
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:396
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:111
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
 msgctxt "ExportTab|"
 msgid "Browse"
 msgstr "Procházet"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:131
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:397
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:116
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:382
 msgctxt "ExportTab|"
 msgid "Start encoder:"
 msgstr "Spuštění enkodéru:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:136
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:398
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:121
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
 msgstr "Zastavení enkodéru:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:362
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:347
 msgctxt "ExportTab|"
 msgid "Choose output file"
 msgstr "Vyberte výstupní soubor"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:372
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:357
 msgctxt "ExportTab|"
 msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
@@ -412,7 +412,7 @@ msgstr ""
 "Níže můžete nastavit, který program/proces má Stopmotion použít pro kódování "
 "aktuálně aktivního projektu do video souboru."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:374
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:359
 msgctxt "ExportTab|"
 msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
@@ -421,7 +421,7 @@ msgstr ""
 "K označení cesty k obrázku a k video souboru byste měli vždy používat <b>"
 "$IMAGEPATH</b> a <b>$VIDEOFILE</b>."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:376
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:361
 msgctxt "ExportTab|"
 msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
@@ -430,49 +430,49 @@ msgstr ""
 "K označení snímkové frekvence, která se v projektu aktuálně používá, můžete "
 "použít <b>$FRAMERATE</b>."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:378
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:363
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
 msgstr ""
 "Příklad s programem mencoder (obrázky ve formátu JPEG do videa ve formátu "
 "MPEG-4):"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:368
 msgctxt "ExportTab|"
 msgid "Name"
 msgstr "Název"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:368
 msgctxt "ExportTab|"
 msgid "Description"
 msgstr "Popis"
 
-#: src/presentation/frontends/qtfrontend/framebar/framebar.cpp:197
+#: src/presentation/frontends/qtfrontend/framebar/framebar.cpp:182
 msgctxt "FrameBar|"
 msgid "Frame number: "
 msgstr "Číslo snímku: "
 
-#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:114
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:100
 msgctxt "FramePreferencesMenu|"
 msgid "Add &sound"
 msgstr "Přidat &zvuk"
 
-#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:115
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:101
 msgctxt "FramePreferencesMenu|"
 msgid "&Remove Sound"
 msgstr "&Odstranit zvuk"
 
-#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:116
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:102
 msgctxt "FramePreferencesMenu|"
 msgid "Change name"
 msgstr "Změnit název"
 
-#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:117
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:103
 msgctxt "FramePreferencesMenu|"
 msgid "Sounds:"
 msgstr "Zvuky:"
 
-#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:120
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:106
 msgctxt "FramePreferencesMenu|"
 msgid ""
 "<h4>Add sound</h4> <p>With this button you can <em>add sounds</em> to the "
@@ -483,7 +483,7 @@ msgstr ""
 "do vybraného snímku.</p><p>Zvuk se začne přehrávat, jakmile se tento snímek "
 "zobrazí, a bude hrát, dokud neskončí.</p>"
 
-#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:128
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:114
 msgctxt "FramePreferencesMenu|"
 msgid ""
 "<h4>Remove sound</h4> <p>With this button you can <em>remove</em> the "
@@ -492,7 +492,7 @@ msgstr ""
 "<h4>Odstranit zvuk</h4><p>Pomocí tohoto tlačítka můžete <em>odstranit</em> "
 "vybraný zvuk z tohoto snímku.</p>"
 
-#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:135
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:121
 msgctxt "FramePreferencesMenu|"
 msgid ""
 "<h4>Change name</h4> <p>With this button you can change the name of the "
@@ -503,7 +503,7 @@ msgstr ""
 "zvuku. <BR>Název zvuku nemá žádný jiný účinek než usnadnění práce s animací."
 "</p>"
 
-#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:143
+#: src/presentation/frontends/qtfrontend/framepreferencesmenu.cpp:129
 msgctxt "FramePreferencesMenu|"
 msgid ""
 "<h4>Sounds</h4> <p>This list shows all the sounds connected to this frame.</"
@@ -514,33 +514,33 @@ msgstr ""
 "</p><p>Zvuky se začnou přehrávat, jakmile se tento snímek zobrazí, a budou "
 "hrát, dokud nedohrají.</p>"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:276
-#: src/presentation/frontends/qtfrontend/frameview.cpp:288
-#: src/presentation/frontends/qtfrontend/frameview.cpp:299
-#: src/presentation/frontends/qtfrontend/frameview.cpp:322
-#: src/presentation/frontends/qtfrontend/frameview.cpp:338
-#: src/presentation/frontends/qtfrontend/frameview.cpp:348
+#: src/presentation/frontends/qtfrontend/frameview.cpp:261
+#: src/presentation/frontends/qtfrontend/frameview.cpp:273
+#: src/presentation/frontends/qtfrontend/frameview.cpp:284
+#: src/presentation/frontends/qtfrontend/frameview.cpp:307
+#: src/presentation/frontends/qtfrontend/frameview.cpp:323
+#: src/presentation/frontends/qtfrontend/frameview.cpp:333
 msgctxt "FrameView|"
 msgid "Warning"
 msgstr "Varování"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:276
+#: src/presentation/frontends/qtfrontend/frameview.cpp:261
 msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
 msgstr "V nabídce předvoleb není vybráno žádné video zařízení."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:288
+#: src/presentation/frontends/qtfrontend/frameview.cpp:273
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
 msgstr "Příkaz pre poll neexistuje"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:299
+#: src/presentation/frontends/qtfrontend/frameview.cpp:284
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
 msgstr "V systému nemáte nainstalován uvedený zachycovač"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:322
-#: src/presentation/frontends/qtfrontend/frameview.cpp:338
+#: src/presentation/frontends/qtfrontend/frameview.cpp:307
+#: src/presentation/frontends/qtfrontend/frameview.cpp:323
 msgctxt "FrameView|"
 msgid ""
 "Grabbing failed. This may happen if you try\n"
@@ -551,7 +551,7 @@ msgstr ""
 "zachytit obraz z neplatného zařízení. Zkontrolujte prosím\n"
 "nastavení zachycovače v nabídce předvoleb."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:348
+#: src/presentation/frontends/qtfrontend/frameview.cpp:333
 msgctxt "FrameView|"
 msgid ""
 "You have to define an image grabber to use.\n"
@@ -560,8 +560,8 @@ msgstr ""
 "Musíte nastavit nástroj pro zachycení obrázků. \n"
 "Toto nastavení lze provést v nabídce předvoleb."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:63
-#: src/presentation/frontends/qtfrontend/importtab.cpp:317
+#: src/presentation/frontends/qtfrontend/importtab.cpp:48
+#: src/presentation/frontends/qtfrontend/importtab.cpp:302
 msgctxt "ImportTab|"
 msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
@@ -570,8 +570,8 @@ msgstr ""
 "Níže můžete nastavit, který program/proces má Stopmotion používat pro "
 "zachycení obrázků z vybraného zařízení."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:65
-#: src/presentation/frontends/qtfrontend/importtab.cpp:319
+#: src/presentation/frontends/qtfrontend/importtab.cpp:50
+#: src/presentation/frontends/qtfrontend/importtab.cpp:304
 msgctxt "ImportTab|"
 msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
@@ -580,213 +580,213 @@ msgstr ""
 "K označení video zařízení a obrazového souboru byste měli vždy používat <b>"
 "$VIDEODEVICE</b> a <b>$IMAGEFILE</b>."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:71
-#: src/presentation/frontends/qtfrontend/importtab.cpp:323
+#: src/presentation/frontends/qtfrontend/importtab.cpp:56
+#: src/presentation/frontends/qtfrontend/importtab.cpp:308
 msgctxt "ImportTab|"
 msgid "Name"
 msgstr "Název"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:71
-#: src/presentation/frontends/qtfrontend/importtab.cpp:323
+#: src/presentation/frontends/qtfrontend/importtab.cpp:56
+#: src/presentation/frontends/qtfrontend/importtab.cpp:308
 msgctxt "ImportTab|"
 msgid "Description"
 msgstr "Popis"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:87
-#: src/presentation/frontends/qtfrontend/importtab.cpp:326
+#: src/presentation/frontends/qtfrontend/importtab.cpp:72
+#: src/presentation/frontends/qtfrontend/importtab.cpp:311
 msgctxt "ImportTab|"
 msgid "&Add"
 msgstr "Přid&at"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:91
-#: src/presentation/frontends/qtfrontend/importtab.cpp:327
+#: src/presentation/frontends/qtfrontend/importtab.cpp:76
+#: src/presentation/frontends/qtfrontend/importtab.cpp:312
 msgctxt "ImportTab|"
 msgid "&Remove"
 msgstr "Odst&ranit"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:94
-#: src/presentation/frontends/qtfrontend/importtab.cpp:328
+#: src/presentation/frontends/qtfrontend/importtab.cpp:79
+#: src/presentation/frontends/qtfrontend/importtab.cpp:313
 msgctxt "ImportTab|"
 msgid "&Edit"
 msgstr "&Upravit"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:98
-#: src/presentation/frontends/qtfrontend/importtab.cpp:330
+#: src/presentation/frontends/qtfrontend/importtab.cpp:83
+#: src/presentation/frontends/qtfrontend/importtab.cpp:315
 msgctxt "ImportTab|"
 msgid "Import device settings"
 msgstr "Importovat nastavení zařízení"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:107
-#: src/presentation/frontends/qtfrontend/importtab.cpp:331
+#: src/presentation/frontends/qtfrontend/importtab.cpp:92
+#: src/presentation/frontends/qtfrontend/importtab.cpp:316
 msgctxt "ImportTab|"
 msgid "Pre-poll command"
 msgstr "Příkaz pre-poll"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:114
-#: src/presentation/frontends/qtfrontend/importtab.cpp:332
+#: src/presentation/frontends/qtfrontend/importtab.cpp:99
+#: src/presentation/frontends/qtfrontend/importtab.cpp:317
 msgctxt "ImportTab|"
 msgid "Start daemon"
 msgstr "Spustit démona"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:121
-#: src/presentation/frontends/qtfrontend/importtab.cpp:333
+#: src/presentation/frontends/qtfrontend/importtab.cpp:106
+#: src/presentation/frontends/qtfrontend/importtab.cpp:318
 msgctxt "ImportTab|"
 msgid "Stop daemon"
 msgstr "Zastavit démona"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:154
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:139
 msgctxt "MainWindowGUI|"
 msgid "Ready to rumble ;-)"
 msgstr "Jsem připraven na akci ;-)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:364
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:526
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:349
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:511
 msgctxt "MainWindowGUI|"
 msgid "&File"
 msgstr "&Soubor"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:365
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:539
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:350
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:524
 msgctxt "MainWindowGUI|"
 msgid "&Export"
 msgstr "&Exportovat"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:366
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1134
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:351
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1119
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr "Otevřít ne&dávný"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:368
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:555
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:353
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:540
 msgctxt "MainWindowGUI|"
 msgid "&Edit"
 msgstr "&Upravit"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:385
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:550
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:370
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:535
 msgctxt "MainWindowGUI|"
 msgid "&Settings"
 msgstr "Na&stavení"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:388
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:510
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:557
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:373
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:542
 msgctxt "MainWindowGUI|"
 msgid "&Help"
 msgstr "Nápo&věda"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:480
 msgctxt "MainWindowGUI|"
 msgid "&New"
 msgstr "Nápo&věda"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:481
 msgctxt "MainWindowGUI|"
 msgid "&Open"
 msgstr "&Otevřít"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:482
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr "&Uložit"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:483
 msgctxt "MainWindowGUI|"
 msgid "Save &As"
 msgstr "Uložit j&ako"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:484
 msgctxt "MainWindowGUI|"
 msgid "Video"
 msgstr "Video"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:485
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
 msgstr "Cinelerra"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:486
 msgctxt "MainWindowGUI|"
 msgid "&Quit"
 msgstr "U&končit"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:487
 msgctxt "MainWindowGUI|"
 msgid "&Undo"
 msgstr "&Zpět"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:488
 msgctxt "MainWindowGUI|"
 msgid "Re&do"
 msgstr "Zno&vu"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:504
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:489
 msgctxt "MainWindowGUI|"
 msgid "Cu&t"
 msgstr "Vyjmou&t"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:505
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:490
 msgctxt "MainWindowGUI|"
 msgid "&Copy"
 msgstr "&Kopírovat"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:506
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:491
 msgctxt "MainWindowGUI|"
 msgid "&Paste"
 msgstr "V&ložit"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:507
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:492
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
 msgstr "&Přejít na snímek"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:508
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
 msgstr "&Nastavit Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:509
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
 msgctxt "MainWindowGUI|"
 msgid "What's &This"
 msgstr "Co je &toto"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:511
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
 msgctxt "MainWindowGUI|"
 msgid "&About"
 msgstr "Informace o &aplikaci"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:514
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
 msgstr "Číslo snímku: "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:516
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
 msgstr "Přejít na snímek:"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:573
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:558
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
 msgstr "<h4>Nový</h4><p>Vytvoří <em>nový</em> projekt.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:578
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:563
 msgctxt "MainWindowGUI|"
 msgid "New project"
 msgstr "Nový projekt"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:582
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:567
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
 msgstr "<h4>Otevřít</h4><p><em>Otevře</em> soubor projektu Stopmotion.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:586
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
 msgctxt "MainWindowGUI|"
 msgid "Open project"
 msgstr "Otevřít projekt"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:590
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:575
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -797,12 +797,12 @@ msgstr ""
 "Stopmotion. <br>Pokud již byl tento projekt dříve uložen, bude automaticky "
 "uložen do dříve vybraného souboru.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:596
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:581
 msgctxt "MainWindowGUI|"
 msgid "Save project"
 msgstr "Uložit projekt"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:600
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:585
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -811,12 +811,12 @@ msgstr ""
 "<h4>Uložit jako</h4><p><em>Uloží</em> aktuální animaci jako soubor projektu "
 "Stopmotion.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:605
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:590
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
 msgstr "Uložit projekt jako"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:609
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
@@ -825,7 +825,7 @@ msgstr ""
 "<h4>Video</h4><p>Exportuje aktuální projekt jako <em>video</em>.</p>Zobrazí "
 "se průvodce, který vás provede procesem."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:616
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:601
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
@@ -834,17 +834,17 @@ msgstr ""
 "<h4>Cinerella</h4><p>Exportuje aktuální animaci jako projekt <em>Cinerella</"
 "em>.</p>Zobrazí se průvodce, který vás provede procesem."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:623
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:608
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
 msgstr "<h4>Ukončit</h4><p><em>Ukončí</em> program.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:627
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:612
 msgctxt "MainWindowGUI|"
 msgid "Quit"
 msgstr "Ukončit"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:633
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:618
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
@@ -853,12 +853,12 @@ msgstr ""
 "<h4>Zpět</h4><p><em>Zruší</em> vaši poslední operaci. Tlačítko Zpět můžete "
 "stisknout několikrát, abyste zrušili i předchozí operace.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:638
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:623
 msgctxt "MainWindowGUI|"
 msgid "Undo"
 msgstr "Zpět"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:642
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:627
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
@@ -868,12 +868,12 @@ msgstr ""
 "Tlačítko Znovu provést můžete stisknout několikrát, abyste znovu provedli "
 "několik operací.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:647
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:632
 msgctxt "MainWindowGUI|"
 msgid "Redo"
 msgstr "Znovu"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:651
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:636
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
@@ -882,12 +882,12 @@ msgstr ""
 "<h4>Vyjmout</h4><p><em>Vyjme</em> vybrané snímky z animace a přidá je do "
 "schránky, abyste je mohli vložit někam jinam.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:656
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:641
 msgctxt "MainWindowGUI|"
 msgid "Cut"
 msgstr "Vyjmout"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:660
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:645
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
@@ -896,12 +896,12 @@ msgstr ""
 "<h4>Kopírovat</h4><p><em>Zkopíruje</em> vybrané snímky do schránky. Poté je "
 "můžete vložit na jiné místo.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:665
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:650
 msgctxt "MainWindowGUI|"
 msgid "Copy"
 msgstr "Kopírovat"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:669
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:654
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Paste</h4> <p><em>Pastes</em> the frames which are currently in the "
@@ -913,12 +913,12 @@ msgstr ""
 "schránce, na vybrané místo.</p><p>Můžete zkopírovat nebo vyjmout obrázky z "
 "jiných programů a poté je pomocí této možnosti vložit do této animace.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:675
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:660
 msgctxt "MainWindowGUI|"
 msgid "Paste"
 msgstr "Vložit"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:679
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:664
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
@@ -928,12 +928,12 @@ msgstr ""
 "rozbalovací nabídka, ve které si můžete vybrat snímek, na který chcete "
 "<em>přejít</em>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:684
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:669
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
 msgstr "Přejít na snímek"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:688
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
@@ -943,12 +943,12 @@ msgstr ""
 "<em>nastavit</em> program Stopmotion s různými vstupními a výstupními "
 "zařízeními.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:693
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:678
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
 msgstr "Nastavit Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:699
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:684
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
@@ -957,12 +957,12 @@ msgstr ""
 "<h4>Co je to?</h4><p>Tímto získáte kurzor myši \"Co je to?\", pomocí kterého "
 "můžete vyvolat užitečné informace, jako je tato.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:704
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:689
 msgctxt "MainWindowGUI|"
 msgid "What's This"
 msgstr "Co je to"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:708
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:693
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
@@ -971,12 +971,12 @@ msgstr ""
 "<h4>Nápověda</h4><p>Toto tlačítko otevře dialogové okno s příručkou k "
 "programu Stopmotion</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:712
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:697
 msgctxt "MainWindowGUI|"
 msgid "Help"
 msgstr "Nápověda"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:716
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:701
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>About</h4> <p>This will display a small information box where you can "
@@ -987,12 +987,12 @@ msgstr ""
 "obecné informace i jména vývojářů, kteří stojí za tímto vynikajícím "
 "softwarem.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:722
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:707
 msgctxt "MainWindowGUI|"
 msgid "About"
 msgstr "O aplikaci"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:728
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:713
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
@@ -1001,7 +1001,7 @@ msgstr ""
 "<h4>Číslo snímku</h4><p>V této oblasti se zobrazuje číslo aktuálně vybraného "
 "snímku</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:735
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:720
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
@@ -1011,7 +1011,7 @@ msgstr ""
 "tomto okně můžete také přehrávat animace stisknutím tlačítka <b>Přehrát</b>."
 "</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:742
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:727
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
@@ -1020,7 +1020,7 @@ msgstr ""
 "<h4>Přejít na snímek</h4><p>Zde můžete zadat číslo snímku a program přeskočí "
 "na zadaný snímek</p>  "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:748
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:733
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame preferences menu</h4> <p>In this menu you can set preferences for "
@@ -1031,7 +1031,7 @@ msgstr ""
 "pro vybraný rámeček/rámečky, jako jsou například <b>titulky</b>, <b>zvukové "
 "efekty</b> atd.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:755
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
@@ -1041,7 +1041,7 @@ msgstr ""
 "většina tlačítek a ovládacích prvků, které budete při práci na stop-motion "
 "animacích potřebovat.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:761
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameBar</h4> <p>In this area you can see the frames and scenes in the "
@@ -1054,33 +1054,33 @@ msgstr ""
 "předchozí snímek můžete přepnout pomocí <b>tlačítek se šipkami</b> nebo "
 "<b>x</b> a <b>z</b></p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:775
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:760
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr "Neuložené změny"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:776
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:761
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr "Máte neuložené změny. Chcete je uložit?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:810
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:795
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr "Vyberte soubor projektu"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:878
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:863
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr "Uložit jako"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:905
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:941
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr "Varování"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:906
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:891
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1094,12 +1094,12 @@ msgstr ""
 "možný, dokud nenastavíte enkodér, který se má použít.\n"
 "Chcete jej nastavit nyní?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:941
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:926
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr "Exportovat do video souboru"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:957
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:942
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
@@ -1108,88 +1108,88 @@ msgstr ""
 "Registrovaný enkodér není platný. Chcete\n"
 "zkontrolovat nastavení v nabídce předvoleb?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:971
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr "Exportovat do souboru"
 
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:44
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:123
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:29
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:108
 msgctxt "PreferencesMenu|"
 msgid "Apply"
 msgstr "Použít"
 
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:48
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:124
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:33
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:109
 msgctxt "PreferencesMenu|"
 msgid "Close"
 msgstr "Zavřít"
 
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:62
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:125
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:47
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:110
 msgctxt "PreferencesMenu|"
 msgid "Preferences Menu"
 msgstr "Nabídka nastavení"
 
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:78
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:128
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:63
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:113
 msgctxt "PreferencesMenu|"
 msgid "Video &Import"
 msgstr "&Import videa"
 
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:87
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:129
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:72
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:114
 msgctxt "PreferencesMenu|"
 msgid "Video &Export"
 msgstr "&Export videa"
 
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:96
-#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:127
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:81
+#: src/presentation/frontends/qtfrontend/preferencesmenu.cpp:112
 msgctxt "PreferencesMenu|"
 msgid "Video &Device"
 msgstr "Vi&deo zařízení"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:86
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:71
 msgctxt "QtFrontend|"
 msgid "Please wait..."
 msgstr "Čekejte prosím..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:89
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:74
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
 msgstr "Připojování kamery..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:77
 msgctxt "QtFrontend|"
 msgid "Importing frames from disk"
 msgstr "Importování snímků z disku"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:95
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:80
 msgctxt "QtFrontend|"
 msgid "Exporting..."
 msgstr "Probíhá export..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:98
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:83
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
 msgstr "Obnovování projektu..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:101
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:86
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
 msgstr "Ukládání scén na disk..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:105
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:90
 msgctxt "QtFrontend|"
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:195
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:180
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
 msgstr "Ztráta poškozeného souboru"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:196
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:181
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1199,110 +1199,110 @@ msgstr ""
 "Soubor %1 je zřejmě poškozený; pokud budete pokračovat, jeho obsah bude "
 "ztracen. Chcete pokračovat?"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:255
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:241
 msgctxt "QtFrontend|"
 msgid "vgrabbj"
 msgstr "vgrabbj"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:257
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:243
 msgctxt "QtFrontend|"
 msgid "The simplest setting. Fairly slow"
 msgstr "Nejjednodušší nastavení. Poměrně pomalé"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:264
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:250
 msgctxt "QtFrontend|"
 msgid "vgrabbj VGA daemon"
 msgstr "vgrabbj VGA démon"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:266
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:252
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
 msgstr "Spustí vgrabbj jako démon. Je to docela rychlé."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:274
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:260
 msgctxt "QtFrontend|"
 msgid "uvccapture"
 msgstr "uvccapture"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:276
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:262
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
 msgstr "Zachycování ze zařízení V4L2"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:283
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:269
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
 msgstr "videodog singleshot"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:285
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:271
 msgctxt "QtFrontend|"
 msgid "Videodog."
 msgstr "Videodog."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:292
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:278
 msgctxt "QtFrontend|"
 msgid "dvgrab"
 msgstr "dvgrab"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:294
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:280
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
 msgstr "Záznam z DV kamery."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:310
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:296
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
 msgstr "Export obrázků ve formátu JPEG do videa ve formátu MPEG-1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:319
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:305
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
 msgstr "Export obrázků ve formátu JPEG do videa ve formátu MPEG-2"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:328
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:337
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:314
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:323
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:331
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
 msgstr "Export obrázků ve formátu JPEG do videa ve formátu MPEG-4"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:357
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:343
 msgctxt "QtFrontend|"
 msgid "Unsupported image file type"
 msgstr "Nepodporovaný typ obrázkového souboru"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:344
 msgctxt "QtFrontend|"
 msgid "Only JPeg image files can be added to the animation"
 msgstr "Do animace lze přidávat pouze obrázkové soubory ve formátu JPEG"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:361
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:347
 msgctxt "QtFrontend|"
 msgid "The selected audio file could not be loaded"
 msgstr "Vybraný zvukový soubor se nepodařilo načíst"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:362
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
 msgctxt "QtFrontend|"
 msgid "Perhaps it is corrupt."
 msgstr "Možná je to poškozené."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:366
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:352
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
 msgstr "Nelze otevřít vybraný soubor pro čtení"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:367
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:353
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "The file %1 could not be opened"
 msgstr "Soubor %1 nelze otevřít"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:371
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:357
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
 msgstr "Nelze zkopírovat soubor do pracovního prostoru"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:372
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
@@ -1310,33 +1310,33 @@ msgstr ""
 "Nepodařilo se zkopírovat následující soubory do pracovního adresáře (~/."
 "stopmotion): %1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:376
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:362
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
 msgstr "Nepodařilo se inicializovat zvukový ovladač"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:377
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:363
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
 msgstr "Zvuk nebude fungovat, dokud se tento problém nevyřeší"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:381
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:367
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
 msgstr "Nepodařilo se uložit nastavení"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:382
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:368
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
 msgstr "Nepodařilo se zapsat nastavení do souboru: %1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:391
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:377
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
 msgstr "Stopmotion nelze spustit."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:378
 msgctxt "QtFrontend|"
 msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
@@ -1345,19 +1345,19 @@ msgstr ""
 "Nepodařilo se získat exkluzivní zámek souboru command.log. Možná již běží "
 "program Stopmotion."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:396
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:382
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:387
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
 msgstr "Nelze načíst soubor nastavení"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:397
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:383
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
 msgstr "Soubor nastavení %1 je nečitelný. Opravte jej a zkuste to znovu."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:402
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:388
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1367,27 +1367,27 @@ msgstr ""
 "Soubor nastavení %1 není platným souborem nastavení ve formátu XML. Opravte "
 "jej nebo soubor smažte a zkuste to znovu."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:405
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:391
 msgctxt "QtFrontend|"
 msgid "Fatal"
 msgstr "Fatální"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:413
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:399
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
 msgstr "Stopmotion vyvolalo výjimku, kterou nedokázalo zpracovat."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:414
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
 msgstr "Prosím, pošlete hlášení o chybě."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:420
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:406
 msgctxt "QtFrontend|"
 msgid "Warning"
 msgstr "Varování"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:462
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:448
 msgctxt "QtFrontend|"
 msgid ""
 "A newer version of the preferences file with few more default\n"
@@ -1398,57 +1398,57 @@ msgstr ""
 "hodnotami. Chcete použít tuto verzi? (Vaše stávající nastavení\n"
 " bude uloženo v souboru ~/.stopmotion/preferences.xml.OLD)"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:469
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:455
 msgctxt "QtFrontend|"
 msgid "Question"
 msgstr "Otázka"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:207
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:192
 msgctxt "ToolsMenu|"
 msgid "FPS chooser"
 msgstr "Výběr snímkové frekvence"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:208
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:193
 msgctxt "ToolsMenu|"
 msgid "Number of images:"
 msgstr "Počet obrázků:"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:211
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:196
 msgctxt "ToolsMenu|"
 msgid "Mix"
 msgstr "Mix"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:212
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:197
 msgctxt "ToolsMenu|"
 msgid "Diff"
 msgstr "Rozdíl"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:213
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:198
 msgctxt "ToolsMenu|"
 msgid "Playback"
 msgstr "Přehrávání"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:214
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:199
 msgctxt "ToolsMenu|"
 msgid "Auto"
 msgstr "Automaticky"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:218
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"
 msgid "Per second"
 msgstr "Za sekundu"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:219
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:204
 msgctxt "ToolsMenu|"
 msgid "Per minute"
 msgstr "Za minutu"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:220
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:205
 msgctxt "ToolsMenu|"
 msgid "Per hour"
 msgstr "Za hodinu"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:225
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:210
 msgctxt "ToolsMenu|"
 msgid ""
 "<h4>Add Frames (CTRL+F)</h4> <p>Click on this button to <em>add</em> frames "
@@ -1457,7 +1457,7 @@ msgstr ""
 "<h4>Přidat snímky (CTRL+F)</h4><p>Kliknutím na toto tlačítko <em>přidáte</"
 "em> snímky do animace.</p>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:232
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:217
 msgctxt "ToolsMenu|"
 msgid ""
 "<h4>Remove Selection (Delete)</h4> <p>Click this button to <em>remove</em> "
@@ -1466,7 +1466,7 @@ msgstr ""
 "<h4>Odstranit výběr (Smazat)</h4><p>Kliknutím na toto tlačítko "
 "<em>odstraníte</em> vybrané snímky z animace.</p>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:239
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:224
 msgctxt "ToolsMenu|"
 msgid ""
 "<h4>New Scene (CTRL+E)</h4> <p>Click this button to <em>create</em> a new "
@@ -1475,7 +1475,7 @@ msgstr ""
 "<h4>Nová scéna (CTRL+E)</h4><p>Kliknutím na toto tlačítko <em>vytvoříte</em> "
 "novou <em>scénu</em> v animaci.</p>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:246
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:231
 msgctxt "ToolsMenu|"
 msgid ""
 "<h4>Remove Scene (SHIFT+Delete)</h4> <p>Click this button to <em>remove</em> "
@@ -1484,7 +1484,7 @@ msgstr ""
 "<h4>Odstranit scénu (SHIFT+Delete)</h4><p>Kliknutím na toto tlačítko "
 "<em>odstraníte</em> vybranou scénu z animace.</p>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:253
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:238
 msgctxt "ToolsMenu|"
 msgid ""
 "<h4>Toggle camera on/off (C)</h4> <p>Click this button to toggle the camera "
@@ -1493,7 +1493,7 @@ msgstr ""
 "<h4>Zapnutí/vypnutí kamery (C)</h4><p>Kliknutím na toto tlačítko zapnete "
 "nebo vypnete kameru</p> "
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:259
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:244
 msgctxt "ToolsMenu|"
 msgid ""
 "<h4>Launch Gimp</h4> <p>Click this button to open the active frame in Gimp</"
@@ -1504,7 +1504,7 @@ msgstr ""
 "v programu GIMP</p><p>Upozorňujeme, že obrázky můžete také přetáhnout z "
 "lišty rámečků a umístit je do programu GIMP</p>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:266
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:251
 msgctxt "ToolsMenu|"
 msgid ""
 "<h4>Capture Frame (Space)</h4> <p>Click on this button to <em>capture</em> a "
@@ -1515,7 +1515,7 @@ msgstr ""
 "<em>zachytíte</em> snímek z kamery a vložíte jej do animace</p><p> To lze "
 "provést také stisknutím <b>klávesy mezerníku</b></p>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:274
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:259
 msgctxt "ToolsMenu|"
 msgid ""
 "<h4>Number of images</h4> <p>By changing the value in this slidebar you can "
@@ -1532,7 +1532,7 @@ msgstr ""
 "vypadat ve vztahu k ostatním, čímž docílíte plynulejší stop-motion animace!</"
 "p>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:285
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:270
 msgctxt "ToolsMenu|"
 msgid ""
 "<h4>FPS chooser</h4> <p>By changing the value in this chooser you set which "
@@ -1543,37 +1543,37 @@ msgstr ""
 "nastavíte, jakou rychlostí se má animace v <b>zobrazení snímků</b> přehrávat."
 "</p><p>Animaci spustíte stisknutím tlačítka <b>Spustit animaci</b>.</p>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:295
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:280
 msgctxt "ToolsMenu|"
 msgid "<h4>Play animation (K, P)</h4>"
 msgstr "<h4>Přehrát animaci (K, P)</h4>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:298
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:283
 msgctxt "ToolsMenu|"
 msgid "<h4>Stop animation (K, P)</h4>"
 msgstr "<h4>Zastavit animaci (K, P)</h4>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:301
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:286
 msgctxt "ToolsMenu|"
 msgid "<h4>Previous frame (J, Left)</h4>"
 msgstr "<h4>Předchozí snímek (J, vlevo)</h4>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:304
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:289
 msgctxt "ToolsMenu|"
 msgid "<h4>Next frame (L, Right)</h4>"
 msgstr "<h4>Další snímek (L, vpravo)</h4>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:307
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:292
 msgctxt "ToolsMenu|"
 msgid "<h4>Previous scene (I)</h4>"
 msgstr "<h4>Předchozí scéna (I)</h4>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:310
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:295
 msgctxt "ToolsMenu|"
 msgid "<h4>Next scene (O)</h4>"
 msgstr "<h4>Další scéna (O)</h4>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:314
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:299
 msgctxt "ToolsMenu|"
 msgid ""
 "<h4>Loop animation (CTRL+L)</h4> <p>With this button you can set whether you "
@@ -1583,12 +1583,12 @@ msgstr ""
 "nastavit, zda se má animace přehrát až do konce, nebo zda se má opakovat "
 "donekonečna.</p>"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:384
 msgctxt "ToolsMenu|"
 msgid "Notice"
 msgstr "Upozornění"
 
-#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:399
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:384
 msgctxt "ToolsMenu|"
 msgid ""
 "Playback only currently works when running the grabber as a daemon. Go to "
