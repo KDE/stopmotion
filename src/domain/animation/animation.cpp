@@ -273,10 +273,12 @@ bool Animation::loadFromDat(const char* filename,
 
 
 void Animation::openProject(const char *filename) {
+	assert(filename != nullptr);
+	// keep the current project if the new one cannot be opened
+	ProjectSerializer::checkSto(filename);
 	logger->setLogFile(nullptr);
 	clear();
 	initializeCommandLog();
-	assert(filename != nullptr);
 	vector<Scene*> newScenes = serializer->openSto(filename);
 	setScenes(newScenes);
 }

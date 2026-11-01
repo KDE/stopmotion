@@ -21,6 +21,7 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QFile>
+#include <QFileInfo>
 #include <QString>
 #include <QXmlStreamWriter>
 
@@ -148,6 +149,7 @@ public:
 
 class StoFileRead {
 	TarFileRead tar;
+public:
 	static bool isProjectFile(const char* filename) {
 		if (filename) {
 			const char* slash1 = strchr(filename, '/');
@@ -188,7 +190,6 @@ class StoFileRead {
 		}
 		return nullptr;
 	}
-public:
 	StoFileRead(const char* filename) : tar(filename) {
 	}
 	~StoFileRead() {
@@ -223,15 +224,19 @@ void readSto(const char* filename) {
 }
 
 // appends .sto to filename if appropriate to make a project filename
-void ProjectSerializer::setProjectFile(const char *filename) {
-	static const char appendix[] = ".sto";
-	const size_t len = strlen(filename);
-	char* newProjectFile = new char[len + sizeof(appendix)];
-	strcpy(newProjectFile, filename);
+static std::string stoFileName(const char *filename) {
+	std::string name(filename);
 	const char *dotPtr = strrchr(filename, '.');
 	if (dotPtr == nullptr || strcmp(dotPtr, ".sto") != 0) {
-		strcat(newProjectFile, ".sto");
+		name += ".sto";
 	}
+	return name;
+}
+
+void ProjectSerializer::setProjectFile(const char *filename) {
+	const std::string name = stoFileName(filename);
+	char* newProjectFile = new char[name.size() + 1];
+	strcpy(newProjectFile, name.c_str());
 	delete[] projectFile;
 	projectFile = newProjectFile;
 }
@@ -267,6 +272,62 @@ std::vector<Scene*> ProjectSerializer::openSto(const char *filename) {
 				QStringLiteral("%1 contains no readable project description")
 				.arg(QString::fromLocal8Bit(projectFile)));
 	return sVect;
+}
+
+// Collects the files referenced within scenes, like getAttributes() does
+static void getReferencedFiles(const QDomNode& node, bool& inScene,
+		std::vector<QString>& files) {
+	for (QDomNode currNode = node; !currNode.isNull();
+			currNode = currNode.nextSibling()) {
+		const QDomElement element = currNode.toElement();
+		if (!element.isNull()) {
+			const QString nodeName = element.tagName();
+			if ((nodeName == QLatin1String("img")
+					|| nodeName == QLatin1String("audio"))
+					&& element.hasAttribute(QStringLiteral("src")) && inScene) {
+				files.push_back(element.attribute(QStringLiteral("src")));
+			} else if (nodeName == QLatin1String("seq")) {
+				inScene = true;
+			}
+		}
+		getReferencedFiles(currNode.firstChild(), inScene, files);
+	}
+}
+
+void ProjectSerializer::checkSto(const char *filename) {
+	assert(filename != nullptr);
+	const std::string name = stoFileName(filename);
+	const QString qName = QString::fromLocal8Bit(name.c_str());
+	TarFileRead tar(name.c_str());
+	const qint64 archiveSize = QFileInfo(qName).size();
+	std::set<QString> files;
+	const KArchiveFile* dat = nullptr;
+	tar.forEachFile([&](const QString& path, const KArchiveFile* file) {
+		// KTar opens truncated archives without complaint
+		if (archiveSize < file->position() + file->size())
+			throw ProjectFileReadException("checkSto",
+					QStringLiteral("%1 is truncated").arg(qName));
+		const QByteArray fn = path.toLocal8Bit();
+		const char* base = StoFileRead::imageOrSoundFile(fn.constData());
+		if (base) {
+			files.insert(QString::fromLocal8Bit(base));
+		} else if (StoFileRead::isProjectFile(fn.constData())) {
+			dat = file;
+		}
+	});
+	QDomDocument doc;
+	if (!dat || !doc.setContent(dat->data()))
+		throw ProjectFileReadException("checkSto",
+				QStringLiteral("%1 contains no readable project description")
+				.arg(qName));
+	bool inScene = false;
+	std::vector<QString> referenced;
+	getReferencedFiles(doc.documentElement(), inScene, referenced);
+	for (const QString& file : referenced) {
+		if (files.find(file) == files.end())
+			throw ProjectFileReadException("checkSto",
+					QStringLiteral("%1 is missing from the project").arg(file));
+	}
 }
 
 class UniqueVisitor: public FileNameVisitor {

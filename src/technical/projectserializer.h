@@ -48,6 +48,15 @@ public:
 	std::vector<Scene*> openSto(const char *filename);
 
 	/**
+	 * Checks that the project ({@c .sto}) file can be opened, without
+	 * changing the workspace.
+	 * @param filename The project file
+	 * @throws FileException if the project file is unreadable, truncated or
+	 * misses a file.
+	 */
+	static void checkSto(const char *filename);
+
+	/**
 	 * Saves the files in a tarball with the name {@a filename} plus the
 	 * {@c .sto} extension.
 	 * @param filename the project file to store the files within

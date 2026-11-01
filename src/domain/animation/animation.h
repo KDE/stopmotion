@@ -272,7 +272,7 @@ public:
 	bool loadFromDat(const char* filename, const char* projectFilename);
 
 	/**
-	 * Opens a project.
+	 * Opens a project. If it cannot be read, the current project is kept.
 	 * @param filename the project file to open (ends with .sto)
 	 */
 	void openProject(const char *filename);
