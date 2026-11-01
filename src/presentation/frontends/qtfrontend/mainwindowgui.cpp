@@ -18,6 +18,7 @@
 #include "src/presentation/frontends/qtfrontend/preferencesmenu.h"
 #include "src/domain/domainfacade.h"
 #include "src/foundation/preferencestool.h"
+#include "src/foundation/uiexception.h"
 #include "src/technical/video/videoencoder.h"
 #include "src/presentation/frontends/qtfrontend/toolsmenu.h"
 #include "src/presentation/frontends/qtfrontend/helpwindow.h"
@@ -42,6 +43,7 @@
 #include "graphics/icons/languages.xpm"
 
 #include <QShortcut>
+#include <exception>
 #include <QPixmap>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -818,7 +820,17 @@ void MainWindowGUI::updatePasteEnabled() {
 
 void MainWindowGUI::doOpenProject(const char* projectFile) {
 	assert(projectFile != nullptr);
-	DomainFacade::getFacade()->openProject(projectFile);
+	DomainFacade* facade = DomainFacade::getFacade();
+	try {
+		facade->openProject(projectFile);
+	} catch (UiException& e) {
+		facade->getFrontend()->handleException(e);
+		return;
+	} catch (std::exception& e) {
+		QMessageBox::warning(this, tr("Could not open the project"),
+				QString::fromLocal8Bit(e.what()));
+		return;
+	}
 	frameView->workspaceCleared();
 	saveAsAct->setEnabled(true);
 	saveAct->setEnabled(false);
