@@ -262,7 +262,10 @@ std::vector<Scene*> ProjectSerializer::openSto(const char *filename) {
 	readSto(projectFile);
 	WorkspaceFile dat(WorkspaceFile::currentModelFile);
 	std::vector<Scene*> sVect;
-	openDat(sVect, dat.path());
+	if (!openDat(sVect, dat.path()))
+		throw ProjectFileReadException("openSto",
+				QStringLiteral("%1 contains no readable project description")
+				.arg(QString::fromLocal8Bit(projectFile)));
 	return sVect;
 }
 
