@@ -59,6 +59,12 @@ endif ()
 include(FeatureSummary)
 feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND)
 
+include(ECMDeprecationSettings)
+ecm_set_disabled_deprecation_versions(
+  QT 6.8.0
+  KF 6.13.0
+  )
+
 add_compile_definitions(STOPMOTION_VERSION="${PROJECT_VERSION}")
 
 # where translations and the manual are installed and looked up at runtime;
