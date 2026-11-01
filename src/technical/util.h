@@ -42,6 +42,10 @@ public:
 	static const char* endOfArgument(const char* in);
 	static bool checkCommand(std::string* pathOut, const char* command);
 	static const std::vector<GrabberDevice> getGrabberDevices();
+	/**
+	 * Copies a file. If that fails, no partial copy is left behind.
+	 * @return @c true if successful.
+	 */
 	static bool copyFile(const char *destFileName, const char *srcFileName);
 	static void linkOrCopyFile(const char *newName, const char* oldName);
 	static bool removeDirectoryContents(const char* path);

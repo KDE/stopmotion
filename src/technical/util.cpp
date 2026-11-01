@@ -248,6 +248,8 @@ bool Util::copyFile(const char *destFileName, const char *srcFileName) {
             fprintf(stderr, "Error while writing '%s': %s\n", destFileName, strerror(errno));
         success = false;
     }
+    if (!success)
+        remove(destFileName);
 
     return success;
 }
