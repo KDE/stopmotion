@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 Linuxstopmotion contributors; see the AUTHORS file for details
+SPDX-License-Identifier: CC0-1.0
+-->
+<component type="desktop-application">
+  <id>org.kde.stopmotion</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-2.0-or-later</project_license>
+  <name>Stopmotion</name>
+  <summary>Create stop-motion animations</summary>
+  <description>
+    <p>
+      Stopmotion is a program to create stop-motion animations. It captures
+      the frames from a camera, shows the previous frames on top of the live
+      image to place the objects, and plays the animation back.
+    </p>
+    <ul>
+      <li>Capture frames from a webcam or import existing images</li>
+      <li>Onion skinning, differentiation and playback modes</li>
+      <li>Organize the animation in scenes and add sounds to frames</li>
+      <li>Export the animation to a video file</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">org.kde.stopmotion.desktop</launchable>
+  <url type="homepage">https://invent.kde.org/multimedia/stopmotion</url>
+  <url type="bugtracker">https://invent.kde.org/multimedia/stopmotion/-/issues</url>
+  <url type="vcs-browser">https://invent.kde.org/multimedia/stopmotion</url>
+  <developer id="org.kde">
+    <name>KDE</name>
+  </developer>
+  <project_group>KDE</project_group>
+  <categories>
+    <category>AudioVideo</category>
+    <category>Video</category>
+  </categories>
+  <provides>
+    <binary>stopmotion</binary>
+  </provides>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.9.0" date="2025-05-25"/>
+    <release version="0.8.7" date="2024-06-09"/>
+  </releases>
+</component>

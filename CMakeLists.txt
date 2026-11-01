@@ -208,6 +208,8 @@ target_include_directories(stopmotion
 install(TARGETS stopmotion ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
 install(FILES org.kde.stopmotion.desktop
   DESTINATION ${KDE_INSTALL_APPDIR})
+install(FILES org.kde.stopmotion.metainfo.xml
+  DESTINATION ${KDE_INSTALL_METAINFODIR})
 install(FILES graphics/stopmotion.png
   DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/32x32/apps)
 install(FILES graphics/stopmotion.svg
