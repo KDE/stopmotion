@@ -13,7 +13,7 @@ INSTALLATION
 
 You need the following packages installed to compile:
 - C++ compiler (g++ or Clang)
-- CMake >= 3.16
+- CMake >= 3.31
 - pkg-config
 - Extra CMake Modules >= 6.13 (`extra-cmake-modules`)
 - Qt6 >= 6.8 (development modules base, multimedia) (`qtbase5-dev`, `qttools5-dev-tools`, `qttools5-dev`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)

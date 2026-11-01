@@ -4,11 +4,11 @@
 ###
 # general project setup
 ###
-cmake_minimum_required(VERSION 3.22)
+cmake_minimum_required(VERSION 3.31)
 
 project(stopmotion
+  VERSION 0.9.0
   LANGUAGES CXX)
-set(PROJECT_VERSION 0.9.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -43,12 +43,8 @@ find_package(KF6Archive 6.13
   REQUIRED)
 
 # libVorbisFile
-find_file(VORBISFILE_INCLUDE_PATH
-  NAMES "vorbis/vorbisfile.h"
-  REQUIRED)
-find_library(VORBISFILE_LIBRARY_PATH
-  NAMES vorbisfile
-  REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(VorbisFile REQUIRED IMPORTED_TARGET vorbisfile)
 
 if(BUILD_TESTING)
   find_package(Qt6 6.8 REQUIRED
@@ -86,7 +82,7 @@ add_subdirectory(translations)
 ###
 # handle translation files
 ###
-file(GLOB TS_FILES "translations/stopmotion_*.ts")
+file(GLOB TS_FILES CONFIGURE_DEPENDS "translations/stopmotion_*.ts")
 qt_add_translation(QM_FILES "${TS_FILES}")
 
 ###
@@ -176,7 +172,7 @@ add_executable(stopmotion
 
 # link to Qt libraries
 target_link_libraries(stopmotion
-  PUBLIC
+  PRIVATE
   Qt6::Core
   Qt6::Widgets
   Qt6::Multimedia
@@ -184,13 +180,13 @@ target_link_libraries(stopmotion
   )
 # link to libVorbis, KArchive
 target_link_libraries(stopmotion
-  PUBLIC
-  ${VORBISFILE_LIBRARY_PATH}
+  PRIVATE
+  PkgConfig::VorbisFile
   KF6::Archive
   )
 
 target_include_directories(stopmotion
-  PUBLIC
+  PRIVATE
   .
   src
   src/domain

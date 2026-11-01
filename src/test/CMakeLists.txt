@@ -80,7 +80,7 @@ if(BUILD_TESTING)
 
   # link to Qt libraries
   target_link_libraries(test-stopmotion
-    PUBLIC
+    PRIVATE
     Qt6::Core
     Qt6::Widgets
     Qt6::Multimedia
@@ -89,15 +89,15 @@ if(BUILD_TESTING)
     )
   # link to libVorbisFile, KArchive
   target_link_libraries(test-stopmotion
-    PUBLIC
+    PRIVATE
     oomtestutil oomteststub
-    ${VORBISFILE_LIBRARY_PATH}
+    PkgConfig::VorbisFile
     KF6::Archive
     )
 
   target_include_directories(test-stopmotion
-    PUBLIC
-    ${CMAKE_SOURCE_DIR})
+    PRIVATE
+    ${PROJECT_SOURCE_DIR})
 
   # add test executable to CTest suite
   add_test(
