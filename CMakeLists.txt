@@ -80,6 +80,11 @@ endif()
 add_compile_definitions(TRANSLATIONS_PATH="${TRANSLATIONS_PATH}")
 add_compile_definitions(LOCALE_PATH="${LOCALE_PATH}")
 add_compile_definitions(HTML_PATH="${HTML_PATH}")
+# to find the manual when running from the build directory
+if(NOT PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
+  file(CREATE_LINK ${PROJECT_SOURCE_DIR}/manual ${PROJECT_BINARY_DIR}/manual
+    COPY_ON_ERROR SYMBOLIC)
+endif()
 
 add_subdirectory(src)
 

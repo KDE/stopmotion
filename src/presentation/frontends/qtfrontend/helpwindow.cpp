@@ -5,6 +5,8 @@
  */
 #include "helpwindow.h"
 
+#include <QCoreApplication>
+#include <QFile>
 #include <QTextBrowser>
 #include <QUrl>
 
@@ -17,5 +19,10 @@ HelpWindow::HelpWindow(QWidget *parent)
 {
 	ui.setupUi(this);
 	QObject::connect(ui.textBrowser, &QTextBrowser::highlighted, ui.lineEdit, [&](const QUrl &url) { ui.lineEdit->setText(url.path()); });
-	ui.textBrowser->setSource(QUrl::fromLocalFile( QString(stopmotion::htmlDirectory) + "/index.html" ));
+	// In a build directory, the executable is in bin/ and the manual next to it
+	QString index = QCoreApplication::applicationDirPath()
+			+ QStringLiteral(u"/../manual/index.html");
+	if (!QFile::exists(index))
+		index = QString(stopmotion::htmlDirectory) + "/index.html";
+	ui.textBrowser->setSource(QUrl::fromLocalFile(index));
 }
