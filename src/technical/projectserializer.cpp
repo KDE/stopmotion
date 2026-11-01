@@ -484,13 +484,20 @@ void ProjectSerializer::save(const char *filename,
 	assert(filename != nullptr);
 	assert(frontend != nullptr);
 
+	const std::string previousFile = projectFile ? projectFile : "";
 	setProjectFile(filename);
 
-	WorkspaceFile newDat(WorkspaceFile::newModelFile);
-	writeDat(newDat.path(), anim, frontend);
+	try {
+		WorkspaceFile newDat(WorkspaceFile::newModelFile);
+		writeDat(newDat.path(), anim, frontend);
 
-	// Write out new.dat file. The recovery system will ignore it until...
-	writeSto(projectFile, newDat.path(), anim);
+		// Write out new.dat file. The recovery system will ignore it until...
+		writeSto(projectFile, newDat.path(), anim);
+	} catch (...) {
+		frontend->hideProgress();
+		resetProjectFile(previousFile.empty() ? nullptr : previousFile.c_str());
+		throw;
+	}
 	int numElem = anim.sceneCount();
 	frontend->updateProgress(numElem);
 	frontend->hideProgress();
