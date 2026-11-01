@@ -15,9 +15,9 @@ You need the following packages installed to compile:
 - C++ compiler (g++ or Clang)
 - CMake >= 3.16
 - pkg-config
-- Extra CMake Modules >= 6.0 (`extra-cmake-modules`)
-- Qt6 >= 6.3 (development modules base, multimedia) (`qtbase5-dev`, `qttools5-dev-tools`, `qttools5-dev`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
-- KArchive >= 6.0 (`libkf6archive-dev`)
+- Extra CMake Modules >= 6.13 (`extra-cmake-modules`)
+- Qt6 >= 6.8 (development modules base, multimedia) (`qtbase5-dev`, `qttools5-dev-tools`, `qttools5-dev`, `qtmultimedia5-dev` and `libqt5multimedia5-plugins`)
+- KArchive >= 6.13 (`libkf6archive-dev`)
 - vorbisfile (`libvorbis-dev`)
 
 For example, in Ubuntu or Debian you would open a terminal and type:

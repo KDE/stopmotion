@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # use KDE's build settings from extra-cmake-modules
-find_package(ECM 6.0 REQUIRED NO_MODULE)
+find_package(ECM 6.13 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(KDEInstallDirs6)
@@ -34,12 +34,12 @@ remove_definitions(
 ###
 
 # Qt
-find_package(Qt6 6.5
+find_package(Qt6 6.8
   COMPONENTS Widgets Multimedia Xml LinguistTools
   REQUIRED)
 
 # KArchive, to read and write project files
-find_package(KF6Archive 6.0
+find_package(KF6Archive 6.13
   REQUIRED)
 
 # libVorbisFile
@@ -51,7 +51,7 @@ find_library(VORBISFILE_LIBRARY_PATH
   REQUIRED)
 
 if(BUILD_TESTING)
-  find_package(Qt6 6.5 REQUIRED
+  find_package(Qt6 6.8 REQUIRED
     COMPONENTS Test
   )
 endif ()
