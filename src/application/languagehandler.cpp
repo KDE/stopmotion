@@ -11,6 +11,7 @@
 
 #include <cassert>
 #include <QDebug>
+#include <QCoreApplication>
 #include <QDir>
 #include <QTranslator>
 #include <QLocale>
@@ -65,22 +66,37 @@ LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const cha
 }
 
 void LanguageHandler::findTranslations() {
+	// In a build directory, the executable is in bin/ and the translations
+	// are next to it. They take precedence over installed ones.
+	const QString buildDir = QCoreApplication::applicationDirPath()
+			+ QStringLiteral(u"/..");
 	// Stopmotion's own translations, named stopmotion_<language>.qm
 	const QString prefix = QStringLiteral("stopmotion_");
-	const QDir dir(QString::fromLocal8Bit(stopmotion::translationsDirectory));
-	const QStringList fileNames = dir.entryList(QStringList(prefix + u"*.qm"), QDir::Files);
-	for (const QString& fileName : fileNames) {
-		const QString code = fileName.mid(prefix.size()).chopped(3);
-		translations.insert(code, dir.filePath(fileName));
+	const QStringList dirs = { buildDir,
+			QString::fromLocal8Bit(stopmotion::translationsDirectory) };
+	for (const QString& d : dirs) {
+		const QDir dir(d);
+		const QStringList fileNames = dir.entryList(QStringList(prefix + u"*.qm"), QDir::Files);
+		for (const QString& fileName : fileNames) {
+			const QString code = fileName.mid(prefix.size()).chopped(3);
+			if (!translations.contains(code))
+				translations.insert(code, dir.filePath(fileName));
+		}
 	}
-	// KDE's translations, for the other languages
-	const QDir localeDir(QString::fromLocal8Bit(stopmotion::localeDirectory));
-	const QStringList languages = localeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
-	for (const QString& language : languages) {
-		const QString file = localeDir.filePath(language
-				+ QStringLiteral(u"/LC_MESSAGES/stopmotion_qt.qm"));
-		if (!translations.contains(language) && QFile::exists(file))
-			translations.insert(language, file);
+	// KDE's translations, for the other languages, in <language>/<subdir>
+	const QList<std::pair<QString, QString>> localeDirs = {
+			{ buildDir + QStringLiteral(u"/ECMPoQm"), QString() },
+			{ QString::fromLocal8Bit(stopmotion::localeDirectory),
+					QStringLiteral(u"/LC_MESSAGES") } };
+	for (const auto& [d, subdir] : localeDirs) {
+		const QDir localeDir(d);
+		const QStringList languages = localeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+		for (const QString& language : languages) {
+			const QString file = localeDir.filePath(language + subdir
+					+ QStringLiteral(u"/stopmotion_qt.qm"));
+			if (!translations.contains(language) && QFile::exists(file))
+				translations.insert(language, file);
+		}
 	}
 }
 
