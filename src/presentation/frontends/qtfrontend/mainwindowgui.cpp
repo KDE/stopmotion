@@ -870,12 +870,28 @@ void MainWindowGUI::openThirdMostRecent()
 }
 
 
+bool MainWindowGUI::doSaveProject(const char* projectFile) {
+	DomainFacade* facade = DomainFacade::getFacade();
+	try {
+		facade->saveProject(projectFile);
+	} catch (UiException& e) {
+		facade->getFrontend()->handleException(e);
+		return false;
+	} catch (std::exception& e) {
+		QMessageBox::warning(this, tr("Could not save the project"),
+				QString::fromLocal8Bit(e.what()));
+		return false;
+	}
+	return true;
+}
+
 bool MainWindowGUI::saveProjectAs() {
 	QString file = QFileDialog::getSaveFileName(this,
 			tr("Save As"), lastVisitedDir, "Stopmotion (*.sto)");
 	if ( file.isNull() )
 		return false;
-	DomainFacade::getFacade()->saveProject(file.toLocal8Bit().constData());
+	if (!doSaveProject(file.toLocal8Bit().constData()))
+		return false;
 	saveAct->setEnabled(false);
 	setTitle(false);
 	updateMostRecentMenu();
@@ -886,8 +902,7 @@ bool MainWindowGUI::saveProjectAs() {
 bool MainWindowGUI::saveProject() {
 	const char *file = DomainFacade::getFacade()->getProjectFile();
 	if (file) {
-		DomainFacade::getFacade()->saveProject(file);
-		return true;
+		return doSaveProject(file);
 	}
 	return saveProjectAs();
 }

@@ -257,6 +257,11 @@ private:
 	 */
 	SaveDialogResult saveIfNecessary();
 	void doOpenProject(const char* projectFile);
+	/**
+	 * Saves the project, telling the user if that fails.
+	 * @return {@c true} if successful.
+	 */
+	bool doSaveProject(const char* projectFile);
 
 public Q_SLOTS:
 
@@ -295,15 +300,15 @@ private Q_SLOTS:
 
 	/**
 	 * Saves the project to the last saved file.
-	 * @return {@c false} if a filename was required but the user cancelled;
-	 * in this case the project was not saved.
+	 * @return {@c false} if a filename was required but the user cancelled,
+	 * or if saving failed; in this case the project was not saved.
 	 */
 	bool saveProject();
 
 	/**
 	 * Saves the project to a given filename from the user.
-	 * @return {@c false} if the user cancelled; in this case the project was
-	 * not saved.
+	 * @return {@c false} if the user cancelled or if saving failed; in this
+	 * case the project was not saved.
 	 */
 	bool saveProjectAs();
 
