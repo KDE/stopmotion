@@ -24,7 +24,6 @@ path = [
     "stopmotion.1",
     "stopmotion.desktop",
     "stopmotion.mime",
-    "translations/translations.qrc",
     "translations/stopmotion_*.ts",
 ]
 precedence = "aggregate"

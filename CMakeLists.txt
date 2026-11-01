@@ -77,13 +77,12 @@ add_compile_definitions(TRANSLATIONS_PATH="${TRANSLATIONS_PATH}")
 add_compile_definitions(HTML_PATH="${HTML_PATH}")
 
 add_subdirectory(src)
-add_subdirectory(translations)
 
 ###
 # handle translation files
 ###
 file(GLOB TS_FILES CONFIGURE_DEPENDS "translations/stopmotion_*.ts")
-qt_add_translation(QM_FILES "${TS_FILES}")
+qt_add_lrelease(TS_FILES ${TS_FILES} QM_FILES_OUTPUT_VARIABLE QM_FILES)
 
 ###
 # create executable and link libraries
@@ -166,8 +165,6 @@ add_executable(stopmotion
   src/domain/undo/executor.cpp
   src/domain/undo/addallcommands.cpp
   src/domain/undo/random.cpp
-  translations.qrc
-  ${QM_FILES}
   )
 
 # link to Qt libraries
