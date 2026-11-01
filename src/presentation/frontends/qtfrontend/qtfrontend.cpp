@@ -32,6 +32,7 @@ const char* QtFrontend::VERSION = STOPMOTION_VERSION;
 
 QtFrontend::QtFrontend(int &argc, char **argv) {
 	stApp = new QApplication(argc, argv);
+	QApplication::setDesktopFileName(QStringLiteral("org.kde.stopmotion"));
 
 	mw = new MainWindowGUI(stApp);
 	mw->setWindowTitle("Stopmotion");

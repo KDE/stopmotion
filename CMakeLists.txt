@@ -206,7 +206,7 @@ target_include_directories(stopmotion
 # handle installation
 ###
 install(TARGETS stopmotion ${KDE_INSTALL_TARGETS_DEFAULT_ARGS})
-install(FILES stopmotion.desktop
+install(FILES org.kde.stopmotion.desktop
   DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES graphics/stopmotion.png
   DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/32x32/apps)

@@ -22,7 +22,7 @@ path = [
     "src/**/*.ui",
     "src/test/resources/**",
     "stopmotion.1",
-    "stopmotion.desktop",
+    "org.kde.stopmotion.desktop",
     "stopmotion.mime",
     "translations/stopmotion_*.ts",
 ]
