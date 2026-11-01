@@ -8,6 +8,5 @@ Dependencies:
     'frameworks/karchive': '@latest-kf6'
 
 Options:
-  cmake-options: '-DBUILD_TESTING=ON'
   test-before-installing: True
   require-passing-tests-on: ['Linux']
