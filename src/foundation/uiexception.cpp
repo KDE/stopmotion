@@ -65,7 +65,7 @@ const char* UiException::what() const noexcept {
 		case invalidAudioFormat:
 			return "Did not understand the format of that audio file";
 		case unsupportedImageType:
-			return "That type of audio file is not supported";
+			return "That type of image file is not supported";
 		case failedToCopyFilesToWorkspace:
 			out = formatError("Failed to copy the following files to the workspace: %s", stringParam);
 			return out.c_str();
