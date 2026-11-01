@@ -47,7 +47,7 @@ public:
 	void setRemoveFramesButton(QPushButton *removeFramesButton);
 
 
-public slots:
+public Q_SLOTS:
 	/**
 	 * Brings up a dialog so that the user can choose a file to load.
 	 */
@@ -95,7 +95,7 @@ private:
 	QFileDialog* fileDialog;
 	QString *lastVisitedDir;
 
-signals:
+Q_SIGNALS:
 	/**
 	 * Notified when the model is changed.
 	 */

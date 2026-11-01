@@ -114,7 +114,7 @@ void FrameBar::updateAdd(int scene, int index, int numFrames) {
 	if (scene == activeScene) {
 		Logger::get().logDebug("Adding in framebar");
 		addFrames(index, numFrames);
-		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
+		Q_EMIT modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
 	updateNewActiveFrame(scene, index + numFrames - 1);
 	setSelection(index);
@@ -125,7 +125,7 @@ void FrameBar::updateRemove(int scene, int fromFrame, int toFrame) {
 	if (scene == activeScene) {
 		Logger::get().logDebug("Receiving notification about the removal of a frame in the model");
 		removeFrames(fromFrame, toFrame);
-		emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
+		Q_EMIT modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
 	updateNewActiveFrame(scene, fromFrame - 1);
 }
@@ -179,8 +179,8 @@ void FrameBar::fixPreferencesMenu() {
 void FrameBar::doActiveFrameNotifications() {
 	fixPreferencesMenu();
 	// For writing the frame number in the frame number display
-	emit newActiveFrame( QString(tr("Frame number: ")) + QString("%1").arg(activeFrame + 1) );
-	emit newActiveFrame(activeScene, activeFrame);
+	Q_EMIT newActiveFrame( QString(tr("Frame number: ")) + QString("%1").arg(activeFrame + 1) );
+	Q_EMIT newActiveFrame(activeScene, activeFrame);
 }
 
 void FrameBar::updateNewActiveScene(int sceneNumber) {
@@ -208,7 +208,7 @@ void FrameBar::updateClear() {
 	clear();
 	activeFrame = -1;
 	activeScene = -1;
-	emit newActiveFrame(activeScene, activeFrame);
+	Q_EMIT newActiveFrame(activeScene, activeFrame);
 }
 
 
@@ -273,7 +273,7 @@ void FrameBar::resync() {
 	for (int i = 0; i != activeSceneSize; ++i) {
 		getFrameThumb(i, true);
 	}
-	emit newActiveFrame(activeScene, activeFrame);
+	Q_EMIT newActiveFrame(activeScene, activeFrame);
 	fixSize();
 }
 
@@ -497,7 +497,7 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 		Logger::get().logDebug("Setting new active frame %d and scene %d in FrameBar",
 				activeFrame, activeScene);
 	}
-	emit newActiveFrame(activeScene, activeFrame);
+	Q_EMIT newActiveFrame(activeScene, activeFrame);
 }
 
 void FrameBar::setSelection(int sf) {
@@ -539,7 +539,7 @@ void FrameBar::newScene(int index) {
 		getSceneThumb(i, true);
 	}
 	fixSize();
-	emit modelSizeChanged(DomainFacade::getFacade()->getModelSize());
+	Q_EMIT modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 }
 
 void FrameBar::updateRemoveScene(int sceneNumber) {
@@ -644,10 +644,10 @@ void FrameBar::setActiveScene(int sceneNumber) {
 
 	Logger::get().logDebug("Setting new active scene %d in FrameBar", activeScene);
 
-	emit newActiveFrame(activeScene, activeFrame);
+	Q_EMIT newActiveFrame(activeScene, activeFrame);
 
 	doScroll();
-	emit newMaximumValue(DomainFacade::getFacade()->getSceneSize(activeScene));
+	Q_EMIT newMaximumValue(DomainFacade::getFacade()->getSceneSize(activeScene));
 }
 
 

@@ -135,7 +135,7 @@ void ModelHandler::addFrames(const QStringList & fileNames) {
 		if (frame < 0)
 			frame = 0;
 		facade->addFrames(scene, frame, fNames);
-		emit modelChanged();
+		Q_EMIT modelChanged();
 	}
 }
 
@@ -185,7 +185,7 @@ void ModelHandler::newScene() {
 			DomainFacade::getFacade()->newScene(activeScene+1);
 		}
 	}
-	emit modelChanged();
+	Q_EMIT modelChanged();
 }
 
 

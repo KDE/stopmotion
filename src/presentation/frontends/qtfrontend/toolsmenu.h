@@ -41,7 +41,7 @@ public:
 	 */
 	void retranslateStrings();
 
-public slots:
+public Q_SLOTS:
 
 	/**
 	 * Activates or deactivates the captureGroup
@@ -83,7 +83,7 @@ private:
 	 */
 	void createAccelerators();
 
-private slots:
+private Q_SLOTS:
 
 	/**
 	 * Slot for notified the toolsmenu when the viewing mode changes, so that widgets
@@ -122,7 +122,7 @@ private slots:
 	 */
 	void setPlaybackMode();
 
-public slots:
+public Q_SLOTS:
 	/**
 	 * Slot for being notified when the camera is turned on so that
 	 * it disable of some buttons.
@@ -130,7 +130,7 @@ public slots:
 	 */
 	void cameraOn(bool isOn);
 
-signals:
+Q_SIGNALS:
 	void viewingModeChanged();
 };
 

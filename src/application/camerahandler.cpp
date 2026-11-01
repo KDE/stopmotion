@@ -63,7 +63,7 @@ void CameraHandler::cameraOn()
 	if (!isCameraOn) {
 		cameraOff();
 	} else {
-		emit cameraStateChanged(true);
+		Q_EMIT cameraStateChanged(true);
 	}
 	DomainFacade::getFacade()->getFrontend()->hideProgress();
 }
@@ -74,7 +74,7 @@ void CameraHandler::cameraOff()
 	cameraButton->setIcon( QPixmap(cameraon) );
 	frameView->off();
 	isCameraOn = false;
-	emit cameraStateChanged(false);
+	Q_EMIT cameraStateChanged(false);
 }
 
 
@@ -103,7 +103,7 @@ void CameraHandler::storeFrame()
 	i.load(path);
 	if ( !i.isNull() ) {
 		modelHandler->addFrame(path);
-		emit capturedFrame();
+		Q_EMIT capturedFrame();
 	} else {
 		timer->start(60);
 	}
@@ -113,7 +113,7 @@ void CameraHandler::storeFrame()
 void CameraHandler::switchToVideoView()
 {
 	cameraButton->setEnabled(true);
-	emit cameraStateChanged(true);
+	Q_EMIT cameraStateChanged(true);
 	DomainFacade::getFacade()->getFrontend()->hideProgress();
 }
 

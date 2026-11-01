@@ -180,6 +180,6 @@ void LanguageHandler::changeLanguage(QAction *action)
 	}
 	
 	PreferencesTool::get()->setPreference("language", locale.toLatin1().constData());
-	emit languageChanged();
+	Q_EMIT languageChanged();
 }
 

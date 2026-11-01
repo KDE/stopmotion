@@ -32,12 +32,12 @@ void FlexibleSpinBox::keyPressEvent( QKeyEvent * k )
 	{
 		case Qt::Key_Return: case Qt::Key_Enter:
 		{
-			emit spinBoxTriggered(this->value()-1);
+			Q_EMIT spinBoxTriggered(this->value()-1);
 			break;
 		}
 		case Qt::Key_Escape:
 		{
-			emit spinBoxCanceled();
+			Q_EMIT spinBoxCanceled();
 			break;
 		}
 		default:

@@ -31,7 +31,7 @@ class TestCache : public QObject {
 public:
 	TestCache();
 	~TestCache() override;
-private slots:
+private Q_SLOTS:
 	void gettingTwiceReturnsSameInstance();
 	void leastRecentlyUsedIsFreed();
 	void clearFrees();

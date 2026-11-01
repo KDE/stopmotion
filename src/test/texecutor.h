@@ -30,7 +30,7 @@ public:
 	TestCommandFactory();
 	~TestCommandFactory() override;
 	const char* RandomString();
-private slots:
+private Q_SLOTS:
 	void emptyCommandReplayerThrows();
 	void canParseFromLog();
 	void parsingDescriptionIsCloning();

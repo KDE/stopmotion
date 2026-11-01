@@ -43,7 +43,7 @@ private:
 	void makeVideoExportTab();
 	void makeVideoDeviceTab();
 	
-private slots:
+private Q_SLOTS:
 	void apply();
 };
 

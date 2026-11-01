@@ -199,7 +199,7 @@ protected:
 public:
 	void setThumbImage(ThumbView* thumb, const char* imagePath);
 
-public slots:
+public Q_SLOTS:
 	void updateNewActiveFrame(int scene, int frame);
 	/**
 	 * Move the active frame and selection to the selection before the current
@@ -218,7 +218,7 @@ public slots:
 	void fileChanged(const QString &path);
 	void setSelection(int scene, int selectionFrame, int activeFrame);
 
-signals:
+Q_SIGNALS:
 	//The signals in the framebar is used for signaling small widget,
 	//who are deemed to insignificant to be observers, of changes in
 	//the framebar/model. A bit hacky and should be in it's own widget.
@@ -227,7 +227,7 @@ signals:
 	void modelSizeChanged( int modelSize );
 	void newMaximumValue(int value);
 
-private slots:
+private Q_SLOTS:
 	void scroll();
 
 private:

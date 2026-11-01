@@ -55,7 +55,7 @@ private:
 	QString systemLanguage() const;
 	bool load(const QString& language);
 	
-private slots:
+private Q_SLOTS:
 	/**
 	 * Switch to the language in location menuID in the languages menu.
 	 * @param menuID the ide of the menu options with the language to
@@ -63,7 +63,7 @@ private slots:
 	 */
 	void changeLanguage(QAction *activeAction);
 	
-signals:
+Q_SIGNALS:
 	/**
 	 * Called when the user has changed the language.
 	 */

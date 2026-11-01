@@ -65,7 +65,7 @@ public:
 	void setUndoRedoEnabled();
 
 	void openProject(const char* file);
-protected slots:
+protected Q_SLOTS:
 	void updateProgressBar();
 
 private:

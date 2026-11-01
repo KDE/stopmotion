@@ -41,7 +41,7 @@ public:
 	 */
 	bool wasGrabbingSuccess();
 
-signals:
+Q_SIGNALS:
 	void grabbed();
 
 private:

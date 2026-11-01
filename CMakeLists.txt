@@ -23,10 +23,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 kde_enable_exceptions()
-# not yet ready for these Qt definitions set by KDECompilerSettings
+# not yet ready for this Qt definition set by KDECompilerSettings
 remove_definitions(
   -DQT_NO_CAST_FROM_ASCII
-  -DQT_NO_KEYWORDS
   )
 
 ###

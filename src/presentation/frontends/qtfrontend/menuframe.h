@@ -70,7 +70,7 @@ private:
 	QSpinBox *focusSpinBox;
 	QLineEdit *focusLineEdit;
 	
-public slots:
+public Q_SLOTS:
 	/**
 	 * Opens the menu.
 	 */

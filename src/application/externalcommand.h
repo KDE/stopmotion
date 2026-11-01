@@ -25,7 +25,7 @@ public:
 	ExternalCommand(QWidget *parent = nullptr);
 	void run(const QString &command);
 
-private slots:
+private Q_SLOTS:
 	void readFromStandardOutput();
 	void readFromStandardError();
 	void submitInputToProgram();

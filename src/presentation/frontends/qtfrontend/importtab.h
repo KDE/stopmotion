@@ -55,7 +55,7 @@ public:
 protected:
 	void resizeEvent(QResizeEvent *event) override;
 
-private slots:
+private Q_SLOTS:
 	void addImportProgram();
 	void removeImportProgram();
 	void contentsChanged(int row, int column);

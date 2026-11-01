@@ -19,7 +19,7 @@ class TestWorkspace : public QObject {
 public:
 	TestWorkspace();
 	~TestWorkspace() override;
-private slots:
+private Q_SLOTS:
 	void jpgsCanBeCopiedIntoWorkspace();
 	void nonJpgImagesCannotBeCopied();
 };

@@ -29,7 +29,7 @@ class TestStopmotionUndo : public QObject {
 public:
 	TestStopmotionUndo();
 	~TestStopmotionUndo() override;
-private slots:
+private Q_SLOTS:
 	void newScene();
 	void removeScene();
 	void moveScene();

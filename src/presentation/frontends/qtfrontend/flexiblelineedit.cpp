@@ -20,12 +20,12 @@ void FlexibleLineEdit::keyPressEvent( QKeyEvent * k )
 	{
 		case Qt::Key_Return: case Qt::Key_Enter:
 		{
-			emit returnPressed();
+			Q_EMIT returnPressed();
 			break;
 		}
 		case Qt::Key_Escape:
 		{
-			emit lineEditCanceled();
+			Q_EMIT lineEditCanceled();
 			k->ignore();
 			break;
 		}

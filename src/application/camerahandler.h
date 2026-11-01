@@ -54,7 +54,7 @@ public:
 	 */
 	bool isCameraRunning();
 
-public slots:
+public Q_SLOTS:
 	void toggleCamera();
 	void captureFrame();
 	
@@ -77,18 +77,18 @@ private:
 	void cameraOn();
 	void cameraOff();
 
-private slots:
+private Q_SLOTS:
 	/**
 	 * Slot called by the timer which checks if the frame has been fully captured.
 	 */
 	void storeFrame();
 
-public slots:
+public Q_SLOTS:
 	void setMixCount(int mixCount);
 	
 	void setPlaybackSpeed(int playBackSpeed);
 	
-signals:
+Q_SIGNALS:
 	void capturedFrame();
 	
 	/**

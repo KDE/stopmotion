@@ -32,7 +32,7 @@ public:
 	 */
 	void keyPressEvent( QKeyEvent * k ) override;
 	
-public slots:
+public Q_SLOTS:
 	/**
 	 * Sets a limit for the maximum value. This is based on the
 	 * the thumbnails displayed in the framebar. 
@@ -45,7 +45,7 @@ public slots:
 	 */
 	void setIndexSecond(int, int index);
 
-signals:
+Q_SIGNALS:
 	/**
 	 * Emits this signal when pressing enter.
 	 * @param frameNumber the chosen frame number in this spinbox

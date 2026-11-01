@@ -127,7 +127,7 @@ void RunAnimationHandler::stopAnimation() {
 		statusBar->clearMessage();
 		timer->stop();
 		if (startFrame < endFrame)
-			emit stopped(sceneNr, startFrame, endFrame - 1);
+			Q_EMIT stopped(sceneNr, startFrame, endFrame - 1);
 		startFrame = -1;
 	}
 }
@@ -146,7 +146,7 @@ void RunAnimationHandler::pauseAnimation() {
 		playButton->setChecked(false);
 		removeFramesButton->setEnabled(true);
 
-		emit paused();
+		Q_EMIT paused();
 		DomainFacade *f = DomainFacade::getFacade();
 		f->shutdownAudioDevice();
 
@@ -180,7 +180,7 @@ void RunAnimationHandler::toggleLooping() {
 void RunAnimationHandler::playNextFrame() {
 	DomainFacade *facade = DomainFacade::getFacade();
 	if (sceneNr >= 0) {
-		emit playFrame(sceneNr, frameNr);
+		Q_EMIT playFrame(sceneNr, frameNr);
 		facade->playSounds(sceneNr, frameNr);
 		++frameNr;
 		int sceneSize = facade->getSceneSize(sceneNr);

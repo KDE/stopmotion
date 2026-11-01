@@ -31,7 +31,7 @@ public:
 	 */
 	void keyPressEvent( QKeyEvent * k ) override;
 	
-signals:
+Q_SIGNALS:
 	/**
 	 * Emitted if editing was canceled.
 	 */

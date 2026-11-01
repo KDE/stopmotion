@@ -77,10 +77,10 @@ public:
 	 */
 	int getPlaybackSpeed() const;
 
-signals:
+Q_SIGNALS:
 	void cameraReady();
 
-public slots:
+public Q_SLOTS:
 	/**
 	 * Turns on the webcamera/video import mode.
 	 */

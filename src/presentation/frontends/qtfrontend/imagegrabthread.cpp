@@ -23,7 +23,7 @@ void ImageGrabThread::run()
 		if (!wasGrabSuccess) {
 			break;
 		}
-		emit grabbed();
+		Q_EMIT grabbed();
 	}
 }
 

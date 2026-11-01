@@ -57,7 +57,7 @@ private:
 	QPushButton *changeNameButton;
 	QGridLayout *grid;
 	
-public slots:
+public Q_SLOTS:
 	/**
 	 * Opens the menu.
 	 */

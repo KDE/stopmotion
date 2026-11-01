@@ -48,14 +48,14 @@ void EditMenuHandler::closeGotoMenu()
 void EditMenuHandler::undo()
 {
 	DomainFacade::getFacade()->undo();
-	emit undoOrRedo();
+	Q_EMIT undoOrRedo();
 }
 
 
 void EditMenuHandler::redo()
 {
 	DomainFacade::getFacade()->redo();
-	emit undoOrRedo();
+	Q_EMIT undoOrRedo();
 }
 
 
@@ -88,7 +88,7 @@ void EditMenuHandler::copy()
 
 void EditMenuHandler::cut() {
 	copy();
-	emit removeFrames();
+	Q_EMIT removeFrames();
 }
 
 void EditMenuHandler::paste()
@@ -101,6 +101,6 @@ void EditMenuHandler::paste()
 		for (int i = 0; i < numFrames; ++i) {
 			fileNames.append(urls[i].toLocalFile());
 		}
-		emit addFrames(fileNames);
+		Q_EMIT addFrames(fileNames);
 	}
 }

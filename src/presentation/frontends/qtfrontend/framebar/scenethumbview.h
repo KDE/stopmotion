@@ -50,7 +50,7 @@ public:
 	 */
 	bool getIsOpened() const;
 
-public slots:
+public Q_SLOTS:
 	/**
 	 * Closes the scene.
 	 */

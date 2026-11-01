@@ -33,7 +33,7 @@ public:
 	 */
 	void setOpened(bool isOpened);
 	
-public slots:
+public Q_SLOTS:
 	/**
 	 * Slot for moving the icon to create an animation-like effect.
 	 */
@@ -71,7 +71,7 @@ private:
 	
 	QTimer *moveTimer;
 	
-signals:
+Q_SIGNALS:
 	void clicked();
 };
 

@@ -61,7 +61,7 @@ public:
 	 */
 	void setPauseButton(QPushButton *pauseButton);
 
-signals:
+Q_SIGNALS:
 
 	/**
 	 * The animation has reached this frame.
@@ -70,7 +70,7 @@ signals:
 	void paused();
 	void stopped(int scene, int startFrame, int endFrame);
 
-public slots:
+public Q_SLOTS:
 
 	/**
 	 * Starts the animation if it isn't playing and stops it if it is.
@@ -121,7 +121,7 @@ private:
 	int startFrame;
 	int endFrame;
 
-private slots:
+private Q_SLOTS:
 	/**
 	 * Slot for playing the next frame. This slot is triggered by the timer.
 	 */

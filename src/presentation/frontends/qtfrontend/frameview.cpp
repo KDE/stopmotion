@@ -107,7 +107,7 @@ FrameView::~FrameView() {
 
 
 void FrameView::initCompleted() {
-	emit cameraReady();
+	Q_EMIT cameraReady();
 }
 
 void FrameView::updateNewActiveFrame(int sceneNumber, int frameNumber) {

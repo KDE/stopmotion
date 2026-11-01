@@ -258,7 +258,7 @@ private:
 	SaveDialogResult saveIfNecessary();
 	void doOpenProject(const char* projectFile);
 
-public slots:
+public Q_SLOTS:
 
 	/**
 	 * Opens a saved project.
@@ -266,7 +266,7 @@ public slots:
 	 */
 	void openProject(const char *projectFile);
 
-private slots:
+private Q_SLOTS:
 
 	/**
 	 * Retranslates the strings.
@@ -347,7 +347,7 @@ private slots:
 	void updatePasteEnabled();
 	void createMostRecentMenu();
 
-public slots:
+public Q_SLOTS:
 	/**
 	 * This slot is notified when the size of the model changes so that menuframe
 	 * menu options can be adjusted (activated/deactivated, etc).

@@ -42,7 +42,7 @@ public:
 	//void setSoundsList(Q3ListBox *soundsList);
 	void setSoundsList(QListWidget *soundsList);
 	
-public slots:
+public Q_SLOTS:
 
 	/**
 	 * Attaches a sound to a frame in the animation.

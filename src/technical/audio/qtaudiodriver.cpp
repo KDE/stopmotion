@@ -45,7 +45,7 @@ public:
 		a->reset();
 		sounds.push_back(a);
 		Logger::get().logDebug("Added sound");
-		emit output->stateChanged(QAudio::ActiveState);
+		Q_EMIT output->stateChanged(QAudio::ActiveState);
 	}
     qint64 readData(char *data, qint64 maxlen) override {
 		std::list<AudioFormat*>::iterator s = sounds.begin();
@@ -64,7 +64,7 @@ public:
 				s = sounds.erase(s);
 		}
 		if (len == 0) {
-			emit output->stateChanged(QAudio::IdleState);
+			Q_EMIT output->stateChanged(QAudio::IdleState);
 			Logger::get().logDebug("out of sound");
 			return 0;
 		}

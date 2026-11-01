@@ -37,7 +37,7 @@ public:
 	 */
 	void setGotoMenu(QWidget *gotoMenu);
 
-public slots:
+public Q_SLOTS:
 	
 	/**
 	 * Goes to the frame with the number frameNumber on the framebar.
@@ -80,7 +80,7 @@ private:
 	FrameBar *frameBar;
 	QWidget *gotoMenu;
 	
-signals:
+Q_SIGNALS:
 	/**
 	 * Adds the frames pointed to by a list.
 	 * @param l the list containing pointers to the frames
