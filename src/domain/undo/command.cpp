@@ -199,7 +199,12 @@ void CommandHistory::redo() {
 
 void CommandHistory::execute(Command& c) {
 	future->clear();
-	future->push(c);
+	try {
+		future->push(c);
+	} catch (...) {
+		delete &c;
+		throw;
+	}
 	redo();
 	notifyObserver();
 }
