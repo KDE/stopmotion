@@ -6,3 +6,4 @@
 
 const char *const stopmotion::htmlDirectory = HTML_PATH;
 const char *const stopmotion::translationsDirectory = TRANSLATIONS_PATH;
+const char *const stopmotion::localeDirectory = LOCALE_PATH;

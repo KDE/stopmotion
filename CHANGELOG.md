@@ -9,6 +9,7 @@ Changes
 
 Features
 * Use KArchive instead of libarchive.
+* Offer the translations from KDE's translation teams.
 
 
 0.9.0 (2025-05-25)

@@ -16,6 +16,8 @@
 namespace stopmotion {
 	extern const char *const htmlDirectory;
 	extern const char *const translationsDirectory;
+	/** KDE's translations, in <language>/LC_MESSAGES/stopmotion_qt.qm */
+	extern const char *const localeDirectory;
 };
 
 #endif

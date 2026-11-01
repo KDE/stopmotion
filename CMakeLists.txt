@@ -64,16 +64,21 @@ ecm_set_disabled_deprecation_versions(
 add_compile_definitions(STOPMOTION_VERSION="${PROJECT_VERSION}")
 
 # where translations and the manual are installed and looked up at runtime;
-# packagers can override the latter with TRANSLATIONS_PATH and HTML_PATH
+# packagers can override the latter with TRANSLATIONS_PATH, LOCALE_PATH and
+# HTML_PATH
 set(STOPMOTION_TRANSLATIONS_INSTALL_DIR ${KDE_INSTALL_DATADIR}/stopmotion/translations)
 set(STOPMOTION_DOC_INSTALL_DIR ${KDE_INSTALL_DATAROOTDIR}/doc/stopmotion)
 if(NOT TRANSLATIONS_PATH)
   set(TRANSLATIONS_PATH ${CMAKE_INSTALL_PREFIX}/${STOPMOTION_TRANSLATIONS_INSTALL_DIR})
 endif()
+if(NOT LOCALE_PATH)
+  set(LOCALE_PATH ${CMAKE_INSTALL_PREFIX}/${KDE_INSTALL_LOCALEDIR})
+endif()
 if(NOT HTML_PATH)
   set(HTML_PATH ${CMAKE_INSTALL_PREFIX}/${STOPMOTION_DOC_INSTALL_DIR}/manual)
 endif()
 add_compile_definitions(TRANSLATIONS_PATH="${TRANSLATIONS_PATH}")
+add_compile_definitions(LOCALE_PATH="${LOCALE_PATH}")
 add_compile_definitions(HTML_PATH="${HTML_PATH}")
 
 add_subdirectory(src)
@@ -83,6 +88,9 @@ add_subdirectory(src)
 ###
 file(GLOB TS_FILES CONFIGURE_DEPENDS "translations/stopmotion_*.ts")
 qt_add_lrelease(TS_FILES ${TS_FILES} QM_FILES_OUTPUT_VARIABLE QM_FILES)
+# KDE's translations, synced into poqm/
+include(ECMPoQmTools)
+ecm_install_po_files_as_qm(poqm)
 
 ###
 # create executable and link libraries

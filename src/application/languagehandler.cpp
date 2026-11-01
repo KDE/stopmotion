@@ -18,71 +18,108 @@
 #include <QString>
 
 
+namespace {
+// The name of the language in that language, like "Deutsch" for de
+QString languageName(const QString& code) {
+	const QString language = code.section(u'@', 0, 0);
+	const QString variant = code.section(u'@', 1);
+	const QLocale locale(language);
+	QString name = locale.nativeLanguageName();
+	if (name.isEmpty())
+		name = code;
+	else if (language.contains(u'_')
+			&& name == QLocale(locale.language()).nativeLanguageName())
+		name += QStringLiteral(" (%1)").arg(locale.nativeTerritoryName());
+	if (!variant.isEmpty())
+		name += QStringLiteral(" (%1)").arg(variant);
+	return name;
+}
+}
+
 LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const char *name) 
 		: QObject(parent), languagesMenu(nullptr) {
-	qmPath = QString(stopmotion::translationsDirectory);
 	activeAction = nullptr;
 	translator = new QTranslator(this);
+	findTranslations();
 
-	// Get system locale.
-	QString locale = QLocale::system().name().toLower();
-	if (locale == QLatin1String("nb_no"))
-	    locale = QStringLiteral(u"no_nb");
-	else if (locale == QLatin1String("nn_no"))
-	    locale = QStringLiteral(u"no_nn");
-	else if (locale == QLatin1String("se_no"))
-	    locale = QStringLiteral(u"no_se");
-	else
-	    locale.truncate(2);
-
-	// Put together a translation file based on the qmPath or keep
-	// it empty if the locale is english.
-	const bool englishLocale = (locale == QLatin1String("en"));
-	const QString prefix = qmPath + u'/' + QStringLiteral(u"stopmotion_");
-	QString translationFile = englishLocale ? QString() : prefix + locale;
-
-	if (!englishLocale && !QFile::exists(translationFile + QStringLiteral(u".qm"))) {
-		// Was not able to find a translation file for the locale, so use the
-		// language saved in the preferences file, or use English as fall-back.
-		const QByteArray localeArray = locale.toLatin1();
-		const char *localePtr = localeArray.constData();
-		Preference languagePref("language", localePtr);
-		if (languagePref.get()) {
-			translationFile = prefix + QLatin1String(languagePref.get());
-			if (!QFile::exists(translationFile + QStringLiteral(u".qm")))
-				translationFile = QString();
-	    } else {
-	    	translationFile = QString();
-	    }
+	// Use the language of the system if there is a translation for it, or
+	// the one saved in the preferences file, or English as fall-back.
+	QString language = systemLanguage();
+	if (language.isEmpty()) {
+		Preference languagePref("language", "en");
+		language = QString::fromLatin1(languagePref.get());
+		if (!translations.contains(language))
+			language = QStringLiteral("en");
 	} else {
-	    PreferencesTool::get()->setPreference("language", locale.toLatin1().constData());
+		PreferencesTool::get()->setPreference("language", language.toLatin1().constData());
 	}
 
-	if (!translationFile.isEmpty()) {
+	if (language != QLatin1String("en")) {
 	    Logger::get().logDebug("Loading translator: ");
-	    Logger::get().logDebug(translationFile.toLatin1().constData());
-	    if (!translator->load(translationFile)) {
-		    Logger::get().logWarning("Failed to load translation %s",
-				    translationFile.toLocal8Bit().constData());
-	    }
+	    Logger::get().logDebug(translations.value(language).toLocal8Bit().constData());
+	    load(language);
 	}
 
 	stApp->installTranslator(translator);
 	setObjectName(name);
 }
 
+void LanguageHandler::findTranslations() {
+	// Stopmotion's own translations, named stopmotion_<language>.qm
+	const QString prefix = QStringLiteral("stopmotion_");
+	const QDir dir(QString::fromLocal8Bit(stopmotion::translationsDirectory));
+	const QStringList fileNames = dir.entryList(QStringList(prefix + u"*.qm"), QDir::Files);
+	for (const QString& fileName : fileNames) {
+		const QString code = fileName.mid(prefix.size()).chopped(3);
+		translations.insert(code, dir.filePath(fileName));
+	}
+	// KDE's translations, for the other languages
+	const QDir localeDir(QString::fromLocal8Bit(stopmotion::localeDirectory));
+	const QStringList languages = localeDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+	for (const QString& language : languages) {
+		const QString file = localeDir.filePath(language
+				+ QStringLiteral(u"/LC_MESSAGES/stopmotion_qt.qm"));
+		if (!translations.contains(language) && QFile::exists(file))
+			translations.insert(language, file);
+	}
+}
+
+/**
+ * Returns the first language of the system with a translation, "en" if
+ * English comes first, or an empty string.
+ */
+QString LanguageHandler::systemLanguage() const {
+	const QStringList uiLanguages = QLocale::system().uiLanguages();
+	for (const QString& uiLanguage : uiLanguages) {
+		// e.g. pt-Latn-BR becomes pt_BR
+		const QString language = QLocale(uiLanguage).name();
+		if (translations.contains(language))
+			return language;
+		const QString base = language.section(u'_', 0, 0);
+		if (translations.contains(base))
+			return base;
+		if (base == QLatin1String("en"))
+			return base;
+	}
+	return QString();
+}
+
+bool LanguageHandler::load(const QString& language) {
+	const QString file = translations.value(language);
+	if (file.isEmpty() || !translator->load(file)) {
+		Logger::get().logWarning("Failed to load translation for %s",
+				language.toLocal8Bit().constData());
+		return false;
+	}
+	return true;
+}
+
 
 QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 {
 	assert(parent);
-	// For the .po files. findtr isn't as intelligent as luptate
-	tr("English");
-
 	languagesMenu = parent->addMenu(tr("&Translation"));
 	connect(languagesMenu, &QMenu::triggered, this, &LanguageHandler::changeLanguage);
-
-	QDir dir(qmPath);
-	QStringList fileNames = dir.entryList(QStringList("stopmotion_*.qm"));
 
 	//English is a special case (base language)
 	QAction *langAct = languagesMenu->addAction("&1 English");
@@ -90,36 +127,15 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 	locales.insert(langAct, "en");
 
 	int num = 2;
-	for (int i = 0; i < fileNames.size(); ++i) {
-		QTranslator translator;
-		if (!translator.load(fileNames[i], qmPath)) {
-			Logger::get().logWarning("Failed to load translation %s",
-					fileNames[i].toLocal8Bit().constData());
-			continue;
-		}
-
-		QString language = translator.translate("LanguageHandler", "English", 
-			"This should be translated to the name of the "
-			"language you are translating to, in that language. "
-			"Example: English = Deutsch (Deutsch is \"German\" "
-			"in German)");
-
-		// Checks that the minimum requirement for accepting a string is covered.
-		// The minimum requirement is that the menu option string (English) is translated.
-		if (language != "") {
-			langAct = languagesMenu->addAction(QString("&%1 %2").arg(num++).arg(language));
-			langAct->setCheckable(true);
-			langAct->setChecked(false);
-
-			QString locale = fileNames[i];
-			locale = locale.mid(locale.indexOf('_') + 1);
-			locale.truncate(locale.indexOf('.'));
-			locales.insert(langAct, locale);
-		}
+	for (auto it = translations.cbegin(); it != translations.cend(); ++it) {
+		langAct = languagesMenu->addAction(QString("&%1 %2").arg(num++).arg(languageName(it.key())));
+		langAct->setCheckable(true);
+		langAct->setChecked(false);
+		locales.insert(langAct, it.key());
 	}
 
 	Preference languagePref("language", "en");
-	activeAction = locales.key(QString(languagePref.get()));
+	activeAction = locales.key(QString::fromLatin1(languagePref.get()));
 	if (activeAction != nullptr) {
 		activeAction->setChecked(true);
 	} else {
@@ -139,10 +155,7 @@ void LanguageHandler::changeLanguage(QAction *action)
 	
 	QString locale = locales[action];
 	if (locale != "en") {
-		if (!translator->load("stopmotion_" + locale, qmPath)) {
-			Logger::get().logWarning("Failed to load translation for %s",
-					locale.toLocal8Bit().constData());
-		}
+		load(locale);
 	}
 	else {
 		// Loading an empty file name unloads the current translation, which

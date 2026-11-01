@@ -71,8 +71,8 @@ You can tell CMake to install in a specific location:
 
     cmake -DCMAKE_INSTALL_PREFIX=<specific/location> <path/to/source/dir>
 
-You can also specify the path to the translation and HTML documentation path
-by setting `-DTRANSLATIONS_PATH=` and `-DHTML_PATH=`.
+You can also specify the paths to the translations and the HTML documentation
+by setting `-DTRANSLATIONS_PATH=`, `-DLOCALE_PATH=` and `-DHTML_PATH=`.
 
 Please see `src/domain/undo/README.md` for some notes on Stopmotion's
 architecture.

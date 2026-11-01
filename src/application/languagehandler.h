@@ -14,6 +14,8 @@
 #include <QTranslator>
 #include <QHash>
 #include <QAction>
+#include <QMap>
+#include <QString>
 
 
 /**
@@ -44,9 +46,14 @@ public:
 private:
 	QTranslator *translator;
 	QMenu *languagesMenu;
-	QString qmPath;
 	QAction *activeAction;
 	QHash<QAction*, QString> locales;
+	/** The .qm file for each available language */
+	QMap<QString, QString> translations;
+
+	void findTranslations();
+	QString systemLanguage() const;
+	bool load(const QString& language);
 	
 private slots:
 	/**
