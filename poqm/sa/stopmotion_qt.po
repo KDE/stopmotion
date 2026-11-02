@@ -50,23 +50,10 @@ msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "सफल!"
 
-#: src/application/languagehandler.cpp:79
-msgctxt "LanguageHandler|"
-msgid "English"
-msgstr "आंग्ल"
-
-#: src/application/languagehandler.cpp:81
+#: src/application/languagehandler.cpp:137
 msgctxt "LanguageHandler|"
 msgid "&Translation"
 msgstr "&अनुवादः"
-
-#: src/application/languagehandler.cpp:101
-msgctxt ""
-"LanguageHandler|This should be translated to the name of the language you "
-"are translating to, in that language. Example: English = Deutsch (Deutsch is "
-"\"German\" in German)"
-msgid "English"
-msgstr "आंग्ल"
 
 #: src/application/modelhandler.cpp:48
 msgctxt "ModelHandler|"
@@ -628,160 +615,160 @@ msgctxt "ImportTab|"
 msgid "Stop daemon"
 msgstr "डेमनं स्थगयतु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:139
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:141
 msgctxt "MainWindowGUI|"
 msgid "Ready to rumble ;-)"
 msgstr "गुञ्जितुं सज्जः ;-)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:349
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:511
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:351
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:513
 msgctxt "MainWindowGUI|"
 msgid "&File"
 msgstr "&संचिका"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:350
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:524
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:352
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:526
 msgctxt "MainWindowGUI|"
 msgid "&Export"
 msgstr "&निर्यात"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:351
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1119
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:353
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1146
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr "Open &Recent"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:353
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:540
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:355
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:542
 msgctxt "MainWindowGUI|"
 msgid "&Edit"
 msgstr "&सम्पादन"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:370
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:535
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:372
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:537
 msgctxt "MainWindowGUI|"
 msgid "&Settings"
 msgstr "&सेटिंग्स"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:373
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:542
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:375
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:544
 msgctxt "MainWindowGUI|"
 msgid "&Help"
 msgstr "&साहाय्यम्‌"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:480
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:482
 msgctxt "MainWindowGUI|"
 msgid "&New"
 msgstr "&नूतनम्‌"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:481
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:483
 msgctxt "MainWindowGUI|"
 msgid "&Open"
 msgstr "&उद्घाटित"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:482
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:484
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr "&रक्ष्"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:483
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:485
 msgctxt "MainWindowGUI|"
 msgid "Save &As"
 msgstr "रक्षन्तु &अस्"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:484
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:486
 msgctxt "MainWindowGUI|"
 msgid "Video"
 msgstr "विडिओ"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:485
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:487
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
 msgstr "सिनेलेरा"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:486
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:488
 msgctxt "MainWindowGUI|"
 msgid "&Quit"
 msgstr "&परिजहातु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:487
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:489
 msgctxt "MainWindowGUI|"
 msgid "&Undo"
 msgstr "&Undo"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:488
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:490
 msgctxt "MainWindowGUI|"
 msgid "Re&do"
 msgstr "पुनः&कर"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:489
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:491
 msgctxt "MainWindowGUI|"
 msgid "Cu&t"
 msgstr "छिन्न"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:490
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:492
 msgctxt "MainWindowGUI|"
 msgid "&Copy"
 msgstr "&प्रतिलिपि"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:491
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
 msgctxt "MainWindowGUI|"
 msgid "&Paste"
 msgstr "&पेस्ट"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:492
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
 msgstr "&फ्रेम् प्रति गच्छतु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
 msgstr "&Stopmotion विन्यस्तं कुर्वन्तु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
 msgctxt "MainWindowGUI|"
 msgid "What's &This"
 msgstr "किम् &इदम्"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
 msgctxt "MainWindowGUI|"
 msgid "&About"
 msgstr "&विषये"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
 msgstr "फ्रेम संख्या :"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
 msgstr "फ्रेमं गच्छन्तु :"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:558
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:560
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
 msgstr "<h4>नवीन</h4> <p><em>नवीन</em> परियोजनां निर्माति ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:563
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:565
 msgctxt "MainWindowGUI|"
 msgid "New project"
 msgstr "नवीन परियोजना"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:567
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:569
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
 msgstr ""
 "<h4>उद्घाटयति</h4> <p><em>Stopmotion परियोजना सञ्चिकां उद्घाटयति</em> ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:573
 msgctxt "MainWindowGUI|"
 msgid "Open project"
 msgstr "खुला परियोजना"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:575
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:577
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -792,12 +779,12 @@ msgstr ""
 "<BR>यदि एषा परियोजना पूर्वं रक्षिता अस्ति तर्हि पूर्वचयनितसञ्चिकायां स्वयमेव रक्षिता "
 "भविष्यति ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:581
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:583
 msgctxt "MainWindowGUI|"
 msgid "Save project"
 msgstr "परियोजनां रक्षन्तु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:585
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:587
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -806,12 +793,12 @@ msgstr ""
 "<h4>Save As</h4> <p><em>वर्तमानं एनिमेशनं Stopmotion परियोजनासञ्चिकारूपेण रक्षति</"
 "em> ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:590
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:592
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
 msgstr "परियोजना As रक्षतु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:596
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
@@ -820,7 +807,7 @@ msgstr ""
 "<h4>Video</h4> <p>वर्तमानं परियोजनां <em>video</em> इति निर्यातयति ।</p>भवतः "
 "मार्गदर्शनार्थं विजार्डः दीयते ।"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:601
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
@@ -829,17 +816,17 @@ msgstr ""
 "<h4>Cinerella</h4> <p>वर्तमानं एनिमेशनं <em>Cinerella</em> परियोजनारूपेण निर्यातयति "
 "।</p>भवतः मार्गदर्शनार्थं विजार्डः दीयते ।"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:608
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:610
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
 msgstr "<h4>निर्गम</h4> <p><em>कार्यक्रमं त्यजति</em> ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:612
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
 msgctxt "MainWindowGUI|"
 msgid "Quit"
 msgstr "परिजहातु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:618
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:620
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
@@ -848,12 +835,12 @@ msgstr ""
 "<h4>पूर्ववर्ती</h4> <p><em>भवतः अन्तिमक्रियायाः पूर्ववर्ती</em> करोति । पूर्वकार्यं "
 "पूर्ववत् कर्तुं भवान् undo बहुवारं नुदतु ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:623
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
 msgctxt "MainWindowGUI|"
 msgid "Undo"
 msgstr "पूर्ववत"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:627
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:629
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
@@ -862,12 +849,12 @@ msgstr ""
 "<h4>पुनः कुरुत</h4> <p><em>पुनः करोति</em> भवतः अन्तिमं कार्यं । अनेकाः क्रियाः पुनः "
 "कर्तुं भवन्तः redo अनेकवारं नुदितुं शक्नुवन्ति ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:632
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:634
 msgctxt "MainWindowGUI|"
 msgid "Redo"
 msgstr "पुनः करो"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:636
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:638
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
@@ -876,12 +863,12 @@ msgstr ""
 "<h4>कट्</h4> <p><em>चयनितानि फ्रेम्स एनिमेशनतः बहिः कटयति</em> च क्लिप्बोर्ड् मध्ये "
 "योजयति यथा भवान् तान् अन्यत्र चिनोतु ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:641
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:643
 msgctxt "MainWindowGUI|"
 msgid "Cut"
 msgstr "छिन्न"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:645
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:647
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
@@ -890,12 +877,12 @@ msgstr ""
 "<h4>प्रतिलिपिं</h4> <p><em>चयनित-फ्रेम्स् क्लिप्बोर्ड् प्रति प्रतिलिपिं करोति</em> । ततः "
 "भवन्तः तान् अन्यस्मिन् स्थाने चिनोतुम् अर्हन्ति।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:650
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:652
 msgctxt "MainWindowGUI|"
 msgid "Copy"
 msgstr "प्रतिलिपि"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:654
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:656
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Paste</h4> <p><em>Pastes</em> the frames which are currently in the "
@@ -907,12 +894,12 @@ msgstr ""
 "em> ।</p> <p>भवन्तः अन्येभ्यः कार्यक्रमेभ्यः चित्राणि प्रतिलिखितुं/कटयितुं शक्नुवन्ति ततः च "
 "तान् अस्मिन् एनिमेशनमध्ये चिनोतुम् एतत् विकल्पं उपयुज्यताम् ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:660
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:662
 msgctxt "MainWindowGUI|"
 msgid "Paste"
 msgstr "चिनोतु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:664
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:666
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
@@ -921,12 +908,12 @@ msgstr ""
 "<h4>फ्रेम् प्रति गच्छतु</h4> <p>एतेन अधः एकं popup-menu आनयिष्यति यत्र भवान् <em>गन्तुं</"
 "em> इच्छितं फ्रेमं चिन्वितुं शक्नोति।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:669
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:671
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
 msgstr "फ्रेमं प्रति गच्छन्तु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:675
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
@@ -935,12 +922,12 @@ msgstr ""
 "<h4>Stopmotion विन्यस्तु</h4> <p>एतेन एकं विण्डो उद्घाट्यते यत्र भवान् विभिन्नैः इनपुट्-"
 "आउटपुट्-यन्त्रैः सह Stopmotion <em>configure</em> कर्तुं शक्नोति ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:678
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:680
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
 msgstr "Stopmotion विन्यस्तं कुर्वन्तु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:684
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
@@ -949,12 +936,12 @@ msgstr ""
 "<h4>इदं किम्</h4> <p>एतेन भवन्तः WhatsThis मूषकस्य कर्सरं दास्यन्ति यस्य उपयोगेन एतादृशी "
 "सहायकसूचनाः आनेतुं शक्यन्ते ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:689
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
 msgctxt "MainWindowGUI|"
 msgid "What's This"
 msgstr "किम् एतत्"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:693
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:695
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
@@ -962,12 +949,12 @@ msgid ""
 msgstr ""
 "<h4>सहायता</h4> <p>एतत् बटन् Stopmotion manual</p> इत्यनेन सह संवादं आनयिष्यति"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:697
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:699
 msgctxt "MainWindowGUI|"
 msgid "Help"
 msgstr "साहाय्यम्‌"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:701
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:703
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>About</h4> <p>This will display a small information box where you can "
@@ -977,19 +964,19 @@ msgstr ""
 "<h4>विषये</h4> <p>एतत् लघुसूचनापेटिकां प्रदर्शयिष्यति यत्र भवान् सामान्यसूचनाः अपि च अस्य "
 "उत्तमस्य सॉफ्टवेयरस्य पृष्ठतः विकासकानां नामानि पठितुं शक्नोति।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:707
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:709
 msgctxt "MainWindowGUI|"
 msgid "About"
 msgstr "विषये"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:713
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:715
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
 "selected frame</p>"
 msgstr "<h4>Frame number</h4><p>अयं क्षेत्रं सम्प्रति चयनितस्य frame</p>सङ्ख्यां प्रदर्शयति"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:720
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:722
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
@@ -998,7 +985,7 @@ msgstr ""
 "<h4>FrameView</h4><p> अस्मिन् क्षेत्रे भवान् चयनितं फ्रेम द्रष्टुं शक्नोति । अस्मिन् विण्डो "
 "मध्ये <b>Play</b> इति बटन् नुत्वा एनिमेशन्स् अपि वादयितुं शक्नुवन्ति ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:727
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:729
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
@@ -1007,7 +994,7 @@ msgstr ""
 "<h4>frame menu प्रति गच्छतु</h4> <p>अत्र भवान् framenumber निर्दिष्टुं शक्नोति ततः "
 "प्रोग्रामः निर्दिष्टं frame</p> प्रति कूर्दति"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:733
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:735
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame preferences menu</h4> <p>In this menu you can set preferences for "
@@ -1018,7 +1005,7 @@ msgstr ""
 "preferences सेट् कर्तुं शक्नोति, यथा <b>subtitles</b>, <b>sound effects</b> "
 "इत्यादयः । </p> इति"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:742
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
@@ -1027,7 +1014,7 @@ msgstr ""
 "<h4>उपकरणमेनू</h4> <p>इदं साधनमेनू अस्ति यत्र भवतः अधिकांशं बटन् विजेट् च स्टॉप मोशन "
 "एनिमेशन्स् इत्यत्र कार्यं कुर्वन् आवश्यकाः भविष्यन्ति ।</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:748
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameBar</h4> <p>In this area you can see the frames and scenes in the "
@@ -1039,33 +1026,46 @@ msgstr ""
 "तथा च तान् परितः चालयित्वा एनिमेशनं निर्मातुं शक्नुवन्ति।</p><p>भवन्तः परं पूर्वस्मिन् च गन्तुं "
 "शक्नुवन्ति <b>बाणबटन</b> अथवा <b>x</b> तथा <b>z</b></p> इत्येतयोः उपयोगेन फ्रेम"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:760
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:762
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr "असरक्षितं परिवर्तनं भवति"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:761
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:763
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr "अरक्षिताः परिवर्तनाः सन्ति। किं त्वं रक्षितुम् इच्छसि ?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:795
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:797
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr "परियोजनासञ्चिकां चिनोतु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:863
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:830
+#, fuzzy
+#| msgctxt "QtFrontend|"
+#| msgid "Could not copy file to workspace"
+msgctxt "MainWindowGUI|"
+msgid "Could not open the project"
+msgstr "सञ्चिकां कार्यक्षेत्रे प्रतिलिपिं कर्तुं न शक्तवान्"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:881
+msgctxt "MainWindowGUI|"
+msgid "Could not save the project"
+msgstr ""
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr "As Save As इति"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:941
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:917
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:968
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr "चेतवानी"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:891
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:918
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1077,19 +1077,19 @@ msgstr ""
 "मध्ये सेट् कर्तुं शक्यते । यावत् भवान् उपयोगाय एन्कोडरं न सेट् करोति तावत् यावत् विडियो "
 "निर्यातनं सम्भवं न भविष्यति । इदानीं सेट् कर्तुम् इच्छसि वा ?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:926
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:953
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr "विडियो सञ्चिकायां निर्यातं कुर्वन्तु"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:942
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
 "to check your settings in the preferences menu?"
 msgstr "पञ्जीकृतः एन्कोडरः वैधः नास्ति । किं भवान् प्राधान्यमेनूमध्ये स्वस्य सेटिङ्ग्स् पश्यतु?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:983
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr "सञ्चिकायां निर्यातं कुर्वन्तु"
@@ -1130,47 +1130,47 @@ msgctxt "PreferencesMenu|"
 msgid "Video &Device"
 msgstr "विडियो एवं उपकरण"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:71
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:72
 msgctxt "QtFrontend|"
 msgid "Please wait..."
 msgstr "कृपया प्रतीक्षां कुर्वन्तु..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:74
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:75
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
 msgstr "कॅमेरा संयोजयति..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:77
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:78
 msgctxt "QtFrontend|"
 msgid "Importing frames from disk"
 msgstr "डिस्कतः फ्रेम्स आयातम्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:80
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:81
 msgctxt "QtFrontend|"
 msgid "Exporting..."
 msgstr "निर्यातं कुर्वन्..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:83
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:84
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
 msgstr "परियोजनायाः पुनर्स्थापनम्..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:86
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:87
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
 msgstr "दृश्यान् डिस्क मध्ये रक्षन्..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:90
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:91
 msgctxt "QtFrontend|"
 msgid "Cancel"
 msgstr "निरसयतु"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:180
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:181
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
 msgstr "दूषितं सञ्चिकां नष्टं कुर्वन्तु"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:181
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:182
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1180,142 +1180,142 @@ msgstr ""
 "%1 सञ्चिका दूषिता इव दृश्यते, यदि भवान् निरन्तरं करोति तर्हि तस्याः सामग्री नष्टा "
 "भविष्यति । किं त्वं निरन्तरं कर्तुम् इच्छसि ?"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:241
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:242
 msgctxt "QtFrontend|"
 msgid "vgrabbj"
 msgstr "वग्रब्ब्ज"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:243
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:244
 msgctxt "QtFrontend|"
 msgid "The simplest setting. Fairly slow"
 msgstr "सरलतमं सेटिंग्। तुल्य मन्दम्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:250
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:251
 msgctxt "QtFrontend|"
 msgid "vgrabbj VGA daemon"
 msgstr "vgrabbj VGA राक्षसः"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:252
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:253
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
 msgstr "vgrabbj इत्येतत् डेमनरूपेण आरभते । सुन्दरं द्रुतम्।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:260
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:261
 msgctxt "QtFrontend|"
 msgid "uvccapture"
 msgstr "uvccapture इति"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:262
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:263
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
 msgstr "V4L2 उपकरणेभ्यः ग्रहणम्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:269
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:270
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
 msgstr "videodog एकल शॉट"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:271
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:272
 msgctxt "QtFrontend|"
 msgid "Videodog."
 msgstr "वीडियोकुक्कुर।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:278
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:279
 msgctxt "QtFrontend|"
 msgid "dvgrab"
 msgstr "द्विग्राब्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:280
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:281
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
 msgstr "DV-cam तः ग्रहणम्।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:296
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:297
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
 msgstr "jpeg इमेज् तः mpeg1 विडियो मध्ये निर्यातयति"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:305
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:306
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
 msgstr "jpeg इमेज् तः mpeg2 video मध्ये निर्यातयति"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:314
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:323
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:331
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:315
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:324
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:332
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
 msgstr "jpeg इमेज् तः mpeg4 video मध्ये निर्यातयति"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:343
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:344
 msgctxt "QtFrontend|"
 msgid "Unsupported image file type"
 msgstr "असमर्थितः चित्रसञ्चिकाप्रकारः"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:344
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
 msgctxt "QtFrontend|"
 msgid "Only JPeg image files can be added to the animation"
 msgstr "केवलं JPeg इमेज सञ्चिकाः एव एनिमेशनमध्ये योजयितुं शक्यन्ते"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:347
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
 msgctxt "QtFrontend|"
 msgid "The selected audio file could not be loaded"
 msgstr "चयनितं श्रव्यसञ्चिकां लोड् कर्तुं न शक्यते स्म"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:349
 msgctxt "QtFrontend|"
 msgid "Perhaps it is corrupt."
 msgstr "कदाचित् भ्रष्टम् अस्ति।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:352
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:353
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
 msgstr "चयनितसञ्चिकां पठनार्थं उद्घाटयितुं न शक्यते"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:353
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:354
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "The file %1 could not be opened"
 msgstr "%1 इति सञ्चिका उद्घाटयितुं न शक्यते स्म"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:357
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
 msgstr "सञ्चिकां कार्यक्षेत्रे प्रतिलिपिं कर्तुं न शक्तवान्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:359
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr "कार्यक्षेत्रे (~/.stopmotion) निम्नलिखितसञ्चिकानां प्रतिलिपिं कर्तुं असफलम्: %1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:362
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:363
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
 msgstr "श्रव्यचालकस्य आरम्भं कर्तुं असफलम्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:363
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
 msgstr "यावत् एतत् सम्यक् न भवति तावत् शब्दः कार्यं न करिष्यति"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:367
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:368
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
 msgstr "प्राधान्यानि लिखितुं असफलम्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:368
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
 msgstr "सञ्चिकायां प्राधान्यानि लिखितुं न शक्तम्: %1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:377
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:378
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
 msgstr "स्टॉपमोशन आरभ्यतुं न शक्यते।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:378
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
 msgctxt "QtFrontend|"
 msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
@@ -1323,19 +1323,19 @@ msgid ""
 msgstr ""
 "command.log इत्यत्र अनन्यतालान् प्राप्तुं असफलम्। कदाचित् Stopmotion पूर्वमेव प्रचलति।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:382
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:387
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:383
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:388
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
 msgstr "प्राधान्यसञ्चिका पठितुं न शक्यते"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:383
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
 msgstr "प्राधान्यसञ्चिका %1 अपठनीया अस्ति । कृपया एतत् सम्यक् कृत्वा पुनः प्रयासं कुर्वन्तु।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:388
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:389
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1345,27 +1345,27 @@ msgstr ""
 "प्राधान्यसञ्चिका %1 वैधः XML प्राधान्यसञ्चिका नास्ति । कृपया एतत् सम्यक् कुर्वन्तु अथवा "
 "सञ्चिकां विलोपयन्तु पुनः प्रयासं कुर्वन्तु ।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:391
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
 msgctxt "QtFrontend|"
 msgid "Fatal"
 msgstr "प्राणहर"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:399
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
 msgstr "स्टॉपमोशन इत्यनेन अपवादः क्षिप्तः यत् सः सम्भालितुं न शक्नोति स्म ।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
 msgstr "कृपया दोषप्रतिवेदनं उत्थापयन्तु।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:406
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:407
 msgctxt "QtFrontend|"
 msgid "Warning"
 msgstr "चेतवानी"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:448
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:449
 msgctxt "QtFrontend|"
 msgid ""
 "A newer version of the preferences file with few more default\n"
@@ -1376,7 +1376,7 @@ msgstr ""
 "किं भवन्तः एतत् उपयोक्तुं इच्छन्ति ? (भवतः पुरातनं प्राधान्यं ~/.stopmotion/preferences."
 "xml.OLD इत्यत्र रक्षितं भविष्यति)"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:455
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:456
 msgctxt "QtFrontend|"
 msgid "Question"
 msgstr "प्रश्न"
@@ -1571,3 +1571,14 @@ msgid ""
 msgstr ""
 "प्लेबैक् केवलं वर्तमानकाले एव कार्यं करोति यदा ग्राबर् डेमनरूपेण चालयति । इमेज ग्राबिंग् इत्येतत् "
 "डेमन् इत्यस्य रूपेण चालयितुं स्विच् कर्तुं प्राधान्यमेनू (CTRL+P) प्रति गच्छन्तु ।"
+
+#~ msgctxt "LanguageHandler|"
+#~ msgid "English"
+#~ msgstr "आंग्ल"
+
+#~ msgctxt ""
+#~ "LanguageHandler|This should be translated to the name of the language you "
+#~ "are translating to, in that language. Example: English = Deutsch (Deutsch "
+#~ "is \"German\" in German)"
+#~ msgid "English"
+#~ msgstr "आंग्ल"

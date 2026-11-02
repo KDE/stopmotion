@@ -49,23 +49,10 @@ msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "成功！"
 
-#: src/application/languagehandler.cpp:79
-msgctxt "LanguageHandler|"
-msgid "English"
-msgstr "英語"
-
-#: src/application/languagehandler.cpp:81
+#: src/application/languagehandler.cpp:137
 msgctxt "LanguageHandler|"
 msgid "&Translation"
 msgstr "翻譯(&T)"
-
-#: src/application/languagehandler.cpp:101
-msgctxt ""
-"LanguageHandler|This should be translated to the name of the language you "
-"are translating to, in that language. Example: English = Deutsch (Deutsch is "
-"\"German\" in German)"
-msgid "English"
-msgstr "正體中文"
 
 #: src/application/modelhandler.cpp:48
 msgctxt "ModelHandler|"
@@ -599,159 +586,159 @@ msgctxt "ImportTab|"
 msgid "Stop daemon"
 msgstr "停止伺服程式"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:139
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:141
 msgctxt "MainWindowGUI|"
 msgid "Ready to rumble ;-)"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:349
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:511
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:351
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:513
 msgctxt "MainWindowGUI|"
 msgid "&File"
 msgstr "檔案(&F)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:350
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:524
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:352
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:526
 msgctxt "MainWindowGUI|"
 msgid "&Export"
 msgstr "匯出(&E)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:351
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1119
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:353
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1146
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr "開啟最近檔案(&R)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:353
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:540
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:355
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:542
 msgctxt "MainWindowGUI|"
 msgid "&Edit"
 msgstr "編輯(&E)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:370
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:535
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:372
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:537
 msgctxt "MainWindowGUI|"
 msgid "&Settings"
 msgstr "設定(&S)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:373
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:542
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:375
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:544
 msgctxt "MainWindowGUI|"
 msgid "&Help"
 msgstr "說明(&H)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:480
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:482
 msgctxt "MainWindowGUI|"
 msgid "&New"
 msgstr "新增(&N)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:481
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:483
 msgctxt "MainWindowGUI|"
 msgid "&Open"
 msgstr "開啟(&O)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:482
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:484
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr "儲存(&S)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:483
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:485
 msgctxt "MainWindowGUI|"
 msgid "Save &As"
 msgstr "另存為(&A)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:484
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:486
 msgctxt "MainWindowGUI|"
 msgid "Video"
 msgstr "影片"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:485
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:487
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:486
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:488
 msgctxt "MainWindowGUI|"
 msgid "&Quit"
 msgstr "離開(&Q)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:487
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:489
 msgctxt "MainWindowGUI|"
 msgid "&Undo"
 msgstr "復原(&U)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:488
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:490
 msgctxt "MainWindowGUI|"
 msgid "Re&do"
 msgstr "重做(&D)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:489
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:491
 msgctxt "MainWindowGUI|"
 msgid "Cu&t"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:490
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:492
 msgctxt "MainWindowGUI|"
 msgid "&Copy"
 msgstr "複製(&C)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:491
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
 msgctxt "MainWindowGUI|"
 msgid "&Paste"
 msgstr "貼上(&P)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:492
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
 msgstr "跳到畫格(&G)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
 msgstr "設定 Stopmotion(&C)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
 msgctxt "MainWindowGUI|"
 msgid "What's &This"
 msgstr "這是什麼(&T)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
 msgctxt "MainWindowGUI|"
 msgid "&About"
 msgstr "關於(&A)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:499
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
 msgstr "畫格編號："
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
 msgstr "跳到畫格："
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:558
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:560
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
 msgstr "<h4>新增</h4> <p>建立<em>新的</em>專案。</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:563
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:565
 msgctxt "MainWindowGUI|"
 msgid "New project"
 msgstr "新增專案"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:567
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:569
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:571
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:573
 msgctxt "MainWindowGUI|"
 msgid "Open project"
 msgstr "開啟專案"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:575
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:577
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -759,96 +746,96 @@ msgid ""
 "automatically be saved to the previously selected file.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:581
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:583
 msgctxt "MainWindowGUI|"
 msgid "Save project"
 msgstr "儲存專案"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:585
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:587
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
 "project file.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:590
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:592
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
 msgstr "另存專案為"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:594
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:596
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
 "be given a wizard to guide you."
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:601
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
 "project.</p>You will be given a wizard to guide you."
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:608
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:610
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
 msgstr "<h4>離開</h4><p>會<em>離開</em>本程式。</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:612
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
 msgctxt "MainWindowGUI|"
 msgid "Quit"
 msgstr "離開"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:618
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:620
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
 "several time to undo earlier operations.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:623
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
 msgctxt "MainWindowGUI|"
 msgid "Undo"
 msgstr "復原"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:627
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:629
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
 "several times to redo several operations.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:632
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:634
 msgctxt "MainWindowGUI|"
 msgid "Redo"
 msgstr "重做"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:636
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:638
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
 "adds them to the clipboard so that you can paste them in somewhere else.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:641
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:643
 msgctxt "MainWindowGUI|"
 msgid "Cut"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:645
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:647
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
 "can then paste them in another place.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:650
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:652
 msgctxt "MainWindowGUI|"
 msgid "Copy"
 msgstr "複製"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:654
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:656
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Paste</h4> <p><em>Pastes</em> the frames which are currently in the "
@@ -857,60 +844,60 @@ msgid ""
 "</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:660
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:662
 msgctxt "MainWindowGUI|"
 msgid "Paste"
 msgstr "貼上"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:664
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:666
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
 "you can choose a frame you want to <em>go to</em>.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:669
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:671
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
 msgstr "跳到畫格"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:673
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:675
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
 "<em>configure</em> Stopmotion with various input and output devices.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:678
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:680
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
 msgstr "設定 Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:684
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
 "can be used to bring up helpful information like this.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:689
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
 msgctxt "MainWindowGUI|"
 msgid "What's This"
 msgstr "這是什麼"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:693
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:695
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
 "manual</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:697
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:699
 msgctxt "MainWindowGUI|"
 msgid "Help"
 msgstr "說明"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:701
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:703
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>About</h4> <p>This will display a small information box where you can "
@@ -918,33 +905,33 @@ msgid ""
 "excellent piece of software.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:707
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:709
 msgctxt "MainWindowGUI|"
 msgid "About"
 msgstr "關於"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:713
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:715
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
 "selected frame</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:720
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:722
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
 "also play animations in this window by pressing the <b>Play</b> button.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:727
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:729
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
 "program will jump to the specified frame</p> "
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:733
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:735
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame preferences menu</h4> <p>In this menu you can set preferences for "
@@ -952,14 +939,14 @@ msgid ""
 "etc.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:740
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:742
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
 "widgets you will need when working on stop motion animations are located.</p>"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:746
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:748
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameBar</h4> <p>In this area you can see the frames and scenes in the "
@@ -968,33 +955,46 @@ msgid ""
 "<b>x</b> and <b>z</b></p> "
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:760
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:762
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr "未儲存的變更"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:761
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:763
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr "有未儲存的變更。您要儲存嗎？"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:795
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:797
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr "選擇專案檔案"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:863
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:830
+#, fuzzy
+#| msgctxt "QtFrontend|"
+#| msgid "Could not copy file to workspace"
+msgctxt "MainWindowGUI|"
+msgid "Could not open the project"
+msgstr "無法複製檔案到作業空間"
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:881
+msgctxt "MainWindowGUI|"
+msgid "Could not save the project"
+msgstr ""
+
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr "另存為"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:941
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:917
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:968
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr "警告"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:891
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:918
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1003,19 +1003,19 @@ msgid ""
 "have set an encoder to use. Do you want to set it now?"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:926
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:953
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr "匯出為影片檔"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:942
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
 "to check your settings in the preferences menu?"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:956
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:983
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr "匯出為檔案"
@@ -1056,47 +1056,47 @@ msgctxt "PreferencesMenu|"
 msgid "Video &Device"
 msgstr "視訊裝置(&D)"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:71
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:72
 msgctxt "QtFrontend|"
 msgid "Please wait..."
 msgstr "請稍候..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:74
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:75
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
 msgstr "連線相機中..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:77
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:78
 msgctxt "QtFrontend|"
 msgid "Importing frames from disk"
 msgstr "從磁碟匯入畫格中"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:80
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:81
 msgctxt "QtFrontend|"
 msgid "Exporting..."
 msgstr "匯出中..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:83
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:84
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
 msgstr "回復專案中..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:86
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:87
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
 msgstr "正在儲存場景到磁碟上..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:90
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:91
 msgctxt "QtFrontend|"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:180
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:181
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
 msgstr "喪失毀損檔案"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:181
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:182
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1104,161 +1104,161 @@ msgid ""
 "Do you want to continue?"
 msgstr "檔案 %1 似乎已毀損，如果繼續的話會喪失它的內容。您要繼續嗎？"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:241
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:242
 msgctxt "QtFrontend|"
 msgid "vgrabbj"
 msgstr "vgrabbj"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:243
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:244
 msgctxt "QtFrontend|"
 msgid "The simplest setting. Fairly slow"
 msgstr "最簡單的設定值。有點慢。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:250
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:251
 msgctxt "QtFrontend|"
 msgid "vgrabbj VGA daemon"
 msgstr "vgrabbj VGA 伺服程式"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:252
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:253
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
 msgstr "將 vgrabbj 作為伺服程式啟動。速度很快。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:260
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:261
 msgctxt "QtFrontend|"
 msgid "uvccapture"
 msgstr "uvccapture"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:262
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:263
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
 msgstr "從 V4L2 裝置擷取"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:269
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:270
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:271
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:272
 msgctxt "QtFrontend|"
 msgid "Videodog."
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:278
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:279
 msgctxt "QtFrontend|"
 msgid "dvgrab"
 msgstr "dvgrab"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:280
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:281
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
 msgstr "從 DV-cam 擷取。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:296
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:297
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
 msgstr "從 jpeg 影像匯出到 mpeg1 影片"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:305
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:306
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
 msgstr "從 jpeg 影像匯出到 mpeg2 影片"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:314
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:323
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:331
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:315
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:324
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:332
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
 msgstr "從 jpeg 影像匯出到 mpeg4 影片"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:343
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:344
 msgctxt "QtFrontend|"
 msgid "Unsupported image file type"
 msgstr "不支援的影像檔類型"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:344
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
 msgctxt "QtFrontend|"
 msgid "Only JPeg image files can be added to the animation"
 msgstr "只能將 JPEG 影像檔案加入動畫"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:347
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
 msgctxt "QtFrontend|"
 msgid "The selected audio file could not be loaded"
 msgstr "所選的音訊檔案無法載入"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:349
 msgctxt "QtFrontend|"
 msgid "Perhaps it is corrupt."
 msgstr "它可能已毀損。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:352
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:353
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
 msgstr "無法開啟所選檔案供讀取"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:353
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:354
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "The file %1 could not be opened"
 msgstr "檔案 %1 無法開啟"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:357
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
 msgstr "無法複製檔案到作業空間"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:359
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr "複製以下檔案到工作區 (~/.stopmotion) 時失敗：%1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:362
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:363
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
 msgstr "初始化音效驅動失敗"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:363
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
 msgstr "在修正此問題之後聲音才能正常運作"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:367
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:368
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
 msgstr "寫入偏好設定失敗"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:368
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
 msgstr "無法將偏好設定寫入檔案：%1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:377
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:378
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
 msgstr "無法啟動 Stopmotion。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:378
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
 msgctxt "QtFrontend|"
 msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
 "running."
 msgstr "取得 command.log 的專屬鎖定時失敗。這或許代表 Stopmotion 已在執行中。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:382
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:387
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:383
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:388
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
 msgstr "無法讀取偏好設定檔案"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:383
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
 msgstr "偏好設定檔案 %1 不可讀。請修正它的檔案權限後再試一次。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:388
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:389
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1268,27 +1268,27 @@ msgstr ""
 "偏好設定檔案 %1 不是有效的 XML 偏好設定檔案。請修正它，或是刪除它重設設定之後"
 "再試一次。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:391
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
 msgctxt "QtFrontend|"
 msgid "Fatal"
 msgstr "嚴重錯誤"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:399
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
 msgstr "Stopmotion 扔出無法處理的例外狀況。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
 msgstr "請提出問題回報。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:406
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:407
 msgctxt "QtFrontend|"
 msgid "Warning"
 msgstr "警告"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:448
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:449
 msgctxt "QtFrontend|"
 msgid ""
 "A newer version of the preferences file with few more default\n"
@@ -1296,7 +1296,7 @@ msgid ""
 " will be saved in ~/.stopmotion/preferences.xml.OLD)"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:455
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:456
 msgctxt "QtFrontend|"
 msgid "Question"
 msgstr "問題"
@@ -1469,6 +1469,17 @@ msgid ""
 msgstr ""
 "播放只在擷取工具作為伺服程式執行時才能正常運作。請到偏好設定選單 (CTRL+P) 切"
 "換成將影像擷取作為伺服程式執行。"
+
+#~ msgctxt "LanguageHandler|"
+#~ msgid "English"
+#~ msgstr "英語"
+
+#~ msgctxt ""
+#~ "LanguageHandler|This should be translated to the name of the language you "
+#~ "are translating to, in that language. Example: English = Deutsch (Deutsch "
+#~ "is \"German\" in German)"
+#~ msgid "English"
+#~ msgstr "正體中文"
 
 #~ msgctxt "MainWindowGUI|"
 #~ msgid "Do&n't save"
