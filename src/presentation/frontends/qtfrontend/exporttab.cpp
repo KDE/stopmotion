@@ -168,15 +168,15 @@ void ExportTab::initialize()
 	int numEncoders = pref->getPreference("numEncoders", 0);
 	encoderTable->setRowCount(numEncoders);
 	for (int i = 0; i < numEncoders; ++i) {
-		Preference name(QStringLiteral("encoderName%1").arg(i).toLatin1().constData(),"");
+		Preference name(QStringLiteral("encoderName%1").arg(i).toUtf8().constData(),"");
 		encoderTable->setItem(i, 0, new QTableWidgetItem(QString::fromUtf8(name.get())) );
-		Preference desc(QStringLiteral("encoderDescription%1").arg(i).toLatin1().constData(),"");
+		Preference desc(QStringLiteral("encoderDescription%1").arg(i).toUtf8().constData(),"");
 		encoderTable->setItem(i, 1, new QTableWidgetItem(QString::fromUtf8(desc.get())) );
-		Preference start(QStringLiteral("startEncoder%1").arg(i).toLatin1().constData(), "");
+		Preference start(QStringLiteral("startEncoder%1").arg(i).toUtf8().constData(), "");
 		startEncoderStrings.push_back(QString::fromUtf8(start.get()));
-		Preference stop(QStringLiteral("stopEncoder%1").arg(i).toLatin1().constData(), "");
+		Preference stop(QStringLiteral("stopEncoder%1").arg(i).toUtf8().constData(), "");
 		stopEncoderStrings.push_back(QString::fromUtf8(stop.get()));
-		Preference output(QStringLiteral("outputFile%1").arg(i).toLatin1().constData(), "" );
+		Preference output(QStringLiteral("outputFile%1").arg(i).toUtf8().constData(), "" );
 		outputFiles.push_back( QString::fromUtf8(output.get()));
 	}
 
@@ -201,11 +201,11 @@ void ExportTab::apply() {
 	int numEncoders = prefs->getPreference("numEncoders", -1);
  	if (numEncoders > 0) {
 		for (int i = 0; i < numEncoders; ++i) {
-			prefs->removePreference(QStringLiteral("encoderName%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QStringLiteral("encoderDescription%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QStringLiteral("startEncoder%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QStringLiteral("stopEncoder%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QStringLiteral("outputFile%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("encoderName%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("encoderDescription%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("startEncoder%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("stopEncoder%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("outputFile%1").arg(i).toUtf8().constData());
 		}
 	}
 
@@ -215,16 +215,16 @@ void ExportTab::apply() {
 		prefs->setPreference("numEncoders", numEncoders);
 		prefs->setPreference("activeEncoder", encoderTable->currentRow());
 		for (int i = 0; i < numEncoders; ++i) {
-			prefs->setPreference(QStringLiteral("encoderName%1").arg(i).toLatin1().constData(),
-					encoderTable->item(i, 0)->text().toLatin1().constData());
-			prefs->setPreference(QStringLiteral("encoderDescription%1").arg(i).toLatin1().constData(),
-					encoderTable->item(i, 1)->text().toLatin1().constData());
-			prefs->setPreference(QStringLiteral("startEncoder%1").arg(i).toLatin1().constData(),
-					startEncoderStrings[i].toLatin1().constData());
-			prefs->setPreference(QStringLiteral("stopEncoder%1").arg(i).toLatin1().constData(),
-					stopEncoderStrings[i].toLatin1().constData());
-			prefs->setPreference(QStringLiteral("outputFile%1").arg(i).toLatin1().constData(),
-					outputFiles[i].toLatin1().constData());
+			prefs->setPreference(QStringLiteral("encoderName%1").arg(i).toUtf8().constData(),
+					encoderTable->item(i, 0)->text().toUtf8().constData());
+			prefs->setPreference(QStringLiteral("encoderDescription%1").arg(i).toUtf8().constData(),
+					encoderTable->item(i, 1)->text().toUtf8().constData());
+			prefs->setPreference(QStringLiteral("startEncoder%1").arg(i).toUtf8().constData(),
+					startEncoderStrings[i].toUtf8().constData());
+			prefs->setPreference(QStringLiteral("stopEncoder%1").arg(i).toUtf8().constData(),
+					stopEncoderStrings[i].toUtf8().constData());
+			prefs->setPreference(QStringLiteral("outputFile%1").arg(i).toUtf8().constData(),
+					outputFiles[i].toUtf8().constData());
 		}
 	} else {
 		prefs->setPreference("numEncoders", -1);

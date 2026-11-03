@@ -239,11 +239,11 @@ bool FrameView::on() {
 	int activeCmd = prefs->getPreference("activedevice", 0);
 
 	Preference prepoll(QStringLiteral("importprepoll%1")
-			.arg(activeCmd).toLatin1().constData(), "");
+			.arg(activeCmd).toUtf8().constData(), "");
 	Preference startDaemon(QStringLiteral("importstartdaemon%1")
-			.arg(activeCmd).toLatin1().constData(), "");
+			.arg(activeCmd).toUtf8().constData(), "");
 	Preference stopDaemon(QStringLiteral("importstopdaemon%1")
-			.arg(activeCmd).toLatin1().constData(), "");
+			.arg(activeCmd).toUtf8().constData(), "");
 
 	bool prepollRequiresDevice = strstr(prepoll.get(), DEVICE_TOKEN);
 	bool startDaemonRequiresDevice = strstr(startDaemon.get(), DEVICE_TOKEN);
@@ -252,7 +252,7 @@ bool FrameView::on() {
 		int activeDev = prefs->getPreference("activeVideoDevice", -1);
 		if (0 <= activeDev) {
 			Preference deviceP(QStringLiteral("device%1")
-					.arg(activeDev).toLatin1().constData(), "");
+					.arg(activeDev).toUtf8().constData(), "");
 			device = QString::fromUtf8(deviceP.get()).trimmed();
 		}
 		if (device.isEmpty()) {
@@ -267,7 +267,7 @@ bool FrameView::on() {
 
 	bool isCameraReady = true;
 	grabber = std::make_unique<CommandLineGrabber>(capturedFile.path());
-	if ( !grabber->setPrePollCommand(pre.toLatin1().constData()) ) {
+	if ( !grabber->setPrePollCommand(pre.toLocal8Bit().constData()) ) {
 		QMessageBox::warning(this, tr("Warning"), tr(
 					"Pre poll command does not exists"),
 					QMessageBox::Ok);
@@ -277,7 +277,7 @@ bool FrameView::on() {
 
 	if (isProcess) {
 		QString sd = QString::fromUtf8(startDaemon.get()).replace(QLatin1String(DEVICE_TOKEN), device);
-		if ( !grabber->setStartCommand(sd.toLatin1().constData()) ) {
+		if ( !grabber->setStartCommand(sd.toLocal8Bit().constData()) ) {
 			DomainFacade::getFacade()->getFrontend()->hideProgress();
 			QMessageBox::warning(this, tr("Warning"), tr(
 						"You do not have the given grabber installed on your system"),

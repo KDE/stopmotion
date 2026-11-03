@@ -146,18 +146,18 @@ void ImportTab::initializeImportValues()
 	int numImports = pref->getPreference("numberofimports", 0);
 	deviceSelectionTable->setRowCount(numImports);
 	for (int i = 0; i < numImports; ++i) {
-		Preference name(QStringLiteral("importname%1").arg(i).toLatin1().constData(), "");
+		Preference name(QStringLiteral("importname%1").arg(i).toUtf8().constData(), "");
 		deviceSelectionTable->setItem( i, 0, new QTableWidgetItem(QString::fromUtf8(name.get())) );
-		Preference desc(QStringLiteral("importdescription%1").arg(i).toLatin1().constData(), "");
+		Preference desc(QStringLiteral("importdescription%1").arg(i).toUtf8().constData(), "");
 		deviceSelectionTable->setItem( i, 1, new QTableWidgetItem(QString::fromUtf8(desc.get())) );
 
-		Preference prepoll(QStringLiteral("importprepoll%1").arg(i).toLatin1().constData(), "");
+		Preference prepoll(QStringLiteral("importprepoll%1").arg(i).toUtf8().constData(), "");
 		prePollStrings.push_back(QString::fromUtf8(prepoll.get()));
 
-		Preference start(QStringLiteral("importstartdaemon%1").arg(i).toLatin1().constData(), "");
+		Preference start(QStringLiteral("importstartdaemon%1").arg(i).toUtf8().constData(), "");
 		startDaemonStrings.push_back(QString::fromUtf8(start.get()));
 
-		Preference stop(QStringLiteral("importstopdaemon%1").arg(i).toLatin1().constData(), "");
+		Preference stop(QStringLiteral("importstopdaemon%1").arg(i).toUtf8().constData(), "");
 		stopDaemonStrings.push_back(QString::fromUtf8(stop.get()));
 	}
 
@@ -175,11 +175,11 @@ void ImportTab::apply() {
 	int numImports = prefs->getPreference("numberofimports", -1);
  	if (numImports > 0) {
 		for (int i = 0; i < numImports; ++i) {
-			prefs->removePreference(QStringLiteral("importname%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QStringLiteral("importdescription%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QStringLiteral("importprepoll%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QStringLiteral("importstartdaemon%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QStringLiteral("importstopdaemon%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("importname%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("importdescription%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("importprepoll%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("importstartdaemon%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("importstopdaemon%1").arg(i).toUtf8().constData());
 		}
 	}
 
@@ -188,16 +188,16 @@ void ImportTab::apply() {
 		prefs->setPreference("numberofimports", numImports);
 		prefs->setPreference("activedevice", deviceSelectionTable->currentRow());
 		for (int i = 0; i < numImports; ++i) {
-			prefs->setPreference(QStringLiteral("importname%1").arg(i).toLatin1().constData(),
-					deviceSelectionTable->item(i, 0)->text().toLatin1().constData());
-			prefs->setPreference(QStringLiteral("importdescription%1").arg(i).toLatin1().constData(),
-					deviceSelectionTable->item(i, 1)->text().toLatin1().constData());
-			prefs->setPreference(QStringLiteral("importprepoll%1").arg(i).toLatin1().constData(),
-					prePollStrings[i].toLatin1().constData());
-			prefs->setPreference(QStringLiteral("importstartdaemon%1").arg(i).toLatin1().constData(),
-					startDaemonStrings[i].toLatin1().constData());
-			prefs->setPreference(QStringLiteral("importstopdaemon%1").arg(i).toLatin1().constData(),
-					stopDaemonStrings[i].toLatin1().constData());
+			prefs->setPreference(QStringLiteral("importname%1").arg(i).toUtf8().constData(),
+					deviceSelectionTable->item(i, 0)->text().toUtf8().constData());
+			prefs->setPreference(QStringLiteral("importdescription%1").arg(i).toUtf8().constData(),
+					deviceSelectionTable->item(i, 1)->text().toUtf8().constData());
+			prefs->setPreference(QStringLiteral("importprepoll%1").arg(i).toUtf8().constData(),
+					prePollStrings[i].toUtf8().constData());
+			prefs->setPreference(QStringLiteral("importstartdaemon%1").arg(i).toUtf8().constData(),
+					startDaemonStrings[i].toUtf8().constData());
+			prefs->setPreference(QStringLiteral("importstopdaemon%1").arg(i).toUtf8().constData(),
+					stopDaemonStrings[i].toUtf8().constData());
 		}
 	} else {
 		prefs->setPreference("numberofimports", -1);
