@@ -6,6 +6,7 @@
 #ifndef WORKSPACEFILE_H_
 #define WORKSPACEFILE_H_
 
+#include <string>
 #include <cstdint>
 
 /**
@@ -16,8 +17,8 @@
  * commands.
  */
 class WorkspaceFile {
-	char* fullPath;
-	const char* namePart;
+	std::string fullPath;
+	std::string::size_type nameStart = 0;
 	void setFilename(const char* basename, bool inFrames = false);
 public:
 	enum NewModelFile { newModelFile };
@@ -27,8 +28,6 @@ public:
 	enum PreferencesFile { preferencesFile };
 	enum PreferencesFileOld { preferencesFileOld };
 	enum AndClear { doNotClear, andClear };
-	WorkspaceFile(const WorkspaceFile&);
-	WorkspaceFile& operator=(const WorkspaceFile&);
 	/**
 	 * Creates a WorkspaceFile referring to no file. Both @ref basename and
 	 * @ref path will return null until a @ref TemporaryWorkspaceFile is
@@ -157,8 +156,8 @@ public:
  * To be used by the facade in front of the undo system.
  */
 class TemporaryWorkspaceFile {
-	char* fullPath;
-	const char* namePart;
+	std::string fullPath;
+	std::string::size_type nameStart = 0;
 	bool toBeDeleted;
 	TemporaryWorkspaceFile(const TemporaryWorkspaceFile&) = delete;
 	TemporaryWorkspaceFile& operator=(const TemporaryWorkspaceFile&) = delete;
@@ -211,26 +210,26 @@ public:
 	 * @return Ownership is not returned.
 	 */
 	const char* path() const {
-		return fullPath;
+		return fullPath.empty() ? nullptr : fullPath.c_str();
 	}
 	/**
 	 * Returns the basename (with extension) of the file.
 	 * @return Ownership is not returned.
 	 */
 	const char* basename() const {
-		return namePart;
+		return fullPath.empty() ? nullptr : fullPath.c_str() + nameStart;
 	}
 };
 
 class ExportDirectory {
-	char* p;
+	std::string p;
 public:
 	ExportDirectory(const ExportDirectory&) = delete;
 	ExportDirectory& operator=(const ExportDirectory&) = delete;
 	ExportDirectory();
 	~ExportDirectory();
 	const char* path() const {
-		return p;
+		return p.c_str();
 	}
 	static void makeEmpty();
 };

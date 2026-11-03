@@ -42,35 +42,26 @@ std::ostream& operator<<(std::ostream& s, WorkspacePathFrames) {
 /**
  * Gets a fresh filename in the workspace that doesn't clash with any other
  * file.
- * @param [out] path Will get a @code{.cpp} new char[] @endcode containing
- * the full path to the new file.
- * @param [out] namePart Will get a pointer into @a path that points to the
- * basename part of the path.
+ * @param [out] path Will get the full path to the new file.
+ * @param [out] nameStart Will get the index of the basename within @a path.
  * @param [in] extension Characters that must come at the end of the filename,
  * for example ".jpg".
  */
-void getFreshFilename(char*& path, const char*& namePart,
+void getFreshFilename(std::string& path, std::string::size_type& nameStart,
 		const char* extension) {
-	std::string pathOut;
 	std::stringstream p;
-	int indexOfName = 0;
-	int size = 0;
 	do {
 		p.str("");
 		p << workspacePathFrames;
-		indexOfName = p.str().length();
+		nameStart = p.str().length();
 		p.fill('0');
 		p.width(8);
 		p << nextFileNumber();
 		if (extension)
 			p << extension;
-		pathOut = p.str();
-		size = pathOut.length() + 1;
+		path = p.str();
 		// keep going until we find a filename that doesn't already exist.
-	} while (0 == access(pathOut.c_str(), F_OK));
-	path = new char[size];
-	strncpy(path, pathOut.c_str(), size);
-	namePart = path + indexOfName;
+	} while (0 == access(path.c_str(), F_OK));
 }
 
 char upper(char c) {
@@ -136,33 +127,22 @@ const WorkspaceFileType& WorkspaceFileType::sound() {
 }
 
 /**
- * Sets @c fullPath and namePart.
+ * Sets @c fullPath and @c nameStart.
  * @param basename The name of the file.
  * @param inFrames True for a sound or image file.
  */
 void WorkspaceFile::setFilename(const char* basename, bool inFrames) {
-	namePart = nullptr;
-	delete[] fullPath;
-	fullPath = nullptr;
 	std::stringstream p;
-	if (p.fail())
-		throw UiException(UiException::failedToCopyFilesToWorkspace);
 	if (inFrames) {
 		p << workspacePathFrames;
 	} else {
 		p << workspacePath;
 	}
-	int indexOfName = p.tellp();
+	nameStart = p.tellp();
 	p << basename;
-	int size = p.tellp();
 	if (p.fail())
 		throw UiException(UiException::failedToCopyFilesToWorkspace);
-	fullPath = new char[size + 1];
-	p.read(fullPath, size);
-	if (p.fail())
-		throw UiException(UiException::failedToCopyFilesToWorkspace);
-	fullPath[size] = '\0';
-	namePart = fullPath + indexOfName;
+	fullPath = p.str();
 }
 
 void WorkspaceFile::ensureStopmotionDirectoriesExist(AndClear clear) {
@@ -203,82 +183,51 @@ void WorkspaceFile::nextSoundNumber() {
 	++soundNumber;
 }
 
-WorkspaceFile::WorkspaceFile()
-		: fullPath(nullptr), namePart(nullptr) {
+WorkspaceFile::WorkspaceFile() {
 }
 
-WorkspaceFile& WorkspaceFile::operator=(const WorkspaceFile& other) {
-	if (this != &other && other.fullPath) {
-		int nameStart = other.namePart - other.fullPath;
-		size_t length = 1 + nameStart + strlen(other.namePart);
-		char* buffer = new char[length];
-		delete[] fullPath;
-		fullPath = buffer;
-		strncpy(fullPath, other.fullPath, length);
-		namePart = fullPath + nameStart;
-	}
-	return *this;
-}
-
-WorkspaceFile::WorkspaceFile(const WorkspaceFile& t)
-		: fullPath(nullptr), namePart(nullptr) {
-	*this = t;
-}
-
-WorkspaceFile::WorkspaceFile(const char* name)
-		: fullPath(nullptr), namePart(nullptr) {
+WorkspaceFile::WorkspaceFile(const char* name) {
 	setFilename(name, true);
 }
 
-WorkspaceFile::WorkspaceFile(NewModelFile)
-		: fullPath(nullptr), namePart(nullptr) {
+WorkspaceFile::WorkspaceFile(NewModelFile) {
 	setFilename("new.dat");
 }
 
-WorkspaceFile::WorkspaceFile(CurrentModelFile)
-		: fullPath(nullptr), namePart(nullptr) {
+WorkspaceFile::WorkspaceFile(CurrentModelFile) {
 	setFilename("current.dat");
 }
 
-WorkspaceFile::WorkspaceFile(CommandLogFile)
-		: fullPath(nullptr), namePart(nullptr) {
+WorkspaceFile::WorkspaceFile(CommandLogFile) {
 	setFilename("command.log");
 }
 
-WorkspaceFile::WorkspaceFile(CapturedImage)
-	: fullPath(nullptr), namePart(nullptr) {
+WorkspaceFile::WorkspaceFile(CapturedImage) {
 	setFilename("capturedfile.jpg");
 }
 
-WorkspaceFile::WorkspaceFile(PreferencesFile)
-	: fullPath(nullptr), namePart(nullptr) {
+WorkspaceFile::WorkspaceFile(PreferencesFile) {
 	setFilename("preferences.xml");
 }
 
-WorkspaceFile::WorkspaceFile(PreferencesFileOld)
-	: fullPath(nullptr), namePart(nullptr) {
+WorkspaceFile::WorkspaceFile(PreferencesFileOld) {
 	setFilename("preferences.xml.OLD");
 }
 
 WorkspaceFile::~WorkspaceFile() {
-	delete[] fullPath;
 }
 
 const char* WorkspaceFile::basename() const {
-	return namePart;
+	return fullPath.empty() ? nullptr : fullPath.c_str() + nameStart;
 }
 
 const char* WorkspaceFile::path() const {
-	return fullPath;
+	return fullPath.empty() ? nullptr : fullPath.c_str();
 }
 
 void WorkspaceFile::swap(WorkspaceFile& w) {
-	char* t = w.fullPath;
-	w.fullPath = fullPath;
-	fullPath = t;
-	const char* t0 = w.namePart;
-	w.namePart = namePart;
-	namePart = t0;
+	fullPath.swap(w.fullPath);
+	std::swap(nameStart, w.nameStart);
 }
 
 void TemporaryWorkspaceFile::copyToWorkspace(const char* filename,
@@ -286,14 +235,10 @@ void TemporaryWorkspaceFile::copyToWorkspace(const char* filename,
 	if (!type.isType(filename)) {
 		throw UiException(UiException::unsupportedImageType);
 	}
-	getFreshFilename(fullPath, namePart, type.preferredExtension(filename));
+	getFreshFilename(fullPath, nameStart, type.preferredExtension(filename));
 	toBeDeleted = false;
-	if (!Util::copyFile(fullPath, filename)) {
-		// The destructor will not run if we are called from a constructor
-		unlink(fullPath);
-		delete[] fullPath;
-		fullPath = nullptr;
-		namePart = nullptr;
+	if (!Util::copyFile(fullPath.c_str(), filename)) {
+		fullPath.clear();
 		throw UiException(UiException::failedToCopyFilesToWorkspace, filename);
 	}
 	toBeDeleted = true;
@@ -301,14 +246,12 @@ void TemporaryWorkspaceFile::copyToWorkspace(const char* filename,
 
 TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename,
 		const WorkspaceFileType& type)
-		: fullPath(nullptr), namePart(nullptr), toBeDeleted(false) {
+		: toBeDeleted(false) {
 	// not a totally foolproof test...
 	if (strstr(filename, "/.stopmotion/frames/") != nullptr) {
 		// Already a workspace file; no need to copy it again
-		int size = strlen(filename) + 1;
-		fullPath = new char[size];
-		strncpy(fullPath, filename, size);
-		namePart = strrchr(fullPath,'/') + 1;
+		fullPath = filename;
+		nameStart = fullPath.rfind('/') + 1;
 	} else {
 		copyToWorkspace(filename, type);
 	}
@@ -316,30 +259,24 @@ TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename,
 
 TemporaryWorkspaceFile::TemporaryWorkspaceFile(const char* filename,
 		const WorkspaceFileType& type, ForceCopy)
-		: fullPath(nullptr), namePart(nullptr), toBeDeleted(false) {
+		: toBeDeleted(false) {
 	copyToWorkspace(filename, type);
 }
 
 TemporaryWorkspaceFile::~TemporaryWorkspaceFile() {
 	if (toBeDeleted) {
-		unlink(fullPath);
+		unlink(fullPath.c_str());
 	}
-	delete[] fullPath;
-	fullPath = nullptr;
-	namePart = nullptr;
 }
 
-ExportDirectory::ExportDirectory() : p(nullptr) {
+ExportDirectory::ExportDirectory() {
 	std::stringstream s;
 	s << getenv("HOME");
 	s << "/.stopmotion/export/";
-	std::string pathOut = s.str();
-	p = new char[pathOut.length() + 1];
-	strcpy(p, pathOut.c_str());
+	p = s.str();
 }
 
 ExportDirectory::~ExportDirectory() {
-	delete[] p;
 }
 
 void ExportDirectory::makeEmpty() {
