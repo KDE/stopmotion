@@ -6,9 +6,9 @@
 #ifndef DEVICETAB_H
 #define DEVICETAB_H
 
-#include <qobjectdefs.h>
-#include <qstring.h>
-#include <qwidget.h>
+#include <QObject>
+#include <QString>
+#include <QWidget>
 #include <vector>
 
 class QTableWidget;

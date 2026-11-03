@@ -8,7 +8,7 @@
 
 #include <QString>
 
-#include <src/technical/util.h>
+#include "src/technical/util.h"
 #include <unistd.h>
 #include <cstdlib>
 #include <cstring>

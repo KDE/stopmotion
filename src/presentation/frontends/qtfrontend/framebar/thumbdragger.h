@@ -6,7 +6,7 @@
 #ifndef THUMBDRAGGER_H_
 #define THUMBDRAGGER_H_
 
-#include <qdrag.h>
+#include <QDrag>
 
 class ThumbView;
 

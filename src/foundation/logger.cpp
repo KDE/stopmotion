@@ -6,8 +6,8 @@
 #include "logger.h"
 
 #include <cstdarg>
-#include <qdebug.h>
-#include <qstring.h>
+#include <QDebug>
+#include <QString>
 #include <QtCore/qglobal.h>
 
 Logger Logger::get() {
