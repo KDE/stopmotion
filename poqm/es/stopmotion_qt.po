@@ -1,13 +1,13 @@
 # Spanish translations for stopmotion_qt.po package.
-# Copyright (C) 2021-2025 This file is copyright:
+# Copyright (C) 2021-2026 This file is copyright:
 # This file is distributed under the same license as the stopmotion package.
 #
-# SPDX-FileCopyrightText: 2021, 2025 Eloy Cuadra <ecuadra@eloihr.net>
+# SPDX-FileCopyrightText: 2021, 2025-2026 Eloy Cuadra <ecuadra@eloihr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: stopmotion_qt\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"PO-Revision-Date: 2025-12-08 12:01+0100\n"
+"PO-Revision-Date: 2026-11-03 00:30+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
 "Language: es\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 21.04.0\n"
+"X-Generator: Lokalize 26.08.2\n"
 
 #: src/application/externalcommand.cpp:31
 msgctxt "ExternalCommand|"
@@ -1066,17 +1066,14 @@ msgid "Choose project file"
 msgstr "Escoger archivo de proyecto"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:830
-#, fuzzy
-#| msgctxt "QtFrontend|"
-#| msgid "Could not copy file to workspace"
 msgctxt "MainWindowGUI|"
 msgid "Could not open the project"
-msgstr "No se ha podido copiar el archivo en el espacio de trabajo"
+msgstr "No se ha podido abrir el proyecto"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:881
 msgctxt "MainWindowGUI|"
 msgid "Could not save the project"
-msgstr ""
+msgstr "No se ha podido guardar el proyecto"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
 msgctxt "MainWindowGUI|"
@@ -1608,14 +1605,3 @@ msgstr ""
 "La reproducción solo funciona en la actualidad cuando ejecuta la capturadora "
 "como demonio. Vaya al menú de preferencias (Ctrl+P) para cambiar la "
 "ejecución de la capturadora de imágenes como demonio."
-
-#~ msgctxt "LanguageHandler|"
-#~ msgid "English"
-#~ msgstr "Inglés"
-
-#~ msgctxt ""
-#~ "LanguageHandler|This should be translated to the name of the language you "
-#~ "are translating to, in that language. Example: English = Deutsch (Deutsch "
-#~ "is \"German\" in German)"
-#~ msgid "English"
-#~ msgstr "Inglés"

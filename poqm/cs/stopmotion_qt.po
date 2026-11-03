@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2026-09-02 20:23+0200\n"
+"PO-Revision-Date: 2026-11-02 23:57+0100\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Lokalize 26.08.2\n"
 "X-Qt-Contexts: true\n"
 
 #: src/application/externalcommand.cpp:31
@@ -1057,17 +1057,14 @@ msgid "Choose project file"
 msgstr "Vyberte soubor projektu"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:830
-#, fuzzy
-#| msgctxt "QtFrontend|"
-#| msgid "Could not copy file to workspace"
 msgctxt "MainWindowGUI|"
 msgid "Could not open the project"
-msgstr "Nelze zkopírovat soubor do pracovního prostoru"
+msgstr "Projekt se nepodařilo otevřít"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:881
 msgctxt "MainWindowGUI|"
 msgid "Could not save the project"
-msgstr ""
+msgstr "Projekt se nepodařilo uložit"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
 msgctxt "MainWindowGUI|"

@@ -1053,17 +1053,14 @@ msgid "Choose project file"
 msgstr "არჩიეთ პროექტის ფაილი"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:830
-#, fuzzy
-#| msgctxt "QtFrontend|"
-#| msgid "Could not copy file to workspace"
 msgctxt "MainWindowGUI|"
 msgid "Could not open the project"
-msgstr "შეუძლებელია ფაილის კოპირება სამუშაო სივრცეში"
+msgstr "პროექტის გახსნა შეუძლებელია"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:881
 msgctxt "MainWindowGUI|"
 msgid "Could not save the project"
-msgstr ""
+msgstr "პროექტის შენახვა შეუძლებელია"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
 msgctxt "MainWindowGUI|"

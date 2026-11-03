@@ -1,9 +1,9 @@
-# SPDX-FileCopyrightText: 2021, 2024 Freek de Kruijf <freekdekruijf@kde.nl>
+# SPDX-FileCopyrightText: 2021, 2024, 2026 Freek de Kruijf <freekdekruijf@kde.nl>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2024-01-12 11:12+0100\n"
-"Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
+"PO-Revision-Date: 2026-11-02 12:55+0100\n"
+"Last-Translator: freek <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 25.04.3\n"
 
 #: src/application/externalcommand.cpp:31
 msgctxt "ExternalCommand|"
@@ -1061,17 +1061,14 @@ msgid "Choose project file"
 msgstr "Projectbestand kiezen"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:830
-#, fuzzy
-#| msgctxt "QtFrontend|"
-#| msgid "Could not copy file to workspace"
 msgctxt "MainWindowGUI|"
 msgid "Could not open the project"
-msgstr "Kon bestand niet naar werkruimte kopiëren"
+msgstr "Kon het project niet openen"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:881
 msgctxt "MainWindowGUI|"
 msgid "Could not save the project"
-msgstr ""
+msgstr "Kon het project niet opslaan"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
 msgctxt "MainWindowGUI|"

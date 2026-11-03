@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: stopmotion_qt\n"
-"PO-Revision-Date: 2026-10-10 12:22+0200\n"
+"PO-Revision-Date: 2026-11-02 07:45+0200\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -1052,17 +1052,14 @@ msgid "Choose project file"
 msgstr "Выбор файла проекта"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:830
-#, fuzzy
-#| msgctxt "QtFrontend|"
-#| msgid "Could not copy file to workspace"
 msgctxt "MainWindowGUI|"
 msgid "Could not open the project"
-msgstr "Не удалось скопировать файл в рабочую папку"
+msgstr "Не удалось открыть проект"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:881
 msgctxt "MainWindowGUI|"
 msgid "Could not save the project"
-msgstr ""
+msgstr "Не удалось сохранить проект"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
 msgctxt "MainWindowGUI|"
