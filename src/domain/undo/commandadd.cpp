@@ -5,8 +5,6 @@
 #include "commandadd.h"
 
 #include <cassert>
-#include <cstdlib>
-#include <new>
 #include <memory>
 
 #include "commandremove.h"
@@ -47,25 +45,18 @@ void CommandAdd::accept(FileNameVisitor& v) const {
 }
 
 CommandAddFactory::Parameters::Parameters(int scene, int frame, int count)
-		: sc(scene), fr(frame), frameCount(count), twfs(nullptr), twfCount(0),
-		  parameterCount(0) {
-	twfs = static_cast<TemporaryWorkspaceFile*>(malloc(
-			frameCount * sizeof(TemporaryWorkspaceFile)));
+		: sc(scene), fr(frame), frameCount(count), parameterCount(0) {
+	twfs.reserve(frameCount);
 }
 
 CommandAddFactory::Parameters::~Parameters() {
-	for (int i = 0; i != twfCount; ++i) {
-		twfs[i].~TemporaryWorkspaceFile();
-	}
-	free(twfs);
 }
 
 const char* CommandAddFactory::Parameters::addFrame(const char* filename) {
-	assert (twfCount != frameCount);
-	TemporaryWorkspaceFile* p = twfs + twfCount;
-	new (p) TemporaryWorkspaceFile(filename, WorkspaceFileType::image());
-	++twfCount;
-	return p->path();
+	assert(static_cast<int32_t>(twfs.size()) != frameCount);
+	twfs.push_back(std::make_unique<TemporaryWorkspaceFile>(filename,
+			WorkspaceFileType::image()));
+	return twfs.back()->path();
 }
 
 int32_t CommandAddFactory::Parameters::getInteger(int32_t, int32_t) {
@@ -85,12 +76,12 @@ void CommandAddFactory::Parameters::getString(std::string& out,
 	assert(3 <= parameterCount);
 	int index = parameterCount - 3;
 	++parameterCount;
-	out.assign(twfs[index].basename());
+	out.assign(twfs[index]->basename());
 }
 
 void CommandAddFactory::Parameters::retainFiles() {
-	for (int i = 0; i != twfCount; ++i) {
-		twfs[i].retainFile();
+	for (auto& twf : twfs) {
+		twf->retainFile();
 	}
 }
 

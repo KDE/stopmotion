@@ -49,8 +49,7 @@ public:
 		int32_t sc;
 		int32_t fr;
 		int32_t frameCount;
-		TemporaryWorkspaceFile* twfs;
-		int32_t twfCount;
+		std::vector<std::unique_ptr<TemporaryWorkspaceFile>> twfs;
 		int32_t parameterCount;
 	public:
 		Parameters(int scene, int frame, int count);
