@@ -8,18 +8,25 @@ SPDX-License-Identifier: CC0-1.0
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0-or-later</project_license>
   <name>Stopmotion</name>
+  <name xml:lang="ca">Stopmotion</name>
   <summary>Create stop-motion animations</summary>
+  <summary xml:lang="ca">Creació d'animacions stop-motion</summary>
   <description>
     <p>
       Stopmotion is a program to create stop-motion animations. It captures
       the frames from a camera, shows the previous frames on top of the live
       image to place the objects, and plays the animation back.
     </p>
+    <p xml:lang="ca">Stopmotion és un programa per a crear animacions stop-motion. Captura els fotogrames d'una càmera, mostra els fotogrames anteriors a la part superior de la imatge en viu per col·locar els objectes i reprodueix l'animació.</p>
     <ul>
       <li>Capture frames from a webcam or import existing images</li>
+      <li xml:lang="ca">Captura fotogrames des d'una càmera web o importa imatges existents</li>
       <li>Onion skinning, differentiation and playback modes</li>
+      <li xml:lang="ca">Modes de canvi de pell de ceba, diferenciació i reproducció</li>
       <li>Organize the animation in scenes and add sounds to frames</li>
+      <li xml:lang="ca">Organitza l'animació en escenes i afegeix so als fotogrames</li>
       <li>Export the animation to a video file</li>
+      <li xml:lang="ca">Exporta l'animació a un fitxer de vídeo</li>
     </ul>
   </description>
   <launchable type="desktop-id">org.kde.stopmotion.desktop</launchable>
