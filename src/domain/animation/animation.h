@@ -372,17 +372,17 @@ private:
 	FILE* initializeCommandLog();
 
 	/** All of the scenes in the animation. */
-	ObserverNotifier* scenes;
+	std::unique_ptr<ObserverNotifier> scenes;
 
 	/** Undo and disaster recovery. */
-	Executor* executor;
-	FileCommandLogger* logger;
+	std::unique_ptr<Executor> executor;
+	std::unique_ptr<FileCommandLogger> logger;
 
 	/** Serializer to be used on saving and loading of the project. */
-	ProjectSerializer *serializer;
+	std::unique_ptr<ProjectSerializer> serializer;
 
 	/** Audio driver that can play sound. */
-	AudioDriver *audioDriver;
+	std::unique_ptr<AudioDriver> audioDriver;
 
 	/** Variable for checking if the audio device is successfully initialized. */
 	bool isAudioDriverInitialized;

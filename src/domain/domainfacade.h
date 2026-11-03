@@ -5,6 +5,7 @@
 #ifndef DOMAINFACADE_H
 #define DOMAINFACADE_H
 
+#include <memory>
 #include <vector>
 
 class Animation;
@@ -356,7 +357,7 @@ private:
 	static DomainFacade *domainFacade;
 
 	/**The datamodel in the program*/
-	Animation *animationModel;
+	std::unique_ptr<Animation> animationModel;
 };
 
 #endif

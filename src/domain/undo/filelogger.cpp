@@ -81,12 +81,11 @@ public:
 	}
 };
 
-FileCommandLogger::FileCommandLogger() {
-	pImpl = new FileCommandLoggerImpl;
+FileCommandLogger::FileCommandLogger()
+		: pImpl(std::make_unique<FileCommandLoggerImpl>()) {
 }
 
 FileCommandLogger::~FileCommandLogger() {
-	delete pImpl;
 }
 
 void FileCommandLogger::setLogFile(FILE* f) {
@@ -98,11 +97,11 @@ FILE* FileCommandLogger::getLogFile() const {
 }
 
 CommandLogger* FileCommandLogger::getLogger() {
-	return pImpl;
+	return pImpl.get();
 }
 
 const CommandLogger* FileCommandLogger::getLogger() const {
-	return pImpl;
+	return pImpl.get();
 }
 
 LoggerWriteFailedException::LoggerWriteFailedException(int error) {

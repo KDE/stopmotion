@@ -484,16 +484,15 @@ public:
 class ConcreteExecutor : public Executor {
 	CommandHistory history;
 	CommandLogger* logger;
-	using FactoryMap = std::map<std::string, CommandFactory*>;
+	using FactoryMap = std::map<std::string, std::unique_ptr<CommandFactory>>;
 	FactoryMap factories;
-	// does not own its factories
 	std::vector<std::string> constructiveCommands;
 	CommandFactory* Factory(const char* name) {
 		std::string n(name);
 		FactoryMap::iterator found = factories.find(n);
 		if (found == factories.end())
 			throw UnknownCommandException();
-		return found->second;
+		return found->second.get();
 	}
 public:
 	ConcreteExecutor(const ConcreteExecutor&) = delete;
@@ -501,10 +500,6 @@ public:
 	ConcreteExecutor() : logger(nullptr) {
 	}
 	~ConcreteExecutor() override {
-		for (FactoryMap::iterator i = factories.begin();
-				i != factories.end(); ++i) {
-			delete i->second;
-		}
 	}
 	void execute(const char* name, ...) override {
 		CommandFactory* f = Factory(name);
@@ -627,13 +622,11 @@ public:
 	void addCommand(const char* name,
 			std::unique_ptr<CommandFactory> factory, bool constructive) override {
 		std::string n(name);
-		std::pair<std::string, CommandFactory*> p(n, factory.get());
 		if (constructive)
 			constructiveCommands.reserve(constructiveCommands.size() + 1);
-		factories.insert(p);
+		factories.emplace(n, std::move(factory));
 		if (constructive)
 			constructiveCommands.push_back(n);
-		factory.release();
 	}
 	int commandCount() const override {
 		return factories.size();

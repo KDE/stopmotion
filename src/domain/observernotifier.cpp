@@ -54,11 +54,11 @@ void ObserverNotifier::doOp(ObservableOperation& oo) {
 }
 
 ObserverNotifier::~ObserverNotifier() {
-	delete del;
 }
 
-ObserverNotifier::ObserverNotifier(AnimationImpl* delegate, Frontend* fe)
-		: del(delegate), frontend(fe) {
+ObserverNotifier::ObserverNotifier(std::unique_ptr<AnimationImpl> delegate,
+		Frontend* fe)
+		: del(std::move(delegate)), frontend(fe) {
 }
 
 void ObserverNotifier::addObserver(Observer* newObserver) {

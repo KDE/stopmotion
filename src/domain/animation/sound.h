@@ -6,6 +6,7 @@
 #ifndef SOUND_H_
 #define SOUND_H_
 
+#include <memory>
 #include <string>
 
 class AudioFormat;
@@ -14,7 +15,7 @@ class WorkspaceFile;
 class ErrorHandler;
 
 class Sound {
-	AudioFormat* af;
+	std::unique_ptr<AudioFormat> af;
 	std::string name;
 	Sound& operator=(const Sound&) = delete;
 	Sound(const Sound&) = delete;

@@ -27,12 +27,11 @@ void SurfaceLoader::free(SurfaceLoader::value_t* s) {
 	delete s;
 }
 
-ImageCache::ImageCache(int cacheSize) : delegate(nullptr) {
-	delegate = new LoadCache<SurfaceLoader>(cacheSize);
+ImageCache::ImageCache(int cacheSize)
+		: delegate(std::make_unique<LoadCache<SurfaceLoader>>(cacheSize)) {
 }
 
 ImageCache::~ImageCache() {
-	delete delegate;
 }
 
 QPixmap* ImageCache::get(const char* path) {

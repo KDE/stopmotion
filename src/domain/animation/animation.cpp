@@ -32,6 +32,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <optional>
 
 
 class UndoRedoObserver;
@@ -42,20 +43,19 @@ bool ensureUnlinked(const char* path) {
 }
 
 class ErrorCapture : public ErrorHandler {
-	UiException* exception;
+	std::optional<UiException> exception;
 public:
 	ErrorCapture(const ErrorCapture&) = delete;
 	ErrorCapture& operator=(const ErrorCapture&) = delete;
-	ErrorCapture() : exception(nullptr) {
+	ErrorCapture() {
 	}
 	~ErrorCapture() override {
-		delete exception;
 	}
   void error(UiException e) override {
 		// We will only bother recording the first exception we come across.
 		// Better is clearly possible.
 		if (!exception) {
-			exception = new UiException(e);
+			exception = e;
 		}
 	}
 	void throwException() {
@@ -74,35 +74,18 @@ const char* FailedToInitializeCommandLogger::what() const noexcept {
 }
 
 Animation::Animation()
-		: scenes(nullptr), executor(nullptr), logger(nullptr), serializer(nullptr), audioDriver(nullptr),
+		: scenes(std::make_unique<ObserverNotifier>(
+				std::make_unique<SceneVector>(), nullptr)),
+		  executor(makeAnimationCommandExecutor(*scenes)),
+		  logger(std::make_unique<FileCommandLogger>()),
+		  serializer(std::make_unique<ProjectSerializer>()),
+		  audioDriver(std::make_unique<QtAudioDriver>()),
 		  isAudioDriverInitialized(false), frontend(nullptr) {
-	std::unique_ptr<SceneVector> scs(new SceneVector);
-	std::unique_ptr<ObserverNotifier> on(new ObserverNotifier(scs.get(), nullptr));
-	scs.release();
-	std::unique_ptr<ProjectSerializer> szer(new ProjectSerializer);
-	std::unique_ptr<AudioDriver> ad(new QtAudioDriver());
-	std::unique_ptr<Executor> ex(makeAnimationCommandExecutor(*on));
-	std::unique_ptr<FileCommandLogger> lgr(new FileCommandLogger);
-	ex->setCommandLogger(lgr->getLogger());
-	scenes = on.release();
-	serializer = szer.release();
-	executor = ex.release();
-	logger = lgr.release();
-	audioDriver = ad.release();
+	executor->setCommandLogger(logger->getLogger());
 }
 
 
 Animation::~Animation() {
-	delete scenes;
-	scenes = nullptr;
-	delete serializer;
-	serializer = nullptr;
-	delete audioDriver;
-	audioDriver = nullptr;
-	delete executor;
-	executor = nullptr;
-	delete logger;
-	logger = nullptr;
 }
 
 
@@ -362,7 +345,7 @@ int Animation::soundCount(int scene, int frame) const {
 }
 
 void Animation::playSounds(int scene, int frame) const {
-	scenes->playSounds(scene, frame, audioDriver);
+	scenes->playSounds(scene, frame, audioDriver.get());
 }
 
 void Animation::newScene(int32_t index) {
@@ -401,7 +384,7 @@ void Animation::shutdownAudioDevice() {
 
 
 bool Animation::exportToVideo(VideoEncoder * encoder, int playbackSpeed) {
-	VideoFactory factory(scenes);
+	VideoFactory factory(scenes.get());
 	frontend->showProgress(Frontend::exporting, 0);
 	if (factory.createVideoFile(encoder, playbackSpeed) != nullptr) {
 		frontend->hideProgress();

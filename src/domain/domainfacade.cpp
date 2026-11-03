@@ -71,15 +71,12 @@ void DomainFacade::setMostRecentProject() {
 	}
 }
 
-DomainFacade::DomainFacade() {
-	animationModel = new Animation();
+DomainFacade::DomainFacade() : animationModel(std::make_unique<Animation>()) {
 	domainFacade = nullptr;
 }
 
 
 DomainFacade::~DomainFacade() {
-	delete animationModel;
-	animationModel = nullptr;
 }
 
 

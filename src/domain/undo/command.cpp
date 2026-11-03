@@ -168,15 +168,13 @@ int32_t Parameters::getHowMany() {
 	return getInteger(1, INT32_MAX);
 }
 
-CommandHistory::CommandHistory() : past(nullptr), future(nullptr), observer(nullptr),
-		previousCanUndo(false), previousCanRedo(false) {
-	past = new CommandList();
-	future = new CommandList();
+CommandHistory::CommandHistory()
+		: past(std::make_unique<CommandList>()),
+		  future(std::make_unique<CommandList>()), observer(nullptr),
+		  previousCanUndo(false), previousCanRedo(false) {
 }
 
 CommandHistory::~CommandHistory() {
-	delete past;
-	delete future;
 }
 
 bool CommandHistory::canUndo() const {

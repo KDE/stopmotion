@@ -6,13 +6,15 @@
 #ifndef IMAGECACHE_H_
 #define IMAGECACHE_H_
 
+#include <memory>
+
 class QPixmap;
 
 struct SurfaceLoader;
 template<typename T> class LoadCache;
 
 class ImageCache {
-	LoadCache<SurfaceLoader>* delegate;
+	std::unique_ptr<LoadCache<SurfaceLoader>> delegate;
 public:
 	ImageCache(const ImageCache&) = delete;
 	ImageCache& operator=(const ImageCache&) = delete;

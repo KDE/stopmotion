@@ -6,6 +6,7 @@
 #ifndef LOADCACHE_H_
 #define LOADCACHE_H_
 
+#include <memory>
 #include <string>
 #include <cstring>
 
@@ -101,18 +102,18 @@ private:
 		 */
 		static void move(Item*& to, Item*& from);
 	};
-	Item* buffer;
+	std::unique_ptr<Item[]> buffer;
 	Item* cacheHead;
 	Item* freeHead;
 };
 
 template<typename T>
 LoadCache<T>::LoadCache(int cacheSize)
-		: buffer(nullptr), cacheHead(nullptr), freeHead(nullptr) {
-	buffer = new Item[cacheSize < 1? 1 : cacheSize];
+		: buffer(std::make_unique<Item[]>(cacheSize < 1? 1 : cacheSize)),
+		  cacheHead(nullptr), freeHead(nullptr) {
 	// construct the free list
 	for (int i = 0; i != cacheSize; ++i) {
-		Item* p = buffer + i;
+		Item* p = buffer.get() + i;
 		Item::move(freeHead, p);
 	}
 }
@@ -120,7 +121,6 @@ LoadCache<T>::LoadCache(int cacheSize)
 template<typename T>
 LoadCache<T>::~LoadCache() {
 	clear();
-	delete[] buffer;
 }
 
 template<typename T>

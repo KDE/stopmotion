@@ -6,6 +6,7 @@
 #ifndef COMMAND_H_
 #define COMMAND_H_
 
+#include <memory>
 #include <cstdint>
 #include <string>
 
@@ -111,8 +112,8 @@ Command* createNullCommand();
  * Command history for undo and redo.
  */
 class CommandHistory {
-	CommandList* past;
-	CommandList* future;
+	std::unique_ptr<CommandList> past;
+	std::unique_ptr<CommandList> future;
 	UndoRedoObserver* observer;
 	bool previousCanUndo;
 	bool previousCanRedo;

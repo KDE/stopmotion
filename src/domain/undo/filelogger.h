@@ -6,6 +6,7 @@
 #ifndef FILELOGGER_H_
 #define FILELOGGER_H_
 
+#include <memory>
 #include <cstdio>
 #include <exception>
 
@@ -23,7 +24,7 @@ public:
  * Logs commands to a file
  */
 class FileCommandLogger {
-	FileCommandLoggerImpl* pImpl;
+	std::unique_ptr<FileCommandLoggerImpl> pImpl;
 public:
 	FileCommandLogger();
 	~FileCommandLogger();

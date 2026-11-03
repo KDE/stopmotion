@@ -23,7 +23,7 @@ class WorkspaceFile;
 
 
 class ObserverNotifier : public AnimationImpl {
-	AnimationImpl* del;
+	std::unique_ptr<AnimationImpl> del;
 	Frontend* frontend;
 	using observers_t = std::vector<Observer*>;
 	observers_t observers;
@@ -35,11 +35,11 @@ public:
 	/**
 	 * Constructs a wrapper for another {@ref AnimationImpl} that notifies
 	 * observers of changes and reports errors to the user.
-	 * @param delegate The wrapped {@ref AnimationImpl}. Ownership is passed.
+	 * @param delegate The wrapped {@ref AnimationImpl}.
 	 * @param frontend The UI, which is notified of errors and warnings.
 	 * Ownership is not passed. Optional.
 	 */
-	ObserverNotifier(AnimationImpl* delegate, Frontend* frontend);
+	ObserverNotifier(std::unique_ptr<AnimationImpl> delegate, Frontend* frontend);
 	void addObserver(Observer* newObserver);
 	void removeObserver(Observer* o);
 	void registerFrontend(Frontend* fe);

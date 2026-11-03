@@ -11,11 +11,10 @@
 
 #include <memory>
 
-Sound::Sound() : af(nullptr) {
+Sound::Sound() {
 }
 
 Sound::~Sound() {
-	delete af;
 }
 
 /**
@@ -24,8 +23,7 @@ Sound::~Sound() {
 void Sound::open(WorkspaceFile& file, ErrorHandler& e) {
 	std::unique_ptr<OggVorbis> a(new OggVorbis());
 	a->setFilename(file, e);
-	delete af;
-	af = a.release();
+	af = std::move(a);
 	af->open();
 }
 
@@ -47,5 +45,5 @@ const char* Sound::getBasename() const {
 }
 
 void Sound::addToDriver(AudioDriver& ad) const {
-	ad.addAudioFile(af);
+	ad.addAudioFile(af.get());
 }
