@@ -13,10 +13,8 @@
 #include "sound.h"
 
 #include <cassert>
-#include <cstring>
 #include <memory>
 #include <exception>
-#include <sstream>
 #include <string>
 
 
@@ -60,15 +58,7 @@ int Frame::newSound(WorkspaceFile& file) {
 	Logger::get().logDebug("Adding sound in frame");
 	preallocateSounds(1);
 	std::unique_ptr<Sound> sound(new Sound());
-	std::stringstream ss;
-	std::stringstream::pos_type zeroOff = ss.tellp();
-	ss << "Sound" << WorkspaceFile::getSoundNumber();
-	int size = (ss.tellp() - zeroOff) + 1;
-	char* soundName = new char[size];
-	std::string cs = ss.str();
-	strncpy(soundName, cs.c_str(), size);
-	const char* oldName = sound->setName(soundName);
-	assert(oldName == nullptr);
+	sound->setName("Sound" + std::to_string(WorkspaceFile::getSoundNumber()));
 	sound->open(file, *ErrorHandler::getThrower());
 	WorkspaceFile::nextSoundNumber();
 	sounds.push_back(sound.release());
@@ -114,10 +104,10 @@ int Frame::soundCount() const {
 }
 
 
-const char* Frame::setSoundName(int soundNumber, const char* soundName) {
+std::string Frame::setSoundName(int soundNumber, std::string soundName) {
 	if (soundNumber < 0 || soundCount() <= soundNumber)
 		throw SoundOutOfRangeException();
-	return sounds[soundNumber]->setName(soundName);
+	return sounds[soundNumber]->setName(std::move(soundName));
 }
 
 

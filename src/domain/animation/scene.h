@@ -7,6 +7,7 @@
 
 #include "src/config.h"
 
+#include <string>
 #include <exception>
 #include <vector>
 
@@ -177,13 +178,11 @@ public:
 	 * to soundName
 	 * @param frameNumber Index of the frame.
 	 * @param soundNumber the number of the sound to change the name of.
-	 * @param soundName the new name of the sound. Ownership is passed; must
-	 * have been allocated with new char[].
-	 * @return The old name for this sound. Ownership is returned; must be
-	 * freed with delete[].
+	 * @param soundName the new name of the sound.
+	 * @return The old name for this sound.
 	 */
-	const char* setSoundName(int frameNumber, int soundNumber,
-			const char* soundName);
+	std::string setSoundName(int frameNumber, int soundNumber,
+			std::string soundName);
 
 	/**
 	 * Retrieves the name of the sound at index soundNumber in the specified

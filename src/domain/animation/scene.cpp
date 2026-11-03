@@ -138,11 +138,11 @@ int Scene::soundCount(int frameNumber) const {
 	return frames[frameNumber]->soundCount();
 }
 
-const char* Scene::setSoundName(int frameNumber, int soundNumber,
-		const char* soundName) {
+std::string Scene::setSoundName(int frameNumber, int soundNumber,
+		std::string soundName) {
 	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
-	return frames[frameNumber]->setSoundName(soundNumber, soundName);
+	return frames[frameNumber]->setSoundName(soundNumber, std::move(soundName));
 }
 
 const char* Scene::getSoundName(int frameNumber, int soundNumber) const {

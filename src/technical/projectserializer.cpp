@@ -603,16 +603,8 @@ void ProjectSerializer::getAttributes(const QDomNode& node,
 						int soundNum = s->soundCount(frameNum);
 						s->newSound(frameNum, wf);
 						if (element.hasAttribute(QStringLiteral("alt"))) {
-							const QByteArray soundName =
-									element.attribute(QStringLiteral("alt")).toUtf8();
-							// setSoundName takes ownership of a new[] string
-							// and returns ownership of the old name
-							size_t size = soundName.size() + 1;
-							std::unique_ptr<char[]> name(new char[size]);
-							memcpy(name.get(), soundName.constData(), size);
-							delete[] s->setSoundName(frameNum, soundNum,
-									name.get());
-							name.release();
+							s->setSoundName(frameNum, soundNum,
+									element.attribute(QStringLiteral("alt")).toStdString());
 						}
 					}
 				}

@@ -15,7 +15,7 @@ class ErrorHandler;
 
 class Sound {
 	AudioFormat* af;
-	const char* name;
+	std::string name;
 	Sound& operator=(const Sound&) = delete;
 	Sound(const Sound&) = delete;
 public:
@@ -29,18 +29,10 @@ public:
 	 */
 	void open(WorkspaceFile& file, ErrorHandler& e);
 	/**
-	 * Sets or resets the (human-readable) name of this sound.
-	 * @param name The new name or NULL for no name. Name passed must have been
-	 * allocated with new[]. Ownership is passed.
-	 * @return The old name or NULL for no name. Ownership is returned.
+	 * Sets the (human-readable) name of this sound.
+	 * @return The old name.
 	 */
-	const char* setName(const char* name);
-	/**
-	 * Sets the (human-readable) name of this sound. May only be used when
-	 * there is no name already set for the sound.
-	 * @param n The name to set.
-	 */
-	void setName(std::string& n);
+	std::string setName(std::string name);
 	const char* getName() const;
 	const char* getSoundPath() const;
 	const char* getBasename() const;

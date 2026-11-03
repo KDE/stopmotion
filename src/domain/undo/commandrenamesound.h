@@ -7,6 +7,7 @@
 #define COMMANDRENAMESOUND_H_
 
 #include <cstdint>
+#include <string>
 
 #include "command.h"
 
@@ -18,20 +19,11 @@ class CommandRenameSound : public Command {
 	int32_t sc;
 	int32_t fr;
 	int32_t index;
-	const char* name;
+	std::string name;
 public:
-	/**
-	 * @param newName The new name. Ownership is passed; must have been
-	 * allocated with {@c new char[]}.
-	 */
 	CommandRenameSound(AnimationImpl& model, int32_t scene, int32_t frame,
-			int32_t soundNumber, const char* newName);
+			int32_t soundNumber, std::string newName);
 	~CommandRenameSound() override;
-	/**
-	 * Sets the name to be set.
-	 * @param newName Ownership is not passed.
-	 */
-	void setName(const char* newName);
 	Command* execute() override;
 };
 

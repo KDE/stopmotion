@@ -27,11 +27,9 @@
 
 #include <cassert>
 #include <cstdlib>
-#include <cstring>
 #include <cerrno>
 #include <unistd.h>
 #include <vector>
-#include <sstream>
 #include <string>
 #include <memory>
 
@@ -183,19 +181,10 @@ void Animation::addSound(int32_t scene, int32_t frameNumber,
 		const char *soundFile) {
 	TemporaryWorkspaceFile soundFileWs(soundFile,
 			WorkspaceFileType::sound());
-	std::unique_ptr<Sound> sound(new Sound());
-	std::stringstream ss;
-	std::stringstream::pos_type zeroOffset = ss.tellp();
-	ss << "Sound " << WorkspaceFile::getSoundNumber();
-	int size = (ss.tellp() - zeroOffset) + 1;
-	char* soundName = new char[size];
-	std::string sc = ss.str();
-	strncpy(soundName, sc.c_str(), size);
-	const char* oldName = sound->setName(soundName);
-	assert(oldName == nullptr);
+	const std::string soundName = "Sound " + std::to_string(WorkspaceFile::getSoundNumber());
 	int32_t index = soundCount(scene, frameNumber);
 	executor->execute(Commands::addSound, scene, frameNumber,
-			index, soundFileWs.basename(), soundName);
+			index, soundFileWs.basename(), soundName.c_str());
 	soundFileWs.retainFile();
 	WorkspaceFile::nextSoundNumber();
 }

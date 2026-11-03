@@ -9,16 +9,13 @@
 #include "src/technical/audio/oggvorbis.h"
 #include "src/technical/audio/audiodriver.h"
 
-#include <cassert>
-#include <cstring>
 #include <memory>
 
-Sound::Sound() : af(nullptr), name(nullptr) {
+Sound::Sound() : af(nullptr) {
 }
 
 Sound::~Sound() {
 	delete af;
-	delete[] name;
 }
 
 /**
@@ -32,22 +29,13 @@ void Sound::open(WorkspaceFile& file, ErrorHandler& e) {
 	af->open();
 }
 
-const char* Sound::setName(const char* n) {
-	const char* r = name;
-	name = n;
-	return r;
-}
-
-void Sound::setName(std::string& n) {
-	assert(!name);
-	int size = n.size() + 1;
-	char* a = new char[size];
-	name = a;
-	strncpy(a, n.c_str(), size);
+std::string Sound::setName(std::string n) {
+	name.swap(n);
+	return n;
 }
 
 const char* Sound::getName() const {
-	return name;
+	return name.c_str();
 }
 
 const char* Sound::getSoundPath() const {

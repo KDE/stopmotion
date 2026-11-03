@@ -365,23 +365,23 @@ void ObserverNotifier::addSound(int scene, int frame, int soundNumber,
 
 class SoundNamer : public SoundChanger {
 	int sn;
-	const char* nm;
-	const char* r;
+	std::string nm;
 public:
-	SoundNamer(int scene, int frame, int soundNumber, const char* name)
-			: SoundChanger(scene, frame), sn(soundNumber), nm(name), r(nullptr) {
+	SoundNamer(int scene, int frame, int soundNumber, std::string name)
+			: SoundChanger(scene, frame), sn(soundNumber), nm(std::move(name)) {
 	}
 	void op(AnimationImpl& del) override {
-		r = del.setSoundName(scene(), frame(), sn, nm);
+		// nm becomes the old name
+		nm = del.setSoundName(scene(), frame(), sn, std::move(nm));
 	}
-	const char* returnValue() const {
-		return r;
+	std::string returnValue() {
+		return std::move(nm);
 	}
 };
 
-const char* ObserverNotifier::setSoundName(int scene, int frame,
-		int soundNumber, const char* soundName) {
-	SoundNamer sn(scene, frame, soundNumber, soundName);
+std::string ObserverNotifier::setSoundName(int scene, int frame,
+		int soundNumber, std::string soundName) {
+	SoundNamer sn(scene, frame, soundNumber, std::move(soundName));
 	doOp(sn);
 	return sn.returnValue();
 }

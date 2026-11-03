@@ -165,9 +165,10 @@ void SceneVector::addSound(int scene, int frame, int soundNumber,
 	++totalSoundCount;
 }
 
-const char* SceneVector::setSoundName(int scene, int frame, int soundNumber,
-		const char* soundName) {
-	return getMutableScene(scene)->setSoundName(frame, soundNumber, soundName);
+std::string SceneVector::setSoundName(int scene, int frame, int soundNumber,
+		std::string soundName) {
+	return getMutableScene(scene)->setSoundName(frame, soundNumber,
+			std::move(soundName));
 }
 
 Sound* SceneVector::removeSound(int scene, int frame, int soundNumber) {

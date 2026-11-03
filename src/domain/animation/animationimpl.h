@@ -7,6 +7,7 @@
 #ifndef ANIMATIONIMPL_H_
 #define ANIMATIONIMPL_H_
 
+#include <string>
 #include <vector>
 
 class WorkspaceFile;
@@ -182,14 +183,12 @@ public:
 	 * containing the sound to be named.
 	 * @param soundNumber Which sound within frame number @a frame of scene
 	 * number @a scene to be replaced.
-	 * @param soundName The new name of the sound to be added. Ownership
-	 * is passed; must have been created with {@c new char[]}.
-	 * @return The old name of the sound. Ownership is returned; must be
-	 * deleted with {@c delete[]}.
+	 * @param soundName The new name of the sound to be added.
+	 * @return The old name of the sound.
 	 * @throws Nothing.
 	 */
-	virtual const char* setSoundName(int scene, int frame, int soundNumber,
-			const char* soundName) = 0;
+	virtual std::string setSoundName(int scene, int frame, int soundNumber,
+			std::string soundName) = 0;
 	/**
 	 * Removes a sound of a frame.
 	 * @param scene The number of the scene containing the frame to change.

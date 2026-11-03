@@ -6,6 +6,7 @@
 #ifndef SCENEVECTOR_H_
 #define SCENEVECTOR_H_
 
+#include <string>
 #include <vector>
 
 #include "animationimpl.h"
@@ -185,14 +186,12 @@ public:
 	 * containing the sound to be named.
 	 * @param soundNumber Which sound within frame number @a frame of scene
 	 * number @a scene to be replaced.
-	 * @param soundName The new name of the sound to be added. Ownership
-	 * is passed; must have been created with {@c new char[]}.
-	 * @return The old name of the sound. Ownership is returned; must be
-	 * deleted with {@c delete[]}.
+	 * @param soundName The new name of the sound to be added.
+	 * @return The old name of the sound.
 	 * @throws Nothing.
 	 */
-	const char* setSoundName(int scene, int frame, int soundNumber,
-			const char* soundName) override;
+	std::string setSoundName(int scene, int frame, int soundNumber,
+			std::string soundName) override;
 	/**
 	 * Removes a sound of a frame.
 	 * @param scene The number of the scene containing the frame to change.

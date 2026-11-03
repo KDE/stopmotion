@@ -5,8 +5,6 @@
 
 #include "commandrenamesound.h"
 
-#include <cstring>
-#include <memory>
 #include <string>
 
 #include "src/domain/animation/animationimpl.h"
@@ -16,24 +14,17 @@
 
 
 CommandRenameSound::CommandRenameSound(AnimationImpl& model, int32_t scene,
-		int32_t frame, int32_t soundNumber, const char* newName)
-	: sv(model), sc(scene), fr(frame), index(soundNumber), name(newName) {
+		int32_t frame, int32_t soundNumber, std::string newName)
+	: sv(model), sc(scene), fr(frame), index(soundNumber),
+	  name(std::move(newName)) {
 }
 
 CommandRenameSound::~CommandRenameSound() {
-	delete[] name;
-}
-
-void CommandRenameSound::setName(const char* newName) {
-	int length = strlen(newName) + 1;
-	char* nn = new char[length];
-	strncpy(nn, newName, length);
-	delete[] name;
-	name = nn;
 }
 
 Command* CommandRenameSound::execute() {
-	name = sv.setSoundName(sc, fr, index, name);
+	// the inverse command sets the old name again
+	name = sv.setSoundName(sc, fr, index, std::move(name));
 	return this;
 }
 
@@ -56,9 +47,7 @@ Command* CommandRenameSoundFactory::create(Parameters& ps, ErrorHandler&) {
 	if (soundCount == 0)
 		return nullptr;
 	int32_t index = ps.getInteger(0, soundCount - 1);
-	std::unique_ptr<CommandRenameSound> r(new CommandRenameSound(sv, sc, fr, index, nullptr));
 	std::string name;
 	ps.getString(name, "sound ?*");
-	r->setName(name.c_str());
-	return r.release();
+	return new CommandRenameSound(sv, sc, fr, index, std::move(name));
 }
