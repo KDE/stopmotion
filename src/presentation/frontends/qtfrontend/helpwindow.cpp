@@ -23,6 +23,6 @@ HelpWindow::HelpWindow(QWidget *parent)
 	QString index = QCoreApplication::applicationDirPath()
 			+ QStringLiteral(u"/../manual/index.html");
 	if (!QFile::exists(index))
-		index = QString(stopmotion::htmlDirectory) + "/index.html";
+		index = QString::fromLocal8Bit(stopmotion::htmlDirectory) + QStringLiteral("/index.html");
 	ui.textBrowser->setSource(QUrl::fromLocalFile(index));
 }

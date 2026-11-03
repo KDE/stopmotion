@@ -100,9 +100,9 @@ void CameraHandler::storeFrame()
 {
 	QImage i;
 	const char* path = capturedFile.path();
-	i.load(path);
+	i.load(QString::fromLocal8Bit(path));
 	if ( !i.isNull() ) {
-		modelHandler->addFrame(path);
+		modelHandler->addFrame(QString::fromLocal8Bit(path));
 		Q_EMIT capturedFrame();
 	} else {
 		timer->start(60);

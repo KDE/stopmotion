@@ -58,7 +58,7 @@ void SceneThumbView::setOpened( bool isOpened ) {
 	if (!isOpened && (facade->getSceneSize(getNumber()) > 0)) {
 		const char *path = facade->getImagePath(getNumber(), 0);
 		if (path) {
-			QImage half = QImage(path).scaled(width() / 2, height() / 2);
+			QImage half = QImage(QString::fromLocal8Bit(path)).scaled(width() / 2, height() / 2);
 			centerIcon = QPixmap::fromImage(half);
 		}
 	} else {
@@ -83,7 +83,7 @@ void SceneThumbView::paintEvent ( QPaintEvent * ) {
 	QPainter paint(this);
 	paint.setPen(Qt::black);
 	paint.setFont(f);
-	paint.drawText( 7, width / 4, QString("%1").arg(getNumber() + 1) );
+	paint.drawText( 7, width / 4, QStringLiteral("%1").arg(getNumber() + 1) );
 
 	if (!isOpened && (DomainFacade::getFacade()->getSceneSize(getNumber()) > 0) ) {
 		paint.drawPixmap(width / 4, width / 3, centerIcon);

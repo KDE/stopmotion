@@ -73,7 +73,7 @@ void EditMenuHandler::copy()
 	for (int i = lowend; i <= highend; ++i) {
 		const char* imagePath = facade->getImagePath(activeScene, i);
 		if (imagePath)
-			urls.append(QUrl::fromLocalFile(imagePath));
+			urls.append(QUrl::fromLocalFile(QString::fromLocal8Bit(imagePath)));
 	}
 
 	//QDrag *drag = new QDrag((MainWindowGUI*)this->parent());

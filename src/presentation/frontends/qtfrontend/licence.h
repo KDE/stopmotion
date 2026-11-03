@@ -6,7 +6,7 @@
 // The license text shown in the about dialog. Its copyright notices are
 // part of that text and not about this file.
 // REUSE-IgnoreStart
-QString licence = 
+QString licence = QString::fromUtf8(
 "(c) 2005-2016, Fredrik Berg Kjølstad and Bjørn Erik Nilsen\n"
 "\n"
 "This program is free software; you can redistribute it and/or modify\n"
@@ -353,6 +353,5 @@ QString licence =
 "proprietary programs.  If your program is a subroutine library, you may\n"
 "consider it more useful to permit linking proprietary applications with the\n"
 "library.  If this is what you want to do, use the GNU Library General\n"
-"Public License instead of this License.\n"
-;
+"Public License instead of this License.\n");
 // REUSE-IgnoreEnd

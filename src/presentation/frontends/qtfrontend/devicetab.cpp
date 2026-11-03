@@ -51,13 +51,13 @@ void DeviceTab::makeGUI()
 	informationText = new QTextEdit;
 	informationText->setReadOnly(true);
 	informationText->setHtml(
-		"<p>" + tr("Below you can set which device Stopmotion should use for grabbing images "
-		"and displaying video.") + "<br><br>" +
+		QStringLiteral("<p>") + tr("Below you can set which device Stopmotion should use for grabbing images "
+		"and displaying video.") + QStringLiteral("<br><br>") +
 		tr("You can select from the auto-detected devices below or add devices yourself. "
 		"It is not recommended to use devices which is not auto-detected, but feel free to do "
-		"it if you are an advanced user.") + "<br><br>" +
+		"it if you are an advanced user.") + QStringLiteral("<br><br>") +
 		tr("The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import.") +
-		"</p>");
+		QStringLiteral("</p>"));
 	informationText->setMinimumWidth(440);
 	informationText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
@@ -140,10 +140,10 @@ void DeviceTab::initialize() {
 
 	// Auto-detected devices
 	for (int i = 0; i < numAutoDetectedDevices; ++i) {
-		QString name( devices[i].name.c_str() );
-		QString device( devices[i].device.c_str() );
-		QString desc(QString("*Autodetected* ") + devices[i].type.c_str() + "-" +
-			tr("device") + " (" + device + ")");
+		QString name = QString::fromStdString(devices[i].name);
+		QString device = QString::fromStdString(devices[i].device);
+		QString desc(QStringLiteral("*Autodetected* ") + QString::fromStdString(devices[i].type) + QStringLiteral("-") +
+			tr("device") + QStringLiteral(" (") + device + QStringLiteral(")"));
 
 		QTableWidgetItem *item = new QTableWidgetItem(name);
 		item->setFlags( item->flags() & (~Qt::ItemIsEditable) );
@@ -168,18 +168,18 @@ void DeviceTab::initialize() {
 	bool oldWasAutoDetected = false;
 
 	for (int i = 0; i < numDevices; ++i) {
-		Preference descP(QString("deviceDescription%1").arg(i).toUtf8().constData(),"");
-		QString desc(descP.get());
-		Preference nameP(QString("deviceName%1").arg(i).toUtf8().constData(),"");
-		QString name(nameP.get());
-		Preference deviceP(QString("device%1").arg(i).toUtf8().constData(),"");
-		QString device(deviceP.get());
+		Preference descP(QStringLiteral("deviceDescription%1").arg(i).toUtf8().constData(),"");
+		QString desc = QString::fromUtf8(descP.get());
+		Preference nameP(QStringLiteral("deviceName%1").arg(i).toUtf8().constData(),"");
+		QString name = QString::fromUtf8(nameP.get());
+		Preference deviceP(QStringLiteral("device%1").arg(i).toUtf8().constData(),"");
+		QString device = QString::fromUtf8(deviceP.get());
 		if (active == i) {
 			oldDevice = device.toStdString();
 			oldName = name.toStdString();
 		}
 
-		if ( !desc.startsWith("*Autodetected*") ) {
+		if ( !desc.startsWith(QLatin1String("*Autodetected*")) ) {
 			if (active == i)
 				newActive = numUserDevices + numAutoDetectedDevices;
 			deviceTable->setRowCount( numUserDevices + numAutoDetectedDevices + 1 );
@@ -225,9 +225,9 @@ void DeviceTab::apply() {
 	int numDevices = prefs->getPreference("numDevices", -1);
  	if (numDevices > 0) {
 		for (int i = 0; i < numDevices; ++i) {
-			prefs->removePreference(QString("deviceName%1").arg(i).toUtf8().constData());
-			prefs->removePreference(QString("deviceDescription%1").arg(i).toUtf8().constData());
-			prefs->removePreference(QString("device%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("deviceName%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("deviceDescription%1").arg(i).toUtf8().constData());
+			prefs->removePreference(QStringLiteral("device%1").arg(i).toUtf8().constData());
 		}
 	}
 
@@ -237,11 +237,11 @@ void DeviceTab::apply() {
 		prefs->setPreference("numDevices", numDevices);
 		prefs->setPreference("activeVideoDevice", deviceTable->currentRow());
 		for (int i = 0; i < numDevices; ++i) {
-			prefs->setPreference(QString("deviceName%1").arg(i).toUtf8().constData(),
+			prefs->setPreference(QStringLiteral("deviceName%1").arg(i).toUtf8().constData(),
 					deviceTable->item(i, 0)->text().toUtf8().constData());
-			prefs->setPreference(QString("deviceDescription%1").arg(i).toUtf8().constData(),
+			prefs->setPreference(QStringLiteral("deviceDescription%1").arg(i).toUtf8().constData(),
 					deviceTable->item(i, 1)->text().toUtf8().constData());
-			prefs->setPreference(QString("device%1").arg(i).toUtf8().constData(),
+			prefs->setPreference(QStringLiteral("device%1").arg(i).toUtf8().constData(),
 					deviceStrings[i].toUtf8().constData());
 		}
 	} else {
@@ -312,13 +312,13 @@ void DeviceTab::addDevice()
 {
 	int newRow = deviceTable->rowCount();
 	deviceTable->setRowCount(newRow + 1);
-	deviceTable->setItem( newRow, 0, new QTableWidgetItem(QString("")) );
-	deviceTable->setItem( newRow, 1, new QTableWidgetItem(QString("")) );
+	deviceTable->setItem( newRow, 0, new QTableWidgetItem(QString()) );
+	deviceTable->setItem( newRow, 1, new QTableWidgetItem(QString()) );
 	deviceTable->setCurrentCell(newRow, 0);
 
-	deviceStrings.push_back("");
-	deviceNameStrings.push_back("");
-	deviceDescriptionStrings.push_back("");
+	deviceStrings.push_back(QString());
+	deviceNameStrings.push_back(QString());
+	deviceDescriptionStrings.push_back(QString());
 }
 
 
@@ -338,13 +338,13 @@ void DeviceTab::removeDevice()
 void DeviceTab::retranslateStrings()
 {
 	informationText->setHtml(
-		"<p>" + tr("Below you can set which device Stopmotion should use for grabbing images "
-		"and displaying video.") + "<br><br>" +
+		QStringLiteral("<p>") + tr("Below you can set which device Stopmotion should use for grabbing images "
+		"and displaying video.") + QStringLiteral("<br><br>") +
 		tr("You can select from the auto-detected devices below or add devices yourself. "
 		"It is not recommended to use devices which is not auto-detected, but feel free to do "
-		"it if you are an advanced user.") + "<br><br>" +
+		"it if you are an advanced user.") + QStringLiteral("<br><br>") +
 		tr("The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import.") +
-		"</p>");
+		QStringLiteral("</p>"));
 
 	QStringList lst;
 	lst << tr("Name") << tr("Description");

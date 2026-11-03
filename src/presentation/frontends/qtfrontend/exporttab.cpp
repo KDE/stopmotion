@@ -168,16 +168,16 @@ void ExportTab::initialize()
 	int numEncoders = pref->getPreference("numEncoders", 0);
 	encoderTable->setRowCount(numEncoders);
 	for (int i = 0; i < numEncoders; ++i) {
-		Preference name(QString("encoderName%1").arg(i).toLatin1().constData(),"");
-		encoderTable->setItem(i, 0, new QTableWidgetItem(name.get()) );
-		Preference desc(QString("encoderDescription%1").arg(i).toLatin1().constData(),"");
-		encoderTable->setItem(i, 1, new QTableWidgetItem(desc.get()) );
-		Preference start(QString("startEncoder%1").arg(i).toLatin1().constData(), "");
-		startEncoderStrings.push_back(QString(start.get()));
-		Preference stop(QString("stopEncoder%1").arg(i).toLatin1().constData(), "");
-		stopEncoderStrings.push_back(QString(stop.get()));
-		Preference output(QString("outputFile%1").arg(i).toLatin1().constData(), "" );
-		outputFiles.push_back( QString(output.get()));
+		Preference name(QStringLiteral("encoderName%1").arg(i).toLatin1().constData(),"");
+		encoderTable->setItem(i, 0, new QTableWidgetItem(QString::fromUtf8(name.get())) );
+		Preference desc(QStringLiteral("encoderDescription%1").arg(i).toLatin1().constData(),"");
+		encoderTable->setItem(i, 1, new QTableWidgetItem(QString::fromUtf8(desc.get())) );
+		Preference start(QStringLiteral("startEncoder%1").arg(i).toLatin1().constData(), "");
+		startEncoderStrings.push_back(QString::fromUtf8(start.get()));
+		Preference stop(QStringLiteral("stopEncoder%1").arg(i).toLatin1().constData(), "");
+		stopEncoderStrings.push_back(QString::fromUtf8(stop.get()));
+		Preference output(QStringLiteral("outputFile%1").arg(i).toLatin1().constData(), "" );
+		outputFiles.push_back( QString::fromUtf8(output.get()));
 	}
 
 	int active = pref->getPreference("activeEncoder", -1);
@@ -201,11 +201,11 @@ void ExportTab::apply() {
 	int numEncoders = prefs->getPreference("numEncoders", -1);
  	if (numEncoders > 0) {
 		for (int i = 0; i < numEncoders; ++i) {
-			prefs->removePreference(QString("encoderName%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("encoderDescription%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("startEncoder%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("stopEncoder%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("outputFile%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("encoderName%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("encoderDescription%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("startEncoder%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("stopEncoder%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("outputFile%1").arg(i).toLatin1().constData());
 		}
 	}
 
@@ -215,15 +215,15 @@ void ExportTab::apply() {
 		prefs->setPreference("numEncoders", numEncoders);
 		prefs->setPreference("activeEncoder", encoderTable->currentRow());
 		for (int i = 0; i < numEncoders; ++i) {
-			prefs->setPreference(QString("encoderName%1").arg(i).toLatin1().constData(),
+			prefs->setPreference(QStringLiteral("encoderName%1").arg(i).toLatin1().constData(),
 					encoderTable->item(i, 0)->text().toLatin1().constData());
-			prefs->setPreference(QString("encoderDescription%1").arg(i).toLatin1().constData(),
+			prefs->setPreference(QStringLiteral("encoderDescription%1").arg(i).toLatin1().constData(),
 					encoderTable->item(i, 1)->text().toLatin1().constData());
-			prefs->setPreference(QString("startEncoder%1").arg(i).toLatin1().constData(),
+			prefs->setPreference(QStringLiteral("startEncoder%1").arg(i).toLatin1().constData(),
 					startEncoderStrings[i].toLatin1().constData());
-			prefs->setPreference(QString("stopEncoder%1").arg(i).toLatin1().constData(),
+			prefs->setPreference(QStringLiteral("stopEncoder%1").arg(i).toLatin1().constData(),
 					stopEncoderStrings[i].toLatin1().constData());
-			prefs->setPreference(QString("outputFile%1").arg(i).toLatin1().constData(),
+			prefs->setPreference(QStringLiteral("outputFile%1").arg(i).toLatin1().constData(),
 					outputFiles[i].toLatin1().constData());
 		}
 	} else {
@@ -237,13 +237,13 @@ void ExportTab::addEncoder()
 {
 	int newRow = encoderTable->rowCount();
 	encoderTable->setRowCount(newRow + 1);
-	encoderTable->setItem(newRow, 0, new QTableWidgetItem(QString("")));
-	encoderTable->setItem(newRow, 1, new QTableWidgetItem(QString("")));
+	encoderTable->setItem(newRow, 0, new QTableWidgetItem(QString()));
+	encoderTable->setItem(newRow, 1, new QTableWidgetItem(QString()));
 	encoderTable->setCurrentCell(newRow, 0);
 
-	startEncoderStrings.push_back("");
-	stopEncoderStrings.push_back("");
-	outputFiles.push_back("");
+	startEncoderStrings.push_back(QString());
+	stopEncoderStrings.push_back(QString());
+	outputFiles.push_back(QString());
 }
 
 
@@ -285,7 +285,7 @@ void ExportTab::editSettings()
 	if (selected >= 0) {
 		startEncoder->setText(startEncoderStrings[selected]);
 		stopEncoder->setText(stopEncoderStrings[selected]);
-		if ( outputFiles[selected] == "" ) {
+		if ( outputFiles[selected].isEmpty() ) {
 			setYesButtonOn();
 		}
 		else {
@@ -325,10 +325,10 @@ void ExportTab::setYesButtonOn()
 {
 	yesButton->setChecked(true);
 	noButton->setChecked(false);
-	defaultOutput->setText("");
+	defaultOutput->clear();
 	defaultOutput->setEnabled(false);
 	browseButton->setEnabled(false);
-	outputFiles[encoderTable->currentRow()] = "";
+	outputFiles[encoderTable->currentRow()].clear();
 }
 
 
@@ -344,7 +344,8 @@ void ExportTab::setNoButtonOn()
 
 void ExportTab::browseFiles()
 {
-	QString file = QFileDialog::getSaveFileName(this, tr("Choose output file"), getenv("PWD"));
+	QString file = QFileDialog::getSaveFileName(this, tr("Choose output file"),
+			QString::fromLocal8Bit(qgetenv("PWD")));
 	if ( !file.isEmpty() ) {
 		outputFiles[encoderTable->currentRow()] = file;
 		defaultOutput->setText(file);
@@ -354,15 +355,15 @@ void ExportTab::browseFiles()
 void ExportTab::retranslateStrings()
 {
 	infoText->setHtml(
-		"<p>" + tr("Below you can set which program/process Stopmotion should use "
-		"for encoding the currently active project to a video file.") + "</p><p>" +
+		QStringLiteral("<p>") + tr("Below you can set which program/process Stopmotion should use "
+		"for encoding the currently active project to a video file.") + QStringLiteral("</p><p>") +
 		tr("You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
-		"the image path and the video file, respectively.") + "</p><p>" +
+		"the image path and the video file, respectively.") + QStringLiteral("</p><p>") +
 		tr("You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
-				"in the project.") + "</p><p>" +
-		tr("Example with mencoder (jpeg images to mpeg4 video):") + "<br>" +
-		"mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1 -mf type=jpg:fps=$FRAMERATE -o "
-		"$VIDEOFILE mf://$IMAGEPATH/*.jpg");
+				"in the project.") + QStringLiteral("</p><p>") +
+		tr("Example with mencoder (jpeg images to mpeg4 video):") + QStringLiteral("<br>") +
+		QStringLiteral("mencoder -ovc lavc -lavcopts vcodec=msmpeg4v2:vpass=1 -mf type=jpg:fps=$FRAMERATE -o "
+		"$VIDEOFILE mf://$IMAGEPATH/*.jpg"));
 
 	QStringList lst;
 	lst << tr("Name") << tr("Description");

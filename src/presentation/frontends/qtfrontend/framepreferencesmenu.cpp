@@ -83,7 +83,7 @@ void FramePreferencesMenu::open() {
 		const char* soundName = facade->getSoundName(
 				activeScene, activeFrame, i);
 		if (soundName)
-			soundsList->addItem(new QListWidgetItem(soundName));
+			soundsList->addItem(new QListWidgetItem(QString::fromUtf8(soundName)));
 	}
 	show();
 }

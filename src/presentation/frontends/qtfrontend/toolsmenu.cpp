@@ -199,7 +199,7 @@ void ToolsMenu::retranslateStrings() {
 	ui->viewChooseCombo->addItem( tr("Auto") );
 
 	ui->unitChooseCombo->clear();
-	ui->unitChooseCombo->addItem("Off");
+	ui->unitChooseCombo->addItem( tr("Off") );
 	ui->unitChooseCombo->addItem( tr("Per second") );
 	ui->unitChooseCombo->addItem( tr("Per minute") );
 	ui->unitChooseCombo->addItem( tr("Per hour") );

@@ -45,10 +45,10 @@ void ImportTab::makeGUI()
 	informationText = new QTextEdit;
 	informationText->setReadOnly(true);
 	informationText->setHtml(
-		"<p>" + tr("Below you can set which program/process Stopmotion should use "
-		"for grabbing images from the selected device.") + "</p><p>" +
+		QStringLiteral("<p>") + tr("Below you can set which program/process Stopmotion should use "
+		"for grabbing images from the selected device.") + QStringLiteral("</p><p>") +
 		tr("You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
-		"the video device and the image file, respectively.") + "</p>");
+		"the video device and the image file, respectively.") + QStringLiteral("</p>"));
 	informationText->setMinimumWidth(440);
 	informationText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
@@ -146,19 +146,19 @@ void ImportTab::initializeImportValues()
 	int numImports = pref->getPreference("numberofimports", 0);
 	deviceSelectionTable->setRowCount(numImports);
 	for (int i = 0; i < numImports; ++i) {
-		Preference name(QString("importname%1").arg(i).toLatin1().constData(), "");
-		deviceSelectionTable->setItem( i, 0, new QTableWidgetItem(name.get()) );
-		Preference desc(QString("importdescription%1").arg(i).toLatin1().constData(), "");
-		deviceSelectionTable->setItem( i, 1, new QTableWidgetItem(desc.get()) );
+		Preference name(QStringLiteral("importname%1").arg(i).toLatin1().constData(), "");
+		deviceSelectionTable->setItem( i, 0, new QTableWidgetItem(QString::fromUtf8(name.get())) );
+		Preference desc(QStringLiteral("importdescription%1").arg(i).toLatin1().constData(), "");
+		deviceSelectionTable->setItem( i, 1, new QTableWidgetItem(QString::fromUtf8(desc.get())) );
 
-		Preference prepoll(QString("importprepoll%1").arg(i).toLatin1().constData(), "");
-		prePollStrings.push_back(QString(prepoll.get()));
+		Preference prepoll(QStringLiteral("importprepoll%1").arg(i).toLatin1().constData(), "");
+		prePollStrings.push_back(QString::fromUtf8(prepoll.get()));
 
-		Preference start(QString("importstartdaemon%1").arg(i).toLatin1().constData(), "");
-		startDaemonStrings.push_back(QString(start.get()));
+		Preference start(QStringLiteral("importstartdaemon%1").arg(i).toLatin1().constData(), "");
+		startDaemonStrings.push_back(QString::fromUtf8(start.get()));
 
-		Preference stop(QString("importstopdaemon%1").arg(i).toLatin1().constData(), "");
-		stopDaemonStrings.push_back(QString(stop.get()));
+		Preference stop(QStringLiteral("importstopdaemon%1").arg(i).toLatin1().constData(), "");
+		stopDaemonStrings.push_back(QString::fromUtf8(stop.get()));
 	}
 
 	int activeCommand = pref->getPreference("activedevice", -1);
@@ -175,11 +175,11 @@ void ImportTab::apply() {
 	int numImports = prefs->getPreference("numberofimports", -1);
  	if (numImports > 0) {
 		for (int i = 0; i < numImports; ++i) {
-			prefs->removePreference(QString("importname%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("importdescription%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("importprepoll%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("importstartdaemon%1").arg(i).toLatin1().constData());
-			prefs->removePreference(QString("importstopdaemon%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("importname%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("importdescription%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("importprepoll%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("importstartdaemon%1").arg(i).toLatin1().constData());
+			prefs->removePreference(QStringLiteral("importstopdaemon%1").arg(i).toLatin1().constData());
 		}
 	}
 
@@ -188,15 +188,15 @@ void ImportTab::apply() {
 		prefs->setPreference("numberofimports", numImports);
 		prefs->setPreference("activedevice", deviceSelectionTable->currentRow());
 		for (int i = 0; i < numImports; ++i) {
-			prefs->setPreference(QString("importname%1").arg(i).toLatin1().constData(),
+			prefs->setPreference(QStringLiteral("importname%1").arg(i).toLatin1().constData(),
 					deviceSelectionTable->item(i, 0)->text().toLatin1().constData());
-			prefs->setPreference(QString("importdescription%1").arg(i).toLatin1().constData(),
+			prefs->setPreference(QStringLiteral("importdescription%1").arg(i).toLatin1().constData(),
 					deviceSelectionTable->item(i, 1)->text().toLatin1().constData());
-			prefs->setPreference(QString("importprepoll%1").arg(i).toLatin1().constData(),
+			prefs->setPreference(QStringLiteral("importprepoll%1").arg(i).toLatin1().constData(),
 					prePollStrings[i].toLatin1().constData());
-			prefs->setPreference(QString("importstartdaemon%1").arg(i).toLatin1().constData(),
+			prefs->setPreference(QStringLiteral("importstartdaemon%1").arg(i).toLatin1().constData(),
 					startDaemonStrings[i].toLatin1().constData());
-			prefs->setPreference(QString("importstopdaemon%1").arg(i).toLatin1().constData(),
+			prefs->setPreference(QStringLiteral("importstopdaemon%1").arg(i).toLatin1().constData(),
 					stopDaemonStrings[i].toLatin1().constData());
 		}
 	} else {
@@ -217,13 +217,13 @@ void ImportTab::addImportProgram()
 {
 	int newRow = deviceSelectionTable->rowCount();
 	deviceSelectionTable->setRowCount(newRow + 1);
-	deviceSelectionTable->setItem( newRow, 0, new QTableWidgetItem(QString("")) );
-	deviceSelectionTable->setItem( newRow, 1, new QTableWidgetItem(QString("")) );
+	deviceSelectionTable->setItem( newRow, 0, new QTableWidgetItem(QString()) );
+	deviceSelectionTable->setItem( newRow, 1, new QTableWidgetItem(QString()) );
 	deviceSelectionTable->setCurrentCell(newRow, 0);
 
-	prePollStrings.push_back("");
-	startDaemonStrings.push_back("");
-	stopDaemonStrings.push_back("");
+	prePollStrings.push_back(QString());
+	startDaemonStrings.push_back(QString());
+	stopDaemonStrings.push_back(QString());
 }
 
 
@@ -299,10 +299,10 @@ void ImportTab::closeChangeBox()
 void ImportTab::retranslateStrings()
 {
 	informationText->setHtml(
-		"<p>" + tr("Below you can set which program/process Stopmotion should use "
-		"for grabbing images from the selected device.") + "</p><p>" +
+		QStringLiteral("<p>") + tr("Below you can set which program/process Stopmotion should use "
+		"for grabbing images from the selected device.") + QStringLiteral("</p><p>") +
 		tr("You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
-		"the video device and the image file, respectively.") + "</p>");
+		"the video device and the image file, respectively.") + QStringLiteral("</p>"));
 
 	QStringList lst;
 	lst << tr("Name") << tr("Description");

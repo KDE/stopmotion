@@ -138,13 +138,13 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 	connect(languagesMenu, &QMenu::triggered, this, &LanguageHandler::changeLanguage);
 
 	//English is a special case (base language)
-	QAction *langAct = languagesMenu->addAction("&1 English");
+	QAction *langAct = languagesMenu->addAction(QStringLiteral("&1 English"));
 	langAct->setCheckable(true);
-	locales.insert(langAct, "en");
+	locales.insert(langAct, QStringLiteral("en"));
 
 	int num = 2;
 	for (auto it = translations.cbegin(); it != translations.cend(); ++it) {
-		langAct = languagesMenu->addAction(QString("&%1 %2").arg(num++).arg(languageName(it.key())));
+		langAct = languagesMenu->addAction(QStringLiteral("&%1 %2").arg(num++).arg(languageName(it.key())));
 		langAct->setCheckable(true);
 		langAct->setChecked(false);
 		locales.insert(langAct, it.key());
@@ -170,7 +170,7 @@ void LanguageHandler::changeLanguage(QAction *action)
 	activeAction = action;
 	
 	QString locale = locales[action];
-	if (locale != "en") {
+	if (locale != QLatin1String("en")) {
 		load(locale);
 	}
 	else {

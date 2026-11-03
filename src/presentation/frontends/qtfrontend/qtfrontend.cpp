@@ -35,7 +35,7 @@ QtFrontend::QtFrontend(int &argc, char **argv) {
 	QApplication::setDesktopFileName(QStringLiteral("org.kde.stopmotion"));
 
 	mw = new MainWindowGUI(stApp);
-	mw->setWindowTitle("Stopmotion");
+	mw->setWindowTitle(QStringLiteral("Stopmotion"));
 	mw->showMaximized();
 
 	try {
@@ -133,7 +133,7 @@ void QtFrontend::updateProgress(int numOperationsDone) {
 
 void QtFrontend::setProgressInfo(const char *infoText) {
 	if (progressDialog) {
-		progressDialog->setLabelText(infoText);
+		progressDialog->setLabelText(QString::fromUtf8(infoText));
 	}
 }
 
@@ -389,7 +389,7 @@ void QtFrontend::handleException(UiException& e) {
 				tr("Preferences file %1 is not a valid XML preferences file. Please correct this or delete the file and try again.").arg(e.string()));
 		break;
 	case UiException::ArbitraryError:
-		QMessageBox::critical(nullptr, tr("Fatal"), e.what());
+		QMessageBox::critical(nullptr, tr("Fatal"), QString::fromLocal8Bit(e.what()));
 		break;
 	default:
 		unhandled = true;
@@ -404,7 +404,7 @@ void QtFrontend::handleException(UiException& e) {
 }
 
 void QtFrontend::reportWarning(const char *message) {
-	QMessageBox::warning(nullptr, tr("Warning"), message);
+	QMessageBox::warning(nullptr, tr("Warning"), QString::fromUtf8(message));
 }
 
 void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
@@ -414,7 +414,7 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 			QStringLiteral("/dev/(v4l/){0,1}video[0-9]{0,1}"));
 	int numImports = prefs->getPreference("numberofimports", 1);
 	for (int i = 0; i < numImports; ++i) {
-		Preference startPref(QString("importstartdaemon%1")
+		Preference startPref(QStringLiteral("importstartdaemon%1")
 				.arg(i).toUtf8().constData(), "");
 		std::string start(startPref.get());
 		int index = start.find("(DEFAULTPATH)");
@@ -422,12 +422,12 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 			start.replace(index, (int) strlen("(DEFAULTPATH)"),
 					std::string("$IMAGEFILE"));
 		}
-		QString s(start.c_str());
-		s.replace( videoDevice, QString("$VIDEODEVICE") );
-		prefs->setPreference( QString("importstartdaemon%1")
+		QString s = QString::fromStdString(start);
+		s.replace( videoDevice, QStringLiteral("$VIDEODEVICE") );
+		prefs->setPreference( QStringLiteral("importstartdaemon%1")
 				.arg(i).toUtf8().constData(), s.toUtf8().constData());
 
-		Preference prepollPref(QString("importprepoll%1")
+		Preference prepollPref(QStringLiteral("importprepoll%1")
 				.arg(i).toUtf8().constData(), "");
 		std::string prepoll(prepollPref.get());
 		index = prepoll.find("(DEFAULTPATH)");
@@ -435,9 +435,9 @@ void QtFrontend::updateOldPreferences(PreferencesTool *prefs) {
 			prepoll.replace(index, (int) strlen("(DEFAULTPATH)"),
 					std::string("$IMAGEFILE"));
 		}
-		QString ss(prepoll.c_str());
-		ss.replace( videoDevice, QString("$VIDEODEVICE") );
-		prefs->setPreference( QString("importprepoll%1").arg(i).toUtf8().constData(), ss.toUtf8().constData());
+		QString ss = QString::fromStdString(prepoll);
+		ss.replace( videoDevice, QStringLiteral("$VIDEODEVICE") );
+		prefs->setPreference( QStringLiteral("importprepoll%1").arg(i).toUtf8().constData(), ss.toUtf8().constData());
 	}
 }
 

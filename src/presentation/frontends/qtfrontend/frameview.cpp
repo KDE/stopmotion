@@ -238,11 +238,11 @@ bool FrameView::on() {
 	PreferencesTool *prefs = PreferencesTool::get();
 	int activeCmd = prefs->getPreference("activedevice", 0);
 
-	Preference prepoll(QString("importprepoll%1")
+	Preference prepoll(QStringLiteral("importprepoll%1")
 			.arg(activeCmd).toLatin1().constData(), "");
-	Preference startDaemon(QString("importstartdaemon%1")
+	Preference startDaemon(QStringLiteral("importstartdaemon%1")
 			.arg(activeCmd).toLatin1().constData(), "");
-	Preference stopDaemon(QString("importstopdaemon%1")
+	Preference stopDaemon(QStringLiteral("importstopdaemon%1")
 			.arg(activeCmd).toLatin1().constData(), "");
 
 	bool prepollRequiresDevice = strstr(prepoll.get(), DEVICE_TOKEN);
@@ -251,9 +251,9 @@ bool FrameView::on() {
 	if (prepollRequiresDevice || startDaemonRequiresDevice) {
 		int activeDev = prefs->getPreference("activeVideoDevice", -1);
 		if (0 <= activeDev) {
-			Preference deviceP(QString("device%1")
+			Preference deviceP(QStringLiteral("device%1")
 					.arg(activeDev).toLatin1().constData(), "");
-			device = QString(deviceP.get()).trimmed();
+			device = QString::fromUtf8(deviceP.get()).trimmed();
 		}
 		if (device.isEmpty()) {
 			QMessageBox::warning(this, tr("Warning"), tr(
@@ -262,7 +262,7 @@ bool FrameView::on() {
 			return false;
 		}
 	}
-	QString pre = QString(prepoll.get()).replace(DEVICE_TOKEN, device);
+	QString pre = QString::fromUtf8(prepoll.get()).replace(QLatin1String(DEVICE_TOKEN), device);
 	bool isProcess = startDaemon.get() && *startDaemon.get() != '\0';
 
 	bool isCameraReady = true;
@@ -276,7 +276,7 @@ bool FrameView::on() {
 	}
 
 	if (isProcess) {
-		QString sd = QString(startDaemon.get()).replace(DEVICE_TOKEN, device);
+		QString sd = QString::fromUtf8(startDaemon.get()).replace(QLatin1String(DEVICE_TOKEN), device);
 		if ( !grabber->setStartCommand(sd.toLatin1().constData()) ) {
 			DomainFacade::getFacade()->getFrontend()->hideProgress();
 			QMessageBox::warning(this, tr("Warning"), tr(
@@ -361,7 +361,7 @@ void FrameView::off() {
 
 
 void FrameView::redraw() {
-	cameraOutput.load(capturedFile.path());
+	cameraOutput.load(QString::fromLocal8Bit(capturedFile.path()));
 	update();
 }
 

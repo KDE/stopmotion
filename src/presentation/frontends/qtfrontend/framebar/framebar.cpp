@@ -49,7 +49,7 @@ static QImage tryReadImage(const char *filename) {
     // Loop through all the supported formats and see if we can find a match.
     const QList<QByteArray> supportedImageFormats = QImageReader::supportedImageFormats();
     for (int i = 0; i < supportedImageFormats.size(); ++i) {
-        QImageReader anotherImageReader(filename);
+        QImageReader anotherImageReader(QString::fromLocal8Bit(filename));
         anotherImageReader.setFormat(supportedImageFormats.at(i));
         const QImage anotherImage = anotherImageReader.read();
         if (!anotherImage.isNull())
@@ -179,7 +179,7 @@ void FrameBar::fixPreferencesMenu() {
 void FrameBar::doActiveFrameNotifications() {
 	fixPreferencesMenu();
 	// For writing the frame number in the frame number display
-	Q_EMIT newActiveFrameText( QString(tr("Frame number: ")) + QString("%1").arg(activeFrame + 1) );
+	Q_EMIT newActiveFrameText( QString(tr("Frame number: ")) + QStringLiteral("%1").arg(activeFrame + 1) );
 	Q_EMIT newActiveFrame(activeScene, activeFrame);
 }
 

@@ -47,19 +47,19 @@ void ModelHandler::chooseFrame() {
 	fileDialog = new QFileDialog((MainWindowGUI*)parent(),
 			tr("Choose frames to add"), *lastVisitedDir);
 	QStringList filters;
-	filters << "Images (*.png *.jpg *.jpeg  *.gif *.PNG *.JPG *.JPEG *.GIF)"
-			<< "Joint Photographic Ex. Gr. (*.jpg *.jpeg *.JPG *.JPEG)"
-			<< "Portable Network Graphics (*.png *.PNG)"
-			<< "GIMP native (*.xcf *.XCF)"
-			<< "Tagged Image File Format (*.tif *.TIF)"
-			<< "Windows Bitmap (*.bmp *.BMP)"
-			<< "TrueVision Targa (*.tga *.TGA)"
-			<< "Portable Anymap (*.pnm *.PNM)"
-			<< "X11 Pixmap (*.xpm *.XPM)"
-			<< "ZSoft IBM PC Paintbrush (*.pcx *.PCX)"
-			<< "CompuServe Graph. Interch. Format (*.gif *.GIF)"
-			<< "Interleaved Bitmap (*.lbm *.iff *.LBM *.IFF)"
-			<< "All files (*)";
+	filters << QStringLiteral("Images (*.png *.jpg *.jpeg  *.gif *.PNG *.JPG *.JPEG *.GIF)")
+			<< QStringLiteral("Joint Photographic Ex. Gr. (*.jpg *.jpeg *.JPG *.JPEG)")
+			<< QStringLiteral("Portable Network Graphics (*.png *.PNG)")
+			<< QStringLiteral("GIMP native (*.xcf *.XCF)")
+			<< QStringLiteral("Tagged Image File Format (*.tif *.TIF)")
+			<< QStringLiteral("Windows Bitmap (*.bmp *.BMP)")
+			<< QStringLiteral("TrueVision Targa (*.tga *.TGA)")
+			<< QStringLiteral("Portable Anymap (*.pnm *.PNM)")
+			<< QStringLiteral("X11 Pixmap (*.xpm *.XPM)")
+			<< QStringLiteral("ZSoft IBM PC Paintbrush (*.pcx *.PCX)")
+			<< QStringLiteral("CompuServe Graph. Interch. Format (*.gif *.GIF)")
+			<< QStringLiteral("Interleaved Bitmap (*.lbm *.iff *.LBM *.IFF)")
+			<< QStringLiteral("All files (*)");
 	fileDialog->setNameFilters(filters);
 	fileDialog->setAcceptMode(QFileDialog::AcceptOpen);
 	fileDialog->setFileMode(QFileDialog::ExistingFiles);

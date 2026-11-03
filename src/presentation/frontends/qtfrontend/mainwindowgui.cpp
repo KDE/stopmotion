@@ -79,7 +79,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	  gotoFrameLabel(nullptr),
 	  modelHandler(nullptr), soundHandler(nullptr), cameraHandler(nullptr), editMenuHandler(nullptr),
 	  languageHandler(nullptr), runAnimationHandler(nullptr),
-	  lastVisitedDir(getenv("PWD")) {
+	  lastVisitedDir(QString::fromLocal8Bit(qgetenv("PWD"))) {
 
 	centerWidget = new QWidget;
 	centerWidget->setObjectName("CenterWidget");
@@ -498,7 +498,7 @@ void MainWindowGUI::retranslateStrings()
 
 	//Other widgets
 	numberDisplay->setText(tr("Frame number: ") +
-			QString("%1").arg(frameBar->getActiveFrame() + 1));
+			QStringLiteral("%1").arg(frameBar->getActiveFrame() + 1));
 	gotoFrameLabel->setText(tr("Go to frame:"));
 
 	//Tooltip and whatsthis texts
@@ -795,7 +795,7 @@ void MainWindowGUI::openProject() {
 			getOpenFileName(this,
 					tr("Choose project file"),
 					lastVisitedDir,
-					"Stopmotion (*.sto)");
+					QStringLiteral("Stopmotion (*.sto)"));
 		if ( !file.isNull() ) {
 			doOpenProject( file.toLocal8Bit().constData() );
 		}
@@ -886,7 +886,7 @@ bool MainWindowGUI::doSaveProject(const char* projectFile) {
 
 bool MainWindowGUI::saveProjectAs() {
 	QString file = QFileDialog::getSaveFileName(this,
-			tr("Save As"), lastVisitedDir, "Stopmotion (*.sto)");
+			tr("Save As"), lastVisitedDir, QStringLiteral("Stopmotion (*.sto)"));
 	if ( file.isNull() )
 		return false;
 	if (!doSaveProject(file.toLocal8Bit().constData()))
@@ -979,7 +979,7 @@ void MainWindowGUI::exportToCinerella()
 {
 	QString file = QFileDialog::
 		getSaveFileName(this,
-				tr("Export to file"), lastVisitedDir, "Cinerella (*.XXX)");
+				tr("Export to file"), lastVisitedDir, QStringLiteral("Cinerella (*.XXX)"));
 
 	if ( !file.isNull() ) {
 		DomainFacade::getFacade()->exportToCinerella( file.toLocal8Bit().constData() );
@@ -1090,7 +1090,7 @@ void MainWindowGUI::setTitle(bool modified) {
 	} else {
 		title.append("Stopmotion");
 	}
-	setWindowTitle(title.c_str());
+	setWindowTitle(QString::fromLocal8Bit(title.c_str()));
 }
 
 

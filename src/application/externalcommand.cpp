@@ -74,7 +74,7 @@ void ExternalCommand::readFromStandardOutput()
 	textBrowser->ensureCursorVisible();
 	QTextCursor curs = textBrowser->textCursor();
 	curs.movePosition(QTextCursor::StartOfLine, QTextCursor::KeepAnchor);
-	curs.insertText(process->readAllStandardOutput());
+	curs.insertText(QString::fromLocal8Bit(process->readAllStandardOutput()));
 }
 
 
@@ -83,7 +83,7 @@ void ExternalCommand::readFromStandardError()
 	textBrowser->ensureCursorVisible();
 	QTextCursor curs = textBrowser->textCursor();
 	curs.movePosition(QTextCursor::StartOfLine, QTextCursor::KeepAnchor);
-	curs.insertText(process->readAllStandardError());
+	curs.insertText(QString::fromLocal8Bit(process->readAllStandardError()));
 }
 
 
@@ -91,9 +91,9 @@ void ExternalCommand::submitInputToProgram()
 {
 	if ( lineEdit->isModified() ) {
 		QString input = lineEdit->text();
-		input.append('\n');
+		input.append(u'\n');
 		process->write(input.toLocal8Bit());
-		lineEdit->setText("");
+		lineEdit->clear();
 	}
 }
 

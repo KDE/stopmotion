@@ -39,7 +39,7 @@ void EditObserver::updateAnimationChanged(int sceneNumber, int frameNumber) {
 	const char *path = DomainFacade::getFacade()->getImagePath(sceneNumber,
 				frameNumber);
 	if (path && fsw) {
-		fsw->addPath(path);
+		fsw->addPath(QString::fromLocal8Bit(path));
 	}
 }
 

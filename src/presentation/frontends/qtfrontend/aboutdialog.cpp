@@ -24,7 +24,7 @@ AboutDialog::AboutDialog(QWidget *parent)
 	label->setScaledContents(true);
 	layout->addWidget(label);
 	layout->addWidget( new QLabel(
-				"<p>" + tr("This is the Stopmotion application for creating stop motion animations.") + "</p>"
+				QStringLiteral("<p>") + tr("This is the Stopmotion application for creating stop motion animations.") + QStringLiteral("</p>")
 				+ QString::fromUtf8(
 						"<p> &copy; 2005-2016 Bj\xc3\xb8rn Erik Nilsen, Fredrik Berg Kj\xc3\xb8lstad et al </p>")));
 	widget->setLayout(layout);
@@ -32,11 +32,11 @@ AboutDialog::AboutDialog(QWidget *parent)
 	tabWidget->addTab(widget, tr("&About") );
 
 	tabWidget->addTab( new QLabel(
-				"<p><b>" + tr("Main developers") + "</b><br>"
+				QStringLiteral("<p><b>") + tr("Main developers") + QStringLiteral("</b><br>")
 				+ QString::fromUtf8(
 						"Bj\xc3\xb8rn Erik Nilsen &lt;bjoern.nilsen@bjoernen.com&gt;<br>"
 						"Fredrik Berg Kj\xc3\xb8lstad &lt;fredrikbk@hotmail.com&gt;<br>")
-				+ "<p><b>" + tr("Contributors") + "</b><br>"
+				+ QStringLiteral("<p><b>") + tr("Contributors") + QStringLiteral("</b><br>")
 				+ QString::fromUtf8(
 					"Eric Stolten &lt;stoltene2@gmail.com&gt;<br>"
 					"Josh Green &lt;josh@resonance.org&gt;<br>"
@@ -45,37 +45,37 @@ AboutDialog::AboutDialog(QWidget *parent)
 				"Ying-Chun Liu (PaulLiu) &lt;paulliu@debian.org&gt;<br>"
 				"Barak A. Pearlmutter &lt;bap@debian.org&gt;<br>"
 				"Cyril Brulebois &lt;kibi@debian.org&gt;<br>")
-				+ "<p>"),
+				+ QStringLiteral("<p>")),
 				tr("A&uthors"));
 
 	QTextEdit *qte = new QTextEdit;
 	qte->setHtml(
-				"<p><b>" + tr("Translation") + "</b><br>"
-				"George Helebrant &lt;helb@skatekralovice.com&gt; (" + tr("Czech") + ")<br>"
-				"Gorazd Bizjak and Matej Lavreni &lt;info@zapstudio.net&gt; (" + tr("Slovenian") + ")<br>"
-				"Guillaume B &lt;littletux@zarb.org&gt; (" + tr("French") + ")<br>"
-				"Martin Herweg &lt;m.herweg@gmx.de&gt; (" + tr("German") + ")<br>"
+				QStringLiteral("<p><b>") + tr("Translation") + QStringLiteral("</b><br>"
+				"George Helebrant &lt;helb@skatekralovice.com&gt; (") + tr("Czech") + QStringLiteral(")<br>"
+				"Gorazd Bizjak and Matej Lavreni &lt;info@zapstudio.net&gt; (") + tr("Slovenian") + QStringLiteral(")<br>"
+				"Guillaume B &lt;littletux@zarb.org&gt; (") + tr("French") + QStringLiteral(")<br>"
+				"Martin Herweg &lt;m.herweg@gmx.de&gt; (") + tr("German") + QStringLiteral(")<br>")
 				+ QString::fromUtf8(
-				"Jos\xc3\xa9 Jorge &lt;jjorge@free.fr&gt; (") + tr("Portuguese") + ")<br>"
+				"Jos\xc3\xa9 Jorge &lt;jjorge@free.fr&gt; (") + tr("Portuguese") + QStringLiteral(")<br>")
 				+ QString::fromUtf8(
-				"Manuel Qui\xc3\xb1ones &lt;manuel.por.aca@gmail.com&gt; (") + tr("Spanish") + ")<br>"
-				"David Hjelm &lt;dav.hjelm@spray.se&gt; (" + tr("Swedish") + ")<br>"
+				"Manuel Qui\xc3\xb1ones &lt;manuel.por.aca@gmail.com&gt; (") + tr("Spanish") + QStringLiteral(")<br>"
+				"David Hjelm &lt;dav.hjelm@spray.se&gt; (") + tr("Swedish") + QStringLiteral(")<br>")
 				+ QString::fromUtf8(
-				"Koray L\xc3\xb6ker &lt;loker@pardus.org.tr&gt; (") + tr("Turkish") + ")<br>"
-				"Diego Giordano &lt;fusion_machine@tin.it&gt; (" + tr("Italian") + ")<br>"
-				"Matteo Comisso &lt;teomatteo8.9@hotmail.it&gt; (" + tr("Italian") + ")<br>"
-				"Wei-Lun Chao &lt;bluebat@member.fsf.org&gt; (" + tr("Traditional Chinese") +")<br>"
-				"Maysara Abdulhaq and Ahmad Gharbeia of Arab Digital Expression Foundation (" + tr("Arabic") + ")<br>"
-				"Denis Fokin (" + tr("Russian") + ")<br>"
-				"Yaron (sh-yaron) (" + tr("Hebrew") + ")<br>"
+				"Koray L\xc3\xb6ker &lt;loker@pardus.org.tr&gt; (") + tr("Turkish") + QStringLiteral(")<br>"
+				"Diego Giordano &lt;fusion_machine@tin.it&gt; (") + tr("Italian") + QStringLiteral(")<br>"
+				"Matteo Comisso &lt;teomatteo8.9@hotmail.it&gt; (") + tr("Italian") + QStringLiteral(")<br>"
+				"Wei-Lun Chao &lt;bluebat@member.fsf.org&gt; (") + tr("Traditional Chinese") +QStringLiteral(")<br>"
+				"Maysara Abdulhaq and Ahmad Gharbeia of Arab Digital Expression Foundation (") + tr("Arabic") + QStringLiteral(")<br>"
+				"Denis Fokin (") + tr("Russian") + QStringLiteral(")<br>"
+				"Yaron (sh-yaron) (") + tr("Hebrew") + QStringLiteral(")<br>"
 				"</p>"
-				"<p><b>" + tr("Logo") + "</b><br>"
+				"<p><b>") + tr("Logo") + QStringLiteral("</b><br>"
 				"Gorazd Bizjak &lt;gorazd@zapstudio.net&gt;<br>"
-				"<p><b>" + tr("Coordinating") + "</b><br>"
-				"Herman Robak &lt;herman@skolelinux.no&gt;<br>"
+				"<p><b>") + tr("Coordinating") + QStringLiteral("</b><br>"
+				"Herman Robak &lt;herman@skolelinux.no&gt;<br>")
 				+ QString::fromUtf8(
 				"\xc3\x98yvind Kol\xc3\xa5s &lt;pippin@gimp.org&gt;</p>")
-				+ "<p><b>" + tr("Testing") + "</b><br>"
+				+ QStringLiteral("<p><b>") + tr("Testing") + QStringLiteral("</b><br>")
 				+ QString::fromUtf8(
 				"Tore Sinding Bekkedal &lt;toresbe@ifi.uio.no&gt;<br>"
 				"Finn Arne Johansen &lt;faj@bzz.no&gt;<br>"

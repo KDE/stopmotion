@@ -17,7 +17,7 @@ struct SurfaceLoader {
 
 SurfaceLoader::value_t* SurfaceLoader::load(const char* path) {
 	std::unique_ptr<QPixmap> p(new QPixmap);
-	if (p->load(path)) {
+	if (p->load(QString::fromLocal8Bit(path))) {
 		return p.release();
 	}
 	return nullptr;

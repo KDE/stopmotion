@@ -30,7 +30,7 @@ class QWidget;
 FrameThumbView::FrameThumbView(FrameBar *frameBar, QWidget *parent, int number,
 		const char *name)
 		: ThumbView(frameBar, parent, number, name) {
-	stringNumber = QString("%1").arg(number + 1);
+	stringNumber = QStringLiteral("%1").arg(number + 1);
 	textWidth = 5 + stringNumber.length() * 8;
 	selected = false;
 	hasSounds = false;
@@ -133,7 +133,7 @@ void FrameThumbView::startDrag() {
 	for (int i = lowend; i <= highend; ++i) {
 		const char* imagePath = facade->getImagePath(activeScene, i);
 		if (imagePath)
-			urls.append(QUrl::fromLocalFile(imagePath));
+			urls.append(QUrl::fromLocalFile(QString::fromLocal8Bit(imagePath)));
 	}
 
 	QDrag *drag = new ThumbDragger(this);
@@ -154,7 +154,7 @@ void FrameThumbView::setHasSounds( bool hasSounds ) {
 
 void FrameThumbView::setNumber( int number ) {
 	ThumbView::setNumber(number);
-	stringNumber = QString("%1").arg(number + 1);
+	stringNumber = QStringLiteral("%1").arg(number + 1);
 	textWidth = 5 + stringNumber.length() * 8;
 	update();
 }
