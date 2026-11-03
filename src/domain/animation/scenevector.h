@@ -91,7 +91,8 @@ public:
 	 * @param frames The frames to add.
 	 * @note On failure, no frames will have been added.
 	 */
-	void addFrames(int scene, int where, const std::vector<Frame*>& frames) override;
+	void addFrames(int scene, int where,
+			std::vector<std::unique_ptr<Frame>>& frames) override;
 	/**
 	 * Preallocates enough memory for @ref AddFrames to add @a count frames
 	 * to scene number @scene.
@@ -108,7 +109,8 @@ public:
 	 * @pre The scene must have at least @code{.cpp} frame + count @endcode
 	 * frames.
 	 */
-	void removeFrames(int scene, int frame, int count, std::vector<Frame*>& out) override;
+	void removeFrames(int scene, int frame, int count,
+			std::vector<std::unique_ptr<Frame>>& out) override;
 	/**
 	 * Moves frames.
 	 * @param fromScene The number of the scene from which to move frames.

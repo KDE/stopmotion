@@ -11,6 +11,7 @@
 
 #include "commandadd.h"
 #include "src/domain/animation/animationimpl.h"
+#include "src/domain/animation/frame.h"
 #include "src/domain/undo/command.h"
 
 class ErrorHandler;
@@ -26,10 +27,10 @@ CommandRemove::~CommandRemove() {
 
 Command* CommandRemove::execute() {
 	std::unique_ptr<CommandAdd> inv(new CommandAdd(sv, sc, fr, frameCount));
-	std::vector<Frame*> removed;
+	std::vector<std::unique_ptr<Frame>> removed;
 	sv.removeFrames(sc, fr, frameCount, removed);
-	for (Frame* f : removed) {
-		inv->addFrame(f);
+	for (auto& f : removed) {
+		inv->addFrame(std::move(f));
 	}
 	delete this;
 	return inv.release();

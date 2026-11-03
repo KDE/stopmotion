@@ -58,9 +58,9 @@ public:
 	/**
 	 * Removes a frame from the scene.
 	 * @param frame The frame to remove.
-	 * @return The removed frame. Ownership is returned.
+	 * @return The removed frame.
 	 */
-	Frame* removeFrame(int frame);
+	std::unique_ptr<Frame> removeFrame(int frame);
 
 	/**
 	 * Removes frames from the animation.
@@ -69,7 +69,7 @@ public:
 	 * @param [out] out The removed frames.
 	 */
 	void removeFrames(int frame, int count,
-			std::vector<Frame*>& out);
+			std::vector<std::unique_ptr<Frame>>& out);
 
 	/**
 	 * Moves the frames at the positions from fromFrame to toFrame (inclusive)
@@ -95,14 +95,14 @@ public:
 	 * @param index The index at which to add the frame. Must be between
 	 * 0 and @code{.cpp} getSize() @endcode inclusive.
 	 */
-	void addFrame(Frame* f, int index);
+	void addFrame(std::unique_ptr<Frame>&& f, int index);
 
 	/**
 	 * Adds frames to the scene.
 	 * @param where Frame index to add the new frames.
 	 * @param fs The frames to add.
 	 */
-	void addFrames(int where, const std::vector<Frame*>& fs);
+	void addFrames(int where, std::vector<std::unique_ptr<Frame>>& fs);
 
 	/**
 	 * Reserves space for @a count more frames to be added without the risk of
@@ -125,7 +125,7 @@ public:
 	 * Adds an already saved frame.
 	 * @param f the frame to add
 	 */
-	void addSavedFrame(Frame *f);
+	void addSavedFrame(std::unique_ptr<Frame>&& f);
 
 	/**
 	 * Adds the sound in the file filename to the end of the sounds in the
@@ -150,7 +150,7 @@ public:
 	 * Removes a sound from the specified frame.
 	 * @param frameNumber The frame from which to remove the sound.
 	 * @param index Which sound to remove.
-	 * @return The removed sound. Ownership is passed.
+	 * @return The removed sound.
 	 */
 	std::unique_ptr<Sound> removeSound(int frameNumber, int index);
 
@@ -202,7 +202,7 @@ public:
 	void accept(FileNameVisitor& v) const;
 
 private:
-	using FrameVector = std::vector<Frame*>;
+	using FrameVector = std::vector<std::unique_ptr<Frame>>;
 	FrameVector frames;
 };
 

@@ -9,6 +9,7 @@
 
 #include <cstdint>
 #include <string>
+#include <memory>
 #include <vector>
 
 class ErrorHandler;
@@ -27,14 +28,13 @@ public:
 	~CommandAdd() override;
 	/**
 	 * Adds a frame to the add command.
-	 * @param frame Ownership is passed.
 	 */
-	void addFrame(Frame* frame);
+	void addFrame(std::unique_ptr<Frame> frame);
 	Command* execute() override;
 	void accept(FileNameVisitor& v) const override;
 private:
 	AnimationImpl& sv;
-	std::vector<Frame*> frames;
+	std::vector<std::unique_ptr<Frame>> frames;
 	int scene;
 	int frame;
 };

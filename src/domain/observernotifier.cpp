@@ -177,10 +177,11 @@ int ObserverNotifier::frameCount(int scene) const {
 class FrameAdder : public ObservableOperation {
 	int sc;
 	int n;
-	const std::vector<Frame*>& frs;
+	std::vector<std::unique_ptr<Frame>>& frs;
+	int count;
 public:
-	FrameAdder(int scene, int where, const std::vector<Frame*>& frames)
-			: sc(scene), n(where), frs(frames) {
+	FrameAdder(int scene, int where, std::vector<std::unique_ptr<Frame>>& frames)
+			: sc(scene), n(where), frs(frames), count(frames.size()) {
 	}
 	~FrameAdder() override {
 	}
@@ -188,13 +189,12 @@ public:
 		del.addFrames(sc, n, frs);
 	}
 	void update(Observer& ob) override {
-		int count = frs.size();
 		ob.updateAdd(sc, n, count);
 	}
 };
 
 void ObserverNotifier::addFrames(int scene, int where,
-		const std::vector<Frame*>& frames) {
+		std::vector<std::unique_ptr<Frame>>& frames) {
 	FrameAdder fa(scene, where, frames);
 	doOp(fa);
 }
@@ -207,9 +207,9 @@ class FramesRemover : public ObservableOperation {
 	int sc;
 	int fr;
 	int c;
-	std::vector<Frame*>& r;
+	std::vector<std::unique_ptr<Frame>>& r;
 public:
-	FramesRemover(int scene, int where, int count, std::vector<Frame*>& out)
+	FramesRemover(int scene, int where, int count, std::vector<std::unique_ptr<Frame>>& out)
 			: sc(scene), fr(where), c(count), r(out) {
 	}
 	~FramesRemover() override {
@@ -223,7 +223,7 @@ public:
 };
 
 void ObserverNotifier::removeFrames(int scene, int frame, int count,
-		std::vector<Frame*>& out) {
+		std::vector<std::unique_ptr<Frame>>& out) {
 	FramesRemover fr(scene, frame, count, out);
 	doOp(fr);
 }

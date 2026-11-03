@@ -586,10 +586,7 @@ void ProjectSerializer::getAttributes(const QDomNode& node,
 					}
 					// The node is a image node
 					if (nodeName == QLatin1String("img")) {
-						std::unique_ptr<Frame> f(new Frame(wf));
-						Scene *s = sVect.back();
-						s->addSavedFrame(f.get());
-						f.release();
+						sVect.back()->addSavedFrame(std::make_unique<Frame>(wf));
 					}
 					// The node is a sound node
 					else {

@@ -92,11 +92,13 @@ int SceneVector::frameCount(int scene) const {
 }
 
 void SceneVector::addFrames(int scene, int where,
-		const std::vector<Frame*>& frames) {
-	getMutableScene(scene)->addFrames(where, frames);
-	for (const Frame* frame : frames) {
-		totalSoundCount += frame->soundCount();
+		std::vector<std::unique_ptr<Frame>>& frames) {
+	int sounds = 0;
+	for (const auto& frame : frames) {
+		sounds += frame->soundCount();
 	}
+	getMutableScene(scene)->addFrames(where, frames);
+	totalSoundCount += sounds;
 }
 
 void SceneVector::preallocateFrames(int scene, int count) {
@@ -104,11 +106,10 @@ void SceneVector::preallocateFrames(int scene, int count) {
 }
 
 void SceneVector::removeFrames(int scene, int frame, int count,
-		std::vector<Frame*>& out) {
+		std::vector<std::unique_ptr<Frame>>& out) {
 	int start = static_cast<int>(out.size());
 	getMutableScene(scene)->removeFrames(frame, count, out);
-	for (std::vector<Frame*>::const_iterator i = out.begin() + start;
-			i != out.end(); ++i) {
+	for (auto i = out.begin() + start; i != out.end(); ++i) {
 		totalSoundCount -= (*i)->soundCount();
 	}
 }
@@ -126,21 +127,18 @@ void SceneVector::moveFrames(int fromScene, int fromFrame, int frameCount,
 		preallocateFrames(toScene, frameCount);
 		// this will do for now, even though it is quadratic
 		for (int i = 0; i != frameCount; ++i) {
-			Frame* f = from->removeFrame(fromFrame);
-			to->addFrame(f, toFrame + i);
+			to->addFrame(from->removeFrame(fromFrame), toFrame + i);
 		}
 	} else if (toFrame < fromFrame) {
 		// this will do for now, even though it is stupid
 		for (int i = 0; i != frameCount; ++i) {
-			Frame* f = from->removeFrame(fromFrame + i);
-			to->addFrame(f, toFrame + i);
+			to->addFrame(from->removeFrame(fromFrame + i), toFrame + i);
 		}
 	} else if (fromFrame + frameCount < toFrame) {
 		// this will do for now, even though it is stupid
 		for (int i = 0; i != frameCount; ++i) {
 			// perform a rotation
-			Frame* f = from->removeFrame(fromFrame);
-			to->addFrame(f, toFrame - 1);
+			to->addFrame(from->removeFrame(fromFrame), toFrame - 1);
 		}
 	}
 }

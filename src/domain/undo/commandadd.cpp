@@ -24,27 +24,24 @@ CommandAdd::CommandAdd(AnimationImpl& model, int toScene, int toFrame, int count
 }
 
 CommandAdd::~CommandAdd() {
-	for (Frame* f : frames) {
-		delete f;
-	}
 }
 
-void CommandAdd::addFrame(Frame* frame) {
-	frames.push_back(frame);
+void CommandAdd::addFrame(std::unique_ptr<Frame> frame) {
+	frames.push_back(std::move(frame));
 }
 
 Command* CommandAdd::execute() {
 	std::unique_ptr<CommandRemove> inverse(
 			new CommandRemove(sv, scene, frame, frames.size()));
 	sv.addFrames(scene, frame, frames);
-	// ownership has been passed, so we must forget the frames
+	// the frames have been moved out
 	frames.clear();
 	delete this;
 	return inverse.release();
 }
 
 void CommandAdd::accept(FileNameVisitor& v) const {
-	for (const Frame* f : frames) {
+	for (const auto& f : frames) {
 		f->accept(v);
 	}
 }
@@ -110,12 +107,12 @@ Command* CommandAddFactory::create(::Parameters& ps, ErrorHandler&) {
 	int scene = ps.getInteger(0, sceneCount - 1);
 	int frame = ps.getInteger(0, sv.frameCount(scene));
 	int count = ps.getHowMany();
-	CommandAdd* add = new CommandAdd(sv, scene, frame, count);
+	std::unique_ptr<CommandAdd> add(new CommandAdd(sv, scene, frame, count));
 	std::string frameName;
 	for (int i = 0; i != count; ++i) {
 		ps.getString(frameName, "?*.jpg");
 		WorkspaceFile wf(frameName.c_str());
-		add->addFrame(new Frame(wf));
+		add->addFrame(std::make_unique<Frame>(wf));
 	}
-	return add;
+	return add.release();
 }

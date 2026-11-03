@@ -55,10 +55,10 @@ public:
 	const Scene* getScene(int which) const override;
 	int frameCount(int scene) const override;
 	void addFrames(int scene, int where,
-			const std::vector<Frame*>& frames) override;
+			std::vector<std::unique_ptr<Frame>>& frames) override;
 	void preallocateFrames(int scene, int count) override;
 	void removeFrames(int scene, int frame, int count,
-			std::vector<Frame*>& out) override;
+			std::vector<std::unique_ptr<Frame>>& out) override;
 	void moveFrames(int fromScene, int fromFrame, int frameCount,
 			int toScene, int toFrame) override;
 	void replaceImage(int sceneNumber, int frameNumber,

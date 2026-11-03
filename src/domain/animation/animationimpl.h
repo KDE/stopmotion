@@ -86,11 +86,12 @@ public:
 	 * Adds frames to the animation.
 	 * @param scene The scene to which the frames will be added.
 	 * @param where The frame number for the first of the added frames.
-	 * @param frames The frames to add.
+	 * @param frames The frames to add. On success they are moved out of
+	 * @a frames, leaving null pointers.
 	 * @note On failure, no frames will have been added.
 	 */
 	virtual void addFrames(int scene, int where,
-			const std::vector<Frame*>& frames) = 0;
+			std::vector<std::unique_ptr<Frame>>& frames) = 0;
 	/**
 	 * Preallocates enough memory for @ref AddFrames to add @a count frames
 	 * to scene number @scene.
@@ -102,13 +103,13 @@ public:
 	 * @param frame The first frame to remove.
 	 * @param count The number of frames to remove.
 	 * @param [out] out The removed frames will be added to the end of this
-	 * vector. Ownership is returned.
+	 * vector.
 	 * @note Upon failure, {@a out} and the animation will both be untouched.
 	 * @pre The scene must have at least @code{.cpp} frame + count @endcode
 	 * frames.
 	 */
 	virtual void removeFrames(int scene, int frame, int count,
-			std::vector<Frame*>& out) = 0;
+			std::vector<std::unique_ptr<Frame>>& out) = 0;
 	/**
 	 * Moves frames.
 	 * @param fromScene The number of the scene from which to move frames.
