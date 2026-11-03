@@ -25,7 +25,7 @@ class DeviceTab : public QWidget
 {
 	Q_OBJECT
 public:
-	DeviceTab(QWidget *parent = nullptr);
+	explicit DeviceTab(QWidget *parent = nullptr);
 
 	void initialize();
 	void apply();

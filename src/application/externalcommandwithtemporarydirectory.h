@@ -19,7 +19,7 @@ class ExternalCommandWithTemporaryDirectory {
 	ExternalCommandWithTemporaryDirectory(
 			const ExternalCommandWithTemporaryDirectory&) = delete;
 public:
-	ExternalCommandWithTemporaryDirectory(QWidget *parent = nullptr);
+	explicit ExternalCommandWithTemporaryDirectory(QWidget *parent = nullptr);
 	~ExternalCommandWithTemporaryDirectory();
 	void run(const QString &command);
 	void show();

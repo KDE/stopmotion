@@ -474,7 +474,7 @@ class GetLine {
 public:
 	GetLine(const GetLine&) = delete;
 	GetLine& operator=(const GetLine&) = delete;
-	GetLine(FILE* handle) : fh(handle), buffer(nullptr), size(0) {
+	explicit GetLine(FILE* handle) : fh(handle), buffer(nullptr), size(0) {
 	}
 	~GetLine() {
 		free(buffer);

@@ -66,7 +66,7 @@ public:
 	 * Constructs a @c StringReader.
 	 * @param input The null-terminated buffer to read.
 	 */
-	StringReader(const char* input) {
+	explicit StringReader(const char* input) {
 		p = input;
 		end = p + strlen(input);
 	}
@@ -359,7 +359,7 @@ public:
 class StringReaderParameters : public Parameters {
 	StringReader& reader;
 public:
-	StringReaderParameters(StringReader& r) : reader(r) {
+	explicit StringReaderParameters(StringReader& r) : reader(r) {
 	}
 	~StringReaderParameters() override {
 	}
@@ -438,7 +438,7 @@ public:
 	 * representation of the command and its parameters. Ownership is
 	 * not passed.
 	 */
-	VaListParameters(va_list& a)
+	explicit VaListParameters(va_list& a)
 			: args(a) {
 	}
 	~VaListParameters() override {
@@ -455,7 +455,7 @@ public:
 class RandomParameters : public Parameters {
 	RandomSource& rs;
 public:
-	RandomParameters(RandomSource& rng)
+	explicit RandomParameters(RandomSource& rng)
 			: rs(rng) {
 	}
 	int32_t getInteger(int32_t min, int32_t max) override {

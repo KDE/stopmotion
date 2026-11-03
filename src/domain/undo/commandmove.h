@@ -30,7 +30,7 @@ public:
 class CommandMoveFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	CommandMoveFactory(AnimationImpl& model);
+	explicit CommandMoveFactory(AnimationImpl& model);
 	~CommandMoveFactory() override;
 	Command* create(Parameters& ps, ErrorHandler& e) override;
 };

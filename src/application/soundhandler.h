@@ -30,7 +30,7 @@ public:
 	 * @param homeDir the home directory of the user.
 	 * @param name the name of the soundhandler
 	 */
-	SoundHandler ( QObject *parent = nullptr, QStatusBar *sb = nullptr,
+	explicit SoundHandler ( QObject *parent = nullptr, QStatusBar *sb = nullptr,
 			const FrameBar* frameBar = nullptr, const QString& homeDir = QString(),
 			const char *name = nullptr );
 	

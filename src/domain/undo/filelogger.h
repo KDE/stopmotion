@@ -15,7 +15,7 @@ class CommandLogger;
 class LoggerWriteFailedException : public std::exception {
 	char msg[400];
 public:
-	LoggerWriteFailedException(int error);
+	explicit LoggerWriteFailedException(int error);
 	const char* what() const noexcept override;
 };
 

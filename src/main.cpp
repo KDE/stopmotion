@@ -26,7 +26,7 @@
 class CouldNotInitializeRecoveryFiles : public std::exception {
 	char buffer[1024];
 public:
-	CouldNotInitializeRecoveryFiles(int err) {
+	explicit CouldNotInitializeRecoveryFiles(int err) {
 		snprintf(buffer, sizeof(buffer),
 				"Could not initialize recovery files (%s)."
 				" You need permission to read and write in a ~/.stopmotion"
@@ -40,7 +40,7 @@ public:
 class RecoveryIncompleteException : public std::exception {
 	char buffer[1024];
 public:
-	RecoveryIncompleteException(const char* filename) {
+	explicit RecoveryIncompleteException(const char* filename) {
 		snprintf(buffer, sizeof(buffer),
 				"Failed to recover previous project from command log file %s."
 				" Perhaps the file is corrupt or you don't have permission"

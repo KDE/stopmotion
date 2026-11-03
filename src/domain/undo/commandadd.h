@@ -42,7 +42,7 @@ private:
 class CommandAddFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	CommandAddFactory(AnimationImpl& model);
+	explicit CommandAddFactory(AnimationImpl& model);
 	~CommandAddFactory() override;
 	Command* create(::Parameters& ps, ErrorHandler& e) override;
 	class Parameters : public ::Parameters {

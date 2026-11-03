@@ -19,7 +19,7 @@
 class TemporaryDirectoryCreationException : public std::exception {
 	char msg[100];
 public:
-	TemporaryDirectoryCreationException(const char* reason) {
+	explicit TemporaryDirectoryCreationException(const char* reason) {
 		strncpy(msg, reason, sizeof(msg) - 1);
 		msg[sizeof(msg) - 1] = '\0';
 	}

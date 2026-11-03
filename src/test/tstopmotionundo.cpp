@@ -96,7 +96,7 @@ class SceneVectorTestHelper : public ModelTestHelper {
 	class HashingFileNameVisitor : public FileNameVisitor {
 		Hash h;
 	public:
-		HashingFileNameVisitor(SceneVector& sv) {
+		explicit HashingFileNameVisitor(SceneVector& sv) {
 			sv.accept(*this);
 		}
 		Hash get() const {
@@ -116,7 +116,7 @@ class SceneVectorTestHelper : public ModelTestHelper {
 	class DumpingFileNameVisitor : public FileNameVisitor {
 		StringWriter dump;
 	public:
-		DumpingFileNameVisitor(SceneVector& sv) {
+		explicit DumpingFileNameVisitor(SceneVector& sv) {
 			sv.accept(*this);
 		}
 		const char* get() const {
@@ -138,7 +138,7 @@ class SceneVectorTestHelper : public ModelTestHelper {
 		}
 	};
 public:
-	SceneVectorTestHelper(SceneVector& s) : sv(s) {
+	explicit SceneVectorTestHelper(SceneVector& s) : sv(s) {
 	}
 	~SceneVectorTestHelper() override {
 	}
@@ -210,7 +210,7 @@ class AnimTester {
 		QCOMPARE(soundHashes[n], h);
 	}
 public:
-	AnimTester(const Animation* a) : anim(a), scene(0),
+	explicit AnimTester(const Animation* a) : anim(a), scene(0),
 			frame(0), sound(0), soundCount(0), seenFrame(false) {
 		getHashes(imageHashes, "resources/frame?.jpg");
 		getHashes(soundHashes, "resources/sound?.ogg");

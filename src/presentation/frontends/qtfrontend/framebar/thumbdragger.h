@@ -14,7 +14,7 @@ class ThumbDragger: public QDrag {
 	Q_OBJECT
 public:
 	~ThumbDragger() override;
-	ThumbDragger(ThumbView* source);
+	explicit ThumbDragger(ThumbView* source);
 };
 
 #endif /* THUMBDRAGGER_H_ */

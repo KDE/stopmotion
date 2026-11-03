@@ -97,7 +97,7 @@ class TarFileRead {
 		}
 	}
 public:
-	TarFileRead(const char* filename)
+	explicit TarFileRead(const char* filename)
 			: tar(QString::fromLocal8Bit(filename), tarMimeType) {
 		if (!tar.open(QIODevice::ReadOnly)) {
 			// KTar does not say why it could not open the file itself
@@ -190,7 +190,7 @@ public:
 		}
 		return nullptr;
 	}
-	StoFileRead(const char* filename) : tar(filename) {
+	explicit StoFileRead(const char* filename) : tar(filename) {
 	}
 	~StoFileRead() {
 	}
@@ -334,7 +334,7 @@ class UniqueVisitor: public FileNameVisitor {
 	std::set<std::string> visited;
 	FileNameVisitor* del;
 public:
-	UniqueVisitor(FileNameVisitor* delegate) :
+	explicit UniqueVisitor(FileNameVisitor* delegate) :
 			del(delegate) {
 	}
 	~UniqueVisitor() override {
@@ -387,7 +387,7 @@ class TarFileWrite {
 	QString filename;
 	KTar tar;
 public:
-	TarFileWrite(const char* tarFilename)
+	explicit TarFileWrite(const char* tarFilename)
 			: filename(QString::fromLocal8Bit(tarFilename)),
 			  tar(filename, tarMimeType) {
 		if (!tar.open(QIODevice::WriteOnly))
@@ -422,7 +422,7 @@ class StoFileWrite {
 	TarPath soundPath;
 	std::set<std::string> alreadyPacked;
 public:
-	StoFileWrite(const char* stoFilename)
+	explicit StoFileWrite(const char* stoFilename)
 			: tar(stoFilename),
 			  name(getProjectName(stoFilename)),
 			  imagePath(name, "/images/"),

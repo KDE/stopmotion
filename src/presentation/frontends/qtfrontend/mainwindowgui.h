@@ -54,7 +54,7 @@ public:
 	 * @param stApp the application class for changing translator
 	 * on runtime.
 	 */
-	MainWindowGUI(QApplication *stApp);
+	explicit MainWindowGUI(QApplication *stApp);
 	~MainWindowGUI() override;
 
 	/**

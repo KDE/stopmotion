@@ -33,7 +33,7 @@ public:
 class CommandAddSceneFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	CommandAddSceneFactory(AnimationImpl& model);
+	explicit CommandAddSceneFactory(AnimationImpl& model);
 	~CommandAddSceneFactory() override;
 	Command* create(Parameters& ps, ErrorHandler& e) override;
 };

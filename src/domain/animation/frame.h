@@ -27,7 +27,7 @@ public:
 	 * @param file The picture for this frame. The WorkspaceFile object is
 	 * emptied by this call.
 	 */
-	Frame(WorkspaceFile& file);
+	explicit Frame(WorkspaceFile& file);
 
 	/**
 	 * Cleans up after the frame

@@ -17,7 +17,7 @@ class HelpWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	HelpWindow(QWidget *parent = nullptr);
+	explicit HelpWindow(QWidget *parent = nullptr);
 
 private:
 	Ui::MainWindow ui;

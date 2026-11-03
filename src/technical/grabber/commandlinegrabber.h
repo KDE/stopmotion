@@ -29,7 +29,7 @@ public:
 	 * @param stopProcess command line for stopping the process
 	 * @param isProcess true if the process is running in daemon mode, false otherwise
 	 */
-	CommandLineGrabber(const char* filePath);
+	explicit CommandLineGrabber(const char* filePath);
 	~CommandLineGrabber() override;
 	bool setPrePollCommand(const char *command) override;
 	bool setStartCommand(const char *command) override;

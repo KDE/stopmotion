@@ -22,7 +22,7 @@ public:
 	 * Constructs and initializes the line edit object.
 	 * @param parent the parent widget
 	 */
-	FlexibleLineEdit(QWidget *parent = nullptr);
+	explicit FlexibleLineEdit(QWidget *parent = nullptr);
 	
 	/**
 	 * Checks what kind of key event the user has requested and 

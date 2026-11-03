@@ -41,7 +41,7 @@ public:
 	 * @param name The basename of the file (i.e. the return value of
 	 * {@ref TemporaryWorkspaceFile::basename}).
 	 */
-	WorkspaceFile(const char* name);
+	explicit WorkspaceFile(const char* name);
 	/**
 	 * Refers to the "new" model file, which should be used by the recovery
 	 * system if either the "current" model file or the command log cannot be
@@ -49,30 +49,30 @@ public:
 	 * file. This should only be necessary if a crash occurred during project
 	 * save.
 	 */
-	WorkspaceFile(NewModelFile);
+	explicit WorkspaceFile(NewModelFile);
 	/**
 	 * Refers to the "current" model file. If it and the command log are
 	 * present, the recovery system restores from this and then plays back the
 	 * commands from the command log.
 	 */
-	WorkspaceFile(CurrentModelFile);
+	explicit WorkspaceFile(CurrentModelFile);
 	/**
 	 * Refers to the command log. This holds the commands that were issued
 	 * since the "current" model file was written.
 	 */
-	WorkspaceFile(CommandLogFile);
+	explicit WorkspaceFile(CommandLogFile);
 	/**
 	 * Refers to the image written to by the capture command.
 	 */
-	WorkspaceFile(CapturedImage);
+	explicit WorkspaceFile(CapturedImage);
 	/**
 	 * Refers to the preferences file.
 	 */
-	WorkspaceFile(PreferencesFile);
+	explicit WorkspaceFile(PreferencesFile);
 	/**
 	 * Refers to the backup preferences file.
 	 */
-	WorkspaceFile(PreferencesFileOld);
+	explicit WorkspaceFile(PreferencesFileOld);
 	~WorkspaceFile();
 	/**
 	 * Gets the file's basename.

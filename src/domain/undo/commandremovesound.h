@@ -28,7 +28,7 @@ public:
 class UndoRemoveSoundFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	UndoRemoveSoundFactory(AnimationImpl& model);
+	explicit UndoRemoveSoundFactory(AnimationImpl& model);
 	~UndoRemoveSoundFactory() override;
 	Command* create(Parameters& ps, ErrorHandler& e) override;
 };

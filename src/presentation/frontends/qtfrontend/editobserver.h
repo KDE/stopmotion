@@ -19,7 +19,7 @@ class EditObserver: public Observer {
 	EditObserver(const EditObserver&) = delete;
 	EditObserver& operator=(const EditObserver&) = delete;
 public:
-	EditObserver(QFileSystemWatcher* watcher);
+	explicit EditObserver(QFileSystemWatcher* watcher);
 	~EditObserver() override;
 	void updateAdd(int scene, int index, int numFrames) override;
 	void updateRemove(int scene, int fromFrame, int toFrame) override;

@@ -33,7 +33,7 @@ public:
 class CommandAddSoundFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	CommandAddSoundFactory(AnimationImpl& model);
+	explicit CommandAddSoundFactory(AnimationImpl& model);
 	~CommandAddSoundFactory() override;
 	Command* create(Parameters& ps, ErrorHandler& e) override;
 };

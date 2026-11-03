@@ -130,7 +130,7 @@ class SceneRemover : public ObservableOperation {
 	int sc;
 public:
 	Scene* r;
-	SceneRemover(int from) : sc(from), r(nullptr) {
+	explicit SceneRemover(int from) : sc(from), r(nullptr) {
 	}
 	void op(AnimationImpl& del) override {
 		r = del.removeScene(sc);

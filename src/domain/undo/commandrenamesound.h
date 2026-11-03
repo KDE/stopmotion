@@ -38,7 +38,7 @@ public:
 class CommandRenameSoundFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	CommandRenameSoundFactory(AnimationImpl& model);
+	explicit CommandRenameSoundFactory(AnimationImpl& model);
 	~CommandRenameSoundFactory() override;
 	Command* create(Parameters& ps, ErrorHandler& e) override;
 };

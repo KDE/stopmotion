@@ -33,7 +33,7 @@ public:
 	 * Sets up the import tab.
 	 * @param parent the parent of the widget.
 	 */
-	ImportTab( QWidget *parent = nullptr );
+	explicit ImportTab( QWidget *parent = nullptr );
 
 	/**
 	 * Sets up the gui for the tab and connects the buttons.

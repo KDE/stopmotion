@@ -22,7 +22,7 @@ class ExternalCommand : public QWidget
 {
 	Q_OBJECT
 public:
-	ExternalCommand(QWidget *parent = nullptr);
+	explicit ExternalCommand(QWidget *parent = nullptr);
 	void run(const QString &command);
 
 private Q_SLOTS:

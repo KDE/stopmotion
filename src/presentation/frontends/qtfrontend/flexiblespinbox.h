@@ -23,7 +23,7 @@ public:
 	 * Constructs and initializes the object.
 	 * @param parent the parent widget
 	 */
-	FlexibleSpinBox(QWidget *parent = nullptr);
+	explicit FlexibleSpinBox(QWidget *parent = nullptr);
 	
 	/**
 	 * Checks what kind of key event the user has requested and 

@@ -25,7 +25,7 @@ public:
 	 * Retrieves the value associated with {@a key}. {@ref get} will return
 	 * this value, or {@c 0} if no such value exists.
 	 */
-	Preference(const char* key);
+	explicit Preference(const char* key);
 	/**
 	 * Retrieves the value associated with {@a key}. {@ref get} will return
 	 * this value, or {@a defaultValue} if no such value exists.

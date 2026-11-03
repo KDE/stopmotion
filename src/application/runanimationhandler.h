@@ -30,7 +30,7 @@ public:
 	 * @param sb the statusBar for displaying information to the user
 	 * @param name the name of this QObject
 	 */
-	RunAnimationHandler ( QObject *parent = nullptr, QStatusBar *sb = nullptr,
+	explicit RunAnimationHandler ( QObject *parent = nullptr, QStatusBar *sb = nullptr,
 			Selection *selection = nullptr, const char *name = nullptr );
 
 

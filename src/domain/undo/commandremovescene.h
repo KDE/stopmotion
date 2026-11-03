@@ -25,7 +25,7 @@ public:
 class UndoRemoveSceneFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	UndoRemoveSceneFactory(AnimationImpl& model);
+	explicit UndoRemoveSceneFactory(AnimationImpl& model);
 	~UndoRemoveSceneFactory() override;
 	Command* create(Parameters& ps, ErrorHandler& e) override;
 };

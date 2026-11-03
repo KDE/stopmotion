@@ -20,7 +20,7 @@ public:
 	 * Constructs an image cache.
 	 * @param cacheSize The number of images that the cache should hold.
 	 */
-	ImageCache(int cacheSize);
+	explicit ImageCache(int cacheSize);
 	~ImageCache();
 	/**
 	 * Pulls the named image into the cache, if necessary, and returns it.

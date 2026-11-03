@@ -28,7 +28,7 @@ public:
 class CommandSetImageFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	CommandSetImageFactory(AnimationImpl& model);
+	explicit CommandSetImageFactory(AnimationImpl& model);
 	~CommandSetImageFactory() override;
 	Command* create(Parameters& ps, ErrorHandler& e) override;
 };

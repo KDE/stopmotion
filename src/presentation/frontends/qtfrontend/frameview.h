@@ -38,7 +38,7 @@ public:
 	* @param playbackSpeed which speed the playback has to be played in if
 	* the playback mode is chosen
 	*/
-	FrameView(QWidget *parent=nullptr, const char *name=nullptr, int playbackSpeed = 10);
+	explicit FrameView(QWidget *parent=nullptr, const char *name=nullptr, int playbackSpeed = 10);
 
 	/**
 	* Cleans up after the frameview.

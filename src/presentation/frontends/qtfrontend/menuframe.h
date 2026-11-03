@@ -31,7 +31,7 @@ public:
 	 * @param parent the parent widget.
 	 * @param name the name of the menu.
 	 */
-	MenuFrame(QWidget * parent = nullptr, const char * name = nullptr);
+	explicit MenuFrame(QWidget * parent = nullptr, const char * name = nullptr);
 			
 	/**
 	 * Sets the focus widget to the QSpinBox: focusSpinBox.

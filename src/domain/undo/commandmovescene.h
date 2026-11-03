@@ -26,7 +26,7 @@ public:
 class CommandMoveSceneFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	CommandMoveSceneFactory(AnimationImpl& model);
+	explicit CommandMoveSceneFactory(AnimationImpl& model);
 	~CommandMoveSceneFactory() override;
 	Command* create(Parameters& ps, ErrorHandler& e) override;
 };

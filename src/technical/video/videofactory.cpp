@@ -36,7 +36,7 @@ class FileCopier : public FileNameVisitor {
 	int index;
 	const char* dir;
 public:
-	FileCopier(const char* dirPath) : index(0), dir(dirPath) {
+	explicit FileCopier(const char* dirPath) : index(0), dir(dirPath) {
 	}
 	~FileCopier() override {
 	}

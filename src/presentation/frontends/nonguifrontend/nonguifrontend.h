@@ -26,7 +26,7 @@ public:
      * Constructs and initializes the object.
      * @param facadePtr pointer to the domain facade
      */
-    NonGUIFrontend(DomainFacade *facadePtr);
+    explicit NonGUIFrontend(DomainFacade *facadePtr);
 	~NonGUIFrontend() override;
 	
 	/**

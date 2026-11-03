@@ -25,7 +25,7 @@ public:
 	 * Sets up the scenearrowbutton
 	 * @param parent the parent of the widget.
 	 */
-	SceneArrowButton( QWidget *parent=nullptr );
+	explicit SceneArrowButton( QWidget *parent=nullptr );
 	
 	/**
 	 * Sets if the scene is opened or closed.

@@ -34,7 +34,7 @@ static const int32_t no_num = std::numeric_limits<int32_t>::min();
 class TestException : public std::exception {
 	const char* msg;
 public:
-	TestException(const char* message) : msg(message) {
+	explicit TestException(const char* message) : msg(message) {
 	}
 	const char* what() const noexcept override {
 		return msg;
@@ -111,7 +111,7 @@ class CloneLogger : public CommandLogger {
 	class AlreadyIn {
 		bool& r;
 	public:
-		AlreadyIn(bool& a) : r(a) {
+		explicit AlreadyIn(bool& a) : r(a) {
 			r = true;
 		}
 		~AlreadyIn() {
@@ -267,7 +267,7 @@ public:
 		}
 		Command* execute() override;
 	};
-	AddCharFactory(std::string* m) : model(m) {
+	explicit AddCharFactory(std::string* m) : model(m) {
 	}
 	Command* create(Parameters& ps, ErrorHandler&) override {
 		int32_t i = ps.getInteger(0, sizeof(alphanumeric) - 1);
@@ -289,7 +289,7 @@ public:
 		}
 		Command* execute() override;
 	};
-	DelCharFactory(std::string* m) : model(m) {
+	explicit DelCharFactory(std::string* m) : model(m) {
 	}
 	Command* create(Parameters& ps, ErrorHandler&) override {
 		int32_t len = model->length();
@@ -327,7 +327,7 @@ class StringModelTestHelper : public ModelTestHelper {
 	// not owned
 	std::string* s;
 public:
-	StringModelTestHelper(std::string& model) : s(&model) {
+	explicit StringModelTestHelper(std::string& model) : s(&model) {
 	}
 	~StringModelTestHelper() override {
 	}

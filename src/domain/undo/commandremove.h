@@ -33,7 +33,7 @@ public:
 class CommandRemoveFactory : public CommandFactory {
 	AnimationImpl& sv;
 public:
-	CommandRemoveFactory(AnimationImpl& model);
+	explicit CommandRemoveFactory(AnimationImpl& model);
 	~CommandRemoveFactory() override;
 	Command* create(Parameters& ps, ErrorHandler& e) override;
 };

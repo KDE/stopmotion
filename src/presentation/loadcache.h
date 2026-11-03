@@ -23,7 +23,7 @@ public:
 	 * Constructs an image cache.
 	 * @param cacheSize The number of images that the cache should hold.
 	 */
-	LoadCache(int cacheSize);
+	explicit LoadCache(int cacheSize);
 	~LoadCache();
 	/**
 	 * Pulls the named image into the cache, if necessary, and returns it.

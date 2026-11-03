@@ -33,7 +33,7 @@ class StringLoggerWrapper: public CommandLogger {
 	std::string pending;
 	int committedUpTo;
 public:
-	StringLoggerWrapper(std::string* output) :
+	explicit StringLoggerWrapper(std::string* output) :
 			delegate(nullptr), out(output), committedUpTo(0) {
 	}
 	/**
@@ -151,7 +151,7 @@ public:
 	static int failureCount() {
 		return failures;
 	}
-	ExecutorStep(ExecutorStep* following)
+	explicit ExecutorStep(ExecutorStep* following)
 		: mallocCount(0), previous(following), stringLogger(&log[0]),
 		  activeLog(0) {
 	}
@@ -306,7 +306,7 @@ class FailingStep : public ExecutorStep {
 	int totalFails;
 	int noMallocsToFailCount;
 public:
-	FailingStep(ExecutorStep* delegate)
+	explicit FailingStep(ExecutorStep* delegate)
 		: ExecutorStep(delegate? delegate->getPrevious() : nullptr),
 		  del(delegate), nameString("failing "), fail(false),
 		  totalFails(0), noMallocsToFailCount(0) {
@@ -353,7 +353,7 @@ public:
 class ExecutorInit : public ExecutorStep {
 	ModelTestHelper& mth;
 public:
-	ExecutorInit(ModelTestHelper& helper) : ExecutorStep(nullptr), mth(helper) {
+	explicit ExecutorInit(ModelTestHelper& helper) : ExecutorStep(nullptr), mth(helper) {
 	}
 	const char* name() const override {
 		return "initialize";
@@ -365,7 +365,7 @@ public:
 
 class ExecutorConstruct : public ExecutorStep {
 public:
-	ExecutorConstruct(ExecutorStep* following) : ExecutorStep(following) {
+	explicit ExecutorConstruct(ExecutorStep* following) : ExecutorStep(following) {
 	}
 	const char* name() const override {
 		return "constructive commands";
@@ -377,7 +377,7 @@ public:
 
 class ClearHistory : public ExecutorStep {
 public:
-	ClearHistory(ExecutorStep* following)
+	explicit ClearHistory(ExecutorStep* following)
 		: ExecutorStep(following) {
 	}
 	const char* name() const override {
@@ -462,7 +462,7 @@ public:
 
 class ExecutorUndoAll : public ExecutorStep {
 public:
-	ExecutorUndoAll(ExecutorStep* following) : ExecutorStep(following) {
+	explicit ExecutorUndoAll(ExecutorStep* following) : ExecutorStep(following) {
 	}
 	const char* name() const override {
 		return "undo all";
@@ -476,7 +476,7 @@ public:
 
 class ExecutorRedoAll : public ExecutorStep {
 public:
-	ExecutorRedoAll(ExecutorStep* following) : ExecutorStep(following) {
+	explicit ExecutorRedoAll(ExecutorStep* following) : ExecutorStep(following) {
 	}
 	const char* name() const override {
 		return "redo all";

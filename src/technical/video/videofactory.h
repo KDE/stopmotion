@@ -20,7 +20,7 @@ public:
 	 * Objects of this class make a video file.
 	 * @param animation The animation to be turned into a video
 	 */
-	VideoFactory(const AnimationImpl *animation);
+	explicit VideoFactory(const AnimationImpl *animation);
 	~VideoFactory();
 
 	/**

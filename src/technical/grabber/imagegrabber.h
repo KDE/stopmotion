@@ -21,7 +21,7 @@ public:
 	 * @param filePath path to the output file grabbed from a device.
 	 * Ownership is not passed.
 	 */
-	ImageGrabber(const char* filePath);
+	explicit ImageGrabber(const char* filePath);
 	virtual ~ImageGrabber() = 0;
 
 	/**

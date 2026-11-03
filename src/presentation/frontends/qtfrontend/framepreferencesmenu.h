@@ -36,7 +36,7 @@ public:
 	 * @param frameBar The frame bar.
 	 * @param name the name of the menu
 	 */
-	FramePreferencesMenu( QWidget * parent = nullptr, SoundHandler *soundHandler = nullptr,
+	explicit FramePreferencesMenu( QWidget * parent = nullptr, SoundHandler *soundHandler = nullptr,
 			const FrameBar *frameBar = nullptr, const char * name = nullptr);
 
 	~FramePreferencesMenu() override;

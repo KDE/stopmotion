@@ -32,7 +32,7 @@ public:
 		NullAdder(const NullAdder&) = delete;
 		NullAdder& operator=(const NullAdder&) = delete;
 	public:
-		NullAdder(CommandList& c) : cl(c) {
+		explicit NullAdder(CommandList& c) : cl(c) {
 			cl.cs.push_front(nullptr);
 		}
 		~NullAdder() {
