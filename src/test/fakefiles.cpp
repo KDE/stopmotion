@@ -117,22 +117,6 @@ int RealOggEmptyJpg::unlink(const char *name) {
 	return 0;
 }
 
-int RealOggEmptyJpg::ov_test(FILE *, OggVorbis_File *, const char *, long) {
-	return 0;
-}
-
-int RealOggEmptyJpg::ov_clear(OggVorbis_File *) {
-	return 0;
-}
-
-int RealOggEmptyJpg::ov_open(FILE *,OggVorbis_File *,const char *, long) {
-	return 0;
-}
-
-long RealOggEmptyJpg::ov_read(OggVorbis_File *,char *,int, int, int, int, int *) {
-	return 0;
-}
-
 int ov_raw_seek(OggVorbis_File *,long) {
 	return 0;
 }

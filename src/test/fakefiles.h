@@ -34,10 +34,6 @@ public:
 	int access (const char *name, int type) override;
 	int ferror(FILE*) override;
 	int unlink(const char *name) override;
-	int ov_test(FILE *, OggVorbis_File *, const char *, long);
-	int ov_clear(OggVorbis_File *);
-	int ov_open(FILE *,OggVorbis_File *,const char *, long);
-	long ov_read(OggVorbis_File *,char *,int, int, int, int, int *);
 	char *getenv(const char *name) override;
 };
 

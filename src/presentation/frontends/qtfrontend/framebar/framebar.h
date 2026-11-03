@@ -177,7 +177,6 @@ public:
 
 	int getFrameWidth() const;
 	int getFrameHeight() const;
-	int getSpace() const;
 
 protected:
 	/**

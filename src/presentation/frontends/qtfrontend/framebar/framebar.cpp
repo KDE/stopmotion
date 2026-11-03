@@ -750,10 +750,6 @@ int FrameBar::getFrameHeight() const {
 	return FRAME_HEIGHT;
 }
 
-int FrameBar::getSpace() const {
-	return SPACE;
-}
-
 int FrameBar::getActiveFrame() const {
 	return activeFrame;
 }

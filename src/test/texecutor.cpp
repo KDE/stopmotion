@@ -92,9 +92,6 @@ public:
 		e->i2 = ps.getInteger(-RAND_MAX/2, RAND_MAX/2);
 		return e;
 	}
-	void Fail(const char* s) {
-		QFAIL(s);
-	}
 };
 
 /**

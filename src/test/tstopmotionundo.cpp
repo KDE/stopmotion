@@ -67,8 +67,6 @@ public:
 	}
 	void processEvents() override {
 	}
-	void reportError(const char *, int) {
-	}
 	bool askQuestion(Question) override {
 		return true;
 	}
