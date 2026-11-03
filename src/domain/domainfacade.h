@@ -250,7 +250,7 @@ public:
 	 * Sets the preferences in the preferences file for current,
 	 * most recent, second most recent and third most recent project filenames.
 	 */
-	void setMostRecentProject();
+	static void setMostRecentProject();
 
 	/**
 	 * Undoes the last undoable operation on the model.
@@ -336,7 +336,7 @@ public:
 	 * Returns available grabber devices.
 	 * @return vector containing available devices.
 	 */
-	const std::vector<GrabberDevice> getGrabberDevices();
+	static const std::vector<GrabberDevice> getGrabberDevices();
 
 	/**
 	 * Sets up the command logger file. If unsuccessful, a message will have

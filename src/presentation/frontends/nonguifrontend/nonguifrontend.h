@@ -42,7 +42,7 @@ public:
 	 * yet. Must be called before the preferences are used.
 	 * @throws UiException if the preferences file exists but cannot be read.
 	 */
-	void initializePreferences();
+	static void initializePreferences();
 	
 	void showProgress(ProgressMessage message, int numOperations) override;
 	void hideProgress() override;
@@ -74,8 +74,8 @@ private:
 	 * @param[in] isDirectory If true, a trailing slash is added if missing.
 	 * Must be false for paths of files.
 	 */
-	void getAbsolutePath(std::string& out, const char *path, bool isDirectory);
-	int checkFiles(const char *directory);
+	static void getAbsolutePath(std::string& out, const char *path, bool isDirectory);
+	static int checkFiles(const char *directory);
 };
 
 #endif

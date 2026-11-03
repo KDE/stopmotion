@@ -20,10 +20,10 @@ class RealOggEmptyJpg : public MockableFileSystem {
 public:
 	RealOggEmptyJpg();
 	~RealOggEmptyJpg() override;
-	bool hasExtension(const char* filename, const char* extension);
-	bool isSound(const char* filename);
-	bool isJpg(const char* filename);
-	bool isPng(const char* filename);
+	static bool hasExtension(const char* filename, const char* extension);
+	static bool isSound(const char* filename);
+	static bool isJpg(const char* filename);
+	static bool isPng(const char* filename);
 	void setDelegate(MockableFileSystem* mfs) override;
 	FILE* fopen(const char* filename, const char* mode) override;
 	FILE* freopen(const char* filename, const char* mode, FILE* fh) override;

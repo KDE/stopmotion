@@ -742,11 +742,11 @@ void FrameBar::scroll() {
 	}
 }
 
-int FrameBar::getFrameWidth() const {
+int FrameBar::getFrameWidth() {
 	return FRAME_WIDTH;
 }
 
-int FrameBar::getFrameHeight() const {
+int FrameBar::getFrameHeight() {
 	return FRAME_HEIGHT;
 }
 

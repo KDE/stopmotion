@@ -10,9 +10,9 @@ class Logger
 {
 public:
 	static Logger get();
-	void logDebug(const char * msg, ...);
-	void logWarning(const char * msg, ...);
-	void logFatal(const char * msg, ...);
+	static void logDebug(const char * msg, ...);
+	static void logWarning(const char * msg, ...);
+	static void logFatal(const char * msg, ...);
 	
 private:
 	static Logger logger;

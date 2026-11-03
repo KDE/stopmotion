@@ -342,7 +342,7 @@ public:
 	 * @param file the Cinerella project file
 	 * @return true on success, false otherwise
 	 */
-	bool exportToCinerella(const char *file);
+	static bool exportToCinerella(const char *file);
 
 	/**
 	 * Sets the file to be used as the command log.

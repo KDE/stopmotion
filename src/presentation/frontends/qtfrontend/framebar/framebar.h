@@ -175,8 +175,8 @@ public:
 	 */
 	void setMovingScene(int movingScene);
 
-	int getFrameWidth() const;
-	int getFrameHeight() const;
+	static int getFrameWidth();
+	static int getFrameHeight();
 
 protected:
 	/**

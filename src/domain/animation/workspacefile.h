@@ -232,7 +232,7 @@ public:
 	const char* path() const {
 		return p;
 	}
-	void makeEmpty();
+	static void makeEmpty();
 };
 
 #endif /* WORKSPACEFILE_H_ */
