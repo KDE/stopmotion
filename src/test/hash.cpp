@@ -42,10 +42,8 @@ void Hash::add(FILE* fh) {
 		for (size_t i = 0; i != r; ++i)
 			s.add(buffer[i]);
 	}
-	if (r == 0) {
-		if (ferror(fh))
-			throw std::ios_base::failure("error reading file for hash");
-	}
+	if (ferror(fh))
+		throw std::ios_base::failure("error reading file for hash");
 	fseek(fh, fpos, SEEK_SET);
 	add(s);
 }

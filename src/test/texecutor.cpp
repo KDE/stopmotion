@@ -177,7 +177,7 @@ void TestCommandFactory::AddCharToRandomString(char c) {
 	if (strNext == str + strAllocLen) {
 		int32_t newLen = strAllocLen == 0? 64 : strAllocLen * 2;
 		char* newStr = new char[newLen];
-		if (str)
+		if (strAllocLen != 0)
 			strncpy(newStr, str, strAllocLen);
 		delete[] str;
 		strNext = newStr + (strNext - str);

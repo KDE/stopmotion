@@ -402,7 +402,7 @@ bool FrameView::setViewMode(ImageMode mode) {
 		} else {
 			return false;
 		}
-	} else if (mode != imageModePlayback) {
+	} else {
 		if ( grabber->isGrabberProcess() ) {
 			playbackTimer.stop();
 		}

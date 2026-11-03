@@ -581,10 +581,8 @@ public:
 				i != factories.end(); ++i) {
 			factoryNames.push_back(i->first);
 		}
-		bool dontEnd = false;
 		while (commandCount < maxCount) {
-			int r = rng.getUniform(dontEnd || commandCount < minCount?
-					n - 1: n);
+			int r = rng.getUniform(commandCount < minCount? n - 1: n);
 			if (r == n)
 				return;
 			std::string& name(factoryNames[r]);
