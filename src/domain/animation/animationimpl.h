@@ -7,6 +7,7 @@
 #ifndef ANIMATIONIMPL_H_
 #define ANIMATIONIMPL_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -172,10 +173,10 @@ public:
 	 * add the sound to.
 	 * @param soundNumber The position of the sound to add. Must be between
 	 * 0 and @code{.cpp} SoundCount(scene, frame) @endcode inclusive.
-	 * @param sound The name sound to add. Ownership is passed.
+	 * @param sound The sound to add. It is taken only if this succeeds.
 	 */
 	virtual void addSound(int scene, int frame, int soundNumber,
-			Sound* sound) = 0;
+			std::unique_ptr<Sound>&& sound) = 0;
 	/**
 	 * changes the name of a sound of a frame.
 	 * @param scene The number of the scene containing the frame to change.
@@ -196,11 +197,11 @@ public:
 	 * containing the sound to be changed.
 	 * @param soundNumber Which sound within frame number @a frame of scene
 	 * number @a scene to be removed.
-	 * @return The file name of the sound that is being removed. Ownership
-	 * is returned.
+	 * @return The sound that is being removed.
 	 * @throws Nothing.
 	 */
-	virtual Sound* removeSound(int scene, int frame, int soundNumber) = 0;
+	virtual std::unique_ptr<Sound> removeSound(int scene, int frame,
+			int soundNumber) = 0;
 	/**
 	 * Plays the sounds from the frame specified.
 	 * @param scene The scene to which the frame belongs.

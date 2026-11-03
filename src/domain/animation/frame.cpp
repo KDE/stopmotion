@@ -35,11 +35,6 @@ Frame::Frame(WorkspaceFile& file) {
 
 
 Frame::~Frame() {
-	int numElem = sounds.size();
-	for (int i = 0; i < numElem; ++i) {
-		delete sounds[i];
-		sounds[i] = nullptr;
-	}
 }
 
 
@@ -61,25 +56,26 @@ int Frame::newSound(WorkspaceFile& file) {
 	sound->setName("Sound" + std::to_string(WorkspaceFile::getSoundNumber()));
 	sound->open(file, *ErrorHandler::getThrower());
 	WorkspaceFile::nextSoundNumber();
-	sounds.push_back(sound.release());
+	sounds.push_back(std::move(sound));
 
 	return 0;
 }
 
-void Frame::addSound(int index, Sound* sound) {
+void Frame::addSound(int index, std::unique_ptr<Sound>&& sound) {
 	if (index < 0 || soundCount() < index)
 		throw SoundOutOfRangeException();
-	sounds.insert(sounds.begin() + index, sound);
+	// leaves sound untouched if this throws
+	sounds.insert(sounds.begin() + index, std::move(sound));
 }
 
 void Frame::preallocateSounds(int extra) {
 	sounds.reserve(soundCount() + extra);
 }
 
-Sound* Frame::removeSound(int soundNumber) {
+std::unique_ptr<Sound> Frame::removeSound(int soundNumber) {
 	if (soundNumber < 0 || soundCount() <= soundNumber)
 		throw SoundOutOfRangeException();
-	Sound* s = sounds[soundNumber];
+	std::unique_ptr<Sound> s = std::move(sounds[soundNumber]);
 	sounds.erase(sounds.begin() + soundNumber);
 	return s;
 }
@@ -88,14 +84,14 @@ Sound* Frame::removeSound(int soundNumber) {
 Sound* Frame::getSound(int soundNumber) {
 	if (soundNumber < 0 || soundCount() <= soundNumber)
 		throw SoundOutOfRangeException();
-	return sounds[soundNumber];
+	return sounds[soundNumber].get();
 }
 
 
 const Sound* Frame::getSound(int soundNumber) const {
 	if (soundNumber < 0 || soundCount() <= soundNumber)
 		throw SoundOutOfRangeException();
-	return sounds[soundNumber];
+	return sounds[soundNumber].get();
 }
 
 
@@ -133,7 +129,7 @@ void Frame::replaceImage(WorkspaceFile& otherImage) {
 
 void Frame::accept(FileNameVisitor& v) const {
 	v.visitImage(imagePath.path());
-	for(Sound* sound : sounds) {
+	for (const auto& sound : sounds) {
 		v.visitSound(sound->getSoundPath());
 	}
 }

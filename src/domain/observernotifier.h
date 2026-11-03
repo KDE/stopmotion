@@ -7,6 +7,7 @@
 #define OBSERVERNOTIFIER_H_
 
 #include "src/domain/animation/animationimpl.h"
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -67,10 +68,11 @@ public:
 	int soundCount(int scene, int frame) const override;
 	int soundCount() const override;
 	void addSound(int scene, int frame, int soundNumber,
-			Sound* sound) override;
+			std::unique_ptr<Sound>&& sound) override;
 	std::string setSoundName(int scene, int frame, int soundNumber,
 			std::string soundName) override;
-	Sound* removeSound(int scene, int frame, int soundNumber) override;
+	std::unique_ptr<Sound> removeSound(int scene, int frame,
+			int soundNumber) override;
 	void playSounds(int scene, int frame, AudioDriver* audioDriver) const override;
 	void resync();
 	void accept(FileNameVisitor& v) const override;

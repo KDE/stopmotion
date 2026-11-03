@@ -20,24 +20,21 @@ class ErrorHandler;
 
 CommandAddSound::CommandAddSound(AnimationImpl& model, int32_t scene, int32_t frame,
 		int32_t soundNumber)
-	: sv(model), sc(scene), fr(frame), index(soundNumber),
-	  snd(nullptr) {
+	: sv(model), sc(scene), fr(frame), index(soundNumber) {
 }
 
 CommandAddSound::~CommandAddSound() {
-	delete snd;
 }
 
-void CommandAddSound::setSound(Sound* sound) {
+void CommandAddSound::setSound(std::unique_ptr<Sound> sound) {
 	assert(!snd);
-	snd = sound;
+	snd = std::move(sound);
 }
 
 Command* CommandAddSound::execute() {
 	std::unique_ptr<CommandRemoveSound>
 			inv(new CommandRemoveSound(sv, sc, fr, index));
-	sv.addSound(sc, fr, index, snd);
-	snd = nullptr;
+	sv.addSound(sc, fr, index, std::move(snd));
 	delete this;
 	return inv.release();
 };
@@ -70,7 +67,7 @@ Command* CommandAddSoundFactory::create(Parameters& ps, ErrorHandler& e) {
 	sound->setName(humanName);
 	std::unique_ptr<CommandAddSound> r(new CommandAddSound(sv, sc, fr, index));
 	Sound* soundCopy = sound.get();
-	r->setSound(sound.release());
+	r->setSound(std::move(sound));
 	WorkspaceFile wf(filename.c_str());
 	soundCopy->open(wf, e);
 	return r.release();

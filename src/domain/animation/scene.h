@@ -7,6 +7,7 @@
 
 #include "src/config.h"
 
+#include <memory>
 #include <string>
 #include <exception>
 #include <vector>
@@ -142,7 +143,8 @@ public:
 	 * @param soundNumber Index that the sound is to have.
 	 * @param sound The sound to add.
 	 */
-	void addSound(int frameNumber, int soundNumber, Sound* sound);
+	void addSound(int frameNumber, int soundNumber,
+			std::unique_ptr<Sound>&& sound);
 
 	/**
 	 * Removes a sound from the specified frame.
@@ -150,7 +152,7 @@ public:
 	 * @param index Which sound to remove.
 	 * @return The removed sound. Ownership is passed.
 	 */
-	Sound* removeSound(int frameNumber, int index);
+	std::unique_ptr<Sound> removeSound(int frameNumber, int index);
 
 	/**
 	 * Gets a sound from a frame.

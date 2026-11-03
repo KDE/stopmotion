@@ -6,6 +6,7 @@
 #include "observernotifier.h"
 #include "animation/animationimpl.h"
 #include "animation/frame.h"
+#include "animation/sound.h"
 #include "animation/workspacefile.h"
 #include "src/presentation/observer.h"
 #include "src/presentation/frontends/frontend.h"
@@ -347,18 +348,19 @@ public:
 
 class SoundAdder : public SoundChanger {
 	int sn;
-	Sound* s;
+	std::unique_ptr<Sound>& s;
 public:
-	SoundAdder(int scene, int frame, int soundNumber, Sound* sound)
+	SoundAdder(int scene, int frame, int soundNumber,
+			std::unique_ptr<Sound>& sound)
 			: SoundChanger(scene, frame), sn(soundNumber), s(sound) {
 	}
 	void op(AnimationImpl& del) override {
-		del.addSound(scene(), frame(), sn, s);
+		del.addSound(scene(), frame(), sn, std::move(s));
 	}
 };
 
 void ObserverNotifier::addSound(int scene, int frame, int soundNumber,
-		Sound* sound) {
+		std::unique_ptr<Sound>&& sound) {
 	SoundAdder adder(scene, frame, soundNumber, sound);
 	doOp(adder);
 }
@@ -388,20 +390,21 @@ std::string ObserverNotifier::setSoundName(int scene, int frame,
 
 class SoundRemover : public SoundChanger {
 	int sn;
-	Sound* r;
+	std::unique_ptr<Sound> r;
 public:
 	SoundRemover(int scene, int frame, int soundNumber)
-			: SoundChanger(scene, frame), sn(soundNumber), r(nullptr) {
+			: SoundChanger(scene, frame), sn(soundNumber) {
 	}
 	void op(AnimationImpl& del) override {
 		r = del.removeSound(scene(), frame(), sn);
 	}
-	Sound* returnValue() const {
-		return r;
+	std::unique_ptr<Sound> returnValue() {
+		return std::move(r);
 	}
 };
 
-Sound* ObserverNotifier::removeSound(int scene, int frame, int soundNumber) {
+std::unique_ptr<Sound> ObserverNotifier::removeSound(int scene, int frame,
+		int soundNumber) {
 	SoundRemover sr(scene, frame, soundNumber);
 	doOp(sr);
 	return sr.returnValue();

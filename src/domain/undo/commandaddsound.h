@@ -9,6 +9,7 @@
 #include "command.h"
 
 #include <cstdint>
+#include <memory>
 
 class AnimationImpl;
 class ErrorHandler;
@@ -20,12 +21,12 @@ class CommandAddSound : public Command {
 	int32_t sc;
 	int32_t fr;
 	int32_t index;
-	Sound* snd;
+	std::unique_ptr<Sound> snd;
 public:
 	CommandAddSound(AnimationImpl& model, int32_t scene, int32_t frame,
 			int32_t soundNumber);
 	~CommandAddSound() override;
-	void setSound(Sound* sound);
+	void setSound(std::unique_ptr<Sound> sound);
 	Command* execute() override;
 	void accept(FileNameVisitor& v) const override;
 };

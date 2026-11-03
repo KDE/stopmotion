@@ -6,6 +6,7 @@
 #ifndef SCENEVECTOR_H_
 #define SCENEVECTOR_H_
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -178,7 +179,7 @@ public:
 	 * @param sound The name sound to add. Ownership is passed.
 	 */
 	void addSound(int scene, int frame, int soundNumber,
-			Sound* sound) override;
+			std::unique_ptr<Sound>&& sound) override;
 	/**
 	 * changes the name of a sound of a frame.
 	 * @param scene The number of the scene containing the frame to change.
@@ -203,7 +204,8 @@ public:
 	 * is returned.
 	 * @throws Nothing.
 	 */
-	Sound* removeSound(int scene, int frame, int soundNumber) override;
+	std::unique_ptr<Sound> removeSound(int scene, int frame,
+			int soundNumber) override;
 	/**
 	 * Plays the sounds attached to the specified frame.
 	 * @param scene The number of the scene containing the sounds.

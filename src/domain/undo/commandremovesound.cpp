@@ -10,6 +10,7 @@
 #include "commandaddsound.h"
 #include "src/domain/animation/frame.h"
 #include "src/domain/animation/scene.h"
+#include "src/domain/animation/sound.h"
 #include "src/domain/animation/animationimpl.h"
 #include "src/domain/undo/command.h"
 
@@ -26,8 +27,7 @@ CommandRemoveSound::~CommandRemoveSound() {
 Command* CommandRemoveSound::execute() {
 	std::unique_ptr<CommandAddSound> inv(
 			new CommandAddSound(sv, sc, fr, index));
-	Sound* s = sv.removeSound(sc, fr, index);
-	inv->setSound(s);
+	inv->setSound(sv.removeSound(sc, fr, index));
 	delete this;
 	return inv.release();
 }

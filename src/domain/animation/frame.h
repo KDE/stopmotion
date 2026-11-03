@@ -7,6 +7,7 @@
 
 #include "workspacefile.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -53,7 +54,7 @@ public:
 	 * @note This is guaranteed not to fail for @c n calls after a call to
 	 * @code{.cpp} preallocateSounds(n) @endcode
 	 */
-	void addSound(int index, Sound* sound);
+	void addSound(int index, std::unique_ptr<Sound>&& sound);
 
 	/**
 	 * Allocates space for @a extra more calls to @ref addSound
@@ -67,7 +68,7 @@ public:
 	 * 0 and @code{.cpp} getNumberOfSounds() - 1 @encode
 	 * @return The sound that was removed. Ownership is returned.
 	 */
-	Sound* removeSound(int index);
+	std::unique_ptr<Sound> removeSound(int index);
 
 	/**
 	 * Returns the sound.
@@ -137,7 +138,7 @@ private:
 
 	WorkspaceFile imagePath;
 
-	using SoundVector = std::vector<Sound*>;
+	using SoundVector = std::vector<std::unique_ptr<Sound>>;
 
 	/** Contains the sounds belonging to this frame. */
 	SoundVector sounds;

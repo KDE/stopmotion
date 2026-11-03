@@ -9,6 +9,7 @@
 
 #include "scene.h"
 #include "frame.h"
+#include "sound.h"
 
 class SceneOutOfRangeException : public std::exception {
 public:
@@ -160,8 +161,8 @@ int SceneVector::soundCount(int scene, int frame) const {
 }
 
 void SceneVector::addSound(int scene, int frame, int soundNumber,
-		Sound* sound) {
-	getMutableScene(scene)->addSound(frame, soundNumber, sound);
+		std::unique_ptr<Sound>&& sound) {
+	getMutableScene(scene)->addSound(frame, soundNumber, std::move(sound));
 	++totalSoundCount;
 }
 
@@ -171,8 +172,9 @@ std::string SceneVector::setSoundName(int scene, int frame, int soundNumber,
 			std::move(soundName));
 }
 
-Sound* SceneVector::removeSound(int scene, int frame, int soundNumber) {
-	Sound* r = getMutableScene(scene)->removeSound(frame, soundNumber);
+std::unique_ptr<Sound> SceneVector::removeSound(int scene, int frame,
+		int soundNumber) {
+	std::unique_ptr<Sound> r = getMutableScene(scene)->removeSound(frame, soundNumber);
 	if (r)
 		--totalSoundCount;
 	return r;

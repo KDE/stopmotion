@@ -6,6 +6,7 @@
 #include "scene.h"
 
 #include "frame.h"
+#include "sound.h"
 #include "src/domain/filenamevisitor.h"
 
 class Sound;
@@ -114,13 +115,14 @@ void Scene::moveFrames(int fromFrame, int toFrame, int movePosition ) {
 	}
 }
 
-void Scene::addSound(int frameNumber, int soundNumber, Sound* sound) {
+void Scene::addSound(int frameNumber, int soundNumber,
+		std::unique_ptr<Sound>&& sound) {
 	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
-	frames[frameNumber]->addSound(soundNumber, sound);
+	frames[frameNumber]->addSound(soundNumber, std::move(sound));
 }
 
-Sound* Scene::removeSound(int frameNumber, int index) {
+std::unique_ptr<Sound> Scene::removeSound(int frameNumber, int index) {
 	if (frameNumber < 0 || getSize() <= frameNumber)
 		throw FrameOutOfRangeException();
 	return frames[frameNumber]->removeSound(index);
