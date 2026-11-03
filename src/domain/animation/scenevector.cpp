@@ -28,9 +28,6 @@ SceneVector::~SceneVector() {
 }
 
 void SceneVector::clear() {
-	for (Scene* scene : scenes) {
-		delete scene;
-	}
 	scenes.clear();
 	totalSoundCount = 0;
 }
@@ -39,27 +36,28 @@ int SceneVector::sceneCount() const {
 	return scenes.size();
 }
 
-void SceneVector::addScene(int where, Scene* newScene) {
+void SceneVector::addScene(int where, std::unique_ptr<Scene>&& newScene) {
 	if (where < 0 || sceneCount() < where)
 		throw SceneOutOfRangeException();
-	scenes.insert(scenes.begin() + where, newScene);
-	totalSoundCount += newScene->soundCount();
+	const int sounds = newScene->soundCount();
+	// leaves newScene untouched if this throws
+	scenes.insert(scenes.begin() + where, std::move(newScene));
+	totalSoundCount += sounds;
 }
 
 void SceneVector::addScene(int where) {
-	preallocateScenes(1);
-	scenes.insert(scenes.begin() + where, new Scene());
+	addScene(where, std::make_unique<Scene>());
 }
 
 void SceneVector::preallocateScenes(int count) {
 	scenes.reserve(sceneCount() + count);
 }
 
-Scene* SceneVector::removeScene(int from) {
+std::unique_ptr<Scene> SceneVector::removeScene(int from) {
 	int sc = sceneCount();
 	if (from < 0 || sc <= from)
 		throw SceneOutOfRangeException();
-	Scene* s = scenes[from];
+	std::unique_ptr<Scene> s = std::move(scenes[from]);
 	scenes.erase(scenes.begin() + from);
 	totalSoundCount -= s->soundCount();
 	return s;
@@ -69,22 +67,22 @@ void SceneVector::moveScene(int from, int to) {
 	int size = sceneCount();
 	if (from < 0 || size <= from || to < 0 || size < to)
 		throw SceneOutOfRangeException();
-	Scene* s = removeScene(from);
+	std::unique_ptr<Scene> s = removeScene(from);
 	if (from < to)
 		--to;
-	addScene(to, s);
+	addScene(to, std::move(s));
 }
 
 const Scene* SceneVector::getScene(int which) const {
 	if (which < 0 || sceneCount() <= which)
 		throw SceneOutOfRangeException();
-	return scenes[which];
+	return scenes[which].get();
 }
 
 Scene* SceneVector::getMutableScene(int which) {
 	if (which < 0 || sceneCount() <= which)
 		throw SceneOutOfRangeException();
-	return scenes[which];
+	return scenes[which].get();
 }
 
 int SceneVector::frameCount(int scene) const {
@@ -177,7 +175,7 @@ int SceneVector::soundCount() const {
 }
 
 void SceneVector::accept(FileNameVisitor& v) const {
-	for (const Scene* scene : scenes) {
+	for (const auto& scene : scenes) {
 		scene->accept(v);
 	}
 }

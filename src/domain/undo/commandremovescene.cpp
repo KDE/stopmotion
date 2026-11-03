@@ -8,6 +8,7 @@
 #include "command.h"
 #include "commandaddscene.h"
 #include "src/domain/animation/animationimpl.h"
+#include "src/domain/animation/scene.h"
 
 #include <memory>
 

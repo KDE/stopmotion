@@ -236,7 +236,7 @@ void ProjectSerializer::setProjectFile(const char *filename) {
 	projectFile = stoFileName(filename);
 }
 
-bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) {
+bool ProjectSerializer::openDat(std::vector<std::unique_ptr<Scene>>& out, const char* filename) {
 	QFile file(QString::fromLocal8Bit(filename));
 	QDomDocument doc;
 	if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file)) {
@@ -247,21 +247,18 @@ bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) 
 	try {
 		getAttributes(doc.documentElement(), out);
 	} catch (...) {
-		for (Scene* s : out) {
-			delete s;
-		}
 		out.clear();
 		throw;
 	}
 	return true;
 }
 
-std::vector<Scene*> ProjectSerializer::openSto(const char *filename) {
+std::vector<std::unique_ptr<Scene>> ProjectSerializer::openSto(const char *filename) {
 	assert(filename != nullptr);
 	setProjectFile(filename);
 	readSto(projectFile.c_str());
 	WorkspaceFile dat(WorkspaceFile::currentModelFile);
-	std::vector<Scene*> sVect;
+	std::vector<std::unique_ptr<Scene>> sVect;
 	if (!openDat(sVect, dat.path()))
 		throw ProjectFileReadException("openSto",
 				QStringLiteral("%1 contains no readable project description")
@@ -560,7 +557,7 @@ void ProjectSerializer::writeDat(const char* filename,
 }
 
 void ProjectSerializer::getAttributes(const QDomNode& node,
-		std::vector<Scene*>& sVect) {
+		std::vector<std::unique_ptr<Scene>>& sVect) {
 	for (QDomNode currNode = node; !currNode.isNull();
 			currNode = currNode.nextSibling()) {
 		const QDomElement element = currNode.toElement();
@@ -590,7 +587,7 @@ void ProjectSerializer::getAttributes(const QDomNode& node,
 					}
 					// The node is a sound node
 					else {
-						Scene *s = sVect.back();
+						Scene *s = sVect.back().get();
 						int frameNum = s->getSize() - 1;
 						int soundNum = s->soundCount(frameNum);
 						s->newSound(frameNum, wf);
@@ -603,8 +600,7 @@ void ProjectSerializer::getAttributes(const QDomNode& node,
 			}
 			// The node is a scene node
 			else if (nodeName == QLatin1String("seq")) {
-				Scene *s = new Scene();
-				sVect.push_back(s);
+				sVect.push_back(std::make_unique<Scene>());
 			}
 		}
 		getAttributes(currNode.firstChild(), sVect);

@@ -6,6 +6,7 @@
 #include "observernotifier.h"
 #include "animation/animationimpl.h"
 #include "animation/frame.h"
+#include "animation/scene.h"
 #include "animation/sound.h"
 #include "animation/workspacefile.h"
 #include "src/presentation/observer.h"
@@ -98,13 +99,14 @@ int ObserverNotifier::sceneCount() const {
 
 class SceneAdder : public ObservableOperation {
 	int n;
-	Scene* s;
+	std::unique_ptr<Scene>* s;
 public:
-	SceneAdder(int where, Scene* sc) : n(where), s(sc) {
+	/** @param sc The scene to add, or null for a new empty one. */
+	SceneAdder(int where, std::unique_ptr<Scene>* sc) : n(where), s(sc) {
 	}
 	void op(AnimationImpl& del) override {
 		if (s)
-			del.addScene(n, s);
+			del.addScene(n, std::move(*s));
 		else
 			del.addScene(n);
 	}
@@ -113,8 +115,8 @@ public:
 	}
 };
 
-void ObserverNotifier::addScene(int where, Scene* newScene) {
-	SceneAdder sa(where, newScene);
+void ObserverNotifier::addScene(int where, std::unique_ptr<Scene>&& newScene) {
+	SceneAdder sa(where, &newScene);
 	doOp(sa);
 }
 
@@ -130,8 +132,8 @@ void ObserverNotifier::preallocateScenes(int count) {
 class SceneRemover : public ObservableOperation {
 	int sc;
 public:
-	Scene* r;
-	explicit SceneRemover(int from) : sc(from), r(nullptr) {
+	std::unique_ptr<Scene> r;
+	explicit SceneRemover(int from) : sc(from) {
 	}
 	void op(AnimationImpl& del) override {
 		r = del.removeScene(sc);
@@ -141,10 +143,10 @@ public:
 	}
 };
 
-Scene* ObserverNotifier::removeScene(int from) {
+std::unique_ptr<Scene> ObserverNotifier::removeScene(int from) {
 	SceneRemover sr(from);
 	doOp(sr);
-	return sr.r;
+	return std::move(sr.r);
 }
 
 class SceneMover : public ObservableOperation {

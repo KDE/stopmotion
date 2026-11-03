@@ -40,9 +40,10 @@ public:
 	 * Adds a scene to the animation.
 	 * @param where Where in the sequence of scenes to insert this one. Must be
 	 * between 0 and {@c SceneCount()} inclusive.
-	 * @param newScene The scene to be inserted; ownership is passed.
+	 * @param newScene The scene to be inserted. It is taken only if this
+	 * succeeds.
 	 */
-	virtual void addScene(int where, Scene* newScene) = 0;
+	virtual void addScene(int where, std::unique_ptr<Scene>&& newScene) = 0;
 	/**
 	 * Adds a fresh empty scene.
 	 * @param where The scene number that this new scene will have.
@@ -59,9 +60,9 @@ public:
 	 * Removes a scene from the animation, together with all its frames.
 	 * @param from The scene to remove. Must be between 0 and @code{.cpp}
 	 * SceneCount() - 1 @endcode inclusive.
-	 * @return The removed scene. Ownership is returned.
+	 * @return The removed scene.
 	 */
-	virtual Scene* removeScene(int from) = 0;
+	virtual std::unique_ptr<Scene> removeScene(int from) = 0;
 	/**
 	 * Moves a scene.
 	 * @param from The scene number to move. Must be between 0 and

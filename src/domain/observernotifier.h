@@ -47,10 +47,10 @@ public:
 	void clear() override;
 	int sceneCount() const override;
 
-	void addScene(int where, Scene* newScene) override;
+	void addScene(int where, std::unique_ptr<Scene>&& newScene) override;
 	void addScene(int where) override;
 	void preallocateScenes(int count) override;
-	Scene* removeScene(int from) override;
+	std::unique_ptr<Scene> removeScene(int from) override;
 	void moveScene(int from, int to) override;
 	const Scene* getScene(int which) const override;
 	int frameCount(int scene) const override;

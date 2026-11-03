@@ -16,22 +16,20 @@
 class ErrorHandler;
 
 CommandAddScene::CommandAddScene(AnimationImpl& model, int32_t sn)
-		: sv(model), index(sn), sc(nullptr) {
+		: sv(model), index(sn) {
 }
 
 CommandAddScene::~CommandAddScene() {
-	delete sc;
 }
 
-void CommandAddScene::setScene(Scene* s) {
+void CommandAddScene::setScene(std::unique_ptr<Scene> s) {
 	assert(!sc);
-	sc = s;
+	sc = std::move(s);
 }
 
 Command* CommandAddScene::execute() {
 	std::unique_ptr<UndoRemoveScene> inv(new UndoRemoveScene(sv, index));
-	sv.addScene(index, sc);
-	sc = nullptr;
+	sv.addScene(index, std::move(sc));
 	delete this;
 	return inv.release();
 }
@@ -44,8 +42,7 @@ CommandAddSceneFactory::~CommandAddSceneFactory() {
 
 Command* CommandAddSceneFactory::create(Parameters& ps, ErrorHandler&) {
 	int32_t index = ps.getInteger(0, sv.sceneCount());
-	std::unique_ptr<Scene> sc(new Scene());
-	CommandAddScene* r = new CommandAddScene(sv, index);
-	r->setScene(sc.release());
-	return r;
+	std::unique_ptr<CommandAddScene> r(new CommandAddScene(sv, index));
+	r->setScene(std::make_unique<Scene>());
+	return r.release();
 }

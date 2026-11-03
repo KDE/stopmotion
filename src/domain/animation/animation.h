@@ -10,6 +10,7 @@
 #include <cstdint>
 #include <cstdio>
 #include <exception>
+#include <memory>
 #include <vector>
 
 
@@ -367,7 +368,7 @@ public:
 	void accept(FileNameVisitor& v) const;
 
 private:
-	void setScenes(const std::vector<Scene*>& sv);
+	void setScenes(std::vector<std::unique_ptr<Scene>>& sv);
 	FILE* initializeCommandLog();
 
 	/** All of the scenes in the animation. */

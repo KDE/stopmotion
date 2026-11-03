@@ -8,6 +8,7 @@
 #include "command.h"
 
 #include <cstdint>
+#include <memory>
 
 class AnimationImpl;
 class ErrorHandler;
@@ -16,14 +17,11 @@ class Scene;
 class CommandAddScene : public Command {
 	AnimationImpl& sv;
 	int32_t index;
-	Scene* sc;
+	std::unique_ptr<Scene> sc;
 public:
-	/**
-	 * @param scene Ownership is passed.
-	 */
 	CommandAddScene(AnimationImpl& model, int32_t sceneNumber);
 	~CommandAddScene() override;
-	void setScene(Scene* s);
+	void setScene(std::unique_ptr<Scene> s);
 	Command* execute() override;
 };
 

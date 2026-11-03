@@ -8,6 +8,7 @@
 
 
 #include <exception>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -39,14 +40,14 @@ public:
 	 * @param filename The model file.
 	 * @return {@c true} if successful, {@c false} otherwise.
 	 */
-	static bool openDat(std::vector<Scene*>& out, const char* filename);
+	static bool openDat(std::vector<std::unique_ptr<Scene>>& out, const char* filename);
 
 	/**
 	 * Creates necessary project paths and opens the project ({@c .sto}) file.
 	 * @param filename The project file
 	 * @return A vector containing the scenes stored in the project file.
 	 */
-	std::vector<Scene*> openSto(const char *filename);
+	std::vector<std::unique_ptr<Scene>> openSto(const char *filename);
 
 	/**
 	 * Checks that the project ({@c .sto}) file can be opened, without
@@ -95,7 +96,7 @@ private:
 	static void writeDat(const char* filename,
 			const AnimationImpl& anim, Frontend *frontend);
 	static void getAttributes(const QDomNode& node,
-			std::vector<Scene*>& scenes);
+			std::vector<std::unique_ptr<Scene>>& scenes);
 	void setProjectFile(const char *filename);
 };
 

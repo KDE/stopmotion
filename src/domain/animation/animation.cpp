@@ -240,18 +240,18 @@ void Animation::clear() {
 }
 
 
-void Animation::setScenes(const std::vector<Scene*>& sv) {
+void Animation::setScenes(std::vector<std::unique_ptr<Scene>>& sv) {
 	int count = sv.size();
 	scenes->preallocateScenes(count);
 	scenes->clear();
 	for (int i = 0; i != count; ++i) {
-		scenes->addScene(i, sv[i]);
+		scenes->addScene(i, std::move(sv[i]));
 	}
 }
 
 bool Animation::loadFromDat(const char* filename,
 		const char* projectFilename) {
-	std::vector<Scene*> sv;
+	std::vector<std::unique_ptr<Scene>> sv;
 	if (ProjectSerializer::openDat(sv, filename)) {
 		setScenes(sv);
 		serializer->resetProjectFile(projectFilename);
@@ -268,7 +268,7 @@ void Animation::openProject(const char *filename) {
 	logger->setLogFile(nullptr);
 	clear();
 	initializeCommandLog();
-	vector<Scene*> newScenes = serializer->openSto(filename);
+	std::vector<std::unique_ptr<Scene>> newScenes = serializer->openSto(filename);
 	setScenes(newScenes);
 }
 
