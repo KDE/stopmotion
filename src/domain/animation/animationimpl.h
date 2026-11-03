@@ -83,14 +83,6 @@ public:
 	 */
 	virtual int frameCount(int scene) const = 0;
 	/**
-	 * Adds a frame to the animation.
-	 * @param scene The number of the scene to add the frames to.
-	 * @param where The number of the frame within scene number @a scene to
-	 * add the frame.
-	 * @param frame The frame to add. Ownership is passed.
-	 */
-	virtual void addFrame(int scene, int where, Frame* frame) = 0;
-	/**
 	 * Adds frames to the animation.
 	 * @param scene The scene to which the frames will be added.
 	 * @param where The frame number for the first of the added frames.
@@ -104,15 +96,6 @@ public:
 	 * to scene number @scene.
 	 */
 	virtual void preallocateFrames(int scene, int count) = 0;
-	/**
-	 * Removes a frame from the animation.
-	 * @param scene The scene to remove the frame from.
-	 * @param frame The number of the first frame within scene @a scene
-	 * to remove.
-	 * @return The removed frame; ownership is returned.
-	 * @throws Will not throw.
-	 */
-	virtual Frame* removeFrame(int scene, int frame) = 0;
 	/**
 	 * Removes frames from the animation.
 	 * @param scene The scene from which to remove the frames.

@@ -91,11 +91,6 @@ int SceneVector::frameCount(int scene) const {
 	return getScene(scene)->getSize();
 }
 
-void SceneVector::addFrame(int scene, int where, Frame* frame) {
-	getMutableScene(scene)->addFrame(frame, where);
-	totalSoundCount += frame->soundCount();
-}
-
 void SceneVector::addFrames(int scene, int where,
 		const std::vector<Frame*>& frames) {
 	getMutableScene(scene)->addFrames(where, frames);
@@ -106,12 +101,6 @@ void SceneVector::addFrames(int scene, int where,
 
 void SceneVector::preallocateFrames(int scene, int count) {
 	getMutableScene(scene)->preallocateFrames(count);
-}
-
-Frame* SceneVector::removeFrame(int scene, int frame) {
-	Frame* r = getMutableScene(scene)->removeFrame(frame);
-	totalSoundCount -= r->soundCount();
-	return r;
 }
 
 void SceneVector::removeFrames(int scene, int frame, int count,

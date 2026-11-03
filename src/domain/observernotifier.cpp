@@ -193,13 +193,6 @@ public:
 	}
 };
 
-void ObserverNotifier::addFrame(int scene, int where, Frame* frame) {
-	std::vector<Frame*> frs;
-	frs.push_back(frame);
-	FrameAdder fa(scene, where, frs);
-	doOp(fa);
-}
-
 void ObserverNotifier::addFrames(int scene, int where,
 		const std::vector<Frame*>& frames) {
 	FrameAdder fa(scene, where, frames);
@@ -208,38 +201,6 @@ void ObserverNotifier::addFrames(int scene, int where,
 
 void ObserverNotifier::preallocateFrames(int scene, int count) {
 	del->preallocateFrames(scene, count);
-}
-
-class FrameRemover : public ObservableOperation {
-	int sc;
-	int n;
-	Frame* r;
-public:
-	FrameRemover(const FrameRemover&) = delete;
-	FrameRemover& operator=(const FrameRemover&) = delete;
-	FrameRemover(int scene, int where)
-			: sc(scene), n(where), r(nullptr) {
-	}
-	~FrameRemover() override {
-		delete r;
-	}
-	Frame* release() {
-		Frame* v = r;
-		r = nullptr;
-		return v;
-	}
-	void op(AnimationImpl& del) override {
-		del.removeFrame(sc, n);
-	}
-	void update(Observer& ob) override {
-		ob.updateRemove(sc, n, n);
-	}
-};
-
-Frame* ObserverNotifier::removeFrame(int scene, int frame) {
-	FrameRemover fr(scene, frame);
-	doOp(fr);
-	return fr.release();
 }
 
 class FramesRemover : public ObservableOperation {
