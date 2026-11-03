@@ -223,17 +223,11 @@ void readSto(const char* filename) {
 }
 
 // appends .sto to filename if appropriate to make a project filename
-static std::string stoFileName(const char *filename) {
-	std::string name(filename);
-	const char *dotPtr = strrchr(filename, '.');
-	if (dotPtr == nullptr || strcmp(dotPtr, ".sto") != 0) {
-		name += ".sto";
-	}
-	return name;
-}
-
 void ProjectSerializer::setProjectFile(const char *filename) {
-	projectFile = stoFileName(filename);
+	projectFile = filename;
+	const char *dotPtr = strrchr(filename, '.');
+	if (dotPtr == nullptr || strcmp(dotPtr, ".sto") != 0)
+		projectFile += ".sto";
 }
 
 bool ProjectSerializer::openDat(std::vector<std::unique_ptr<Scene>>& out, const char* filename) {
@@ -288,7 +282,11 @@ static void getReferencedFiles(const QDomNode& node, bool& inScene,
 
 void ProjectSerializer::checkSto(const char *filename) {
 	assert(filename != nullptr);
-	const std::string name = stoFileName(filename);
+	// appends .sto like setProjectFile() does
+	std::string name(filename);
+	const char *dotPtr = strrchr(filename, '.');
+	if (dotPtr == nullptr || strcmp(dotPtr, ".sto") != 0)
+		name += ".sto";
 	const QString qName = QString::fromLocal8Bit(name.c_str());
 	TarFileRead tar(name.c_str());
 	const qint64 archiveSize = QFileInfo(qName).size();
