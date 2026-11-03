@@ -8,6 +8,7 @@
 
 
 #include <exception>
+#include <string>
 #include <vector>
 
 class AnimationImpl;
@@ -90,7 +91,7 @@ public:
 	void resetProjectFile(const char* filename);
 
 private:
-	char* projectFile;
+	std::string projectFile;
 	static void writeDat(const char* filename,
 			const AnimationImpl& anim, Frontend *frontend);
 	static void getAttributes(const QDomNode& node,

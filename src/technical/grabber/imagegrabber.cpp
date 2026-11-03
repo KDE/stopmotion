@@ -5,19 +5,14 @@
  */
 
 #include "imagegrabber.h"
-#include <cstring>
 
 ImageGrabber::ImageGrabber(const char* filePath)
-		: path(nullptr) {
-	size_t pathLen = strlen(filePath) + 1;
-	path = new char[pathLen];
-	strncpy(path, filePath, pathLen);
+		: path(filePath) {
 }
 
 ImageGrabber::~ImageGrabber() {
-	delete[] path;
 }
 
 const char* ImageGrabber::filePath() const {
-	return path;
+	return path.c_str();
 }

@@ -72,11 +72,10 @@ namespace {
 const QString tarMimeType = QStringLiteral("application/x-tar");
 }
 
-ProjectSerializer::ProjectSerializer() : projectFile(nullptr) {
+ProjectSerializer::ProjectSerializer() {
 }
 
 ProjectSerializer::~ProjectSerializer() {
-	resetProjectFile();
 }
 
 class TarFileRead {
@@ -234,11 +233,7 @@ static std::string stoFileName(const char *filename) {
 }
 
 void ProjectSerializer::setProjectFile(const char *filename) {
-	const std::string name = stoFileName(filename);
-	char* newProjectFile = new char[name.size() + 1];
-	strcpy(newProjectFile, name.c_str());
-	delete[] projectFile;
-	projectFile = newProjectFile;
+	projectFile = stoFileName(filename);
 }
 
 bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) {
@@ -264,13 +259,13 @@ bool ProjectSerializer::openDat(std::vector<Scene*>& out, const char* filename) 
 std::vector<Scene*> ProjectSerializer::openSto(const char *filename) {
 	assert(filename != nullptr);
 	setProjectFile(filename);
-	readSto(projectFile);
+	readSto(projectFile.c_str());
 	WorkspaceFile dat(WorkspaceFile::currentModelFile);
 	std::vector<Scene*> sVect;
 	if (!openDat(sVect, dat.path()))
 		throw ProjectFileReadException("openSto",
 				QStringLiteral("%1 contains no readable project description")
-				.arg(QString::fromLocal8Bit(projectFile)));
+				.arg(QString::fromStdString(projectFile)));
 	return sVect;
 }
 
@@ -484,7 +479,7 @@ void ProjectSerializer::save(const char *filename,
 	assert(filename != nullptr);
 	assert(frontend != nullptr);
 
-	const std::string previousFile = projectFile ? projectFile : "";
+	const std::string previousFile = projectFile;
 	setProjectFile(filename);
 
 	try {
@@ -492,10 +487,10 @@ void ProjectSerializer::save(const char *filename,
 		writeDat(newDat.path(), anim, frontend);
 
 		// Write out new.dat file. The recovery system will ignore it until...
-		writeSto(projectFile, newDat.path(), anim);
+		writeSto(projectFile.c_str(), newDat.path(), anim);
 	} catch (...) {
 		frontend->hideProgress();
-		resetProjectFile(previousFile.empty() ? nullptr : previousFile.c_str());
+		projectFile = previousFile;
 		throw;
 	}
 	int numElem = anim.sceneCount();
@@ -620,20 +615,13 @@ void ProjectSerializer::getAttributes(const QDomNode& node,
 }
 
 const char* ProjectSerializer::getProjectFile() {
-	return projectFile;
+	return projectFile.empty() ? nullptr : projectFile.c_str();
 }
 
 void ProjectSerializer::resetProjectFile(const char* filename) {
-	char* copy = nullptr;
-	if (filename) {
-		size_t len = strlen(filename);
-		copy = new char[len + 1];
-		strncpy(copy, filename, len + 1);
-	}
-	delete[] projectFile;
-	projectFile = copy;
+	projectFile = filename ? filename : "";
 }
 
 void ProjectSerializer::resetProjectFile() {
-	resetProjectFile(nullptr);
+	projectFile.clear();
 }

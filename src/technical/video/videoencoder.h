@@ -6,6 +6,8 @@
 #ifndef VIDEOENCODER_H
 #define VIDEOENCODER_H
 
+#include <string>
+
 /**
  * Class for gathering information needed to export a stopmotion project to
  * a video file.
@@ -64,9 +66,9 @@ public:
 	bool isValid();
 	
 private:
-	char *startCommand;
-	char *stopCommand;
-	char *outputFile;
+	std::string startCommand;
+	std::string stopCommand;
+	std::string outputFile;
 };
 
 #endif

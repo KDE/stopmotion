@@ -6,13 +6,15 @@
 #ifndef IMAGEGRABBER_H
 #define IMAGEGRABBER_H
 
+#include <string>
+
 /**
  * Abstract class for the different video grabbers.
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
  */
 class ImageGrabber {
-	char* path;
+	std::string path;
 	ImageGrabber(const ImageGrabber&) = delete;
 	ImageGrabber& operator=(const ImageGrabber&) = delete;
 public:
