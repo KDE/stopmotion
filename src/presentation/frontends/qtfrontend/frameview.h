@@ -5,6 +5,7 @@
 #ifndef FRAMEVIEW_H
 #define FRAMEVIEW_H
 
+#include <memory>
 #include <QObject>
 #include <QTimer>
 #include <QWidget>
@@ -135,7 +136,7 @@ private:
 	QTimer grabTimer;
 	QTimer playbackTimer;
 	ImageGrabThread *grabThread;
-	ImageGrabber *grabber;
+	std::unique_ptr<ImageGrabber> grabber;
 	WorkspaceFile capturedFile;
 
 	/** The facade cached away in this class for efficiency reasons */

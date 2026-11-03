@@ -71,7 +71,7 @@ void drawBorders(QPainter& painter, const QRect& inner, const QRect& outer) {
 
 FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 		: QWidget(parent),
-		  imageCache(IMAGE_CACHE_SIZE), grabThread(nullptr), grabber(nullptr),
+		  imageCache(IMAGE_CACHE_SIZE), grabThread(nullptr),
 		  capturedFile(WorkspaceFile::capturedImage) {
 	facade = DomainFacade::getFacade();
 
@@ -101,8 +101,6 @@ FrameView::~FrameView() {
 	if (isPlayingVideo) {
 		off();
 	}
-	delete grabber;
-	grabber = nullptr;
 }
 
 
@@ -268,7 +266,7 @@ bool FrameView::on() {
 	bool isProcess = startDaemon.get() && *startDaemon.get() != '\0';
 
 	bool isCameraReady = true;
-	grabber = new CommandLineGrabber(capturedFile.path());
+	grabber = std::make_unique<CommandLineGrabber>(capturedFile.path());
 	if ( !grabber->setPrePollCommand(pre.toLatin1().constData()) ) {
 		QMessageBox::warning(this, tr("Warning"), tr(
 					"Pre poll command does not exists"),
@@ -314,7 +312,7 @@ bool FrameView::on() {
 		}
 		// Otherwise a thread is needed
 		else {
-			grabThread = new ImageGrabThread(this, grabber);
+			grabThread = new ImageGrabThread(this, grabber.get());
 			connect(grabThread, &ImageGrabThread::grabbed, this, &FrameView::redraw);
 			grabThread->start();
 			grabThread->wait(500);
@@ -354,8 +352,7 @@ void FrameView::off() {
 		delete grabThread;
 		grabThread = nullptr;
 	}
-	delete grabber;
-	grabber = nullptr;
+	grabber.reset();
 
 	isPlayingVideo = false;
 	setActiveFrame(activeScene, activeFrame);

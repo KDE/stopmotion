@@ -6,13 +6,15 @@
 #ifndef QTAUDIODRIVER_H
 #define QTAUDIODRIVER_H
 
+#include <memory>
+
 #include "audiodriver.h"
 
 class AudioFormat;
 
 class QtAudioDriver : public AudioDriver {
 	class Impl;
-	Impl* impl;
+	std::unique_ptr<Impl> impl;
 public:
 	QtAudioDriver();
 	~QtAudioDriver() override;

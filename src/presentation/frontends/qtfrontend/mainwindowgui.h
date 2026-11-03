@@ -8,6 +8,7 @@
 
 #include "src/domain/undo/undoredoobserver.h"
 
+#include <memory>
 #include <QObject>
 #include <QMainWindow>
 
@@ -92,7 +93,7 @@ private:
 	QWidget *gotoMenuWidget;
 	QHBoxLayout *gotoMenuWidgetLayout;
 	QFileSystemWatcher *fileWatcher;
-	EditObserver *editObserver;
+	std::unique_ptr<EditObserver> editObserver;
 
 	//Actions
 	QAction *newAct;

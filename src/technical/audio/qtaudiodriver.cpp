@@ -23,11 +23,11 @@ class QtAudioDriver::Impl : public QIODevice {
 	static const int buffer_size = 4096;
 	using sample_t = int16_t;
 	QAudioFormat audioFormat;
-	QAudioSink* output;
+	std::unique_ptr<QAudioSink> output;
 	std::list<AudioFormat*> sounds;
 	std::vector<sample_t> buffer;
 public:
-    Impl() : output(nullptr), buffer(buffer_size) {
+    Impl() : buffer(buffer_size) {
 		audioFormat.setSampleRate(44100);
 		audioFormat.setChannelCount(2);
 		audioFormat.setSampleFormat(QAudioFormat::Int16);
@@ -35,11 +35,10 @@ public:
 		if (!info.isFormatSupported(audioFormat)) {
 			audioFormat = info.preferredFormat();
 		}
-		output = new QAudioSink(info, audioFormat);
+		output = std::make_unique<QAudioSink>(info, audioFormat);
 		setOpenMode(ReadOnly);
 	}
 	~Impl() override {
-		delete output;
 	}
 	void addSound(AudioFormat* a) {
 		a->reset();
@@ -101,12 +100,10 @@ private:
 	}
 };
 
-QtAudioDriver::QtAudioDriver() : impl(nullptr) {
-	impl = new Impl();
+QtAudioDriver::QtAudioDriver() : impl(std::make_unique<Impl>()) {
 }
 
 QtAudioDriver::~QtAudioDriver() {
-	delete impl;
 }
 
 void QtAudioDriver::play() {

@@ -66,7 +66,7 @@ MainWindowGUI::MainWindowGUI(QApplication *stApp)
 	: stApp(stApp), centerWidget(nullptr), centerWidgetLayout(nullptr), bottomWidget(nullptr),
 	  bottomWidgetLayout(nullptr), workArea(nullptr), workAreaLayout(nullptr),
 	  frameBar(nullptr), frameView(nullptr), gotoMenuWidget(nullptr), gotoMenuWidgetLayout(nullptr),
-	  fileWatcher(nullptr), editObserver(nullptr),
+	  fileWatcher(nullptr),
 	  newAct(nullptr), openAct(nullptr), mostRecentAct(nullptr), secondMostRecentAct(nullptr),
 	  thirdMostRecentAct(nullptr), saveAct(nullptr), saveAsAct(nullptr), videoAct(nullptr), cinerellaAct(nullptr),
 	  quitAct(nullptr), undoAct(nullptr), redoAct(nullptr), cutAct(nullptr), copyAct(nullptr), pasteAct(nullptr),
@@ -150,7 +150,6 @@ void MainWindowGUI::ConstructUI() {
 
 
 MainWindowGUI::~MainWindowGUI() {
-	delete editObserver;
 }
 
 
@@ -182,12 +181,12 @@ void MainWindowGUI::createHandlers(QApplication *stApp) {
 
 void MainWindowGUI::setupDirectoryMonitoring() {
 	fileWatcher = new QFileSystemWatcher(this);
-	editObserver = new EditObserver(fileWatcher);
+	editObserver = std::make_unique<EditObserver>(fileWatcher);
 	connect(fileWatcher, &QFileSystemWatcher::fileChanged,
 			frameBar, &FrameBar::fileChanged);
 	connect(fileWatcher, &QFileSystemWatcher::fileChanged,
 			frameView, &FrameView::fileChanged);
-	DomainFacade::getFacade()->attach(editObserver);
+	DomainFacade::getFacade()->attach(editObserver.get());
 }
 
 
