@@ -222,7 +222,8 @@ Q_SIGNALS:
 	//The signals in the framebar is used for signaling small widget,
 	//who are deemed to insignificant to be observers, of changes in
 	//the framebar/model. A bit hacky and should be in it's own widget.
-	void newActiveFrame( const QString & );
+	/** The text for the status bar, like "Frame number: 3" */
+	void newActiveFrameText(const QString& text);
 	void newActiveFrame(int scene, int frame);
 	void modelSizeChanged( int modelSize );
 	void newMaximumValue(int value);

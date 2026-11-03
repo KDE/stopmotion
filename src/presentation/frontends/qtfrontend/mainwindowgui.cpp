@@ -116,7 +116,7 @@ void MainWindowGUI::ConstructUI() {
 	workArea->setLayout(workAreaLayout);
 	connect(runAnimationHandler, &RunAnimationHandler::playFrame, frameView,
 			&FrameView::updatePlayFrame);
-	connect(frameBar, qOverload<int, int>(&FrameBar::newActiveFrame),
+	connect(frameBar, &FrameBar::newActiveFrame,
 			runAnimationHandler, &RunAnimationHandler::stopAnimation);
 	makeGotoMenu(centerWidgetLayout);
 	centerWidget->setLayout(centerWidgetLayout);
@@ -128,7 +128,7 @@ void MainWindowGUI::ConstructUI() {
 	//These slots will activate/deactivate menu options based on the changes in the model.
 	connect(frameBar, &FrameBar::modelSizeChanged, this,
 			&MainWindowGUI::modelSizeChanged);
-	connect(frameBar, qOverload<int, int>(&FrameBar::newActiveFrame), this,
+	connect(frameBar, &FrameBar::newActiveFrame, this,
 			&MainWindowGUI::updateNewActiveFrame);
 	// update paste menu item depending on what's on the clipboard
 	connect(QApplication::clipboard(), &QClipboard::dataChanged, this,
@@ -418,7 +418,7 @@ void MainWindowGUI::makeGotoMenu(QVBoxLayout *layout)
 	gotoSpinner->setMaximumWidth(60);
 	gotoSpinner->setRange(1, 1);
 
-	connect(frameBar, qOverload<int, int>(&FrameBar::newActiveFrame),
+	connect(frameBar, &FrameBar::newActiveFrame,
 			gotoSpinner, &FlexibleSpinBox::setIndexSecond);
 	connect(frameBar, &FrameBar::modelSizeChanged,
 			gotoSpinner, &FlexibleSpinBox::setMaximumValue);
@@ -450,7 +450,7 @@ void MainWindowGUI::makeStatusBar()
 	numberDisplay = new QLabel;
 	numberDisplay->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 	numberDisplay->setContentsMargins(0, 0, 0, 0);
-	connect(frameBar, qOverload<const QString &>(&FrameBar::newActiveFrame),
+	connect(frameBar, &FrameBar::newActiveFrameText,
 			numberDisplay, &QLabel::setText);
 	this->statusBar()->addPermanentWidget(numberDisplay);
 }
@@ -468,7 +468,7 @@ void MainWindowGUI::makeViews(QHBoxLayout *layout)
 	connect(cameraHandler, &CameraHandler::capturedFrame, this, &MainWindowGUI::activateMenuOptions);
 
 	cameraHandler->setFrameView(frameView);
-	connect(frameBar, qOverload<int, int>(&FrameBar::newActiveFrame),
+	connect(frameBar, &FrameBar::newActiveFrame,
 			frameView, &FrameView::updateNewActiveFrame);
 	connect(stApp, &QCoreApplication::aboutToQuit, frameView, &FrameView::off);
 }

@@ -179,7 +179,7 @@ void FrameBar::fixPreferencesMenu() {
 void FrameBar::doActiveFrameNotifications() {
 	fixPreferencesMenu();
 	// For writing the frame number in the frame number display
-	Q_EMIT newActiveFrame( QString(tr("Frame number: ")) + QString("%1").arg(activeFrame + 1) );
+	Q_EMIT newActiveFrameText( QString(tr("Frame number: ")) + QString("%1").arg(activeFrame + 1) );
 	Q_EMIT newActiveFrame(activeScene, activeFrame);
 }
 
