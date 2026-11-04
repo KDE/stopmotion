@@ -42,7 +42,8 @@ QtFrontend::QtFrontend(int &argc, char **argv) {
 		initializePreferences();
 		PreferencesTool::get()->flush();
 	} catch (UiException& ex) {
-		DomainFacade::getFacade()->getFrontend()->handleException(ex);
+		// the frontend is not registered yet
+		handleException(ex);
 	}
 
 	mw->ConstructUI();
