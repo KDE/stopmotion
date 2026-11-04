@@ -1014,8 +1014,8 @@ void MainWindowGUI::dropEvent(QDropEvent *event)
 		int numFrames = urls.size();
 		for (int i = 0; i < numFrames; ++i) {
 			fileNames.append(urls[i].toLocalFile());
-			modelHandler->addFrames(fileNames);
 		}
+		modelHandler->addFrames(fileNames);
 
 	}
 }
