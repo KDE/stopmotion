@@ -101,7 +101,7 @@ int32_t RandomSource::getUniform(int32_t max) {
 int32_t RandomSource::getLogInt(int32_t p) {
 	assert(0 < p && p < 100);
 	int32_t r = 0;
-	while (getUniform(0,99) < r) {
+	while (getUniform(0,99) < p) {
 		++r;
 	}
 	return r;
