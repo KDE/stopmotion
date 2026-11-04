@@ -15,6 +15,8 @@
 
 #include <cstdint>
 #include <algorithm>
+#include <iterator>
+#include <limits>
 #include <list>
 #include <vector>
 
@@ -47,25 +49,26 @@ public:
 		Q_EMIT output->stateChanged(QAudio::ActiveState);
 	}
     qint64 readData(char *data, qint64 maxlen) override {
-		std::list<AudioFormat*>::iterator s = sounds.begin();
+		// The first sound with data left is copied, the others are mixed in.
+		const int maxBytes = static_cast<int>(std::min<qint64>(maxlen,
+				std::numeric_limits<int>::max()));
 		int len = 0;
-		for (; s != sounds.end(); ++s) {
-			len = (*s)->fillBuffer(data, maxlen);
-			if (len != 0)
-				break;
-			sounds.pop_front();
-			s = sounds.begin();
-		}
-		while (s != sounds.end()) {
-			if (mixSound(*s, reinterpret_cast<int16_t*>(data), len))
-				++s;
-			else
-				s = sounds.erase(s);
+		while (!sounds.empty() && len == 0) {
+			len = sounds.front()->fillBuffer(data, maxBytes);
+			if (len == 0)
+				sounds.pop_front();
 		}
 		if (len == 0) {
 			Q_EMIT output->stateChanged(QAudio::IdleState);
 			Logger::get().logDebug("out of sound");
 			return 0;
+		}
+		auto s = std::next(sounds.begin());
+		while (s != sounds.end()) {
+			if (mixSound(*s, reinterpret_cast<sample_t*>(data), len))
+				++s;
+			else
+				s = sounds.erase(s);
 		}
 		Logger::get().logDebug("Sent data %d", len);
 		return len;
@@ -80,19 +83,22 @@ public:
 		output->stop();
 	}
 private:
-	// returns false if s is exhausted after the call
-	bool mixSound(AudioFormat* s, sample_t* out, unsigned long length) {
-		char* buf = reinterpret_cast<char*>(&*buffer.begin());
+	// Adds length bytes of sound s to out. Returns false if s is exhausted.
+	bool mixSound(AudioFormat* s, sample_t* out, int length) {
+		char* buf = reinterpret_cast<char*>(buffer.data());
+		const int bufferBytes = buffer.size() * sizeof(sample_t);
 		while (0 < length) {
-			int len2 = s->fillBuffer(buf,
-				std::min(length, (unsigned long)buffer_size * sizeof(sample_t)));
+			int len2 = s->fillBuffer(buf, std::min(length, bufferBytes));
 			if (len2 == 0) {
 				return false;
 			}
 			length -= len2;
 			int samples = len2 / sizeof(sample_t);
 			for (int i = 0; i != samples; ++i) {
-				*out += buf[i];
+				int sum = *out + buffer[i];
+				*out = std::clamp(sum,
+						int(std::numeric_limits<sample_t>::min()),
+						int(std::numeric_limits<sample_t>::max()));
 				++out;
 			}
 		}
