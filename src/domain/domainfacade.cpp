@@ -365,17 +365,18 @@ bool DomainFacade::replayCommandLog(const char* filename) {
 	FILE* log = fopen(filename, "r");
 	if (!log)
 		return false;
+	bool success = true;
 	try {
 		animationModel->replayCommandLog(log);
 	} catch (UiException& e) {
 		animationModel->resync(e);
-		return false;
+		success = false;
 	} catch (std::exception& e) {
 		Logger::get().logWarning("Recovery failed: %s", e.what());
-		fclose(log);
-		return false;
+		success = false;
 	}
-	return true;
+	fclose(log);
+	return success;
 }
 
 bool DomainFacade::canUndo() {

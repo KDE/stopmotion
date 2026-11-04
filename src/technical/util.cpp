@@ -139,6 +139,8 @@ bool Util::checkCommand(std::string* pathOut, const char* command) {
 	const char* commandEnd = endOfArgument(command);
 	which.append(command, commandEnd);
 	FILE *fp = popen(which.c_str(), "r");
+	if (!fp)
+		return false;
 	__gnu_cxx::stdio_filebuf<char> buf(fp, ios::in);
 	istream bufStream(&buf);
 	std::string dummy;
