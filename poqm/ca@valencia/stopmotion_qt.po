@@ -328,19 +328,19 @@ msgid "device"
 msgstr "dispositiu"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:72
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:371
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:372
 msgctxt "ExportTab|"
 msgid "&Add"
 msgstr "Afi&g"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:76
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:372
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:373
 msgctxt "ExportTab|"
 msgid "&Remove"
 msgstr "&Elimina"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:79
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:373
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:374
 msgctxt "ExportTab|"
 msgid "&Edit"
 msgstr "&Edita"
@@ -351,7 +351,7 @@ msgid "Encoder settings"
 msgstr "Configureu el codificador"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:93
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:376
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:377
 msgctxt "ExportTab|"
 msgid ""
 "Do you want to be asked for an output file every time you choose to export?"
@@ -359,37 +359,37 @@ msgstr ""
 "Voleu que es pregunte pel fitxer d'eixida cada vegada que vulgueu exportar?"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:95
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:378
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
 msgctxt "ExportTab|"
 msgid "Yes"
 msgstr "Sí"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:100
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:380
 msgctxt "ExportTab|"
 msgid "No"
 msgstr "No"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:105
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:380
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
 msgctxt "ExportTab|"
 msgid "Set default output file:"
 msgstr "Fitxer predeterminat d'eixida:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:111
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:382
 msgctxt "ExportTab|"
 msgid "Browse"
 msgstr "Navega"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:116
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:382
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
 msgctxt "ExportTab|"
 msgid "Start encoder:"
 msgstr "Inici del codificador:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:121
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:384
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
 msgstr "Parada del codificador:"
@@ -399,7 +399,7 @@ msgctxt "ExportTab|"
 msgid "Choose output file"
 msgstr "Trieu un fitxer d'eixida"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:357
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:358
 msgctxt "ExportTab|"
 msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
@@ -408,7 +408,7 @@ msgstr ""
 "A davall podeu establir el programa/procés que utilitzarà Stopmotion per a "
 "codificar el projecte actualment actiu a un fitxer de vídeo."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:359
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:360
 msgctxt "ExportTab|"
 msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
@@ -417,7 +417,7 @@ msgstr ""
 "Sempre hauríeu d'utilitzar <b>$IMAGEPATH</b> i <b>$VIDEOFILE</b> per a "
 "representar el camí de les imatges i del fitxer de vídeo, respectivament."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:361
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:362
 msgctxt "ExportTab|"
 msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
@@ -426,17 +426,17 @@ msgstr ""
 "Podeu utilitzar <b>$FRAMERATE</b> per a representar la velocitat dels "
 "fotogrames actual en ús en el projecte."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:363
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:364
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
 msgstr "Exemple amb «mencoder» (imatges «jpeg» a vídeo «mpeg4»):"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:368
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:369
 msgctxt "ExportTab|"
 msgid "Name"
 msgstr "Nom"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:368
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:369
 msgctxt "ExportTab|"
 msgid "Description"
 msgstr "Descripció"
@@ -508,34 +508,34 @@ msgstr ""
 "fotograma.</p><p>Els sons començaran la reproducció quan es mostre este "
 "fotograma i es reproduiran fins que finalitzen.</p>"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:261
-#: src/presentation/frontends/qtfrontend/frameview.cpp:273
-#: src/presentation/frontends/qtfrontend/frameview.cpp:284
-#: src/presentation/frontends/qtfrontend/frameview.cpp:307
-#: src/presentation/frontends/qtfrontend/frameview.cpp:323
-#: src/presentation/frontends/qtfrontend/frameview.cpp:333
+#: src/presentation/frontends/qtfrontend/frameview.cpp:259
+#: src/presentation/frontends/qtfrontend/frameview.cpp:271
+#: src/presentation/frontends/qtfrontend/frameview.cpp:282
+#: src/presentation/frontends/qtfrontend/frameview.cpp:305
+#: src/presentation/frontends/qtfrontend/frameview.cpp:321
+#: src/presentation/frontends/qtfrontend/frameview.cpp:331
 msgctxt "FrameView|"
 msgid "Warning"
 msgstr "Avís"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:261
+#: src/presentation/frontends/qtfrontend/frameview.cpp:259
 msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
 msgstr ""
 "No s'ha seleccionat cap dispositiu de vídeo en el menú de les preferències."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:273
+#: src/presentation/frontends/qtfrontend/frameview.cpp:271
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
 msgstr "No existix l'ordre de presondeig"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:284
+#: src/presentation/frontends/qtfrontend/frameview.cpp:282
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
 msgstr "La capturadora indicada no està instal·lada en este sistema"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:307
-#: src/presentation/frontends/qtfrontend/frameview.cpp:323
+#: src/presentation/frontends/qtfrontend/frameview.cpp:305
+#: src/presentation/frontends/qtfrontend/frameview.cpp:321
 msgctxt "FrameView|"
 msgid ""
 "Grabbing failed. This may happen if you try\n"
@@ -546,7 +546,7 @@ msgstr ""
 "capturar des d'un dispositiu no vàlid. Comproveu\n"
 "la configuració de la capturadora en el menú de preferències."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:333
+#: src/presentation/frontends/qtfrontend/frameview.cpp:331
 msgctxt "FrameView|"
 msgid ""
 "You have to define an image grabber to use.\n"
@@ -634,154 +634,154 @@ msgctxt "MainWindowGUI|"
 msgid "Ready to rumble ;-)"
 msgstr "Preparat per a començar ;-)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:351
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:513
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:350
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:512
 msgctxt "MainWindowGUI|"
 msgid "&File"
 msgstr "Fi&txer"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:352
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:526
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:351
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:525
 msgctxt "MainWindowGUI|"
 msgid "&Export"
 msgstr "&Exporta"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:353
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1146
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:352
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1145
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr "Obri'n un &recent"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:355
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:542
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:354
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:541
 msgctxt "MainWindowGUI|"
 msgid "&Edit"
 msgstr "&Edita"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:372
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:537
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:371
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:536
 msgctxt "MainWindowGUI|"
 msgid "&Settings"
 msgstr "Con&figuració"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:375
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:544
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:374
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:543
 msgctxt "MainWindowGUI|"
 msgid "&Help"
 msgstr "&Ajuda"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:482
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:481
 msgctxt "MainWindowGUI|"
 msgid "&New"
 msgstr "&Nou"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:483
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:482
 msgctxt "MainWindowGUI|"
 msgid "&Open"
 msgstr "O&bri"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:484
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:483
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr "Guar&da"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:485
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:484
 msgctxt "MainWindowGUI|"
 msgid "Save &As"
 msgstr "Anomena i gu&arda"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:486
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:485
 msgctxt "MainWindowGUI|"
 msgid "Video"
 msgstr "Vídeo"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:487
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:486
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
 msgstr "Cinelerra"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:488
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:487
 msgctxt "MainWindowGUI|"
 msgid "&Quit"
 msgstr "I&x"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:489
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:488
 msgctxt "MainWindowGUI|"
 msgid "&Undo"
 msgstr "&Desfés"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:490
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:489
 msgctxt "MainWindowGUI|"
 msgid "Re&do"
 msgstr "Re&fés"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:491
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:490
 msgctxt "MainWindowGUI|"
 msgid "Cu&t"
 msgstr "Re&talla"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:492
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:491
 msgctxt "MainWindowGUI|"
 msgid "&Copy"
 msgstr "&Copia"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:492
 msgctxt "MainWindowGUI|"
 msgid "&Paste"
 msgstr "A&pega"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
 msgstr "&Ves fins al fotograma"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
 msgstr "&Configura Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
 msgctxt "MainWindowGUI|"
 msgid "What's &This"
 msgstr "Què és &açò"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
 msgctxt "MainWindowGUI|"
 msgid "&About"
 msgstr "&Quant a"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
 msgstr "Número de fotograma: "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
 msgstr "Ves fins al fotograma:"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:560
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:559
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
 msgstr "<h4>Nou</h4> <p>Crea un projecte <em>nou</em>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:565
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:564
 msgctxt "MainWindowGUI|"
 msgid "New project"
 msgstr "Projecte nou"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:569
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:568
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
 msgstr "<h4>Obri</h4> <p><em>Obri</em> un fitxer de projecte Stopmotion.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:573
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:572
 msgctxt "MainWindowGUI|"
 msgid "Open project"
 msgstr "Obri un projecte"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:577
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:576
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -792,12 +792,12 @@ msgstr ""
 "projecte Stopmotion. <BR>Si este projecte s'ha guardat abans, automàticament "
 "es guardarà en el fitxer seleccionat anteriorment.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:583
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:582
 msgctxt "MainWindowGUI|"
 msgid "Save project"
 msgstr "Guarda el projecte"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:587
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:586
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -806,12 +806,12 @@ msgstr ""
 "<h4>Anomena i guarda</h4> <p><em>Guarda</em> l'animació actual com un fitxer "
 "de projecte Stopmotion.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:592
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:591
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
 msgstr "Anomeneu i guardeu el projecte"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:596
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:595
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
@@ -820,7 +820,7 @@ msgstr ""
 "<h4>Vídeo</h4> <p>Exporta el projecte actual com a <em>vídeo</em>.</"
 "p>S'obrirà un assistent per a guiar-vos."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:602
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
@@ -829,17 +829,17 @@ msgstr ""
 "<h4>Cinerella</h4> <p>Exporta l'animació actual com a projecte "
 "<em>Cinerella</em>.</p>S'obrirà un assistent per a guiar-vos."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:610
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:609
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
 msgstr "<h4>Ix</h4> <p><em>Ix</em> del programa.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:613
 msgctxt "MainWindowGUI|"
 msgid "Quit"
 msgstr "Ix"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:620
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:619
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
@@ -848,12 +848,12 @@ msgstr ""
 "<h4>Desfés</h4> <p><em>Desfà</em> l'última operació. Es pot prémer diverses "
 "vegades per a desfer les operacions anteriors.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:624
 msgctxt "MainWindowGUI|"
 msgid "Undo"
 msgstr "Desfés"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:629
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:628
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
@@ -862,12 +862,12 @@ msgstr ""
 "<h4>Refés</h4> <p><em>Refà</em> l'última operació. Es pot prémer diverses "
 "vegades per a refer diverses operacions.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:634
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:633
 msgctxt "MainWindowGUI|"
 msgid "Redo"
 msgstr "Refés"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:638
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:637
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
@@ -877,12 +877,12 @@ msgstr ""
 "l'animació i els afig al porta-retalls de manera que els podreu apegar en "
 "qualsevol altre lloc.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:643
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:642
 msgctxt "MainWindowGUI|"
 msgid "Cut"
 msgstr "Retalla"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:647
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:646
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
@@ -891,12 +891,12 @@ msgstr ""
 "<h4>Copia</h4> <p><em>Copia</em> els fotogrames seleccionats a dins del "
 "porta-retalls. Després els podreu apegar en un altre lloc.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:652
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:651
 msgctxt "MainWindowGUI|"
 msgid "Copy"
 msgstr "Copia"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:656
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:655
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Paste</h4> <p><em>Pastes</em> the frames which are currently in the "
@@ -909,12 +909,12 @@ msgstr ""
 "imatges des d'altres programes i després utilitzar esta opció per a apegar-"
 "los en esta animació.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:662
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:661
 msgctxt "MainWindowGUI|"
 msgid "Paste"
 msgstr "Apega"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:666
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:665
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
@@ -923,12 +923,12 @@ msgstr ""
 "<h4>Ves fins al fotograma</h4> <p>Açò obrirà un menú emergent a la part "
 "inferior a on podreu triar un fotograma al qual vulgueu <em>anar</em>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:671
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:670
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
 msgstr "Ves fins al fotograma"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:675
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:674
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
@@ -938,12 +938,12 @@ msgstr ""
 "<em>configurar</em> Stopmotion amb diversos dispositius d'entrada i eixida.</"
 "p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:680
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:679
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
 msgstr "Configura Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:685
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
@@ -952,12 +952,12 @@ msgstr ""
 "<h4>Què és açò</h4> <p>Açò activarà un cursor del ratolí «WhatsThis» que es "
 "pot utilitzar per a obrir informació útil com esta.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:690
 msgctxt "MainWindowGUI|"
 msgid "What's This"
 msgstr "Què és açò"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:695
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:694
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
@@ -965,12 +965,12 @@ msgid ""
 msgstr ""
 "<h4>Ajuda</h4> <p>Este botó obrirà un diàleg amb el manual de Stopmotion</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:699
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:698
 msgctxt "MainWindowGUI|"
 msgid "Help"
 msgstr "Ajuda"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:703
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:702
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>About</h4> <p>This will display a small information box where you can "
@@ -981,12 +981,12 @@ msgstr ""
 "llegir informació general així com els noms dels desenvolupadors que hi ha "
 "darrere d'esta peça excel·lent de programari.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:709
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:708
 msgctxt "MainWindowGUI|"
 msgid "About"
 msgstr "Quant a"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:715
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:714
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
@@ -995,7 +995,7 @@ msgstr ""
 "<h4>Número de fotograma</h4><p>Esta àrea mostra el número del fotograma "
 "actualment seleccionat</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:722
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:721
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
@@ -1005,7 +1005,7 @@ msgstr ""
 "seleccionat. També es poden reproduir les animacions en esta finestra "
 "prement el botó <b>Reproduïu</b>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:729
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:728
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
@@ -1015,7 +1015,7 @@ msgstr ""
 "de fotograma i el programa saltarà fins al fotograma especificat</p> "
 
 # skip-rule: common-es_s
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:735
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:734
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame preferences menu</h4> <p>In this menu you can set preferences for "
@@ -1026,7 +1026,7 @@ msgstr ""
 "les preferències per als fotogrames seleccionat, com els <b>subtítols</b>, "
 "<b>efectes de so</b>, etc.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:742
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:741
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
@@ -1036,7 +1036,7 @@ msgstr ""
 "de botons i ginys que es necessiten per a treballar amb les animacions stop-"
 "motion.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:748
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:747
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameBar</h4> <p>In this area you can see the frames and scenes in the "
@@ -1049,22 +1049,22 @@ msgstr ""
 "p><p>Es pot canviar al fotograma següent i l'anterior utilitzant els "
 "<b>botons de fletxa</b> o <b>x</b> i <b>z</b></p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:762
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:761
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr "Canvis sense guardar"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:763
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:762
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr "Hi ha canvis sense guardar. Els voleu guardar?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:797
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:796
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr "Trieu un fitxer de projecte"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:830
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:829
 #, fuzzy
 #| msgctxt "QtFrontend|"
 #| msgid "Could not copy file to workspace"
@@ -1072,23 +1072,23 @@ msgctxt "MainWindowGUI|"
 msgid "Could not open the project"
 msgstr "No s'ha pogut copiar el fitxer a l'espai de treball"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:881
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:880
 msgctxt "MainWindowGUI|"
 msgid "Could not save the project"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:889
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr "Anomena i guarda"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:917
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:968
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:916
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:967
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr "Avís"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:918
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:917
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1102,12 +1102,12 @@ msgstr ""
 "vídeo fins que no s'haja establit l'ús d'un codificador.\n"
 "El voleu definir ara?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:953
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:952
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr "Exporta cap a un fitxer de vídeo"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:968
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
@@ -1116,7 +1116,7 @@ msgstr ""
 "El codificador registrat no és vàlid. Voleu revisar\n"
 "la configuració en el menú de preferències?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:983
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:982
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr "Exporta cap a un fitxer"
@@ -1442,6 +1442,11 @@ msgstr "Reproduïu"
 msgctxt "ToolsMenu|"
 msgid "Auto"
 msgstr "Automàtic"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
+msgctxt "ToolsMenu|"
+msgid "Off"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"

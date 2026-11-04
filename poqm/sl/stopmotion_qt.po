@@ -320,19 +320,19 @@ msgid "device"
 msgstr "naprava"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:72
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:371
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:372
 msgctxt "ExportTab|"
 msgid "&Add"
 msgstr "Dodaj"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:76
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:372
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:373
 msgctxt "ExportTab|"
 msgid "&Remove"
 msgstr "Odstrani"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:79
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:373
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:374
 msgctxt "ExportTab|"
 msgid "&Edit"
 msgstr "Uredi"
@@ -343,7 +343,7 @@ msgid "Encoder settings"
 msgstr "Nastavitve kodiranja"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:93
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:376
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:377
 msgctxt "ExportTab|"
 msgid ""
 "Do you want to be asked for an output file every time you choose to export?"
@@ -352,37 +352,37 @@ msgstr ""
 "izvoz?"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:95
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:378
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
 msgctxt "ExportTab|"
 msgid "Yes"
 msgstr "Da"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:100
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:380
 msgctxt "ExportTab|"
 msgid "No"
 msgstr "Ne"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:105
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:380
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
 msgctxt "ExportTab|"
 msgid "Set default output file:"
 msgstr "Nastavite privzeto izhodno datoteko:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:111
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:382
 msgctxt "ExportTab|"
 msgid "Browse"
 msgstr "Brskaj"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:116
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:382
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
 msgctxt "ExportTab|"
 msgid "Start encoder:"
 msgstr "Zaženi kodiranje:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:121
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:384
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
 msgstr "Ustavi kodiranje:"
@@ -392,7 +392,7 @@ msgctxt "ExportTab|"
 msgid "Choose output file"
 msgstr "Izberi izhodno datoteko"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:357
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:358
 msgctxt "ExportTab|"
 msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
@@ -401,7 +401,7 @@ msgstr ""
 "Spodaj lahko nastavite, kateri program/postopek naj Stopmotion uporablja za "
 "kodiranje trenutnega aktivnega projekta v video datoteko."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:359
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:360
 msgctxt "ExportTab|"
 msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
@@ -410,7 +410,7 @@ msgstr ""
 "Za določanje poti vedno uporabite <b>$IMAGEPATH</b> in <b>$VIDEOFILE</b>za "
 "sliko in video datoteko."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:361
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:362
 msgctxt "ExportTab|"
 msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
@@ -419,17 +419,17 @@ msgstr ""
 "<b>$FRAMERATE</b> lahko uporabite za določanje trenutne hitrosti sličic v "
 "projektu."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:363
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:364
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
 msgstr "Primer z menkoderjem (slike jpeg v video mpeg4):"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:368
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:369
 msgctxt "ExportTab|"
 msgid "Name"
 msgstr "Ime"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:368
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:369
 msgctxt "ExportTab|"
 msgid "Description"
 msgstr "Opis"
@@ -500,33 +500,33 @@ msgstr ""
 "p><p>Zvoki se bodo začeli predvajati, ko bo prikazan ta okvir, in se bodo "
 "predvajali, dokler se ne bodo končali.</p>"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:261
-#: src/presentation/frontends/qtfrontend/frameview.cpp:273
-#: src/presentation/frontends/qtfrontend/frameview.cpp:284
-#: src/presentation/frontends/qtfrontend/frameview.cpp:307
-#: src/presentation/frontends/qtfrontend/frameview.cpp:323
-#: src/presentation/frontends/qtfrontend/frameview.cpp:333
+#: src/presentation/frontends/qtfrontend/frameview.cpp:259
+#: src/presentation/frontends/qtfrontend/frameview.cpp:271
+#: src/presentation/frontends/qtfrontend/frameview.cpp:282
+#: src/presentation/frontends/qtfrontend/frameview.cpp:305
+#: src/presentation/frontends/qtfrontend/frameview.cpp:321
+#: src/presentation/frontends/qtfrontend/frameview.cpp:331
 msgctxt "FrameView|"
 msgid "Warning"
 msgstr "Opozorilo"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:261
+#: src/presentation/frontends/qtfrontend/frameview.cpp:259
 msgctxt "FrameView|"
 msgid "No video device selected in the preferences menu."
 msgstr "V meniju z nastavitvami ni izbrane nobene video naprave."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:273
+#: src/presentation/frontends/qtfrontend/frameview.cpp:271
 msgctxt "FrameView|"
 msgid "Pre poll command does not exists"
 msgstr "Ukaz pre poll ne obstaja"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:284
+#: src/presentation/frontends/qtfrontend/frameview.cpp:282
 msgctxt "FrameView|"
 msgid "You do not have the given grabber installed on your system"
 msgstr "V vašem sistemu ni nameščenega nobenega zajemalnika zaslona"
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:307
-#: src/presentation/frontends/qtfrontend/frameview.cpp:323
+#: src/presentation/frontends/qtfrontend/frameview.cpp:305
+#: src/presentation/frontends/qtfrontend/frameview.cpp:321
 msgctxt "FrameView|"
 msgid ""
 "Grabbing failed. This may happen if you try\n"
@@ -537,7 +537,7 @@ msgstr ""
 "zajemati iz neveljavne naprave. Preverite\n"
 "nastavitve vašega zajema v meniju z nastavitvami."
 
-#: src/presentation/frontends/qtfrontend/frameview.cpp:333
+#: src/presentation/frontends/qtfrontend/frameview.cpp:331
 msgctxt "FrameView|"
 msgid ""
 "You have to define an image grabber to use.\n"
@@ -625,154 +625,154 @@ msgctxt "MainWindowGUI|"
 msgid "Ready to rumble ;-)"
 msgstr "Pripravljen na ropotanje ;-)"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:351
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:513
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:350
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:512
 msgctxt "MainWindowGUI|"
 msgid "&File"
 msgstr "Datoteka"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:352
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:526
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:351
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:525
 msgctxt "MainWindowGUI|"
 msgid "&Export"
 msgstr "Izvozi"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:353
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1146
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:352
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:1145
 msgctxt "MainWindowGUI|"
 msgid "Open &Recent"
 msgstr "Odpri nedavne"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:355
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:542
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:354
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:541
 msgctxt "MainWindowGUI|"
 msgid "&Edit"
 msgstr "Uredi"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:372
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:537
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:371
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:536
 msgctxt "MainWindowGUI|"
 msgid "&Settings"
 msgstr "Nastavitve"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:375
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:544
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:374
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:543
 msgctxt "MainWindowGUI|"
 msgid "&Help"
 msgstr "Pomoč"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:482
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:481
 msgctxt "MainWindowGUI|"
 msgid "&New"
 msgstr "Novo"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:483
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:482
 msgctxt "MainWindowGUI|"
 msgid "&Open"
 msgstr "Odpri"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:484
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:483
 msgctxt "MainWindowGUI|"
 msgid "&Save"
 msgstr "Shrani"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:485
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:484
 msgctxt "MainWindowGUI|"
 msgid "Save &As"
 msgstr "Shrani kot"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:486
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:485
 msgctxt "MainWindowGUI|"
 msgid "Video"
 msgstr "Video"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:487
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:486
 msgctxt "MainWindowGUI|"
 msgid "Cinelerra"
 msgstr "Cinelerra"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:488
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:487
 msgctxt "MainWindowGUI|"
 msgid "&Quit"
 msgstr "Zapusti"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:489
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:488
 msgctxt "MainWindowGUI|"
 msgid "&Undo"
 msgstr "Razveljavi"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:490
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:489
 msgctxt "MainWindowGUI|"
 msgid "Re&do"
 msgstr "Uveljavi"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:491
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:490
 msgctxt "MainWindowGUI|"
 msgid "Cu&t"
 msgstr "Izreži"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:492
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:491
 msgctxt "MainWindowGUI|"
 msgid "&Copy"
 msgstr "Kopiraj"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:492
 msgctxt "MainWindowGUI|"
 msgid "&Paste"
 msgstr "Prilepi"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:493
 msgctxt "MainWindowGUI|"
 msgid "&Go to frame"
 msgstr "Pojdi na sličico"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:494
 msgctxt "MainWindowGUI|"
 msgid "&Configure Stopmotion"
 msgstr "Sestavi Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:496
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:495
 msgctxt "MainWindowGUI|"
 msgid "What's &This"
 msgstr "Kaj je to"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:498
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:497
 msgctxt "MainWindowGUI|"
 msgid "&About"
 msgstr "O programu"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:501
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:500
 msgctxt "MainWindowGUI|"
 msgid "Frame number: "
 msgstr "Številka sličice: "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:503
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:502
 msgctxt "MainWindowGUI|"
 msgid "Go to frame:"
 msgstr "Pojdi na sličico:"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:560
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:559
 msgctxt "MainWindowGUI|"
 msgid "<h4>New</h4> <p>Creates a <em>new</em> project.</p>"
 msgstr "<h4>Novi</h4> <p>Ustvari <em>nov</em> projekt.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:565
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:564
 msgctxt "MainWindowGUI|"
 msgid "New project"
 msgstr "Novi projekt"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:569
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:568
 msgctxt "MainWindowGUI|"
 msgid "<h4>Open</h4> <p><em>Opens</em> a Stopmotion project file.</p>"
 msgstr "<h4>Odpri</h4> <p><em>Odpre</em> Stopmotion projektno datoteko.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:573
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:572
 msgctxt "MainWindowGUI|"
 msgid "Open project"
 msgstr "Odpri projekt"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:577
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:576
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -783,12 +783,12 @@ msgstr ""
 "projektno datoteko.<BR>Če je bil ta projekt shranjen prej, se bo samodejno "
 "shrani v že prej izbrano datoteko.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:583
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:582
 msgctxt "MainWindowGUI|"
 msgid "Save project"
 msgstr "Shrani projekt"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:587
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:586
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Save As</h4> <p><em>Saves</em> the current animation as a Stopmotion "
@@ -797,12 +797,12 @@ msgstr ""
 "<h4>Shrani kot</h4><p><em>Shrani</em> trenutno animacijo kot Stopmotion "
 "projektno datoteko.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:592
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:591
 msgctxt "MainWindowGUI|"
 msgid "Save project As"
 msgstr "Shrani projekt kot"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:596
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:595
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Video</h4> <p>Exports the current project as <em>video</em>.</p>You will "
@@ -811,7 +811,7 @@ msgstr ""
 "<h4>Video</h4><p>Trenutni projekt izvozi kot <em>video</em>.</p>Čarovnik, "
 "vas bo vodil pri tem."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:603
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:602
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cinerella</h4> <p>Exports the current animation as a <em>Cinerella</em> "
@@ -820,17 +820,17 @@ msgstr ""
 "<h4>Cinerella</h4><p>Izvozi trenutno animacijo kot <em>Cinerellin</em> "
 "projekt.</p>Čarovnik vas bo vodil pri tem."
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:610
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:609
 msgctxt "MainWindowGUI|"
 msgid "<h4>Quit</h4> <p><em>Quits</em> the program.</p>"
 msgstr "<h4>Zapusti</h4> <p><em>Zapusti</em> program.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:614
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:613
 msgctxt "MainWindowGUI|"
 msgid "Quit"
 msgstr "Zapusti"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:620
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:619
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Undo</h4> <p><em>Undoes</em> your last operation. You can press undo "
@@ -839,12 +839,12 @@ msgstr ""
 "<h4>Razveljavi</h4><p><em>Razveljavi</em> vaš zadnji postopek. Pritisnite "
 "lahko večkrat razveljavi, ki razveljaviti prejšnje operacije.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:625
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:624
 msgctxt "MainWindowGUI|"
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:629
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:628
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Redo</h4> <p><em>Redoes</em> your last operation. You can press redo "
@@ -853,12 +853,12 @@ msgstr ""
 "<h4>Uveljavi</h4><p><em>Uveljavi</em> vašo zadnjo operacijo. Pritisnete "
 "lahko uveljavi večkrat, da ponovite več operacij.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:634
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:633
 msgctxt "MainWindowGUI|"
 msgid "Redo"
 msgstr "Uveljavi"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:638
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:637
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Cut</h4> <p><em>Cuts</em> the selected frames out of the animation and "
@@ -867,12 +867,12 @@ msgstr ""
 "<h4>Izreži</h4><p><em>Izreže</em> izbrane sličice iz animacije in jih doda v "
 "odložišče, tako da jih lahko prilepite kam drugam.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:643
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:642
 msgctxt "MainWindowGUI|"
 msgid "Cut"
 msgstr "Izreži"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:647
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:646
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Copy</h4> <p><em>Copies</em> the selected frames to the clipboard. You "
@@ -881,12 +881,12 @@ msgstr ""
 "<h4>Kopiraj</h4><p><em>Kopira</em> izbrane sličice v odložišče. Tako jih "
 "lahko nato prilepimo kam drugam.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:652
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:651
 msgctxt "MainWindowGUI|"
 msgid "Copy"
 msgstr "Kopiraj"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:656
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:655
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Paste</h4> <p><em>Pastes</em> the frames which are currently in the "
@@ -898,12 +898,12 @@ msgstr ""
 "izbrano mesto.</p><p>Sličice lahko kopirate/izrežete iz drugih programov in "
 "s to možnostjo prilepite v to animacijo.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:662
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:661
 msgctxt "MainWindowGUI|"
 msgid "Paste"
 msgstr "Prilepi"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:666
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:665
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame</h4> <p>This will bring up a popup-menu at the bottom where "
@@ -912,12 +912,12 @@ msgstr ""
 "<h4>Pojdi na sličico</h4><p>Na dnu se prikaže pojavni meni, kjer lahko "
 "izberete sličico, na katero želite <em>iti</em>. </p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:671
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:670
 msgctxt "MainWindowGUI|"
 msgid "Go to frame"
 msgstr "Pojdi na sličico"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:675
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:674
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Configure Stopmotion</h4> <p>This will open a window where you can "
@@ -926,12 +926,12 @@ msgstr ""
 "<h4>Sestavi Stopmotion</h4><p>Odpre se okno, kjer lahko <em>sestavite</em> "
 "Stopmotion z različnimi vhodnimi in izhodnimi napravami.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:680
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:679
 msgctxt "MainWindowGUI|"
 msgid "Configure Stopmotion"
 msgstr "Sestavi Stopmotion"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:686
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:685
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>What's This</h4> <p>This will give you a WhatsThis mouse cursor which "
@@ -940,12 +940,12 @@ msgstr ""
 "<h4>Kaj je to</h4><p>Dobili boste miškin kazalec KajJeTo, ki ga lahko "
 "uporabimo za pridobivanje koristnih informacij, kot je ta.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:691
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:690
 msgctxt "MainWindowGUI|"
 msgid "What's This"
 msgstr "Kaj je to"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:695
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:694
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Help</h4> <p>This button will bring up a dialog with the Stopmotion "
@@ -954,12 +954,12 @@ msgstr ""
 "<h4>Pomoč</h4><p>Ta gumb bo odprl pogovorno okno s priročnikom za "
 "Stopmotion</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:699
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:698
 msgctxt "MainWindowGUI|"
 msgid "Help"
 msgstr "Pomoč"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:703
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:702
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>About</h4> <p>This will display a small information box where you can "
@@ -970,12 +970,12 @@ msgstr ""
 "preberite splošne informacije kot tudi imena razvijalcev, ki stojijo za tem "
 "odličnim delom programske opreme.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:709
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:708
 msgctxt "MainWindowGUI|"
 msgid "About"
 msgstr "O programu"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:715
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:714
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame number</h4><p>This area displays the number of the currently "
@@ -984,7 +984,7 @@ msgstr ""
 "<h4>Številka sličice</h4><p>To območje prikazuje številko trenutno izbrane "
 "sličice</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:722
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:721
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameView</h4><p> In this area you can see the selected frame. You can "
@@ -993,7 +993,7 @@ msgstr ""
 "<h4>Ogled kadra</h4><p>Na tem področju lahko vidite izbrani kader. Vtem oknu "
 "lahko tudi predvajate animacije s pritiskom na gumb <b>Predvajaj</b>.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:729
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:728
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Go to frame menu</h4> <p>Here you can specify a framenumber and the "
@@ -1002,7 +1002,7 @@ msgstr ""
 "<h4>Pojdi v meni kadrov</h4><p>Tu lahko določite številko kadra in program "
 "bo skočil na določen kader</p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:735
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:734
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Frame preferences menu</h4> <p>In this menu you can set preferences for "
@@ -1013,7 +1013,7 @@ msgstr ""
 "za izbrani(e) kader/kadre, kot so <b>podnapisi</b>, <b>zvočni učinki</b>, "
 "itd. </p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:742
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:741
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>Tool menu</h4> <p>This is the tool menu where most of the buttons and "
@@ -1023,7 +1023,7 @@ msgstr ""
 "nahajajo pripomočki, ki jih boste potrebovali pri delu na ustavitvah "
 "animacij.</p>"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:748
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:747
 msgctxt "MainWindowGUI|"
 msgid ""
 "<h4>FrameBar</h4> <p>In this area you can see the frames and scenes in the "
@@ -1036,43 +1036,43 @@ msgstr ""
 "preklopite na naslednji in prejšnjo sličico s <b>puščicami</b> ali tipkami "
 "<b>x</b> in <b>z</b></p> "
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:762
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:761
 msgctxt "MainWindowGUI|"
 msgid "Unsaved changes"
 msgstr "Neshranjene spremembe"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:763
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:762
 msgctxt "MainWindowGUI|"
 msgid "There are unsaved changes. Do you want to save?"
 msgstr "Obstajajo neshranjene spremembe. Ali jih želite shraniti?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:797
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:796
 msgctxt "MainWindowGUI|"
 msgid "Choose project file"
 msgstr "Izberi projektno datoteko"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:830
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:829
 msgctxt "MainWindowGUI|"
 msgid "Could not open the project"
 msgstr "Ni bilo mogoče odpreti projekta"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:881
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:880
 msgctxt "MainWindowGUI|"
 msgid "Could not save the project"
 msgstr "Ni bilo mogoče shraniti projekta"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:890
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:889
 msgctxt "MainWindowGUI|"
 msgid "Save As"
 msgstr "Shrani kot"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:917
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:968
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:916
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:967
 msgctxt "MainWindowGUI|"
 msgid "Warning"
 msgstr "Opozorilo"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:918
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:917
 msgctxt "MainWindowGUI|"
 msgid ""
 "Cannot find any registered encoder to be used for\n"
@@ -1085,12 +1085,12 @@ msgstr ""
 "preferenc. Izvoz v video ne bo mogoč, dokler ni\n"
 "nastavljen kodirnik za uporabo. Ali ga želite nastaviti zdaj?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:953
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:952
 msgctxt "MainWindowGUI|"
 msgid "Export to video file"
 msgstr "Izvozi v video datoteko"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:969
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:968
 msgctxt "MainWindowGUI|"
 msgid ""
 "The registered encoder is not valid. Do you want\n"
@@ -1099,7 +1099,7 @@ msgstr ""
 "Registrirani kodirnik ni veljaven. Ali želite\n"
 "preveriti nastavitve v meniju preferenc?"
 
-#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:983
+#: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:982
 msgctxt "MainWindowGUI|"
 msgid "Export to file"
 msgstr "Izvozi v datoteko"
@@ -1423,6 +1423,11 @@ msgstr "Predvajanje"
 msgctxt "ToolsMenu|"
 msgid "Auto"
 msgstr "Samodejno"
+
+#: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
+msgctxt "ToolsMenu|"
+msgid "Off"
+msgstr ""
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"
