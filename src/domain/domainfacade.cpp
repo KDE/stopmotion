@@ -355,7 +355,7 @@ bool DomainFacade::replayCommandLog(const char* filename) {
 		animationModel->resync(e);
 		return false;
 	} catch (std::exception& e) {
-		Logger::get().logFatal("Recovery failed: %s", e.what());
+		Logger::get().logWarning("Recovery failed: %s", e.what());
 		fclose(log);
 		return false;
 	}

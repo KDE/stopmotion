@@ -23,7 +23,7 @@ bool callSystem(const char* task, const char* commandLine,
 	Logger::get().logDebug("Attempting task '%s'", task);
 	int r = system(commandLine);
 	if (!WIFEXITED(r)) {
-		Logger::get().logFatal("Could not start task '%s': %s", task,
+		Logger::get().logWarning("Could not start task '%s': %s", task,
 				commandLine);
 		return false;
 	}
@@ -43,7 +43,7 @@ bool callSystem(const char* task, const char* commandLine,
 					commandLine);
 		return true;
 	}
-	Logger::get().logFatal(
+	Logger::get().logWarning(
 		"Task '%s' returned code %d: %s",
 				task, code, commandLine);
 	return false;
