@@ -552,7 +552,7 @@ void FrameBar::removeScene(int sceneNumber) {
 	if (sceneNumber == activeScene)
 		closeActiveScene();
 	std::vector<ThumbView*>::size_type delThumb = sceneNumber <= activeScene?
-			sceneNumber + 1 : sceneNumber + activeSceneSize + 1;
+			sceneNumber : sceneNumber + activeSceneSize;
 
 	if (sceneNumber < activeScene)
 		--activeScene;
@@ -565,8 +565,9 @@ void FrameBar::removeScene(int sceneNumber) {
 	thumbViews[delThumb]->delRef();
 	thumbViews.erase(thumbViews.begin() + delThumb);
 
+	// renumber the following scenes
 	int sceneCount = sceneThumbCount();
-	for (int i = sceneNumber + 1; i < sceneCount; ++i) {
+	for (int i = sceneNumber; i < sceneCount; ++i) {
 		getSceneThumb(i, true);
 	}
 }
