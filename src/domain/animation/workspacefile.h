@@ -27,6 +27,7 @@ public:
 	enum CapturedImage { capturedImage };
 	enum PreferencesFile { preferencesFile };
 	enum PreferencesFileOld { preferencesFileOld };
+	enum LockFile { lockFile };
 	enum AndClear { doNotClear, andClear };
 	/**
 	 * Creates a WorkspaceFile referring to no file. Both @ref basename and
@@ -72,6 +73,10 @@ public:
 	 * Refers to the backup preferences file.
 	 */
 	explicit WorkspaceFile(PreferencesFileOld);
+	/**
+	 * Refers to the file locked while Stopmotion uses the workspace.
+	 */
+	explicit WorkspaceFile(LockFile);
 	~WorkspaceFile();
 	/**
 	 * Gets the file's basename.

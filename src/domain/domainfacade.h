@@ -345,6 +345,14 @@ public:
 	 */
 	void initializeCommandLoggerFile();
 
+	/**
+	 * Locks the workspace in ~/.stopmotion until the program ends, so that
+	 * a second instance cannot use it at the same time.
+	 * @throws UiException failedToGetExclusiveLock if another instance holds
+	 * the lock.
+	 */
+	void lockWorkspace();
+
 protected:
 	/**
 	 * The constructor. It is protected so that it will be impossible for other classes,
@@ -358,6 +366,9 @@ private:
 
 	/**The datamodel in the program*/
 	std::unique_ptr<Animation> animationModel;
+
+	/** Descriptor of the locked lock file, or -1 */
+	int lockFd = -1;
 };
 
 #endif

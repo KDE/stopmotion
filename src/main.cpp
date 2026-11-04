@@ -97,6 +97,7 @@ int main(int argc, char **argv) {
 
 		try {
 			nonGUIFrontend.initializePreferences();
+			facadePtr->lockWorkspace();
 			recover(facadePtr);
 			facadePtr->registerFrontend(&nonGUIFrontend);
 			ret = nonGUIFrontend.run(argc, argv);
@@ -112,6 +113,7 @@ int main(int argc, char **argv) {
 		qtFrontend.processEvents();
 		try {
 			facadePtr->registerFrontend(&qtFrontend);
+			facadePtr->lockWorkspace();
 			recover(facadePtr);
 			qtFrontend.setUndoRedoEnabled();
 			facadePtr->initializeCommandLoggerFile();

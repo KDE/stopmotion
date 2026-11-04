@@ -13,7 +13,9 @@
 #include "technical/util.h"
 
 #include <cstdio>
+#include <fcntl.h>
 #include <sys/file.h>
+#include <unistd.h>
 #include <exception>
 
 DomainFacade* DomainFacade::domainFacade = nullptr;
@@ -77,6 +79,8 @@ DomainFacade::DomainFacade() : animationModel(std::make_unique<Animation>()) {
 
 
 DomainFacade::~DomainFacade() {
+	if (lockFd != -1)
+		close(lockFd);
 }
 
 
@@ -338,11 +342,23 @@ void DomainFacade::initializeCommandLoggerFile() {
 	FILE* log = fopen(wslf.path(), "a");
 	if (!log)
 		throw FailedToInitializeCommandLogger();
-	if (flock(fileno(log), LOCK_EX | LOCK_NB)) {
-		fclose(log);
-		throw (UiException(UiException::failedToGetExclusiveLock));
-	}
 	animationModel->setCommandLoggerFile(log);
+}
+
+void DomainFacade::lockWorkspace() {
+	if (lockFd != -1)
+		return;
+	WorkspaceFile::ensureStopmotionDirectoriesExist();
+	// A file of its own, as the command log is closed and deleted when
+	// saving or opening a project, which would release the lock
+	WorkspaceFile lock(WorkspaceFile::lockFile);
+	int fd = open(lock.path(), O_RDWR | O_CREAT | O_CLOEXEC, 0644);
+	if (fd < 0 || flock(fd, LOCK_EX | LOCK_NB)) {
+		if (0 <= fd)
+			close(fd);
+		throw UiException(UiException::failedToGetExclusiveLock);
+	}
+	lockFd = fd;
 }
 
 bool DomainFacade::replayCommandLog(const char* filename) {

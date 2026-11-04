@@ -214,6 +214,10 @@ WorkspaceFile::WorkspaceFile(PreferencesFileOld) {
 	setFilename("preferences.xml.OLD");
 }
 
+WorkspaceFile::WorkspaceFile(LockFile) {
+	setFilename("stopmotion.lock");
+}
+
 WorkspaceFile::~WorkspaceFile() {
 }
 
