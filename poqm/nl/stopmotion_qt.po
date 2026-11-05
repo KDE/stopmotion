@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2026-11-02 12:55+0100\n"
+"PO-Revision-Date: 2026-11-04 12:10+0100\n"
 "Last-Translator: freek <freekdekruijf@kde.nl>\n"
 "Language-Team: \n"
 "Language: nl\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 25.04.3\n"
+"X-Generator: Lokalize 26.04.1\n"
 
 #: src/application/externalcommand.cpp:31
 msgctxt "ExternalCommand|"
@@ -1438,7 +1438,7 @@ msgstr "Automatisch"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
 msgctxt "ToolsMenu|"
 msgid "Off"
-msgstr ""
+msgstr "Uit"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"

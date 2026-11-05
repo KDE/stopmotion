@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: stopmotion_qt\n"
-"PO-Revision-Date: 2026-11-02 07:45+0200\n"
+"PO-Revision-Date: 2026-11-04 07:45+0200\n"
 "Last-Translator: Alexander Yavorsky <kekcuha@gmail.com>\n"
 "Language-Team: Russian <kde-russian@lists.kde.ru>\n"
 "Language: ru\n"
@@ -1429,7 +1429,7 @@ msgstr "Автоматически"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
 msgctxt "ToolsMenu|"
 msgid "Off"
-msgstr ""
+msgstr "Выкл."
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"

@@ -1427,7 +1427,7 @@ msgstr "ავტომატური"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
 msgctxt "ToolsMenu|"
 msgid "Off"
-msgstr ""
+msgstr "გამორთ"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"

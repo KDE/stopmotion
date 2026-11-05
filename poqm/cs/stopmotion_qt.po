@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2026-11-02 23:57+0100\n"
+"PO-Revision-Date: 2026-11-04 14:07+0100\n"
 "Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -1433,7 +1433,7 @@ msgstr "Automaticky"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
 msgctxt "ToolsMenu|"
 msgid "Off"
-msgstr ""
+msgstr "Vypnuto"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"
