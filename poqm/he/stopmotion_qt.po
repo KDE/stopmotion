@@ -1,8 +1,8 @@
-# SPDX-FileCopyrightText: 2024, 2025 Yaron Shahrabani <sh.yaron@gmail.com>
+# SPDX-FileCopyrightText: 2024-2026 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2025-10-05 12:21+0300\n"
+"PO-Revision-Date: 2026-11-05 13:07+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -12,7 +12,7 @@ msgstr ""
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 26.08.1\n"
 
 #: src/application/externalcommand.cpp:31
 msgctxt "ExternalCommand|"
@@ -1036,17 +1036,14 @@ msgid "Choose project file"
 msgstr "בחירת קובץ מיזם"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:829
-#, fuzzy
-#| msgctxt "QtFrontend|"
-#| msgid "Could not copy file to workspace"
 msgctxt "MainWindowGUI|"
 msgid "Could not open the project"
-msgstr "לא ניתן להעתיק את הקובץ למרחב העבודה"
+msgstr "לא ניתן לפתוח את המיזם"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:880
 msgctxt "MainWindowGUI|"
 msgid "Could not save the project"
-msgstr ""
+msgstr "לא ניתן לשמור את המיזם"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:889
 msgctxt "MainWindowGUI|"
@@ -1408,7 +1405,7 @@ msgstr "אוטו׳"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
 msgctxt "ToolsMenu|"
 msgid "Off"
-msgstr ""
+msgstr "כבוי"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"

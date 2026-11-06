@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2026-11-02 07:54-0300\n"
+"PO-Revision-Date: 2026-11-05 07:37-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Portuguese <kde-i18n-pt_BR@kde.org>\n"
 "Language: pt_BR\n"
@@ -1421,7 +1421,7 @@ msgstr "Mistura"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:197
 msgctxt "ToolsMenu|"
 msgid "Diff"
-msgstr "Diff"
+msgstr "Diferença"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:198
 msgctxt "ToolsMenu|"
@@ -1436,7 +1436,7 @@ msgstr "Automático"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
 msgctxt "ToolsMenu|"
 msgid "Off"
-msgstr ""
+msgstr "Desligado"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"
