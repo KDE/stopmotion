@@ -8,8 +8,11 @@ SPDX-License-Identifier: CC0-1.0
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0-or-later</project_license>
   <name>Stopmotion</name>
+  <name xml:lang="ar">مُحَرِّك الصور</name>
   <name xml:lang="ca">Stopmotion</name>
   <name xml:lang="es">Stopmotion</name>
+  <name xml:lang="fr">Stopmotion</name>
+  <name xml:lang="he">סטופמושן</name>
   <name xml:lang="ka">Stopmotion</name>
   <name xml:lang="nl">Stopmotion</name>
   <name xml:lang="pt-BR">Stopmotion</name>
@@ -17,8 +20,11 @@ SPDX-License-Identifier: CC0-1.0
   <name xml:lang="tr">Stopmotion</name>
   <name xml:lang="uk">Stopmotion</name>
   <summary>Create stop-motion animations</summary>
+  <summary xml:lang="ar">إنشاء رسوم متحركة بتقنية إيقاف الحركة</summary>
   <summary xml:lang="ca">Creació d'animacions stop-motion</summary>
   <summary xml:lang="es">Cree animaciones fotograma a fotograma</summary>
+  <summary xml:lang="fr">Créer des animations en stop-motion</summary>
+  <summary xml:lang="he">יצירת הנפשות סטופ מושן</summary>
   <summary xml:lang="ka">შექმენით stop-motion ანიმაციები</summary>
   <summary xml:lang="nl">Stop-motion animaties aanmaken</summary>
   <summary xml:lang="pt-BR">Crie animações em stop-motion (quadro a quadro)</summary>
@@ -31,8 +37,10 @@ SPDX-License-Identifier: CC0-1.0
       the frames from a camera, shows the previous frames on top of the live
       image to place the objects, and plays the animation back.
     </p>
+    <p xml:lang="ar">مُحَرِّك الصور برنامج لإنشاء رسوم متحركة بإيقاف الحركة. يلتقط الإطارات من كاميرا، ويعرض الإطارات السابقة فوق الصورة الحية لتحديد مواضع الأجسام، ويعيد تشغيل الرسوم المتحركة.</p>
     <p xml:lang="ca">Stopmotion és un programa per a crear animacions stop-motion. Captura els fotogrames d'una càmera, mostra els fotogrames anteriors a la part superior de la imatge en viu per col·locar els objectes i reprodueix l'animació.</p>
     <p xml:lang="es">Stopmotion es un programa para crear animaciones fotograma a fotograma. Captura los fotogramas de una cámara, muestra los fotogramas anteriores encima de la imagen en vivo para situar los objetos y reproduce la animación.</p>
+    <p xml:lang="fr">Stopmotion est un programme pour créer des animations en stop-motion. Il capture les images d'une caméra, affiche les images précédentes au-dessus de l'image en direct pour placer les objets et lit l'animation en retour.</p>
     <p xml:lang="ka">Stopmotion პროგრამაა მოძრაობის გაჩერების ანიმაციების შესაქმნელად. ის გადაიღებს კადრებს კამერიდან, გაჩვენებთ წინა კადრებს ცოცხალი გამოსახულების ზემოდან, რომ ზედ ობიექტები მოათავსოთ და დაუკრავს მიღებულ ანიმაციას.</p>
     <p xml:lang="nl">Stopmotion is een programma voor het maken van stop-motionanimaties. Het legt beelden vast vanaf een camera, toont de voorgaande beelden over het livebeeld heen om objecten te kunnen positioneren, en speelt de animatie vervolgens af.</p>
     <p xml:lang="pt-BR">O Stopmotion é um programa para criar animações em stop-motion (quadro a quadro). Ele captura quadros a partir de uma câmera, exibe os quadros anteriores sobrepostos à imagem em tempo real — facilitando o posicionamento dos objetos — e reproduz a animação.</p>
@@ -41,8 +49,10 @@ SPDX-License-Identifier: CC0-1.0
     <p xml:lang="uk">Stopmotion — це програма для створення покадрових анімацій. Вона захоплює кадри з камери, накладає попередні кадри на поточне зображення (що допомагає правильно розмістити об’єкти) і відтворює готову анімацію.</p>
     <ul>
       <li>Capture frames from a webcam or import existing images</li>
+      <li xml:lang="ar">التقاط الإطارات من كاميرا ويب أو استورد صورًا موجودة</li>
       <li xml:lang="ca">Captura fotogrames des d'una càmera web o importa imatges existents</li>
       <li xml:lang="es">Capture fotogramas de una webcam o importe imágenes existentes</li>
+      <li xml:lang="fr">Capturez des images à partir d'une webcam ou importez des images existantes</li>
       <li xml:lang="ka">გადაიღეთ კადრები ვებკამერიდან, ან შემოიტანეთ არსებული გამოსახულებები</li>
       <li xml:lang="nl">Leg beelden vast vanaf een webcam of importeer bestaande afbeeldingen</li>
       <li xml:lang="pt-BR">Capture quadros de uma webcam ou importe imagens existentes</li>
@@ -50,8 +60,10 @@ SPDX-License-Identifier: CC0-1.0
       <li xml:lang="tr">Web kamerasından çekim yapın veya var olan görselleri içe aktarın</li>
       <li xml:lang="uk">Захоплення кадрів з камери або імпортування наявних зображень</li>
       <li>Onion skinning, differentiation and playback modes</li>
+      <li xml:lang="ar">أوضاع تقشير البصل والتفريق وإعادة التشغيل</li>
       <li xml:lang="ca">Modes de canvi de pell de ceba, diferenciació i reproducció</li>
       <li xml:lang="es">Modos de piel de cebolla, diferenciación y reproducción</li>
+      <li xml:lang="fr">Modes en pelure d'oignon, de différenciation et de lecture</li>
       <li xml:lang="ka">ხახვის გაფრცქვნის, განსხვავებისა და დაკვრის რეჟიმები</li>
       <li xml:lang="nl">'Onion skinning', differentiatie en afspeelmodi</li>
       <li xml:lang="pt-BR">Modos de casca de cebola, diferenciação e reprodução</li>
@@ -59,8 +71,10 @@ SPDX-License-Identifier: CC0-1.0
       <li xml:lang="tr">Soğan zarı, farklılaştırma ve oynatma kipleri</li>
       <li xml:lang="uk">Калькування, режими диференціювання та відтворення</li>
       <li>Organize the animation in scenes and add sounds to frames</li>
+      <li xml:lang="ar">تنظيم الرسوم المتحركة في مشاهد وأضف أصواتًا إلى الإطارات</li>
       <li xml:lang="ca">Organitza l'animació en escenes i afegeix so als fotogrames</li>
       <li xml:lang="es">Organice la animación en escenas y añada sonido a los fotogramas</li>
+      <li xml:lang="fr">Organisez l'animation en scènes et ajoutez des sons aux images</li>
       <li xml:lang="ka">დაალაგეთ ანიმაცია სცენებში და დაამატეთ კადრებს ხმა</li>
       <li xml:lang="nl">Organiseer de animatie in scènes en voeg geluiden toe aan frames</li>
       <li xml:lang="pt-BR">Organize a animação em cenas e adicione sons aos quadros</li>
@@ -68,8 +82,11 @@ SPDX-License-Identifier: CC0-1.0
       <li xml:lang="tr">Canlandırmayı sahneler olarak organize edin ve karelere sesler ekleyin</li>
       <li xml:lang="uk">Упорядкування анімацій за сценами та додавання звуку до кадрів</li>
       <li>Export the animation to a video file</li>
+      <li xml:lang="ar">تصدير الرسوم المتحركة إلى ملف فيديو</li>
       <li xml:lang="ca">Exporta l'animació a un fitxer de vídeo</li>
       <li xml:lang="es">Exporte la animación a un archivo de vídeo</li>
+      <li xml:lang="fr">Exporter l'animation vers un fichier vidéo</li>
+      <li xml:lang="he">ייצוא ההנפשה לקובץ וידאו</li>
       <li xml:lang="ka">ანიმაციის გატანა ვიდეოფაილში</li>
       <li xml:lang="nl">Exporteer de animatie naar een videobestand</li>
       <li xml:lang="pt-BR">Exporte a animação para um arquivo de vídeo</li>
