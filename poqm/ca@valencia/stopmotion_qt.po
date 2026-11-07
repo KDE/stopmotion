@@ -1,14 +1,14 @@
 # Translation of stopmotion_qt.po to Catalan (Valencian)
-# Copyright (C) 2021-2024 This_file_is_part_of_KDE
+# Copyright (C) 2021-2026 This_file_is_part_of_KDE
 # This file is distributed under the license LGPL version 2.1 or
 # version 3 or later versions approved by the membership of KDE e.V.
 #
 # SPDX-FileCopyrightText: 2023 Antoni Bella Pérez <antonibella5@yahoo.com>
-# SPDX-FileCopyrightText: 2021, 2024 Josep M. Ferrer <txemaq@gmail.com>
+# SPDX-FileCopyrightText: 2021, 2024, 2026 Josep M. Ferrer <txemaq@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: stopmotion\n"
-"PO-Revision-Date: 2024-10-23 22:00+0200\n"
+"PO-Revision-Date: 2026-11-05 08:49+0100\n"
 "Last-Translator: Josep M. Ferrer <txemaq@gmail.com>\n"
 "Language-Team: Catalan <kde-i18n-ca@kde.org>\n"
 "Language: ca@valencia\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Qt-Contexts: true\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Accelerator-Marker: &\n"
-"X-Generator: Lokalize 24.08.2\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #: src/application/externalcommand.cpp:31
 msgctxt "ExternalCommand|"
@@ -1065,17 +1065,14 @@ msgid "Choose project file"
 msgstr "Trieu un fitxer de projecte"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:829
-#, fuzzy
-#| msgctxt "QtFrontend|"
-#| msgid "Could not copy file to workspace"
 msgctxt "MainWindowGUI|"
 msgid "Could not open the project"
-msgstr "No s'ha pogut copiar el fitxer a l'espai de treball"
+msgstr "No s'ha pogut obrir el projecte"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:880
 msgctxt "MainWindowGUI|"
 msgid "Could not save the project"
-msgstr ""
+msgstr "No s'ha pogut guardar el projecte"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:889
 msgctxt "MainWindowGUI|"
@@ -1446,7 +1443,7 @@ msgstr "Automàtic"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
 msgctxt "ToolsMenu|"
 msgid "Off"
-msgstr ""
+msgstr "Inactiu"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"
@@ -1615,15 +1612,3 @@ msgstr ""
 "Només reproduïx els treballs actuals quan la capturadora s'executa com a "
 "dimoni. Aneu fins al menú preferències («Ctrl+P») per a canviar l'execució "
 "de la captura d'imatges com a dimoni."
-
-#~ msgctxt "LanguageHandler|"
-#~ msgid "English"
-#~ msgstr "Anglés"
-
-# skip-rule: iso_639-English
-#~ msgctxt ""
-#~ "LanguageHandler|This should be translated to the name of the language you "
-#~ "are translating to, in that language. Example: English = Deutsch (Deutsch "
-#~ "is \"German\" in German)"
-#~ msgid "English"
-#~ msgstr "Català"

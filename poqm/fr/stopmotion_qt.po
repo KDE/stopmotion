@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: stopmotion_qt\n"
-"PO-Revision-Date: 2026-11-03 07:27+0100\n"
+"PO-Revision-Date: 2026-11-05 13:53+0100\n"
 "Last-Translator: Xavier Besnard <xavier.besnard@kde.org>\n"
 "Language-Team: fr\n"
 "Language: fr\n"
@@ -1446,7 +1446,7 @@ msgstr "Auto"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
 msgctxt "ToolsMenu|"
 msgid "Off"
-msgstr ""
+msgstr "Désactivé"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"
