@@ -10,6 +10,7 @@ SPDX-License-Identifier: CC0-1.0
   <name>Stopmotion</name>
   <name xml:lang="ar">مُحَرِّك الصور</name>
   <name xml:lang="ca">Stopmotion</name>
+  <name xml:lang="ca-valencia">Stopmotion</name>
   <name xml:lang="es">Stopmotion</name>
   <name xml:lang="fr">Stopmotion</name>
   <name xml:lang="he">סטופמושן</name>
@@ -22,6 +23,7 @@ SPDX-License-Identifier: CC0-1.0
   <summary>Create stop-motion animations</summary>
   <summary xml:lang="ar">إنشاء رسوم متحركة بتقنية إيقاف الحركة</summary>
   <summary xml:lang="ca">Creació d'animacions stop-motion</summary>
+  <summary xml:lang="ca-valencia">Creeu animacions stop-motion</summary>
   <summary xml:lang="es">Cree animaciones fotograma a fotograma</summary>
   <summary xml:lang="fr">Créer des animations en stop-motion</summary>
   <summary xml:lang="he">יצירת הנפשות סטופ מושן</summary>
@@ -39,6 +41,7 @@ SPDX-License-Identifier: CC0-1.0
     </p>
     <p xml:lang="ar">مُحَرِّك الصور برنامج لإنشاء رسوم متحركة بإيقاف الحركة. يلتقط الإطارات من كاميرا، ويعرض الإطارات السابقة فوق الصورة الحية لتحديد مواضع الأجسام، ويعيد تشغيل الرسوم المتحركة.</p>
     <p xml:lang="ca">Stopmotion és un programa per a crear animacions stop-motion. Captura els fotogrames d'una càmera, mostra els fotogrames anteriors a la part superior de la imatge en viu per col·locar els objectes i reprodueix l'animació.</p>
+    <p xml:lang="ca-valencia">Stopmotion és un programa per a crear animacions stop-motion. Captura els fotogrames d'una càmera, mostra els fotogrames anteriors a la part superior de la imatge en viu per col·locar els objectes i reproduïx l'animació.</p>
     <p xml:lang="es">Stopmotion es un programa para crear animaciones fotograma a fotograma. Captura los fotogramas de una cámara, muestra los fotogramas anteriores encima de la imagen en vivo para situar los objetos y reproduce la animación.</p>
     <p xml:lang="fr">Stopmotion est un programme pour créer des animations en stop-motion. Il capture les images d'une caméra, affiche les images précédentes au-dessus de l'image en direct pour placer les objets et lit l'animation en retour.</p>
     <p xml:lang="ka">Stopmotion პროგრამაა მოძრაობის გაჩერების ანიმაციების შესაქმნელად. ის გადაიღებს კადრებს კამერიდან, გაჩვენებთ წინა კადრებს ცოცხალი გამოსახულების ზემოდან, რომ ზედ ობიექტები მოათავსოთ და დაუკრავს მიღებულ ანიმაციას.</p>
@@ -51,6 +54,7 @@ SPDX-License-Identifier: CC0-1.0
       <li>Capture frames from a webcam or import existing images</li>
       <li xml:lang="ar">التقاط الإطارات من كاميرا ويب أو استورد صورًا موجودة</li>
       <li xml:lang="ca">Captura fotogrames des d'una càmera web o importa imatges existents</li>
+      <li xml:lang="ca-valencia">Captura fotogrames des d'una càmera web o importa imatges existents</li>
       <li xml:lang="es">Capture fotogramas de una webcam o importe imágenes existentes</li>
       <li xml:lang="fr">Capturez des images à partir d'une webcam ou importez des images existantes</li>
       <li xml:lang="ka">გადაიღეთ კადრები ვებკამერიდან, ან შემოიტანეთ არსებული გამოსახულებები</li>
@@ -62,6 +66,7 @@ SPDX-License-Identifier: CC0-1.0
       <li>Onion skinning, differentiation and playback modes</li>
       <li xml:lang="ar">أوضاع تقشير البصل والتفريق وإعادة التشغيل</li>
       <li xml:lang="ca">Modes de canvi de pell de ceba, diferenciació i reproducció</li>
+      <li xml:lang="ca-valencia">Modes de canvi de pell de ceba, diferenciació i reproducció</li>
       <li xml:lang="es">Modos de piel de cebolla, diferenciación y reproducción</li>
       <li xml:lang="fr">Modes en pelure d'oignon, de différenciation et de lecture</li>
       <li xml:lang="ka">ხახვის გაფრცქვნის, განსხვავებისა და დაკვრის რეჟიმები</li>
@@ -73,6 +78,7 @@ SPDX-License-Identifier: CC0-1.0
       <li>Organize the animation in scenes and add sounds to frames</li>
       <li xml:lang="ar">تنظيم الرسوم المتحركة في مشاهد وأضف أصواتًا إلى الإطارات</li>
       <li xml:lang="ca">Organitza l'animació en escenes i afegeix so als fotogrames</li>
+      <li xml:lang="ca-valencia">Organitza l'animació en escenes i afig so als fotogrames</li>
       <li xml:lang="es">Organice la animación en escenas y añada sonido a los fotogramas</li>
       <li xml:lang="fr">Organisez l'animation en scènes et ajoutez des sons aux images</li>
       <li xml:lang="ka">დაალაგეთ ანიმაცია სცენებში და დაამატეთ კადრებს ხმა</li>
@@ -84,6 +90,7 @@ SPDX-License-Identifier: CC0-1.0
       <li>Export the animation to a video file</li>
       <li xml:lang="ar">تصدير الرسوم المتحركة إلى ملف فيديو</li>
       <li xml:lang="ca">Exporta l'animació a un fitxer de vídeo</li>
+      <li xml:lang="ca-valencia">Exporta l'animació a un fitxer de vídeo</li>
       <li xml:lang="es">Exporte la animación a un archivo de vídeo</li>
       <li xml:lang="fr">Exporter l'animation vers un fichier vidéo</li>
       <li xml:lang="he">ייצוא ההנפשה לקובץ וידאו</li>
