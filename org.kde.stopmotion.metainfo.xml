@@ -57,6 +57,7 @@ SPDX-License-Identifier: CC0-1.0
       <li xml:lang="ca-valencia">Captura fotogrames des d'una càmera web o importa imatges existents</li>
       <li xml:lang="es">Capture fotogramas de una webcam o importe imágenes existentes</li>
       <li xml:lang="fr">Capturez des images à partir d'une webcam ou importez des images existantes</li>
+      <li xml:lang="he">לכידת תמוניות ממצלמה או ייבוא תמונות קיימות</li>
       <li xml:lang="ka">გადაიღეთ კადრები ვებკამერიდან, ან შემოიტანეთ არსებული გამოსახულებები</li>
       <li xml:lang="nl">Leg beelden vast vanaf een webcam of importeer bestaande afbeeldingen</li>
       <li xml:lang="pt-BR">Capture quadros de uma webcam ou importe imagens existentes</li>
@@ -81,6 +82,7 @@ SPDX-License-Identifier: CC0-1.0
       <li xml:lang="ca-valencia">Organitza l'animació en escenes i afig so als fotogrames</li>
       <li xml:lang="es">Organice la animación en escenas y añada sonido a los fotogramas</li>
       <li xml:lang="fr">Organisez l'animation en scènes et ajoutez des sons aux images</li>
+      <li xml:lang="he">סידור ההנפשה בסצנות והוספת צלילים לתמוניות</li>
       <li xml:lang="ka">დაალაგეთ ანიმაცია სცენებში და დაამატეთ კადრებს ხმა</li>
       <li xml:lang="nl">Organiseer de animatie in scènes en voeg geluiden toe aan frames</li>
       <li xml:lang="pt-BR">Organize a animação em cenas e adicione sons aos quadros</li>
