@@ -501,7 +501,8 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 }
 
 void FrameBar::setSelection(int sf) {
-	setActiveFrameAndSelection(sf, selectionFrame);
+	// without an anchor, the selection starts at the new frame
+	setActiveFrameAndSelection(sf, selectionFrame < 0? sf : selectionFrame);
 }
 
 int FrameBar::getSelectionAnchor() const {
