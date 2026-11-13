@@ -6,14 +6,18 @@
 #ifndef EXTERNALCOMMANDWITHTEMPORARYDIRECTORY_H_
 #define EXTERNALCOMMANDWITHTEMPORARYDIRECTORY_H_
 
+#include <QMetaObject>
+
 class ExternalCommand;
 class TemporaryDirectory;
 class QWidget;
 class QString;
 
+/** Deletes itself when its window is closed. */
 class ExternalCommandWithTemporaryDirectory {
 	ExternalCommand* ec;
 	TemporaryDirectory* td;
+	QMetaObject::Connection deleteWithWindow;
 	ExternalCommandWithTemporaryDirectory&
 	operator=(const ExternalCommandWithTemporaryDirectory&) = delete;
 	ExternalCommandWithTemporaryDirectory(

@@ -6,6 +6,7 @@
 #include "externalcommandwithtemporarydirectory.h"
 #include "externalcommand.h"
 
+#include <QObject>
 #include <QString>
 
 #include "src/technical/util.h"
@@ -70,10 +71,16 @@ ExternalCommandWithTemporaryDirectory
 	std::unique_ptr<TemporaryDirectory> ttd(new TemporaryDirectory);
 	ec = new ExternalCommand(parent);
 	td = ttd.release();
+	// the window deletes itself when closed, take the directory with it
+	deleteWithWindow = QObject::connect(ec, &QObject::destroyed, [this] {
+		ec = nullptr;
+		delete this;
+	});
 }
 
 ExternalCommandWithTemporaryDirectory
 		::~ExternalCommandWithTemporaryDirectory() {
+	QObject::disconnect(deleteWithWindow);
 	delete ec;
 	ec = nullptr;
 	delete td;
