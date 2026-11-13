@@ -9,7 +9,7 @@
 #include "src/technical/util.h"
 #include "src/technical/video/videoencoder.h"
 #include "src/domain/filenamevisitor.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 #include "src/application/externalcommandwithtemporarydirectory.h"
 
 #include <unistd.h>
@@ -86,7 +86,7 @@ const char* VideoFactory::createVideoFile(VideoEncoder *encoder,
 		replaceText(startCommand, "$opt", "");
 		std::string playbackSpeedString = integerToString(playbackSpeed);
 		replaceText(startCommand, "$FRAMERATE", playbackSpeedString.c_str());
-		Logger::get().logDebug("Copying frames into temporary directory %s",
+		qCDebug(STOPMOTION_LOG, "Copying frames into temporary directory %s",
 				tmpDir);
 		FileCopier copier(tmpDir);
 		anim->accept(copier);

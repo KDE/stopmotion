@@ -5,7 +5,7 @@
  */
 #include "languagehandler.h"
 
-#include "logger.h"
+#include "stopmotion_debug.h"
 #include "src/foundation/preferencestool.h"
 #include "src/config.h"
 
@@ -56,8 +56,8 @@ LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const cha
 	}
 
 	if (language != QLatin1String("en")) {
-	    Logger::get().logDebug("Loading translator: ");
-	    Logger::get().logDebug(translations.value(language).toLocal8Bit().constData());
+	    qCDebug(STOPMOTION_LOG, "Loading translator: ");
+	    qCDebug(STOPMOTION_LOG, translations.value(language).toLocal8Bit().constData());
 	    load(language);
 	}
 
@@ -123,7 +123,7 @@ QString LanguageHandler::systemLanguage() const {
 bool LanguageHandler::load(const QString& language) {
 	const QString file = translations.value(language);
 	if (file.isEmpty() || !translator->load(file)) {
-		Logger::get().logWarning("Failed to load translation for %s",
+		qCWarning(STOPMOTION_LOG, "Failed to load translation for %s",
 				language.toLocal8Bit().constData());
 		return false;
 	}
@@ -155,7 +155,7 @@ QMenu* LanguageHandler::createLanguagesMenu(QMenu *parent)
 	if (activeAction != nullptr) {
 		activeAction->setChecked(true);
 	} else {
-		Logger::get().logWarning("Something wrong with the locale!");
+		qCWarning(STOPMOTION_LOG, "Something wrong with the locale!");
 	}
 	return languagesMenu;
 }

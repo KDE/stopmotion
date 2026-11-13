@@ -4,7 +4,7 @@
  */
 
 #include "qtaudiodriver.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 #include "src/technical/audio/audioformat.h"
 
 #include <QAudioFormat>
@@ -45,7 +45,7 @@ public:
 	void addSound(AudioFormat* a) {
 		a->reset();
 		sounds.push_back(a);
-		Logger::get().logDebug("Added sound");
+		qCDebug(STOPMOTION_LOG, "Added sound");
 		Q_EMIT output->stateChanged(QAudio::ActiveState);
 	}
     qint64 readData(char *data, qint64 maxlen) override {
@@ -60,7 +60,7 @@ public:
 		}
 		if (len == 0) {
 			Q_EMIT output->stateChanged(QAudio::IdleState);
-			Logger::get().logDebug("out of sound");
+			qCDebug(STOPMOTION_LOG, "out of sound");
 			return 0;
 		}
 		auto s = std::next(sounds.begin());
@@ -70,7 +70,7 @@ public:
 			else
 				s = sounds.erase(s);
 		}
-		Logger::get().logDebug("Sent data %d", len);
+		qCDebug(STOPMOTION_LOG, "Sent data %d", len);
 		return len;
 	}
     qint64 writeData(const char *, qint64) override {

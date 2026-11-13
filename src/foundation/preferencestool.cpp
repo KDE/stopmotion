@@ -4,7 +4,7 @@
  */
 
 #include "preferencestool.h"
-#include "logger.h"
+#include "stopmotion_debug.h"
 #include "uiexception.h"
 
 #include <QFile>
@@ -115,7 +115,7 @@ bool PreferencesTool::load(const char* filePath) {
 	QDomElement loadedPreferences =
 			root.firstChildElement(QStringLiteral("preferences"));
 	if (loadedPreferences.isNull() || loadedVersion.isNull()) {
-		Logger::get().logWarning("Error while parsing preferences file");
+		qCWarning(STOPMOTION_LOG, "Error while parsing preferences file");
 		return false;
 	}
 	doc = loaded;
@@ -266,7 +266,7 @@ QDomElement PreferencesTool::findNode(const char * key) {
 
 void PreferencesTool::checkInitialized() {
 	if (doc.isNull()) {
-		Logger::get().logFatal("A preferencesfile has to be specified before "
+		qCFatal(STOPMOTION_LOG, "A preferencesfile has to be specified before "
 				"using the PreferencesTool.");
 		exit(1);
 	}

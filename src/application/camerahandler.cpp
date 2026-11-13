@@ -14,7 +14,7 @@
 #include "graphics/icons/cameraoff.xpm"
 #include "graphics/icons/cameraon.xpm"
 #include "src/domain/domainfacade.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 #include "src/foundation/preferencestool.h"
 #include "src/foundation/uiexception.h"
 #include "src/presentation/frontends/qtfrontend/frameview.h"
@@ -83,7 +83,7 @@ void CameraHandler::toggleCamera()
 	if(isCameraOn) {
 		cameraOff();
 	} else {
-		Logger::get().logDebug("Playing video from webcam");
+		qCDebug(STOPMOTION_LOG, "Playing video from webcam");
 		cameraOn();
 	}
 }
@@ -91,7 +91,7 @@ void CameraHandler::toggleCamera()
 
 void CameraHandler::captureFrame()
 {
-	Logger::get().logDebug("Capturing image from webcam");
+	qCDebug(STOPMOTION_LOG, "Capturing image from webcam");
 	timer->start(60);
 }
 

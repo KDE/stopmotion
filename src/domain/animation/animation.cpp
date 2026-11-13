@@ -5,7 +5,7 @@
 
 #include "animation.h"
 
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 #include "src/foundation/uiexception.h"
 #include "src/technical/audio/qtaudiodriver.h"
 #include "src/technical/video/videofactory.h"
@@ -268,12 +268,12 @@ void Animation::saveProject(const char *filename) {
 	assert(filename != nullptr);
 	WorkspaceFile newDat(WorkspaceFile::newModelFile);
 	if (!ensureUnlinked(newDat.path())) {
-		Logger::get().logWarning("newModelFile not removed prior to saving");
+		qCWarning(STOPMOTION_LOG, "newModelFile not removed prior to saving");
 	}
 	serializer->save(filename, *scenes, frontend);
 	WorkspaceFile currentDat(WorkspaceFile::currentModelFile);
 	if (!ensureUnlinked(currentDat.path())) {
-		Logger::get().logWarning("currentModelFile not removed after saving");
+		qCWarning(STOPMOTION_LOG, "currentModelFile not removed after saving");
 	}
 	logger->setLogFile(nullptr);
 	initializeCommandLog();

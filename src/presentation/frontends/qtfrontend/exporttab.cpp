@@ -11,7 +11,7 @@
 #include "graphics/icons/close.xpm"
 #include "flexiblelineedit.h"
 #include "src/foundation/preferencestool.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 
 #include <QFileDialog>
 #include <QGridLayout>
@@ -162,7 +162,7 @@ void ExportTab::makeGUI()
 
 void ExportTab::initialize()
 {
-	Logger::get().logDebug("Initializing encoder settings");
+	qCDebug(STOPMOTION_LOG, "Initializing encoder settings");
 	PreferencesTool *pref = PreferencesTool::get();
 
 	int numEncoders = pref->getPreference("numEncoders", 0);

@@ -5,7 +5,7 @@
 
 #include "scenethumbview.h"
 
-#include "logger.h"
+#include "stopmotion_debug.h"
 #include "thumbdragger.h"
 #include "filenamesfromurlsiterator.h"
 #include "framebar.h"
@@ -118,7 +118,7 @@ void SceneThumbView::mouseMoveEvent(QMouseEvent * me) {
 
 
 void SceneThumbView::startDrag() {
-	Logger::get().logDebug("Starting drag of the scene");
+	qCDebug(STOPMOTION_LOG, "Starting drag of the scene");
 	getFrameBar()->setMovingScene(getNumber());
 
 	QDrag *drag = new ThumbDragger(this);
@@ -179,7 +179,7 @@ void SceneThumbView::contentsDropped(QDropEvent *event) {
 					highend - lowend + 1, sceneDest, sceneSize);
 		}
 	} else if (movingScene != sceneNumber) {
-		Logger::get().logDebug("Moving scene");
+		qCDebug(STOPMOTION_LOG, "Moving scene");
 		int destination = movingScene < sceneNumber?
 				sceneNumber + 1 : sceneNumber;
 		facade->moveScene(movingScene, destination);

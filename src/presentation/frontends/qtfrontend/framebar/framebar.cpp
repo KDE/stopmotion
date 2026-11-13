@@ -6,7 +6,7 @@
 
 #include "framepreferencesmenu.h"
 #include "framethumbview.h"
-#include "logger.h"
+#include "stopmotion_debug.h"
 #include "scenethumbview.h"
 #include "thumbview.h"
 #include "src/domain/domainfacade.h"
@@ -29,7 +29,7 @@
 
 static QImage tryReadImage(const char *filename) {
     if (!filename) {
-        qWarning() << "Couldn't read image: Invalid file name";
+        qCWarning(STOPMOTION_LOG) << "Couldn't read image: Invalid file name";
         return QImage();
     }
 
@@ -40,7 +40,7 @@ static QImage tryReadImage(const char *filename) {
 
     if (imageReader.error() != QImageReader::UnsupportedFormatError
         && imageReader.error() != QImageReader::InvalidDataError) {
-        qWarning() << "Couldn't read image:" << imageReader.errorString();
+        qCWarning(STOPMOTION_LOG) << "Couldn't read image:" << imageReader.errorString();
         return image;
     }
 
@@ -56,7 +56,7 @@ static QImage tryReadImage(const char *filename) {
             return anotherImage;
     }
 
-    qWarning() << "Couldn't read image:" << imageReader.errorString();
+    qCWarning(STOPMOTION_LOG) << "Couldn't read image:" << imageReader.errorString();
     return image;
 }
 
@@ -103,7 +103,7 @@ FrameBar::FrameBar(QWidget *parent)
 	setBackgroundRole(QPalette::Dark);
 	setAcceptDrops(true);
 
-	Logger::get().logDebug("FrameBar is attached to the model");
+	qCDebug(STOPMOTION_LOG, "FrameBar is attached to the model");
 	DomainFacade::getFacade()->attach(this);
 }
 
@@ -112,7 +112,7 @@ FrameBar::~FrameBar() {
 
 void FrameBar::updateAdd(int scene, int index, int numFrames) {
 	if (scene == activeScene) {
-		Logger::get().logDebug("Adding in framebar");
+		qCDebug(STOPMOTION_LOG, "Adding in framebar");
 		addFrames(index, numFrames);
 		Q_EMIT modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
@@ -123,7 +123,7 @@ void FrameBar::updateAdd(int scene, int index, int numFrames) {
 
 void FrameBar::updateRemove(int scene, int fromFrame, int toFrame) {
 	if (scene == activeScene) {
-		Logger::get().logDebug("Receiving notification about the removal of a frame in the model");
+		qCDebug(STOPMOTION_LOG, "Receiving notification about the removal of a frame in the model");
 		removeFrames(fromFrame, toFrame);
 		Q_EMIT modelSizeChanged(DomainFacade::getFacade()->getModelSize());
 	}
@@ -135,20 +135,20 @@ void FrameBar::updateMove(int fromScene, int fromFrame, int count,
 	if (toScene == activeScene) {
 		if (fromScene == activeScene) {
 			changeSelectionHighlight(fromFrame + count - 1, fromFrame);
-			Logger::get().logDebug("Moving in framebar");
+			qCDebug(STOPMOTION_LOG, "Moving in framebar");
 			moveFrames(fromFrame, fromFrame + count - 1, toFrame);
 			if (fromFrame < toFrame)
 				toFrame -= count;
 		} else {
 			changeSelectionHighlight(-1, -1);
-			Logger::get().logDebug("Moving to framebar");
+			qCDebug(STOPMOTION_LOG, "Moving to framebar");
 			addFrames(toFrame, count);
 		}
 	} else {
-		Logger::get().logDebug("Moving to a different scene");
+		qCDebug(STOPMOTION_LOG, "Moving to a different scene");
 		setActiveScene(toScene);
 	}
-	Logger::get().logDebug("Setting new active frame in FrameBar");
+	qCDebug(STOPMOTION_LOG, "Setting new active frame in FrameBar");
 	setActiveFrameAndSelection(toFrame + count - 1, toFrame);
 	doScroll();
 	doActiveFrameNotifications();
@@ -300,7 +300,7 @@ void FrameBar::insertFrames(int index, int numFrames) {
 void FrameBar::addFrames(int index, int numFrames) {
 	//TODO as we're no longer allowing cancelling during this operation, we
 	// should implement caching and lazy loading so that this isn't a problem.
-	Logger::get().logDebug("Adding frames in framebar");
+	qCDebug(STOPMOTION_LOG, "Adding frames in framebar");
 	if (activeSceneSize < index) {
 		resync();
 		return;
@@ -408,7 +408,7 @@ void FrameBar::doScroll() {
 
 void FrameBar::setActiveFrame(int frameNumber) {
 	selecting = false;
-	Logger::get().logDebug("Setting new active frame %d in FrameBar", activeFrame);
+	qCDebug(STOPMOTION_LOG, "Setting new active frame %d in FrameBar", activeFrame);
 	setActiveFrameAndSelection(frameNumber, frameNumber);
 	// If there is a frame to set as active
 	if (frameNumber >= 0) {
@@ -494,7 +494,7 @@ void FrameBar::setActiveFrameAndSelection(int af, int sf) {
 	}
 	if (af != activeFrame || sf != selectionFrame) {
 		changeSelectionHighlight(af, sf);
-		Logger::get().logDebug("Setting new active frame %d and scene %d in FrameBar",
+		qCDebug(STOPMOTION_LOG, "Setting new active frame %d and scene %d in FrameBar",
 				activeFrame, activeScene);
 	}
 	Q_EMIT newActiveFrame(activeScene, activeFrame);
@@ -523,7 +523,7 @@ void FrameBar::updateNewScene(int index) {
 }
 
 void FrameBar::newScene(int index) {
-	Logger::get().logDebug("Adding new scene thumb to framebar");
+	qCDebug(STOPMOTION_LOG, "Adding new scene thumb to framebar");
 
 	int thumbIndex = index <= activeScene? index : index + activeSceneSize;
 	thumbViews.insert(thumbViews.begin() + thumbIndex, nullptr);
@@ -643,7 +643,7 @@ void FrameBar::setActiveScene(int sceneNumber) {
 	insertFrames(0, count);
 	fixSize();
 
-	Logger::get().logDebug("Setting new active scene %d in FrameBar", activeScene);
+	qCDebug(STOPMOTION_LOG, "Setting new active scene %d in FrameBar", activeScene);
 
 	Q_EMIT newActiveFrame(activeScene, activeFrame);
 

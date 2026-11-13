@@ -8,7 +8,7 @@
 #include "src/application/externalcommand.h"
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 #include "src/foundation/preferencestool.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 #include "src/foundation/uiexception.h"
 #include "src/domain/animation/workspacefile.h"
 #include "src/domain/domainfacade.h"
@@ -189,7 +189,7 @@ bool QtFrontend::loadPreferencesFrom(PreferencesTool* prefs, const char* path) {
 }
 
 void QtFrontend::initializePreferences() {
-	Logger::get().logDebug("Loading preferencestool");
+	qCDebug(STOPMOTION_LOG, "Loading preferencestool");
 
 	PreferencesTool *prefs = PreferencesTool::get();
 	WorkspaceFile preferencesFile(WorkspaceFile::preferencesFile);
@@ -201,11 +201,11 @@ void QtFrontend::initializePreferences() {
 	bool oldIsDirty = true;
 	if (!loadPreferencesFrom(prefs, preferencesFile.path())) {
 		dirty = true;
-		Logger::get().logWarning("Did not load new prefs");
+		qCWarning(STOPMOTION_LOG, "Did not load new prefs");
 		if (loadPreferencesFrom(prefs, oldPrefsFile.path())) {
 			oldIsDirty = false;
 		} else {
-			Logger::get().logWarning("Did not load old prefs");
+			qCWarning(STOPMOTION_LOG, "Did not load old prefs");
 			prefs->setDefaultPreferences(VERSION);
 			setDefaultPreferences(prefs);
 		}
@@ -233,7 +233,7 @@ void QtFrontend::initializePreferences() {
 
 void QtFrontend::setDefaultPreferences(PreferencesTool *prefs) {
 	assert(prefs != nullptr);
-	Logger::get().logDebug("Setting default preferences");
+	qCDebug(STOPMOTION_LOG, "Setting default preferences");
 
 	// Default import options ------------------------------------------------
 	prefs->setPreference("numberofimports", 5);
