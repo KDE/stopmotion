@@ -62,8 +62,9 @@ void RunAnimationHandler::resumeAnimation() {
 		if (sceneSize < endFrame)
 			endFrame = sceneSize;
 		if (endFrame <= startFrame) {
-			startFrame = endFrame;
+			// nothing left to play, for example after removing frames
 			stopAnimation();
+			return;
 		}
 		if (endFrame <= frameNr)
 			frameNr = startFrame;
@@ -128,8 +129,9 @@ void RunAnimationHandler::stopAnimation() {
 		timer->stop();
 		if (startFrame < endFrame)
 			Q_EMIT stopped(sceneNr, startFrame, endFrame - 1);
-		startFrame = -1;
 	}
+	// also forget a paused animation
+	startFrame = -1;
 }
 
 
