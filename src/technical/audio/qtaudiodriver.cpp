@@ -26,7 +26,7 @@ class QtAudioDriver::Impl : public QIODevice {
 	using sample_t = int16_t;
 	QAudioFormat audioFormat;
 	std::unique_ptr<QAudioSink> output;
-	std::list<AudioFormat*> sounds;
+	std::list<std::shared_ptr<AudioFormat>> sounds;
 	std::vector<sample_t> buffer;
 public:
     Impl() : buffer(buffer_size) {
@@ -42,9 +42,11 @@ public:
 	}
 	~Impl() override {
 	}
-	void addSound(AudioFormat* a) {
+	void addSound(std::shared_ptr<AudioFormat> a) {
+		// playing a sound again restarts it
+		sounds.remove(a);
 		a->reset();
-		sounds.push_back(a);
+		sounds.push_back(std::move(a));
 		qCDebug(STOPMOTION_LOG, "Added sound");
 		Q_EMIT output->stateChanged(QAudio::ActiveState);
 	}
@@ -65,7 +67,7 @@ public:
 		}
 		auto s = std::next(sounds.begin());
 		while (s != sounds.end()) {
-			if (mixSound(*s, reinterpret_cast<sample_t*>(data), len))
+			if (mixSound(**s, reinterpret_cast<sample_t*>(data), len))
 				++s;
 			else
 				s = sounds.erase(s);
@@ -84,11 +86,11 @@ public:
 	}
 private:
 	// Adds length bytes of sound s to out. Returns false if s is exhausted.
-	bool mixSound(AudioFormat* s, sample_t* out, int length) {
+	bool mixSound(AudioFormat& s, sample_t* out, int length) {
 		char* buf = reinterpret_cast<char*>(buffer.data());
 		const int bufferBytes = buffer.size() * sizeof(sample_t);
 		while (0 < length) {
-			int len2 = s->fillBuffer(buf, std::min(length, bufferBytes));
+			int len2 = s.fillBuffer(buf, std::min(length, bufferBytes));
 			if (len2 == 0) {
 				return false;
 			}
@@ -119,8 +121,8 @@ void QtAudioDriver::playInThread() {
 	impl->play();
 }
 
-void QtAudioDriver::addAudioFile(AudioFormat* audioFile) {
-	impl->addSound(audioFile);
+void QtAudioDriver::addAudioFile(std::shared_ptr<AudioFormat> audioFile) {
+	impl->addSound(std::move(audioFile));
 }
 
 bool QtAudioDriver::initialize() {

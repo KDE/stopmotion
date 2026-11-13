@@ -6,6 +6,8 @@
 #ifndef AUDIODRIVER_H
 #define AUDIODRIVER_H
 
+#include <memory>
+
 #include "audioformat.h"
 
 /**
@@ -36,10 +38,11 @@ public:
 	
 	/**
 	 * Abstract function for adding a audio file which later on can be played
-	 * with the play or playInThread functions. Ownership is not passed.
+	 * with the play or playInThread functions. The driver keeps it until it
+	 * has been played, even if its sound is deleted meanwhile.
 	 * @param audioFile the audio file to be played
 	 */
-	virtual void addAudioFile(AudioFormat *audioFile) = 0;
+	virtual void addAudioFile(std::shared_ptr<AudioFormat> audioFile) = 0;
 	
 	/**
 	 * Abstract function for initializing the registered audio device.

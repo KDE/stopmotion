@@ -20,7 +20,7 @@ public:
 	~QtAudioDriver() override;
 	void play() override;
 	void playInThread() override;
-	void addAudioFile(AudioFormat *audioFile) override;
+	void addAudioFile(std::shared_ptr<AudioFormat> audioFile) override;
 	bool initialize() override;
 	void shutdown() override;
 };

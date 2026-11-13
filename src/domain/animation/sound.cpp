@@ -45,5 +45,5 @@ const char* Sound::getBasename() const {
 }
 
 void Sound::addToDriver(AudioDriver& ad) const {
-	ad.addAudioFile(af.get());
+	ad.addAudioFile(af);
 }

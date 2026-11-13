@@ -15,7 +15,8 @@ class WorkspaceFile;
 class ErrorHandler;
 
 class Sound {
-	std::unique_ptr<AudioFormat> af;
+	// shared with the audio driver while playing
+	std::shared_ptr<AudioFormat> af;
 	std::string name;
 	Sound& operator=(const Sound&) = delete;
 	Sound(const Sound&) = delete;
