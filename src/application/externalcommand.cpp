@@ -53,6 +53,7 @@ ExternalCommand::ExternalCommand(QWidget *parent)
 	connect(process, &QProcess::readyReadStandardOutput, this, &ExternalCommand::readFromStandardOutput);
 	connect(process, &QProcess::readyReadStandardError, this, &ExternalCommand::readFromStandardError);
 	connect(process, &QProcess::finished, this, &ExternalCommand::displayExitStatus);
+	connect(process, &QProcess::errorOccurred, this, &ExternalCommand::displayError);
     
 	resize(QSize(593, 363).expandedTo(minimumSizeHint()));
 	
@@ -63,9 +64,14 @@ ExternalCommand::ExternalCommand(QWidget *parent)
 
 void ExternalCommand::run(const QString &command)
 {
-    QStringList arguments = QProcess::splitCommand(command);
-    const QString executalbe = arguments.takeFirst();
-    process->start(executalbe, arguments);
+	QStringList arguments = QProcess::splitCommand(command);
+	if (arguments.isEmpty()) {
+		QMessageBox::warning(this, tr("Result"), tr("Failed!"));
+		finish();
+		return;
+	}
+	const QString executable = arguments.takeFirst();
+	process->start(executable, arguments);
 }
 
 
@@ -98,15 +104,31 @@ void ExternalCommand::submitInputToProgram()
 }
 
 
-void ExternalCommand::displayExitStatus(int exitCode, QProcess::ExitStatus)
+void ExternalCommand::displayError(QProcess::ProcessError error)
 {
-	if (exitCode != 0) {
+	// otherwise finished() follows
+	if (error != QProcess::FailedToStart)
+		return;
+	textBrowser->append(process->errorString());
+	QMessageBox::warning(this, tr("Result"), tr("Failed!"));
+	finish();
+}
+
+
+void ExternalCommand::displayExitStatus(int exitCode, QProcess::ExitStatus exitStatus)
+{
+	if (exitCode != 0 || exitStatus != QProcess::NormalExit) {
 		QMessageBox::warning(this, tr("Result"), tr("Failed!"));
 	}
 	else {                                                     
 		QMessageBox::information(this, tr("Result"), tr("Successful!"));
 	}
-	
+	finish();
+}
+
+
+void ExternalCommand::finish()
+{
 	lineEdit->setEnabled(false);
 	submitButton->setEnabled(false);
 	closeButton->setEnabled(true);

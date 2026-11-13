@@ -30,8 +30,10 @@ private Q_SLOTS:
 	void readFromStandardError();
 	void submitInputToProgram();
 	void displayExitStatus(int exitCode, QProcess::ExitStatus exitStatus);
+	void displayError(QProcess::ProcessError error);
 
 private:
+	void finish();
 	QVBoxLayout *vboxLayout;
 	QTextBrowser *textBrowser;
 	QHBoxLayout *hboxLayout;
