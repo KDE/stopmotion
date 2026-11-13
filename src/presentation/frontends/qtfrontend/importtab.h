@@ -67,6 +67,8 @@ private Q_SLOTS:
 	void updatestopDaemonString(const QString &txt);
 
 private:
+	/** The row shown in the edit box, or -1 */
+	int editedRow = -1;
 	vector<QString>prePollStrings;
 	vector<QString>startDaemonStrings;
 	vector<QString>stopDaemonStrings;

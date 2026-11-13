@@ -13,6 +13,7 @@
 #include "src/foundation/preferencestool.h"
 #include "stopmotion_debug.h"
 
+#include <QSignalBlocker>
 #include <QFileDialog>
 #include <QGridLayout>
 #include <QGroupBox>
@@ -66,7 +67,7 @@ void ExportTab::makeGUI()
 	encoderTable->setSelectionBehavior(QAbstractItemView::SelectRows);
 	encoderTable->verticalHeader()->setVisible(false);
 
-	connect(encoderTable, &QTableWidget::cellClicked, this, &ExportTab::activeCellChanged);
+	connect(encoderTable, &QTableWidget::currentCellChanged, this, &ExportTab::activeCellChanged);
 	connect(encoderTable, &QTableWidget::cellChanged, this, &ExportTab::contentsChanged);
 
 	addButton = new QPushButton(tr("&Add"));
@@ -254,8 +255,13 @@ void ExportTab::removeEncoder()
 		startEncoderStrings.erase(startEncoderStrings.begin() + selectedRow);
 		stopEncoderStrings.erase(stopEncoderStrings.begin() + selectedRow);
 		outputFiles.erase(outputFiles.begin() + selectedRow);
-		encoderTable->removeRow(selectedRow);
+		{
+			// the vectors are shorter already
+			QSignalBlocker blocker(encoderTable);
+			encoderTable->removeRow(selectedRow);
+		}
 		contentsChanged(0, 0);
+		activeCellChanged(0, 0);
 	}
 }
 
@@ -282,22 +288,28 @@ void ExportTab::activeCellChanged(int, int)
 void ExportTab::editSettings()
 {
 	int selected = encoderTable->currentRow();
-	if (selected >= 0) {
-		startEncoder->setText(startEncoderStrings[selected]);
-		stopEncoder->setText(stopEncoderStrings[selected]);
-		if ( outputFiles[selected].isEmpty() ) {
-			setYesButtonOn();
-		}
-		else {
-			setNoButtonOn();
-		}
-		encoderPrefs->show();
+	if (selected < 0) {
+		closeSettings();
+		return;
 	}
+	if (static_cast<int>(startEncoderStrings.size()) <= selected)
+		return;
+	editedRow = selected;
+	startEncoder->setText(startEncoderStrings[selected]);
+	stopEncoder->setText(stopEncoderStrings[selected]);
+	if ( outputFiles[selected].isEmpty() ) {
+		setYesButtonOn();
+	}
+	else {
+		setNoButtonOn();
+	}
+	encoderPrefs->show();
 }
 
 
 void ExportTab::closeSettings( )
 {
+	editedRow = -1;
 	encoderPrefs->hide();
 	this->resize(minimumSize());
 }
@@ -305,19 +317,22 @@ void ExportTab::closeSettings( )
 
 void ExportTab::updateStartString(const QString &txt)
 {
-	startEncoderStrings[encoderTable->currentRow()] = txt;
+	if (isEditing())
+		startEncoderStrings[editedRow] = txt;
 }
 
 
 void ExportTab::updateStopString(const QString &txt)
 {
-	stopEncoderStrings[encoderTable->currentRow()] = txt;
+	if (isEditing())
+		stopEncoderStrings[editedRow] = txt;
 }
 
 
 void ExportTab::setDefaultOutput(const QString &txt)
 {
-	outputFiles[encoderTable->currentRow()] = txt;
+	if (isEditing())
+		outputFiles[editedRow] = txt;
 }
 
 
@@ -328,7 +343,8 @@ void ExportTab::setYesButtonOn()
 	defaultOutput->clear();
 	defaultOutput->setEnabled(false);
 	browseButton->setEnabled(false);
-	outputFiles[encoderTable->currentRow()].clear();
+	if (isEditing())
+		outputFiles[editedRow].clear();
 }
 
 
@@ -338,7 +354,8 @@ void ExportTab::setNoButtonOn()
 	yesButton->setChecked(false);
 	defaultOutput->setEnabled(true);
 	browseButton->setEnabled(true);
-	defaultOutput->setText(outputFiles[encoderTable->currentRow()]);
+	if (isEditing())
+		defaultOutput->setText(outputFiles[editedRow]);
 }
 
 
@@ -346,8 +363,8 @@ void ExportTab::browseFiles()
 {
 	QString file = QFileDialog::getSaveFileName(this, tr("Choose output file"),
 			QString::fromLocal8Bit(qgetenv("PWD")));
-	if ( !file.isEmpty() ) {
-		outputFiles[encoderTable->currentRow()] = file;
+	if ( !file.isEmpty() && isEditing() ) {
+		outputFiles[editedRow] = file;
 		defaultOutput->setText(file);
 	}
 }

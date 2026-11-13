@@ -44,6 +44,8 @@ private Q_SLOTS:
 	void removeDevice();
 
 private:
+	/** The row shown in the edit box, or -1 */
+	int editedRow = -1;
 	QTableWidget *deviceTable;
 	QPushButton *addButton;
 	QPushButton *removeButton;

@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <QSignalBlocker>
 #include <QLayout>
 #include <QLabel>
 #include <QGridLayout>
@@ -64,7 +65,7 @@ void ImportTab::makeGUI()
 	deviceSelectionTable->setHorizontalHeaderLabels(lst);
 	deviceSelectionTable->verticalHeader()->setVisible(false);
 
-	connect(deviceSelectionTable, &QTableWidget::cellClicked,
+	connect(deviceSelectionTable, &QTableWidget::currentCellChanged,
 			this, &ImportTab::activeCellChanged);
 	connect(deviceSelectionTable, &QTableWidget::cellChanged,
 			this, &ImportTab::contentsChanged);
@@ -234,8 +235,13 @@ void ImportTab::removeImportProgram()
 		prePollStrings.erase(prePollStrings.begin() + selectedRow);
 		startDaemonStrings.erase(startDaemonStrings.begin() + selectedRow);
 		stopDaemonStrings.erase(stopDaemonStrings.begin() + selectedRow);
-		deviceSelectionTable->removeRow(selectedRow);
+		{
+			// the vectors are shorter already
+			QSignalBlocker blocker(deviceSelectionTable);
+			deviceSelectionTable->removeRow(selectedRow);
+		}
 		contentsChanged(0, 0);
+		activeCellChanged(0, 0);
 	}
 }
 
@@ -262,35 +268,44 @@ void ImportTab::activeCellChanged(int, int)
 void ImportTab::changeSettings()
 {
 	int selected = deviceSelectionTable->currentRow();
-	if (selected >= 0) {
-		prePollEdit->setText(prePollStrings[selected]);
-		startDaemonEdit->setText(startDaemonStrings[selected]);
-		stopDaemonEdit->setText(stopDaemonStrings[selected]);
-		grabberPreferences->show();
+	if (selected < 0) {
+		closeChangeBox();
+		return;
 	}
+	if (static_cast<int>(prePollStrings.size()) <= selected)
+		return;
+	editedRow = selected;
+	prePollEdit->setText(prePollStrings[selected]);
+	startDaemonEdit->setText(startDaemonStrings[selected]);
+	stopDaemonEdit->setText(stopDaemonStrings[selected]);
+	grabberPreferences->show();
 }
 
 
 void ImportTab::updatePrePollString(const QString &txt)
 {
-	prePollStrings[deviceSelectionTable->currentRow()] = txt;
+	if (0 <= editedRow && editedRow < static_cast<int>(prePollStrings.size()))
+		prePollStrings[editedRow] = txt;
 }
 
 
 void ImportTab::updateStartDaemonString(const QString &txt)
 {
-	startDaemonStrings[deviceSelectionTable->currentRow()] = txt;
+	if (0 <= editedRow && editedRow < static_cast<int>(startDaemonStrings.size()))
+		startDaemonStrings[editedRow] = txt;
 }
 
 
 void ImportTab::updatestopDaemonString(const QString &txt)
 {
-	stopDaemonStrings[deviceSelectionTable->currentRow()] = txt;
+	if (0 <= editedRow && editedRow < static_cast<int>(stopDaemonStrings.size()))
+		stopDaemonStrings[editedRow] = txt;
 }
 
 
 void ImportTab::closeChangeBox()
 {
+	editedRow = -1;
 	grabberPreferences->hide();
 	this->resize(minimumSize());
 }

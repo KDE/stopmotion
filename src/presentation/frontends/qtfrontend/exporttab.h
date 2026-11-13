@@ -65,6 +65,12 @@ private Q_SLOTS:
 	void browseFiles();
 
 private:
+	/** The row shown in the edit box, or -1 */
+	int editedRow = -1;
+	bool isEditing() const {
+		return 0 <= editedRow
+				&& editedRow < static_cast<int>(outputFiles.size());
+	}
 	std::vector<QString>startEncoderStrings;
 	std::vector<QString>stopEncoderStrings;
 	std::vector<QString>outputFiles;

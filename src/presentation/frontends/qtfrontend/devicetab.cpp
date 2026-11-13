@@ -15,6 +15,7 @@
 #include "stopmotion_debug.h"
 #include "src/technical/util.h"
 
+#include <QSignalBlocker>
 #include <QHeaderView>
 #include <QTableWidget>
 #include <QLineEdit>
@@ -73,7 +74,7 @@ void DeviceTab::makeGUI()
 	deviceTable->setHorizontalHeaderLabels(lst);
 	deviceTable->verticalHeader()->setVisible(false);
 
-	connect(deviceTable, &QTableWidget::cellClicked, this, &DeviceTab::activeCellChanged);
+	connect(deviceTable, &QTableWidget::currentCellChanged, this, &DeviceTab::activeCellChanged);
 	connect(deviceTable, &QTableWidget::cellChanged, this, &DeviceTab::contentsChanged);
 
 	addButton = new QPushButton(tr("&Add"));
@@ -280,23 +281,29 @@ void DeviceTab::activeCellChanged(int, int)
 void DeviceTab::editDevice()
 {
 	int selected = deviceTable->currentRow();
-	if (selected >= 0) {
-		deviceEdit->setText(deviceStrings[selected]);
-		devicePreferences->show();
+	if (selected < 0) {
+		closeChangeBox();
+		return;
+	}
+	if (static_cast<int>(deviceStrings.size()) <= selected)
+		return;
+	editedRow = selected;
+	deviceEdit->setText(deviceStrings[selected]);
+	devicePreferences->show();
 
-		// Disables editing of autodetected devices
-		if (selected < numAutoDetectedDevices) {
-			deviceEdit->setReadOnly(true);
-		}
-		else {
-			deviceEdit->setReadOnly(false);
-		}
+	// Disables editing of autodetected devices
+	if (selected < numAutoDetectedDevices) {
+		deviceEdit->setReadOnly(true);
+	}
+	else {
+		deviceEdit->setReadOnly(false);
 	}
 }
 
 
 void DeviceTab::closeChangeBox()
 {
+	editedRow = -1;
 	devicePreferences->hide();
 	this->resize(minimumSize());
 }
@@ -304,7 +311,8 @@ void DeviceTab::closeChangeBox()
 
 void DeviceTab::updateDeviceString(const QString &txt)
 {
-	deviceStrings[deviceTable->currentRow()] = txt;
+	if (0 <= editedRow && editedRow < static_cast<int>(deviceStrings.size()))
+		deviceStrings[editedRow] = txt;
 }
 
 
@@ -329,8 +337,13 @@ void DeviceTab::removeDevice()
 		deviceStrings.erase(deviceStrings.begin() + selectedRow);
 		deviceNameStrings.erase(deviceNameStrings.begin() + selectedRow);
 		deviceDescriptionStrings.erase(deviceDescriptionStrings.begin() + selectedRow);
-		deviceTable->removeRow(selectedRow);
+		{
+			// the vectors are shorter already
+			QSignalBlocker blocker(deviceTable);
+			deviceTable->removeRow(selectedRow);
+		}
 		contentsChanged(0, 0);
+		activeCellChanged(0, 0);
 	}
 }
 
