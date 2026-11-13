@@ -4,7 +4,7 @@
  */
 #include "mainwindowgui.h"
 
-#include "logger.h"
+#include "stopmotion_debug.h"
 #include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 #include "src/presentation/frontends/qtfrontend/frameview.h"
 #include "src/presentation/frontends/qtfrontend/flexiblespinbox.h"
@@ -475,7 +475,7 @@ void MainWindowGUI::makeViews(QHBoxLayout *layout)
 
 void MainWindowGUI::retranslateStrings()
 {
-	Logger::get().logDebug("Retranslating strings");
+	qCDebug(STOPMOTION_LOG, "Retranslating strings");
 
 	//The actions caption texts
 	newAct->setText(tr("&New"));
@@ -995,7 +995,7 @@ void MainWindowGUI::whatsThis()
 
 void MainWindowGUI::dragEnterEvent ( QDragEnterEvent * event)
 {
-	Logger::get().logDebug("Drag entering application");
+	qCDebug(STOPMOTION_LOG, "Drag entering application");
 	if ( event->mimeData()->hasUrls() ) {
 		event->accept();
 	}
@@ -1007,7 +1007,7 @@ void MainWindowGUI::dragEnterEvent ( QDragEnterEvent * event)
 
 void MainWindowGUI::dropEvent(QDropEvent *event)
 {
-	Logger::get().logDebug("Drop inside the application");
+	qCDebug(STOPMOTION_LOG, "Drop inside the application");
 	if ( event->mimeData()->hasUrls() ) {
 		QStringList fileNames;
 		QList<QUrl> urls = event->mimeData()->urls();

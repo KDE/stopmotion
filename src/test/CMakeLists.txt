@@ -75,7 +75,7 @@ if(BUILD_TESTING)
     ../application/externalcommand.cpp
     ../foundation/stringwriter.cpp
     ../foundation/uiexception.cpp
-    ../foundation/logger.cpp
+    ${STOPMOTION_DEBUG_SOURCES}
     )
 
   # link to Qt libraries
@@ -97,7 +97,8 @@ if(BUILD_TESTING)
 
   target_include_directories(test-stopmotion
     PRIVATE
-    ${PROJECT_SOURCE_DIR})
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_BINARY_DIR})
 
   # add test executable to CTest suite
   add_test(

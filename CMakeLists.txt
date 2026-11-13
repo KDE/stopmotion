@@ -81,6 +81,15 @@ if(NOT PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
     COPY_ON_ERROR SYMBOLIC)
 endif()
 
+include(ECMQtDeclareLoggingCategory)
+ecm_qt_declare_logging_category(STOPMOTION_DEBUG_SOURCES
+  HEADER stopmotion_debug.h
+  IDENTIFIER STOPMOTION_LOG
+  CATEGORY_NAME org.kde.stopmotion
+  DESCRIPTION "Stopmotion"
+  EXPORT STOPMOTION
+  )
+
 add_subdirectory(src)
 
 ###
@@ -100,7 +109,6 @@ add_executable(stopmotion
   src/config.cpp
   src/domain/domainfacade.cpp
   src/domain/observernotifier.cpp
-  src/foundation/logger.cpp
   src/foundation/uiexception.cpp
   src/foundation/stringwriter.cpp
   src/domain/animation/animation.cpp
@@ -173,6 +181,7 @@ add_executable(stopmotion
   src/domain/undo/executor.cpp
   src/domain/undo/addallcommands.cpp
   src/domain/undo/random.cpp
+  ${STOPMOTION_DEBUG_SOURCES}
   )
 
 # link to Qt libraries
@@ -214,6 +223,11 @@ install(FILES graphics/stopmotion.png
   DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/32x32/apps)
 install(FILES graphics/stopmotion.svg
   DESTINATION ${KDE_INSTALL_ICONDIR}/hicolor/scalable/apps)
+ecm_qt_install_logging_categories(
+  EXPORT STOPMOTION
+  FILE stopmotion.categories
+  DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR}
+  )
 install(FILES ${QM_FILES}
   DESTINATION ${STOPMOTION_TRANSLATIONS_INSTALL_DIR})
 install(FILES stopmotion.1

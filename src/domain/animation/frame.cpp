@@ -8,7 +8,7 @@
 #include "src/domain/filenamevisitor.h"
 #include "src/domain/animation/errorhandler.h"
 #include "src/domain/animation/workspacefile.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 #include "src/config.h"
 #include "sound.h"
 
@@ -50,7 +50,7 @@ const char* Frame::getBasename() const {
 }
 
 int Frame::newSound(WorkspaceFile& file) {
-	Logger::get().logDebug("Adding sound in frame");
+	qCDebug(STOPMOTION_LOG, "Adding sound in frame");
 	preallocateSounds(1);
 	std::unique_ptr<Sound> sound(new Sound());
 	sound->setName("Sound" + std::to_string(WorkspaceFile::getSoundNumber()));

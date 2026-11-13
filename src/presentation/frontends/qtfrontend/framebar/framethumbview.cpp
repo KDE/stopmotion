@@ -5,7 +5,7 @@
 #include "framethumbview.h"
 
 #include "framebar.h"
-#include "logger.h"
+#include "stopmotion_debug.h"
 #include "thumbdragger.h"
 #include "thumbview.h"
 #include "filenamesfromurlsiterator.h"
@@ -65,7 +65,7 @@ void FrameThumbView::mousePressEvent( QMouseEvent * e ) {
 
 
 void FrameThumbView::mouseReleaseEvent( QMouseEvent * e ) {
-	Logger::get().logDebug("Releasing mouse button inside thumbview");
+	qCDebug(STOPMOTION_LOG, "Releasing mouse button inside thumbview");
 	if (e->button() == Qt::LeftButton) {
 		if ( !getFrameBar()->isSelecting() ) {
 			int selectionFrame = getFrameBar()->getSelectionAnchor();
@@ -181,14 +181,14 @@ void FrameThumbView::contentsDropped(QDropEvent * event) {
 	DomainFacade* facade = DomainFacade::getFacade();
 	int activeScene = getFrameBar()->getActiveScene();
 	if (event->source() == nullptr) {
-		Logger::get().logDebug("Adding picture(s)");
+		qCDebug(STOPMOTION_LOG, "Adding picture(s)");
 		if ( event->mimeData()->hasUrls() ) {
 			QList<QUrl> urls = event->mimeData()->urls();
 			FileNamesFromUrlsIterator fNames(urls.begin(), urls.end());
 			DomainFacade::getFacade()->addFrames(activeScene, getNumber(), fNames);
 		}
 	} else if (getFrameBar()->getMovingScene() == -1) {
-		Logger::get().logDebug("Moving picture");
+		qCDebug(STOPMOTION_LOG, "Moving picture");
 		int selectionFrame = getFrameBar()->getSelectionAnchor();
 		int activeFrame = getFrameBar()->getActiveFrame();
 		int highend = (selectionFrame > activeFrame)?

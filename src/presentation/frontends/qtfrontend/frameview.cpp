@@ -14,7 +14,7 @@
 #include <QPainter>
 
 #include "imagecache.h"
-#include "logger.h"
+#include "stopmotion_debug.h"
 #include "frontends/frontend.h"
 #include "workspacefile.h"
 #include "technical/grabber/imagegrabber.h"
@@ -92,7 +92,7 @@ FrameView::FrameView(QWidget *parent, const char *name, int playbackSpeed)
 	setObjectName(name);
 	update();
 
-	Logger::get().logDebug("FrameView is attached to the model and the model to FrameView");
+	qCDebug(STOPMOTION_LOG, "FrameView is attached to the model and the model to FrameView");
 }
 
 
@@ -226,7 +226,7 @@ void FrameView::paintEvent(QPaintEvent *) {
 void FrameView::setActiveFrame(int sceneNumber, int frameNumber) {
 	activeScene = sceneNumber;
 	activeFrame = frameNumber;
-	Logger::get().logDebug("Setting new active frame %d and scene %d in FrameView",
+	qCDebug(STOPMOTION_LOG, "Setting new active frame %d and scene %d in FrameView",
 			activeFrame, activeScene);
 	update();
 }

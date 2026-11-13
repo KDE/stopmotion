@@ -15,7 +15,7 @@
 
 #include "errorhandler.h"
 #include "workspacefile.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 #include "src/foundation/uiexception.h"
 
 
@@ -62,7 +62,7 @@ void OggVorbis::setFilename(WorkspaceFile& file, ErrorHandler& e) {
 		}
 
 		if ( ov_test(f, oggFile, nullptr, 0) < 0 ) {
-			Logger::get().logDebug("Not a valid oggfile");
+			qCDebug(STOPMOTION_LOG, "Not a valid oggfile");
 			free(oggFile);
 			oggFile = nullptr;
 			e.error( UiException(UiException::invalidAudioFormat) );
@@ -79,7 +79,7 @@ void OggVorbis::setFilename(WorkspaceFile& file, ErrorHandler& e) {
 		if (err == ENOMEM) {
 			throw std::bad_alloc();
 		}
-		Logger::get().logDebug("Cannot open file '%s' for reading", file.path());
+		qCDebug(STOPMOTION_LOG, "Cannot open file '%s' for reading", file.path());
 		e.error( UiException(UiException::couldNotOpenFile) );
 	}
 }
@@ -130,19 +130,18 @@ int OggVorbis::fillBuffer(char *audioBuffer, int numBytes) {
 		int ret = ov_read(oggFile, audioBuffer, numBytes,
 				littleEndian, wordsAre16Bit, wordsAreSigned, &dummy);
 		if (ret < 0) {
-			Logger logger = Logger::get();
 			switch (ret) {
 			case OV_HOLE:
-				logger.logWarning("Hole in the vorbis audio data");
+				qCWarning(STOPMOTION_LOG, "Hole in the vorbis audio data");
 				break;
 			case OV_EBADLINK:
-				logger.logWarning("Invalid link or stream section in vorbis audio data");
+				qCWarning(STOPMOTION_LOG, "Invalid link or stream section in vorbis audio data");
 				break;
 			case OV_EINVAL:
-				logger.logWarning("Corrupt initial headers for vorbis audio data");
+				qCWarning(STOPMOTION_LOG, "Corrupt initial headers for vorbis audio data");
 				break;
 			default:
-				logger.logWarning("Unknown error in vorbis audio data");
+				qCWarning(STOPMOTION_LOG, "Unknown error in vorbis audio data");
 				break;
 			}
 			return 0;

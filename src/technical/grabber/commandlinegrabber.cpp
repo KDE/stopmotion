@@ -9,7 +9,7 @@
 #include <cstring>
 
 #include "imagegrabber.h"
-#include "logger.h"
+#include "stopmotion_debug.h"
 #include "src/technical/util.h"
 
 enum WarnIfExitOne { noWarn, doWarn };
@@ -17,33 +17,33 @@ enum WarnIfExitOne { noWarn, doWarn };
 bool callSystem(const char* task, const char* commandLine,
 		WarnIfExitOne warn = doWarn) {
 	if (!commandLine || strlen(commandLine) == 0) {
-		Logger::get().logDebug("No process defined for '%s'", task);
+		qCDebug(STOPMOTION_LOG, "No process defined for '%s'", task);
 		return true;
 	}
-	Logger::get().logDebug("Attempting task '%s'", task);
+	qCDebug(STOPMOTION_LOG, "Attempting task '%s'", task);
 	int r = system(commandLine);
 	if (!WIFEXITED(r)) {
-		Logger::get().logWarning("Could not start task '%s': %s", task,
+		qCWarning(STOPMOTION_LOG, "Could not start task '%s': %s", task,
 				commandLine);
 		return false;
 	}
 	int code = WEXITSTATUS(r);
 	if (code == 0 || code == 256) {
 		// vgrabberj in daemon mode uses return code 256
-		Logger::get().logDebug("Task '%s' returned code %d: %s", task, code,
+		qCDebug(STOPMOTION_LOG, "Task '%s' returned code %d: %s", task, code,
 				commandLine);
 		return true;
 	}
 	if (code == 1) {
 		if (warn == doWarn)
-			Logger::get().logWarning("Task '%s' returned code %d: %s", task, code,
+			qCWarning(STOPMOTION_LOG, "Task '%s' returned code %d: %s", task, code,
 					commandLine);
 		else
-			Logger::get().logDebug("Task '%s' returned code %d: %s", task, code,
+			qCDebug(STOPMOTION_LOG, "Task '%s' returned code %d: %s", task, code,
 					commandLine);
 		return true;
 	}
-	Logger::get().logWarning(
+	qCWarning(STOPMOTION_LOG,
 		"Task '%s' returned code %d: %s",
 				task, code, commandLine);
 	return false;

@@ -4,7 +4,7 @@
  */
 #include "modelhandler.h"
 
-#include "logger.h"
+#include "stopmotion_debug.h"
 #include "src/presentation/frontends/qtfrontend/mainwindowgui.h"
 #include "src/presentation/frontends/qtfrontend/framebar/framebar.h"
 #include "src/domain/domainfacade.h"
@@ -112,7 +112,7 @@ public:
 
 
 void ModelHandler::addFrames(const QStringList & fileNames) {
-	Logger::get().logDebug("addFrames in modelhandler");
+	qCDebug(STOPMOTION_LOG, "addFrames in modelhandler");
 
 	// the fileDialog pointer is NULL when adding of frames is
 	// done by drag 'n drop

@@ -5,7 +5,7 @@
 
 #include "projectserializer.h"
 
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 #include "src/domain/filenamevisitor.h"
 #include "src/domain/animation/scene.h"
 #include "src/domain/animation/frame.h"
@@ -206,7 +206,7 @@ public:
 				WorkspaceFile dat(WorkspaceFile::currentModelFile);
 				TarFileRead::extract(file, dat.path());
 			} else {
-				Logger::get().logWarning(
+				qCWarning(STOPMOTION_LOG,
 						"Did not know what to do with tarred file %s", fn);
 			}
 		});
@@ -234,7 +234,7 @@ bool ProjectSerializer::openDat(std::vector<std::unique_ptr<Scene>>& out, const 
 	QFile file(QString::fromLocal8Bit(filename));
 	QDomDocument doc;
 	if (!file.open(QIODevice::ReadOnly) || !doc.setContent(&file)) {
-		Logger::get().logWarning("Couldn't load XML file");
+		qCWarning(STOPMOTION_LOG, "Couldn't load XML file");
 		return false;
 	}
 	out.clear();
@@ -567,7 +567,7 @@ void ProjectSerializer::getAttributes(const QDomNode& node,
 				if (!element.hasAttribute(QStringLiteral("src"))) {
 					// nothing to load
 				} else if (sVect.empty()) {
-					Logger::get().logWarning("Ignoring %s outside of any scene",
+					qCWarning(STOPMOTION_LOG, "Ignoring %s outside of any scene",
 							element.attribute(QStringLiteral("src")).toUtf8().constData());
 				} else {
 					const QByteArray filename =

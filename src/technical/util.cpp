@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "src/technical/util.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 
 #include <ext/stdio_filebuf.h>
 #include <cstdio>
@@ -76,14 +76,14 @@ int removeFileOrDirectory(const char *path, const struct stat *,
 	case FTW_DP:
 		if (info->level != 0) {
 			if (0 != rmdir(path)) {
-				Logger::get().logWarning("Could not remove directory %s", path);
+				qCWarning(STOPMOTION_LOG, "Could not remove directory %s", path);
 				return FTW_STOP;
 			}
 		}
 		break;
 	default:
 		if (0 != unlink(path)) {
-			Logger::get().logWarning("Could not remove file %s", path);
+			qCWarning(STOPMOTION_LOG, "Could not remove file %s", path);
 			return FTW_STOP;
 		}
 		break;
@@ -169,24 +169,24 @@ bool getGrabberDevice(const char* dev, GrabberDevice& d) {
 	struct v4l2_capability video_cap;
 
 	if((fd = open(dev, O_RDONLY)) == -1) {
-		Logger::get().logWarning("Could not open device %s", dev);
+		qCWarning(STOPMOTION_LOG, "Could not open device %s", dev);
 		return false;
 	}
 
 	int vcrv = ioctl(fd, VIDIOC_QUERYCAP, &video_cap);
 	close(fd);
 	if (vcrv == -1) {
-		Logger::get().logWarning("Could not read from device %s", dev);
+		qCWarning(STOPMOTION_LOG, "Could not read from device %s", dev);
 		return false;
 	}
 	if (!(video_cap.capabilities & V4L2_CAP_VIDEO_CAPTURE)) {
-		Logger::get().logDebug("Device %s is not a V4L2 capture device", dev);
+		qCDebug(STOPMOTION_LOG, "Device %s is not a V4L2 capture device", dev);
 		return false;
 	}
 	d.device.assign(dev);
 	setString(d.name, video_cap.card);
 	setString(d.type, video_cap.driver);
-	Logger::get().logDebug("Got device %s: card %s, type %s", dev,
+	qCDebug(STOPMOTION_LOG, "Got device %s: card %s, type %s", dev,
 			d.name.c_str(), d.type.c_str());
 	return true;
 }

@@ -6,7 +6,7 @@
 
 #include "animation/animation.h"
 #include "animation/workspacefile.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 #include "src/foundation/preferencestool.h"
 #include "src/foundation/uiexception.h"
 #include "src/presentation/frontends/frontend.h"
@@ -115,7 +115,7 @@ Frontend* DomainFacade::getFrontend() {
 void DomainFacade::addFrames(int scene, int frame,
 		StringIterator& frameNames) {
 	try {
-		Logger::get().logDebug("Adding frames in the domainfacade");
+		qCDebug(STOPMOTION_LOG, "Adding frames in the domainfacade");
 		animationModel->addFrames(scene, frame, frameNames);
 	} catch (UiException& e) {
 		animationModel->resync(e);
@@ -127,7 +127,7 @@ void DomainFacade::addFrames(int scene, int frame,
 
 void DomainFacade::removeFrames(int scene, int frame, int count) {
 	try {
-		Logger::get().logDebug("Removing frames in the domainfacade");
+		qCDebug(STOPMOTION_LOG, "Removing frames in the domainfacade");
 		animationModel->removeFrames(scene, frame, count);
 	} catch (UiException& e) {
 		animationModel->resync(e);
@@ -152,7 +152,7 @@ void DomainFacade::moveFrames(int fromScene, int fromFrame,
 
 void DomainFacade::addSound(int scene, int frame, const char *filename) {
 	try {
-		Logger::get().logDebug("Adding sound in domainfacade");
+		qCDebug(STOPMOTION_LOG, "Adding sound in domainfacade");
 		animationModel->addSound(scene, frame, filename);
 	} catch (UiException& e) {
 		animationModel->resync(e);
@@ -372,7 +372,7 @@ bool DomainFacade::replayCommandLog(const char* filename) {
 		animationModel->resync(e);
 		success = false;
 	} catch (std::exception& e) {
-		Logger::get().logWarning("Recovery failed: %s", e.what());
+		qCWarning(STOPMOTION_LOG, "Recovery failed: %s", e.what());
 		success = false;
 	}
 	fclose(log);

@@ -11,7 +11,7 @@
 #include "animation/workspacefile.h"
 #include "src/presentation/observer.h"
 #include "src/presentation/frontends/frontend.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 
 #include <exception>
 
@@ -73,7 +73,7 @@ void ObserverNotifier::removeObserver(Observer* o) {
 			return;
 		}
 	}
-	Logger::get().logWarning("Failed to find Observer to remove");
+	qCWarning(STOPMOTION_LOG, "Failed to find Observer to remove");
 }
 
 class AnimationClearer : public ObservableOperation {

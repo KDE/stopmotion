@@ -12,7 +12,7 @@
 #include "graphics/icons/close.xpm"
 #include "src/domain/domainfacade.h"
 #include "src/foundation/preferencestool.h"
-#include "src/foundation/logger.h"
+#include "stopmotion_debug.h"
 #include "src/technical/util.h"
 
 #include <QHeaderView>
@@ -131,7 +131,7 @@ void DeviceTab::makeGUI()
 
 
 void DeviceTab::initialize() {
-	Logger::get().logDebug("Initializing video device settings");
+	qCDebug(STOPMOTION_LOG, "Initializing video device settings");
 	PreferencesTool *pref = PreferencesTool::get();
 
 	std::vector<GrabberDevice> devices = DomainFacade::getFacade()->getGrabberDevices();

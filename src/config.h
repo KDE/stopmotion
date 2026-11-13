@@ -8,7 +8,7 @@
 
 //Global includes
 #include <cassert>
-#include "foundation/logger.h"
+#include "stopmotion_debug.h"
 
 //Global defines
 #define QTGUI
