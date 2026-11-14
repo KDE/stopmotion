@@ -1147,47 +1147,47 @@ msgctxt "PreferencesMenu|"
 msgid "Video &Device"
 msgstr "&Dispositivo de vídeo"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:72
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:73
 msgctxt "QtFrontend|"
 msgid "Please wait..."
 msgstr "Agarde…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:75
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:76
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
 msgstr "Conectando a cámara…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:78
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:79
 msgctxt "QtFrontend|"
 msgid "Importing frames from disk"
 msgstr "Importando fotogramas do disco…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:81
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:82
 msgctxt "QtFrontend|"
 msgid "Exporting..."
 msgstr "Exportando…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:84
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:85
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
 msgstr "Restaurando o proxecto…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:87
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:88
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
 msgstr "Gardando as escenas no disco…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:91
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
 msgctxt "QtFrontend|"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:181
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:182
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
 msgstr "Perder o ficheiro corrompido"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:182
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:183
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1197,110 +1197,110 @@ msgstr ""
 "O ficheiro %1 parece estar corrompido, se continúa perderase o seu contido. "
 "Quere continuar?"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:242
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:243
 msgctxt "QtFrontend|"
 msgid "vgrabbj"
 msgstr "vgrabbj"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:244
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:245
 msgctxt "QtFrontend|"
 msgid "The simplest setting. Fairly slow"
 msgstr "A opción máis simple. Bastante lenta."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:251
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:252
 msgctxt "QtFrontend|"
 msgid "vgrabbj VGA daemon"
 msgstr "Servizo de VGA vgrabbj"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:253
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:254
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
 msgstr "Inicia vgrabbj como servizo. Bastante rápido."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:261
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:262
 msgctxt "QtFrontend|"
 msgid "uvccapture"
 msgstr "uvccapture"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:263
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:264
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
 msgstr "Capturar de dispositivos de V4L2"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:270
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:271
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
 msgstr "Unha captura de videodog"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:272
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:273
 msgctxt "QtFrontend|"
 msgid "Videodog."
 msgstr "Videodog."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:279
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:280
 msgctxt "QtFrontend|"
 msgid "dvgrab"
 msgstr "dvgrab"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:281
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:282
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
 msgstr "Capturar de cámara DV."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:297
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:298
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
 msgstr "Exporta imaxes JPEG a vídeo MPEG1."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:306
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:307
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
 msgstr "Exporta imaxes JPEG a vídeo MPEG2."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:315
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:324
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:332
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:316
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:325
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:333
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
 msgstr "Exporta imaxes JPEG a vídeo MPEG4."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:344
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
 msgctxt "QtFrontend|"
 msgid "Unsupported image file type"
 msgstr "Tipo de ficheiro de imaxe incompatíbel."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:346
 msgctxt "QtFrontend|"
 msgid "Only JPeg image files can be added to the animation"
 msgstr "Só pode engadir ficheiros de imaxe JPEG á animación."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:349
 msgctxt "QtFrontend|"
 msgid "The selected audio file could not be loaded"
 msgstr "Non foi posíbel cargar o ficheiro de son seleccionado."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:349
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:350
 msgctxt "QtFrontend|"
 msgid "Perhaps it is corrupt."
 msgstr "Pode que estea corrompido."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:353
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:354
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
 msgstr "Non é posíbel abrir o ficheiro seleccionado para lectura."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:354
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:355
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "The file %1 could not be opened"
 msgstr "Non foi posíbel abrir o ficheiro %1."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:359
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
 msgstr "Non foi posíbel copiar o ficheiro no espazo de traballo."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:359
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:360
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
@@ -1308,33 +1308,33 @@ msgstr ""
 "Non foi posíbel copiar os seguintes ficheiros no espazo de traballo (~/."
 "stopmotion): %1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:363
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
 msgstr "Non foi posíbel iniciar o controlador de son."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:365
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
 msgstr "O son non funcionará ata que o corrixa."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:368
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
 msgstr "Non foi posíbel escribir a configuración."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:370
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
 msgstr "Non foi posíbel escribir a configuración no ficheiro: %1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:378
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
 msgstr "Non é posíbel iniciar Stopmotion."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:380
 msgctxt "QtFrontend|"
 msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
@@ -1343,20 +1343,20 @@ msgstr ""
 "Non foi posíbel bloqueas «command.log» para uso exclusivo. Pode que "
 "Stopmotion xa estea a executarse."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:383
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:388
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:389
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
 msgstr "Non é posíbel ler o ficheiro de configuración."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:385
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
 msgstr ""
 "O ficheiro de configuración %1 non é lexíbel. Corríxao e inténteo de novo."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:389
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:390
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1366,27 +1366,27 @@ msgstr ""
 "O ficheiro de configuración %1 non é un ficheiro de configuración XML "
 "válido. Corríxao ou elimine o ficheiro e inténteo de novo."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:393
 msgctxt "QtFrontend|"
 msgid "Fatal"
 msgstr "Erro fatal"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
 msgstr "Stopmotion lanzou unha excepción que non puido manexar."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:402
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
 msgstr "Informe do fallo."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:407
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:408
 msgctxt "QtFrontend|"
 msgid "Warning"
 msgstr "Aviso"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:449
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:450
 msgctxt "QtFrontend|"
 msgid ""
 "A newer version of the preferences file with few more default\n"
@@ -1397,7 +1397,7 @@ msgstr ""
 "con valores predeterminados adicionais. Quere usar este? (o\n"
 "anterior gardarase en ~/.stopmotion/preferences.xml.OLD)."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:456
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:457
 msgctxt "QtFrontend|"
 msgid "Question"
 msgstr "Pregunta"

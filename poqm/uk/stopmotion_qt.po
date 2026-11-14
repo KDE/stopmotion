@@ -1146,47 +1146,47 @@ msgctxt "PreferencesMenu|"
 msgid "Video &Device"
 msgstr "Відеоп&ристрій"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:72
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:73
 msgctxt "QtFrontend|"
 msgid "Please wait..."
 msgstr "Будь ласка, зачекайте…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:75
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:76
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
 msgstr "З'єднуємо камеру…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:78
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:79
 msgctxt "QtFrontend|"
 msgid "Importing frames from disk"
 msgstr "Імпортування кадрів з диска"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:81
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:82
 msgctxt "QtFrontend|"
 msgid "Exporting..."
 msgstr "Експортування…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:84
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:85
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
 msgstr "Відновлення проєкту…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:87
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:88
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
 msgstr "Збереження сцен на диск…"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:91
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
 msgctxt "QtFrontend|"
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:181
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:182
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
 msgstr "Втрата пошкодженого файла"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:182
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:183
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1196,143 +1196,143 @@ msgstr ""
 "Файл %1, здається, пошкоджено, його вміст буде втрачено, якщо ви продовжите "
 "виконання дії. Хочете виконати дію?"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:242
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:243
 msgctxt "QtFrontend|"
 msgid "vgrabbj"
 msgstr "vgrabbj"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:244
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:245
 msgctxt "QtFrontend|"
 msgid "The simplest setting. Fairly slow"
 msgstr "Найпростіший варіант. Доволі повільно."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:251
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:252
 msgctxt "QtFrontend|"
 msgid "vgrabbj VGA daemon"
 msgstr "Фонова служба VGA vgrabbj"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:253
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:254
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
 msgstr "Запускає vgrabbj як фонову службу. Доволі швидко."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:261
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:262
 msgctxt "QtFrontend|"
 msgid "uvccapture"
 msgstr "uvccapture"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:263
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:264
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
 msgstr "Захоплення з пристроїв V4L2"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:270
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:271
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
 msgstr "одноразовий videodog"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:272
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:273
 msgctxt "QtFrontend|"
 msgid "Videodog."
 msgstr "Videodog."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:279
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:280
 msgctxt "QtFrontend|"
 msgid "dvgrab"
 msgstr "dvgrab"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:281
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:282
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
 msgstr "Захоплення з DV-камери."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:297
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:298
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
 msgstr "Експортує зображення jpeg до відео mpeg1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:306
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:307
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
 msgstr "Експортує зображення jpeg до відео mpeg2"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:315
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:324
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:332
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:316
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:325
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:333
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
 msgstr "Експортує зображення jpeg до відео mpeg4"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:344
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
 msgctxt "QtFrontend|"
 msgid "Unsupported image file type"
 msgstr "Непідтримуваний тип файлів зображень"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:346
 msgctxt "QtFrontend|"
 msgid "Only JPeg image files can be added to the animation"
 msgstr "До анімації можна додавати лише файли зображень JPEG"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:349
 msgctxt "QtFrontend|"
 msgid "The selected audio file could not be loaded"
 msgstr "Не вдалося завантажити вибраний файл звукових даних"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:349
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:350
 msgctxt "QtFrontend|"
 msgid "Perhaps it is corrupt."
 msgstr "Можливо, його пошкоджено."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:353
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:354
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
 msgstr "Не вдалося відкрити вибраний файл для читання"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:354
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:355
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "The file %1 could not be opened"
 msgstr "Не вдалося відкрити файл %1."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:359
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
 msgstr "Не вдалося скопіювати файли до робочого простору"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:359
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:360
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr ""
 "Не вдалося скопіювати такі файли до робочого простору (~/.stopmotion): %1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:363
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
 msgstr "Не вдалося ініціалізувати звуковий драйвер"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:365
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
 msgstr "Звук не працюватиме, доки це не буде виправлено"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:368
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
 msgstr "Не вдалося записати налаштування"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:370
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
 msgstr "Не вдалося записати налаштування до файла: %1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:378
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
 msgstr "Не вдалося запустити Stopmotion."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:380
 msgctxt "QtFrontend|"
 msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
@@ -1341,13 +1341,13 @@ msgstr ""
 "Не вдалося отримати виключне блокування для файла command.log. Ймовірно, "
 "Stopmotion вже запущено."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:383
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:388
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:389
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
 msgstr "Не вдалося прочитати файл налаштувань"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:385
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
@@ -1355,7 +1355,7 @@ msgstr ""
 "Файл налаштувань %1 є непридатним до читання. Будь ласка, виправте права "
 "доступу і повторіть спробу."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:389
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:390
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1365,27 +1365,27 @@ msgstr ""
 "Файл налаштувань %1 не є коректним файлом налаштувань у форматі XML. Будь "
 "ласка, виправте його або вилучіть файл і повторіть спробу."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:393
 msgctxt "QtFrontend|"
 msgid "Fatal"
 msgstr "Критична помилка"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
 msgstr "Stopmotion видано виключення, яке програма не здатна обробити."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:402
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
 msgstr "Будь ласка, створіть повідомлення про ваду."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:407
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:408
 msgctxt "QtFrontend|"
 msgid "Warning"
 msgstr "Попередження"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:449
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:450
 msgctxt "QtFrontend|"
 msgid ""
 "A newer version of the preferences file with few more default\n"
@@ -1396,7 +1396,7 @@ msgstr ""
 "типовими значеннями. Хочете скористатися цією версією (ваші\n"
 " старі налаштування буде збережено до ~/.stopmotion/preferences.xml.OLD)"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:456
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:457
 msgctxt "QtFrontend|"
 msgid "Question"
 msgstr "Питання"

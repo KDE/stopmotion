@@ -1130,47 +1130,47 @@ msgctxt "PreferencesMenu|"
 msgid "Video &Device"
 msgstr "विडियो एवं उपकरण"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:72
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:73
 msgctxt "QtFrontend|"
 msgid "Please wait..."
 msgstr "कृपया प्रतीक्षां कुर्वन्तु..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:75
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:76
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
 msgstr "कॅमेरा संयोजयति..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:78
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:79
 msgctxt "QtFrontend|"
 msgid "Importing frames from disk"
 msgstr "डिस्कतः फ्रेम्स आयातम्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:81
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:82
 msgctxt "QtFrontend|"
 msgid "Exporting..."
 msgstr "निर्यातं कुर्वन्..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:84
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:85
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
 msgstr "परियोजनायाः पुनर्स्थापनम्..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:87
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:88
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
 msgstr "दृश्यान् डिस्क मध्ये रक्षन्..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:91
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
 msgctxt "QtFrontend|"
 msgid "Cancel"
 msgstr "निरसयतु"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:181
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:182
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
 msgstr "दूषितं सञ्चिकां नष्टं कुर्वन्तु"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:182
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:183
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1180,142 +1180,142 @@ msgstr ""
 "%1 सञ्चिका दूषिता इव दृश्यते, यदि भवान् निरन्तरं करोति तर्हि तस्याः सामग्री नष्टा "
 "भविष्यति । किं त्वं निरन्तरं कर्तुम् इच्छसि ?"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:242
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:243
 msgctxt "QtFrontend|"
 msgid "vgrabbj"
 msgstr "वग्रब्ब्ज"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:244
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:245
 msgctxt "QtFrontend|"
 msgid "The simplest setting. Fairly slow"
 msgstr "सरलतमं सेटिंग्। तुल्य मन्दम्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:251
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:252
 msgctxt "QtFrontend|"
 msgid "vgrabbj VGA daemon"
 msgstr "vgrabbj VGA राक्षसः"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:253
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:254
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
 msgstr "vgrabbj इत्येतत् डेमनरूपेण आरभते । सुन्दरं द्रुतम्।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:261
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:262
 msgctxt "QtFrontend|"
 msgid "uvccapture"
 msgstr "uvccapture इति"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:263
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:264
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
 msgstr "V4L2 उपकरणेभ्यः ग्रहणम्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:270
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:271
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
 msgstr "videodog एकल शॉट"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:272
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:273
 msgctxt "QtFrontend|"
 msgid "Videodog."
 msgstr "वीडियोकुक्कुर।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:279
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:280
 msgctxt "QtFrontend|"
 msgid "dvgrab"
 msgstr "द्विग्राब्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:281
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:282
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
 msgstr "DV-cam तः ग्रहणम्।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:297
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:298
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
 msgstr "jpeg इमेज् तः mpeg1 विडियो मध्ये निर्यातयति"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:306
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:307
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
 msgstr "jpeg इमेज् तः mpeg2 video मध्ये निर्यातयति"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:315
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:324
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:332
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:316
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:325
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:333
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
 msgstr "jpeg इमेज् तः mpeg4 video मध्ये निर्यातयति"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:344
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
 msgctxt "QtFrontend|"
 msgid "Unsupported image file type"
 msgstr "असमर्थितः चित्रसञ्चिकाप्रकारः"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:346
 msgctxt "QtFrontend|"
 msgid "Only JPeg image files can be added to the animation"
 msgstr "केवलं JPeg इमेज सञ्चिकाः एव एनिमेशनमध्ये योजयितुं शक्यन्ते"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:349
 msgctxt "QtFrontend|"
 msgid "The selected audio file could not be loaded"
 msgstr "चयनितं श्रव्यसञ्चिकां लोड् कर्तुं न शक्यते स्म"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:349
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:350
 msgctxt "QtFrontend|"
 msgid "Perhaps it is corrupt."
 msgstr "कदाचित् भ्रष्टम् अस्ति।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:353
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:354
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
 msgstr "चयनितसञ्चिकां पठनार्थं उद्घाटयितुं न शक्यते"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:354
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:355
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "The file %1 could not be opened"
 msgstr "%1 इति सञ्चिका उद्घाटयितुं न शक्यते स्म"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:359
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
 msgstr "सञ्चिकां कार्यक्षेत्रे प्रतिलिपिं कर्तुं न शक्तवान्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:359
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:360
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr "कार्यक्षेत्रे (~/.stopmotion) निम्नलिखितसञ्चिकानां प्रतिलिपिं कर्तुं असफलम्: %1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:363
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
 msgstr "श्रव्यचालकस्य आरम्भं कर्तुं असफलम्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:365
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
 msgstr "यावत् एतत् सम्यक् न भवति तावत् शब्दः कार्यं न करिष्यति"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:368
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
 msgstr "प्राधान्यानि लिखितुं असफलम्"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:370
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
 msgstr "सञ्चिकायां प्राधान्यानि लिखितुं न शक्तम्: %1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:378
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
 msgstr "स्टॉपमोशन आरभ्यतुं न शक्यते।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:380
 msgctxt "QtFrontend|"
 msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
@@ -1323,19 +1323,19 @@ msgid ""
 msgstr ""
 "command.log इत्यत्र अनन्यतालान् प्राप्तुं असफलम्। कदाचित् Stopmotion पूर्वमेव प्रचलति।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:383
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:388
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:389
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
 msgstr "प्राधान्यसञ्चिका पठितुं न शक्यते"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:385
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
 msgstr "प्राधान्यसञ्चिका %1 अपठनीया अस्ति । कृपया एतत् सम्यक् कृत्वा पुनः प्रयासं कुर्वन्तु।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:389
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:390
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1345,27 +1345,27 @@ msgstr ""
 "प्राधान्यसञ्चिका %1 वैधः XML प्राधान्यसञ्चिका नास्ति । कृपया एतत् सम्यक् कुर्वन्तु अथवा "
 "सञ्चिकां विलोपयन्तु पुनः प्रयासं कुर्वन्तु ।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:393
 msgctxt "QtFrontend|"
 msgid "Fatal"
 msgstr "प्राणहर"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
 msgstr "स्टॉपमोशन इत्यनेन अपवादः क्षिप्तः यत् सः सम्भालितुं न शक्नोति स्म ।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:402
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
 msgstr "कृपया दोषप्रतिवेदनं उत्थापयन्तु।"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:407
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:408
 msgctxt "QtFrontend|"
 msgid "Warning"
 msgstr "चेतवानी"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:449
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:450
 msgctxt "QtFrontend|"
 msgid ""
 "A newer version of the preferences file with few more default\n"
@@ -1376,7 +1376,7 @@ msgstr ""
 "किं भवन्तः एतत् उपयोक्तुं इच्छन्ति ? (भवतः पुरातनं प्राधान्यं ~/.stopmotion/preferences."
 "xml.OLD इत्यत्र रक्षितं भविष्यति)"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:456
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:457
 msgctxt "QtFrontend|"
 msgid "Question"
 msgstr "प्रश्न"

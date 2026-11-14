@@ -1056,47 +1056,47 @@ msgctxt "PreferencesMenu|"
 msgid "Video &Device"
 msgstr "視訊裝置(&D)"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:72
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:73
 msgctxt "QtFrontend|"
 msgid "Please wait..."
 msgstr "請稍候..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:75
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:76
 msgctxt "QtFrontend|"
 msgid "Connecting camera..."
 msgstr "連線相機中..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:78
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:79
 msgctxt "QtFrontend|"
 msgid "Importing frames from disk"
 msgstr "從磁碟匯入畫格中"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:81
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:82
 msgctxt "QtFrontend|"
 msgid "Exporting..."
 msgstr "匯出中..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:84
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:85
 msgctxt "QtFrontend|"
 msgid "Restoring project..."
 msgstr "回復專案中..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:87
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:88
 msgctxt "QtFrontend|"
 msgid "Saving scenes to disk..."
 msgstr "正在儲存場景到磁碟上..."
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:91
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:92
 msgctxt "QtFrontend|"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:181
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:182
 msgctxt "QtFrontend|"
 msgid "Lose corrupt file"
 msgstr "喪失毀損檔案"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:182
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:183
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1104,161 +1104,161 @@ msgid ""
 "Do you want to continue?"
 msgstr "檔案 %1 似乎已毀損，如果繼續的話會喪失它的內容。您要繼續嗎？"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:242
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:243
 msgctxt "QtFrontend|"
 msgid "vgrabbj"
 msgstr "vgrabbj"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:244
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:245
 msgctxt "QtFrontend|"
 msgid "The simplest setting. Fairly slow"
 msgstr "最簡單的設定值。有點慢。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:251
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:252
 msgctxt "QtFrontend|"
 msgid "vgrabbj VGA daemon"
 msgstr "vgrabbj VGA 伺服程式"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:253
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:254
 msgctxt "QtFrontend|"
 msgid "Starts vgrabbj as a daemon. Pretty fast."
 msgstr "將 vgrabbj 作為伺服程式啟動。速度很快。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:261
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:262
 msgctxt "QtFrontend|"
 msgid "uvccapture"
 msgstr "uvccapture"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:263
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:264
 msgctxt "QtFrontend|"
 msgid "Grabbing from V4L2 devices"
 msgstr "從 V4L2 裝置擷取"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:270
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:271
 msgctxt "QtFrontend|"
 msgid "videodog singleshot"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:272
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:273
 msgctxt "QtFrontend|"
 msgid "Videodog."
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:279
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:280
 msgctxt "QtFrontend|"
 msgid "dvgrab"
 msgstr "dvgrab"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:281
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:282
 msgctxt "QtFrontend|"
 msgid "Grabbing from DV-cam."
 msgstr "從 DV-cam 擷取。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:297
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:298
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg1 video"
 msgstr "從 jpeg 影像匯出到 mpeg1 影片"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:306
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:307
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg2 video"
 msgstr "從 jpeg 影像匯出到 mpeg2 影片"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:315
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:324
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:332
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:316
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:325
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:333
 msgctxt "QtFrontend|"
 msgid "Exports from jpeg images to mpeg4 video"
 msgstr "從 jpeg 影像匯出到 mpeg4 影片"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:344
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
 msgctxt "QtFrontend|"
 msgid "Unsupported image file type"
 msgstr "不支援的影像檔類型"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:345
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:346
 msgctxt "QtFrontend|"
 msgid "Only JPeg image files can be added to the animation"
 msgstr "只能將 JPEG 影像檔案加入動畫"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:348
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:349
 msgctxt "QtFrontend|"
 msgid "The selected audio file could not be loaded"
 msgstr "所選的音訊檔案無法載入"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:349
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:350
 msgctxt "QtFrontend|"
 msgid "Perhaps it is corrupt."
 msgstr "它可能已毀損。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:353
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:354
 msgctxt "QtFrontend|"
 msgid "Cannot open the selected file for reading"
 msgstr "無法開啟所選檔案供讀取"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:354
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:355
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "The file %1 could not be opened"
 msgstr "檔案 %1 無法開啟"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:358
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:359
 msgctxt "QtFrontend|"
 msgid "Could not copy file to workspace"
 msgstr "無法複製檔案到作業空間"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:359
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:360
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Failed to copy the following files to the workspace (~/.stopmotion): %1"
 msgstr "複製以下檔案到工作區 (~/.stopmotion) 時失敗：%1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:363
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
 msgctxt "QtFrontend|"
 msgid "Failed to initialize audio driver"
 msgstr "初始化音效驅動失敗"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:364
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:365
 msgctxt "QtFrontend|"
 msgid "Sound will not work until this is corrected"
 msgstr "在修正此問題之後聲音才能正常運作"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:368
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
 msgctxt "QtFrontend|"
 msgid "Failed to write preferences"
 msgstr "寫入偏好設定失敗"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:369
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:370
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Could not write preferences to file: %1"
 msgstr "無法將偏好設定寫入檔案：%1"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:378
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
 msgctxt "QtFrontend|"
 msgid "Stopmotion cannot be started."
 msgstr "無法啟動 Stopmotion。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:379
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:380
 msgctxt "QtFrontend|"
 msgid ""
 "Failed to get exclusive lock on command.log. Perhaps Stopmotion is already "
 "running."
 msgstr "取得 command.log 的專屬鎖定時失敗。這或許代表 Stopmotion 已在執行中。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:383
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:388
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:389
 msgctxt "QtFrontend|"
 msgid "Preferences file cannot be read"
 msgstr "無法讀取偏好設定檔案"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:384
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:385
 #, qt-format
 msgctxt "QtFrontend|"
 msgid "Preferences file %1 is unreadable. Please correct this and try again."
 msgstr "偏好設定檔案 %1 不可讀。請修正它的檔案權限後再試一次。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:389
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:390
 #, qt-format
 msgctxt "QtFrontend|"
 msgid ""
@@ -1268,27 +1268,27 @@ msgstr ""
 "偏好設定檔案 %1 不是有效的 XML 偏好設定檔案。請修正它，或是刪除它重設設定之後"
 "再試一次。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:392
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:393
 msgctxt "QtFrontend|"
 msgid "Fatal"
 msgstr "嚴重錯誤"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:400
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
 msgctxt "QtFrontend|"
 msgid "Stopmotion threw an exception it could not handle."
 msgstr "Stopmotion 扔出無法處理的例外狀況。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:401
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:402
 msgctxt "QtFrontend|"
 msgid "Please raise a bug report."
 msgstr "請提出問題回報。"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:407
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:408
 msgctxt "QtFrontend|"
 msgid "Warning"
 msgstr "警告"
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:449
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:450
 msgctxt "QtFrontend|"
 msgid ""
 "A newer version of the preferences file with few more default\n"
@@ -1296,7 +1296,7 @@ msgid ""
 " will be saved in ~/.stopmotion/preferences.xml.OLD)"
 msgstr ""
 
-#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:456
+#: src/presentation/frontends/qtfrontend/qtfrontend.cpp:457
 msgctxt "QtFrontend|"
 msgid "Question"
 msgstr "問題"
