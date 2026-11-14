@@ -135,6 +135,12 @@ void DeviceTab::initialize() {
 	qCDebug(STOPMOTION_LOG, "Initializing video device settings");
 	PreferencesTool *pref = PreferencesTool::get();
 
+	// runs again each time the dialog is shown
+	closeChangeBox();
+	deviceNameStrings.clear();
+	deviceStrings.clear();
+	deviceDescriptionStrings.clear();
+
 	std::vector<GrabberDevice> devices = DomainFacade::getFacade()->getGrabberDevices();
 	numAutoDetectedDevices = devices.size();
 	deviceTable->setRowCount(numAutoDetectedDevices);
