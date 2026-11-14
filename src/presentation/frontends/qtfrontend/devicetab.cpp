@@ -216,6 +216,7 @@ void DeviceTab::initialize() {
 			if (oldDevice == devices[i].device)
 				score += 1;
 			if (bestScore < score) {
+				bestScore = score;
 				newActive = i;
 			}
 		}
