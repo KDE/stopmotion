@@ -50,6 +50,9 @@ void handleFileLinkError() {
 		// cannot link across file systems
 	case EMLINK:
 		// too many links already
+	case EPERM:
+	case ENOSYS:
+		// file system without links, such as FAT or some FUSE ones
 		// ...worth trying a different method.
 		return;
 	case EEXIST:
@@ -58,8 +61,6 @@ void handleFileLinkError() {
 		throw FileLinkException("File does not exist to be linked to");
 	case ENOSPC:
 		throw FileLinkException("Out of disk space");
-	case EPERM:
-		throw FileLinkException("Permission denied");
 	case EROFS:
 		throw FileLinkException("Cannot write to a read-only file system");
 	case EIO:
