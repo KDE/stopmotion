@@ -51,11 +51,14 @@ OggVorbis::~OggVorbis() {
 void OggVorbis::setFilename(WorkspaceFile& file, ErrorHandler& e) {
 	assert(file.path() != nullptr);
 
+	// keep the path even if the file is unusable, as frames do
+	close();
+	filename.swap(file);
+
 	// Opens the file and tests for vorbis-ness
-	FILE *f = fopen(file.path(), "r");
+	FILE *f = fopen(filename.path(), "r");
 	FileCloser fcloser(f);
 	if (f) {
-		close();
 		oggFile = static_cast<OggVorbis_File*>(malloc(sizeof(OggVorbis_File)));
 		if (oggFile == nullptr) {
 			throw std::bad_alloc();
@@ -73,13 +76,12 @@ void OggVorbis::setFilename(WorkspaceFile& file, ErrorHandler& e) {
 		// ownership if oggFile has taken it.
 		if (oggFile->datasource == f)
 			fcloser.release();
-		this->filename.swap(file);
 	} else {
 		int err = errno;
 		if (err == ENOMEM) {
 			throw std::bad_alloc();
 		}
-		qCDebug(STOPMOTION_LOG, "Cannot open file '%s' for reading", file.path());
+		qCDebug(STOPMOTION_LOG, "Cannot open file '%s' for reading", filename.path());
 		e.error( UiException(UiException::couldNotOpenFile) );
 	}
 }
