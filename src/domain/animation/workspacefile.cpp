@@ -76,7 +76,7 @@ bool asciiEqualI(const char* a, const char* b) {
 		if (ca != cb)
 			return false;
 	}
-	return true;
+	return *a == *b;
 }
 
 }

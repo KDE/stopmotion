@@ -64,3 +64,15 @@ void TestWorkspace::nonJpgImagesCannotBeCopied() {
 	QFAIL("Copying .PNG image to workspace should not be OK");
 	wrapFileSystem(nullptr);
 }
+
+void TestWorkspace::typeNeedsTheWholeExtension() {
+	const WorkspaceFileType& image = WorkspaceFileType::image();
+	QVERIFY(image.isType("a.jpg"));
+	QVERIFY(image.isType("a.JPEG"));
+	QVERIFY(!image.isType("a.j"));
+	QVERIFY(!image.isType("a."));
+	QVERIFY(!image.isType("a.jpgx"));
+	const WorkspaceFileType& sound = WorkspaceFileType::sound();
+	QVERIFY(sound.isType("a.Ogg"));
+	QVERIFY(!sound.isType("a.o"));
+}

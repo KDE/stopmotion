@@ -22,6 +22,7 @@ public:
 private Q_SLOTS:
 	void jpgsCanBeCopiedIntoWorkspace();
 	void nonJpgImagesCannotBeCopied();
+	void typeNeedsTheWholeExtension();
 };
 
 #endif
