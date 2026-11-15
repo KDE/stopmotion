@@ -31,23 +31,27 @@ msgctxt "ExternalCommand|"
 msgid "Close"
 msgstr "Zavrieť"
 
-#: src/application/externalcommand.cpp:60
+#: src/application/externalcommand.cpp:61
 msgctxt "ExternalCommand|"
 msgid "Output from external command"
 msgstr "Výstup z externého príkazu"
 
-#: src/application/externalcommand.cpp:104
-#: src/application/externalcommand.cpp:107
+#: src/application/externalcommand.cpp:69
+#: src/application/externalcommand.cpp:113
+#: src/application/externalcommand.cpp:121
+#: src/application/externalcommand.cpp:124
 msgctxt "ExternalCommand|"
 msgid "Result"
 msgstr "Výsledok"
 
-#: src/application/externalcommand.cpp:104
+#: src/application/externalcommand.cpp:69
+#: src/application/externalcommand.cpp:113
+#: src/application/externalcommand.cpp:121
 msgctxt "ExternalCommand|"
 msgid "Failed!"
 msgstr "Zlyhalo!"
 
-#: src/application/externalcommand.cpp:107
+#: src/application/externalcommand.cpp:124
 msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "Úspešné!"
@@ -88,7 +92,7 @@ msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr "Nepodarilo sa start Gimp!"
 
-#: src/application/runanimationhandler.cpp:78
+#: src/application/runanimationhandler.cpp:79
 msgctxt "RunAnimationHandler|"
 msgid "Running animation"
 msgstr "Spustená animácia"
@@ -244,8 +248,8 @@ msgctxt "AboutDialog|"
 msgid "About"
 msgstr "O aplikácii"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:54
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:341
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:55
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:354
 msgctxt "DeviceTab|"
 msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
@@ -254,8 +258,8 @@ msgstr ""
 "Nižšie môžete nastaviť, ktoré zariadenie má Stopmotion používať na "
 "zachytávanie obrázkov a zobrazovanie videa."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:56
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:343
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:57
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:356
 msgctxt "DeviceTab|"
 msgid ""
 "You can select from the auto-detected devices below or add devices yourself. "
@@ -266,134 +270,134 @@ msgstr ""
 "zariadenia ručne. Neodporúča sa používať zariadenia, ktoré sú už automaticky "
 "detegované."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:59
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:346
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:60
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:359
 msgctxt "DeviceTab|"
 msgid ""
 "The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
 msgstr ""
 "Vybrané zariadenie je rozpoznané ako <b>$VIDEODEVICE</b> v importe videa."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:65
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:350
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:66
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:363
 msgctxt "DeviceTab|"
 msgid "Name"
 msgstr "Názov"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:65
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:350
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:66
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:363
 msgctxt "DeviceTab|"
 msgid "Description"
 msgstr "Popis"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:79
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:353
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:80
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:366
 msgctxt "DeviceTab|"
 msgid "&Add"
 msgstr "&Pridať"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:83
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:354
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:84
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:367
 msgctxt "DeviceTab|"
 msgid "&Remove"
 msgstr "O&dstrániť"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:86
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:355
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:87
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:368
 msgctxt "DeviceTab|"
 msgid "&Edit"
 msgstr "&Upraviť"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:90
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:358
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:91
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:371
 msgctxt "DeviceTab|"
 msgid "Video device settings"
 msgstr "Video zariadenie nastavenia"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:99
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:359
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:100
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:372
 msgctxt "DeviceTab|"
 msgid "Video Device ($VIDEODEVICE): "
 msgstr "Video zariadenie ($VIDEODEVICE): "
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:146
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:147
 msgctxt "DeviceTab|"
 msgid "device"
 msgstr "zariadenie"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:72
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:372
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:73
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:389
 msgctxt "ExportTab|"
 msgid "&Add"
 msgstr "&Pridať"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:76
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:373
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:77
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:390
 msgctxt "ExportTab|"
 msgid "&Remove"
 msgstr "O&dstrániť"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:79
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:374
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:80
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:391
 msgctxt "ExportTab|"
 msgid "&Edit"
 msgstr "&Upraviť"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:83
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:84
 msgctxt "ExportTab|"
 msgid "Encoder settings"
 msgstr "Nastavenia kodéra"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:93
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:377
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:94
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:394
 msgctxt "ExportTab|"
 msgid ""
 "Do you want to be asked for an output file every time you choose to export?"
 msgstr ""
 "Naozaj chcete be asked for an output file every time you choose to export?"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:95
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:96
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:396
 msgctxt "ExportTab|"
 msgid "Yes"
 msgstr "Áno"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:100
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:380
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:101
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:397
 msgctxt "ExportTab|"
 msgid "No"
 msgstr "Nie"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:105
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:106
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:398
 msgctxt "ExportTab|"
 msgid "Set default output file:"
 msgstr "Nastaviť predvolený výstupný súbor:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:111
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:382
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:112
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:399
 msgctxt "ExportTab|"
 msgid "Browse"
 msgstr "Prehliadať"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:116
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:117
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:400
 msgctxt "ExportTab|"
 msgid "Start encoder:"
 msgstr "Spustiť kodér:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:121
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:384
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:122
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:401
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
 msgstr "Zastaviť kodér:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:347
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:364
 msgctxt "ExportTab|"
 msgid "Choose output file"
 msgstr "Vybrať výstupný súbor"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:358
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:375
 msgctxt "ExportTab|"
 msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
@@ -403,7 +407,7 @@ msgstr ""
 "kódovanie aktuálne aktívneho projektu do video súboru. Ak je nainštalovaný, "
 "odporúča sa mencoder. Na jeho použitie ho musíte skompilovať s podporou jpeg."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:360
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:377
 msgctxt "ExportTab|"
 msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
@@ -412,7 +416,7 @@ msgstr ""
 "Vždy by ste mali používať <b>$IMAGEPATH</b> a <b>$VIDEOFILE</b> na označenie "
 "cesty k obrázkom a video súboru. Proces kódovania ich nahradí ich hodnotami."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:362
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
 msgctxt "ExportTab|"
 msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
@@ -421,17 +425,17 @@ msgstr ""
 "Môžete použiť <b>$FRAMERATE</b> na označenie snímkovej frekvencie aktuálne "
 "používanej v projekte."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:364
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
 msgstr "Príklad s mencoder (obrázky jpeg do videa mpeg4):"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:369
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:386
 msgctxt "ExportTab|"
 msgid "Name"
 msgstr "Názov"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:369
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:386
 msgctxt "ExportTab|"
 msgid "Description"
 msgstr "Popis"
@@ -548,8 +552,8 @@ msgstr ""
 "Musíte definovať zachytávač obrázkov na použitie.\n"
 "Toto sa dá nastaviť v ponuke predvolieb."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:48
-#: src/presentation/frontends/qtfrontend/importtab.cpp:302
+#: src/presentation/frontends/qtfrontend/importtab.cpp:49
+#: src/presentation/frontends/qtfrontend/importtab.cpp:317
 msgctxt "ImportTab|"
 msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
@@ -558,8 +562,8 @@ msgstr ""
 "Nižšie môžete nastaviť, ktorý program/proces má Stopmotion používať na "
 "zachytávanie obrázkov z vybraného video zariadenia."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:50
-#: src/presentation/frontends/qtfrontend/importtab.cpp:304
+#: src/presentation/frontends/qtfrontend/importtab.cpp:51
+#: src/presentation/frontends/qtfrontend/importtab.cpp:319
 msgctxt "ImportTab|"
 msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
@@ -569,56 +573,56 @@ msgstr ""
 "označenie video zariadenia a súboru obrázka. Proces zachytávania ich nahradí "
 "ich hodnotami."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:56
-#: src/presentation/frontends/qtfrontend/importtab.cpp:308
+#: src/presentation/frontends/qtfrontend/importtab.cpp:57
+#: src/presentation/frontends/qtfrontend/importtab.cpp:323
 msgctxt "ImportTab|"
 msgid "Name"
 msgstr "Názov"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:56
-#: src/presentation/frontends/qtfrontend/importtab.cpp:308
+#: src/presentation/frontends/qtfrontend/importtab.cpp:57
+#: src/presentation/frontends/qtfrontend/importtab.cpp:323
 msgctxt "ImportTab|"
 msgid "Description"
 msgstr "Popis"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:72
-#: src/presentation/frontends/qtfrontend/importtab.cpp:311
+#: src/presentation/frontends/qtfrontend/importtab.cpp:73
+#: src/presentation/frontends/qtfrontend/importtab.cpp:326
 msgctxt "ImportTab|"
 msgid "&Add"
 msgstr "&Pridať"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:76
-#: src/presentation/frontends/qtfrontend/importtab.cpp:312
+#: src/presentation/frontends/qtfrontend/importtab.cpp:77
+#: src/presentation/frontends/qtfrontend/importtab.cpp:327
 msgctxt "ImportTab|"
 msgid "&Remove"
 msgstr "O&dstrániť"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:79
-#: src/presentation/frontends/qtfrontend/importtab.cpp:313
+#: src/presentation/frontends/qtfrontend/importtab.cpp:80
+#: src/presentation/frontends/qtfrontend/importtab.cpp:328
 msgctxt "ImportTab|"
 msgid "&Edit"
 msgstr "&Upraviť"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:83
-#: src/presentation/frontends/qtfrontend/importtab.cpp:315
+#: src/presentation/frontends/qtfrontend/importtab.cpp:84
+#: src/presentation/frontends/qtfrontend/importtab.cpp:330
 msgctxt "ImportTab|"
 msgid "Import device settings"
 msgstr "Importovať zariadenie nastavenia"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:92
-#: src/presentation/frontends/qtfrontend/importtab.cpp:316
+#: src/presentation/frontends/qtfrontend/importtab.cpp:93
+#: src/presentation/frontends/qtfrontend/importtab.cpp:331
 msgctxt "ImportTab|"
 msgid "Pre-poll command"
 msgstr "Príkaz pred zachytením"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:99
-#: src/presentation/frontends/qtfrontend/importtab.cpp:317
+#: src/presentation/frontends/qtfrontend/importtab.cpp:100
+#: src/presentation/frontends/qtfrontend/importtab.cpp:332
 msgctxt "ImportTab|"
 msgid "Start daemon"
 msgstr "Spustiť démona"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:106
-#: src/presentation/frontends/qtfrontend/importtab.cpp:318
+#: src/presentation/frontends/qtfrontend/importtab.cpp:107
+#: src/presentation/frontends/qtfrontend/importtab.cpp:333
 msgctxt "ImportTab|"
 msgid "Stop daemon"
 msgstr "Zastaviť démona"

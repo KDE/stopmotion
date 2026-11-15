@@ -30,23 +30,27 @@ msgctxt "ExternalCommand|"
 msgid "Close"
 msgstr "Zapri"
 
-#: src/application/externalcommand.cpp:60
+#: src/application/externalcommand.cpp:61
 msgctxt "ExternalCommand|"
 msgid "Output from external command"
 msgstr "Izhod iz zunanjega ukaza"
 
-#: src/application/externalcommand.cpp:104
-#: src/application/externalcommand.cpp:107
+#: src/application/externalcommand.cpp:69
+#: src/application/externalcommand.cpp:113
+#: src/application/externalcommand.cpp:121
+#: src/application/externalcommand.cpp:124
 msgctxt "ExternalCommand|"
 msgid "Result"
 msgstr "Rezultat"
 
-#: src/application/externalcommand.cpp:104
+#: src/application/externalcommand.cpp:69
+#: src/application/externalcommand.cpp:113
+#: src/application/externalcommand.cpp:121
 msgctxt "ExternalCommand|"
 msgid "Failed!"
 msgstr "Ni uspelo!"
 
-#: src/application/externalcommand.cpp:107
+#: src/application/externalcommand.cpp:124
 msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "Uspelo!"
@@ -87,7 +91,7 @@ msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr "Ni mogoče zagnati Gimpa!"
 
-#: src/application/runanimationhandler.cpp:78
+#: src/application/runanimationhandler.cpp:79
 msgctxt "RunAnimationHandler|"
 msgid "Running animation"
 msgstr "Animacija teče"
@@ -243,8 +247,8 @@ msgctxt "AboutDialog|"
 msgid "About"
 msgstr "O programu"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:54
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:341
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:55
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:354
 msgctxt "DeviceTab|"
 msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
@@ -253,8 +257,8 @@ msgstr ""
 "Spodaj lahko nastavite, katero napravo naj Stopmotion uporablja za zajemanje "
 "slik in prikaza videa."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:56
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:343
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:57
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:356
 msgctxt "DeviceTab|"
 msgid ""
 "You can select from the auto-detected devices below or add devices yourself. "
@@ -265,85 +269,85 @@ msgstr ""
 "sami. Ni priporočljivo uporabljati naprav, ki niso samodejno zaznane, vendar "
 "storite tudi to, če ste napredni uporabnik."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:59
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:346
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:60
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:359
 msgctxt "DeviceTab|"
 msgid ""
 "The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
 msgstr "Izbrana naprava je razpoznana kot <b>$VIDEODEVICE</b> pri uvozu videa."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:65
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:350
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:66
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:363
 msgctxt "DeviceTab|"
 msgid "Name"
 msgstr "Ime"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:65
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:350
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:66
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:363
 msgctxt "DeviceTab|"
 msgid "Description"
 msgstr "Opis"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:79
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:353
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:80
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:366
 msgctxt "DeviceTab|"
 msgid "&Add"
 msgstr "Dodaj"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:83
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:354
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:84
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:367
 msgctxt "DeviceTab|"
 msgid "&Remove"
 msgstr "Odstrani"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:86
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:355
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:87
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:368
 msgctxt "DeviceTab|"
 msgid "&Edit"
 msgstr "Uredi"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:90
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:358
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:91
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:371
 msgctxt "DeviceTab|"
 msgid "Video device settings"
 msgstr "Nastavitve video naprave"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:99
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:359
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:100
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:372
 msgctxt "DeviceTab|"
 msgid "Video Device ($VIDEODEVICE): "
 msgstr "Video naprava ($VIDEODEVICE): "
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:146
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:147
 msgctxt "DeviceTab|"
 msgid "device"
 msgstr "naprava"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:72
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:372
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:73
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:389
 msgctxt "ExportTab|"
 msgid "&Add"
 msgstr "Dodaj"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:76
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:373
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:77
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:390
 msgctxt "ExportTab|"
 msgid "&Remove"
 msgstr "Odstrani"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:79
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:374
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:80
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:391
 msgctxt "ExportTab|"
 msgid "&Edit"
 msgstr "Uredi"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:83
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:84
 msgctxt "ExportTab|"
 msgid "Encoder settings"
 msgstr "Nastavitve kodiranja"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:93
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:377
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:94
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:394
 msgctxt "ExportTab|"
 msgid ""
 "Do you want to be asked for an output file every time you choose to export?"
@@ -351,48 +355,48 @@ msgstr ""
 "Ali želite, da vas vsakič vpraša za izhodno datoteko, ko se odločite za "
 "izvoz?"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:95
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:96
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:396
 msgctxt "ExportTab|"
 msgid "Yes"
 msgstr "Da"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:100
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:380
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:101
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:397
 msgctxt "ExportTab|"
 msgid "No"
 msgstr "Ne"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:105
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:106
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:398
 msgctxt "ExportTab|"
 msgid "Set default output file:"
 msgstr "Nastavite privzeto izhodno datoteko:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:111
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:382
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:112
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:399
 msgctxt "ExportTab|"
 msgid "Browse"
 msgstr "Brskaj"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:116
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:117
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:400
 msgctxt "ExportTab|"
 msgid "Start encoder:"
 msgstr "Zaženi kodiranje:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:121
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:384
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:122
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:401
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
 msgstr "Ustavi kodiranje:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:347
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:364
 msgctxt "ExportTab|"
 msgid "Choose output file"
 msgstr "Izberi izhodno datoteko"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:358
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:375
 msgctxt "ExportTab|"
 msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
@@ -401,7 +405,7 @@ msgstr ""
 "Spodaj lahko nastavite, kateri program/postopek naj Stopmotion uporablja za "
 "kodiranje trenutnega aktivnega projekta v video datoteko."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:360
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:377
 msgctxt "ExportTab|"
 msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
@@ -410,7 +414,7 @@ msgstr ""
 "Za določanje poti vedno uporabite <b>$IMAGEPATH</b> in <b>$VIDEOFILE</b>za "
 "sliko in video datoteko."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:362
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
 msgctxt "ExportTab|"
 msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
@@ -419,17 +423,17 @@ msgstr ""
 "<b>$FRAMERATE</b> lahko uporabite za določanje trenutne hitrosti sličic v "
 "projektu."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:364
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
 msgstr "Primer z menkoderjem (slike jpeg v video mpeg4):"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:369
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:386
 msgctxt "ExportTab|"
 msgid "Name"
 msgstr "Ime"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:369
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:386
 msgctxt "ExportTab|"
 msgid "Description"
 msgstr "Opis"
@@ -546,8 +550,8 @@ msgstr ""
 "Za uporabo morate določiti zajem slike.\n"
 "To lahko nastavite v meniju z nastavitvami."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:48
-#: src/presentation/frontends/qtfrontend/importtab.cpp:302
+#: src/presentation/frontends/qtfrontend/importtab.cpp:49
+#: src/presentation/frontends/qtfrontend/importtab.cpp:317
 msgctxt "ImportTab|"
 msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
@@ -556,8 +560,8 @@ msgstr ""
 "Spodaj lahko nastavite, kateri program/postopek naj Stopmotion uporablja za "
 "zajem slike iz izbrane naprave."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:50
-#: src/presentation/frontends/qtfrontend/importtab.cpp:304
+#: src/presentation/frontends/qtfrontend/importtab.cpp:51
+#: src/presentation/frontends/qtfrontend/importtab.cpp:319
 msgctxt "ImportTab|"
 msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
@@ -566,56 +570,56 @@ msgstr ""
 "Za določanje morate vedno uporabljati <b>$VIDEODEVICE</b> in <b>$IMAGEFILE</"
 "b> video napravo oziroma slikovno datoteko."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:56
-#: src/presentation/frontends/qtfrontend/importtab.cpp:308
+#: src/presentation/frontends/qtfrontend/importtab.cpp:57
+#: src/presentation/frontends/qtfrontend/importtab.cpp:323
 msgctxt "ImportTab|"
 msgid "Name"
 msgstr "Ime"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:56
-#: src/presentation/frontends/qtfrontend/importtab.cpp:308
+#: src/presentation/frontends/qtfrontend/importtab.cpp:57
+#: src/presentation/frontends/qtfrontend/importtab.cpp:323
 msgctxt "ImportTab|"
 msgid "Description"
 msgstr "Opis"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:72
-#: src/presentation/frontends/qtfrontend/importtab.cpp:311
+#: src/presentation/frontends/qtfrontend/importtab.cpp:73
+#: src/presentation/frontends/qtfrontend/importtab.cpp:326
 msgctxt "ImportTab|"
 msgid "&Add"
 msgstr "Dodaj"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:76
-#: src/presentation/frontends/qtfrontend/importtab.cpp:312
+#: src/presentation/frontends/qtfrontend/importtab.cpp:77
+#: src/presentation/frontends/qtfrontend/importtab.cpp:327
 msgctxt "ImportTab|"
 msgid "&Remove"
 msgstr "Odstrani"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:79
-#: src/presentation/frontends/qtfrontend/importtab.cpp:313
+#: src/presentation/frontends/qtfrontend/importtab.cpp:80
+#: src/presentation/frontends/qtfrontend/importtab.cpp:328
 msgctxt "ImportTab|"
 msgid "&Edit"
 msgstr "Uredi"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:83
-#: src/presentation/frontends/qtfrontend/importtab.cpp:315
+#: src/presentation/frontends/qtfrontend/importtab.cpp:84
+#: src/presentation/frontends/qtfrontend/importtab.cpp:330
 msgctxt "ImportTab|"
 msgid "Import device settings"
 msgstr "Uvozi nastavitve naprave"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:92
-#: src/presentation/frontends/qtfrontend/importtab.cpp:316
+#: src/presentation/frontends/qtfrontend/importtab.cpp:93
+#: src/presentation/frontends/qtfrontend/importtab.cpp:331
 msgctxt "ImportTab|"
 msgid "Pre-poll command"
 msgstr "Ukaz pre-poll"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:99
-#: src/presentation/frontends/qtfrontend/importtab.cpp:317
+#: src/presentation/frontends/qtfrontend/importtab.cpp:100
+#: src/presentation/frontends/qtfrontend/importtab.cpp:332
 msgctxt "ImportTab|"
 msgid "Start daemon"
 msgstr "Zaženi demon"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:106
-#: src/presentation/frontends/qtfrontend/importtab.cpp:318
+#: src/presentation/frontends/qtfrontend/importtab.cpp:107
+#: src/presentation/frontends/qtfrontend/importtab.cpp:333
 msgctxt "ImportTab|"
 msgid "Stop daemon"
 msgstr "Ustavi demon"

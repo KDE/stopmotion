@@ -28,23 +28,27 @@ msgctxt "ExternalCommand|"
 msgid "Close"
 msgstr "Sluiten"
 
-#: src/application/externalcommand.cpp:60
+#: src/application/externalcommand.cpp:61
 msgctxt "ExternalCommand|"
 msgid "Output from external command"
 msgstr "Uitvoer van extern commando"
 
-#: src/application/externalcommand.cpp:104
-#: src/application/externalcommand.cpp:107
+#: src/application/externalcommand.cpp:69
+#: src/application/externalcommand.cpp:113
+#: src/application/externalcommand.cpp:121
+#: src/application/externalcommand.cpp:124
 msgctxt "ExternalCommand|"
 msgid "Result"
 msgstr "Resultaat"
 
-#: src/application/externalcommand.cpp:104
+#: src/application/externalcommand.cpp:69
+#: src/application/externalcommand.cpp:113
+#: src/application/externalcommand.cpp:121
 msgctxt "ExternalCommand|"
 msgid "Failed!"
 msgstr "Mislukt!"
 
-#: src/application/externalcommand.cpp:107
+#: src/application/externalcommand.cpp:124
 msgctxt "ExternalCommand|"
 msgid "Successful!"
 msgstr "Succes!"
@@ -85,7 +89,7 @@ msgctxt "ModelHandler|"
 msgid "Failed to start Gimp!"
 msgstr "Gimp starten is mislukt!"
 
-#: src/application/runanimationhandler.cpp:78
+#: src/application/runanimationhandler.cpp:79
 msgctxt "RunAnimationHandler|"
 msgid "Running animation"
 msgstr "Animatie wordt uitgevoerd"
@@ -242,8 +246,8 @@ msgctxt "AboutDialog|"
 msgid "About"
 msgstr "Info over"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:54
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:341
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:55
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:354
 msgctxt "DeviceTab|"
 msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
@@ -252,8 +256,8 @@ msgstr ""
 "Hier onder kunt u instellen welk apparaat Stopmotion zou moeten gebruiken "
 "voor het pakken van afbeeldingen en video afspelen."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:56
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:343
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:57
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:356
 msgctxt "DeviceTab|"
 msgid ""
 "You can select from the auto-detected devices below or add devices yourself. "
@@ -265,8 +269,8 @@ msgstr ""
 "gebruiken die niet automatisch zijn gedetecteerd, maar voel u vrij dat te "
 "doen als u een gevorderde gebruiker bent."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:59
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:346
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:60
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:359
 msgctxt "DeviceTab|"
 msgid ""
 "The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
@@ -274,78 +278,78 @@ msgstr ""
 "Het geselecteerde apparaat is herkend als <b>$VIDEODEVICE</b> onder Video "
 "Import."
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:65
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:350
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:66
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:363
 msgctxt "DeviceTab|"
 msgid "Name"
 msgstr "Naam"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:65
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:350
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:66
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:363
 msgctxt "DeviceTab|"
 msgid "Description"
 msgstr "Beschrijving"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:79
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:353
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:80
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:366
 msgctxt "DeviceTab|"
 msgid "&Add"
 msgstr "&Toevoegen"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:83
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:354
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:84
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:367
 msgctxt "DeviceTab|"
 msgid "&Remove"
 msgstr "&Verwijderen"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:86
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:355
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:87
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:368
 msgctxt "DeviceTab|"
 msgid "&Edit"
 msgstr "B&ewerken"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:90
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:358
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:91
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:371
 msgctxt "DeviceTab|"
 msgid "Video device settings"
 msgstr "Video-apparaatinstellingen"
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:99
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:359
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:100
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:372
 msgctxt "DeviceTab|"
 msgid "Video Device ($VIDEODEVICE): "
 msgstr "Video apparaat ($VIDEODEVICE): "
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:146
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:147
 msgctxt "DeviceTab|"
 msgid "device"
 msgstr "apparaat"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:72
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:372
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:73
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:389
 msgctxt "ExportTab|"
 msgid "&Add"
 msgstr "&Toevoegen"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:76
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:373
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:77
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:390
 msgctxt "ExportTab|"
 msgid "&Remove"
 msgstr "&Verwijderen"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:79
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:374
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:80
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:391
 msgctxt "ExportTab|"
 msgid "&Edit"
 msgstr "B&ewerken"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:83
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:84
 msgctxt "ExportTab|"
 msgid "Encoder settings"
 msgstr "Instellingen voor codering"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:93
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:377
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:94
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:394
 msgctxt "ExportTab|"
 msgid ""
 "Do you want to be asked for an output file every time you choose to export?"
@@ -353,48 +357,48 @@ msgstr ""
 "Wilt u gevraagd worden om een uitvoerbestand elke keer dat u kiest om te "
 "exporteren?"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:95
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:96
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:396
 msgctxt "ExportTab|"
 msgid "Yes"
 msgstr "Ja"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:100
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:380
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:101
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:397
 msgctxt "ExportTab|"
 msgid "No"
 msgstr "Nee"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:105
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:106
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:398
 msgctxt "ExportTab|"
 msgid "Set default output file:"
 msgstr "Stel het standaard uitvoerbestand in:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:111
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:382
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:112
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:399
 msgctxt "ExportTab|"
 msgid "Browse"
 msgstr "Bladeren"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:116
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:383
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:117
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:400
 msgctxt "ExportTab|"
 msgid "Start encoder:"
 msgstr "Codeerder starten:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:121
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:384
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:122
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:401
 msgctxt "ExportTab|"
 msgid "Stop encoder:"
 msgstr "Codeerder stoppen:"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:347
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:364
 msgctxt "ExportTab|"
 msgid "Choose output file"
 msgstr "Uitvoerbestand kiezen"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:358
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:375
 msgctxt "ExportTab|"
 msgid ""
 "Below you can set which program/process Stopmotion should use for encoding "
@@ -403,7 +407,7 @@ msgstr ""
 "Onderstaand kun u instellen welk programma/proces Stopmotion zou moeten "
 "gebruiken voor codering van het nu actieve project naar een videobestand."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:360
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:377
 msgctxt "ExportTab|"
 msgid ""
 "You should always use <b>$IMAGEPATH</b> and <b>$VIDEOFILE</b> to represent "
@@ -412,7 +416,7 @@ msgstr ""
 "U zou altijd <b>$IMAGEPATH</b> en <b>$VIDEOFILE</b> moeten gebruiken om het "
 "pad van de afbeelding en het videobestand, respectievelijk te representeren."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:362
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:379
 msgctxt "ExportTab|"
 msgid ""
 "You can use <b>$FRAMERATE</b> to represent the frame rate currently in use "
@@ -421,17 +425,17 @@ msgstr ""
 "U kunt <b>$FRAMERATE</b> gebruiken om de nu in gebruik zijnde framesnelheid "
 "in het project te representeren."
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:364
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:381
 msgctxt "ExportTab|"
 msgid "Example with mencoder (jpeg images to mpeg4 video):"
 msgstr "Voorbeeld met mencoder (jpeg afbeeldingen naar mpeg4-video):"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:369
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:386
 msgctxt "ExportTab|"
 msgid "Name"
 msgstr "Naam"
 
-#: src/presentation/frontends/qtfrontend/exporttab.cpp:369
+#: src/presentation/frontends/qtfrontend/exporttab.cpp:386
 msgctxt "ExportTab|"
 msgid "Description"
 msgstr "Beschrijving"
@@ -549,8 +553,8 @@ msgstr ""
 "U moet een te gebruiken pakker van afbeeldingen\n"
 "definiëren. Dit ingesteld worden in het menu Voorkeuren."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:48
-#: src/presentation/frontends/qtfrontend/importtab.cpp:302
+#: src/presentation/frontends/qtfrontend/importtab.cpp:49
+#: src/presentation/frontends/qtfrontend/importtab.cpp:317
 msgctxt "ImportTab|"
 msgid ""
 "Below you can set which program/process Stopmotion should use for grabbing "
@@ -559,8 +563,8 @@ msgstr ""
 "Onderstaand kunt u instellen welk programma/proces Stopmotion zou moeten "
 "gebruiken voor het pakken van afbeeldingen van het geselecteerde apparaat."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:50
-#: src/presentation/frontends/qtfrontend/importtab.cpp:304
+#: src/presentation/frontends/qtfrontend/importtab.cpp:51
+#: src/presentation/frontends/qtfrontend/importtab.cpp:319
 msgctxt "ImportTab|"
 msgid ""
 "You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
@@ -570,56 +574,56 @@ msgstr ""
 "het video-apparaat en het afbeeldingsbestand, respectievelijk te "
 "representeren."
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:56
-#: src/presentation/frontends/qtfrontend/importtab.cpp:308
+#: src/presentation/frontends/qtfrontend/importtab.cpp:57
+#: src/presentation/frontends/qtfrontend/importtab.cpp:323
 msgctxt "ImportTab|"
 msgid "Name"
 msgstr "Naam"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:56
-#: src/presentation/frontends/qtfrontend/importtab.cpp:308
+#: src/presentation/frontends/qtfrontend/importtab.cpp:57
+#: src/presentation/frontends/qtfrontend/importtab.cpp:323
 msgctxt "ImportTab|"
 msgid "Description"
 msgstr "Beschrijving"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:72
-#: src/presentation/frontends/qtfrontend/importtab.cpp:311
+#: src/presentation/frontends/qtfrontend/importtab.cpp:73
+#: src/presentation/frontends/qtfrontend/importtab.cpp:326
 msgctxt "ImportTab|"
 msgid "&Add"
 msgstr "&Toevoegen"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:76
-#: src/presentation/frontends/qtfrontend/importtab.cpp:312
+#: src/presentation/frontends/qtfrontend/importtab.cpp:77
+#: src/presentation/frontends/qtfrontend/importtab.cpp:327
 msgctxt "ImportTab|"
 msgid "&Remove"
 msgstr "&Verwijderen"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:79
-#: src/presentation/frontends/qtfrontend/importtab.cpp:313
+#: src/presentation/frontends/qtfrontend/importtab.cpp:80
+#: src/presentation/frontends/qtfrontend/importtab.cpp:328
 msgctxt "ImportTab|"
 msgid "&Edit"
 msgstr "B&ewerken"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:83
-#: src/presentation/frontends/qtfrontend/importtab.cpp:315
+#: src/presentation/frontends/qtfrontend/importtab.cpp:84
+#: src/presentation/frontends/qtfrontend/importtab.cpp:330
 msgctxt "ImportTab|"
 msgid "Import device settings"
 msgstr "Apparaatinstellingen importeren"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:92
-#: src/presentation/frontends/qtfrontend/importtab.cpp:316
+#: src/presentation/frontends/qtfrontend/importtab.cpp:93
+#: src/presentation/frontends/qtfrontend/importtab.cpp:331
 msgctxt "ImportTab|"
 msgid "Pre-poll command"
 msgstr "Commando voor vooraf aftasten"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:99
-#: src/presentation/frontends/qtfrontend/importtab.cpp:317
+#: src/presentation/frontends/qtfrontend/importtab.cpp:100
+#: src/presentation/frontends/qtfrontend/importtab.cpp:332
 msgctxt "ImportTab|"
 msgid "Start daemon"
 msgstr "Daemon starten"
 
-#: src/presentation/frontends/qtfrontend/importtab.cpp:106
-#: src/presentation/frontends/qtfrontend/importtab.cpp:318
+#: src/presentation/frontends/qtfrontend/importtab.cpp:107
+#: src/presentation/frontends/qtfrontend/importtab.cpp:333
 msgctxt "ImportTab|"
 msgid "Stop daemon"
 msgstr "Daemon stoppen"
