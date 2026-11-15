@@ -163,7 +163,7 @@ int NonGUIFrontend::parseArguments(int argc, char **argv) {
 	return 0;
 }
 
-class DirIterator : public StringIterator {
+class DirIterator final : public StringIterator {
 	std::string buffer;
 	std::string::size_type dirLen;
 	DIR *dp;

@@ -23,7 +23,7 @@ class UiException;
  *
  * @author Bjoern Erik Nilsen & Fredrik Berg Kjoelstad
 */
-class QtFrontend : public QObject, public Frontend {
+class QtFrontend final : public QObject, public Frontend {
 	Q_OBJECT
 public:
 

@@ -73,7 +73,7 @@ void ModelHandler::chooseFrame() {
 }
 
 
-class StringListIterator : public StringIterator {
+class StringListIterator final : public StringIterator {
 	QStringList::ConstIterator b;
 	QStringList::ConstIterator e;
 	std::string buffer;

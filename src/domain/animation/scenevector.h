@@ -19,7 +19,7 @@ class FileNameVisitor;
 class WorkspaceFile;
 class AudioDriver;
 
-class SceneVector : public AnimationImpl {
+class SceneVector final : public AnimationImpl {
 	std::vector<std::unique_ptr<Scene>> scenes;
 	int totalSoundCount;
 

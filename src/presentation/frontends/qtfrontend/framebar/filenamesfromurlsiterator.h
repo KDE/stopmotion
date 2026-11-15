@@ -13,7 +13,7 @@
 
 class QUrl;
 
-class FileNamesFromUrlsIterator : public StringIterator {
+class FileNamesFromUrlsIterator final : public StringIterator {
 	QList<QUrl>::Iterator b;
 	QList<QUrl>::Iterator e;
 	std::string buffer;

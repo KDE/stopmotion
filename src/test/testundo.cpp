@@ -488,7 +488,7 @@ public:
 	}
 };
 
-class ExecutorReplay : public ExecutorStep {
+class ExecutorReplay final : public ExecutorStep {
 	const char* logFName;
 	FILE* fh;
 	enum {

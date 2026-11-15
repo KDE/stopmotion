@@ -20,7 +20,7 @@ class ErrorHandler;
  *
  * @author Bjoern Erik Nilsen & Fredrik B. Kjoelstad
  */
-class OggVorbis : public AudioFormat {
+class OggVorbis final : public AudioFormat {
 public:
 	OggVorbis(const OggVorbis&) = delete;
 	OggVorbis& operator=(const OggVorbis&) = delete;
