@@ -36,30 +36,30 @@ public:
 
 	/**
 	 * Stores the playButton so that it can be toggled
-	 * @param playButton the button which starts and stops the
+	 * @param button the button which starts and stops the
 	 * animation running. This is needed for toggling the button states.
 	 */
-	void setPlayButton(QPushButton *playButton);
+	void setPlayButton(QPushButton *button);
 
 	/**
 	 * Stores the removeFramesButton so that it can be deactivated as needed.
-	 * @param removeFramesButton the button for removing frames.
+	 * @param button the button for removing frames.
 	 * This is needed for canceling this while running the animations to
 	 * avoid system crash :D
 	 */
-	void setRemoveFramesButton(QPushButton *removeFramesButton);
+	void setRemoveFramesButton(QPushButton *button);
 
 	/**
 	 * Sets the loop button.
-	 * @param loopButton the button to be used as loop button
+	 * @param button the button to be used as loop button
 	 */
-	void setLoopButton(QPushButton *loopButton);
+	void setLoopButton(QPushButton *button);
 
 	/**
 	 * Sets the pause button.
-	 * @param pauseButton the button to be used as pause button
+	 * @param button the button to be used as pause button
 	 */
-	void setPauseButton(QPushButton *pauseButton);
+	void setPauseButton(QPushButton *button);
 
 Q_SIGNALS:
 
@@ -96,9 +96,9 @@ public Q_SLOTS:
 
 	/**
 	 * Sets the speed of the animation in frames per second
-	 * @param fps the number of frames per second the animation will run at.
+	 * @param newFps the number of frames per second the animation will run at.
 	 */
-	void setSpeed(int fps);
+	void setSpeed(int newFps);
 
 	/**
 	 * Toggles between looping the animation when it is running and closing it

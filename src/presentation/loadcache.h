@@ -65,11 +65,11 @@ private:
 		typename T::value_t* value() const;
 		/**
 		 * Sets the path and value.
-		 * @param path A copy is taken, so ownership is not passed and the
+		 * @param newPath A copy is taken, so ownership is not passed and the
 		 * lifetime of the original is immaterial.
-		 * @param value Ownership is passed.
+		 * @param newValue Ownership is passed.
 		 */
-		void set(const char* path, typename T::value_t* value);
+		void set(const char* newPath, typename T::value_t* newValue);
 		/**
 		 * Find the item in a list and move it to the front, if it exists.
 		 * @param [in] path The path to find.
@@ -178,10 +178,10 @@ typename T::value_t* LoadCache<T>::Item::value() const {
 }
 
 template<typename T>
-void LoadCache<T>::Item::set(const char* path, typename T::value_t* value) {
+void LoadCache<T>::Item::set(const char* newPath, typename T::value_t* newValue) {
 	clear();
-	n = path;
-	v = value;
+	n = newPath;
+	v = newValue;
 }
 
 template<typename T>

@@ -112,29 +112,29 @@ void SceneVector::removeFrames(int scene, int frame, int count,
 	}
 }
 
-void SceneVector::moveFrames(int fromScene, int fromFrame, int frameCount,
+void SceneVector::moveFrames(int fromScene, int fromFrame, int count,
 		int toScene, int toFrame) {
 	Scene* from = getMutableScene(fromScene);
 	Scene* to = getMutableScene(toScene);
 	const int fromSize = from->getSize();
 	const int toSize = to->getSize();
-	if (fromSize < fromFrame + frameCount
+	if (fromSize < fromFrame + count
 			 	 || toSize < toFrame)
 		 throw FrameOutOfRangeException();
 	if (toScene != fromScene) {
-		preallocateFrames(toScene, frameCount);
+		preallocateFrames(toScene, count);
 		// this will do for now, even though it is quadratic
-		for (int i = 0; i != frameCount; ++i) {
+		for (int i = 0; i != count; ++i) {
 			to->addFrame(from->removeFrame(fromFrame), toFrame + i);
 		}
 	} else if (toFrame < fromFrame) {
 		// this will do for now, even though it is stupid
-		for (int i = 0; i != frameCount; ++i) {
+		for (int i = 0; i != count; ++i) {
 			to->addFrame(from->removeFrame(fromFrame + i), toFrame + i);
 		}
-	} else if (fromFrame + frameCount < toFrame) {
+	} else if (fromFrame + count < toFrame) {
 		// this will do for now, even though it is stupid
-		for (int i = 0; i != frameCount; ++i) {
+		for (int i = 0; i != count; ++i) {
 			// perform a rotation
 			to->addFrame(from->removeFrame(fromFrame), toFrame - 1);
 		}

@@ -19,9 +19,9 @@ ThumbView::~ThumbView()
 }
 
 
-void ThumbView::setNumber(int number)
+void ThumbView::setNumber(int n)
 {
-	this->number = number;
+	number = n;
 }
 
 

@@ -50,15 +50,15 @@ public:
 
 	/**
 	 * Sets the viewing mode/type of effect used when displaying the video.
-	 * @param mode the type of effect to be showed on the video. The modes are:\n
+	 * @param newMode the type of effect to be showed on the video. The modes are:\n
 	 *             0: Image mixing/onion skinning\n
 	 *             1: Image differentiating\n
 	 *             2: Playback\n
 	 * @return true if the mode was successfully changed
 	 */
-	bool setViewMode(ImageMode mode);
+	bool setViewMode(ImageMode newMode);
 
-	void setMixCount(int mixCount);
+	void setMixCount(int count);
 
 	/**
 	 * Returns the view mode.
@@ -68,9 +68,9 @@ public:
 
 	/**
 	 * Sets the speed for the playback.
-	 * @param playbackSpeed the speed to be set.
+	 * @param speed the speed to be set.
 	 */
-	void setPlaybackSpeed(int playbackSpeed);
+	void setPlaybackSpeed(int speed);
 
 	/**
 	 * Gets the speed for playback.

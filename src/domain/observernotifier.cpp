@@ -252,9 +252,9 @@ public:
 	}
 };
 
-void ObserverNotifier::moveFrames(int fromScene, int fromFrame, int frameCount,
+void ObserverNotifier::moveFrames(int fromScene, int fromFrame, int count,
 		int toScene, int toFrame) {
-	FrameMover fm(fromScene, fromFrame, frameCount, toScene, toFrame);
+	FrameMover fm(fromScene, fromFrame, count, toScene, toFrame);
 	doOp(fm);
 }
 

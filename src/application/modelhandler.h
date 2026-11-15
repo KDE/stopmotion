@@ -42,9 +42,9 @@ public:
 	 * Function for setting the button used for removing frames. This button is
 	 * needed for checking if it is enabled when attempting to remove frames with
 	 * the delete key.
-	 * @param removeFramesButton the button used for removing frames.
+	 * @param button the button used for removing frames.
 	 */
-	void setRemoveFramesButton(QPushButton *removeFramesButton);
+	void setRemoveFramesButton(QPushButton *button);
 
 
 public Q_SLOTS:

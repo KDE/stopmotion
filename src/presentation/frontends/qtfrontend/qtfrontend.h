@@ -50,7 +50,7 @@ public:
 	void showProgress(ProgressMessage message, int numOperations) override;
 	void hideProgress() override;
 	void updateProgress(int numOperationsDone) override;
-	void setProgressInfo(const char *infoText);
+	void setProgressInfo(const char *text);
 	bool isOperationAborted() override;
 	void processEvents() override;
 	bool askQuestion(Question question) override;

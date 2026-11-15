@@ -41,9 +41,9 @@ public:
 	 *     a custom(/messy!) class hierarchy and gives me time to go out and have  
 	 *     a few beers tonight).
 	 *
-	 * @param focusSpinBox the focuswidget of this menu.
+	 * @param spinBox the focuswidget of this menu.
 	 */
-	void setFocusWidget(QSpinBox * focusSpinBox = nullptr);
+	void setFocusWidget(QSpinBox * spinBox = nullptr);
 	
 	
 	/**
@@ -54,9 +54,9 @@ public:
 	 *     a custom(/messy!) class hierarchy and gives me time to go out and have  
 	 *     a few beers tonight).
 	 *
-	 * @param focusLineEdit the focuswidget of this menu.
+	 * @param lineEdit the focuswidget of this menu.
 	 */
-	void setFocusWidget(QLineEdit * focusLineEdit = nullptr);
+	void setFocusWidget(QLineEdit * lineEdit = nullptr);
 	
 protected:
 	/**

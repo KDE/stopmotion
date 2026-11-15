@@ -417,8 +417,8 @@ void FrameBar::setActiveFrame(int frameNumber) {
 }
 
 
-void FrameBar::setSelecting(bool selecting) {
-	this->selecting = selecting;
+void FrameBar::setSelecting(bool on) {
+	selecting = on;
 }
 
 
@@ -509,8 +509,8 @@ int FrameBar::getSelectionAnchor() const {
 	return selectionFrame;
 }
 
-void FrameBar::setPreferencesMenu(FramePreferencesMenu* preferencesMenu) {
-	this->preferencesMenu = preferencesMenu;
+void FrameBar::setPreferencesMenu(FramePreferencesMenu* menu) {
+	preferencesMenu = menu;
 }
 
 void FrameBar::showPreferencesMenu() {
@@ -658,8 +658,8 @@ int FrameBar::getMovingScene() const {
 }
 
 
-void FrameBar::setMovingScene(int movingScene) {
-	this->movingScene = movingScene;
+void FrameBar::setMovingScene(int scene) {
+	movingScene = scene;
 }
 
 
@@ -888,7 +888,7 @@ void FrameBar::selectNextScene() {
 	doScroll();
 }
 
-void FrameBar::setSelection(int scene, int selectionFrame, int activeFrame) {
+void FrameBar::setSelection(int scene, int selection, int active) {
 	setActiveScene(scene);
-	setActiveFrameAndSelection(activeFrame, selectionFrame);
+	setActiveFrameAndSelection(active, selection);
 }

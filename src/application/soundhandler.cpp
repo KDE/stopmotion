@@ -20,8 +20,8 @@ SoundHandler::SoundHandler(QObject *parent, QStatusBar *sb,
 }
 
 
-void SoundHandler::setSoundsList(QListWidget *soundsList) {
-	this->soundsList = soundsList;
+void SoundHandler::setSoundsList(QListWidget *list) {
+	soundsList = list;
 }
 
 

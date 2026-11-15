@@ -97,8 +97,8 @@ void FrameThumbView::mouseDoubleClickEvent( QMouseEvent * ) {
 }
 
 
-void FrameThumbView::paintEvent (QPaintEvent * paintEvent) {
-	QLabel::paintEvent(paintEvent);
+void FrameThumbView::paintEvent (QPaintEvent * event) {
+	QLabel::paintEvent(event);
 	QPainter painter( this );
 	
 	if (selected) {
@@ -146,8 +146,8 @@ void FrameThumbView::startDrag() {
 }
 
 
-void FrameThumbView::setHasSounds( bool hasSounds ) {
-	this->hasSounds = hasSounds;
+void FrameThumbView::setHasSounds( bool sounds ) {
+	hasSounds = sounds;
 	update();
 }
 
@@ -160,9 +160,9 @@ void FrameThumbView::setNumber( int number ) {
 }
 
 
-void FrameThumbView::setSelected(bool selected) {
-	this->selected = selected;
-	if (selected) {
+void FrameThumbView::setSelected(bool on) {
+	selected = on;
+	if (on) {
 		setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 		setLineWidth(5);
 		setMidLineWidth(6);

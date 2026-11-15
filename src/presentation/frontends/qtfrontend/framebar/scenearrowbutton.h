@@ -29,9 +29,9 @@ public:
 	
 	/**
 	 * Sets if the scene is opened or closed.
-	 * @param isOpened true if the scene is opened.
+	 * @param opened true if the scene is opened.
 	 */
-	void setOpened(bool isOpened);
+	void setOpened(bool opened);
 	
 public Q_SLOTS:
 	/**

@@ -26,9 +26,9 @@ EditMenuHandler::EditMenuHandler ( QObject *parent, QStatusBar *sb,
 }
 
 
-void EditMenuHandler::setGotoMenu( QWidget * gotoMenu )
+void EditMenuHandler::setGotoMenu( QWidget * menu )
 {
-	this->gotoMenu = gotoMenu;
+	gotoMenu = menu;
 }
 
 

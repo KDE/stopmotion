@@ -40,9 +40,9 @@ public:
 
 	/**
 	 * Sets if the scene is opened or closed.
-	 * @param isOpened true if the scene is opened.
+	 * @param opened true if the scene is opened.
 	 */
-	void setOpened(bool isOpened) override;
+	void setOpened(bool opened) override;
 
 	/**
 	 * Returns whether the scene is opened.

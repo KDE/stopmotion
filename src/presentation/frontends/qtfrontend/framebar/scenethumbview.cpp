@@ -51,11 +51,11 @@ SceneThumbView::~SceneThumbView() {
 }
 
 
-void SceneThumbView::setOpened( bool isOpened ) {
-	this->isOpened = isOpened;
-	arrowButton->setOpened(isOpened);
+void SceneThumbView::setOpened( bool opened ) {
+	isOpened = opened;
+	arrowButton->setOpened(opened);
 	DomainFacade* facade = DomainFacade::getFacade();
-	if (!isOpened && (facade->getSceneSize(getNumber()) > 0)) {
+	if (!opened && (facade->getSceneSize(getNumber()) > 0)) {
 		const char *path = facade->getImagePath(getNumber(), 0);
 		if (path) {
 			QImage half = QImage(QString::fromLocal8Bit(path)).scaled(width() / 2, height() / 2);

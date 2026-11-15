@@ -28,8 +28,8 @@ void Hash::add(const char* string) {
 	add(s);
 }
 
-void Hash::add(Hash h) {
-	add(h.h);
+void Hash::add(Hash other) {
+	add(other.h);
 }
 
 void Hash::add(FILE* fh) {

@@ -49,8 +49,8 @@ public:
 	StringLoggerWrapper& operator=(const StringLoggerWrapper&) = delete;
 	~StringLoggerWrapper() override {
 	}
-	void setOutputString(std::string* output) {
-		out = output;
+	void setOutputString(std::string* str) {
+		out = str;
 	}
 	void output(std::string* to) {
 		if (to)
@@ -108,11 +108,11 @@ class ExecutorStep {
 	std::string log[2];
 	StringLoggerWrapper stringLogger;
 	RandomSource final;
-	void setup(Executor& e, CommandLogger* logger, int whichLog) {
+	void setup(Executor& e, CommandLogger* delegate, int whichLog) {
 		cancelAnyMallocFailure();
 		log[whichLog].clear();
 		stringLogger.setOutputString(&log[whichLog]);
-		stringLogger.setDelegate(logger);
+		stringLogger.setDelegate(delegate);
 		e.setCommandLogger(&stringLogger);
 	}
 	int activeLog;
@@ -183,19 +183,19 @@ public:
 	 * Runs this series of steps and {@a other} and tests the results against
 	 * one another. {@a other} is run first.
 	 */
-	void runAndCheck(const char* name, ExecutorStep& other, Executor& executor,
+	void runAndCheck(const char* testName, ExecutorStep& other, Executor& executor,
 			ModelTestHelper& helper, RandomSource rng, int testNum) {
 		RandomSource r2 = rng;
 		try {
 			other.run(executor, rng, 0);
 		} catch (std::exception& e) {
 			other.cleanup();
-			std::string log;
-			other.getLog(log, 0);
+			std::string logText;
+			other.getLog(logText, 0);
 			std::ostringstream ss;
-			ss << "Failed to run 'other' step in test '" << name
+			ss << "Failed to run 'other' step in test '" << testName
 					<< "' on iteration " << testNum
-					<< "\nSuccessful log:" << log;
+					<< "\nSuccessful log:" << logText;
 			std::string s = ss.str();
 			QFAIL(s.c_str());
 		}
@@ -212,7 +212,7 @@ public:
 			std::string logS2;
 			getLog(logS2, 1);
 			std::ostringstream ss;
-			ss << "Failed to run 'this' step in test '" << name
+			ss << "Failed to run 'this' step in test '" << testName
 					<< "' on iteration " << testNum
 					<< "\nOther log:" << logS1
 					<< "\nSuccessful portion of 'this' log:" << logS2;
@@ -228,7 +228,7 @@ public:
 			std::string logS2;
 			getLog(logS2, 1);
 			std::ostringstream ss;
-			ss << "Failed test '" << name << "' on iteration " << testNum
+			ss << "Failed test '" << testName << "' on iteration " << testNum
 					<< "\nTesting:" << logS1 << "\nAgainst:" << logS2;
 			std::string model2;
 			helper.dumpModel(model2, executor);
@@ -243,7 +243,7 @@ public:
 	 * Just like runAndCheck but pre-runs this.run. Useful if "this" contains a
 	 * FailingStep (whose delegate needs to be pre-run).
 	 */
-	void runAndCheckWithPreRun(const char* name, ExecutorStep& other, Executor& executor,
+	void runAndCheckWithPreRun(const char* testName, ExecutorStep& other, Executor& executor,
 			ModelTestHelper& helper, RandomSource rng, int testNum) {
 		RandomSource r1 = rng;
 		try {
@@ -255,7 +255,7 @@ public:
 			std::string logS2;
 			getLog(logS2, 0);
 			std::ostringstream ss;
-			ss << "Failed to pre-run 'this' step in test '" << name
+			ss << "Failed to pre-run 'this' step in test '" << testName
 					<< "' on iteration " << testNum
 					<< "\nOther log:" << logS1
 					<< "\nSuccessful portion of 'this' log:" << logS2;
@@ -263,7 +263,7 @@ public:
 			QFAIL(s.c_str());
 		}
 		cleanup();
-		runAndCheck(name, other, executor, helper, rng, testNum);
+		runAndCheck(testName, other, executor, helper, rng, testNum);
 	}
 };
 

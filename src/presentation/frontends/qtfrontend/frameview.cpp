@@ -388,12 +388,12 @@ void FrameView::nextPlayBack() {
 }
 
 
-bool FrameView::setViewMode(ImageMode mode) {
-	if (mode == this->mode)
+bool FrameView::setViewMode(ImageMode newMode) {
+	if (newMode == mode)
 		return true;
 	if (!grabber)
 		return true;
-	if (mode == imageModePlayback) {
+	if (newMode == imageModePlayback) {
 		if ( grabber->isGrabberProcess() ) {
 			playbackTimer.start(1000/playbackSpeed);
 		} else {
@@ -404,22 +404,22 @@ bool FrameView::setViewMode(ImageMode mode) {
 			playbackTimer.stop();
 		}
 	}
-	this->mode = mode;
+	mode = newMode;
 	return true;
 }
 
-void FrameView::setMixCount(int mixCount) {
-	this->mixCount = mixCount;
+void FrameView::setMixCount(int count) {
+	mixCount = count;
 }
 
 int FrameView::getViewMode() const {
 	return mode;
 }
 
-void FrameView::setPlaybackSpeed(int playbackSpeed) {
-	this->playbackSpeed = playbackSpeed;
+void FrameView::setPlaybackSpeed(int speed) {
+	playbackSpeed = speed;
 	if ( playbackTimer.isActive() ) {
-		playbackTimer.setInterval(1000 / playbackSpeed);
+		playbackTimer.setInterval(1000 / speed);
 	}
 }
 

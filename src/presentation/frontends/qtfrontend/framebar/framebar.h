@@ -116,9 +116,9 @@ public:
 	/**
 	 * Set whether the user is engaged selecting several frames or not (pressing
 	 * shift).
-	 * @param selecting true if the user is currently selecting multiple pictures
+	 * @param on true if the user is currently selecting multiple pictures
 	 */
-	void setSelecting(bool selecting);
+	void setSelecting(bool on);
 
 	/**
 	 * Returns true if the user is currently selecting several thumbviews.
@@ -152,9 +152,9 @@ public:
 
 	/**
 	 * Registers the frame preferences menu in the framebar.
-	 * @param preferencesMenu the frame preferences menu.
+	 * @param menu the frame preferences menu.
 	 */
-	void setPreferencesMenu(FramePreferencesMenu *preferencesMenu);
+	void setPreferencesMenu(FramePreferencesMenu *menu);
 
 	/**
 	 * Displays the frame preferences for the active frame.
@@ -171,9 +171,9 @@ public:
 	/**
 	 * Sets the value of the movingScene property specifying which scene
 	 * is currently being moved in the framebar.
-	 * @param movingScene the new value of the movingScene property.
+	 * @param scene the new value of the movingScene property.
 	 */
-	void setMovingScene(int movingScene);
+	void setMovingScene(int scene);
 
 	static int getFrameWidth();
 	static int getFrameHeight();
@@ -215,7 +215,7 @@ public Q_SLOTS:
 	void selectPreviousScene();
 	void selectNextScene();
 	void fileChanged(const QString &path);
-	void setSelection(int scene, int selectionFrame, int activeFrame);
+	void setSelection(int scene, int selection, int active);
 
 Q_SIGNALS:
 	//The signals in the framebar is used for signaling small widget,

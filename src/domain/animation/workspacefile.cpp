@@ -131,7 +131,7 @@ const WorkspaceFileType& WorkspaceFileType::sound() {
  * @param basename The name of the file.
  * @param inFrames True for a sound or image file.
  */
-void WorkspaceFile::setFilename(const char* basename, bool inFrames) {
+void WorkspaceFile::setFilename(const char* name, bool inFrames) {
 	std::stringstream p;
 	if (inFrames) {
 		p << workspacePathFrames;
@@ -139,13 +139,13 @@ void WorkspaceFile::setFilename(const char* basename, bool inFrames) {
 		p << workspacePath;
 	}
 	nameStart = p.tellp();
-	p << basename;
+	p << name;
 	if (p.fail())
 		throw UiException(UiException::failedToCopyFilesToWorkspace);
 	fullPath = p.str();
 }
 
-void WorkspaceFile::ensureStopmotionDirectoriesExist(AndClear clear) {
+void WorkspaceFile::ensureStopmotionDirectoriesExist(AndClear clearing) {
 	{
 		std::stringstream pathStr;
 		pathStr << workspacePath;
@@ -157,7 +157,7 @@ void WorkspaceFile::ensureStopmotionDirectoriesExist(AndClear clear) {
 		pathStr << workspacePathFrames;
 		std::string path = pathStr.str();
 		Util::ensurePathExists(path.c_str());
-		if (clear == andClear) {
+		if (clearing == andClear) {
 			Util::removeDirectoryContents(path.c_str());
 		}
 	}

@@ -31,7 +31,7 @@ public:
 	void add(uint64_t n);
 	void addS(int64_t n);
 	void add(const char* string);
-	void add(Hash h)
+	void add(Hash other)
 	/**
 	 * Add the contents of a file to the hash.
 	 * @param fh The file handle to the file (which must be open for reading).

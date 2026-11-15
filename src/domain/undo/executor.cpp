@@ -565,9 +565,9 @@ public:
 			return false;
 		throw MalformedLineException();
 	}
-	void executeRandomCommands(int& commandCount, RandomSource& rng,
+	void executeRandomCommands(int& count, RandomSource& rng,
 			int minCount, int maxCount) override {
-		commandCount = 0;
+		count = 0;
 		int n = factories.size();
 		if (n == 0)
 			throw UnknownCommandException();
@@ -576,8 +576,8 @@ public:
 				i != factories.end(); ++i) {
 			factoryNames.push_back(i->first);
 		}
-		while (commandCount < maxCount) {
-			int r = rng.getUniform(commandCount < minCount? n - 1: n);
+		while (count < maxCount) {
+			int r = rng.getUniform(count < minCount? n - 1: n);
 			if (r == n)
 				return;
 			std::string& name(factoryNames[r]);
@@ -591,7 +591,7 @@ public:
 				history.execute(*c.release());
 				if (logger)
 					logger->commit();
-				++commandCount;
+				++count;
 			}
 		}
 	}

@@ -49,9 +49,9 @@ public:
 	/**
 	 * Function to set the number of this ThumbView in the framebar
 	 * when the ThumbView change position.
-	 * @param number the new number for the ThumbView in the framebar.
+	 * @param n the new number for the ThumbView in the framebar.
 	 */
-	virtual void setNumber(int number);
+	virtual void setNumber(int n);
 
 	/**
 	 *Retrieves the number of this ThumbView in the framebar

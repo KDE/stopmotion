@@ -29,7 +29,7 @@ public:
 	/**
 	 * Adds a frame to the add command.
 	 */
-	void addFrame(std::unique_ptr<Frame> frame);
+	void addFrame(std::unique_ptr<Frame> f);
 	Command* execute() override;
 	void accept(FileNameVisitor& v) const override;
 private:

@@ -33,9 +33,9 @@ public:
 	
 	/**
 	 * Sets the gotoMenu property so that it can be closed.
-	 * @param gotoMenu the gotoMenu.
+	 * @param menu the gotoMenu.
 	 */
-	void setGotoMenu(QWidget *gotoMenu);
+	void setGotoMenu(QWidget *menu);
 
 public Q_SLOTS:
 	

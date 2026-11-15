@@ -19,7 +19,7 @@
 class WorkspaceFile {
 	std::string fullPath;
 	std::string::size_type nameStart = 0;
-	void setFilename(const char* basename, bool inFrames = false);
+	void setFilename(const char* name, bool inFrames = false);
 public:
 	enum NewModelFile { newModelFile };
 	enum CurrentModelFile { currentModelFile };
@@ -98,10 +98,10 @@ public:
 	/**
 	 * Ensures that the ~/.stopmotion and frames directories exist if they do
 	 * not already.
-	 * @param clear Pass @c andClear to clear the frames directory contents, if
+	 * @param clearing Pass @c andClear to clear the frames directory contents, if
 	 * any.
 	 */
-	static void ensureStopmotionDirectoriesExist(AndClear clear = doNotClear);
+	static void ensureStopmotionDirectoriesExist(AndClear clearing = doNotClear);
 	/**
 	 * Clears (creating if necessary) model files, frames, sounds and logs from
 	 * the workspace directory

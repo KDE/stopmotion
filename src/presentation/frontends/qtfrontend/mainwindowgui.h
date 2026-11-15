@@ -155,10 +155,10 @@ private:
 
 	/**
 	 * Creates the handlers for handling user requests.
-	 * @param stApp the application class for changing translator
+	 * @param app the application class for changing translator
 	 * on runtime.
 	 */
-	void createHandlers(QApplication *stApp);
+	void createHandlers(QApplication *app);
 
 	/**
 	 * Begins monitoring the workspace directory for interesting changes.

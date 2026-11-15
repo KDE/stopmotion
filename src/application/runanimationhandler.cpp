@@ -29,19 +29,19 @@ RunAnimationHandler::RunAnimationHandler(QObject *parent, QStatusBar *sb,
 }
 
 
-void RunAnimationHandler::setPlayButton( QPushButton * playButton ) {
-	this->playButton = playButton;
+void RunAnimationHandler::setPlayButton( QPushButton * button ) {
+	playButton = button;
 }
 
 
 void RunAnimationHandler::setRemoveFramesButton(
-		QPushButton * removeFramesButton) {
-	this->removeFramesButton = removeFramesButton;
+		QPushButton * button) {
+	removeFramesButton = button;
 }
 
 
-void RunAnimationHandler::setLoopButton(QPushButton * loopButton) {
-	this->loopButton = loopButton;
+void RunAnimationHandler::setLoopButton(QPushButton * button) {
+	loopButton = button;
 }
 
 
@@ -135,8 +135,8 @@ void RunAnimationHandler::stopAnimation() {
 }
 
 
-void RunAnimationHandler::setPauseButton(QPushButton * pauseButton) {
-	this->pauseButton = pauseButton;
+void RunAnimationHandler::setPauseButton(QPushButton * button) {
+	pauseButton = button;
 }
 
 
@@ -159,13 +159,13 @@ void RunAnimationHandler::pauseAnimation() {
 }
 
 
-void RunAnimationHandler::setSpeed(int fps) {
-	this->fps = fps;
+void RunAnimationHandler::setSpeed(int newFps) {
+	fps = newFps;
 	if ( timer->isActive() ) {
 		timer->setInterval(1000/this->fps);
 	}
 	PreferencesTool* preferences = PreferencesTool::get();
-	preferences->setPreference("fps", fps);
+	preferences->setPreference("fps", newFps);
 	try {
 		preferences->flush();
 	} catch (UiException& ex) {

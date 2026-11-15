@@ -59,7 +59,7 @@ public:
 	void preallocateFrames(int scene, int count) override;
 	void removeFrames(int scene, int frame, int count,
 			std::vector<std::unique_ptr<Frame>>& out) override;
-	void moveFrames(int fromScene, int fromFrame, int frameCount,
+	void moveFrames(int fromScene, int fromFrame, int count,
 			int toScene, int toFrame) override;
 	void replaceImage(int sceneNumber, int frameNumber,
 			WorkspaceFile& otherImage) override;

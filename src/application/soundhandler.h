@@ -40,7 +40,7 @@ public:
 	 * @param soundsList the listbox to add to the handler.
 	 */
 	//void setSoundsList(Q3ListBox *soundsList);
-	void setSoundsList(QListWidget *soundsList);
+	void setSoundsList(QListWidget *list);
 	
 public Q_SLOTS:
 

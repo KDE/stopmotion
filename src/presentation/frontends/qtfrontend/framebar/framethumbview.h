@@ -72,15 +72,15 @@ public:
 	
 	/**
 	 * Sets whether this widget has sounds.
-	 * @param hasSounds 
+	 * @param sounds
 	 */
-	void setHasSounds( bool hasSounds ) override;
+	void setHasSounds( bool sounds ) override;
 	
 	/**
 	 * Sets whether this thumbview should be selected.
-	 * @param selected whether this frame is selected.
+	 * @param on whether this frame is selected.
 	 */
-	void setSelected(bool selected) override;
+	void setSelected(bool on) override;
 	
 	/**
 	 * Notifies the framethumbview that a drop have happened inside its borders. 

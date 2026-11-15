@@ -24,15 +24,15 @@ void MenuFrame::mousePressEvent( QMouseEvent * )
 }
 
 
-void MenuFrame::setFocusWidget( QSpinBox * focusSpinBox )
+void MenuFrame::setFocusWidget( QSpinBox * spinBox )
 {
-	this->focusSpinBox = focusSpinBox;
+	focusSpinBox = spinBox;
 }
 
 
-void MenuFrame::setFocusWidget( QLineEdit * focusLineEdit )
+void MenuFrame::setFocusWidget( QLineEdit * lineEdit )
 {
-	this->focusLineEdit = focusLineEdit;
+	focusLineEdit = lineEdit;
 }
 
 

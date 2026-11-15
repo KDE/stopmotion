@@ -132,9 +132,9 @@ void QtFrontend::updateProgress(int numOperationsDone) {
 }
 
 
-void QtFrontend::setProgressInfo(const char *infoText) {
+void QtFrontend::setProgressInfo(const char *text) {
 	if (progressDialog) {
-		progressDialog->setLabelText(QString::fromUtf8(infoText));
+		progressDialog->setLabelText(QString::fromUtf8(text));
 	}
 }
 

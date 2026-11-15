@@ -35,8 +35,8 @@ public:
 	
 	~CameraHandler() override;
 
-	void setCameraButton( QPushButton *cameraButton );
-	void setFrameView(FrameView *frameView);
+	void setCameraButton( QPushButton *button );
+	void setFrameView(FrameView *view);
 	
 	/**
 	 * Sets the viewing mode which is the type of effect used when running the camera.

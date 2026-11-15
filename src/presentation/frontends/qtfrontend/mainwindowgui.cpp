@@ -153,8 +153,8 @@ MainWindowGUI::~MainWindowGUI() {
 }
 
 
-void MainWindowGUI::createHandlers(QApplication *stApp) {
-	languageHandler = new LanguageHandler( this, stApp );
+void MainWindowGUI::createHandlers(QApplication *app) {
+	languageHandler = new LanguageHandler( this, app );
 	connect( languageHandler, &LanguageHandler::languageChanged, this, &MainWindowGUI::retranslateStrings );
 
 	runAnimationHandler = new RunAnimationHandler(this, statusBar(), frameBar);

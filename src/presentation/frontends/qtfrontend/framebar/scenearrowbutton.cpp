@@ -25,9 +25,9 @@ SceneArrowButton::SceneArrowButton( QWidget *parent ) : QWidget(parent)
 }
 
 
-void SceneArrowButton::setOpened(bool isOpened)
+void SceneArrowButton::setOpened(bool opened)
 {
-	this->isOpened = isOpened;
+	isOpened = opened;
 	update();
 }
 

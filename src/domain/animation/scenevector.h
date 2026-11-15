@@ -117,13 +117,13 @@ public:
 	 * @param fromScene The number of the scene from which to move frames.
 	 * @param fromFrame The number of the frame within scene @a fromScene from
 	 * which frames should be moved.
-	 * @param frameCount The number of frames to move. All the frames must be
+	 * @param count The number of frames to move. All the frames must be
 	 * from the same scene.
 	 * @param toScene The number of the scene to which to move the frames.
 	 * @param toFrame The number of the frame within scene @a toScene to which
 	 * the frames should be moved.
 	 */
-	void moveFrames(int fromScene, int fromFrame, int frameCount,
+	void moveFrames(int fromScene, int fromFrame, int count,
 			int toScene, int toFrame) override;
 	/**
 	 * Returns the file path of the image of the specified frame.

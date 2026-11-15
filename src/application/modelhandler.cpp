@@ -37,8 +37,8 @@ ModelHandler::~ModelHandler() {
 }
 
 
-void ModelHandler::setRemoveFramesButton(QPushButton* removeFramesButton) {
-	this->removeFramesButton = removeFramesButton;
+void ModelHandler::setRemoveFramesButton(QPushButton* button) {
+	removeFramesButton = button;
 }
 
 

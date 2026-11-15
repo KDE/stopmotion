@@ -24,8 +24,8 @@ CommandAdd::CommandAdd(AnimationImpl& model, int toScene, int toFrame, int count
 CommandAdd::~CommandAdd() {
 }
 
-void CommandAdd::addFrame(std::unique_ptr<Frame> frame) {
-	frames.push_back(std::move(frame));
+void CommandAdd::addFrame(std::unique_ptr<Frame> f) {
+	frames.push_back(std::move(f));
 }
 
 Command* CommandAdd::execute() {

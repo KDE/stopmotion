@@ -36,15 +36,15 @@ CameraHandler::~CameraHandler( ) {
 }
 
 
-void CameraHandler::setFrameView( FrameView * frameView )
+void CameraHandler::setFrameView( FrameView * view )
 {
-	this->frameView = frameView;
+	frameView = view;
 }
 
 
-void CameraHandler::setCameraButton( QPushButton *cameraButton )
+void CameraHandler::setCameraButton( QPushButton *button )
 {
-	this->cameraButton = cameraButton;
+	cameraButton = button;
 }
 
 
