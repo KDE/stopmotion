@@ -29,8 +29,8 @@ class QWidget;
 
 FrameThumbView::FrameThumbView(FrameBar *frameBar, QWidget *parent, int number,
 		const char *name)
-		: ThumbView(frameBar, parent, number, name) {
-	stringNumber = QStringLiteral("%1").arg(number + 1);
+		: ThumbView(frameBar, parent, number, name),
+		  stringNumber(QStringLiteral("%1").arg(number + 1)) {
 	textWidth = 5 + stringNumber.length() * 8;
 	selected = false;
 	hasSounds = false;
@@ -69,11 +69,11 @@ void FrameThumbView::mouseReleaseEvent( QMouseEvent * e ) {
 	if (e->button() == Qt::LeftButton) {
 		if ( !getFrameBar()->isSelecting() ) {
 			int selectionFrame = getFrameBar()->getSelectionAnchor();
-			int activeScene = getFrameBar()->getActiveScene();
 			int activeFrame = getFrameBar()->getActiveFrame();
 			int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 			int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
 			if (getNumber() <= highend || getNumber() >= lowend) {
+				int activeScene = getFrameBar()->getActiveScene();
 				getFrameBar()->updateNewActiveFrame(activeScene, getNumber());
 			}
 		}

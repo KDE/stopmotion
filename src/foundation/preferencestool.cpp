@@ -220,6 +220,8 @@ public:
 			fclose(f);
 	}
 	bool open(const char* filename) {
+		if (f)
+			fclose(f);
 		f = fopen(filename, "w");
 		if (!f)
 			return false;

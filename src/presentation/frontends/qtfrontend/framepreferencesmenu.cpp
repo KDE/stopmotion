@@ -91,7 +91,7 @@ void FramePreferencesMenu::open() {
 
 void FramePreferencesMenu::close()
 {
-	MenuFrame::close((QWidget*)parent());
+	MenuFrame::close(parentWidget());
 }
 
 

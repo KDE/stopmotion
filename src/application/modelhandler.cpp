@@ -44,7 +44,7 @@ void ModelHandler::setRemoveFramesButton(QPushButton* button) {
 
 void ModelHandler::chooseFrame() {
 	delete fileDialog;
-	fileDialog = new QFileDialog((MainWindowGUI*)parent(),
+	fileDialog = new QFileDialog(static_cast<MainWindowGUI*>(parent()),
 			tr("Choose frames to add"), *lastVisitedDir);
 	QStringList filters;
 	filters << QStringLiteral("Images (*.png *.jpg *.jpeg  *.gif *.PNG *.JPG *.JPEG *.GIF)")

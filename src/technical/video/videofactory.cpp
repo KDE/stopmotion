@@ -94,7 +94,7 @@ const char* VideoFactory::createVideoFile(VideoEncoder *encoder,
 		ec->show();
 		ec->run(QString::fromLocal8Bit(startCommand.c_str()));
 		// deleted when its window is closed
-		ec.release();
+		static_cast<void>(ec.release());
 		return encoder->getOutputFile();
 	}
 	return nullptr;

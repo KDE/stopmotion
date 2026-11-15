@@ -28,7 +28,7 @@ class RandomImpl {
 	enum {
 		chunkSize = 10
 	};
-	int chunk[chunkSize];
+	int chunk[chunkSize] = {};
 	int refCount;
 	int nextIndex;
 	RandomImpl* nextChunk;

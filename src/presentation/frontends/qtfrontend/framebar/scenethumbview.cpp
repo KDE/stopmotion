@@ -153,7 +153,6 @@ void SceneThumbView::contentsDropped(QDropEvent *event) {
 	DomainFacade* facade = DomainFacade::getFacade();
 	int sceneNumber = getNumber();
 	int movingScene = getFrameBar()->getMovingScene();
-	int activeScene= getFrameBar()->getActiveScene();
 	if (event->source() == nullptr) {
 		if ( event->mimeData()->hasUrls() ) {
 			QList<QUrl> urls = event->mimeData()->urls();
@@ -162,6 +161,7 @@ void SceneThumbView::contentsDropped(QDropEvent *event) {
 		}
 	} else if (movingScene == -1) {
 		// moving frames into a scene
+		int activeScene = getFrameBar()->getActiveScene();
 		int selectionFrame = getFrameBar()->getSelectionAnchor();
 		int activeFrame = getFrameBar()->getActiveFrame();
 		int highend = (selectionFrame > activeFrame)?
