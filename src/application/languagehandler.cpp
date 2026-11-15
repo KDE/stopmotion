@@ -56,8 +56,8 @@ LanguageHandler::LanguageHandler(QObject *parent, QApplication *stApp, const cha
 	}
 
 	if (language != QLatin1String("en")) {
-	    qCDebug(STOPMOTION_LOG, "Loading translator: ");
-	    qCDebug(STOPMOTION_LOG, translations.value(language).toLocal8Bit().constData());
+	    qCDebug(STOPMOTION_LOG, "Loading translator: %s",
+	            translations.value(language).toLocal8Bit().constData());
 	    load(language);
 	}
 
