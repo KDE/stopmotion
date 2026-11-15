@@ -256,7 +256,7 @@ int NonGUIFrontend::checkFiles(const char *directory) {
 	DIR *dp = opendir(directory);
 
 	if (dp) {
-		struct dirent *ep;
+		const struct dirent *ep;
 		struct stat st;
 		std::stringstream path;
 

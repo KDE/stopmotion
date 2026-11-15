@@ -66,7 +66,7 @@ public:
 	 * when something is changed in the model.
 	 * @param o the observer to be detached from the model.
 	 */
-	void detach(Observer *o);
+	void detach(const Observer *o);
 
 	/**
 	 * Registers the GUI frontend which is used to displaying and updating
@@ -84,7 +84,7 @@ public:
 	/**
 	 * Attempts to re-synch the UI after an error.
 	 */
-	void resync(std::exception& e);
+	void resync(const std::exception& e);
 	/**
 	 * Attempts to re-synch the UI after a non-critical error.
 	 */

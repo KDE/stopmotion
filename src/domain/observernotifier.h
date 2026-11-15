@@ -41,7 +41,7 @@ public:
 	 */
 	ObserverNotifier(std::unique_ptr<AnimationImpl> delegate, Frontend* frontend);
 	void addObserver(Observer* newObserver);
-	void removeObserver(Observer* o);
+	void removeObserver(const Observer* o);
 	void registerFrontend(Frontend* fe);
 	// derived from AnimationImpl
 	void clear() override;

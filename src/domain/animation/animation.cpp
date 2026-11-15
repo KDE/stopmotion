@@ -327,7 +327,7 @@ void Animation::attach(Observer* o) {
 	scenes->addObserver(o);
 }
 
-void Animation::detach(Observer* o) {
+void Animation::detach(const Observer* o) {
 	scenes->removeObserver(o);
 }
 
@@ -415,7 +415,7 @@ void Animation::clearHistory() {
 	executor->clearHistory();
 }
 
-void Animation::resync(std::exception& e) {
+void Animation::resync(const std::exception& e) {
 	if (frontend)
 		frontend->reportWarning(e.what());
 	scenes->resync();

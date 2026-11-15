@@ -580,7 +580,7 @@ public:
 			int r = rng.getUniform(count < minCount? n - 1: n);
 			if (r == n)
 				return;
-			std::string& name(factoryNames[r]);
+			const std::string& name(factoryNames[r]);
 			RandomParameters rpsd(rng);
 			const char* commandName = name.c_str();
 			WriterParametersWrapper rps(rpsd, commandName);
@@ -603,7 +603,7 @@ public:
 			int r = rng.getUniform(n);
 			if (r == n)
 				return;
-			std::string& name(constructiveCommands[r]);
+			const std::string& name(constructiveCommands[r]);
 			RandomParameters rpsd(rng);
 			WriterParametersWrapper rps(rpsd, name.c_str());
 			std::unique_ptr<Command> c(factories[name]->create(rps, *ErrorHandler::getThrower()));

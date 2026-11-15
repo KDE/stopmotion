@@ -50,7 +50,7 @@ public:
 	 * when something is changed in the model.
 	 * @param o the observer to be detached from the model.
 	 */
-	void detach(Observer *o);
+	void detach(const Observer *o);
 
 	/**
 	 * Registers the GUI frontend which is used to display and update

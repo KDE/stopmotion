@@ -76,7 +76,7 @@ void FramePreferencesMenu::open() {
 	soundsList->clear();
 	int activeFrame = frameBar->getActiveFrame();
 	int activeScene = frameBar->getActiveScene();
-	DomainFacade* facade = DomainFacade::getFacade();
+	const DomainFacade* facade = DomainFacade::getFacade();
 	int numSounds = facade->getNumberOfSounds(activeScene,
 					activeFrame);
 	for (int i = 0; i < numSounds; ++i) {

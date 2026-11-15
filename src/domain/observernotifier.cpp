@@ -65,7 +65,7 @@ void ObserverNotifier::addObserver(Observer* newObserver) {
 	observers.push_back(newObserver);
 }
 
-void ObserverNotifier::removeObserver(Observer* o) {
+void ObserverNotifier::removeObserver(const Observer* o) {
 	for (std::vector<Observer*>::iterator i = observers.begin();
 			i != observers.end(); ++i) {
 		if (*i == o) {

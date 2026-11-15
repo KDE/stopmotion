@@ -71,7 +71,7 @@ void handleFileLinkError() {
 }
 
 int removeFileOrDirectory(const char *path, const struct stat *,
-		int flag, struct FTW *info) {
+		int flag, struct FTW *info) { // cppcheck-suppress constParameterCallback
 	switch (flag) {
 	case FTW_D:
 	case FTW_DP:

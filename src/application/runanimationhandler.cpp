@@ -180,7 +180,7 @@ void RunAnimationHandler::toggleLooping() {
 
 
 void RunAnimationHandler::playNextFrame() {
-	DomainFacade *facade = DomainFacade::getFacade();
+	const DomainFacade *facade = DomainFacade::getFacade();
 	if (sceneNr >= 0) {
 		Q_EMIT playFrame(sceneNr, frameNr);
 		facade->playSounds(sceneNr, frameNr);

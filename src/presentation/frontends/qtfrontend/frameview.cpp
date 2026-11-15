@@ -150,7 +150,7 @@ void FrameView::drawOnionSkins() {
 			for (int i = 0; i != frameCount; ++i) {
 				const char* path = anim->getImagePath(
 						activeScene, activeFrame - i);
-				QPixmap* image = imageCache.get(path);
+				const QPixmap* image = imageCache.get(path);
 				if (image) {
 					painter.setOpacity(qreal(1)/(i + 2));
 					painter.drawPixmap(dst, *image);
@@ -167,7 +167,7 @@ void FrameView::drawOnionSkins() {
 			differencePainter.drawPixmap(differenceRect, cameraOutput);
 			if (0 <= activeFrame) {
 				const char* path = anim->getImagePath(activeScene, activeFrame);
-				QPixmap* image = imageCache.get(path);
+				const QPixmap* image = imageCache.get(path);
 				if (image) {
 					differencePainter.setCompositionMode(
 							QPainter::CompositionMode_Difference);
@@ -183,7 +183,7 @@ void FrameView::drawOnionSkins() {
 				painter.drawPixmap(dst, cameraOutput);
 			} else {
 				const char* path = anim->getImagePath(activeScene, playbackModeFrame);
-				QPixmap* image = imageCache.get(path);
+				const QPixmap* image = imageCache.get(path);
 				if (image) {
 					painter.drawPixmap(dst, *image);
 				}

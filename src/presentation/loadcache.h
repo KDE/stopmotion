@@ -125,7 +125,7 @@ LoadCache<T>::~LoadCache() {
 
 template<typename T>
 typename T::value_t* LoadCache<T>::get(const char* path) {
-	Item* p = Item::findOrFree(path, cacheHead, &freeHead);
+	const Item* p = Item::findOrFree(path, cacheHead, &freeHead);
 	if (p)
 		return p->value();
 	typename T::value_t* value = T::load(path);
@@ -136,7 +136,7 @@ typename T::value_t* LoadCache<T>::get(const char* path) {
 
 template<typename T>
 void LoadCache<T>::drop(const char* path) {
-	Item* p = Item::find(path, cacheHead);
+	const Item* p = Item::find(path, cacheHead);
 	if (p) {
 		cacheHead->clear();
 		Item::move(freeHead, cacheHead);

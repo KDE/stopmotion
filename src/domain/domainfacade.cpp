@@ -97,7 +97,7 @@ void DomainFacade::attach(Observer *o) {
 }
 
 
-void DomainFacade::detach(Observer *o) {
+void DomainFacade::detach(const Observer *o) {
 	animationModel->detach(o);
 }
 

@@ -209,7 +209,7 @@ const char* TestCommandFactory::RandomString() {
 void TestCommandFactory::emptyCommandReplayerThrows() {
 	try {
 		ce->execute("fakeCommand");
-	} catch (UnknownCommandException& e) {
+	} catch (const UnknownCommandException& e) {
 		return;
 	}
 	QFAIL("Empty CommandReplayer did not throw "

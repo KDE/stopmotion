@@ -1035,7 +1035,7 @@ void MainWindowGUI::keyPressEvent( QKeyEvent *k )
 		}
 		case Key_A:
 		{
-			DomainFacade* facade = DomainFacade::getFacade();
+			const DomainFacade* facade = DomainFacade::getFacade();
 			int scene = frameBar->getActiveScene();
 			if(0 <= scene) {
 				int sceneSize = facade->getSceneSize(scene);

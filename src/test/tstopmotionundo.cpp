@@ -94,7 +94,7 @@ class SceneVectorTestHelper : public ModelTestHelper {
 	class HashingFileNameVisitor : public FileNameVisitor {
 		Hash h;
 	public:
-		explicit HashingFileNameVisitor(SceneVector& sv) {
+		explicit HashingFileNameVisitor(const SceneVector& sv) {
 			sv.accept(*this);
 		}
 		Hash get() const {
@@ -114,7 +114,7 @@ class SceneVectorTestHelper : public ModelTestHelper {
 	class DumpingFileNameVisitor : public FileNameVisitor {
 		StringWriter dump;
 	public:
-		explicit DumpingFileNameVisitor(SceneVector& sv) {
+		explicit DumpingFileNameVisitor(const SceneVector& sv) {
 			sv.accept(*this);
 		}
 		const char* get() const {

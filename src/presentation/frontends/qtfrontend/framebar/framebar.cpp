@@ -252,7 +252,7 @@ void FrameBar::fixSize() {
 
 void FrameBar::resync() {
 	clear();
-	DomainFacade* facade = DomainFacade::getFacade();
+	const DomainFacade* facade = DomainFacade::getFacade();
 	int sceneCount = facade->getNumberOfScenes();
 	int scene = 0 <= activeScene && activeScene < sceneCount?
 			activeScene : -1;
@@ -624,7 +624,7 @@ void FrameBar::setActiveScene(int sceneNumber) {
 	if (sceneNumber == activeScene)
 		return;
 	closeActiveScene();
-	DomainFacade* anim = DomainFacade::getFacade();
+	const DomainFacade* anim = DomainFacade::getFacade();
 	if (anim->getNumberOfScenes() <= sceneNumber) {
 		return;
 	}
