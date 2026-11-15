@@ -219,9 +219,8 @@ void TestCommandFactory::emptyCommandReplayerThrows() {
 void TestCommandFactory::canParseFromLog() {
 	executionOutput.clear();
 	ce->executeFromLog("et -5 \"hello world!\" 412345!", *ErrorHandler::getThrower());
-	QCOMPARE(executionOutput.size(), size_t(1));
-	QCOMPARE(executionOutput.begin()->c_str(),
-			"et,i:-5,s:hello world!,i:412345");
+	const output_t expected{"et,i:-5,s:hello world!,i:412345"};
+	QCOMPARE(executionOutput, expected);
 }
 
 int32_t randomInt() {
@@ -346,12 +345,10 @@ class AddDelTestBed {
 	char lineBuffer[lineBufferSize];
 	std::string finalString;
 	std::string originalString;
-	std::string expected;
 	std::unique_ptr<CommandFactory> af;
 	std::unique_ptr<CommandFactory> df;
 	std::unique_ptr<FileCommandLogger> logger;
 	std::unique_ptr<Executor> ex;
-	FILE* logFile;
 	StringModelTestHelper helper;
 public:
 	AddDelTestBed() :
@@ -359,7 +356,6 @@ public:
 			df(new DelCharFactory(&finalString)),
 			logger(new FileCommandLogger),
 			ex(makeExecutor()),
-			logFile(nullptr),
 			helper(finalString) {
 		ex->setCommandLogger(logger->getLogger());
 		ex->addCommand("add", std::move(af), true);
@@ -369,9 +365,8 @@ public:
 	void init(const char* initialString) {
 		finalString = initialString;
 		originalString = finalString;
-		logFile = tmpfile();
-		// ownership of logFile is passed here
-		logger->setLogFile(logFile);
+		// ownership of the file is passed here
+		logger->setLogFile(tmpfile());
 		ex->clearHistory();
 	}
 	void testUndo() {
@@ -379,6 +374,8 @@ public:
 	}
 };
 
+// a test slot cannot be static
+// cppcheck-suppress functionStatic
 void TestCommandFactory::testUndo() {
 	AddDelTestBed test;
 	test.testUndo();

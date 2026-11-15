@@ -43,6 +43,8 @@ void getHashes(std::vector<Hash>& out, const char* filenameTemplate) {
 		out.resize(i + 1);
 		Hash h;
 		FILE* f = fopen(filename, "r");
+		if (!f)
+			QFAIL("Failed to open a hash resource");
 		h.add(f);
 		fclose(f);
 		out[i] = h;
@@ -202,6 +204,8 @@ class AnimTester {
 	void testSound(int n) {
 		const char* path = anim->getSoundPath(scene, frame, sound - 1);
 		FILE* fh = fopen(path, "r");
+		if (!fh)
+			QFAIL("Failed to open a sound file");
 		Hash h;
 		h.add(fh);
 		fclose(fh);
@@ -373,7 +377,7 @@ void TestStopmotionUndo::setSoundName() {
 	setUpAnim();
 	anim->setSoundName(2, 0, 0, "tommy");
 	animTester->test("0,1;2;3/0,4/1");
-	QCOMPARE(anim->getSoundName(2, 0, 0), "tommy");
+	QCOMPARE(QByteArray(anim->getSoundName(2, 0, 0)), QByteArrayLiteral("tommy"));
 }
 
 void TestStopmotionUndo::newScene() {

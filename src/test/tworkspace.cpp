@@ -65,6 +65,8 @@ void TestWorkspace::nonJpgImagesCannotBeCopied() {
 	wrapFileSystem(nullptr);
 }
 
+// a test slot cannot be static
+// cppcheck-suppress functionStatic
 void TestWorkspace::typeNeedsTheWholeExtension() {
 	const WorkspaceFileType& image = WorkspaceFileType::image();
 	QVERIFY(image.isType("a.jpg"));

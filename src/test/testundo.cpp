@@ -393,11 +393,9 @@ class ExecutorDo : public ExecutorStep {
 	int max;
 	FileCommandLogger fLogger;
 	const char* logFName;
-	FILE* fh;
 public:
 	ExecutorDo(ExecutorStep* following, const char* logFileName)
-		: ExecutorStep(following), min(1), max(40), logFName(logFileName),
-		  fh(nullptr) {
+		: ExecutorStep(following), min(1), max(40), logFName(logFileName) {
 	}
 	void setMinimumAndMaximumCommands(int minimum, int maximum) {
 		min = minimum;
@@ -407,7 +405,7 @@ public:
 		return "random commands";
 	}
 	void doStep(Executor& e, RandomSource& rng) override {
-		fh = fileOpen(logFName, "w");
+		FILE* fh = fileOpen(logFName, "w");
 		assert(fh);
 		fLogger.setLogFile(fh);
 		int cc;
@@ -416,7 +414,6 @@ public:
 	void cleanup() override {
 		fLogger.getLogger()->flush();
 		fLogger.setLogFile(nullptr);
-		fh = nullptr;
 	}
 	CommandLogger* logger() override {
 		return fLogger.getLogger();
@@ -426,17 +423,16 @@ public:
 class ExecutorDoesAndRandomUndoesAndRedoes : public ExecutorStep {
 	FileCommandLogger fLogger;
 	const char* logFName;
-	FILE* fh;
 public:
 	ExecutorDoesAndRandomUndoesAndRedoes(ExecutorStep* following,
 			const char* logFileName)
-		: ExecutorStep(following), logFName(logFileName), fh(nullptr) {
+		: ExecutorStep(following), logFName(logFileName) {
 	}
 	const char* name() const override {
 		return "random undoes and redoes";
 	}
 	void doStep(Executor& e, RandomSource& rng) override {
-		fh = fileOpen(logFName, "w");
+		FILE* fh = fileOpen(logFName, "w");
 		assert(fh);
 		fLogger.setLogFile(fh);
 		int commandCount = 0;
@@ -453,7 +449,6 @@ public:
 	}
 	void cleanup() override {
 		fLogger.setLogFile(nullptr);
-		fh = nullptr;
 	}
 	CommandLogger* logger() override {
 		return fLogger.getLogger();
@@ -494,7 +489,7 @@ class ExecutorReplay final : public ExecutorStep {
 	enum {
 		lineBufferSize = 1024
 	};
-	char lineBuffer[lineBufferSize];
+	char lineBuffer[lineBufferSize] = {};
 	std::string replayed[2];
 public:
 	ExecutorReplay(ExecutorStep* following, const char* logFileName)

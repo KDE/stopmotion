@@ -11,9 +11,15 @@
 
 struct OggVorbis_File;
 
+namespace {
+// only their addresses are used, as fake file handles
+char fakeJpgHandle;
+char fakePngHandle;
+}
+
 RealOggEmptyJpg::RealOggEmptyJpg() : delegate(nullptr),
-		fakeJpg(reinterpret_cast<FILE*>(1)),
-		fakePng(reinterpret_cast<FILE*>(2)),
+		fakeJpg(reinterpret_cast<FILE*>(&fakeJpgHandle)),
+		fakePng(reinterpret_cast<FILE*>(&fakePngHandle)),
 		fakeReads(0) {
 }
 
