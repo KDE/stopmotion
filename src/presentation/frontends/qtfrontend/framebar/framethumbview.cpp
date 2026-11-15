@@ -72,7 +72,7 @@ void FrameThumbView::mouseReleaseEvent( QMouseEvent * e ) {
 			int activeFrame = getFrameBar()->getActiveFrame();
 			int highend = (selectionFrame > activeFrame ) ? selectionFrame : activeFrame;
 			int lowend = (selectionFrame < activeFrame ) ? selectionFrame : activeFrame;
-			if (getNumber() <= highend || getNumber() >= lowend) {
+			if (lowend <= getNumber() && getNumber() <= highend) {
 				int activeScene = getFrameBar()->getActiveScene();
 				getFrameBar()->updateNewActiveFrame(activeScene, getNumber());
 			}
