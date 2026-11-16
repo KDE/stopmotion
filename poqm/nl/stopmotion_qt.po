@@ -247,7 +247,7 @@ msgid "About"
 msgstr "Info over"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:55
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:354
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:361
 msgctxt "DeviceTab|"
 msgid ""
 "Below you can set which device Stopmotion should use for grabbing images and "
@@ -257,7 +257,7 @@ msgstr ""
 "voor het pakken van afbeeldingen en video afspelen."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:57
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:356
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:363
 msgctxt "DeviceTab|"
 msgid ""
 "You can select from the auto-detected devices below or add devices yourself. "
@@ -270,7 +270,7 @@ msgstr ""
 "doen als u een gevorderde gebruiker bent."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:60
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:359
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:366
 msgctxt "DeviceTab|"
 msgid ""
 "The selected device is recognized as <b>$VIDEODEVICE</b> under Video Import."
@@ -279,48 +279,48 @@ msgstr ""
 "Import."
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:66
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:363
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:370
 msgctxt "DeviceTab|"
 msgid "Name"
 msgstr "Naam"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:66
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:363
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:370
 msgctxt "DeviceTab|"
 msgid "Description"
 msgstr "Beschrijving"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:80
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:366
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:373
 msgctxt "DeviceTab|"
 msgid "&Add"
 msgstr "&Toevoegen"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:84
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:367
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:374
 msgctxt "DeviceTab|"
 msgid "&Remove"
 msgstr "&Verwijderen"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:87
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:368
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:375
 msgctxt "DeviceTab|"
 msgid "&Edit"
 msgstr "B&ewerken"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:91
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:371
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:378
 msgctxt "DeviceTab|"
 msgid "Video device settings"
 msgstr "Video-apparaatinstellingen"
 
 #: src/presentation/frontends/qtfrontend/devicetab.cpp:100
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:372
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:379
 msgctxt "DeviceTab|"
 msgid "Video Device ($VIDEODEVICE): "
 msgstr "Video apparaat ($VIDEODEVICE): "
 
-#: src/presentation/frontends/qtfrontend/devicetab.cpp:147
+#: src/presentation/frontends/qtfrontend/devicetab.cpp:153
 msgctxt "DeviceTab|"
 msgid "device"
 msgstr "apparaat"
