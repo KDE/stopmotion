@@ -118,9 +118,9 @@ void SceneVector::moveFrames(int fromScene, int fromFrame, int count,
 	Scene* to = getMutableScene(toScene);
 	const int fromSize = from->getSize();
 	const int toSize = to->getSize();
-	if (fromSize < fromFrame + count
-			 	 || toSize < toFrame)
-		 throw FrameOutOfRangeException();
+	if (fromFrame < 0 || count < 0 || toFrame < 0
+			|| fromSize < fromFrame + count || toSize < toFrame)
+		throw FrameOutOfRangeException();
 	if (toScene != fromScene) {
 		preallocateFrames(toScene, count);
 		// this will do for now, even though it is quadratic

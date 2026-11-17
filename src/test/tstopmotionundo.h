@@ -42,6 +42,7 @@ private Q_SLOTS:
 	void removeSound();
 	void setSoundName();
 	void stopmotionCommandsInvertCorrectly();
+	void moveFramesChecksItsArguments();
 };
 
 #endif /* TSTOPMOTIONUNDO_H_ */

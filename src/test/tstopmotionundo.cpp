@@ -13,6 +13,7 @@
 #include "src/domain/undo/addallcommands.h"
 #include "src/domain/undo/executor.h"
 #include "src/domain/animation/animation.h"
+#include "src/domain/animation/scene.h"
 #include "src/domain/animation/scenevector.h"
 #include "src/domain/animation/workspacefile.h"
 #include "src/domain/filenamevisitor.h"
@@ -398,4 +399,13 @@ void TestStopmotionUndo::moveScene() {
 	setUpAnim();
 	anim->moveScene(2, 0);
 	animTester->test("3/0,4/1;0,1;2");
+}
+
+void TestStopmotionUndo::moveFramesChecksItsArguments() {
+	sv->clear();
+	sv->addScene(0);
+	QVERIFY_THROWS_EXCEPTION(FrameOutOfRangeException, sv->moveFrames(0, 0, -1, 0, 0));
+	QVERIFY_THROWS_EXCEPTION(FrameOutOfRangeException, sv->moveFrames(0, -1, 0, 0, 0));
+	QVERIFY_THROWS_EXCEPTION(FrameOutOfRangeException, sv->moveFrames(0, 0, 0, 0, -1));
+	sv->clear();
 }
