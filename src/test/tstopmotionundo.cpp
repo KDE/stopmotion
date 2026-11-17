@@ -409,3 +409,12 @@ void TestStopmotionUndo::moveFramesChecksItsArguments() {
 	QVERIFY_THROWS_EXCEPTION(FrameOutOfRangeException, sv->moveFrames(0, 0, 0, 0, -1));
 	sv->clear();
 }
+
+void TestStopmotionUndo::executesWithoutLogger() {
+	sv->clear();
+	ex->setCommandLogger(nullptr);
+	ex->execute(Commands::addScene, 0);
+	QCOMPARE(sv->sceneCount(), 1);
+	ex->clearHistory();
+	sv->clear();
+}

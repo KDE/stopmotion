@@ -512,7 +512,8 @@ public:
 			if (c) {
 				vps.writeCommand(logger);
 				history.execute(*c.release());
-				logger->commit();
+				if (logger)
+					logger->commit();
 			}
 		} catch(...) {
 			// Unfortunately we can't put this in VaListParameters's destructor
@@ -530,7 +531,8 @@ public:
 		if (c) {
 			pw.writeCommand(logger);
 			history.execute(*c.release());
-			logger->commit();
+			if (logger)
+				logger->commit();
 		}
 	}
 	bool executeFromLog(const char* line, ErrorHandler& e) override {
