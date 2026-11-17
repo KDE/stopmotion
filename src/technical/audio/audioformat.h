@@ -36,7 +36,20 @@ public:
 	virtual void reset() = 0;
 
 	/**
-	 * Abstract function for filling the buffer with raw PCM data. It
+	 * @return The sample rate of the data from @ref fillBuffer in Hz, or 0
+	 * if unknown.
+	 */
+	virtual int sampleRate() const = 0;
+
+	/**
+	 * @return The number of interleaved channels of the data from
+	 * @ref fillBuffer, or 0 if unknown.
+	 */
+	virtual int channelCount() const = 0;
+
+	/**
+	 * Abstract function for filling the buffer with raw PCM data, as
+	 * interleaved signed 16-bit samples. It
 	 * fills the buffer with up to 'numBytes' bytes.
 	 * @param audioBuffer the buffer to be filled
 	 * @param numBytes number of bytes available in the buffer

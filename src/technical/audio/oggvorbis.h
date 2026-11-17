@@ -38,6 +38,8 @@ public:
 	int open() override;
 	int close() override;
 	void reset() override;
+	int sampleRate() const override;
+	int channelCount() const override;
 	int fillBuffer(char *audioBuffer, int numBytes) override;
 	int add16bit(int16_t* audioBuffer, int count) override;
 	const char* getSoundPath() const override;

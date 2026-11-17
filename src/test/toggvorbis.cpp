@@ -43,6 +43,16 @@ int OggVorbis::close() {
 }
 
 
+int OggVorbis::sampleRate() const {
+	return 44100;
+}
+
+
+int OggVorbis::channelCount() const {
+	return 2;
+}
+
+
 int OggVorbis::fillBuffer(char*, int numBytes) {
 	return numBytes;
 }

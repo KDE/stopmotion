@@ -125,6 +125,18 @@ int OggVorbis::close() {
 }
 
 
+int OggVorbis::sampleRate() const {
+	const vorbis_info* info = oggFile ? ov_info(oggFile, -1) : nullptr;
+	return info ? static_cast<int>(info->rate) : 0;
+}
+
+
+int OggVorbis::channelCount() const {
+	const vorbis_info* info = oggFile ? ov_info(oggFile, -1) : nullptr;
+	return info ? info->channels : 0;
+}
+
+
 int OggVorbis::fillBuffer(char *audioBuffer, int numBytes) {
 	assert(audioBuffer != nullptr);
 	if (oggFile) {
