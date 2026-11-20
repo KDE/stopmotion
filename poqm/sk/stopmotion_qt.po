@@ -1054,17 +1054,14 @@ msgid "Choose project file"
 msgstr "Vybrať súbor projektu"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:829
-#, fuzzy
-#| msgctxt "QtFrontend|"
-#| msgid "Could not copy file to workspace"
 msgctxt "MainWindowGUI|"
 msgid "Could not open the project"
-msgstr "Nepodarilo sa copy file to workspace"
+msgstr "Projekt sa nepodarilo otvoriť"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:880
 msgctxt "MainWindowGUI|"
 msgid "Could not save the project"
-msgstr ""
+msgstr "Projekt sa nepodarilo uložiť"
 
 #: src/presentation/frontends/qtfrontend/mainwindowgui.cpp:889
 msgctxt "MainWindowGUI|"
@@ -1431,7 +1428,7 @@ msgstr "Auto"
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:202
 msgctxt "ToolsMenu|"
 msgid "Off"
-msgstr ""
+msgstr "Vypnuté"
 
 #: src/presentation/frontends/qtfrontend/toolsmenu.cpp:203
 msgctxt "ToolsMenu|"
