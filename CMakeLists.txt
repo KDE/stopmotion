@@ -55,6 +55,7 @@ ecm_set_disabled_deprecation_versions(
   QT 6.8.0
   KF 6.13.0
   )
+add_compile_definitions(QT_ENABLE_STRICT_MODE_UP_TO=0x060800)
 
 add_compile_definitions(STOPMOTION_VERSION="${PROJECT_VERSION}")
 

@@ -72,7 +72,7 @@ ExternalCommandWithTemporaryDirectory
 	ec = new ExternalCommand(parent);
 	td = ttd.release();
 	// the window deletes itself when closed, take the directory with it
-	deleteWithWindow = QObject::connect(ec, &QObject::destroyed, [this] {
+	deleteWithWindow = QObject::connect(ec, &QObject::destroyed, ec, [this] {
 		ec = nullptr;
 		delete this;
 	});
