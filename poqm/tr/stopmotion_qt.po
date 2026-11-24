@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"PO-Revision-Date: 2026-11-18 18:57+0300\n"
+"PO-Revision-Date: 2026-11-23 18:16+0300\n"
 "Last-Translator: Emir SARI <emir_sari@icloud.com>\n"
 "Language-Team: Turkish <kde-l10n-tr@kde.org>\n"
 "Language: tr\n"
@@ -373,7 +373,7 @@ msgstr "Hayır"
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:398
 msgctxt "ExportTab|"
 msgid "Set default output file:"
-msgstr "Öntanımlı çıktı dosyası ayarla:"
+msgstr "Varsayılan çıktı dosyası ayarla:"
 
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:112
 #: src/presentation/frontends/qtfrontend/exporttab.cpp:399
@@ -1390,7 +1390,7 @@ msgid ""
 "values exists. Do you want to use this one? (Your old preferences\n"
 " will be saved in ~/.stopmotion/preferences.xml.OLD)"
 msgstr ""
-"Birkaç tane daha yeni öntanımlı değer içeren tercihler dosyasının\n"
+"Birkaç tane daha yeni varsayılan değer içeren tercihler dosyasının\n"
 "yeni bir sürümü var. Eskisini mi kullanmak istiyorsunuz? (Eski\n"
 "tercihleriniz ~/.stopmotion/preferences.xml.OLD olarak kaydedilecektir)"
 
