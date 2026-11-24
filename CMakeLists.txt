@@ -150,6 +150,7 @@ add_executable(stopmotion
   src/technical/audio/qtaudiodriver.cpp
   src/technical/grabber/imagegrabber.cpp
   src/technical/grabber/commandlinegrabber.cpp
+  src/technical/grabber/qtcameragrabber.cpp
   src/presentation/frontends/qtfrontend/imagegrabthread.cpp
   src/presentation/frontends/qtfrontend/preferencesmenu.cpp
   src/foundation/preferencestool.cpp

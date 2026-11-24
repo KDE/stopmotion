@@ -39,6 +39,7 @@ CameraHandler::~CameraHandler( ) {
 void CameraHandler::setFrameView( FrameView * view )
 {
 	frameView = view;
+	connect(frameView, &FrameView::cameraFailed, this, &CameraHandler::cameraOff);
 }
 
 
@@ -98,6 +99,10 @@ void CameraHandler::captureFrame()
 
 void CameraHandler::storeFrame()
 {
+	if (!frameView->storeCameraImage()) {
+		timer->start(60);
+		return;
+	}
 	QImage i;
 	const char* path = capturedFile.path();
 	i.load(QString::fromLocal8Bit(path));

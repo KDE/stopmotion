@@ -22,6 +22,7 @@
 #include "src/foundation/preferencestool.h"
 #include "src/presentation/frontends/qtfrontend/imagegrabthread.h"
 #include "src/technical/grabber/commandlinegrabber.h"
+#include "src/technical/grabber/qtcameragrabber.h"
 
 enum { IMAGE_CACHE_SIZE = 10 };
 
@@ -236,6 +237,10 @@ void FrameView::setActiveFrame(int sceneNumber, int frameNumber) {
 bool FrameView::on() {
 	const char* DEVICE_TOKEN = "$VIDEODEVICE";
 	PreferencesTool *prefs = PreferencesTool::get();
+	if (prefs->getPreference("grabberbackend", qtMultimediaBackend)
+			== qtMultimediaBackend) {
+		return startCamera();
+	}
 	int activeCmd = prefs->getPreference("activedevice", 0);
 
 	Preference prepoll(QStringLiteral("importprepoll%1")
@@ -338,6 +343,60 @@ bool FrameView::on() {
 }
 
 
+bool FrameView::startCamera() {
+	QByteArray deviceId;
+	const int activeDev = PreferencesTool::get()->getPreference(
+			"activeVideoDevice", -1);
+	if (0 <= activeDev) {
+		Preference deviceP(QStringLiteral("device%1")
+				.arg(activeDev).toUtf8().constData(), "");
+		deviceId = QByteArray(deviceP.get()).trimmed();
+	}
+	camera = std::make_unique<QtCameraGrabber>();
+	if (!camera->start(deviceId)) {
+		camera.reset();
+		QMessageBox::warning(this, tr("Warning"), tr("No camera was found."),
+				QMessageBox::Ok);
+		return false;
+	}
+	connect(camera.get(), &QtCameraGrabber::imageChanged,
+			this, &FrameView::showCameraImage);
+	// queued, as turning the camera off deletes it
+	connect(camera.get(), &QtCameraGrabber::failed,
+			this, &FrameView::reportCameraFailure, Qt::QueuedConnection);
+	cameraOutput = QPixmap();
+	initCompleted();
+	isPlayingVideo = true;
+	return true;
+}
+
+
+void FrameView::showCameraImage(const QImage& image) {
+	cameraOutput = QPixmap::fromImage(image);
+	update();
+}
+
+
+void FrameView::reportCameraFailure(const QString& detail) {
+	if (!camera)
+		return;
+	QString message = tr("The camera stopped working.");
+	if (!detail.isEmpty())
+		message += QStringLiteral("\n") + detail;
+	QMessageBox::warning(this, tr("Warning"), message, QMessageBox::Ok);
+	Q_EMIT cameraFailed();
+}
+
+
+bool FrameView::storeCameraImage() {
+	if (!camera)
+		return true; // the grabber writes the file itself
+	const QImage& image = camera->latestImage();
+	return !image.isNull() && image.save(
+			QString::fromLocal8Bit(capturedFile.path()), "JPEG", 95);
+}
+
+
 void FrameView::off() {
 	if ( grabber != nullptr ) {
 		if ( grabber->isGrabberProcess() ) {
@@ -353,6 +412,8 @@ void FrameView::off() {
 		grabThread = nullptr;
 	}
 	grabber.reset();
+	camera.reset();
+	playbackTimer.stop();
 
 	isPlayingVideo = false;
 	setActiveFrame(activeScene, activeFrame);
@@ -391,18 +452,18 @@ void FrameView::nextPlayBack() {
 bool FrameView::setViewMode(ImageMode newMode) {
 	if (newMode == mode)
 		return true;
-	if (!grabber)
+	if (!grabber && !camera)
 		return true;
+	// playback needs a camera that runs on its own
+	const bool canPlayBack = camera || grabber->isGrabberProcess();
 	if (newMode == imageModePlayback) {
-		if ( grabber->isGrabberProcess() ) {
+		if (canPlayBack) {
 			playbackTimer.start(1000/playbackSpeed);
 		} else {
 			return false;
 		}
 	} else {
-		if ( grabber->isGrabberProcess() ) {
-			playbackTimer.stop();
-		}
+		playbackTimer.stop();
 	}
 	mode = newMode;
 	return true;

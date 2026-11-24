@@ -18,6 +18,8 @@ class QResizeEvent;
 class QPaintEvent;
 class QPixmap;
 class ImageGrabber;
+class QImage;
+class QtCameraGrabber;
 class DomainFacade;
 
 /**
@@ -78,8 +80,18 @@ public:
 	 */
 	int getPlaybackSpeed() const;
 
+	/**
+	 * Makes sure the captured image file holds the current camera image.
+	 * @return false if the camera has not delivered an image yet.
+	 */
+	bool storeCameraImage();
+
 Q_SIGNALS:
 	void cameraReady();
+	/**
+	 * The camera stopped working; it should be turned off.
+	 */
+	void cameraFailed();
 
 public Q_SLOTS:
 	/**
@@ -128,6 +140,9 @@ protected:
 	void paintEvent(QPaintEvent *) override;
 
 private:
+	bool startCamera();
+	void showCameraImage(const QImage& image);
+	void reportCameraFailure(const QString& detail);
 	static const int alphaLut[5];
 
 	QPixmap cameraOutput;
@@ -137,6 +152,7 @@ private:
 	QTimer playbackTimer;
 	ImageGrabThread *grabThread;
 	std::unique_ptr<ImageGrabber> grabber;
+	std::unique_ptr<QtCameraGrabber> camera;
 	WorkspaceFile capturedFile;
 
 	/** The facade cached away in this class for efficiency reasons */

@@ -7,6 +7,7 @@
 #include "flexiblelineedit.h"
 #include "preferencestool.h"
 #include "graphics/icons/close.xpm"
+#include "src/technical/grabber/qtcameragrabber.h"
 
 #include <algorithm>
 #include <memory>
@@ -46,12 +47,22 @@ void ImportTab::makeGUI()
 	informationText = new QTextEdit;
 	informationText->setReadOnly(true);
 	informationText->setHtml(
-		QStringLiteral("<p>") + tr("Below you can set which program/process Stopmotion should use "
+		QStringLiteral("<p>") + tr("Qt Multimedia shows the device selected under Video Device "
+		"directly. Alternatively, Stopmotion can grab images with an external program.")
+		+ QStringLiteral("</p><p>") +
+		tr("Below you can set which program/process Stopmotion should use "
 		"for grabbing images from the selected device.") + QStringLiteral("</p><p>") +
 		tr("You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 		"the video device and the image file, respectively.") + QStringLiteral("</p>"));
 	informationText->setMinimumWidth(440);
 	informationText->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+
+	backendLabel = new QLabel;
+	backendCombo = new QComboBox;
+	backendLabel->setBuddy(backendCombo);
+	setBackendTexts();
+	connect(backendCombo, &QComboBox::currentIndexChanged,
+			this, &ImportTab::backendChanged);
 
 	QStringList lst;
 	lst << tr("Name") << tr("Description");
@@ -113,6 +124,10 @@ void ImportTab::makeGUI()
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->addWidget(informationText);
+	QHBoxLayout *backendLayout = new QHBoxLayout;
+	backendLayout->addWidget(backendLabel);
+	backendLayout->addWidget(backendCombo, 1);
+	mainLayout->addLayout(backendLayout);
 	QVBoxLayout *buttonLayout = new QVBoxLayout;
 	buttonLayout->setContentsMargins(0, 0, 0, 0);
 	buttonLayout->setSpacing(2);
@@ -166,11 +181,40 @@ void ImportTab::initializeImportValues()
 	if (activeCommand > -1) {
 		deviceSelectionTable->setCurrentCell(activeCommand, 0);
 	}
+	const int backend = pref->getPreference("grabberbackend", qtMultimediaBackend);
+	backendCombo->setCurrentIndex(
+			backend == commandLineBackend? commandLineBackend : qtMultimediaBackend);
+	backendChanged(backendCombo->currentIndex());
+}
+
+
+void ImportTab::backendChanged(int index) {
+	// the programs are only used without Qt Multimedia
+	const bool programs = index == commandLineBackend;
+	deviceSelectionTable->setEnabled(programs);
+	addButton->setEnabled(programs);
+	removeButton->setEnabled(programs);
+	changeButton->setEnabled(programs);
+	if (!programs)
+		closeChangeBox();
+}
+
+
+void ImportTab::setBackendTexts() {
+	backendLabel->setText(tr("&Camera access:"));
+	const QSignalBlocker blocker(backendCombo);
+	const int index = backendCombo->currentIndex();
+	backendCombo->clear();
+	// in the order of GrabberBackend
+	backendCombo->addItem(tr("Qt Multimedia"));
+	backendCombo->addItem(tr("External programs"));
+	backendCombo->setCurrentIndex(std::max(index, 0));
 }
 
 
 void ImportTab::apply() {
 	PreferencesTool *prefs = PreferencesTool::get();
+	prefs->setPreference("grabberbackend", backendCombo->currentIndex());
 
 	// Remove old preferences
 	int numImports = prefs->getPreference("numberofimports", -1);
@@ -313,7 +357,10 @@ void ImportTab::closeChangeBox()
 void ImportTab::retranslateStrings()
 {
 	informationText->setHtml(
-		QStringLiteral("<p>") + tr("Below you can set which program/process Stopmotion should use "
+		QStringLiteral("<p>") + tr("Qt Multimedia shows the device selected under Video Device "
+		"directly. Alternatively, Stopmotion can grab images with an external program.")
+		+ QStringLiteral("</p><p>") +
+		tr("Below you can set which program/process Stopmotion should use "
 		"for grabbing images from the selected device.") + QStringLiteral("</p><p>") +
 		tr("You should always use <b>$VIDEODEVICE</b> and <b>$IMAGEFILE</b> to represent "
 		"the video device and the image file, respectively.") + QStringLiteral("</p>"));
@@ -325,6 +372,7 @@ void ImportTab::retranslateStrings()
 	addButton->setText( tr("&Add") );
 	removeButton->setText( tr("&Remove") );
 	changeButton->setText( tr("&Edit") );
+	setBackendTexts();
 
 	grabberPreferences->setTitle( tr("Import device settings") );
 	prePollLabel->setText( tr("Pre-poll command") );

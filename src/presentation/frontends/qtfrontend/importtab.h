@@ -6,6 +6,7 @@
 #ifndef IMPORTTAB_H
 #define IMPORTTAB_H
 
+#include <QComboBox>
 #include <QTableWidget>
 #include <QLineEdit>
 #include <QPushButton>
@@ -65,6 +66,7 @@ private Q_SLOTS:
 	void updatePrePollString(const QString &txt);
 	void updateStartDaemonString(const QString &txt);
 	void updatestopDaemonString(const QString &txt);
+	void backendChanged(int index);
 
 private:
 	/** The row shown in the edit box, or -1 */
@@ -87,6 +89,9 @@ private:
 	QLabel *stopDaemonLabel;
 	QTableWidgetItem *checkTableItem;
 	QTextEdit *informationText;
+	QLabel *backendLabel = nullptr;
+	QComboBox *backendCombo = nullptr;
+	void setBackendTexts();
 };
 
 #endif
