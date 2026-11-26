@@ -182,14 +182,14 @@ void ImportTab::initializeImportValues()
 		deviceSelectionTable->setCurrentCell(activeCommand, 0);
 	}
 	const int backend = pref->getPreference("grabberbackend", qtMultimediaBackend);
-	backendCombo->setCurrentIndex(
-			backend == commandLineBackend? commandLineBackend : qtMultimediaBackend);
+	backendCombo->setCurrentIndex(0 <= backend && backend < backendCombo->count()?
+			backend : qtMultimediaBackend);
 	backendChanged(backendCombo->currentIndex());
 }
 
 
 void ImportTab::backendChanged(int index) {
-	// the programs are only used without Qt Multimedia
+	// the programs are only used by their own backend
 	const bool programs = index == commandLineBackend;
 	deviceSelectionTable->setEnabled(programs);
 	addButton->setEnabled(programs);
@@ -208,6 +208,9 @@ void ImportTab::setBackendTexts() {
 	// in the order of GrabberBackend
 	backendCombo->addItem(tr("Qt Multimedia"));
 	backendCombo->addItem(tr("External programs"));
+#ifdef HAVE_GPHOTO2
+	backendCombo->addItem(tr("gPhoto2 (DSLRs and system cameras)"));
+#endif
 	backendCombo->setCurrentIndex(std::max(index, 0));
 }
 

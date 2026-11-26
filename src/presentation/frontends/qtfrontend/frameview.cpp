@@ -23,6 +23,9 @@
 #include "src/presentation/frontends/qtfrontend/imagegrabthread.h"
 #include "src/technical/grabber/commandlinegrabber.h"
 #include "src/technical/grabber/qtcameragrabber.h"
+#ifdef HAVE_GPHOTO2
+#include "src/technical/grabber/gphotograbber.h"
+#endif
 
 enum { IMAGE_CACHE_SIZE = 10 };
 
@@ -237,10 +240,9 @@ void FrameView::setActiveFrame(int sceneNumber, int frameNumber) {
 bool FrameView::on() {
 	const char* DEVICE_TOKEN = "$VIDEODEVICE";
 	PreferencesTool *prefs = PreferencesTool::get();
-	if (prefs->getPreference("grabberbackend", qtMultimediaBackend)
-			== qtMultimediaBackend) {
-		return startCamera();
-	}
+	const int backend = prefs->getPreference("grabberbackend", qtMultimediaBackend);
+	if (backend != commandLineBackend)
+		return startCamera(backend);
 	int activeCmd = prefs->getPreference("activedevice", 0);
 
 	Preference prepoll(QStringLiteral("importprepoll%1")
@@ -343,7 +345,7 @@ bool FrameView::on() {
 }
 
 
-bool FrameView::startCamera() {
+bool FrameView::startCamera([[maybe_unused]] int backend) {
 	QByteArray deviceId;
 	const int activeDev = PreferencesTool::get()->getPreference(
 			"activeVideoDevice", -1);
@@ -352,7 +354,12 @@ bool FrameView::startCamera() {
 				.arg(activeDev).toUtf8().constData(), "");
 		deviceId = QByteArray(deviceP.get()).trimmed();
 	}
-	camera = std::make_unique<QtCameraGrabber>();
+#ifdef HAVE_GPHOTO2
+	if (backend == gphoto2Backend)
+		camera = std::make_unique<GPhotoGrabber>();
+	else
+#endif
+		camera = std::make_unique<QtCameraGrabber>();
 	if (!camera->start(deviceId)) {
 		QString message = tr("No camera was found.");
 		if (!camera->errorDetail().isEmpty())

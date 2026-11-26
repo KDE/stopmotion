@@ -41,14 +41,18 @@ find_package(KF6Archive 6.13
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(VorbisFile REQUIRED IMPORTED_TARGET vorbisfile)
 
+# libgphoto2, for DSLRs and system cameras
+include(FeatureSummary)
+pkg_check_modules(LibGPhoto2 IMPORTED_TARGET libgphoto2>=2.5)
+add_feature_info(LibGPhoto2 LibGPhoto2_FOUND "Capture from DSLRs and system cameras")
+
 if(BUILD_TESTING)
   find_package(Qt6 6.8 REQUIRED
     COMPONENTS Test
   )
 endif ()
 
-include(FeatureSummary)
-feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND)
+feature_summary(WHAT PACKAGES_FOUND PACKAGES_NOT_FOUND ENABLED_FEATURES DISABLED_FEATURES)
 
 include(ECMDeprecationSettings)
 ecm_set_disabled_deprecation_versions(
@@ -201,6 +205,12 @@ target_link_libraries(stopmotion
   PkgConfig::VorbisFile
   KF6::Archive
   )
+
+if(LibGPhoto2_FOUND)
+  target_sources(stopmotion PRIVATE src/technical/grabber/gphotograbber.cpp)
+  target_compile_definitions(stopmotion PRIVATE HAVE_GPHOTO2)
+  target_link_libraries(stopmotion PRIVATE PkgConfig::LibGPhoto2)
+endif()
 
 target_include_directories(stopmotion
   PRIVATE

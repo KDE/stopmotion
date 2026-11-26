@@ -99,6 +99,9 @@ void CameraHandler::captureFrame()
 
 void CameraHandler::storeFrame()
 {
+	// the camera may have been turned off meanwhile
+	if (!isCameraOn)
+		return;
 	if (!frameView->storeCameraImage()) {
 		timer->start(60);
 		return;

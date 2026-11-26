@@ -140,7 +140,7 @@ protected:
 	void paintEvent(QPaintEvent *) override;
 
 private:
-	bool startCamera();
+	bool startCamera(int backend);
 	void showCameraImage(const QImage& image);
 	void reportCameraFailure(const QString& detail);
 	static const int alphaLut[5];
