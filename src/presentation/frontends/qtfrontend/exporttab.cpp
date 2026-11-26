@@ -311,7 +311,6 @@ void ExportTab::closeSettings( )
 {
 	editedRow = -1;
 	encoderPrefs->hide();
-	this->resize(minimumSize());
 }
 
 

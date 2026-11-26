@@ -312,7 +312,6 @@ void DeviceTab::closeChangeBox()
 {
 	editedRow = -1;
 	devicePreferences->hide();
-	this->resize(minimumSize());
 }
 
 

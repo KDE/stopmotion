@@ -307,7 +307,6 @@ void ImportTab::closeChangeBox()
 {
 	editedRow = -1;
 	grabberPreferences->hide();
-	this->resize(minimumSize());
 }
 
 
