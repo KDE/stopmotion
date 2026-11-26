@@ -354,15 +354,17 @@ bool FrameView::startCamera() {
 	}
 	camera = std::make_unique<QtCameraGrabber>();
 	if (!camera->start(deviceId)) {
+		QString message = tr("No camera was found.");
+		if (!camera->errorDetail().isEmpty())
+			message += QStringLiteral("\n") + camera->errorDetail();
 		camera.reset();
-		QMessageBox::warning(this, tr("Warning"), tr("No camera was found."),
-				QMessageBox::Ok);
+		QMessageBox::warning(this, tr("Warning"), message, QMessageBox::Ok);
 		return false;
 	}
-	connect(camera.get(), &QtCameraGrabber::imageChanged,
+	connect(camera.get(), &CameraGrabber::imageChanged,
 			this, &FrameView::showCameraImage);
 	// queued, as turning the camera off deletes it
-	connect(camera.get(), &QtCameraGrabber::failed,
+	connect(camera.get(), &CameraGrabber::failed,
 			this, &FrameView::reportCameraFailure, Qt::QueuedConnection);
 	cameraOutput = QPixmap();
 	initCompleted();
@@ -391,9 +393,7 @@ void FrameView::reportCameraFailure(const QString& detail) {
 bool FrameView::storeCameraImage() {
 	if (!camera)
 		return true; // the grabber writes the file itself
-	const QImage& image = camera->latestImage();
-	return !image.isNull() && image.save(
-			QString::fromLocal8Bit(capturedFile.path()), "JPEG", 95);
+	return camera->storeImage(QString::fromLocal8Bit(capturedFile.path()));
 }
 
 

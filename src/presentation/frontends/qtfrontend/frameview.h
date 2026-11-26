@@ -19,7 +19,7 @@ class QPaintEvent;
 class QPixmap;
 class ImageGrabber;
 class QImage;
-class QtCameraGrabber;
+class CameraGrabber;
 class DomainFacade;
 
 /**
@@ -152,7 +152,7 @@ private:
 	QTimer playbackTimer;
 	ImageGrabThread *grabThread;
 	std::unique_ptr<ImageGrabber> grabber;
-	std::unique_ptr<QtCameraGrabber> camera;
+	std::unique_ptr<CameraGrabber> camera;
 	WorkspaceFile capturedFile;
 
 	/** The facade cached away in this class for efficiency reasons */

@@ -31,7 +31,7 @@ QCameraFormat bestFormat(const QCameraDevice& device) {
 }
 }
 
-QtCameraGrabber::QtCameraGrabber(QObject* parent) : QObject(parent) {
+QtCameraGrabber::QtCameraGrabber(QObject* parent) : CameraGrabber(parent) {
 	connect(&sink, &QVideoSink::videoFrameChanged,
 			this, &QtCameraGrabber::frameChanged);
 	connect(&mediaDevices, &QMediaDevices::videoInputsChanged,
@@ -68,8 +68,8 @@ bool QtCameraGrabber::start(const QByteArray& deviceId) {
 	return true;
 }
 
-const QImage& QtCameraGrabber::latestImage() const {
-	return image;
+bool QtCameraGrabber::storeImage(const QString& path) {
+	return !image.isNull() && image.save(path, "JPEG", 95);
 }
 
 void QtCameraGrabber::frameChanged(const QVideoFrame& frame) {

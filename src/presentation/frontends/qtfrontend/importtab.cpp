@@ -7,7 +7,7 @@
 #include "flexiblelineedit.h"
 #include "preferencestool.h"
 #include "graphics/icons/close.xpm"
-#include "src/technical/grabber/qtcameragrabber.h"
+#include "src/technical/grabber/cameragrabber.h"
 
 #include <algorithm>
 #include <memory>
