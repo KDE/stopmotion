@@ -181,16 +181,16 @@ void ImportTab::initializeImportValues()
 	if (activeCommand > -1) {
 		deviceSelectionTable->setCurrentCell(activeCommand, 0);
 	}
-	const int backend = pref->getPreference("grabberbackend", qtMultimediaBackend);
-	backendCombo->setCurrentIndex(0 <= backend && backend < backendCombo->count()?
-			backend : qtMultimediaBackend);
+	const int index = backendCombo->findData(
+			pref->getPreference("grabberbackend", qtMultimediaBackend));
+	backendCombo->setCurrentIndex(std::max(index, 0));
 	backendChanged(backendCombo->currentIndex());
 }
 
 
 void ImportTab::backendChanged(int index) {
 	// the programs are only used by their own backend
-	const bool programs = index == commandLineBackend;
+	const bool programs = backendCombo->itemData(index).toInt() == commandLineBackend;
 	deviceSelectionTable->setEnabled(programs);
 	addButton->setEnabled(programs);
 	removeButton->setEnabled(programs);
@@ -203,21 +203,20 @@ void ImportTab::backendChanged(int index) {
 void ImportTab::setBackendTexts() {
 	backendLabel->setText(tr("&Camera access:"));
 	const QSignalBlocker blocker(backendCombo);
-	const int index = backendCombo->currentIndex();
+	const QVariant backend = backendCombo->currentData();
 	backendCombo->clear();
-	// in the order of GrabberBackend
-	backendCombo->addItem(tr("Qt Multimedia"));
-	backendCombo->addItem(tr("External programs"));
+	backendCombo->addItem(tr("Qt Multimedia"), qtMultimediaBackend);
 #ifdef HAVE_GPHOTO2
-	backendCombo->addItem(tr("gPhoto2 (DSLRs and system cameras)"));
+	backendCombo->addItem(tr("gPhoto2 (DSLRs and system cameras)"), gphoto2Backend);
 #endif
-	backendCombo->setCurrentIndex(std::max(index, 0));
+	backendCombo->addItem(tr("External programs"), commandLineBackend);
+	backendCombo->setCurrentIndex(std::max(backendCombo->findData(backend), 0));
 }
 
 
 void ImportTab::apply() {
 	PreferencesTool *prefs = PreferencesTool::get();
-	prefs->setPreference("grabberbackend", backendCombo->currentIndex());
+	prefs->setPreference("grabberbackend", backendCombo->currentData().toInt());
 
 	// Remove old preferences
 	int numImports = prefs->getPreference("numberofimports", -1);
