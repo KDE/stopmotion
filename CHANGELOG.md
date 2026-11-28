@@ -8,8 +8,12 @@ Changes
 * Require Qt 6.8 and KDE Frameworks 6.13.
 
 Features
-* Use KArchive instead of libarchive.
+* Grab camera pictures with Qt Multimedia and libGPhoto2.
 * Offer the translations from KDE's translation teams.
+
+Bugfixes
+* Fix various bugs found by AI that nobody yet reported.
+* Fix multiple memory leaks.
 
 
 0.9.0 (2025-05-25)
